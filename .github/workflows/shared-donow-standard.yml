@@ -7,6 +7,9 @@ on:
       - 'scripts/do-now/**'
       - 'tests/do-now-standard.test.cjs'
       - 'tests/do-now-q1-drafts.test.cjs'
+      - 'tests/h446-q1-published.test.cjs'
+      - 'assets/h446-lesson/lesson.js'
+      - 'assets/h446-mindmap/presentation.js'
       - 'docs/do-now-central-standard.md'
       - '.github/workflows/shared-donow-standard.yml'
   push:
@@ -16,6 +19,9 @@ on:
       - 'scripts/do-now/**'
       - 'tests/do-now-standard.test.cjs'
       - 'tests/do-now-q1-drafts.test.cjs'
+      - 'tests/h446-q1-published.test.cjs'
+      - 'assets/h446-lesson/lesson.js'
+      - 'assets/h446-mindmap/presentation.js'
       - '.github/workflows/shared-donow-standard.yml'
   workflow_dispatch:
 
@@ -33,9 +39,11 @@ jobs:
       - name: Syntax and unit tests
         run: |
           node --check scripts/do-now/collect-legacy.cjs
+          node --check assets/h446-lesson/lesson.js
+          node --check assets/h446-mindmap/presentation.js
           node --check scripts/do-now/validate-standard.cjs
           node --check scripts/do-now/validate-q1-drafts.cjs
-          node --test tests/do-now-standard.test.cjs tests/do-now-q1-drafts.test.cjs
+          node --test tests/do-now-standard.test.cjs tests/do-now-q1-drafts.test.cjs tests/h446-q1-published.test.cjs
       - name: Check all three pilot banks against shared contract
         run: node scripts/do-now/validate-standard.cjs
       - name: Validate staged Q1 True or False rewrites against legacy sources

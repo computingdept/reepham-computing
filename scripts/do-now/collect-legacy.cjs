@@ -77,6 +77,8 @@ function writeSnapshot(course, lessons, exceptions, input) {
     warning:'Not a reviewed bank. Do not load in classroom, Catch Up or Print.',
     lessons, exceptions
   };
+  if (course === 'h446') output.supplementalSourceNote =
+    'Lessons 036–037 redirect to guided.html; Do Now source questions retained from assets/h446-mindmap/presentation.js, D36 and D37.';
   const target = path.join(out, `${course}-source.json`);
   const content=JSON.stringify(output,null,2)+'\n';
   if (checkOnly) {
@@ -116,7 +118,29 @@ for (const dir of fs.readdirSync(h446Dir,{withFileTypes:true}).filter(d=>d.isDir
   if (result.error)h446Issues.push({lesson:dir.name.slice(-3),reason:result.error,source:path.relative(root,file)});
   else h446Lessons[dir.name.slice(-3)]=result;
 }
-writeSnapshot('h446',h446Lessons,h446Issues,'Extracted from live lesson HTML; taught-sequence references need teacher review');
+/* Lessons 036/037 redirect to guided A3 mind-map pages. Their four-card
+   Do Nows are declared in the shared mind-map presentation source. */
+const mindMapSource = path.join(root,'assets/h446-mindmap/presentation.js');
+const mindMapScript = fs.readFileSync(mindMapSource,'utf8');
+for (const number of [36,37]) {
+  const id=String(number).padStart(3,'0');
+  const block=mindMapScript.match(new RegExp('const D'+number+'=\\[([\\s\\S]*?)\\];'));
+  if(!block)throw new Error('Missing D'+number+' original Do Now from mind-map source');
+  const rows=[...block[1].matchAll(/question\(("(?:(?:\\.)|[^"\\])*"),\s*("(?:(?:\\.)|[^"\\])*"),\s*("(?:(?:\\.)|[^"\\])*")\)/g)]
+    .map(match=>match.slice(1,4).map(value=>JSON.parse(value)));
+  if(rows.length!==4)throw new Error('Expected four D'+number+' Do Now questions');
+  h446Lessons[id]={
+    title:'H446 Lesson '+id+' · Guided A3 Mind Map · Part '+(number===36?'1':'2'),
+    source:'assets/h446-mindmap/presentation.js (D'+number+'; lessons/h446/lesson-'+id+'/guided.html)',
+    questions:rows.map(([label,q,a],i)=>({
+      id:'H446-'+id+'-Q'+(i+1),label:'Q'+(i+1)+' · '+(i===0?'LAST LESSON':'RETRIEVAL'),
+      originalQuestion:q,originalQuestionHtml:'<p>'+q+'</p>',
+      originalAnswer:a,originalExplanation:'',originalAnswerHtml:'<p>'+a+'</p>'
+    }))
+  };
+}
+const unresolvedH446Issues=h446Issues.filter(issue=>!['036','037'].includes(issue.lesson));
+writeSnapshot('h446',h446Lessons,unresolvedH446Issues,'Extracted from live lesson HTML; taught-sequence references need teacher review');
 
 const ks3Lessons = {};
 const ks3Issues = [];

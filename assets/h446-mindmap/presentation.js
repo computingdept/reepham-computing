@@ -297,6 +297,30 @@ function back(){
  if(slides[index].type==="model"&&shownSteps>0){shownSteps--;render();return;}
  if(index>0){index--;shownSteps=slides[index].type==="model"?slides[index].steps.length:0;answerVisible=slides[index].type==="board"||slides[index].type==="exit";render();}
 }
+/* The two guided mind-map lessons share the published H446 Do Now Q1 bank.
+   Only the first question and its answer change; Q2-Q4 and slides stay as authored. */
+function applyPublishedH446MindMapQ1(){
+ const id=String(lesson).padStart(3,"0");
+ fetch("../../../data/do-now/q1-published/h446.json",{cache:"force-cache"})
+  .then(response=>{
+   if(!response.ok)throw Error("Published H446 Q1 bank unavailable");
+   return response.json();
+  }).then(bank=>{
+   const entry=bank.status==="published"&&bank.course==="h446"?bank.lessons?.[id]:null;
+   const predecessor="L"+String(lesson-1).padStart(3,"0");
+   if(!entry||entry.previousTaughtLesson!==predecessor
+      ||!entry.sourceRefs?.includes(predecessor)
+      ||typeof entry.statement!=="string"||typeof entry.correct!=="boolean"
+      ||!entry.explanation||(!entry.correct&&!entry.correction))return;
+   const first=(lesson===36?D36:D37)[0];
+   first.label="Q1 · TRUE / FALSE · LAST LESSON · "+predecessor;
+   first.text="True or false? "+entry.statement;
+   first.answer=(entry.correct?"TRUE. ":"FALSE. ")
+     +(entry.correct?"Explanation: "+entry.explanation:"Correction: "+entry.correction);
+   if(index<=1)render();
+  }).catch(error=>console.warn("H446 mind-map Q1 kept authored fallback:",error));
+}
+
 function start(){
  $("#app").innerHTML='<header class="top"><div class="top-left"><a class="home" href="../../../h446-hub.html?year=12#lessons" aria-label="Back to Year 12 hub">⌂ Home</a><span class="lesson-tag" id="lesson-number"></span><div><div class="top-title" id="top-title"></div><div class="top-note">Teacher-led revision · One growing A3 sheet</div></div></div><div class="top-right"><button type="button" id="print" title="Print a blank A3 outline">Print blank A3</button><button type="button" id="fullscreen">Full screen ⛶</button></div></header><main class="scene-shell" id="main"><div class="scene-head"><div class="tags"><span class="tag tag-phase" id="phase-tag"></span><span class="tag tag-routine" id="routine-tag"></span><span class="tag tag-response" id="response-tag"></span></div><span class="time" id="time"></span></div><h1 id="slide-title"></h1><p class="subtitle" id="subtitle"></p><section class="scene-body" id="stage" aria-live="polite"></section></main><footer class="footer"><span class="progress" id="progress" aria-hidden="true"></span><div class="count" id="count"></div><div class="controls"><button type="button" id="back">← Back</button><button type="button" id="next" class="primary">Next →</button></div></footer>';
  $("#print").addEventListener("click",()=>{document.body.classList.remove("print-complete");window.print();});
@@ -308,6 +332,7 @@ function start(){
  app.addEventListener("touchend",e=>{const dx=e.changedTouches[0].screenX-x,dy=e.changedTouches[0].screenY-y;if(Math.abs(dx)>85&&Math.abs(dy)<70){if(dx<0)next();else back();}},{passive:true});
  document.body.insertAdjacentHTML("beforeend",printSheet());
  render();
+ applyPublishedH446MindMapQ1();
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
 })();

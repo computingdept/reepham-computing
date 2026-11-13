@@ -53,46 +53,43 @@ core rules are dependency-free so other Synergy projects can reuse them.
 
 ## Migration: do not change the live rendering yet
 
-### Q1 True/False drafting underway
+### Q1 True/False central publication
 
-The Q1-only drafts are in `data/do-now/q1-drafts/`: 25 J277
-lessons (001–025), all 300 current H446 lesson pages (001–160 and 181–320),
-and the three canonical KS3 Year 7 pilot lessons. The H446 draft has 151 true
-and 149 false statements; each entry records the immediately preceding
-numbered lesson as the retrieval source. Lessons 001 and 181 are explicitly
-labelled course/year-entry diagnostics. These mappings still require teacher
-confirmation against the actual taught order. These are **unapproved Q1-only drafts**, intentionally
-kept apart from `data/do-now/banks/` (which accepts complete, reviewed four-question
-lessons). Q2–Q4 and live lesson pages remain unchanged.
+Q1 drafts remain in `data/do-now/q1-drafts/` for teacher review. The live
+classroom Q1 banks are `data/do-now/q1-published/j277.json` and
+`data/do-now/q1-published/h446.json`. The H446 bank covers all 300 current
+lesson pages (001–160 and 181–320): 151 True and 149 False statements.
+Every non-entry H446 Q1 cites the immediately preceding taught lesson number.
+Lessons 001 and 181 are explicitly identified as course/year-entry diagnostics.
+Teacher checks against the actual taught order remain important. Q1-only draft
+banks remain separate from `data/do-now/banks/` (which accepts reviewed full
+four-question lessons). Q2–Q4 and authored lesson HTML remain unchanged.
 
 Run `node scripts/do-now/validate-q1-drafts.cjs` to check the Q1 statements,
 Boolean keys, corrections, source references and True/False distribution against
 the preserved question/answer snapshots. This validates structure and provenance,
-not educational accuracy or readiness for pupil delivery. A teacher needs to
-review the precise statement, historical teaching order and correct answer before
-its lesson can be migrated. The Q1 rewrites are *not* part of the live page or
-existing Catch Up bank yet. H446 and KS3 lesson-to-source mappings are explicitly
-flagged as provisional: the legacy snapshots have no verified taught-sequence
-references, so a numbered predecessor must not be assumed to prove prior teaching.
+not educational accuracy or readiness for pupil delivery. Teacher QA of precise wording, actual teaching order and answers continues.
+J277 and H446 published Q1 entries now feed classroom Do Now via the shared
+renderer. Catch Up and Print have not yet been migrated; keep them unchanged
+pending a coordinated follow-up. KS3 sequence mappings remain provisional.
 
 1. `node scripts/do-now/collect-legacy.cjs` creates reproducible **unpublished**
    source snapshots in `data/do-now/migration/`, preserving the old prompts,
    answers and source identifiers for review. The script never writes lesson
    HTML or changes the published J277 bank.
-2. J277 already has 164 central Do Nows. Rewrite Q1 in a staged, reviewed bank;
-   keep its short Q2 MCQs and original Q3/Q4. Sync the existing Catch Up bank.
+2. J277 has 164 centrally published Q1 statements. Keep Q2–Q4 unchanged;
+   align the existing Catch Up bank during a later coordinated update.
 3. H446 has 300 lesson index files. Lessons 036 and 037 use a redirected
    mind-map presentation; their original Do Now questions have been captured
-   from `assets/h446-mindmap/presentation.js`. The 300-entry Q1 draft is now
-   centralised for teacher QA. Do not publish to classroom/Catch Up/Print until
-   its preceding-lesson references and content have been reviewed.
+   from `assets/h446-mindmap/presentation.js`. The 300-entry Q1 bank is centrally
+   published for classroom Do Now only. Catch Up and Print remain on their
+   existing material until their separate consistency checks are complete.
 4. KS3 has three canonical Year 7 pilots at this point. Follow the approved
    KS3 authoring rulebook, including a first-lesson diagnostic exception, when
    creating further Year 7–9 material. Do not promote old preview pages.
-5. Only **after** the reviewed banks pass validation, adapt the existing shared
-   classroom engine once; retain the coloured four-card display, teacher answer
-   reveals, phone swipes, and print/catch-up routes. Deploy bank and renderer in
-   one coordinated change.
+5. The shared classroom engine reads published Q1 centrally while retaining
+   four question cards, teacher answer reveals and phone swipes. Do not migrate
+   other phases, Catch Up or Print without their own regression checks.
 
 ## Publication checks
 

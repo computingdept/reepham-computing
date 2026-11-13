@@ -2066,6 +2066,74 @@ if(document.getElementById('exit')&&!document.getElementById('exit-answer-rollou
   document.head.appendChild(link);
 }
 prepareVerifiedExitTicket();
+/* H446 classroom Q1: one published question per lesson, retrieved from the
+   immediately preceding taught lesson (course/year entries are diagnostic).
+   The four-card layout, answer-stage order and Q2-Q4 stay untouched. */
+function applyPublishedH446Q1(){
+  const match=location.pathname.match(/\/lessons\/h446\/lesson-(\d{3})(?:\/|\.html|$)/i);
+  if(!match)return;
+  const id=match[1],number=Number(id);
+  const section=document.querySelector('#do-now');
+  const first=section?.querySelector('.donow-questions .donow-question');
+  const reviewStage=section?.querySelectorAll('.donow-stage')[1];
+  const review=reviewStage?.querySelector('.donow-review-question');
+  const answerPanel=reviewStage?.querySelector('.donow-review-answer');
+  const prompt=first?.querySelector('p');
+  const answerPrompt=review?.querySelector('.review-question')||review?.querySelector('p');
+  if(!prompt||!answerPrompt||!answerPanel)return;
+  fetch('../../../data/do-now/q1-published/h446.json',{cache:'force-cache'})
+    .then(response=>{
+      if(!response.ok)throw Error('Published H446 Q1 bank unavailable');
+      return response.json();
+    }).then(bank=>{
+      if(bank.status!=='published'||bank.course!=='h446')return;
+      const entry=bank.lessons?.[id];
+      if(!entry||typeof entry.statement!=='string'||typeof entry.correct!=='boolean'
+        ||!entry.explanation||(!entry.correct&&!entry.correction))return;
+      const diagnostic=number===1||number===181;
+      const predecessor='L'+String(number-1).padStart(3,'0');
+      if(diagnostic!==Boolean(entry.diagnostic))return;
+      if(!diagnostic&&(entry.previousTaughtLesson!==predecessor
+        ||!entry.sourceRefs?.includes(predecessor)))return;
+      const question='True or false? '+entry.statement;
+      const cardHeading=first.querySelector(':scope > strong');
+      [...first.children].forEach(node=>{if(node!==cardHeading&&node!==prompt)node.remove();});
+      prompt.textContent=question;
+      answerPrompt.textContent=question;
+      const reference=diagnostic?(number===1?'PRIOR · GCSE':'PRIOR · YEAR 12')
+        :'TAUGHT · '+predecessor;
+      for(const [heading,title] of [
+        [cardHeading,'1 · TRUE / FALSE · '+(diagnostic?'DIAGNOSTIC':'LAST LESSON')],
+        [review.querySelector('.review-number'),'QUESTION 1 OF 4 · TRUE / FALSE']
+      ]){
+        if(!heading)continue;
+        heading.classList.add('h446-origin-heading');
+        heading.textContent=title;
+        const origin=document.createElement('span');
+        origin.className='h446-retrieval-origin';
+        origin.textContent=reference;
+        origin.title=diagnostic?'Prior-stage diagnostic':'Knowledge taught in '+predecessor;
+        heading.append(origin);
+      }
+      const label=answerPanel.querySelector('.review-label');
+      const verdict=document.createElement('p');
+      verdict.className='review-answer';
+      verdict.textContent=entry.correct?'TRUE':'FALSE';
+      const explanation=document.createElement('p');
+      explanation.className='review-explain';
+      explanation.textContent=(entry.correct?'Explanation: ':'Correction: ')
+        +(entry.correct?entry.explanation:entry.correction);
+      const parts=[verdict,explanation];
+      if(!entry.correct&&entry.explanation!==entry.correction){
+        const detail=document.createElement('p');
+        detail.className='review-explain';
+        detail.textContent='Explanation: '+entry.explanation;
+        parts.push(detail);
+      }
+      answerPanel.replaceChildren(...(label?[label]:[]),...parts);
+    }).catch(error=>console.warn('H446 Q1 kept authored fallback:',error));
+}
+
 /* Single published J277 Q1 source. Only Q1 is replaced; Q2–Q4, lesson
    navigation and H446 are untouched. If the bank cannot load, the authored
    lesson remains usable rather than displaying an invented answer. */
@@ -2112,6 +2180,7 @@ function applyPublishedJ277Q1(){
 prepareJ277DoNowSourceLabels();
 applyPublishedJ277Q1();
 prepareH446DoNowSourceLabels();
+applyPublishedH446Q1();
 prepareMobileSwipeNavigation();
 /* Responsive binary place-value scaffold, generated from the SVG's actual
    eight column labels and eight bits: no question or answer data is rewritten. */
