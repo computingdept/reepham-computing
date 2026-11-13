@@ -6,6 +6,7 @@ on:
       - 'data/do-now/**'
       - 'scripts/do-now/**'
       - 'tests/do-now-standard.test.cjs'
+      - 'tests/do-now-q1-drafts.test.cjs'
       - 'docs/do-now-central-standard.md'
       - '.github/workflows/shared-donow-standard.yml'
   push:
@@ -14,6 +15,7 @@ on:
       - 'data/do-now/**'
       - 'scripts/do-now/**'
       - 'tests/do-now-standard.test.cjs'
+      - 'tests/do-now-q1-drafts.test.cjs'
       - '.github/workflows/shared-donow-standard.yml'
   workflow_dispatch:
 
@@ -32,8 +34,11 @@ jobs:
         run: |
           node --check scripts/do-now/collect-legacy.cjs
           node --check scripts/do-now/validate-standard.cjs
-          node --test tests/do-now-standard.test.cjs
+          node --check scripts/do-now/validate-q1-drafts.cjs
+          node --test tests/do-now-standard.test.cjs tests/do-now-q1-drafts.test.cjs
       - name: Check all three pilot banks against shared contract
         run: node scripts/do-now/validate-standard.cjs
+      - name: Validate staged Q1 True or False rewrites against legacy sources
+        run: node scripts/do-now/validate-q1-drafts.cjs
       - name: Verify legacy extraction remains reproducible
         run: node scripts/do-now/collect-legacy.cjs --check
