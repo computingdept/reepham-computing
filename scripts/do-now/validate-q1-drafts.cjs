@@ -27,7 +27,7 @@ function validateQ1DraftBank(bank, source) {
     ids.add(q.id);
     if (!Array.isArray(q.sourceRefs) || !q.sourceRefs.length || !q.sourceRefs.every(nonBlank))
       throw new Error(`${loc}: requires sourceRefs for taught content`);
-    if (q.diagnostic && !(lessonId === '001' || (bank.course === 'h446' && lessonId === '181')))
+    if (q.diagnostic && !(lessonId.endsWith('001') || (bank.course === 'h446' && lessonId === '181')))
       throw new Error(`${loc}: only a course/year entry lesson can be diagnostic`);
     if (bank.course === 'h446') {
       const isEntry = lessonId === '001' || lessonId === '181';
