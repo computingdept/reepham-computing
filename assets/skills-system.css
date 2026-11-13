@@ -1,0 +1,181 @@
+/* One visual system for Skills at KS3, GCSE and A Level.
+   These selectors are deliberately scoped: lesson slides and revision pages
+   must not inherit exercise-card or activity spacing. */
+.rhsc-skills-system {
+  --skills-ink:#273b31;
+  --skills-green:#285348;
+  --skills-muted:#60746a;
+  --skills-line:#d5dfd8;
+  --skills-pale:#eaf2ed;
+  background:#fff;
+  color:var(--skills-ink);
+}
+.rhsc-skills-system [hidden]{display:none!important}
+.rhsc-skills-system :is(a,button,input,select,textarea,summary):focus-visible {
+  outline:3px solid #c18b22;
+  outline-offset:3px;
+}
+.rhsc-skills-system .wrap,
+body.paper2-skills.rhsc-skills-system .wrap {
+  width:100%;
+  max-width:1380px;
+  padding:12px 18px 30px;
+  margin:0 auto;
+}
+.rhsc-skills-hub .hero {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin:0 0 15px;
+}
+.rhsc-skills-hub .hero .kicker {
+  display:block;
+  margin:0;
+  color:var(--skills-green);
+  font-size:11px;
+  font-weight:850;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+}
+.rhsc-skills-hub .hero h1 {
+  margin:3px 0 0;
+  color:var(--skills-ink);
+  font-size:clamp(22px,2.6vw,28px);
+  line-height:1.2;
+  letter-spacing:-.45px;
+}
+.rhsc-skills-hub .hero-count[hidden]{display:none!important}
+.rhsc-skills-system .paper-switch {
+  display:flex;
+  align-items:center;
+  flex-shrink:0;
+  gap:3px;
+  margin:0;
+  padding:3px;
+  border:1px solid var(--skills-line);
+  border-radius:9px;
+  background:var(--skills-pale);
+  width:max-content;
+}
+.rhsc-skills-system .paper-switch :is(a,span) {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:35px;
+  padding:7px 13px;
+  border-radius:6px;
+  color:#51675b;
+  font-size:12px;
+  line-height:1.2;
+  font-weight:800;
+  text-decoration:none;
+}
+.rhsc-skills-system .paper-switch [aria-current="page"] {
+  background:#fff;
+  color:var(--skills-green);
+  box-shadow:0 1px 3px #0001;
+}
+.rhsc-skills-system .paper-switch a:hover {background:#f7faf8;color:var(--skills-green)}
+.rhsc-skills-hub .skills-group,
+.rhsc-skills-hub .groups {margin-top:13px}
+.rhsc-skills-hub #home .skills-group {margin-top:13px}
+.rhsc-skills-hub .skills-group h2 {
+  font-size:17px;
+  margin:0 0 3px;
+  color:var(--skills-ink);
+}
+.rhsc-skills-hub .section-caption {font-size:12px;margin:0 0 10px;color:var(--skills-muted)}
+.rhsc-skills-hub .tiles {gap:10px;grid-template-columns:repeat(6,minmax(0,1fr))}
+.rhsc-skills-hub .tile,
+.rhsc-skills-hub .theory .tile {
+  min-width:0;
+  min-height:157px;
+  padding:0;
+  border:1px solid var(--skills-line);
+  border-radius:10px;
+  background:#fff;
+  box-shadow:none;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  justify-content:space-between;
+  gap:0;
+  text-align:center;
+}
+.rhsc-skills-hub .tile:hover {transform:none;box-shadow:none;border-color:#8aaf99;background:#fbfdfb}
+.rhsc-skills-hub .tile-main {flex:1;min-height:104px;padding:13px 8px 9px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px}
+.rhsc-skills-hub .tile-title {font-size:13px;font-weight:850;line-height:1.25;color:var(--skills-ink)}
+.rhsc-skills-hub .tile-sub {font-size:11px;line-height:1.3;color:var(--skills-muted);min-height:0}
+.rhsc-skills-hub .tile-spec {font-size:10px;line-height:1.25;font-weight:800;color:#607568}
+.rhsc-skills-hub .tile-foot {margin:3px 0 0;font-size:10px;color:#617568;font-weight:750}
+.rhsc-skills-hub .tile-action {font-size:12px;font-weight:800;color:var(--skills-green);text-decoration:none}
+.rhsc-skills-hub .tile-actions {display:flex;align-items:stretch;margin-top:auto;width:100%;min-height:45px;border-top:1px solid var(--skills-line)}
+.rhsc-skills-hub .tile-actions > :is(a,button) {
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  align-items:center;
+  justify-content:center;
+  flex:1;
+  min-width:0;
+  min-height:45px;
+  margin:0;
+  padding:7px 5px;
+  background:#fff;
+  border:0;
+  border-radius:0;
+  color:var(--skills-green);
+  text-decoration:none;
+  font-size:12px;
+  font-weight:800;
+}
+.rhsc-skills-hub .tile-actions > :is(a,button)+:is(a,button) {border-left:1px solid var(--skills-line)}
+.rhsc-skills-hub .tile-actions > :is(a,button):hover {background:#f0f6f2}
+.rhsc-skills-hub .group {border:1px solid var(--skills-line);border-radius:10px;box-shadow:none}
+.rhsc-skills-hub .group[open] {border-color:#b7cebf}
+.rhsc-skills-hub .group-summary {padding:10px 14px;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer}
+.rhsc-skills-hub .group-summary::-webkit-details-marker{display:none}
+.rhsc-skills-hub .group-title,
+.rhsc-skills-hub .skills-group h2.group-title {font-size:17px;line-height:1.25;color:var(--skills-ink);margin:0;font-weight:850}
+.rhsc-skills-hub .group-title small {display:block;color:var(--skills-muted);font-size:11px;line-height:1.3;margin-top:2px;font-weight:500;letter-spacing:0}
+.rhsc-skills-hub .group-content {padding:12px;border-top:1px solid #eef1ed}
+.rhsc-skills-hub .group-meta {font-size:11px;display:flex;align-items:center;gap:9px;color:#6d8273;font-weight:750;white-space:nowrap}
+.rhsc-skills-hub .group-chevron{width:9px;height:9px;transform:rotate(45deg);border-right:2px solid #7c9a88;border-bottom:2px solid #7c9a88;transition:transform .16s}
+.rhsc-skills-hub .group[open] .group-chevron{transform:rotate(225deg)}
+.rhsc-skills-hub .skills-group-application {padding:0;border:0}
+.rhsc-skills-hub #home .skills-group-application {padding-top:0;border-top:0}
+.rhsc-skills-system.rhsc-skills-activity .practice-toolbar {margin-bottom:8px}
+.rhsc-skills-activity .activity-links {display:flex;align-items:center;gap:11px;flex-shrink:0;white-space:nowrap}
+.rhsc-skills-activity .activity-links :is(.back,.print-skill) {color:var(--skills-green);font-size:12px;font-weight:800;text-decoration:none;min-height:38px;display:inline-flex;align-items:center}
+.rhsc-skills-activity .activity-links .print-skill {border-left:1px solid var(--skills-line);padding-left:11px}
+.rhsc-skills-activity .activity-links :is(.back,.print-skill):hover {text-decoration:underline}
+.rhsc-skills-system.rhsc-skills-activity .work-board {border-color:var(--skills-line)}
+.rhsc-skills-system.rhsc-skills-activity .levels {background:var(--skills-pale)}
+.rhsc-skills-system.rhsc-skills-activity .level.active {color:var(--skills-green)}
+@media(max-width:1100px){.rhsc-skills-hub .tiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:700px){
+  .rhsc-skills-system .wrap,body.paper2-skills.rhsc-skills-system .wrap{padding:10px 12px 26px}
+  .rhsc-skills-hub .hero{gap:8px;margin-bottom:10px}
+  .rhsc-skills-hub .hero h1{font-size:23px}
+  .rhsc-skills-system .paper-switch :is(a,span){padding:6px 8px;font-size:11px;min-height:33px}
+  .rhsc-skills-hub .tiles{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .rhsc-skills-hub .group-summary{padding:10px 12px}
+  .rhsc-skills-hub .group-content{padding:10px}
+  .rhsc-skills-hub .tile,.rhsc-skills-hub .theory .tile{min-height:149px}
+  .rhsc-skills-activity .activity-links{grid-row:1;grid-column:1 / -1}
+  .rhsc-skills-activity .practice-name{grid-row:2;grid-column:1}
+  .rhsc-skills-activity .levels{grid-row:2;grid-column:2}
+}
+@media(max-width:490px){
+  .rhsc-skills-hub .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rhsc-skills-hub .tile-title{font-size:12px}
+  .rhsc-skills-hub .tile-sub{font-size:10.5px}
+  .rhsc-skills-hub .hero .kicker{font-size:10px}
+  .rhsc-skills-hub .hero h1{font-size:21px}
+  .rhsc-skills-activity .activity-links{grid-column:1}
+  .rhsc-skills-activity .practice-name{grid-row:2}
+  .rhsc-skills-activity .levels{grid-row:3;grid-column:1}
+}
+@media(prefers-reduced-motion:reduce){.rhsc-skills-system *{scroll-behavior:auto!important;transition:none!important}}

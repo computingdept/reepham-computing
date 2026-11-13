@@ -135,8 +135,9 @@ body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-wi
 <link rel="stylesheet" href="/assets/paper1-exercise-theme.css?v=20261111-impact1">
 <link rel="stylesheet" href="/assets/j277-network-skills.css?v=20261112-network1">
 <link rel="stylesheet" href="/assets/binary-shift-workspace.css?v=20261112-unified1">
+<link rel="stylesheet" href="/assets/skills-system.css?v=20261113-shared1">
 </head>
-<body class="course-hub course-inline-nav synergy-unified-hub">
+<body class="course-hub course-inline-nav synergy-unified-hub rhsc-skills-system rhsc-skills-hub">
 <header class="topbar synergy-corners" aria-label="GCSE Computing navigation">
   <a class="rhsc-site-nav-button rhsc-site-nav-home" href="/" aria-label="Learning Hub home" title="Learning Hub home"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9M9 21v-7h6v7"/></svg></a>
   <span class="synergy-corner-title">GCSE Computer Science</span>
@@ -162,26 +163,42 @@ body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-wi
       <div>
         <div class="kicker">OCR J277 · Paper 1</div>
         <h1>Skills practice</h1>
-        <p>Choose an activity to practise a computing process, build a model or solve a problem.</p>
-        <p><a href="/exercise/paper2/">New: Paper 2 Programming Skills →</a></p>
       </div>
-      <div class="hero-count"><strong id="done-counter">0</strong><span>skills solved on this device</span></div>
+      <nav class="paper-switch" aria-label="Switch skills paper">
+        <span aria-current="page">Paper 1</span>
+        <a href="/exercise/paper2/">Paper 2</a>
+      </nav>
+      <div class="hero-count" hidden><strong id="done-counter">0</strong><span>skills solved on this device</span></div>
     </div>
     <section class="skills-group" aria-labelledby="skills-data-heading">
-      <h2 id="skills-data-heading">Data Representation</h2>
-      <p class="section-caption">Conversions · binary operations · file sizes · digital images</p>
-      <div class="tiles" id="data-tiles"></div>
+      <details class="group" open>
+        <summary class="group-summary">
+          <h2 class="group-title" id="skills-data-heading">Data Representation<small>Conversions · binary operations · file sizes · digital images</small></h2>
+          <span class="group-meta">10 skills <span class="group-chevron" aria-hidden="true"></span></span>
+        </summary>
+        <div class="group-content"><div class="tiles" id="data-tiles"></div></div>
+      </details>
     </section>
     <section class="skills-group" aria-labelledby="skills-network-heading">
-      <h2 id="skills-network-heading">Networks</h2>
-      <p class="section-caption">Addresses · Devices &amp; firewalls · Topologies · DNS · Protocols</p>
-      <div class="tiles theory" id="network-tiles"></div>
+      <details class="group">
+        <summary class="group-summary">
+          <h2 class="group-title" id="skills-network-heading">Networks<small>Addresses · Devices &amp; firewalls · Topologies · DNS · Protocols</small></h2>
+          <span class="group-meta">5 skills <span class="group-chevron" aria-hidden="true"></span></span>
+        </summary>
+        <div class="group-content"><div class="tiles theory" id="network-tiles"></div></div>
+      </details>
     </section>
     <section class="skills-group skills-group-application" aria-labelledby="skills-apply-heading">
-      <h2 id="skills-apply-heading">Applying Computer Science</h2>
-      <p class="section-caption">Use computing knowledge to explain impacts, make decisions and solve problems.</p>
-      <div class="tiles theory" id="application-tiles"></div>
-      <p class="skills-preview">Future application activity: Cybersecurity Investigator</p>
+      <details class="group">
+        <summary class="group-summary">
+          <h2 class="group-title" id="skills-apply-heading">Applying Computer Science<small>Explain impacts, make decisions and solve problems</small></h2>
+          <span class="group-meta">1 skill <span class="group-chevron" aria-hidden="true"></span></span>
+        </summary>
+        <div class="group-content">
+          <div class="tiles theory" id="application-tiles"></div>
+          <p class="skills-preview">Future application activity: Cybersecurity Investigator</p>
+        </div>
+      </details>
     </section>
   </section>
   <section id="practice" class="hidden screen" aria-live="polite">

@@ -1,7 +1,8 @@
 (function () {
   'use strict';
   const variables = window.J277Paper2Variables;
-  if (!variables) return;
+  const core = window.RHSCSkills;
+  if (!core) return;
   const $ = id => document.getElementById(id);
   const STORAGE_KEY = 'rhs-j277-paper2-progress-v1';
   const LEVELS = ['easy', 'medium', 'hard'];
@@ -71,13 +72,10 @@
   };
 
   function storage() {
-    try {
-      const value = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-      return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
-    } catch (_) { return {}; }
+    return core.readProgress(STORAGE_KEY);
   }
   function save(value) {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(value)); } catch (_) { /* Private browsing may block storage. */ }
+    core.writeProgress(STORAGE_KEY, value);
   }
   function readProgress(skill, level) {
     const p = storage();
@@ -116,16 +114,30 @@
     const sub = document.createElement('div');
     sub.className = 'tile-sub'; sub.textContent = subtitle;
     main.append(label, sub);
+    if (ready) {
+      const spec = document.createElement('div');
+      spec.className = 'tile-spec'; spec.textContent = '2.2.1';
+      main.append(spec);
+    }
     card.append(main);
     if (ready) {
       const foot = document.createElement('div');
       foot.id = 'variables-progress'; foot.className = 'tile-foot';
       main.append(foot);
-      const play = document.createElement('button');
-      play.type = 'button'; play.className = 'tile-action'; play.textContent = 'Practise';
+      const actions = document.createElement('div');
+      actions.className = 'tile-actions';
+      const play = document.createElement('a');
+      play.className = 'tile-action';
+      play.innerHTML = '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 5 11 7-11 7z"/></svg><span>Practise</span>';
+      play.href = '/exercise/paper2/variables/';
       play.setAttribute('aria-label', 'Practise Variables and Constants');
-      play.addEventListener('click', openSkill);
-      card.append(play);
+      const print = document.createElement('a');
+      print.className = 'tile-action';
+      print.innerHTML = '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="6" y="15" width="12" height="6" rx="1"/><path d="M6 17H3v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6h-3M17 12h.01"/></svg><span>Print</span>';
+      print.href = '/exercise/paper2/variables/print/';
+      print.setAttribute('aria-label', 'Print Variables and Constants worksheet');
+      actions.append(play, print);
+      card.append(actions);
     } else {
       const status = document.createElement('span');
       status.className = 'planned-note'; status.textContent = 'Planned';
@@ -165,21 +177,12 @@
     updateTileProgress();
   }
 
-  function openSkill() {
-    $('home').hidden = true;
-    $('practice').hidden = false;
-    chooseLevel('easy');
-    window.scrollTo(0, 0);
-  }
   function returnHome() {
-    $('practice').hidden = true;
-    $('home').hidden = false;
-    $('question-card').classList.remove('finished');
-    updateTileProgress();
-    window.scrollTo(0, 0);
+    window.location.assign('/exercise/paper2/');
   }
   function chooseLevel(level) {
-    state.level = level;
+    state.level = core.validLevel(level);
+    core.updateLevelUrl(state.level);
     state.index = 0;
     state.seed = Math.floor(Math.random() * 2147483647) + 1;
     state.score = 0;
@@ -189,6 +192,8 @@
       button.setAttribute('aria-pressed', String(chosen));
     });
     $('level-description').textContent = LEVEL_TEXT[level];
+    const printLink = $('print-skill');
+    if (printLink) printLink.href = 'print/?level=' + encodeURIComponent(state.level);
     renderQuestion();
   }
 
@@ -408,23 +413,30 @@
     results.append(kicker, score, heading, text, actions); work.append(results);
   }
 
-  $('back').addEventListener('click', returnHome);
-  document.querySelectorAll('.level').forEach(button => button.addEventListener('click', () => chooseLevel(button.dataset.level)));
-  $('check').addEventListener('click', check);
-  $('clear').addEventListener('click', clearAnswer);
-  $('show-answer').addEventListener('click', showModel);
-  $('next').addEventListener('click', () => {
-    if (!state.locked) return;
-    if (state.index === 9) finish();
-    else { state.index += 1; renderQuestion(); window.scrollTo(0, 0); }
-  });
-  $('hint').addEventListener('click', () => {
-    const panel = $('hint-panel');
-    panel.hidden = !panel.hidden;
-    panel.textContent = state.question.hint;
-    $('hint').textContent = panel.hidden ? 'Show hint' : 'Hide hint';
-  });
-
-  renderGroups();
-  if (new URLSearchParams(window.location.search).get('skill') === 'variables') openSkill();
+  if ($('groups')) {
+    renderGroups();
+    // Preserve lesson and worksheet links made before each skill got its own HTML page.
+    if (new URLSearchParams(window.location.search).get('skill') === 'variables') {
+      window.location.replace('/exercise/paper2/variables/?level=' + core.levelFromUrl());
+    }
+  }
+  if ($('practice')) {
+    if (!variables) throw new Error('Variables question engine did not load.');
+    document.querySelectorAll('.level').forEach(button => button.addEventListener('click', () => chooseLevel(button.dataset.level)));
+    $('check').addEventListener('click', check);
+    $('clear').addEventListener('click', clearAnswer);
+    $('show-answer').addEventListener('click', showModel);
+    $('next').addEventListener('click', () => {
+      if (!state.locked) return;
+      if (state.index === 9) finish();
+      else { state.index += 1; renderQuestion(); window.scrollTo(0, 0); }
+    });
+    $('hint').addEventListener('click', () => {
+      const panel = $('hint-panel');
+      panel.hidden = !panel.hidden;
+      panel.textContent = state.question.hint;
+      $('hint').textContent = panel.hidden ? 'Show hint' : 'Hide hint';
+    });
+    chooseLevel(core.levelFromUrl());
+  }
 })();
