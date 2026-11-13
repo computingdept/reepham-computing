@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#ffffff">
-<meta name="description" content="OCR H446 A Level Computer Science interactive skills: binary representation, arithmetic, floating point and Karnaugh maps.">
+<meta name="description" content="OCR H446 A Level Computer Science interactive skills: binary representation, arithmetic, floating point, Karnaugh maps and quicksort.">
 <title>H446 Skills practice · Synergy Assist</title>
 <link rel="stylesheet" href="/assets/synergy-tokens.css?v=20261101-brand1">
 <link rel="stylesheet" href="/assets/site-nav.css?v=20261101-icon-only1">
@@ -67,6 +67,7 @@ body.course-hub .tiles>.rhsc-resource-card--skill{min-height:175px}
 <article class="tile rhsc-resource-card rhsc-resource-card--skill"><a class="tile-main" href="/exercise/h446/binary-skills/?skill=fixed" aria-label="Practise Fixed-point numbers"><span class="tile-title">Fixed-point numbers</span><span class="tile-sub">Signed fractions · Q4.4</span><span class="tile-ref">1.4.1 support</span><span class="tile-foot" id="progress-fixed">0 correct</span></a><div class="tile-actions"><a class="tile-action" href="/exercise/h446/binary-skills/?skill=fixed"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5.5 19 12 8 18.5Z"/></svg><span>Practise</span></a></div></article>
 <article class="tile rhsc-resource-card rhsc-resource-card--skill"><a class="tile-main" href="/exercise/h446/floating-point/" aria-label="Practise Floating-point arithmetic"><span class="tile-title">Floating-point arithmetic</span><span class="tile-sub">Align · Add · Normalise</span><span class="tile-ref">1.4.1</span><span class="tile-foot" id="progress-floating">0 correct</span></a><div class="tile-actions"><a class="tile-action" href="/exercise/h446/floating-point/"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5.5 19 12 8 18.5Z"/></svg><span>Practise</span></a></div></article></div></section>
 <section class="skill-group" aria-labelledby="logic-title"><h2 id="logic-title">Boolean Algebra</h2><p class="section-caption">Simplification using Karnaugh maps</p><div class="tiles"><article class="tile rhsc-resource-card rhsc-resource-card--skill"><a class="tile-main" href="/exercise/h446/" aria-label="Practise Karnaugh maps"><span class="tile-title">Karnaugh maps</span><span class="tile-sub">Populate · Group · Simplify</span><span class="tile-ref">1.4.3</span><span class="tile-foot" id="progress-kmap">0 correct</span></a><div class="tile-actions"><a class="tile-action" href="/exercise/h446/"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5.5 19 12 8 18.5Z"/></svg><span>Practise</span></a></div></article></div></section>
+<section class="skill-group" aria-labelledby="algorithms-title"><h2 id="algorithms-title">Algorithms</h2><p class="section-caption">Quicksort · pivot selection · partitioning · recursion</p><div class="tiles"><article class="tile rhsc-resource-card rhsc-resource-card--skill"><a class="tile-main" href="/revision/h446/section-2-3/quicksort-lab.html" aria-label="Practise Quicksort"><span class="tile-title">Quicksort</span><span class="tile-sub">Easy · Medium · Hard</span><span class="tile-ref">2.3.1(f)</span><span class="tile-foot" id="progress-quicksort">0 correct</span></a><div class="tile-actions"><a class="tile-action" href="/revision/h446/section-2-3/quicksort-lab.html"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5.5 19 12 8 18.5Z"/></svg><span>Practise</span></a></div></article></div></section>
 </main>
 <script>
 (function(){
@@ -82,6 +83,19 @@ body.course-hub .tiles>.rhsc-resource-card--skill{min-height:175px}
     var n=0;try{n=Number(localStorage.getItem(item.store))||0;}catch(e){}
     var el=document.getElementById('progress-'+item.key);if(el)el.textContent=n+' correct';total+=n;
   });
+  var quicksort=0;
+  try{
+    var data=JSON.parse(localStorage.getItem('rhsc-h446-quicksort-skill-lab-v2')||'null');
+    if(data&&data.levels){
+      ['easy','medium','hard'].forEach(function(level){var record=data.levels[level];if(record)quicksort+=Math.max(0,Math.min(5,Number(record.best)||0));});
+    }else{
+      var old=JSON.parse(localStorage.getItem('rhsc-h446-quicksort-skill-lab-v1')||'null');
+      if(old)quicksort=Math.max(0,Math.min(5,Number(old.best)||0));
+    }
+  }catch(e){}
+  var quicksortLabel=document.getElementById('progress-quicksort');
+  if(quicksortLabel)quicksortLabel.textContent=quicksort+' correct';
+  total+=quicksort;
   document.getElementById('done-counter').textContent=total;
 })();
 </script>
