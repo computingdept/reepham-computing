@@ -2066,7 +2066,51 @@ if(document.getElementById('exit')&&!document.getElementById('exit-answer-rollou
   document.head.appendChild(link);
 }
 prepareVerifiedExitTicket();
+/* Single published J277 Q1 source. Only Q1 is replaced; Q2–Q4, lesson
+   navigation and H446 are untouched. If the bank cannot load, the authored
+   lesson remains usable rather than displaying an invented answer. */
+function applyPublishedJ277Q1(){
+  const match=location.pathname.match(/\/lessons\/j277\/lesson-(\d{3})(?:\/|\.html|$)/i);
+  if(!match)return;
+  const first=document.querySelector('#do-now .donow-questions .donow-question');
+  const review=document.querySelectorAll('#do-now .donow-stage')[1];
+  const prompt=first?.querySelector('p');
+  const reviewPrompt=review?.querySelector('.donow-review-question .review-question')
+    ||review?.querySelector('.donow-review-question p');
+  const reviewAnswer=review?.querySelector('.donow-review-answer');
+  if(!prompt||!reviewPrompt||!reviewAnswer)return;
+  fetch('../../../data/do-now/q1-published/j277.json',{cache:'force-cache'})
+    .then(response=>{
+      if(!response.ok)throw Error('Published Q1 bank unavailable');
+      return response.json();
+    }).then(bank=>{
+      if(bank.status!=='published')return;
+      const entry=bank.lessons?.[match[1]];
+      if(!entry||typeof entry.statement!=='string'||typeof entry.correct!=='boolean'
+         ||!entry.explanation||(!entry.correct&&!entry.correction))return;
+      const question='True or false? '+entry.statement;
+      prompt.textContent=question;
+      reviewPrompt.textContent=question;
+      const label=reviewAnswer.querySelector('.review-label');
+      const answer=document.createElement('p');
+      answer.className='review-answer';
+      answer.textContent=entry.correct?'True':'False';
+      const parts=[answer];
+      if(entry.correction){
+        const correction=document.createElement('p');
+        correction.className='j277-q1-correction';
+        correction.textContent='Correction: '+entry.correction;
+        parts.push(correction);
+      }
+      const explanation=document.createElement('p');
+      explanation.className='j277-q1-explanation';
+      explanation.textContent='Explanation: '+entry.explanation;
+      parts.push(explanation);
+      reviewAnswer.replaceChildren(...(label?[label]:[]),...parts);
+    }).catch(error=>console.warn('J277 Q1 unchanged:',error));
+}
 prepareJ277DoNowSourceLabels();
+applyPublishedJ277Q1();
 prepareH446DoNowSourceLabels();
 prepareMobileSwipeNavigation();
 /* Responsive binary place-value scaffold, generated from the SVG's actual
