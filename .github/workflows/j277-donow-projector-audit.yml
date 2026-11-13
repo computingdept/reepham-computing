@@ -12,6 +12,7 @@ on:
       - 'lessons/j277/lesson-001/index.html'
       - 'lessons/j277/lesson-002/index.html'
       - 'qa/master-audit-2026/j277-donow-viewport.cjs'
+      - 'qa/master-audit-2026/j277-donow-mcq-concision.cjs'
       - '.github/workflows/j277-donow-projector-audit.yml'
   push:
     branches: [main]
@@ -22,6 +23,7 @@ on:
       - 'lessons/j277/autumn2-rebuilt.js'
       - 'lessons/j277/donow-bank-20261020.json'
       - 'qa/master-audit-2026/j277-donow-viewport.cjs'
+      - 'qa/master-audit-2026/j277-donow-mcq-concision.cjs'
   workflow_dispatch:
 
 permissions:
@@ -49,6 +51,7 @@ jobs:
           node --check qa/master-audit-2026/j277-donow-viewport.cjs
           node --check lessons/j277/h446-adapter.js
           node --check lessons/j277/autumn2-rebuilt.js
+          node qa/master-audit-2026/j277-donow-mcq-concision.cjs
       - name: Audit all standard J277 Do Nows at projected and phone heights
         env:
           QA_DONOW_SHARDS: '4'
