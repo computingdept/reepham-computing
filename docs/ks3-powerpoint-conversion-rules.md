@@ -22,6 +22,11 @@
 - Keep educational tasks and the required submission platform; the Learning Hub never falsely claims to submit files to Microsoft Teams or Arbor.
 - Use information from previous lessons for Do Now **only if it has actually been taught**. Lesson 001 is an exception: use a clearly labelled *starting point / diagnostic* rather than pretending pupils have previous Year 7 lessons to retrieve.
 - Do Now: four questions together followed by distinct answer screens. Always avoid answer leakage on the question screen.
+- For **new or deliberately migrated** KS3 lessons, prepare questions using the
+  [Synergy Do Now v1 contract](do-now-central-standard.md): Q1 True/False from
+  the previous taught lesson (or explicitly labelled starting diagnostic), Q2
+  MCQ from earlier learning, Q3 written retrieval and Q4 challenge. Existing
+  pilots remain unchanged until the reviewed bank and shared renderer go live.
 - Eight phases in the established order: **Do Now → Objectives → New Learning → I Do → We Do → You Do → Key Vocabulary → Exit Ticket**. Use the shared `assets/h446-lesson/lesson-base.css`, `lesson-classroom.css` and `lesson.js` interface and behaviour. Keep classroom signs, mobile swipes, reveal sequence and left-side teacher navigation.
 - I Do: teacher demonstration in ordered, hidden-until-revealed steps. We Do: guided pupil participation and ordered reveals. You Do: independent work, each substantial task on its own screen. Turn & Talk followed by count-in to silence, before independent work where appropriate.
 - Key Vocabulary: **definition first → reveal term**. Exit: **three True/False questions**, each with a separate answer-and-explanation screen, then thumbs-up / sideways / down reflection. Do not expose answers before the response.

@@ -1,0 +1,39 @@
+name: Shared Do Now authoring contract
+
+on:
+  pull_request:
+    paths:
+      - 'data/do-now/**'
+      - 'scripts/do-now/**'
+      - 'tests/do-now-standard.test.cjs'
+      - 'docs/do-now-central-standard.md'
+      - '.github/workflows/shared-donow-standard.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'data/do-now/**'
+      - 'scripts/do-now/**'
+      - 'tests/do-now-standard.test.cjs'
+      - '.github/workflows/shared-donow-standard.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax and unit tests
+        run: |
+          node --check scripts/do-now/collect-legacy.cjs
+          node --check scripts/do-now/validate-standard.cjs
+          node --test tests/do-now-standard.test.cjs
+      - name: Check all three pilot banks against shared contract
+        run: node scripts/do-now/validate-standard.cjs
+      - name: Verify legacy extraction remains reproducible
+        run: node scripts/do-now/collect-legacy.cjs --check
