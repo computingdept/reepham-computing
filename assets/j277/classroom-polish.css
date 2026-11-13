@@ -376,3 +376,22 @@ body{
     line-height:1.18;
   }
 }
+
+/* J277 DO NOW ONLY — distinguish the four retrieval questions at a glance.
+   Inset outlines leave card dimensions, large text and the 2×2 grid untouched. */
+#do-now .donow-stage:first-child .donow-questions > .donow-question{
+  outline:2px solid var(--j277-donow-outline);
+  outline-offset:-2px;
+}
+#do-now .donow-stage:first-child .donow-questions > .donow-question:nth-child(1){
+  --j277-donow-outline:#347ca8; /* Last lesson: blue */
+}
+#do-now .donow-stage:first-child .donow-questions > .donow-question:nth-child(2){
+  --j277-donow-outline:#2c8b68; /* Earlier learning MCQ: green */
+}
+#do-now .donow-stage:first-child .donow-questions > .donow-question:nth-child(3){
+  --j277-donow-outline:#b97624; /* Earlier learning: amber */
+}
+#do-now .donow-stage:first-child .donow-questions > .donow-question:nth-child(4){
+  --j277-donow-outline:#8662a8; /* Challenge: plum */
+}
