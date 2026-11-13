@@ -19,6 +19,12 @@ main{max-width:1240px;margin:auto;padding:20px 20px 42px}
 h1{font-size:clamp(1.7rem,3vw,2.6rem);margin:0 0 7px;letter-spacing:-.035em;line-height:1.12}
 .intro{margin:0;color:#3d6153;font-size:clamp(.96rem,1.1vw,1.08rem)}
 .pill{border:1px solid #a9cbb5;border-radius:999px;padding:8px 13px;font-weight:780;color:#1b5d43;white-space:nowrap;background:#ecf6ef}
+.difficulty-bar{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin:14px 0 3px}
+.difficulty-bar strong{color:#22513d;margin-right:2px}
+.difficulty-bar button{min-height:42px;border:1px solid #a9cbb5;border-radius:9px;padding:8px 16px;background:#fff;color:#205c43;font-weight:800}
+.difficulty-bar button:hover:not([aria-pressed="true"]){background:#e8f4eb}
+.difficulty-bar button[aria-pressed="true"]{background:#075d41;color:#fff;border-color:#075d41}
+.difficulty-note{margin:3px 0 6px;color:#506b5b;font-size:.9rem}
 .meter{width:100%;height:10px;border:0;border-radius:99px;overflow:hidden;accent-color:#136c4b;margin:14px 0 15px}
 .layout{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(270px,.8fr);gap:16px;align-items:start}
 .card{border:1px solid #cbdcd0;background:#fff;border-radius:16px;box-shadow:0 3px 12px rgba(16,57,40,.055);min-width:0}
@@ -66,13 +72,20 @@ footer{margin:18px 0;color:#4b6b5c;font-size:.86rem;text-align:center}
 </style>
 </head>
 <body>
-<header><a class="back" href="./index.html#2.3">← Algorithms Skills</a><span class="brand">RHS COMPUTING · H446</span></header>
+<header><a class="back" href="/exercise/h446/tools.html">← H446 Skills</a><span class="brand">RHS COMPUTING · H446</span></header>
 <main>
 <div class="topline">
  <div><p class="eyebrow">OCR H446 · 2.3.1(f) · Interactive Skills</p><h1>Quicksort Skills Lab</h1>
  <p class="intro">Choose pivots, partition values and trace recursion. These are practical skills, not a multiple-choice quiz.</p></div>
  <span class="pill" id="mastery">Best: not attempted</span>
 </div>
+<div class="difficulty-bar" role="group" aria-label="Choose difficulty">
+ <strong>Difficulty</strong>
+ <button type="button" data-difficulty="easy" aria-pressed="true">Easy</button>
+ <button type="button" data-difficulty="medium" aria-pressed="false">Medium</button>
+ <button type="button" data-difficulty="hard" aria-pressed="false">Hard</button>
+</div>
+<p class="difficulty-note" id="difficulty-note">Easy · 4–5 numbers. Changing difficulty starts a new set.</p>
 <progress class="meter" id="progress" value="0" max="5" aria-label="Challenges completed"></progress>
 <div class="layout">
  <section class="card work" aria-labelledby="task-title">
@@ -88,7 +101,7 @@ footer{margin:18px 0;color:#4b6b5c;font-size:.86rem;text-align:center}
   <h3>Progress</h3><div id="scoreboard"></div>
   <h3>Working trace</h3><p class="empty" id="trace-empty">Your completed partitions will appear here.</p>
   <ol class="trace" id="trace"></ol>
-  <p class="small">Five challenges · 80% target · best result saved in this browser, not sent to your teacher. A mistake still allows you to continue practising, but loses that challenge's first-try mark.</p>
+  <p class="small">Five challenges per level · 80% target · best result saved separately for Easy, Medium and Hard in this browser, not sent to your teacher. A mistake still allows you to continue practising, but loses that challenge's first-try mark.</p>
  </aside>
 </div>
 <footer>Independent practice · For an OCR question, follow the pivot and partition rule supplied in that question.</footer>
@@ -100,15 +113,56 @@ const NAMES=["Select the first pivot","Partition one list","Trace the recursive 
 const TASKS=[
  ["Click the pivot that this method selects.","Move every remaining number into the correct group.","Choose each recursive pivot, partition its sublist, then give the final sorted order.","Complete every recursive partition, including any values equal to the pivot. Finish with the sorted list.","Read the supplied pseudocode. Enter the first pivot, both sublists and the returned sorted list."]
 ];
-const SETS=[
- [[6,2,9,4,7],[6,8,1,7,3],[6,8,1,7,3],[6,9,3,6,2,8,4],[7,2,9,4,6]],
- [[5,9,2,7,1],[4,7,1,6,3],[7,2,6,1,4],[5,8,5,2,9,1,6],[6,3,9,2,7]],
- [[8,2,5,1,9],[7,3,8,2,5],[5,7,2,6,1],[7,2,9,4,7,1,6],[8,2,9,3,6]]
-];
-const $=id=>document.getElementById(id), STORE="rhsc-h446-quicksort-skill-lab-v1";
-let saved={round:0,best:null,last:null};
-try{const old=JSON.parse(localStorage.getItem(STORE)||"null");if(old&&Number.isInteger(old.round)&&old.round>=0)saved={round:old.round,best:Number.isInteger(old.best)?old.best:null,last:Number.isInteger(old.last)?old.last:null};}catch(_){}
-let stage=0, scores=[null,null,null,null,null], errors=0, complete=false, work={}, trace=[];
+const LEVELS={
+ easy:{counts:[4,4,5,5,4],max:12,description:"4–5 numbers"},
+ medium:{counts:[6,7,7,8,6],max:30,description:"6–8 numbers"},
+ hard:{counts:[9,10,10,12,9],max:99,description:"9–12 numbers"}
+};
+const $=id=>document.getElementById(id);
+const STORE="rhsc-h446-quicksort-skill-lab-v2",OLD_STORE="rhsc-h446-quicksort-skill-lab-v1";
+const newRecord=()=>({round:0,best:null,last:null});
+let saved={difficulty:"easy",levels:{easy:newRecord(),medium:newRecord(),hard:newRecord()}};
+try{
+ const data=JSON.parse(localStorage.getItem(STORE)||"null");
+ if(data&&data.levels){
+  if(LEVELS[data.difficulty])saved.difficulty=data.difficulty;
+  Object.keys(LEVELS).forEach(key=>{
+   const record=data.levels[key];if(!record)return;
+   saved.levels[key]={
+    round:Number.isInteger(record.round)&&record.round>=0?record.round:0,
+    best:Number.isInteger(record.best)&&record.best>=0&&record.best<=5?record.best:null,
+    last:Number.isInteger(record.last)&&record.last>=0&&record.last<=5?record.last:null
+   };
+  });
+ }else{
+  const old=JSON.parse(localStorage.getItem(OLD_STORE)||"null");
+  if(old&&Number.isInteger(old.round)&&old.round>=0){
+   saved.levels.easy={round:old.round,best:Number.isInteger(old.best)?old.best:null,last:Number.isInteger(old.last)?old.last:null};
+  }
+ }
+}catch(_){}
+let stage=0,scores=[null,null,null,null,null],errors=0,complete=false,work={},trace=[];
+function current(){return saved.levels[saved.difficulty];}
+function makeRandom(seed){
+ let state=(seed>>>0)||1;
+ return ()=>{
+  state^=state<<13;state^=state>>>17;state^=state<<5;
+  return (state>>>0)/4294967296;
+ };
+}
+function seed(){
+ const settings=LEVELS[saved.difficulty],size=settings.counts[stage];
+ const offset={easy:11,medium:101,hard:1009}[saved.difficulty];
+ const random=makeRandom(((current().round+1)*1103515245+(stage+1)*2654435761+offset)>>>0);
+ const unique=new Set(),values=[];
+ while(values.length<size){
+  const value=1+Math.floor(random()*settings.max);
+  if(!unique.has(value)){unique.add(value);values.push(value);}
+ }
+ // The full-trace challenge deliberately includes a duplicate of the first pivot.
+ if(stage===3)values[1+Math.floor(random()*(size-1))]=values[0];
+ return values;
+}
 function persist(){try{localStorage.setItem(STORE,JSON.stringify(saved));}catch(_){}}
 function showFeedback(message,type){const f=$("feedback");f.textContent=message;f.className="feedback"+(type?" "+type:"");}
 function addTrace(text,detail){trace.push({text,detail:detail||""});renderTrace();}
@@ -126,12 +180,12 @@ function parseList(raw){
  if(!/^-?\d+(\s+-?\d+)*$/.test(trim))return null;
  return trim.split(/\s+/).map(Number);
 }
-function seed(){return SETS[saved.round%SETS.length][stage].slice();}
 function updateProgress(){
  $("progress").value=scores.filter(x=>x!==null).length;
  $("scoreboard").replaceChildren();
  scores.forEach((v,i)=>{const d=div("scoreline");d.append(setNodeText("span",(i+1)+". "+NAMES[i]),setNodeText("b",v===null?"—":v?"✓ 1 mark":"Practised"));$("scoreboard").append(d);});
- $("mastery").textContent=saved.best===null?"Best: not attempted":"Best: "+saved.best+"/5"+(saved.best>=4?" · Mastered":"");
+ const best=current().best,label=saved.difficulty[0].toUpperCase()+saved.difficulty.slice(1);
+ $("mastery").textContent=best===null?label+" best: not attempted":label+" best: "+best+"/5"+(best>=4?" · Mastered":"");
 }
 function finishChallenge(){
  if(complete)return;
@@ -256,7 +310,9 @@ function codeTask(){
 }
 function render(){
  complete=false;errors=0;trace=[];renderTrace();$("next").hidden=true;
- $("level").textContent="Challenge "+(stage+1)+" of 5";
+ $("level").textContent=saved.difficulty.toUpperCase()+" · Challenge "+(stage+1)+" of 5";
+ document.querySelectorAll("[data-difficulty]").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.difficulty===saved.difficulty)));
+ $("difficulty-note").textContent=saved.difficulty[0].toUpperCase()+saved.difficulty.slice(1)+" · "+LEVELS[saved.difficulty].description+". Changing difficulty starts a new set.";
  $("task-title").textContent=NAMES[stage];$("task-text").textContent=TASKS[0][stage];
  showFeedback("Work through the skill. Incorrect attempts are explained so you can retry.","");
  $("workspace").replaceChildren();
@@ -268,7 +324,7 @@ function render(){
 }
 function results(){
  const total=scores.filter(Boolean).length;
- saved.last=total;saved.best=Math.max(saved.best===null?0:saved.best,total);persist();updateProgress();
+ current().last=total;current().best=Math.max(current().best===null?0:current().best,total);persist();updateProgress();
  $("level").textContent="Practice complete";$("task-title").textContent=total>=4?"Mastery target reached":"Ready to improve";
  $("task-text").textContent="First-try score: "+total+"/5 ("+(total*20)+"%). "+(total>=4?"You reached the 80% target.":"Practise another set to build fluency.");
  $("workspace").replaceChildren(setNodeText("p","Use the trace to explain each pivot and recursive call on paper. When OCR supplies a different implementation, follow its stated convention.","rule"));
@@ -281,8 +337,12 @@ $("next").addEventListener("click",()=>{
  stage++;render();
 });
 $("restart").addEventListener("click",()=>{
- saved.round++;persist();stage=0;scores=[null,null,null,null,null];render();
+ current().round++;persist();stage=0;scores=[null,null,null,null,null];render();
 });
+document.querySelectorAll("[data-difficulty]").forEach(button=>button.addEventListener("click",()=>{
+ const level=button.dataset.difficulty;if(!LEVELS[level]||level===saved.difficulty)return;
+ saved.difficulty=level;persist();stage=0;scores=[null,null,null,null,null];render();
+}));
 render();
 })();
 </script>
