@@ -86,14 +86,29 @@ async function scenario(browser,view){
   await assertLayout(page,view,"end");
   await page.locator("#next").click();
   check((await page.locator("#task-title").innerText()).includes("Mastery target reached"),view.label+" mastery result 5/5",await page.locator("#task-text").innerText());
-  const local=await page.evaluate(()=>JSON.parse(localStorage.getItem("rhsc-h446-quicksort-skill-lab-v1")||"{}"));
-  check(local.best===5&&local.last===5,view.label+" best score saved locally",local);
+  const local=await page.evaluate(()=>JSON.parse(localStorage.getItem("rhsc-h446-quicksort-skill-lab-v2")||"{}"));
+  check(local.levels?.easy?.best===5&&local.levels?.easy?.last===5,view.label+" easy best score saved locally",local);
   await page.reload({waitUntil:"load"});
   check((await page.locator("#mastery").innerText()).includes("5/5"),view.label+" best score survives reload");
   await page.locator("#restart").click();
   const resetText=await page.locator("#level").innerText();
-  check(/1 OF 5/i.test(resetText),view.label+" new set resets progress",JSON.stringify({level:resetText,round:await page.evaluate(()=>JSON.parse(localStorage.getItem("rhsc-h446-quicksort-skill-lab-v1")||"{}").round)}));
-  check((await page.locator("#workspace button.num").count())===5,view.label+" second set has five values");
+  check(/1 OF 5/i.test(resetText),view.label+" new set resets progress",JSON.stringify({level:resetText,round:await page.evaluate(()=>JSON.parse(localStorage.getItem("rhsc-h446-quicksort-skill-lab-v2")||"{}").levels.easy.round)}));
+  check((await page.locator("#workspace button.num").count())===4,view.label+" easy uses four values");
+  await page.locator('[data-difficulty="medium"]').click();
+  check((await page.locator('[data-difficulty="medium"]').getAttribute("aria-pressed"))==="true",view.label+" medium selected");
+  check((await page.locator("#workspace button.num").count())===6,view.label+" medium uses six values");
+  await page.locator("#workspace button.num").first().click();
+  await page.locator("#next").click();
+  check((await page.locator("#workspace button.num").count())===7,view.label+" medium partition has seven values");
+  await page.locator('[data-difficulty="hard"]').click();
+  check((await page.locator('[data-difficulty="hard"]').getAttribute("aria-pressed"))==="true",view.label+" hard selected");
+  check((await page.locator("#workspace button.num").count())===9,view.label+" hard starts with nine values");
+  await assertLayout(page,view,"hard start");
+  await page.locator("#workspace button.num").first().click();
+  await page.locator("#next").click();
+  check((await page.locator("#workspace button.num").count())===10,view.label+" hard partition has ten values");
+  const levels=await page.evaluate(()=>JSON.parse(localStorage.getItem("rhsc-h446-quicksort-skill-lab-v2")||"{}"));
+  check(levels.difficulty==="hard"&&levels.levels?.easy?.best===5,view.label+" level selection keeps earlier mastery",levels);
   check(errors.length===0,view.label+" no JS errors",errors);
   await assertLayout(page,view,"restart");
  }catch(e){check(false,view.label+" full workflow",String(e).slice(0,800));}
@@ -107,6 +122,8 @@ async function links(browser){
  check((await page.locator('a[href*="quicksort-lab.html"]').count())===1,"Lesson 216 links to one Skills Lab");
  await page.goto(origin+"/revision/h446/section-2-3/index.html",{waitUntil:"domcontentloaded"});
  check((await page.locator('.quicksort-lab-link a[href="./quicksort-lab.html"]').count())===1,"Algorithms practice links to lab");
+ await page.goto(origin+"/exercise/h446/tools.html",{waitUntil:"domcontentloaded"});
+ check((await page.locator('a.tile-main[href="/revision/h446/section-2-3/quicksort-lab.html"]').count())===1,"H446 Skills card links to lab");
  }catch(e){check(false,"Lesson and Skills links",String(e));}
  finally{await ctx.close();}
 }
