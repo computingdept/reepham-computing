@@ -53,6 +53,24 @@ core rules are dependency-free so other Synergy projects can reuse them.
 
 ## Migration: do not change the live rendering yet
 
+### Q1 True/False drafting underway
+
+The first manually rewritten batch is in `data/do-now/q1-drafts/`: 25 J277
+lessons (001–025), 25 H446 lessons (001–025) and the three canonical KS3
+Year 7 pilot lessons. These are **unapproved Q1-only drafts**, intentionally
+kept apart from `data/do-now/banks/` (which accepts complete, reviewed four-question
+lessons). Q2–Q4 and live lesson pages remain unchanged.
+
+Run `node scripts/do-now/validate-q1-drafts.cjs` to check the Q1 statements,
+Boolean keys, corrections, source references and True/False distribution against
+the preserved question/answer snapshots. This validates structure and provenance,
+not educational accuracy or readiness for pupil delivery. A teacher needs to
+review the precise statement, historical teaching order and correct answer before
+its lesson can be migrated. The Q1 rewrites are *not* part of the live page or
+existing Catch Up bank yet. H446 and KS3 lesson-to-source mappings are explicitly
+flagged as provisional: the legacy snapshots have no verified taught-sequence
+references, so a numbered predecessor must not be assumed to prove prior teaching.
+
 1. `node scripts/do-now/collect-legacy.cjs` creates reproducible **unpublished**
    source snapshots in `data/do-now/migration/`, preserving the old prompts,
    answers and source identifiers for review. The script never writes lesson

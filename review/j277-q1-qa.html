@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>J277 Q1 · Teacher QA · Synergy Computing</title>
+<style>
+:root{font-family:Arial,Helvetica,sans-serif;color:#193b2f;background:#f4f8f5;font-synthesis:none}
+*{box-sizing:border-box}
+body{margin:0;min-height:100dvh}
+header{height:58px;background:#fff;border-bottom:1px solid #cfe1d5;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 clamp(12px,2vw,28px)}
+.brand{font-weight:800;font-size:clamp(14px,1.5vw,19px);letter-spacing:.015em}.brand span{color:#26754c}
+.status{font-size:12px;font-weight:700;letter-spacing:.05em;color:#8b5118;background:#fff2d5;border:1px solid #eec98a;padding:6px 9px;border-radius:20px}
+main{width:min(1120px,100%);margin:0 auto;padding:clamp(14px,2vw,28px);display:grid;gap:14px}
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.toolbar label{font-size:14px;font-weight:700;display:flex;align-items:center;gap:10px}
+select{font:inherit;font-weight:700;color:#163f2b;border:1px solid #98bca8;padding:9px 12px;border-radius:10px;background:white}
+.counter{font-size:13px;color:#547266;font-weight:700}
+.card{background:white;border:1px solid #cfe0d4;border-radius:18px;box-shadow:0 7px 22px #163e2420;overflow:hidden}
+.card-top{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#e8f3ec;border-bottom:1px solid #cfe0d4;padding:13px clamp(16px,2.4vw,32px);font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+.dot{display:inline-block;width:9px;height:9px;background:#1e885a;border-radius:50%;margin-right:7px}
+.question{padding:clamp(22px,4vw,48px) clamp(20px,4vw,52px) clamp(18px,3vw,32px)}
+.question h1{font-size:clamp(29px,4.5vw,52px);line-height:1.17;letter-spacing:-.025em;margin:0;max-width:980px;overflow-wrap:anywhere}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2vw,24px);padding:0 clamp(20px,4vw,52px) clamp(22px,3vw,34px)}
+.choice{border:2px solid #bfd8c8;background:#f4f9f5;border-radius:13px;padding:clamp(12px,3vh,26px);font-size:clamp(22px,3.4vw,34px);font-weight:800;text-align:center}
+.reveals{display:grid;gap:10px;padding:0 clamp(20px,4vw,52px) clamp(20px,3vw,32px)}
+.reveal{border-radius:12px;background:#eef7f0;border-left:6px solid #33855a;padding:15px 20px}
+.reveal strong{display:block;font-size:12px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:7px;color:#286345}
+.reveal p{font-size:clamp(17px,2vw,23px);margin:0;line-height:1.3}
+.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+button{border:0;cursor:pointer;font:inherit;font-size:16px;font-weight:800;border-radius:12px;padding:13px 20px;min-height:48px;background:#1a6744;color:white}
+button:disabled{opacity:.4;cursor:not-allowed}
+button.secondary{background:#e4eee7;color:#17452d}
+button:focus-visible,select:focus-visible{outline:3px solid #dc9e36;outline-offset:3px}
+.note{font-size:12px;color:#577166;line-height:1.4;margin:0}
+#error{color:#8b1c1c;font-weight:700}
+[hidden]{display:none!important}
+@media(max-width:650px){header{height:auto;min-height:56px}.question{padding-bottom:26px}.choice{font-size:22px}.actions button{flex:1 1 120px}.toolbar{align-items:flex-start}}
+@media(print){body{background:white}header,.actions,.toolbar,.note{display:none!important}.card{box-shadow:none}}
+</style>
+</head>
+<body>
+<header><div class="brand"><span>SYNERGY</span> COMPUTING · OCR J277</div><span class="status">TEACHER QA · NOT IN LESSONS</span></header>
+<main>
+<div class="toolbar"><label for="lesson">Review lesson <select id="lesson" aria-label="Choose lesson"></select></label><span class="counter" id="counter" aria-live="polite"></span></div>
+<section class="card" aria-live="polite">
+<div class="card-top"><span><span class="dot"></span>Do Now · Q1 · Previous learning</span><span id="lessonNumber">Lesson —</span></div>
+<div class="question"><h1 id="question">Loading questions…</h1></div>
+<div class="options" aria-label="Response choices"><div class="choice">YES</div><div class="choice">NO</div></div>
+<div class="reveals">
+<div id="answerPanel" class="reveal" hidden><strong>Answer</strong><p id="answer"></p><p id="correction" hidden></p></div>
+<div id="explanationPanel" class="reveal" hidden><strong>Explanation</strong><p id="explanation"></p></div>
+</div>
+</section>
+<div class="actions">
+<button type="button" class="secondary" id="prev">← Previous</button>
+<button type="button" id="revealAnswer">Reveal answer</button>
+<button type="button" id="revealExplanation" disabled>Reveal explanation</button>
+<button type="button" class="secondary" id="next">Next →</button>
+</div>
+<p class="note">Teacher review only. This page shows the J277 Q1 draft bank; existing classroom lessons, Q2–Q4, print and Catch Up have not been changed. The source statement, Boolean answer and explanation are kept together in the central bank.</p>
+<p id="error" role="alert" hidden></p>
+</main>
+<script>
+(async()=>{
+const el=id=>document.getElementById(id);
+let lessons=[], index=0;
+function paint(){
+ const [id,item]=lessons[index];
+ el('lesson').value=id;
+ el('counter').textContent=(index+1)+' of '+lessons.length+' drafts';
+ el('lessonNumber').textContent='Lesson '+id;
+ el('question').textContent=item.question;
+ el('answer').textContent=item.correct?'YES':'NO';
+ el('correction').textContent=item.correction||'';
+ el('correction').hidden=!item.correction;
+ el('explanation').textContent=item.explanation;
+ el('answerPanel').hidden=true;el('explanationPanel').hidden=true;
+ el('revealAnswer').disabled=false;el('revealExplanation').disabled=true;
+ el('prev').disabled=index===0;el('next').disabled=index===lessons.length-1;
+ const current=new URL(window.location.href);current.searchParams.set('lesson',id);
+ history.replaceState(null,'',current.pathname+current.search+current.hash);
+}
+try{
+ const response=await fetch('/data/do-now/q1-drafts/j277.json',{cache:'no-store'});
+ if(!response.ok)throw new Error('The draft question bank could not be loaded ('+response.status+').');
+ const data=await response.json();
+ lessons=Object.entries(data.lessons).sort(([a],[b])=>a.localeCompare(b));
+ if(lessons.length!==25||lessons.some(([,v])=>typeof v.question!=='string'||typeof v.correct!=='boolean'||!v.explanation))throw new Error('The 25-question draft bank is incomplete.');
+ lessons.forEach(([id])=>{const option=document.createElement('option');option.value=id;option.textContent='Lesson '+id;el('lesson').append(option)});
+ const chosen=new URLSearchParams(location.search).get('lesson');
+ index=Math.max(0,lessons.findIndex(([id])=>id===chosen));
+ el('lesson').addEventListener('change',()=>{index=lessons.findIndex(([id])=>id===el('lesson').value);paint()});
+ el('prev').addEventListener('click',()=>{if(index>0){index--;paint()}});
+ el('next').addEventListener('click',()=>{if(index<lessons.length-1){index++;paint()}});
+ el('revealAnswer').addEventListener('click',()=>{el('answerPanel').hidden=false;el('revealAnswer').disabled=true;el('revealExplanation').disabled=false});
+ el('revealExplanation').addEventListener('click',()=>{el('explanationPanel').hidden=false;el('revealExplanation').disabled=true});
+ paint();
+}catch(error){el('question').textContent='Questions unavailable';el('error').textContent=error.message;el('error').hidden=false;document.querySelectorAll('button').forEach(b=>b.disabled=true)}
+})();
+</script>
+</body>
+</html>
