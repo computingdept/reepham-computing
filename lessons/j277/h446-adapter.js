@@ -275,7 +275,7 @@ next.addEventListener('click',goNext);previous.addEventListener('click',goPrevio
     const objIntro=objectives.map(o=>`<span class="vocab-tip" tabindex="0" data-definition="${esc(o.definition)}">${esc(o.term)}</span>`).join("");
     const objStages=objectives.map((o,i)=>`<article class="objective-vocab-stage"${i?' hidden':''} data-support="${esc(o.example||"")}"><span class="objective-vocab-count">TERM ${i+1} OF ${objectives.length}</span><h2>${esc(o.term)}</h2><div class="objective-vocab-definition" data-objective-vocab-definition hidden><span>DEFINITION</span><p>${esc(o.definition)}</p></div></article>`).join("");
 
-    const refLines=nlParts.slice(0,4).map(x=>x.a+(x.b?" — "+x.b:"")).join("\\n");
+    const refLines=nlParts.slice(0,4).map(x=>x.a+(x.b?" — "+x.b:"")).join(n==="003" ? "\n" : "\\n");
     const nlStages=(nlParts.length?nlParts.slice(0,4):[{a:"Apply the key knowledge",b:"Use the reference on the left throughout the lesson."}]).map((x,i,arr)=>`<div class="nl-stage"${i?' hidden':''}><span class="nl-stage-label">STEP ${i+1} OF ${arr.length}</span><h2>${esc(x.a)}</h2><p>${esc(x.b||"Use this idea in the worked examples and exam practice.")}</p><span class="nl-stage-count">${i+1} of ${arr.length}</span></div>`).join("");
 
     const idoHtml=idoSteps.map((s,i)=>`<div class="ido-step"${i?' hidden':''}><span class="ido-step-label">STEP ${i+1}</span><h2>${s}</h2></div>`).join("");
