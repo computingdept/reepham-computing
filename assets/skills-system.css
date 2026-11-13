@@ -112,7 +112,7 @@ body.paper2-skills.rhsc-skills-system .wrap {
 .rhsc-skills-hub .tile-foot {margin:3px 0 0;font-size:10px;color:#617568;font-weight:750}
 .rhsc-skills-hub .tile-action {font-size:12px;font-weight:800;color:var(--skills-green);text-decoration:none}
 .rhsc-skills-hub .tile-actions {display:flex;align-items:stretch;margin-top:auto;width:100%;min-height:45px;border-top:1px solid var(--skills-line)}
-.rhsc-skills-hub .tile-actions > :is(a,button) {
+.rhsc-skills-hub .tile-actions > :is(a,button,span.tile-action--coming-soon) {
   display:flex;
   flex-direction:column;
   gap:2px;
@@ -131,8 +131,17 @@ body.paper2-skills.rhsc-skills-system .wrap {
   font-size:12px;
   font-weight:800;
 }
-.rhsc-skills-hub .tile-actions > :is(a,button)+:is(a,button) {border-left:1px solid var(--skills-line)}
+.rhsc-skills-hub .tile-actions > :is(a,button,span.tile-action--coming-soon)+:is(a,button,span.tile-action--coming-soon) {border-left:1px solid var(--skills-line)}
 .rhsc-skills-hub .tile-actions > :is(a,button):hover {background:#f0f6f2}
+body.rhsc-skills-hub .tiles>.rhsc-resource-card--skill .tile-action.tile-action--coming-soon,
+body.rhsc-skills-hub .tiles>.rhsc-resource-card--skill .tile-action.tile-action--coming-soon:hover {
+  background:#fff;
+  color:#a34b45;
+  cursor:default;
+  user-select:none;
+}
+body.rhsc-skills-hub .tiles>.rhsc-resource-card--skill .tile-action--coming-soon svg {color:#a34b45;stroke:#a34b45}
+body.rhsc-skills-hub .tiles>.rhsc-resource-card--skill .tile-action--coming-soon span {color:#825d59}
 .rhsc-skills-hub .group {border:1px solid var(--skills-line);border-radius:10px;box-shadow:none}
 .rhsc-skills-hub .group[open] {border-color:#b7cebf}
 .rhsc-skills-hub .group-summary {padding:10px 14px;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer}
