@@ -44,7 +44,7 @@ core rules are dependency-free so other Synergy projects can reuse them.
   genuine A Level distinctions.
 - Q3/Q4 retain model answers and explanations or working. No question may assess
   new content for the first time.
-- For the first lesson in a course, an explicit **diagnostic** is permitted in
+- For the first lesson in a course or year-group entry, an explicit **diagnostic** is permitted in
   place of the previous-lesson source. Other exceptions need a recorded reason.
 - Pupils should see the same four questions in classroom and Catch Up; print
   presents the same content with sensible answer space and a separate key.
@@ -55,9 +55,13 @@ core rules are dependency-free so other Synergy projects can reuse them.
 
 ### Q1 True/False drafting underway
 
-The first manually rewritten batch is in `data/do-now/q1-drafts/`: 25 J277
-lessons (001–025), 25 H446 lessons (001–025) and the three canonical KS3
-Year 7 pilot lessons. These are **unapproved Q1-only drafts**, intentionally
+The Q1-only drafts are in `data/do-now/q1-drafts/`: 25 J277
+lessons (001–025), all 300 current H446 lesson pages (001–160 and 181–320),
+and the three canonical KS3 Year 7 pilot lessons. The H446 draft has 151 true
+and 149 false statements; each entry records the immediately preceding
+numbered lesson as the retrieval source. Lessons 001 and 181 are explicitly
+labelled course/year-entry diagnostics. These mappings still require teacher
+confirmation against the actual taught order. These are **unapproved Q1-only drafts**, intentionally
 kept apart from `data/do-now/banks/` (which accepts complete, reviewed four-question
 lessons). Q2–Q4 and live lesson pages remain unchanged.
 
@@ -77,9 +81,11 @@ references, so a numbered predecessor must not be assumed to prove prior teachin
    HTML or changes the published J277 bank.
 2. J277 already has 164 central Do Nows. Rewrite Q1 in a staged, reviewed bank;
    keep its short Q2 MCQs and original Q3/Q4. Sync the existing Catch Up bank.
-3. H446 has 300 lesson index files; 298 use the current four-card Do Now. Two
-   exceptions (036 and 037) require their own source review. Centralise H446
-   before converting Q1 and authoring plausible Q2 distractors.
+3. H446 has 300 lesson index files. Lessons 036 and 037 use a redirected
+   mind-map presentation; their original Do Now questions have been captured
+   from `assets/h446-mindmap/presentation.js`. The 300-entry Q1 draft is now
+   centralised for teacher QA. Do not publish to classroom/Catch Up/Print until
+   its preceding-lesson references and content have been reviewed.
 4. KS3 has three canonical Year 7 pilots at this point. Follow the approved
    KS3 authoring rulebook, including a first-lesson diagnostic exception, when
    creating further Year 7–9 material. Do not promote old preview pages.

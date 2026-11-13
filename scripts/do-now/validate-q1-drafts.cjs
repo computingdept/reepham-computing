@@ -27,13 +27,27 @@ function validateQ1DraftBank(bank, source) {
     ids.add(q.id);
     if (!Array.isArray(q.sourceRefs) || !q.sourceRefs.length || !q.sourceRefs.every(nonBlank))
       throw new Error(`${loc}: requires sourceRefs for taught content`);
-    if (q.diagnostic && !lessonId.endsWith('001'))
-      throw new Error(`${loc}: only an entry lesson can be diagnostic`);
+    if (q.diagnostic && !(lessonId === '001' || (bank.course === 'h446' && lessonId === '181')))
+      throw new Error(`${loc}: only a course/year entry lesson can be diagnostic`);
+    if (bank.course === 'h446') {
+      const isEntry = lessonId === '001' || lessonId === '181';
+      const previousId = `L${String(Number(lessonId) - 1).padStart(3, '0')}`;
+      if (isEntry && !q.diagnostic)
+        throw new Error(`${loc}: entry lesson must explicitly identify its diagnostic exception`);
+      if (!isEntry && (q.previousTaughtLesson !== previousId || !q.sourceRefs.includes(previousId)))
+        throw new Error(`${loc}: Q1 must reference immediately preceding taught H446 lesson ${previousId}`);
+    }
     if (!nonBlank(q.statement) || typeof q.correct !== 'boolean' || !nonBlank(q.explanation))
       throw new Error(`${loc}: requires a True/False statement, Boolean answer and explanation`);
     if (!q.correct && !nonBlank(q.correction))
       throw new Error(`${loc}: false statement requires a corrected fact`);
     if (q.correct) trueCount++; else falseCount++;
+  }
+  if (bank.course === 'h446') {
+    const missing = Object.keys(source.lessons).filter(id => !(id in bank.lessons));
+    const extra = Object.keys(bank.lessons).filter(id => !(id in source.lessons));
+    if (missing.length || extra.length)
+      throw new Error(`h446: Q1 coverage mismatch (missing ${missing.join(',')}; extra ${extra.join(',')})`);
   }
   const ratio = trueCount / (trueCount + falseCount);
   if (ids.size >= 10 && (ratio < .3 || ratio > .7))
