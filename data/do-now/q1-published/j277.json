@@ -3,9 +3,625 @@
   "course": "j277",
   "status": "published",
   "slot": 1,
-  "scope": "Classroom Do Now Q1 only — lessons 001–025. Q2–Q4 unchanged.",
+  "scope": "Classroom Do Now Q1 — all 164 J277 lessons. Q2–Q4 unchanged.",
   "sourceSnapshot": "data/do-now/migration/j277-source.json",
   "lessons": {
+    "100": {
+      "id": "J277-L100-Q1",
+      "sourceRefs": [
+        "L099"
+      ],
+      "statement": "A nibble contains 4 bits and a byte contains 8 bits.",
+      "correct": true,
+      "explanation": "A nibble has 4 bits and a byte has 8 bits."
+    },
+    "101": {
+      "id": "J277-L101-Q1",
+      "sourceRefs": [
+        "L100"
+      ],
+      "statement": "Unsigned binary 00101101 is 45 in denary.",
+      "correct": true,
+      "explanation": "45, because 32 + 8 + 4 + 1 = 45."
+    },
+    "102": {
+      "id": "J277-L102-Q1",
+      "sourceRefs": [
+        "L101"
+      ],
+      "statement": "11111111 plus 00000001 fits within eight unsigned bits without overflow.",
+      "correct": false,
+      "explanation": "The true sum is 256, requiring nine bits; only eight stored bits would contain 00000000.",
+      "correction": "The true sum is 256, requiring nine bits; only eight stored bits would contain 00000000."
+    },
+    "103": {
+      "id": "J277-L103-Q1",
+      "sourceRefs": [
+        "L102"
+      ],
+      "statement": "Hexadecimal A3 is 10100011 in eight-bit binary.",
+      "correct": true,
+      "explanation": "10100011: A is 1010 and 3 is 0011."
+    },
+    "104": {
+      "id": "J277-L104-Q1",
+      "sourceRefs": [
+        "L103"
+      ],
+      "statement": "A bitmap stores every pixel colour using only a filename, not binary data.",
+      "correct": false,
+      "explanation": "Each pixel has a colour code stored in binary.",
+      "correction": "Each pixel has a colour code stored in binary."
+    },
+    "105": {
+      "id": "J277-L105-Q1",
+      "sourceRefs": [
+        "L104"
+      ],
+      "statement": "Lossy compression always restores every bit of the original file exactly.",
+      "correct": false,
+      "explanation": "It discards some information, so the exact original cannot necessarily be restored.",
+      "correction": "It discards some information, so the exact original cannot necessarily be restored."
+    },
+    "106": {
+      "id": "J277-L106-Q1",
+      "sourceRefs": [
+        "L105"
+      ],
+      "statement": "Abstraction means keeping every detail, even those unrelated to the problem.",
+      "correct": false,
+      "explanation": "Removing irrelevant detail while keeping what is needed to solve the problem.",
+      "correction": "Removing irrelevant detail while keeping what is needed to solve the problem."
+    },
+    "107": {
+      "id": "J277-L107-Q1",
+      "sourceRefs": [
+        "L106"
+      ],
+      "statement": "A diamond in a flowchart represents a decision.",
+      "correct": true,
+      "explanation": "A decision or condition with alternative paths."
+    },
+    "108": {
+      "id": "J277-L108-Q1",
+      "sourceRefs": [
+        "L107"
+      ],
+      "statement": "A trace table can ignore the order in which assignments are executed.",
+      "correct": false,
+      "explanation": "Each variable value depends on the state produced by earlier executed instructions.",
+      "correction": "Each variable value depends on the state produced by earlier executed instructions."
+    },
+    "109": {
+      "id": "J277-L109-Q1",
+      "sourceRefs": [
+        "L108"
+      ],
+      "statement": "Linear search can work on an unsorted list.",
+      "correct": true,
+      "explanation": "No; it examines items in sequence until a match is found or the list ends."
+    },
+    "110": {
+      "id": "J277-L110-Q1",
+      "sourceRefs": [
+        "L109"
+      ],
+      "statement": "Binary search can always work correctly on an unsorted list.",
+      "correct": false,
+      "explanation": "The list must be sorted. This lets the search safely rule out half the remaining items.",
+      "correction": "The list must be sorted. This lets the search safely rule out half the remaining items."
+    },
+    "111": {
+      "id": "J277-L111-Q1",
+      "sourceRefs": [
+        "L110"
+      ],
+      "statement": "In ascending bubble sort, adjacent items swap when the left value is smaller.",
+      "correct": false,
+      "explanation": "When the left item is greater than the right item.",
+      "correction": "When the left item is greater than the right item."
+    },
+    "112": {
+      "id": "J277-L112-Q1",
+      "sourceRefs": [
+        "L111"
+      ],
+      "statement": "Insertion sort leaves the next unsorted item in its original position regardless of value.",
+      "correct": false,
+      "explanation": "Place the next item in the correct position in the sorted part. Shift larger items right.",
+      "correction": "Place the next item in the correct position in the sorted part. Shift larger items right."
+    },
+    "113": {
+      "id": "J277-L113-Q1",
+      "sourceRefs": [
+        "L112"
+      ],
+      "statement": "Merge sort combines sorted lists by comparing their next available items.",
+      "correct": true,
+      "explanation": "Compare the next item in each list. Take the smaller. Repeat, then add any items left over."
+    },
+    "114": {
+      "id": "J277-L114-Q1",
+      "sourceRefs": [
+        "L113"
+      ],
+      "statement": "The CPU control unit performs all arithmetic calculations instead of the ALU.",
+      "correct": false,
+      "explanation": "The ALU performs arithmetic and logical operations.",
+      "correction": "The ALU performs arithmetic and logical operations."
+    },
+    "115": {
+      "id": "J277-L115-Q1",
+      "sourceRefs": [
+        "L114"
+      ],
+      "statement": "In OCR ERL, 'COMPUTER'.substring(1,3) gives 'OMP'.",
+      "correct": true,
+      "explanation": "OMP; indexing starts at zero and the second argument gives length."
+    },
+    "116": {
+      "id": "J277-L116-Q1",
+      "sourceRefs": [
+        "L115"
+      ],
+      "statement": "A two-dimensional array needs only one index to select a cell.",
+      "correct": false,
+      "explanation": "Use two indexes: one for the row and one for the column.",
+      "correction": "Use two indexes: one for the row and one for the column."
+    },
+    "117": {
+      "id": "J277-L117-Q1",
+      "sourceRefs": [
+        "L116"
+      ],
+      "statement": "A local variable is normally accessible only within its subprogram or local scope.",
+      "correct": true,
+      "explanation": "A local variable can be used only within its own subprogram or local scope."
+    },
+    "118": {
+      "id": "J277-L118-Q1",
+      "sourceRefs": [
+        "L117"
+      ],
+      "statement": "A program must open a file before reading it.",
+      "correct": true,
+      "explanation": "Opening establishes a handle or connection through which the program accesses the file."
+    },
+    "119": {
+      "id": "J277-L119-Q1",
+      "sourceRefs": [
+        "L118"
+      ],
+      "statement": "SQL SELECT specifies which fields or columns to return.",
+      "correct": true,
+      "explanation": "The fields (columns) to return."
+    },
+    "120": {
+      "id": "J277-L120-Q1",
+      "sourceRefs": [
+        "L119"
+      ],
+      "statement": "In OCR ERL, random(1,6) can produce 0.",
+      "correct": false,
+      "explanation": "Any integer from 1 through 6 inclusive.",
+      "correction": "Any integer from 1 through 6 inclusive."
+    },
+    "121": {
+      "id": "J277-L121-Q1",
+      "sourceRefs": [
+        "L120"
+      ],
+      "statement": "A trace table records executed variable updates in the order they occur.",
+      "correct": true,
+      "explanation": "Executed variable updates in their actual order."
+    },
+    "122": {
+      "id": "J277-L122-Q1",
+      "sourceRefs": [
+        "L121"
+      ],
+      "statement": "Trying a new question checks whether you can independently apply a corrected method.",
+      "correct": true,
+      "explanation": "To check that the method can be applied independently rather than copied."
+    },
+    "123": {
+      "id": "J277-L123-Q1",
+      "sourceRefs": [
+        "L122"
+      ],
+      "statement": "Authentication checks evidence that a user is who they claim to be.",
+      "correct": true,
+      "explanation": "Whether a user has supplied suitable evidence of the claimed identity."
+    },
+    "124": {
+      "id": "J277-L124-Q1",
+      "sourceRefs": [
+        "L123"
+      ],
+      "statement": "Defensive design assumes inputs will always be valid and harmless.",
+      "correct": false,
+      "explanation": "Planning for invalid, unexpected or malicious use and handling it safely.",
+      "correction": "Planning for invalid, unexpected or malicious use and handling it safely."
+    },
+    "125": {
+      "id": "J277-L125-Q1",
+      "sourceRefs": [
+        "L124"
+      ],
+      "statement": "For valid ages 13–18 inclusive, 13 and 18 are valid boundary values.",
+      "correct": true,
+      "explanation": "13 and 18 lie on the edges of the valid range."
+    },
+    "126": {
+      "id": "J277-L126-Q1",
+      "sourceRefs": [
+        "L125"
+      ],
+      "statement": "A logic error always prevents a program from running.",
+      "correct": false,
+      "explanation": "A mistake in the algorithm that gives the wrong result, even though the code follows the language's rules.",
+      "correction": "A mistake in the algorithm that gives the wrong result, even though the code follows the language's rules."
+    },
+    "127": {
+      "id": "J277-L127-Q1",
+      "sourceRefs": [
+        "L126"
+      ],
+      "statement": "The Program Counter holds the address of the next instruction to fetch.",
+      "correct": true,
+      "explanation": "The address of the next instruction to be fetched."
+    },
+    "128": {
+      "id": "J277-L128-Q1",
+      "sourceRefs": [
+        "L127"
+      ],
+      "statement": "An embedded system sits within a larger device to perform a specific task.",
+      "correct": true,
+      "explanation": "It is built into a larger device for a specific task, often with limited resources."
+    },
+    "129": {
+      "id": "J277-L129-Q1",
+      "sourceRefs": [
+        "L128"
+      ],
+      "statement": "An array total can be calculated by adding each element once in a loop.",
+      "correct": true,
+      "explanation": "Set a total to 0. Loop through the array, adding each value once."
+    },
+    "130": {
+      "id": "J277-L130-Q1",
+      "sourceRefs": [
+        "L129"
+      ],
+      "statement": "A parameter is a global variable that cannot receive arguments.",
+      "correct": false,
+      "explanation": "A named input received by a subprogram when called with an argument.",
+      "correction": "A named input received by a subprogram when called with an argument."
+    },
+    "131": {
+      "id": "J277-L131-Q1",
+      "sourceRefs": [
+        "L130"
+      ],
+      "statement": "An SQL WHERE clause filters rows that meet a condition.",
+      "correct": true,
+      "explanation": "It selects rows that meet a condition."
+    },
+    "132": {
+      "id": "J277-L132-Q1",
+      "sourceRefs": [
+        "L131"
+      ],
+      "statement": "For £5 tickets, total = tickets + 5 correctly multiplies the price by the number of tickets.",
+      "correct": false,
+      "explanation": "Use total = tickets * 5; addition does not calculate £5 for each ticket.",
+      "correction": "Use total = tickets * 5; addition does not calculate £5 for each ticket."
+    },
+    "133": {
+      "id": "J277-L133-Q1",
+      "sourceRefs": [
+        "L132"
+      ],
+      "statement": "The unsigned binary number 00101101 equals 45 in denary.",
+      "correct": true,
+      "explanation": "45, because 32 + 8 + 4 + 1 = 45."
+    },
+    "134": {
+      "id": "J277-L134-Q1",
+      "sourceRefs": [
+        "L133"
+      ],
+      "statement": "A WAN connects networks over a large geographic area.",
+      "correct": true,
+      "explanation": "A WAN links networks over a large area, often using links provided by other organisations."
+    },
+    "135": {
+      "id": "J277-L135-Q1",
+      "sourceRefs": [
+        "L134"
+      ],
+      "statement": "A wireless access point lets wireless devices join a network.",
+      "correct": true,
+      "explanation": "It enables wireless devices to connect to the network."
+    },
+    "136": {
+      "id": "J277-L136-Q1",
+      "sourceRefs": [
+        "L135"
+      ],
+      "statement": "FTP is used to transfer files between networked computers.",
+      "correct": true,
+      "explanation": "Transferring files between networked computers."
+    },
+    "137": {
+      "id": "J277-L137-Q1",
+      "sourceRefs": [
+        "L136"
+      ],
+      "statement": "More active users may compete for finite network bandwidth.",
+      "correct": true,
+      "explanation": "Users may compete for finite bandwidth, reducing the data rate available to each."
+    },
+    "138": {
+      "id": "J277-L138-Q1",
+      "sourceRefs": [
+        "L137"
+      ],
+      "statement": "SQL injection is prevented simply by using a longer computer password.",
+      "correct": false,
+      "explanation": "Unsafe input changes an SQL query. An attacker may then view or change data.",
+      "correction": "Unsafe input changes an SQL query. An attacker may then view or change data."
+    },
+    "139": {
+      "id": "J277-L139-Q1",
+      "sourceRefs": [
+        "L138"
+      ],
+      "statement": "Locking a server room can reduce physical theft or tampering.",
+      "correct": true,
+      "explanation": "Lock the server room to limit access and reduce theft or tampering."
+    },
+    "140": {
+      "id": "J277-L140-Q1",
+      "sourceRefs": [
+        "L139"
+      ],
+      "statement": "Operating-system file management includes saving and moving files.",
+      "correct": true,
+      "explanation": "It manages files and folders: naming, saving, copying, moving and deleting them."
+    },
+    "141": {
+      "id": "J277-L141-Q1",
+      "sourceRefs": [
+        "L140"
+      ],
+      "statement": "A compression utility reduces the space needed to store data.",
+      "correct": true,
+      "explanation": "It reduces the storage space required for data, using a suitable lossless or lossy method."
+    },
+    "142": {
+      "id": "J277-L142-Q1",
+      "sourceRefs": [
+        "L141"
+      ],
+      "statement": "Digital technology can never affect language, traditions or culture.",
+      "correct": false,
+      "explanation": "Digital communication can change language, access, traditions and how people take part in communities.",
+      "correction": "Digital communication can change language, access, traditions and how people take part in communities."
+    },
+    "143": {
+      "id": "J277-L143-Q1",
+      "sourceRefs": [
+        "L142"
+      ],
+      "statement": "Proprietary software normally gives users specified usage rights while its source code is controlled by its owner.",
+      "correct": true,
+      "explanation": "Source code is normally controlled by its owner and users receive specified usage rights."
+    },
+    "144": {
+      "id": "J277-L144-Q1",
+      "sourceRefs": [
+        "L143"
+      ],
+      "statement": "The Copyright, Designs and Patents Act is the main law that defines unauthorised computer access offences.",
+      "correct": false,
+      "explanation": "The Computer Misuse Act 1990.",
+      "correction": "The Computer Misuse Act 1990."
+    },
+    "145": {
+      "id": "J277-L145-Q1",
+      "sourceRefs": [
+        "L144"
+      ],
+      "statement": "Testing a new example helps check whether a corrected method can be applied independently.",
+      "correct": true,
+      "explanation": "To check that the underlying method works independently on another case."
+    },
+    "146": {
+      "id": "J277-L146-Q1",
+      "sourceRefs": [
+        "L145"
+      ],
+      "statement": "A NOT gate has two inputs and behaves like an AND gate.",
+      "correct": false,
+      "explanation": "It is a one-input inverter, usually a triangle with a small output bubble.",
+      "correction": "It is a one-input inverter, usually a triangle with a small output bubble."
+    },
+    "147": {
+      "id": "J277-L147-Q1",
+      "sourceRefs": [
+        "L146"
+      ],
+      "statement": "Three independent Boolean inputs require six truth-table rows.",
+      "correct": false,
+      "explanation": "8, because 2 to the power 3 is 8; list every combination exactly once.",
+      "correction": "8, because 2 to the power 3 is 8; list every combination exactly once."
+    },
+    "148": {
+      "id": "J277-L148-Q1",
+      "sourceRefs": [
+        "L147"
+      ],
+      "statement": "An interpreter must always create a standalone executable before any code can run.",
+      "correct": false,
+      "explanation": "An interpreter translates and runs code as it goes, often one statement at a time. This gives quick feedback during testing.",
+      "correction": "An interpreter translates and runs code as it goes, often one statement at a time. This gives quick feedback during testing."
+    },
+    "149": {
+      "id": "J277-L149-Q1",
+      "sourceRefs": [
+        "L148"
+      ],
+      "statement": "IDE error diagnostics can help locate coding mistakes.",
+      "correct": true,
+      "explanation": "They show errors and often their location, helping the programmer find the cause."
+    },
+    "150": {
+      "id": "J277-L150-Q1",
+      "sourceRefs": [
+        "L149"
+      ],
+      "statement": "Binary search always succeeds even when its list is unsorted.",
+      "correct": false,
+      "explanation": "The list must be sorted. This lets the search safely rule out half the remaining items.",
+      "correction": "The list must be sorted. This lets the search safely rule out half the remaining items."
+    },
+    "151": {
+      "id": "J277-L151-Q1",
+      "sourceRefs": [
+        "L150"
+      ],
+      "statement": "Selection executes different branches depending on a condition.",
+      "correct": true,
+      "explanation": "It chooses a branch using a condition. Selection can be nested."
+    },
+    "152": {
+      "id": "J277-L152-Q1",
+      "sourceRefs": [
+        "L151"
+      ],
+      "statement": "The text 'twelve' is valid numeric age input if a program expects an integer.",
+      "correct": false,
+      "explanation": "The text 'twelve' is the wrong data type and must be handled or rejected.",
+      "correction": "The text 'twelve' is the wrong data type and must be handled or rejected."
+    },
+    "153": {
+      "id": "J277-L153-Q1",
+      "sourceRefs": [
+        "L152"
+      ],
+      "statement": "The MDR holds the address of the next instruction to fetch.",
+      "correct": false,
+      "explanation": "Data or an instruction being transferred to or from memory.",
+      "correction": "Data or an instruction being transferred to or from memory."
+    },
+    "154": {
+      "id": "J277-L154-Q1",
+      "sourceRefs": [
+        "L153"
+      ],
+      "statement": "Raw text size in bits is characters multiplied by bits per character.",
+      "correct": true,
+      "explanation": "Number of characters × bits per character, using the given encoding."
+    },
+    "155": {
+      "id": "J277-L155-Q1",
+      "sourceRefs": [
+        "L154"
+      ],
+      "statement": "Encryption converts plaintext into ciphertext that is difficult to read without the key.",
+      "correct": true,
+      "explanation": "Encryption changes plaintext into ciphertext. Someone who intercepts it cannot easily read it without the key."
+    },
+    "156": {
+      "id": "J277-L156-Q1",
+      "sourceRefs": [
+        "L155"
+      ],
+      "statement": "The Data Protection Act 2018 gives organisations unlimited freedom to use personal data.",
+      "correct": false,
+      "explanation": "It sets rules for using personal data lawfully and protects people's rights.",
+      "correction": "It sets rules for using personal data lawfully and protects people's rights."
+    },
+    "157": {
+      "id": "J277-L157-Q1",
+      "sourceRefs": [
+        "L156"
+      ],
+      "statement": "A file-size answer should include units such as bits or bytes.",
+      "correct": true,
+      "explanation": "Yes; show a calculation and label the final unit, such as bits or bytes."
+    },
+    "158": {
+      "id": "J277-L158-Q1",
+      "sourceRefs": [
+        "L157"
+      ],
+      "statement": "The final permitted loop iteration can always be skipped without affecting the result.",
+      "correct": false,
+      "explanation": "Yes; omitting it can change the final variable values or output.",
+      "correction": "Yes; omitting it can change the final variable values or output."
+    },
+    "159": {
+      "id": "J277-L159-Q1",
+      "sourceRefs": [
+        "L158"
+      ],
+      "statement": "Saying only 'faster' is enough to fully explain computer performance.",
+      "correct": false,
+      "explanation": "It should identify the relevant characteristic and explain its effect on the stated task.",
+      "correction": "It should identify the relevant characteristic and explain its effect on the stated task."
+    },
+    "160": {
+      "id": "J277-L160-Q1",
+      "sourceRefs": [
+        "L159"
+      ],
+      "statement": "Insertion sort always places the next item at the end without moving larger items.",
+      "correct": false,
+      "explanation": "Place the next item in the correct position in the sorted part. Shift larger items right.",
+      "correction": "Place the next item in the correct position in the sorted part. Shift larger items right."
+    },
+    "161": {
+      "id": "J277-L161-Q1",
+      "sourceRefs": [
+        "L160"
+      ],
+      "statement": "A constant keeps the same named value while a program runs.",
+      "correct": true,
+      "explanation": "A named value that stays the same while the program runs."
+    },
+    "162": {
+      "id": "J277-L162-Q1",
+      "sourceRefs": [
+        "L161"
+      ],
+      "statement": "Raw mono sound size in bits is sample rate divided by duration and bit depth.",
+      "correct": false,
+      "explanation": "Sample rate × duration in seconds × bits per sample.",
+      "correction": "Sample rate × duration in seconds × bits per sample."
+    },
+    "163": {
+      "id": "J277-L163-Q1",
+      "sourceRefs": [
+        "L162"
+      ],
+      "statement": "A logic error always stops a program from running.",
+      "correct": false,
+      "explanation": "A mistake in the algorithm that gives the wrong result, even though the code follows the language's rules.",
+      "correction": "A mistake in the algorithm that gives the wrong result, even though the code follows the language's rules."
+    },
+    "164": {
+      "id": "J277-L164-Q1",
+      "sourceRefs": [
+        "L163"
+      ],
+      "statement": "The best final revision topic is always the one you find easiest.",
+      "correct": false,
+      "explanation": "Evidence of a specific knowledge or method gap from the recent targeted review.",
+      "correction": "Evidence of a specific knowledge or method gap from the recent targeted review."
+    },
     "001": {
       "id": "J277-L001-Q1",
       "sourceRefs": [
@@ -243,6 +859,711 @@
       "statement": "DNS helps find the IP address associated with a domain name.",
       "correct": true,
       "explanation": "DNS resolves a domain name to address records used to contact the destination."
+    },
+    "026": {
+      "id": "J277-L026-Q1",
+      "sourceRefs": [
+        "L025"
+      ],
+      "statement": "If the central switch of a star network fails, devices using it lose contact.",
+      "correct": true,
+      "explanation": "If the central switch fails, devices using it lose contact. A broken cable usually affects just one workstation."
+    },
+    "027": {
+      "id": "J277-L027-Q1",
+      "sourceRefs": [
+        "L026"
+      ],
+      "statement": "Wi-Fi uses cables while wired Ethernet uses radio signals.",
+      "correct": false,
+      "explanation": "Ethernet uses cables. Wi-Fi uses radio, allowing movement but risking interference.",
+      "correction": "Ethernet uses cables. Wi-Fi uses radio, allowing movement but risking interference."
+    },
+    "028": {
+      "id": "J277-L028-Q1",
+      "sourceRefs": [
+        "L027"
+      ],
+      "statement": "An IPv4 address is normally written as six hexadecimal pairs.",
+      "correct": false,
+      "explanation": "IPv4 supports addressing and routing. It is usually written as four decimal numbers separated by dots.",
+      "correction": "IPv4 supports addressing and routing. It is usually written as four decimal numbers separated by dots."
+    },
+    "029": {
+      "id": "J277-L029-Q1",
+      "sourceRefs": [
+        "L028"
+      ],
+      "statement": "SMTP is used to send email.",
+      "correct": true,
+      "explanation": "Sending email from a client to a mail server and between mail servers."
+    },
+    "030": {
+      "id": "J277-L030-Q1",
+      "sourceRefs": [
+        "L029"
+      ],
+      "statement": "Computing standards prevent devices made by different companies from communicating.",
+      "correct": false,
+      "explanation": "Agreed specifications help hardware and software from different producers interoperate.",
+      "correction": "Agreed specifications help hardware and software from different producers interoperate."
+    },
+    "031": {
+      "id": "J277-L031-Q1",
+      "sourceRefs": [
+        "L030"
+      ],
+      "statement": "Phishing can trick people by pretending a message comes from a trusted source.",
+      "correct": true,
+      "explanation": "Phishing pretends to be a trusted source to trick people into sharing data or doing something unsafe."
+    },
+    "032": {
+      "id": "J277-L032-Q1",
+      "sourceRefs": [
+        "L031"
+      ],
+      "statement": "A brute-force password attack succeeds by asking the owner for permission.",
+      "correct": false,
+      "explanation": "It tries many possible passwords or keys until one works.",
+      "correction": "It tries many possible passwords or keys until one works."
+    },
+    "033": {
+      "id": "J277-L033-Q1",
+      "sourceRefs": [
+        "L032"
+      ],
+      "statement": "A firewall automatically blocks every network packet.",
+      "correct": false,
+      "explanation": "It uses rules to allow or block network traffic.",
+      "correction": "It uses rules to allow or block network traffic."
+    },
+    "034": {
+      "id": "J277-L034-Q1",
+      "sourceRefs": [
+        "L033"
+      ],
+      "statement": "Penetration testing requires permission and agreed limits.",
+      "correct": true,
+      "explanation": "Testing with permission, within agreed limits, to find and fix security weaknesses."
+    },
+    "035": {
+      "id": "J277-L035-Q1",
+      "sourceRefs": [
+        "L034"
+      ],
+      "statement": "Encryption helps protect stolen data because ciphertext is difficult to read without its key.",
+      "correct": true,
+      "explanation": "Without the key, an attacker cannot easily read ciphertext. Encryption does not stop theft or deletion."
+    },
+    "036": {
+      "id": "J277-L036-Q1",
+      "sourceRefs": [
+        "L035"
+      ],
+      "statement": "LAN stands for Large Area Network.",
+      "correct": false,
+      "explanation": "Local Area Network.",
+      "correction": "Local Area Network."
+    },
+    "037": {
+      "id": "J277-L037-Q1",
+      "sourceRefs": [
+        "L036"
+      ],
+      "statement": "Assessment feedback should identify whether a mistake came from missing knowledge or inaccurate explanation.",
+      "correct": true,
+      "explanation": "Missing knowledge, a wrong technical term, a missing cause and effect, or a missing detail."
+    },
+    "038": {
+      "id": "J277-L038-Q1",
+      "sourceRefs": [
+        "L037"
+      ],
+      "statement": "An operating system user interface is only used by the computer, not by people.",
+      "correct": false,
+      "explanation": "A user interface lets people use the computer, through GUI controls or typed commands.",
+      "correction": "A user interface lets people use the computer, through GUI controls or typed commands."
+    },
+    "039": {
+      "id": "J277-L039-Q1",
+      "sourceRefs": [
+        "L038"
+      ],
+      "statement": "Device drivers are only used to change a computer's appearance.",
+      "correct": false,
+      "explanation": "It enables communication with and control of a particular peripheral.",
+      "correction": "It enables communication with and control of a particular peripheral."
+    },
+    "040": {
+      "id": "J277-L040-Q1",
+      "sourceRefs": [
+        "L039"
+      ],
+      "statement": "Defragmenting a magnetic HDD can reduce read-head movement.",
+      "correct": true,
+      "explanation": "It brings file fragments together, reducing read-head movement when accessing a file."
+    },
+    "041": {
+      "id": "J277-L041-Q1",
+      "sourceRefs": [
+        "L040"
+      ],
+      "statement": "Replacing devices frequently can increase electronic waste.",
+      "correct": true,
+      "explanation": "Manufacturing uses energy and raw materials, and disposal can add electronic waste."
+    },
+    "042": {
+      "id": "J277-L042-Q1",
+      "sourceRefs": [
+        "L041"
+      ],
+      "statement": "The Data Protection Act 2018 allows organisations to use personal data however they choose.",
+      "correct": false,
+      "explanation": "It sets rules for using personal data lawfully and protects people's rights.",
+      "correction": "It sets rules for using personal data lawfully and protects people's rights."
+    },
+    "043": {
+      "id": "J277-L043-Q1",
+      "sourceRefs": [
+        "L042"
+      ],
+      "statement": "The Computer Misuse Act 1990 addresses unauthorised access to computer systems.",
+      "correct": true,
+      "explanation": "Unauthorised access to computer systems and related prohibited activities."
+    },
+    "044": {
+      "id": "J277-L044-Q1",
+      "sourceRefs": [
+        "L043"
+      ],
+      "statement": "Every open-source licence forbids users from viewing or modifying source code.",
+      "correct": false,
+      "explanation": "It permits access to source code and modification or redistribution under its conditions.",
+      "correction": "It permits access to source code and modification or redistribution under its conditions."
+    },
+    "045": {
+      "id": "J277-L045-Q1",
+      "sourceRefs": [
+        "L044"
+      ],
+      "statement": "An ethical technology issue is only about whether an action is legal.",
+      "correct": false,
+      "explanation": "It concerns fairness, responsibility or what ought to be done, even if an action is legal.",
+      "correction": "It concerns fairness, responsibility or what ought to be done, even if an action is legal."
+    },
+    "046": {
+      "id": "J277-L046-Q1",
+      "sourceRefs": [
+        "L045"
+      ],
+      "statement": "Decomposition breaks a complex problem into smaller parts.",
+      "correct": true,
+      "explanation": "Breaking a complex problem into smaller manageable subproblems."
+    },
+    "047": {
+      "id": "J277-L047-Q1",
+      "sourceRefs": [
+        "L046"
+      ],
+      "statement": "An algorithm should describe a clear, ordered method for solving a problem.",
+      "correct": true,
+      "explanation": "Developing a clear, ordered and unambiguous method for solving a problem."
+    },
+    "048": {
+      "id": "J277-L048-Q1",
+      "sourceRefs": [
+        "L047"
+      ],
+      "statement": "In total = price × quantity, the total is an input rather than an output.",
+      "correct": false,
+      "explanation": "Inputs: price and quantity. Processing: multiplication. Output: total cost.",
+      "correction": "Inputs: price and quantity. Processing: multiplication. Output: total cost."
+    },
+    "049": {
+      "id": "J277-L049-Q1",
+      "sourceRefs": [
+        "L048"
+      ],
+      "statement": "A diamond in a flowchart represents a decision.",
+      "correct": true,
+      "explanation": "A decision or condition with alternative paths."
+    },
+    "050": {
+      "id": "J277-L050-Q1",
+      "sourceRefs": [
+        "L049"
+      ],
+      "statement": "A trace table should record variable updates in any order, even if instructions run differently.",
+      "correct": false,
+      "explanation": "Each variable value depends on the state produced by earlier executed instructions.",
+      "correction": "Each variable value depends on the state produced by earlier executed instructions."
+    },
+    "051": {
+      "id": "J277-L051-Q1",
+      "sourceRefs": [
+        "L050"
+      ],
+      "statement": "An operating system has no role in managing memory.",
+      "correct": false,
+      "explanation": "Memory management, user management, file management, a user interface or peripheral management.",
+      "correction": "Memory management, user management, file management, a user interface or peripheral management."
+    },
+    "052": {
+      "id": "J277-L052-Q1",
+      "sourceRefs": [
+        "L051"
+      ],
+      "statement": "Input enters a program and output is produced by it.",
+      "correct": true,
+      "explanation": "Input enters a program; output is information the program produces."
+    },
+    "053": {
+      "id": "J277-L053-Q1",
+      "sourceRefs": [
+        "L052"
+      ],
+      "statement": "Assignment replaces the value currently stored in a variable.",
+      "correct": true,
+      "explanation": "It stores a value in the named variable, replacing its previous value if one existed."
+    },
+    "054": {
+      "id": "J277-L054-Q1",
+      "sourceRefs": [
+        "L053"
+      ],
+      "statement": "17 DIV 5 gives 2 and 17 MOD 5 gives 3.",
+      "correct": false,
+      "explanation": "DIV gives integer quotient 3; MOD gives remainder 2.",
+      "correction": "DIV gives integer quotient 3; MOD gives remainder 2."
+    },
+    "055": {
+      "id": "J277-L055-Q1",
+      "sourceRefs": [
+        "L054"
+      ],
+      "statement": "A AND B is true only when both A and B are true.",
+      "correct": true,
+      "explanation": "Only when both A and B are true."
+    },
+    "056": {
+      "id": "J277-L056-Q1",
+      "sourceRefs": [
+        "L055"
+      ],
+      "statement": "Selection always runs every branch of an IF statement.",
+      "correct": false,
+      "explanation": "It chooses a branch using a condition. Selection can be nested.",
+      "correction": "It chooses a branch using a condition. Selection can be nested."
+    },
+    "057": {
+      "id": "J277-L057-Q1",
+      "sourceRefs": [
+        "L056"
+      ],
+      "statement": "Selection runs every branch of an IF statement.",
+      "correct": false,
+      "explanation": "It chooses a branch using a condition. Selection can be nested.",
+      "correction": "It chooses a branch using a condition. Selection can be nested."
+    },
+    "058": {
+      "id": "J277-L058-Q1",
+      "sourceRefs": [
+        "L057"
+      ],
+      "statement": "A count-controlled loop suits a known number of repetitions.",
+      "correct": true,
+      "explanation": "When the number of repetitions is known or determined by a fixed count."
+    },
+    "059": {
+      "id": "J277-L059-Q1",
+      "sourceRefs": [
+        "L058"
+      ],
+      "statement": "A condition-controlled loop repeats according to a condition.",
+      "correct": true,
+      "explanation": "When repetition continues or ends according to a condition, such as valid input."
+    },
+    "060": {
+      "id": "J277-L060-Q1",
+      "sourceRefs": [
+        "L059"
+      ],
+      "statement": "In a trace table, the order of executed assignments never changes variable values.",
+      "correct": false,
+      "explanation": "Each variable value depends on the state produced by earlier executed instructions.",
+      "correction": "Each variable value depends on the state produced by earlier executed instructions."
+    },
+    "061": {
+      "id": "J277-L061-Q1",
+      "sourceRefs": [
+        "L060"
+      ],
+      "statement": "Sequence means instructions execute in the specified order.",
+      "correct": true,
+      "explanation": "Instructions execute in the specified order."
+    },
+    "062": {
+      "id": "J277-L062-Q1",
+      "sourceRefs": [
+        "L061"
+      ],
+      "statement": "For £5 tickets, total = tickets + 5 calculates the total price correctly.",
+      "correct": false,
+      "explanation": "Use total = tickets * 5; addition does not calculate £5 for each ticket.",
+      "correction": "Use total = tickets * 5; addition does not calculate £5 for each ticket."
+    },
+    "063": {
+      "id": "J277-L063-Q1",
+      "sourceRefs": [
+        "L062"
+      ],
+      "statement": "Assigning a new value to a variable also keeps its previous value.",
+      "correct": false,
+      "explanation": "It stores a value in the named variable, replacing its previous value if one existed.",
+      "correction": "It stores a value in the named variable, replacing its previous value if one existed."
+    },
+    "064": {
+      "id": "J277-L064-Q1",
+      "sourceRefs": [
+        "L063"
+      ],
+      "statement": "Concatenating 'AB' and '12' gives 'AB12'.",
+      "correct": true,
+      "explanation": "AB12, with no automatically inserted space."
+    },
+    "065": {
+      "id": "J277-L065-Q1",
+      "sourceRefs": [
+        "L064"
+      ],
+      "statement": "Validation checks data against rules but does not prove it is factually correct.",
+      "correct": true,
+      "explanation": "Whether input meets specified rules; it does not prove factual truth or identity."
+    },
+    "066": {
+      "id": "J277-L066-Q1",
+      "sourceRefs": [
+        "L065"
+      ],
+      "statement": "A one-dimensional array can be accessed without using an index.",
+      "correct": false,
+      "explanation": "A fixed-size indexed collection of related elements; OCR ERL indexing begins at zero.",
+      "correction": "A fixed-size indexed collection of related elements; OCR ERL indexing begins at zero."
+    },
+    "067": {
+      "id": "J277-L067-Q1",
+      "sourceRefs": [
+        "L066"
+      ],
+      "statement": "A loop can calculate an array total by adding each item to an accumulator.",
+      "correct": true,
+      "explanation": "Set a total to 0. Loop through the array, adding each value once."
+    },
+    "068": {
+      "id": "J277-L068-Q1",
+      "sourceRefs": [
+        "L067"
+      ],
+      "statement": "A two-dimensional array cell is located using only one index.",
+      "correct": false,
+      "explanation": "Use two indexes: one for the row and one for the column.",
+      "correction": "Use two indexes: one for the row and one for the column."
+    },
+    "069": {
+      "id": "J277-L069-Q1",
+      "sourceRefs": [
+        "L068"
+      ],
+      "statement": "A record can contain only one unnamed value.",
+      "correct": false,
+      "explanation": "Named fields about one item or person. Fields may have different data types.",
+      "correction": "Named fields about one item or person. Fields may have different data types."
+    },
+    "070": {
+      "id": "J277-L070-Q1",
+      "sourceRefs": [
+        "L069"
+      ],
+      "statement": "A function returns a value; a procedure performs a task without a returned result.",
+      "correct": true,
+      "explanation": "A function returns a value to the caller. A procedure performs a task without returning a function value."
+    },
+    "071": {
+      "id": "J277-L071-Q1",
+      "sourceRefs": [
+        "L070"
+      ],
+      "statement": "A procedure can be used for a reusable task such as displaying a menu.",
+      "correct": true,
+      "explanation": "For a named reusable task such as displaying a menu when no function result is required."
+    },
+    "072": {
+      "id": "J277-L072-Q1",
+      "sourceRefs": [
+        "L071"
+      ],
+      "statement": "A parameter is the value returned by a subprogram after it finishes.",
+      "correct": false,
+      "explanation": "A named input received by a subprogram when called with an argument.",
+      "correction": "A named input received by a subprogram when called with an argument."
+    },
+    "073": {
+      "id": "J277-L073-Q1",
+      "sourceRefs": [
+        "L072"
+      ],
+      "statement": "Closing a file releases its resources and helps complete buffered writes.",
+      "correct": true,
+      "explanation": "It releases the handle or resources and helps ensure buffered writes are completed."
+    },
+    "074": {
+      "id": "J277-L074-Q1",
+      "sourceRefs": [
+        "L073"
+      ],
+      "statement": "The WHERE clause tells SQL which columns to display.",
+      "correct": false,
+      "explanation": "It selects rows that meet a condition.",
+      "correction": "It selects rows that meet a condition."
+    },
+    "075": {
+      "id": "J277-L075-Q1",
+      "sourceRefs": [
+        "L074"
+      ],
+      "statement": "In OCR ERL, random(1,6) can never produce 6.",
+      "correct": false,
+      "explanation": "Any integer from 1 through 6 inclusive.",
+      "correction": "Any integer from 1 through 6 inclusive."
+    },
+    "076": {
+      "id": "J277-L076-Q1",
+      "sourceRefs": [
+        "L075"
+      ],
+      "statement": "Authentication checks evidence of a user's claimed identity.",
+      "correct": true,
+      "explanation": "Whether a user has supplied suitable evidence of the claimed identity."
+    },
+    "077": {
+      "id": "J277-L077-Q1",
+      "sourceRefs": [
+        "L076"
+      ],
+      "statement": "Meaningful variable names help other programmers understand code.",
+      "correct": true,
+      "explanation": "Clear names show what values mean and help people read and change code."
+    },
+    "078": {
+      "id": "J277-L078-Q1",
+      "sourceRefs": [
+        "L077"
+      ],
+      "statement": "For valid ages 13–18, 19 is a normal valid test value.",
+      "correct": false,
+      "explanation": "15 is a representative valid value away from the boundaries.",
+      "correction": "15 is a representative valid value away from the boundaries."
+    },
+    "079": {
+      "id": "J277-L079-Q1",
+      "sourceRefs": [
+        "L078"
+      ],
+      "statement": "Testing compares actual outputs with expected results to find faults.",
+      "correct": true,
+      "explanation": "To compare its actual behaviour with the requirements and identify faults."
+    },
+    "080": {
+      "id": "J277-L080-Q1",
+      "sourceRefs": [
+        "L079"
+      ],
+      "statement": "After a failed test, recording only the program name is enough to explain the fault.",
+      "correct": false,
+      "explanation": "The input, expected output, actual output or identified fault, with the correction.",
+      "correction": "The input, expected output, actual output or identified fault, with the correction."
+    },
+    "081": {
+      "id": "J277-L081-Q1",
+      "sourceRefs": [
+        "L080"
+      ],
+      "statement": "In a trace table, variables are updated in alphabetical order.",
+      "correct": false,
+      "explanation": "Each variable value depends on the state produced by earlier executed instructions.",
+      "correction": "Each variable value depends on the state produced by earlier executed instructions."
+    },
+    "082": {
+      "id": "J277-L082-Q1",
+      "sourceRefs": [
+        "L081"
+      ],
+      "statement": "A syntax error breaks a programming language's rules.",
+      "correct": true,
+      "explanation": "A syntax error breaks the language's rules. The affected code cannot be translated or run correctly."
+    },
+    "083": {
+      "id": "J277-L083-Q1",
+      "sourceRefs": [
+        "L082"
+      ],
+      "statement": "Linear search works even if the list has not been sorted.",
+      "correct": true,
+      "explanation": "No; it examines items in sequence until a match is found or the list ends."
+    },
+    "084": {
+      "id": "J277-L084-Q1",
+      "sourceRefs": [
+        "L083"
+      ],
+      "statement": "Binary search works on an unsorted list by checking the middle item.",
+      "correct": false,
+      "explanation": "The list must be sorted. This lets the search safely rule out half the remaining items.",
+      "correction": "The list must be sorted. This lets the search safely rule out half the remaining items."
+    },
+    "085": {
+      "id": "J277-L085-Q1",
+      "sourceRefs": [
+        "L084"
+      ],
+      "statement": "Ascending bubble sort swaps adjacent items when the left value is greater.",
+      "correct": true,
+      "explanation": "When the left item is greater than the right item."
+    },
+    "086": {
+      "id": "J277-L086-Q1",
+      "sourceRefs": [
+        "L085"
+      ],
+      "statement": "Insertion sort places each new item at the end, even if it is out of order.",
+      "correct": false,
+      "explanation": "Place the next item in the correct position in the sorted part. Shift larger items right.",
+      "correction": "Place the next item in the correct position in the sorted part. Shift larger items right."
+    },
+    "087": {
+      "id": "J277-L087-Q1",
+      "sourceRefs": [
+        "L086"
+      ],
+      "statement": "Ascending merge sort combines sorted lists by always choosing the larger next item.",
+      "correct": false,
+      "explanation": "Compare the next item in each list. Take the smaller. Repeat, then add any items left over.",
+      "correction": "Compare the next item in each list. Take the smaller. Repeat, then add any items left over."
+    },
+    "088": {
+      "id": "J277-L088-Q1",
+      "sourceRefs": [
+        "L087"
+      ],
+      "statement": "Binary search does not require the data to be sorted.",
+      "correct": false,
+      "explanation": "The list must be sorted. This lets the search safely rule out half the remaining items.",
+      "correction": "The list must be sorted. This lets the search safely rule out half the remaining items."
+    },
+    "089": {
+      "id": "J277-L089-Q1",
+      "sourceRefs": [
+        "L088"
+      ],
+      "statement": "A NOT gate usually has one input and a small bubble on its output.",
+      "correct": true,
+      "explanation": "It is a one-input inverter, usually a triangle with a small output bubble."
+    },
+    "090": {
+      "id": "J277-L090-Q1",
+      "sourceRefs": [
+        "L089"
+      ],
+      "statement": "A NOT gate leaves both 0 and 1 unchanged.",
+      "correct": false,
+      "explanation": "1 then 0.",
+      "correction": "1 then 0."
+    },
+    "091": {
+      "id": "J277-L091-Q1",
+      "sourceRefs": [
+        "L090"
+      ],
+      "statement": "For A=1, B=0 and C=1, (A AND B) OR C evaluates to 1.",
+      "correct": true,
+      "explanation": "1: A AND B is 0, then 0 OR 1 is 1."
+    },
+    "092": {
+      "id": "J277-L092-Q1",
+      "sourceRefs": [
+        "L091"
+      ],
+      "statement": "A CPU runs high-level source code directly without translation.",
+      "correct": false,
+      "explanation": "A CPU runs machine instructions. High-level source code must be translated before or as it runs.",
+      "correction": "A CPU runs machine instructions. High-level source code must be translated before or as it runs."
+    },
+    "093": {
+      "id": "J277-L093-Q1",
+      "sourceRefs": [
+        "L092"
+      ],
+      "statement": "A compiler translates source code only after the executable has run.",
+      "correct": false,
+      "explanation": "A compiler translates code before it runs. The executable can run again without translating unchanged source code.",
+      "correction": "A compiler translates code before it runs. The executable can run again without translating unchanged source code."
+    },
+    "094": {
+      "id": "J277-L094-Q1",
+      "sourceRefs": [
+        "L093"
+      ],
+      "statement": "An IDE editor is used to write and change source code.",
+      "correct": true,
+      "explanation": "Writing and editing source code, often with helpful formatting or highlighting."
+    },
+    "095": {
+      "id": "J277-L095-Q1",
+      "sourceRefs": [
+        "L094"
+      ],
+      "statement": "An IDE editor lets programmers write and change source code.",
+      "correct": true,
+      "explanation": "The editor."
+    },
+    "096": {
+      "id": "J277-L096-Q1",
+      "sourceRefs": [
+        "L095"
+      ],
+      "statement": "An explain answer only needs a technical word, not a linked reason or effect.",
+      "correct": false,
+      "explanation": "A linked reason or effect that answers the stated situation.",
+      "correction": "A linked reason or effect that answers the stated situation."
+    },
+    "097": {
+      "id": "J277-L097-Q1",
+      "sourceRefs": [
+        "L096"
+      ],
+      "statement": "RAM is volatile, while ROM retains its contents without power.",
+      "correct": true,
+      "explanation": "RAM loses its contents; ROM keeps its contents because it is non-volatile."
+    },
+    "098": {
+      "id": "J277-L098-Q1",
+      "sourceRefs": [
+        "L097"
+      ],
+      "statement": "Virtual memory is stored in a faster part of the CPU cache.",
+      "correct": false,
+      "explanation": "When there is not enough free RAM, secondary storage is used as virtual memory.",
+      "correction": "When there is not enough free RAM, secondary storage is used as virtual memory."
+    },
+    "099": {
+      "id": "J277-L099-Q1",
+      "sourceRefs": [
+        "L098"
+      ],
+      "statement": "The best storage choice is always the cheapest device, regardless of speed or capacity.",
+      "correct": false,
+      "explanation": "The application's requirements, including capacity, speed, cost and physical use.",
+      "correction": "The application's requirements, including capacity, speed, cost and physical use."
     }
   }
 }
