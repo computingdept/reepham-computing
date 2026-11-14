@@ -7,6 +7,7 @@
   const STORAGE_KEY = 'rhs-j277-paper2-progress-v1';
   const LEVELS = ['easy', 'medium', 'hard'];
   const LEVEL_TEXT = { easy: 'Tap and explore', medium: 'Trace and complete', hard: 'Write in OCR ERL' };
+  const READY_SKILLS = new Set(['variables', 'data-types', 'casting', 'sequence', 'operators', 'comparisons', 'selection']);
   const groups = [
     {
       name: 'Programming fundamentals', caption: 'Build first · OCR 2.2.1–2.2.2',
@@ -96,7 +97,7 @@
     updateTileProgress();
   }
   function updateTileProgress() {
-    ['variables', 'data-types', 'casting', 'sequence', 'operators', 'comparisons', 'selection'].forEach(skill => {
+    READY_SKILLS.forEach(skill => {
       const target = $(skill + '-progress');
       if (!target) return;
       const total = LEVELS.reduce((sum, level) => sum + (Number(readProgress(skill, level).solved) || 0), 0);
@@ -106,7 +107,7 @@
 
   function createTile(item, index) {
     const [id, title, , subtitle] = item;
-    const ready = ['variables', 'data-types', 'casting', 'sequence', 'operators', 'comparisons', 'selection'].includes(id);
+    const ready = READY_SKILLS.has(id);
     const card = document.createElement('article');
     card.className = 'tile ' + (ready ? 'ready' : 'planned');
     // Just like a lesson tile, the whole content area opens an available skill.
@@ -177,7 +178,7 @@
       meta.className = 'group-meta';
       const count = document.createElement('span');
       count.className = 'count';
-      count.textContent = i === 0 ? '6 ready / 9' : group.items.length + ' planned';
+      count.textContent = i === 0 ? group.items.filter(item => READY_SKILLS.has(item[0])).length + ' ready / ' + group.items.length : group.items.length + ' planned';
       const chevron = document.createElement('span');
       chevron.className = 'group-chevron'; chevron.setAttribute('aria-hidden', 'true');
       meta.append(count, chevron); summary.append(name, meta);
