@@ -37,6 +37,36 @@ test('DIV, MOD and real division have different meanings', () => {
   assert.equal(engine.evaluateExpression('hello()', {}), null);
 });
 
+test('OCR exponent operator ^ appears in Easy, Medium and Hard and calculates powers', () => {
+  assert.equal(engine.OPERATORS.length, 7);
+  assert.ok(engine.OPERATORS.includes('^'));
+  assert.equal(engine.calculate(3, 4, '^'), 81);
+  for (const level of ['easy', 'medium', 'hard']) {
+    const questions = Array.from({ length: 10 }, (_, index) => engine.makeQuestion(level, index, 52));
+    assert.ok(questions.some(q => level === 'easy' ? q.expected === '^' :
+      level === 'medium' ? q.code.some(line => line.includes('^')) : q.model.includes('^')), `${level} missing ^`);
+  }
+});
+
+test('exponent precedence is correct, right associative, and handles brackets', () => {
+  assert.equal(engine.evaluateExpression('2 ^ 3', {}), 8);
+  assert.equal(engine.evaluateExpression('2 ^ 3 ^ 2', {}), 512);
+  assert.equal(engine.evaluateExpression('2 + 3 ^ 2 * 2', {}), 20);
+  assert.equal(engine.evaluateExpression('(2 + 3) ^ 2', {}), 25);
+  assert.equal(engine.evaluateExpression('-2 ^ 2', {}), -4);
+  assert.equal(engine.evaluateExpression('2 ^ -2', {}), 0.25);
+  assert.equal(engine.evaluateExpression('2 ^ (3 + 1)', {}), 16);
+  assert.equal(engine.evaluateExpression('4 ^ 600', {}), null);
+});
+
+test('hard exponent answers are verified across multiple inputs and wrong precedence is rejected', () => {
+  const q = engine.makeQuestion('hard', 7, 1234);
+  assert.equal(q.rule, 'add-square');
+  assert.equal(engine.checkAnswer(q, q.model).correct, true);
+  assert.equal(engine.checkAnswer(q, q.model.replace('(n + ' + q.c + ') ^ 2', 'n + ' + q.c + ' ^ 2')).correct, false);
+  assert.equal(engine.checkAnswer(q, q.model.replace(' ^ 2', ' * 2')).correct, false);
+});
+
 test('medium accepts exact numeric answer, including a half or quarter', () => {
   const q = engine.makeQuestion('medium', 2, 123);
   assert.ok(!Number.isInteger(q.output));

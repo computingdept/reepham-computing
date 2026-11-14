@@ -84,7 +84,7 @@
     const input = document.createElement('textarea'); input.id = 'operators-code';
     input.className = 'code-entry'; input.rows = 5;
     input.autocomplete = 'off'; input.autocapitalize = 'off'; input.spellcheck = false;
-    input.placeholder = 'number = input("Number")\nanswer = number MOD 3\nprint(answer)';
+    input.placeholder = 'number = input("Number")\nanswer = number ^ 2\nprint(answer)';
     input.addEventListener('input', () => { state.response = input.value; });
     const note = document.createElement('span'); note.className = 'writer-note';
     note.textContent = 'Use any variable names. Your algorithm is checked with several inputs.';
@@ -129,8 +129,8 @@
       disableInputs(); return;
     }
     state.wrong++;
-    feedback(state.level === 'easy' ? 'Compare DIV, MOD and / carefully; remember what each returns.' :
-      state.level === 'medium' ? 'Check the order of operations and distinguish DIV, MOD and /.' :
+    feedback(state.level === 'easy' ? 'Check whether the missing operator is a power (^), a division, or another calculation.' :
+      state.level === 'medium' ? 'Check the order of operations: powers (^) before multiplication and addition.' :
       'Check the operator and the calculation. Try again.', 'bad');
     if (state.wrong >= 2) $('show-answer').hidden = false;
   }

@@ -15,7 +15,7 @@
         ['data-types', 'Data Types', '123', 'Integer, real, Boolean, character, string'],
         ['casting', 'Casting', 'int', 'Convert between types'],
         ['sequence', 'Sequence', '→', 'Input, process and output'],
-        ['operators', 'Operators', '+ −', 'Arithmetic, DIV and MOD'],
+        ['operators', 'Operators', '+ − ^', 'Arithmetic, powers, DIV and MOD'],
         ['comparisons', 'Comparisons', '≥', 'Compare two values'],
         ['selection', 'Selection', 'IF', 'IF, ELSEIF and ELSE'],
         ['for-loops', 'FOR Loops', 'FOR', 'Count-controlled loops'],
