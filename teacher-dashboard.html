@@ -37,7 +37,7 @@
     function save(){localStorage.setItem(STORE,JSON.stringify(data));}
     function escapeHtml(s){return String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
     function heading(h,sub){return `<div class="heading"><div><span class="eyebrow">OCR J277 · RHS COMPUTING</span><h1>${h}</h1><p>${sub}</p></div></div>`;}
-    const warning='<div class="demo-note"><strong>Demonstration only:</strong> 60 fictional students. Progress is saved in this browser, not across devices. The existing Skills and Practice pages do not yet report scores to this dashboard.</div>';
+    const warning='<div class="demo-note"><strong>Fictional pilot:</strong> 60 demonstration students. Assigned Skills record first-try accuracy automatically when launched from My Work; Revision Practice still uses demo scores. Records stay in this browser, not across devices. No real pupil data.</div>';
     const byId=id=>catalog.find(c=>c.id===id);
     const workFor=y=>data.assignments.filter(a=>a.year===y&&byId(a.itemId));
     const records=(student,key,level)=>data.results.filter(r=>r.student===student&&r.assignmentKey===key&&(level===undefined||r.level===level));
@@ -45,7 +45,7 @@
     const latest=(student,key,level)=>{const a=records(student,key,level);return a.length?a[a.length-1].score:null;};
     const dual=a=>a.level==='both'&&byId(a.itemId)?.type==='skill';
     const displayName=a=>{const c=byId(a.itemId);return c?c.title+(a.level&&a.level!=='both'?' · '+a.level[0].toUpperCase()+a.level.slice(1):''):'Unavailable activity';};
-    const launchUrl=(a,level)=>{const c=byId(a.itemId);if(!c)return'#';if(c.type==='skill'&&c.paper===2)return c.url+'?level='+(level||a.level||'easy');return c.url;};
+    const launchUrl=(a,level)=>{const c=byId(a.itemId);if(!c)return'#';if(c.type!=='skill')return c.url;const dest=new URL(c.url,location.origin);if(c.paper===1)dest.searchParams.set('skill',c.sourceKey);dest.searchParams.set('level',level||'easy');if(mode==='learner'){dest.searchParams.set('workCode',studentCode);dest.searchParams.set('workKey',a.key);}return dest.pathname+dest.search+dest.hash;};
     const mastered=(student,a)=>dual(a)?(best(student,a.key,'medium')??-1)>=80:(best(student,a.key)??-1)>=80;
     const attempted=(student,a)=>records(student,a.key).length>0;
     function personProgress(student){const work=workFor(student.year);return{assigned:work.length,attempted:work.filter(a=>attempted(student.id,a)).length,mastered:work.filter(a=>mastered(student.id,a)).length};}
@@ -123,6 +123,7 @@
         container.querySelector('form').onsubmit=e=>{e.preventDefault();const score=Number(e.currentTarget.elements.score.value),level=dual(a)?e.currentTarget.elements.level.value:undefined;data.results.push({student:student.id,assignmentKey:key,score,level,at:new Date().toISOString()});save();renderLearner();};});
     }
     async function start(){try{const response=await fetch('/assets/j277-assignment-catalog.json',{cache:'no-cache'});if(!response.ok)throw Error('Catalogue unavailable');const json=await response.json();if(!Array.isArray(json.items)||json.items.length!==95)throw Error('Unexpected catalogue');catalog=json.items;migrateDemoLevels();render();watchSchedule();}catch(error){app.innerHTML=heading('Catalogue unavailable','Please refresh the page and try again.')+`<section class="panel"><p class="error">The J277 activity catalogue could not be loaded.</p><button class="btn" id="retry">Retry</button></section>`;app.querySelector('#retry').onclick=start;}}
+    window.addEventListener('storage',event=>{if(event.key===STORE&&catalog.length){data=read();render();}});
     start();
   })();
   </script>
