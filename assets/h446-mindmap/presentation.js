@@ -239,7 +239,17 @@ function printSheet(){
 }
 const simpleList=items=>'<ul>'+items.map(x=>'<li>'+escapeHtml(x)+'</li>').join('')+'</ul>';
 function slideBody(s){
- if(s.type==="questions"||s.type==="answers") return '<div class="do-now-grid">'+s.items.map((q,i)=>'<article class="q-card '+(s.type==="answers"?"answer":"")+'"><div class="num">'+escapeHtml(q.label)+'</div><p>'+(s.type==="answers"?escapeHtml(q.answer):escapeHtml(q.text))+'</p></article>').join("")+'</div>';
+ if(s.type==="questions"||s.type==="answers") return '<div class="do-now-grid">'+s.items.map((q,i)=>{
+  const mcq=i===1&&Array.isArray(q.options)&&q.options.length===4;
+  let content;
+  if(s.type==="answers"){
+   content=mcq?'<p class="q2-verdict">'+escapeHtml('ABCD'[q.correctIndex]+' — '+q.options[q.correctIndex])+'</p><p class="q2-explanation">'+escapeHtml(q.explanation)+'</p>':'<p>'+escapeHtml(q.answer)+'</p>';
+  }else{
+   content='<p>'+escapeHtml(q.text)+'</p>';
+   if(mcq)content+='<ol class="q2-options" aria-label="Four multiple-choice answers">'+q.options.map((option,n)=>'<li><span>'+"ABCD"[n]+'</span>'+escapeHtml(option)+'</li>').join('')+'</ol>';
+  }
+  return '<article class="q-card '+(s.type==="answers"?"answer":"")+'"><div class="num">'+escapeHtml(q.label)+'</div>'+content+'</article>';
+ }).join("")+'</div>';
  if(s.type==="map")return '<div class="map-stage"><div class="map-panel">'+mapSVG(s.level,s.focus)+'</div><div class="map-caption"><span>ONE A3 LANDSCAPE SHEET · '+(lesson===36?"BUILD THE FIRST TWO BRANCHES":"CONTINUE THE SAME SHEET")+'</span><strong>'+escapeHtml(s.caption)+'</strong></div></div>';
  if(s.type==="model"){
   const currentStep=shownSteps>0?s.steps[shownSteps-1]:null;
@@ -297,8 +307,8 @@ function back(){
  if(slides[index].type==="model"&&shownSteps>0){shownSteps--;render();return;}
  if(index>0){index--;shownSteps=slides[index].type==="model"?slides[index].steps.length:0;answerVisible=slides[index].type==="board"||slides[index].type==="exit";render();}
 }
-/* The two guided mind-map lessons share the published H446 Do Now Q1 bank.
-   Only the first question and its answer change; Q2-Q4 and slides stay as authored. */
+/* Guided mind-map lessons share the published H446 Do Now Q1 bank.
+   Only Q1 changes; the other retrieval questions retain their own sources. */
 function applyPublishedH446MindMapQ1(){
  const id=String(lesson).padStart(3,"0");
  fetch("../../../data/do-now/q1-published/h446.json",{cache:"force-cache"})
@@ -321,6 +331,34 @@ function applyPublishedH446MindMapQ1(){
   }).catch(error=>console.warn("H446 mind-map Q1 kept authored fallback:",error));
 }
 
+/* The same Q2 central bank supplies the two special mind-map presentations.
+   It changes only Q2; every other question and slide remains intact. */
+function applyPublishedH446MindMapQ2(){
+ const id=String(lesson).padStart(3,"0");
+ if(new URLSearchParams(location.search).get("h446-q2-original")==="1")return;
+ fetch("../../../data/do-now/q2-published/h446.json",{cache:"no-store"})
+  .then(response=>{
+   if(!response.ok)throw Error("Published H446 Q2 bank unavailable");
+   return response.json();
+  }).then(bank=>{
+   const entry=bank.course==="h446"&&bank.status==="published"?bank.lessons?.[id]:null;
+   const source=entry?.taughtIn;
+   if(!entry||typeof entry.question!=="string"||typeof entry.explanation!=="string"
+     ||!Array.isArray(entry.options)||entry.options.length!==4
+     ||new Set(entry.options).size!==4||!Number.isInteger(entry.correctIndex)
+     ||entry.correctIndex<0||entry.correctIndex>3
+     ||!/^L\d{3}$/.test(source)||Number(source.slice(1))>=lesson-1)return;
+   const second=(lesson===36?D36:D37)[1];
+   second.label="Q2 · MCQ · EARLIER · TAUGHT · "+source;
+   second.text=entry.question;
+   second.answer='ABCD'[entry.correctIndex]+" — "+entry.options[entry.correctIndex];
+   second.options=entry.options;
+   second.correctIndex=entry.correctIndex;
+   second.explanation=entry.explanation;
+   if(index<=1)render();
+  }).catch(error=>console.warn("H446 mind-map Q2 retained authored fallback:",error));
+}
+
 function start(){
  $("#app").innerHTML='<header class="top"><div class="top-left"><a class="home" href="../../../h446-hub.html?year=12#lessons" aria-label="Back to Year 12 hub">⌂ Home</a><span class="lesson-tag" id="lesson-number"></span><div><div class="top-title" id="top-title"></div><div class="top-note">Teacher-led revision · One growing A3 sheet</div></div></div><div class="top-right"><button type="button" id="print" title="Print a blank A3 outline">Print blank A3</button><button type="button" id="fullscreen">Full screen ⛶</button></div></header><main class="scene-shell" id="main"><div class="scene-head"><div class="tags"><span class="tag tag-phase" id="phase-tag"></span><span class="tag tag-routine" id="routine-tag"></span><span class="tag tag-response" id="response-tag"></span></div><span class="time" id="time"></span></div><h1 id="slide-title"></h1><p class="subtitle" id="subtitle"></p><section class="scene-body" id="stage" aria-live="polite"></section></main><footer class="footer"><span class="progress" id="progress" aria-hidden="true"></span><div class="count" id="count"></div><div class="controls"><button type="button" id="back">← Back</button><button type="button" id="next" class="primary">Next →</button></div></footer>';
  $("#print").addEventListener("click",()=>{document.body.classList.remove("print-complete");window.print();});
@@ -333,6 +371,7 @@ function start(){
  document.body.insertAdjacentHTML("beforeend",printSheet());
  render();
  applyPublishedH446MindMapQ1();
+ applyPublishedH446MindMapQ2();
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
 })();

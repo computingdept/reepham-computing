@@ -2134,6 +2134,96 @@ function applyPublishedH446Q1(){
     }).catch(error=>console.warn('H446 Q1 kept authored fallback:',error));
 }
 
+/* Published H446 Q2 bank. Only the second Do Now card and its answer are
+   replaced. On load failure the authored question stays available. A teacher
+   may temporarily use ?h446-q2-original=1 to inspect that authored fallback.
+   Q1, Q3, Q4, all J277 lessons and lesson navigation are untouched. */
+function applyPublishedH446Q2(){
+  if(new URLSearchParams(location.search).get('h446-q2-original')==='1')return;
+  const match=location.pathname.match(/\/lessons\/h446\/lesson-(\d{3})(?:\/|\.html|$)/i);
+  if(!match)return;
+  const id=match[1];
+  const section=document.querySelector('#do-now');
+  const cards=section?.querySelectorAll('.donow-questions .donow-question');
+  const stages=section?.querySelectorAll('.donow-stage');
+  const card=cards?.[1],reviewStage=stages?.[2];
+  const review=reviewStage?.querySelector('.donow-review-question');
+  const answerPanel=reviewStage?.querySelector('.donow-review-answer');
+  const cardQuestion=card?.querySelector(':scope > p');
+  const reviewQuestion=review?.querySelector('.review-question')
+    ||review?.querySelector(':scope > p');
+  if(!cardQuestion||!reviewQuestion||!answerPanel)return;
+  fetch('../../../data/do-now/q2-published/h446.json',{cache:'no-store'})
+    .then(response=>{
+      if(!response.ok)throw Error('Published H446 Q2 bank unavailable');
+      return response.json();
+    }).then(bank=>{
+      if(bank.course!=='h446'||bank.status!=='published')return;
+      const entry=bank.lessons?.[id];
+      if(!entry||typeof entry.question!=='string'||!entry.explanation
+        ||!Array.isArray(entry.options)||entry.options.length!==4
+        ||new Set(entry.options).size!==4
+        ||!Number.isInteger(entry.correctIndex)
+        ||entry.correctIndex<0||entry.correctIndex>3)return;
+      const source=entry.taughtIn;
+      const sourceNumber=Number(source?.slice(1));
+      const diagnostic=source==='GCSE';
+      if(!diagnostic&&(!/^L\d{3}$/.test(source)
+        ||sourceNumber>=Number(id)-1
+        ||(Number(id)<=160&&sourceNumber>=181)))return;
+      const makeChoices=showCorrect=>{
+        const list=document.createElement('ol');
+        list.className='h446-q2-options'+(showCorrect?' h446-q2-options--review':'');
+        list.setAttribute('aria-label','Four multiple-choice answers');
+        entry.options.forEach((option,index)=>{
+          const item=document.createElement('li');
+          if(showCorrect&&index===entry.correctIndex)item.classList.add('h446-q2-correct');
+          const letter=document.createElement('span');
+          letter.className='h446-q2-letter';
+          letter.textContent='ABCD'[index];
+          const choice=document.createElement('span');
+          choice.textContent=option;
+          item.append(letter,choice);
+          list.append(item);
+        });
+        return list;
+      };
+      const cardHeading=card.querySelector(':scope > strong');
+      if(cardHeading)cardHeading.textContent='2 · MCQ · EARLIER LEARNING';
+      cardQuestion.textContent=entry.question;
+      card.querySelectorAll('.h446-q2-options').forEach(node=>node.remove());
+      cardQuestion.after(makeChoices(false));
+      reviewQuestion.textContent=entry.question;
+      review.querySelectorAll('.h446-q2-options').forEach(node=>node.remove());
+      reviewQuestion.after(makeChoices(true));
+      const reference=diagnostic?'TAUGHT · GCSE':'TAUGHT · '+source;
+      for(const heading of [cardHeading,review.querySelector('.review-number')]){
+        if(!heading)continue;
+        if(heading!==cardHeading)heading.textContent='QUESTION 2 OF 4 · MCQ';
+        const origin=document.createElement('span');
+        origin.className='h446-retrieval-origin';
+        origin.textContent=reference;
+        heading.append(document.createTextNode(' '),origin);
+      }
+      const label=answerPanel.querySelector('.review-label');
+      const verdict=document.createElement('p');
+      verdict.className='review-answer';
+      verdict.textContent='ABCD'[entry.correctIndex]+' — '+entry.options[entry.correctIndex];
+      const explanation=document.createElement('p');
+      explanation.className='h446-q2-explain';
+      explanation.textContent=entry.explanation;
+      answerPanel.replaceChildren(...(label?[label]:[]),verdict,explanation);
+      if(!document.getElementById('h446-q2-style')){
+        const style=document.createElement('link');
+        style.id='h446-q2-style';
+        style.rel='stylesheet';
+        style.href='../../../assets/h446-lesson/h446-q2.css';
+        document.head.append(style);
+      }
+      section.dataset.h446Q2Published='true';
+    }).catch(error=>console.warn('H446 Q2 bank unavailable; authored fallback retained:',error));
+}
+
 /* Single published J277 Q1 source. Only Q1 is replaced; Q2–Q4, lesson
    navigation and H446 are untouched. If the bank cannot load, the authored
    lesson remains usable rather than displaying an invented answer. */
@@ -2181,6 +2271,7 @@ prepareJ277DoNowSourceLabels();
 applyPublishedJ277Q1();
 prepareH446DoNowSourceLabels();
 applyPublishedH446Q1();
+applyPublishedH446Q2();
 prepareMobileSwipeNavigation();
 /* Responsive binary place-value scaffold, generated from the SVG's actual
    eight column labels and eight bits: no question or answer data is rewritten. */
