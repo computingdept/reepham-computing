@@ -1,0 +1,43 @@
+/* Skill 14 only. Shared Skills typography and layout are inherited. */
+.rhsc-skills-activity .sql-layout{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);align-items:start;gap:16px;width:100%;min-width:0}
+.rhsc-skills-activity .sql-reference,.rhsc-skills-activity .sql-task{min-width:0}
+.rhsc-skills-activity .sql-task{display:grid;gap:11px}
+.rhsc-skills-activity .sql-table-card{border:1px solid #c1d7ca;border-radius:12px;background:#f4f9f5;min-width:0;overflow:hidden}
+.rhsc-skills-activity .sql-table-title{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 13px;color:#285348;background:#e5f2e9}
+.rhsc-skills-activity .sql-table-title strong{font-size:var(--skills-support-title-size,19px)}
+.rhsc-skills-activity .sql-table-title span{font-size:13px;font-weight:650;color:#577365}
+.rhsc-skills-activity .sql-table-scroll{max-width:100%;overflow-x:auto;outline-offset:-2px}
+.rhsc-skills-activity .sql-table{border-collapse:collapse;width:100%;font-size:16px;white-space:nowrap;text-align:left}
+.rhsc-skills-activity .sql-table th,.rhsc-skills-activity .sql-table td{padding:10px 12px;border-bottom:1px solid #dae8df}
+.rhsc-skills-activity .sql-table th{font-weight:800;color:#285348;background:#f3faf5}
+.rhsc-skills-activity .sql-table td{color:#263f34}
+.rhsc-skills-activity .sql-table tr:last-child td{border-bottom:0}
+.rhsc-skills-activity .sql-missing-line{padding:17px 16px;border:1px solid #bed8c6;border-radius:11px;background:#f5faf7;color:#285348;font:750 clamp(18px,1.7vw,25px)/1.45 ui-monospace,Consolas,monospace;overflow-wrap:anywhere}
+.rhsc-skills-activity .sql-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.rhsc-skills-activity .sql-choice{min-height:68px;min-width:0;padding:11px 13px;color:#285348;background:#f0f7f2;border:1px solid #c1d7ca;border-radius:10px;font:750 clamp(17px,1.35vw,20px)/1.3 ui-monospace,Consolas,monospace;cursor:pointer;overflow-wrap:anywhere;touch-action:manipulation}
+.rhsc-skills-activity .sql-choice:hover{border-color:#6d9f7b;background:#e3f2e8}
+.rhsc-skills-activity .sql-choice[aria-pressed="true"]{background:#d1ead8;border:3px solid #285348;padding:9px 11px}
+.rhsc-skills-activity .sql-choice:disabled{cursor:default}
+.rhsc-skills-activity .sql-builder{display:grid;gap:10px}
+.rhsc-skills-activity .sql-select-label{display:grid;gap:5px;font-weight:800;font-size:15px;color:#285348}
+.rhsc-skills-activity .sql-select{box-sizing:border-box;width:100%;min-height:48px;padding:8px 13px;border:1px solid #a5c8af;border-radius:9px;background:white;color:#253e33;font-size:18px;font-weight:600}
+.rhsc-skills-activity .sql-select:focus-visible,.rhsc-skills-activity .sql-code-entry:focus-visible{outline:3px solid #75a68b;outline-offset:2px}
+.rhsc-skills-activity .sql-preview-block{padding:12px 14px;background:#f3faf5;border:1px solid #c6dccd;border-radius:10px;min-width:0}
+.rhsc-skills-activity .sql-preview-title{font-size:14px;color:#476e55;text-transform:uppercase;letter-spacing:.05em}
+.rhsc-skills-activity .sql-preview{margin:8px 0 0;min-height:60px;white-space:pre-wrap;overflow-wrap:anywhere;color:#285348;font:750 clamp(18px,1.5vw,23px)/1.45 ui-monospace,Consolas,monospace}
+.rhsc-skills-activity .sql-answer{display:grid;gap:8px}
+.rhsc-skills-activity .sql-code-entry{box-sizing:border-box;width:100%;min-height:180px;resize:vertical;white-space:pre-wrap;overflow-wrap:anywhere;font-size:20px;line-height:1.5}
+@media(max-width:850px){
+  .rhsc-skills-activity .sql-layout{grid-template-columns:minmax(0,1fr);gap:12px}
+  .rhsc-skills-activity .sql-table th,.rhsc-skills-activity .sql-table td{padding:7px 10px}
+  .rhsc-skills-activity .sql-code-entry{min-height:145px}
+}
+@media(max-width:600px){
+  .rhsc-skills-activity .sql-table{font-size:14px}
+  .rhsc-skills-activity .sql-table th,.rhsc-skills-activity .sql-table td{padding:6px 9px}
+  .rhsc-skills-activity .sql-table-title{padding:8px 10px}
+  .rhsc-skills-activity .sql-choice{min-height:60px;font-size:17px}
+  .rhsc-skills-activity .sql-missing-line{padding:12px;font-size:18px}
+  .rhsc-skills-activity .sql-select{min-height:46px;font-size:17px}
+  .rhsc-skills-activity .sql-preview{font-size:18px}
+}
