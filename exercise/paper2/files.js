@@ -107,8 +107,8 @@
   }
   function hard(index) {
     const tasks = [
-      ['Open the existing file names.txt and store it as myFile.', ['myFile = open("names.txt")']],
-      ['Read the next line from myFile into a variable called name.', ['name = myFile.readLine()']],
+      ['Open the existing file names.txt and store its file reference in a variable of your choice.', ['myFile = open("names.txt")']],
+      ['Read the next line from myFile into a variable of your choice.', ['name = myFile.readLine()']],
       ['Print the next line from myFile.', ['print(myFile.readLine())']],
       ['Add the line "Ruby" to the end of myFile.', ['myFile.writeLine("Ruby")']],
       ['Close myFile after use.', ['myFile.close()']],
@@ -116,8 +116,8 @@
         'while NOT myFile.endOfFile()','    print(myFile.readLine())','endwhile']],
       ['Create a new text file called results.txt.', ['newFile("results.txt")']],
       ['Write the text "Pass" as a new line in myFile.', ['myFile.writeLine("Pass")']],
-      ['Read one line into first, then close myFile.', ['first = myFile.readLine()','myFile.close()']],
-      ['Open names.txt as myFile, read the first line into name, then close it.', [
+      ['Read one line from myFile into a variable of your choice, then close myFile.', ['first = myFile.readLine()','myFile.close()']],
+      ['Open names.txt using a file variable of your choice, read its first line into another variable, then close the file.', [
         'myFile = open("names.txt")','name = myFile.readLine()','myFile.close()']]
     ];
     // Prompt-specific reminders, deliberately using placeholders instead of
@@ -145,12 +145,12 @@
       'Repeat while the end has NOT been reached; read and print inside the loop.',
       'newFile() takes the new filename as a string.',
       'Place the text to append between quotation marks.',
-      'Read into the named variable first, then close the file on a second line.',
-      'First open, then read into name, then close. Use three separate lines.'
+      'Read into your chosen variable first, then close the file on a second line.',
+      'First open, then read into a different variable, then close. Use the same file variable throughout.'
     ];
     const [task, statements] = tasks[index];
     return {level:'hard',type:'write',filename:'names.txt',lines:[],code:[],
-      prompt:'Write the file-handling statement'+(statements.length>1?'s':'')+'.',
+      hardIndex:index, prompt:'Write the file-handling statement'+(statements.length>1?'s':'')+'.',
       context:task, expected:statements.join('\n'), model:statements.join('\n'),
       lineCount:statements.length, helpers:supports[index].map(([label,syntax])=>({label,syntax})),
       hint:tips[index],
@@ -167,12 +167,69 @@
         .replace(/\s+/g,'').replace(/;$/,'').toLowerCase())
       .filter(Boolean).join('\n');
   }
+  // These ten prompts have narrow, checkable semantics. Check the structure of
+  // a solution rather than requiring the model's incidental variable names.
+  // Do not execute student code.
+  const IDENTIFIER='[a-z_][a-z0-9_]*';
+  const validIdentifier=name=>new RegExp('^'+IDENTIFIER+'$').test(name)
+    && !['while','endwhile','if','else','for','print','open','newfile','not'].includes(name);
+  function hardLines(value) {
+    return String(value).replace(/\r/g,'').split('\n').map(line=>line.trim()
+      .replace(/[“”]/g,'"').replace(/[‘’]/g,"'")
+      .replace(/'([^']*)'/g,'"$1"').replace(/\s*(?:←|:=)\s*/g,'=')
+      .replace(/\s*([=().,])\s*/g,'$1').replace(/;\s*$/,'').toLowerCase())
+      .filter(Boolean);
+  }
+  function matchAssign(line,expression) {
+    if(!line)return null;
+    const match=line.match(new RegExp('^('+IDENTIFIER+')='+expression+'$'));
+    return match&&validIdentifier(match[1])?match[1]:null;
+  }
+  function checkHard(q,value) {
+    const lines=hardLines(value), n=q.hardIndex;
+    const same=(index,expected)=>lines[index]===expected;
+    const open='open\\("names\\.txt"\\)';
+    const read='myfile\\.readline\\(\\)';
+    let correct=false;
+    if(n===0) correct=lines.length===1&&!!matchAssign(lines[0],open);
+    else if(n===1) {const name=matchAssign(lines[0],read);correct=lines.length===1&&!!name&&name!=='myfile';}
+    else if(n===2) correct=lines.length===1&&same(0,'print(myfile.readline())');
+    else if(n===3) correct=lines.length===1&&same(0,'myfile.writeline("ruby")');
+    else if(n===4) correct=lines.length===1&&same(0,'myfile.close()');
+    else if(n===5) correct=lines.length===3&&same(0,'while not myfile.endoffile()')
+      &&same(1,'print(myfile.readline())')&&same(2,'endwhile');
+    else if(n===6) correct=lines.length===1&&same(0,'newfile("results.txt")');
+    else if(n===7) correct=lines.length===1&&same(0,'myfile.writeline("pass")');
+    else if(n===8) {const name=matchAssign(lines[0],read);correct=lines.length===2&&!!name
+      &&name!=='myfile'&&same(1,'myfile.close()');}
+    else if(n===9&&lines.length===3) {
+      const handle=matchAssign(lines[0],open);
+      const readMatch=lines[1].match(new RegExp('^('+IDENTIFIER+')=('+IDENTIFIER+')\\.readline\\(\\)$'));
+      const closeMatch=lines[2].match(new RegExp('^('+IDENTIFIER+')\\.close\\(\\)$'));
+      correct=!!handle&&!!readMatch&&!!closeMatch&&validIdentifier(readMatch[1])
+        &&readMatch[1]!==handle&&readMatch[2]===handle&&closeMatch[1]===handle;
+    }
+    if(correct)return {complete:true,correct:true};
+    const code=lines.join('\n');
+    let message='Check the command, brackets and order of the statements.';
+    if(/(?:open|newfile)\([^"']*\.txt\)/.test(code))
+      message='Put quotation marks around the filename because it is a string, for example "'+(n===6?'results.txt':'names.txt')+'".';
+    else if(/\.writeline\((?:ruby|pass)\)/.test(code))
+      message='Put quotation marks around the text inside writeLine().';
+    else if(n===0&&/^open\(/.test(code))
+      message='Store the file returned by open() in a variable, for example file = open("names.txt").';
+    else if(n===9&&/\.readline\(\)/.test(code))
+      message='Use the same file variable for opening, reading and closing. Store the line in a different variable.';
+    else if([0,1,8,9].includes(n))
+      message='Choose a valid variable name and use = to store the value. Keep the file reference separate from text read from it.';
+    return {complete:true,correct:false,feedback:message};
+  }
   function checkAnswer(q,response) {
     const value=String(response??'').trim();
     if(!value) return {complete:false,correct:false};
     if(q.type==='operation') return {complete:true,correct:value===q.expected};
     if(q.type==='value') return {complete:true,correct:value.replace(/^[\s'"“”]+|[\s'"“”]+$/g,'').toLowerCase()===q.expected.toLowerCase()};
-    if(q.type==='write') return {complete:true,correct:normaliseStatements(value)===normaliseStatements(q.expected)};
+    if(q.type==='write') return checkHard(q,value);
     return {complete:true,correct:false};
   }
   return {OPTIONS, makeQuestion,checkAnswer,normaliseStatements};

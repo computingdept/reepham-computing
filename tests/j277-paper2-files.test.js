@@ -71,6 +71,39 @@ test('Hard accepts case, white space, assignment symbols and quote style',()=>{
   assert.equal(engine.makeQuestion('hard',9,1).lineCount,3);
 });
 
+test('Hard marks file operations, not a preferred choice of variable names',()=>{
+  const q=i=>engine.makeQuestion('hard',i,1);
+  for(const i of [0,1,8,9]) assert.match(q(i).context,/variable of your choice|another variable/i);
+  assert.equal(engine.checkAnswer(q(0),'x = open("names.txt")').correct,true);
+  assert.equal(engine.checkAnswer(q(0),"fileRef ← open('names.txt')").correct,true);
+  assert.equal(engine.checkAnswer(q(1),'line_1 = myFile.readLine()').correct,true);
+  assert.equal(engine.checkAnswer(q(8),'nextName = myFile.readLine()\nmyFile.close()').correct,true);
+  assert.equal(engine.checkAnswer(q(9),
+    'handle = open("names.txt")\nfirstLine = handle.readLine()\nhandle.close()').correct,true);
+});
+
+test('Hard rejects missing quotes, invalid identifiers and broken file references',()=>{
+  const q=i=>engine.makeQuestion('hard',i,1);
+  const quoted=engine.checkAnswer(q(0),'x = open(names.txt)');
+  assert.equal(quoted.correct,false);
+  assert.match(quoted.feedback,/quotation marks/i);
+  assert.equal(engine.checkAnswer(q(0),'1x = open("names.txt")').correct,false);
+  assert.equal(engine.checkAnswer(q(0),';').correct,false);
+  assert.equal(engine.checkAnswer(q(0),'x = open("other.txt")').correct,false);
+  assert.equal(engine.checkAnswer(q(1),'myFile = myFile.readLine()').correct,false);
+  assert.equal(engine.checkAnswer(q(8),'x = myFile.readLine()').correct,false);
+  const broken=engine.checkAnswer(q(9),
+    'f = open("names.txt")\nname = other.readLine()\nf.close()');
+  assert.equal(broken.correct,false);
+  assert.match(broken.feedback,/same file variable/i);
+  assert.equal(engine.checkAnswer(q(9),
+    'f = open("names.txt")\nf = f.readLine()\nf.close()').correct,false);
+  assert.equal(engine.checkAnswer(q(3),'myFile.writeLine(Ruby)').correct,false);
+  assert.equal(engine.checkAnswer(q(6),'newFile(results.txt)').correct,false);
+  assert.equal(engine.checkAnswer(q(5),
+    'while NOT myFile.endOfFile()\n    print(other.readLine())\nendwhile').correct,false);
+});
+
 test('Missing answers and invalid question coordinates are rejected',()=>{
   assert.deepEqual(engine.checkAnswer(engine.makeQuestion('easy',0,1),''),{complete:false,correct:false});
   assert.throws(()=>engine.makeQuestion('other',0,1));

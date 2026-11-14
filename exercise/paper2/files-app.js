@@ -119,7 +119,7 @@
     state.wrong++;
     feedback(state.level==='easy'?'Read what each command does.':
       state.level==='medium'?'Track which lines are read or added as you go.':
-      'Check the file variable, command and brackets.','bad');
+      result.feedback||'Check the file variable, command and brackets.','bad');
     if(state.wrong>=2)$('show-answer').hidden=false;
   }
   function showModel() {
