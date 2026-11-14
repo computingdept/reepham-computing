@@ -2767,3 +2767,88 @@ body[data-classroom-focus] :is(#i-do,#we-do)
     margin:0 7px 6px;
   }
 }
+
+/* H446 DO NOW — approved J277 card presentation parity (14 November 2026).
+   Course class comes from the shared lesson engine, and these selectors touch
+   only the first (four-question) Do Now screen. All answer screens, J277,
+   navigation, lesson text and the central question banks are unchanged.
+   This adapts the existing approved J277 Do Now compact rules without
+   importing its broader course-specific classroom-polish stylesheet. */
+@media (min-width:901px) and (min-height:500px){
+  body.h446-donow-layout-parity:not(.answer-page) #do-now .donow-stage:first-child{
+    height:auto;
+    min-height:0;
+  }
+  body.h446-donow-layout-parity:not(.answer-page) #do-now .donow-questions{
+    height:auto;
+    min-height:0;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-template-rows:auto auto;
+    grid-auto-rows:auto;
+    align-content:start;
+    align-items:stretch;
+    gap:clamp(5px,.8vh,8px) clamp(10px,1vw,15px);
+    padding-bottom:2px;
+  }
+  body.h446-donow-layout-parity:not(.answer-page) #do-now .donow-questions > .donow-question{
+    min-width:0;
+    min-height:0;
+    height:100%;
+    padding:clamp(5px,.65vh,9px) clamp(11px,1vw,16px);
+    justify-content:flex-start;
+    align-items:stretch;
+  }
+  body.h446-donow-layout-parity:not(.answer-page) #do-now .donow-questions > .donow-question > strong{
+    margin:0 0 2px;
+    font-size:clamp(15px,1.1vw,19px);
+    line-height:1.22;
+  }
+  body.h446-donow-layout-parity:not(.answer-page) #do-now .donow-questions > .donow-question > p{
+    margin:0;
+    line-height:1.22;
+  }
+  /* H446 Q2 still comes from its published bank; only presentation changes. */
+  body.h446-donow-layout-parity:not(.answer-page) #do-now[data-h446-q2-published="true"] .donow-questions .h446-q2-options{
+    margin:3px 0 0;
+    gap:3px 8px;
+    line-height:1.18;
+  }
+  body.h446-donow-layout-parity:not(.answer-page) #do-now[data-h446-q2-published="true"] .donow-questions .h446-q2-options li{
+    padding:2px 8px;
+    gap:5px;
+    font-size:clamp(17px,1.2vw,22px);
+    font-weight:500;
+    line-height:1.18;
+    border-color:#d9e5de;
+    border-radius:9px;
+    background:#f8faf9;
+  }
+  body.h446-donow-layout-parity:not(.answer-page) #do-now[data-h446-q2-published="true"] .donow-questions .h446-q2-letter{
+    display:inline;
+    width:auto;
+    height:auto;
+    background:transparent;
+    color:inherit;
+    border-radius:0;
+    font-weight:800;
+  }
+  body.h446-donow-layout-parity:not(.answer-page) #do-now[data-h446-q2-published="true"] .donow-questions .h446-q2-letter::after{
+    content:".";
+  }
+}
+body.h446-donow-layout-parity #do-now .donow-stage:first-child .donow-questions > .donow-question{
+  outline:2px solid var(--h446-donow-outline);
+  outline-offset:-2px;
+}
+body.h446-donow-layout-parity #do-now .donow-stage:first-child .donow-questions > .donow-question:nth-child(1){
+  --h446-donow-outline:#347ca8;
+}
+body.h446-donow-layout-parity #do-now .donow-stage:first-child .donow-questions > .donow-question:nth-child(2){
+  --h446-donow-outline:#2c8b68;
+}
+body.h446-donow-layout-parity #do-now .donow-stage:first-child .donow-questions > .donow-question:nth-child(3){
+  --h446-donow-outline:#b97624;
+}
+body.h446-donow-layout-parity #do-now .donow-stage:first-child .donow-questions > .donow-question:nth-child(4){
+  --h446-donow-outline:#8662a8;
+}

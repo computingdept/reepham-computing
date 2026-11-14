@@ -25,6 +25,13 @@ teacherNextAction.setAttribute('aria-hidden','true');
 advance.insertAdjacentElement('afterend',teacherNextAction);
 let current='do-now';
 
+/* H446 Do Now now uses the approved compact J277 card layout. Course-gated
+   here because this classroom engine also serves J277; no question data or
+   reveal behaviour changes. */
+if(/^\/lessons\/h446\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname)){
+  document.body.classList.add('h446-donow-layout-parity');
+}
+
 /* Shared H446/J277 lesson identity: badge is drawn once from the URL, so
    a pupil sees the same lesson number on TV, laptop and the phone header. */
 function lessonIdFromUrl(){
