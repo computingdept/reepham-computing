@@ -34,6 +34,10 @@
       <div class="rhsc-visual-zoom-canvas" tabindex="0"></div>`;
     document.body.appendChild(dialog);
     dialog.querySelector(".rhsc-visual-zoom-close").addEventListener("click", () => dialog.close());
+    dialog.querySelector(".rhsc-visual-zoom-canvas").addEventListener("click", event => {
+      // A second tap on the enlarged artwork returns to the same lesson step.
+      if (event.target.closest?.("svg, img")) dialog.close();
+    });
     dialog.addEventListener("click", event => {
       if (event.target === dialog) dialog.close();
     });
