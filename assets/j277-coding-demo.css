@@ -66,3 +66,12 @@
   .rhsc-skills-activity .skill-demo-table td,.rhsc-skills-activity .skill-demo-table th{padding:4px 7px}
   .rhsc-skills-activity .skill-demo-status{min-height:25px;padding:5px 8px}
 }
+
+/* The global Play/Tools dock is fixed to the phone viewport. Leave a
+   scrollable landing zone below the final answer controls so neither
+   Check answer nor Next question is covered by that dock. */
+@media (max-width:700px){
+  body.paper2-skills.rhsc-skills-activity main.wrap{
+    padding-bottom:calc(104px + env(safe-area-inset-bottom, 0px));
+  }
+}
