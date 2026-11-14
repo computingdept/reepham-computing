@@ -96,15 +96,17 @@
     updateTileProgress();
   }
   function updateTileProgress() {
-    const target = $('variables-progress');
-    if (!target) return;
-    const total = LEVELS.reduce((sum, level) => sum + (Number(readProgress('variables', level).solved) || 0), 0);
-    target.textContent = total + ' correct · replay any time';
+    ['variables', 'data-types'].forEach(skill => {
+      const target = $(skill + '-progress');
+      if (!target) return;
+      const total = LEVELS.reduce((sum, level) => sum + (Number(readProgress(skill, level).solved) || 0), 0);
+      target.textContent = total + ' correct · replay any time';
+    });
   }
 
   function createTile(item, index) {
     const [id, title, , subtitle] = item;
-    const ready = id === 'variables';
+    const ready = id === 'variables' || id === 'data-types';
     const card = document.createElement('article');
     card.className = 'tile ' + (ready ? 'ready' : 'planned');
     const main = document.createElement('div');
@@ -116,26 +118,32 @@
     main.append(label, sub);
     if (ready) {
       const spec = document.createElement('div');
-      spec.className = 'tile-spec'; spec.textContent = '2.2.1';
+      spec.className = 'tile-spec'; spec.textContent = id === 'data-types' ? '2.2.2' : '2.2.1';
       main.append(spec);
     }
     card.append(main);
     if (ready) {
       const foot = document.createElement('div');
-      foot.id = 'variables-progress'; foot.className = 'tile-foot';
+      foot.id = id + '-progress'; foot.className = 'tile-foot';
       main.append(foot);
       const actions = document.createElement('div');
       actions.className = 'tile-actions';
       const play = document.createElement('a');
       play.className = 'tile-action';
       play.innerHTML = '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 5 11 7-11 7z"/></svg><span>Practise</span>';
-      play.href = '/exercise/paper2/variables/';
-      play.setAttribute('aria-label', 'Practise Variables and Constants');
-      const print = document.createElement('a');
-      print.className = 'tile-action';
+      play.href = '/exercise/paper2/' + id + '/';
+      play.setAttribute('aria-label', 'Practise ' + title);
+      const print = document.createElement(id === 'variables' ? 'a' : 'span');
+      print.className = 'tile-action' + (id === 'variables' ? '' : ' tile-action--coming-soon');
       print.innerHTML = '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="6" y="15" width="12" height="6" rx="1"/><path d="M6 17H3v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6h-3M17 12h.01"/></svg><span>Print</span>';
-      print.href = '/exercise/paper2/variables/print/';
-      print.setAttribute('aria-label', 'Print Variables and Constants worksheet');
+      if (id === 'variables') {
+        print.href = '/exercise/paper2/variables/print/';
+        print.setAttribute('aria-label', 'Print Variables and Constants worksheet');
+      } else {
+        print.querySelector('span').textContent = 'Soon';
+        print.setAttribute('aria-label', 'Printable worksheet coming soon');
+        print.title = 'Printable worksheet coming soon';
+      }
       actions.append(play, print);
       card.append(actions);
     } else {
@@ -163,7 +171,7 @@
       meta.className = 'group-meta';
       const count = document.createElement('span');
       count.className = 'count';
-      count.textContent = i === 0 ? '1 ready / 9' : group.items.length + ' planned';
+      count.textContent = i === 0 ? '2 ready / 9' : group.items.length + ' planned';
       const chevron = document.createElement('span');
       chevron.className = 'group-chevron'; chevron.setAttribute('aria-hidden', 'true');
       meta.append(count, chevron); summary.append(name, meta);
@@ -418,6 +426,9 @@
     // Preserve lesson and worksheet links made before each skill got its own HTML page.
     if (new URLSearchParams(window.location.search).get('skill') === 'variables') {
       window.location.replace('/exercise/paper2/variables/?level=' + core.levelFromUrl());
+    }
+    if (new URLSearchParams(window.location.search).get('skill') === 'data-types') {
+      window.location.replace('/exercise/paper2/data-types/?level=' + core.levelFromUrl());
     }
   }
   if ($('practice')) {
