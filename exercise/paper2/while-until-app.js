@@ -8,7 +8,7 @@
   const STORAGE_KEY='rhs-j277-paper2-progress-v1';
   const SKILL='while-until';
   const LEVEL_TEXT={easy:'Compare WHILE with DO UNTIL',medium:'Trace the final printed number',hard:'Write condition-controlled loops in OCR ERL'};
-  const state={level:'easy',index:0,seed:1,score:0,wrong:0,question:null,response:null,locked:false};
+  const state={level:'easy',index:0,seed:1,score:0,wrong:0,question:null,response:null,locked:false,modelShown:false};
   let traceTimer=null;
   function stopTrace(){if(traceTimer!==null){clearInterval(traceTimer);traceTimer=null;}}
   const printSvg='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="6" y="15" width="12" height="6" rx="1"/><path d="M6 17H3v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6h-3M17 12h.01"/></svg>';
@@ -87,13 +87,13 @@
   function renderQuestion(){
     stopTrace();
     state.question=engine.makeQuestion(state.level,state.index,state.seed);
-    state.response=null;state.wrong=0;state.locked=false;
-    $('question-card').classList.remove('finished');
+    state.response=null;state.wrong=0;state.locked=false;state.modelShown=false;
+    $('question-card').classList.remove('finished','loop-model-open');
     $('prompt').textContent=state.question.prompt;$('context').textContent=state.question.context;
     $('question-position').textContent='Question '+(state.index+1)+' of 10';
     $('meter').setAttribute('aria-valuenow',String(state.index));$('meter-fill').style.width=state.index*10+'%';
     ['check','clear','hint'].forEach(id=>{$(id).hidden=false;});
-    $('show-answer').hidden=true;$('next').hidden=true;
+    $('show-answer').hidden=false;$('show-answer').title='Show the worked model. Revealing before a correct answer earns no mark.';$('next').hidden=true;
     $('next').textContent=state.index===9?'See results →':'Next question →';
     resetFeedback();
     const work=$('workspace');work.replaceChildren();work.classList.toggle('is-hard',state.level==='hard');
@@ -103,7 +103,7 @@
   }
   function disableInputs(){
     $('workspace').querySelectorAll('button,input,textarea').forEach(el=>{el.disabled=true;});
-    ['check','clear','hint','show-answer'].forEach(id=>{$(id).hidden=true;});
+    ['check','clear','hint'].forEach(id=>{$(id).hidden=true;});
     $('next').hidden=false;
   }
   function check(){
@@ -121,16 +121,20 @@
     state.wrong++;
     feedback(state.level==='hard'?'Check the stopping condition, update the counter, and close the loop with ENDWHILE or UNTIL.':
       state.level==='medium'?'Trace the loop, remembering when the condition is checked.':'WHILE checks first; DO UNTIL runs before checking.','bad');
-    if(state.wrong>=2)$('show-answer').hidden=false;
   }
   function showModel(){
-    if(state.locked||state.wrong<2)return;
-    state.locked=true;disableInputs();
-    if(state.question.trace){renderTrace(state.question);feedback('Follow the model trace. No point was added for this question.','neutral');return;}
+    if(state.modelShown)return;
+    const alreadyCorrect=state.locked;
+    state.modelShown=true;
+    if(!state.locked){state.locked=true;disableInputs();}
+    $('show-answer').hidden=true;
+    $('question-card').classList.add('loop-model-open');
+    const resultMessage=alreadyCorrect?'Model revealed. Your correct-answer mark is retained.':'Model revealed. No point was added for this question.';
+    if(state.question.trace){renderTrace(state.question);feedback(resultMessage,'neutral');return;}
     const panel=$('hint-panel');const label=document.createElement('strong');label.textContent='Model answer';
     const pre=document.createElement('pre');pre.className='erl';pre.textContent=state.question.model;
     panel.replaceChildren(label,pre);panel.hidden=false;
-    feedback('Compare with the model. No point was added for this question.','neutral');
+    feedback(resultMessage,'neutral');
   }
   function renderTrace(q){
     const trace=q.trace;
@@ -152,11 +156,12 @@
     });
     head.append(header);table.append(head);
     const body=document.createElement('tbody');table.append(body);
+    const scroll=document.createElement('div');scroll.className='loop-trace-scroll';scroll.tabIndex=0;scroll.setAttribute('aria-label','Scroll the model trace table');scroll.append(table);
     const status=document.createElement('p');status.className='loop-trace-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');
     const output=document.createElement('div');output.className='loop-trace-output';
     const outputLabel=document.createElement('span');outputLabel.textContent=trace.operation==='ticks'?'Total prints':'Printed answer';
     const outputValue=document.createElement('strong');output.append(outputLabel,outputValue);
-    board.append(title,controls,table,status,output);
+    board.append(title,controls,scroll,status,output);
     original.replaceWith(board);
     let index=0;
     function paint(){
@@ -173,6 +178,7 @@
         }
         body.append(tr);
       });
+      scroll.scrollTop=scroll.scrollHeight;
       const done=index===trace.rows.length;
       const current=trace.rows[index-1];
       if(!current)status.textContent='Ready. Use Play or Step to see each condition check and update.';
@@ -208,7 +214,7 @@
     if(state.level==='hard')renderHard(state.question,work);
     else if(state.level==='medium')renderMedium(state.question,work);
     else renderEasy(state.question,work);
-    $('show-answer').hidden=state.wrong<2;
+    $('show-answer').hidden=false;
   }
   function finish(){
     stopTrace();
