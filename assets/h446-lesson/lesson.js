@@ -2202,7 +2202,7 @@ function applyPreviewH446Q2(){
         const origin=document.createElement('span');
         origin.className='h446-retrieval-origin';
         origin.textContent=reference;
-        heading.append(origin);
+        heading.append(document.createTextNode(' '),origin);
       }
       const label=answerPanel.querySelector('.review-label');
       const verdict=document.createElement('p');
