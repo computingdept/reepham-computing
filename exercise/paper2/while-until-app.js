@@ -134,7 +134,7 @@
     if(!state.locked){state.locked=true;disableInputs();}
     $('show-answer').hidden=true;
     $('question-card').classList.add('loop-model-open');
-    const resultMessage=alreadyCorrect?'Model revealed. Your correct-answer mark is retained.':'Model revealed. No point was added for this question.';
+    const resultMessage=alreadyCorrect?'Model shown. Your mark is kept.':'Model shown. No mark for this question.';
     if(state.question.trace){renderTrace(state.question);feedback(resultMessage,'neutral');return;}
     const panel=$('hint-panel');const label=document.createElement('strong');label.textContent='Model answer';
     const pre=document.createElement('pre');pre.className='erl';pre.textContent=state.question.model;
@@ -183,7 +183,7 @@
       scroll.scrollTop=scroll.scrollHeight;
       const done=index===events.length;
       const current=events[index-1];
-      if(!current)status.textContent='Ready. Play or Step follows one code line at a time.';
+      if(!current)status.textContent='Ready. Play or Step through the code.';
       else status.textContent='Line '+String(current.line).padStart(2,'0')+' · '+current.action;
       outputValue.textContent=done?String(trace.final):'?';
       output.classList.toggle('is-revealed',done);
