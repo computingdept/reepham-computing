@@ -325,6 +325,8 @@
       const active = !!current && idx === current[0] - 1;
       row.classList.toggle('is-tracing', active);
       row.classList.toggle('is-upcoming', page === 'sql' && idx >= index);
+      if (page === 'sql') row.children[1].textContent = idx < index
+        ? example.lines[idx] : example.lines[idx].split(' ')[0] + ' …';
       if (active) row.setAttribute('aria-current', 'step');
       else row.removeAttribute('aria-current');
     });

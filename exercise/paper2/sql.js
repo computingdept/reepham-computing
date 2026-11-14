@@ -131,7 +131,7 @@
           (where.op === '<' ? 'below ' : where.op === '>' ? 'above ' : 'at least ') + where.value;
     const task = 'Similar example: Show ' + (wildcard ? 'every column' : 'the ' + columns.join(' and ')) +
       ' from ' + other + condition + '.';
-    return {title: 'SQL Builder', codeLabel: other + ' table · worked example',
+    return {title: 'SQL Builder', codeLabel: other + ' table · ' + TABLES[other].columns.join(', '),
       columns: ['Clause', 'What it does'], lines, steps, task,
       end: 'Example query: ' + makeSQL(example) + '; ' +
         (where ? 'WHERE filters the rows.' : 'No WHERE is needed because every row is included.')};
