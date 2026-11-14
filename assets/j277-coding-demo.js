@@ -97,6 +97,27 @@
       ],
       end: 'Outputs: 7, then 7. In seats[row,column], both indices start at zero.'
     },
+    records: {
+      title: 'Records', codeLabel: 'Example record-field notation',
+      columns: ['Field / action', 'Value'],
+      lines: [
+        'player.name = "Asha"',
+        'player.score = 12',
+        'player.active = True',
+        'print(player.name)',
+        'player.score = player.score + 5',
+        'print(player.score)'
+      ],
+      steps: [
+        [1, 'player.name', 'Asha', 'The name field stores a string.'],
+        [2, 'player.score', '12', 'The score field stores an integer in the same record.'],
+        [3, 'player.active', 'True', 'The active field stores a Boolean.'],
+        [4, 'Output', 'Asha', 'Read just the name field.'],
+        [5, 'player.score', '17', 'Only score changes: 12 + 5 = 17.'],
+        [6, 'Output', '17', 'Print the updated score.']
+      ],
+      end: 'Outputs: Asha, then 17. One record stores related values of different types.'
+    },
     selection: {
       title: 'Selection', columns: ['Check / action', 'Result'],
       lines: [
@@ -193,7 +214,7 @@
 
   const grid = make('div', 'skill-demo-grid');
   const codePanel = make('div', 'skill-demo-code');
-  const label = make('span', 'code-label', 'OCR Exam Reference Language');
+  const label = make('span', 'code-label', example.codeLabel || 'OCR Exam Reference Language');
   const pre = make('pre', 'erl skill-demo-source');
   const codeRows = [];
   example.lines.forEach((line, idx) => {
