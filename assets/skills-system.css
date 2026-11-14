@@ -77,6 +77,31 @@ body.paper2-skills.rhsc-skills-system .wrap {
   box-shadow:0 1px 3px #0001;
 }
 .rhsc-skills-system .paper-switch a:hover {background:#f7faf8;color:var(--skills-green)}
+/* The Skills link is a fourth resource tab, not a separate browser-style link. */
+body.course-hub.synergy-unified-hub.rhsc-skills-system .synergy-course-controls .course-nav > a.j277-skills-nav {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 auto;
+  min-height:38px;
+  margin:0;
+  padding:8px 10px 6px;
+  border:0;
+  border-bottom:2px solid transparent;
+  border-radius:0;
+  background:transparent;
+  color:#59635e;
+  font-size:12px;
+  font-weight:700;
+  line-height:1.2;
+  white-space:nowrap;
+  text-decoration:none;
+}
+body.course-hub.synergy-unified-hub.rhsc-skills-system .synergy-course-controls .course-nav > a.j277-skills-nav[aria-current="page"] {
+  color:var(--skills-green);
+  border-bottom-color:var(--skills-green);
+  font-weight:800;
+}
 .rhsc-skills-hub .skills-group,
 .rhsc-skills-hub .groups {margin-top:13px}
 .rhsc-skills-hub #home .skills-group {margin-top:13px}
@@ -187,6 +212,32 @@ body.rhsc-skills-hub .tiles>.tile .tile-action--coming-soon span {color:#825d59}
 @media(max-width:1100px){.rhsc-skills-hub .tiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:700px){
   .rhsc-skills-system .wrap,body.paper2-skills.rhsc-skills-system .wrap{padding:10px 12px 26px}
+  body.course-hub.course-inline-nav.synergy-unified-hub.rhsc-skills-activity > .topbar.synergy-corners{
+    grid-template-rows:38px 36px;
+    height:74px!important;
+    min-height:74px!important;
+  }
+  body.course-hub.synergy-unified-hub.rhsc-skills-system .synergy-course-controls .course-nav > a.j277-skills-nav{
+    min-height:34px;
+    padding:6px 7px 4px;
+  }
+  .rhsc-skills-activity .wrap{padding-top:5px!important}
+  .rhsc-skills-activity .practice-toolbar{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    grid-template-rows:auto auto;
+    column-gap:7px;
+    row-gap:1px;
+    margin-bottom:3px;
+  }
+  .rhsc-skills-activity .practice-toolbar .levels{grid-row:1;grid-column:2;margin:0;align-self:center}
+  .rhsc-skills-activity .practice-toolbar .level{min-height:34px;padding:5px 9px;font-size:12px}
+  .rhsc-skills-activity .practice-toolbar .activity-links{grid-row:1;grid-column:1;gap:5px}
+  .rhsc-skills-activity .practice-toolbar .practice-name{grid-row:2;grid-column:1 / -1}
+  .rhsc-skills-activity .practice-toolbar .activity-links .print-soon{display:none!important}
+  .rhsc-skills-activity .question-status{margin:2px 0 5px}
+  .rhsc-skills-activity .question-card{min-height:0}
+  .rhsc-skills-activity .question-text{margin-bottom:6px}
   .rhsc-skills-hub .hero{gap:8px;margin-bottom:10px}
   .rhsc-skills-hub .hero h1{font-size:23px}
   .rhsc-skills-system .paper-switch :is(a,span){padding:6px 8px;font-size:11px;min-height:33px}
@@ -194,9 +245,6 @@ body.rhsc-skills-hub .tiles>.tile .tile-action--coming-soon span {color:#825d59}
   .rhsc-skills-hub .group-summary{padding:10px 12px}
   .rhsc-skills-hub .group-content{padding:10px}
   .rhsc-skills-hub .tile,.rhsc-skills-hub .theory .tile{min-height:149px}
-  .rhsc-skills-activity .activity-links{grid-row:1;grid-column:1 / -1}
-  .rhsc-skills-activity .practice-name{grid-row:2;grid-column:1}
-  .rhsc-skills-activity .levels{grid-row:2;grid-column:2}
 }
 @media(max-width:490px){
   .rhsc-skills-hub .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -204,8 +252,9 @@ body.rhsc-skills-hub .tiles>.tile .tile-action--coming-soon span {color:#825d59}
   .rhsc-skills-hub .tile-sub{font-size:10.5px}
   .rhsc-skills-hub .hero .kicker{font-size:10px}
   .rhsc-skills-hub .hero h1{font-size:21px}
-  .rhsc-skills-activity .activity-links{grid-column:1}
-  .rhsc-skills-activity .practice-name{grid-row:2}
-  .rhsc-skills-activity .levels{grid-row:3;grid-column:1}
+  .rhsc-skills-activity .practice-toolbar{grid-template-columns:minmax(0,1fr) auto;gap:1px 5px}
+  .rhsc-skills-activity .practice-toolbar .activity-links{grid-column:1}
+  .rhsc-skills-activity .practice-toolbar .practice-name{grid-row:2;grid-column:1 / -1}
+  .rhsc-skills-activity .practice-toolbar .levels{grid-row:1;grid-column:2;justify-self:end}
 }
 @media(prefers-reduced-motion:reduce){.rhsc-skills-system *{scroll-behavior:auto!important;transition:none!important}}
