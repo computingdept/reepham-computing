@@ -354,9 +354,9 @@ body.course-hub .wrap{padding-top:12px}
     var main=document.createElement("span");main.textContent=variableCount()===3?"A ↓":"AB ↓";
     var small=document.createElement("small");small.textContent=variableCount()===3?"BC →":"CD →";
     corner.append(main,small);map.append(corner);
-    for(var c=0;c<4;c++){var h=document.createElement("div");h.className="axis";h.textContent=String(gray[c]).padStart(2,"0");map.append(h);}
+    for(var c=0;c<4;c++){var h=document.createElement("div");h.className="axis";h.textContent=gray[c].toString(2).padStart(2,"0");map.append(h);}
     for(var r=0;r<rows();r++){
-      var v=document.createElement("div");v.className="axis";v.textContent=variableCount()===3?String(r):String(gray[r]).padStart(2,"0");map.append(v);
+      var v=document.createElement("div");v.className="axis";v.textContent=variableCount()===3?String(r):gray[r].toString(2).padStart(2,"0");map.append(v);
       for(var col=0;col<4;col++){
         var pos=r*4+col,cell=document.createElement("button");cell.type="button";cell.className="kcell";
         var text=values[pos]===null?"–":String(values[pos]);cell.textContent=text;
@@ -365,7 +365,7 @@ body.course-hub .wrap{padding-top:12px}
         if(stage===3&&truth[pos]===1)cell.classList.add("solved");
         var tags=groups.map(function(g,i){return g.cells.includes(pos)?i+1:null;}).filter(function(x){return x!==null;});
         if(tags.length){var dot=document.createElement("span");dot.className="badges";dot.textContent="G"+tags.join(",");cell.append(dot);}
-        var input=String(inputOf(pos)).padStart(variableCount(),"0");
+        var input=inputOf(pos).toString(2).padStart(variableCount(),"0");
         cell.setAttribute("aria-label","Inputs "+input+", "+(values[pos]===null?"blank":"output "+values[pos])+(stage===2?", "+(selected.has(pos)?"selected":"not selected"):""));
         cell.disabled=stage===3||(stage===2&&values[pos]!==1);
         cell.addEventListener("click",(function(position){return function(){cellClick(position);};})(pos));
