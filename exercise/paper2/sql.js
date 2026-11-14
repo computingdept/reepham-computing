@@ -102,12 +102,12 @@
     const columns = wildcard ? ['*'] : other === 'Books'
       ? (multi ? ['Title', 'Pages'] : ['Title'])
       : (multi ? ['Name', 'Score'] : ['Name']);
-    const numerical = q.level !== 'easy' && q.where && typeof q.where.value === 'number';
-    const lessThan = numerical && q.where.op.startsWith('<');
+    const numerical = q.level === 'easy' ? easyIndex === 6 : !!(q.where && typeof q.where.value === 'number');
+    const lessThan = numerical && !!q.where && q.where.op.startsWith('<');
     const where = !filtered ? null : numerical
       ? other === 'Books'
-        ? {field: 'Pages', op: lessThan ? '<' : '>=', value: lessThan ? 200 : 200}
-        : {field: 'Score', op: lessThan ? '<' : '>=', value: lessThan ? 75 : 70}
+        ? {field: 'Pages', op: lessThan ? '<' : numerical && easyIndex === 6 ? '>' : '>=', value: 200}
+        : {field: 'Score', op: lessThan ? '<' : numerical && easyIndex === 6 ? '>' : '>=', value: lessThan ? 75 : 70}
       : other === 'Books'
         ? {field: 'Genre', op: '=', value: 'Science'}
         : {field: 'House', op: '=', value: 'Red'};
@@ -125,8 +125,12 @@
       steps.push([3, 'WHERE', condition,
         'Keep only matching rows. Text needs quotation marks; numbers do not.']);
     }
+    const condition = !where ? ' for every ' + (other === 'Books' ? 'book' : 'pupil')
+      : typeof where.value === 'string' ? ' where ' + where.field + ' is ' + where.value
+        : ' where ' + where.field + ' is ' +
+          (where.op === '<' ? 'below ' : where.op === '>' ? 'above ' : 'at least ') + where.value;
     const task = 'Similar example: Show ' + (wildcard ? 'every column' : 'the ' + columns.join(' and ')) +
-      ' for ' + (where ? 'matching' : 'every') + ' ' + (other === 'Books' ? 'book' : 'pupil') + '.';
+      ' from ' + other + condition + '.';
     return {title: 'SQL Builder', codeLabel: other + ' table · worked example',
       columns: ['Clause', 'What it does'], lines, steps, task,
       end: 'Example query: ' + makeSQL(example) + '; ' +

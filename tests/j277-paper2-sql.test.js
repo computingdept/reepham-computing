@@ -16,6 +16,8 @@ test('all 30 SQL questions have clear prompts and valid model answers', () => {
       }
     }
   }
+  assert.match(engine.makeDemo(engine.makeQuestion('easy', 6, 1)).lines[2], />/);
+  assert.match(engine.makeDemo(engine.makeQuestion('hard', 3, 1)).task, /where Genre is Science/);
 });
 
 test('valid alternative SQL syntax is accepted without literal model matching', () => {
