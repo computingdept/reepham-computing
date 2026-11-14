@@ -68,7 +68,7 @@
     }
   ];
   const state = {
-    level: 'easy', index: 0, seed: 1, score: 0, wrong: 0,
+    level: 'easy', index: 0, seed: 1, score: 0, firstTry: 0, wrong: 0,
     question: null, response: null, locked: false
   };
 
@@ -200,7 +200,7 @@
     core.updateLevelUrl(state.level);
     state.index = 0;
     state.seed = Math.floor(Math.random() * 2147483647) + 1;
-    state.score = 0;
+    state.score = 0; state.firstTry = 0;
     document.querySelectorAll('.level').forEach(button => {
       const chosen = button.dataset.level === level;
       button.classList.toggle('active', chosen);
@@ -350,6 +350,7 @@
     }
     if (result.correct) {
       state.locked = true;
+      if (state.wrong === 0) state.firstTry += 1;
       state.score += 1;
       const current = readProgress('variables', state.level);
       updateProgress('variables', state.level, 'solved', (Number(current.solved) || 0) + 1);
@@ -387,6 +388,7 @@
     $('show-answer').hidden = state.wrong < 2;
   }
   function finish() {
+    core.reportCompletion(2, 'variables', state.level, state.firstTry, 10);
     const current = readProgress('variables', state.level);
     updateProgress('variables', state.level, 'best', Math.max(Number(current.best) || 0, state.score));
     updateProgress('variables', state.level, 'sessions', (Number(current.sessions) || 0) + 1);
