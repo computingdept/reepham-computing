@@ -72,7 +72,7 @@
       throw new Error('Invalid SQL question');
     if (level === 'easy') {
       const item = EASY[index];
-      return {level, type: 'choice', table: index === 3 || index === 7 || index === 8 ? 'Books' : 'Pupils',
+      return {level, index, type: 'choice', table: index === 3 || index === 7 || index === 8 ? 'Books' : 'Pupils',
         prompt: 'Complete the SQL statement.', context: item.task, line: item.line,
         options: item.options, expected: item.correct,
         hint: 'SELECT chooses columns, FROM chooses the table, and WHERE filters rows.',
@@ -80,14 +80,57 @@
         explanation: item.correct + ' completes this SQL statement.'};
     }
     const task = TASKS[index];
-    return {level, type: level === 'medium' ? 'build' : 'write',
+    return {level, index, type: level === 'medium' ? 'build' : 'write',
       table: task.table, columns: task.columns, where: task.where,
       prompt: level === 'medium' ? 'Build the SQL query.' : 'Write the SQL query.',
       context: task.task, model: makeSQL(task),
       columnsToChoose: columnOptions(task), tablesToChoose: ['Pupils', 'Books'], filtersToChoose: filterOptions(task),
-      hint: task.where ? 'SELECT the columns, FROM the table, then WHERE to filter the rows.' :
-        'You need SELECT and FROM. No WHERE is needed to show every row.',
+      hint: task.where
+        ? 'The question asks for a smaller group. Which table heading contains the condition? Put that comparison after WHERE.'
+        : 'The question says every record. Choose the named column(s) after SELECT and the table after FROM; leave out WHERE.',
       explanation: 'Correct — your query selects the requested columns and rows.'};
+  }
+
+  // The demo uses a different table so it teaches the current question's method,
+  // without revealing the current question's model answer or changing progress.
+  function makeDemo(q) {
+    const other = q.table === 'Pupils' ? 'Books' : 'Pupils';
+    const easyIndex = q.level === 'easy' ? q.index : -1;
+    const filtered = q.level === 'easy' ? [2, 5, 6, 8, 9].includes(easyIndex) : !!q.where;
+    const wildcard = q.level === 'easy' ? easyIndex === 7 : q.columns.includes('*');
+    const multi = q.level !== 'easy' && q.columns.length > 1;
+    const columns = wildcard ? ['*'] : other === 'Books'
+      ? (multi ? ['Title', 'Pages'] : ['Title'])
+      : (multi ? ['Name', 'Score'] : ['Name']);
+    const numerical = q.level !== 'easy' && q.where && typeof q.where.value === 'number';
+    const lessThan = numerical && q.where.op.startsWith('<');
+    const where = !filtered ? null : numerical
+      ? other === 'Books'
+        ? {field: 'Pages', op: lessThan ? '<' : '>=', value: lessThan ? 200 : 200}
+        : {field: 'Score', op: lessThan ? '<' : '>=', value: lessThan ? 75 : 70}
+      : other === 'Books'
+        ? {field: 'Genre', op: '=', value: 'Science'}
+        : {field: 'House', op: '=', value: 'Red'};
+    const example = {table: other, columns, where};
+    const lines = ['SELECT ' + columns.join(', '), 'FROM ' + other];
+    const steps = [
+      [1, 'SELECT', columns.join(', '), wildcard
+        ? 'An asterisk after SELECT asks for every column, not every row.'
+        : 'Choose the heading(s) for the information to display.'],
+      [2, 'FROM', other, 'Name the table holding those columns.']
+    ];
+    if (where) {
+      const condition = where.field + ' ' + where.op + ' ' + quote(where.value);
+      lines.push('WHERE ' + condition);
+      steps.push([3, 'WHERE', condition,
+        'Keep only matching rows. Text needs quotation marks; numbers do not.']);
+    }
+    const task = 'Similar example: Show ' + (wildcard ? 'every column' : 'the ' + columns.join(' and ')) +
+      ' for ' + (where ? 'matching' : 'every') + ' ' + (other === 'Books' ? 'book' : 'pupil') + '.';
+    return {title: 'SQL Builder', codeLabel: other + ' table · worked example',
+      columns: ['Clause', 'What it does'], lines, steps, task,
+      end: 'Example query: ' + makeSQL(example) + '; ' +
+        (where ? 'WHERE filters the rows.' : 'No WHERE is needed because every row is included.')};
   }
 
   // A deliberately small parser: only the OCR-required SELECT/FROM/WHERE subset.
@@ -97,6 +140,8 @@
     if (!text) return {error: 'Enter an SQL query first.'};
     text = text.replace(/;\s*$/, '').trim();
     if (text.includes(';')) return {error: 'Write one SELECT query only.'};
+    if (/^SELECT\s+FROM\b/i.test(text))
+      return {error: 'Put the column name(s) between SELECT and FROM. SELECT chooses what to display.'};
     const head = /^SELECT\s+(.+?)\s+FROM\s+([A-Za-z_][A-Za-z0-9_]*)(?:\s+WHERE\s+(.+))?$/is.exec(text);
     if (!head) return {error: 'Use the order SELECT columns FROM table WHERE condition.'};
     if (/\bWHERE\b/i.test(head[1])) return {error: 'Use the order SELECT columns FROM table WHERE condition.'};
@@ -111,6 +156,7 @@
       const parts = /^([A-Za-z_][A-Za-z0-9_]*)\s*(>=|<=|<>|!=|=|>|<)\s*(.+)$/s.exec(head[3].trim());
       if (!parts) return {error: 'After WHERE, write a column, a comparison and a value.'};
       const raw = parts[3].trim();
+      if (raw === '*') return {error: 'The * means every column after SELECT. WHERE needs a value to filter rows.'};
       let value, quoted = false;
       if ((raw.startsWith("'") && raw.endsWith("'")) || (raw.startsWith('"') && raw.endsWith('"'))) {
         value = raw.slice(1, -1); quoted = true;
@@ -180,5 +226,5 @@
     }
     return checkSQL(q, response);
   }
-  return {TABLES, TASKS, makeQuestion, parseSQL, checkSQL, checkAnswer};
+  return {TABLES, TASKS, makeQuestion, makeDemo, parseSQL, checkSQL, checkAnswer};
 });

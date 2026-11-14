@@ -87,3 +87,26 @@ test('reject malformed or dangerous SQL without evaluating anything', () => {
   }
   assert.throws(() => engine.makeQuestion('hard', 10, 1));
 });
+
+test('SQL demos match each question structure without revealing its own answer', () => {
+  for (const level of ['easy', 'medium', 'hard']) {
+    for (let index = 0; index < 10; index++) {
+      const question = engine.makeQuestion(level, index, 1);
+      const demo = engine.makeDemo(question);
+      assert.ok(demo.task.startsWith('Similar example:'));
+      assert.notEqual(demo.lines[1], 'FROM ' + question.table);
+      assert.equal(demo.lines.length, demo.steps.length);
+      assert.ok(demo.lines[0].startsWith('SELECT '));
+      assert.ok(demo.lines[1].startsWith('FROM '));
+      const needsFilter = level === 'easy' ? [2, 5, 6, 8, 9].includes(index) : !!question.where;
+      assert.equal(demo.lines.some(line => line.startsWith('WHERE ')), needsFilter);
+      assert.ok(demo.end.includes(needsFilter ? 'WHERE filters' : 'No WHERE is needed'));
+    }
+  }
+});
+
+test('SQL feedback teaches the distinction between * and filtering every row', () => {
+  const question = engine.makeQuestion('hard', 0, 1);
+  assert.match(engine.checkAnswer(question, 'SELECT FROM Pupils WHERE Name = *').feedback, /column name/i);
+  assert.match(engine.checkAnswer(question, 'SELECT Name FROM Pupils WHERE Name = *').feedback, /every column/i);
+});

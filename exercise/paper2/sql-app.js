@@ -212,5 +212,8 @@
     panel.textContent = state.question.hint;
     $('hint').textContent = panel.hidden ? 'Show hint' : 'Hide hint';
   });
+  // The shared Demo asks for an analogous worked example when opened.
+  // This never writes into the student's answer, score or progress.
+  window.RHSSkillsDemoProvider = () => engine.makeDemo(state.question);
   chooseLevel(core.levelFromUrl());
 })();
