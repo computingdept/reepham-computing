@@ -1,3 +1,22 @@
+/* Standard teaching-panel sizing for the rebuilt J277 Autumn 1 SVGs.
+   Opt-in class avoids changing custom programming/network diagrams or H446. */
+#new-learning .nl-reference > figure.a1-scene.rhsc-classroom-diagram:not(.a1-scene--cpu-performance){
+  width:100%;
+  max-width:min(100%,560px);
+}
+#i-do .ido-reference figure.a1-scene.rhsc-classroom-diagram,
+#we-do .wedo-reference figure.a1-scene.rhsc-classroom-diagram{
+  width:100%;
+  max-width:min(100%,520px);
+}
+@media (min-width:901px) and (max-height:740px){
+  #new-learning .nl-reference > figure.a1-scene.rhsc-classroom-diagram:not(.a1-scene--cpu-performance),
+  #i-do .ido-reference figure.a1-scene.rhsc-classroom-diagram,
+  #we-do .wedo-reference figure.a1-scene.rhsc-classroom-diagram{
+    max-width:min(100%,390px);
+  }
+}
+
 /* Projector-scale instructional diagrams: opt in with this shared class.
    A diagram fills the teaching panel, while mobile uses the available width.
    This deliberately excludes icons, badges and existing custom SVG layouts. */
