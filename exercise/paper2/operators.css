@@ -1,0 +1,38 @@
+/* Skill 05 only: compact operator selection and expression tracing. */
+.rhsc-skills-activity .operators-easy {
+  display:grid;gap:15px;width:min(100%,720px);
+}
+.rhsc-skills-activity .operators-expression {
+  padding:18px 12px;background:#f5faf6;border:2px solid #b3d3bd;
+  border-radius:12px;text-align:center;color:#204d34;
+  font:850 clamp(24px,4vw,40px)/1.25 ui-monospace,SFMono-Regular,Consolas,monospace;
+  white-space:pre-wrap;
+}
+.rhsc-skills-activity .operators-label {color:#345c46;font-size:14px}
+.rhsc-skills-activity .operators-options {
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;
+}
+.rhsc-skills-activity .operators-options button {
+  min-height:62px;background:#fff;border:2px solid #b8d2c0;
+  border-radius:11px;color:#214c35;
+  font:850 clamp(20px,3vw,28px)/1.15 ui-monospace,SFMono-Regular,Consolas,monospace;
+  touch-action:manipulation;
+}
+.rhsc-skills-activity .operators-options button[aria-pressed="true"] {
+  border-color:#285348;background:#e4f3e8;box-shadow:0 0 0 2px #bedcc7 inset;
+}
+.rhsc-skills-activity .operators-options button:hover {border-color:#47805c}
+.rhsc-skills-activity .operators-answer {
+  display:grid;gap:10px;align-content:start;width:min(100%,280px);
+}
+.rhsc-skills-activity .operators-answer input {
+  width:100%;min-height:57px;padding:10px 14px;border:2px solid #a0c3ad;
+  border-radius:11px;color:#1e4e34;background:white;font-size:22px;font-weight:800;
+}
+.rhsc-skills-activity .operators-writer {display:grid;gap:10px;max-width:970px;flex:1}
+.rhsc-skills-activity .operators-writer .code-entry {min-height:190px;width:100%;font-size:16px;line-height:1.55}
+@media(max-width:560px) {
+  .rhsc-skills-activity .operators-options {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rhsc-skills-activity .operators-options button {min-height:55px}
+  .rhsc-skills-activity .operators-answer {width:100%}
+}
