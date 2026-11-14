@@ -8,8 +8,8 @@
 .rhsc-skills-activity .file-choice:hover{background:#e2f1e6;border-color:#6d9f7b}
 .rhsc-skills-activity .file-choice[aria-pressed="true"]{background:#d1ead8;border:3px solid #285348;padding:11px 13px}
 .rhsc-skills-activity .file-choice:disabled{cursor:default}
-.rhsc-skills-activity .file-choice-name{font-size:18px;line-height:1.15;color:#244c3a}
-.rhsc-skills-activity .file-choice-code{font:600 14px/1.4 ui-monospace,Consolas,monospace;overflow-wrap:anywhere}
+.rhsc-skills-activity .file-choice-name{font-size:var(--skills-support-title-size,18px);line-height:1.2;color:#244c3a}
+.rhsc-skills-activity .file-choice-code{font:600 var(--skills-support-code-size,14px)/1.4 ui-monospace,Consolas,monospace;overflow-wrap:anywhere}
 .rhsc-skills-activity .file-layout{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(205px,.7fr);gap:15px;align-items:start;min-width:0;width:100%;box-sizing:border-box}
 .rhsc-skills-activity .file-source{display:grid;grid-template-columns:minmax(140px,.72fr) minmax(0,1.28fr);gap:11px;min-width:0}
 .rhsc-skills-activity .file-source .code-panel{min-width:0;margin:0}
@@ -26,11 +26,11 @@
 .rhsc-skills-activity .file-answer .writer-note{color:#5e7668;font-size:12px;line-height:1.45}
 .rhsc-skills-activity .file-hard-layout{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)}
 .rhsc-skills-activity .file-guide{padding:12px 14px;background:#f0f7f2;border:1px solid #c2dcc9;border-radius:10px;min-width:0}
-.rhsc-skills-activity .file-guide-title{font-size:14px;color:#285348}
+.rhsc-skills-activity .file-guide-title{font-size:var(--skills-support-title-size,14px);color:#285348}
 .rhsc-skills-activity .file-build-chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:7px;margin-top:10px}
 .rhsc-skills-activity .file-build-chip{min-width:0;display:grid;gap:5px;padding:9px 10px;background:#fff;border:1px solid #d8e7de;border-radius:9px}
-.rhsc-skills-activity .file-build-label{font-size:11px;font-weight:750;color:#496d56}
-.rhsc-skills-activity .file-build-code{font:650 13px/1.35 ui-monospace,Consolas,monospace;color:#285348;overflow-wrap:anywhere}
+.rhsc-skills-activity .file-build-label{font-size:var(--skills-support-label-size,11px);font-weight:750;color:#496d56}
+.rhsc-skills-activity .file-build-code{font:650 var(--skills-support-code-size,13px)/1.4 ui-monospace,Consolas,monospace;color:#285348;overflow-wrap:anywhere}
 @media(max-width:980px){
   .rhsc-skills-activity .file-layout{grid-template-columns:minmax(0,1fr)}
   .rhsc-skills-activity .file-source{grid-template-columns:minmax(160px,.75fr) minmax(0,1.25fr)}
@@ -40,8 +40,8 @@
   .rhsc-skills-activity .file-choices{gap:7px}
   .rhsc-skills-activity .file-choice{min-height:89px;padding:10px;gap:5px}
   .rhsc-skills-activity .file-choice[aria-pressed="true"]{padding:8px}
-  .rhsc-skills-activity .file-choice-name{font-size:15px}
-  .rhsc-skills-activity .file-choice-code{font-size:11px;line-height:1.3}
+  .rhsc-skills-activity .file-choice-name{font-size:var(--skills-support-title-size,15px)}
+  .rhsc-skills-activity .file-choice-code{font-size:var(--skills-support-code-size,11px);line-height:1.3}
   .rhsc-skills-activity .file-source{grid-template-columns:minmax(0,1fr)}
   .rhsc-skills-activity .file-sheet-lines{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
   .rhsc-skills-activity .file-sheet-row{grid-template-columns:20px minmax(0,1fr);gap:4px;padding:6px 4px}
@@ -50,7 +50,11 @@
   .rhsc-skills-activity .file-guide{padding:9px 11px}
   .rhsc-skills-activity .file-build-chips{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:7px}
   .rhsc-skills-activity .file-build-chip{padding:7px;gap:4px}
-  .rhsc-skills-activity .file-build-label{font-size:10px}
-  .rhsc-skills-activity .file-build-code{font-size:11px}
+  .rhsc-skills-activity .file-build-label{font-size:var(--skills-support-label-size,10px)}
+  .rhsc-skills-activity .file-build-code{font-size:var(--skills-support-code-size,11px)}
   .rhsc-skills-activity .file-answer .code-entry{min-height:115px}
+}
+@media(max-width:600px){
+  .rhsc-skills-activity.skills-readable-type .file-build-chips{grid-template-columns:minmax(0,1fr)}
+  .rhsc-skills-activity.skills-readable-type .file-answer .code-entry.file-one-line{height:60px}
 }
