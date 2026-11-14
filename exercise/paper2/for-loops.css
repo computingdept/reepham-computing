@@ -1,0 +1,27 @@
+/* Skill 08 uses shared Skills components and the same compact OCR-code layout. */
+.rhsc-skills-activity .for-grid{
+  display:grid;grid-template-columns:minmax(0,1.4fr) minmax(210px,.85fr);
+  gap:18px;align-items:start;width:100%;
+}
+.rhsc-skills-activity .for-grid .code-panel{margin:0;min-width:0}
+.rhsc-skills-activity .for-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;min-width:0}
+.rhsc-skills-activity .for-label{grid-column:1/-1;color:#345c46;font-size:15px}
+.rhsc-skills-activity .for-choices button{
+  background:#fff;color:#214c35;border:2px solid #b8d2c0;border-radius:11px;
+  padding:12px;min-height:62px;font-size:23px;font-weight:800;
+  text-align:center;touch-action:manipulation;
+}
+.rhsc-skills-activity .for-choices button:hover{border-color:#47805c}
+.rhsc-skills-activity .for-choices button[aria-pressed="true"]{
+  border-color:#285348;background:#e4f3e8;box-shadow:0 0 0 2px #bedcc7 inset;
+}
+.rhsc-skills-activity .for-answer{display:grid;gap:10px;align-content:start;min-width:0}
+.rhsc-skills-activity .for-answer .number-entry{max-width:220px;font-size:24px;text-align:center}
+.rhsc-skills-activity .for-writer{display:grid;gap:10px;max-width:970px;width:100%;flex:1}
+.rhsc-skills-activity .for-writer .code-entry{min-height:215px;width:100%;font-size:15px;line-height:1.45}
+@media(max-width:720px){
+  .rhsc-skills-activity .for-grid{grid-template-columns:1fr;gap:12px}
+  .rhsc-skills-activity .for-choices button{min-height:51px}
+  .rhsc-skills-activity .for-answer .number-entry{max-width:100%}
+  .rhsc-skills-activity .for-writer .code-entry{min-height:245px}
+}
