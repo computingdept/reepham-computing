@@ -1,0 +1,28 @@
+/* Skill 07: compact selection-tracing workspace using shared Skills components. */
+.rhsc-skills-activity .selection-grid {
+  display:grid;grid-template-columns:minmax(0,1.4fr) minmax(220px,.85fr);
+  gap:18px;align-items:start;width:100%;
+}
+.rhsc-skills-activity .selection-grid .code-panel {min-width:0;margin:0}
+.rhsc-skills-activity .selection-choices {
+  display:grid;gap:10px;min-width:0;align-content:start;
+}
+.rhsc-skills-activity .selection-label {color:#345c46;font-size:14px}
+.rhsc-skills-activity .selection-choices button {
+  background:#fff;color:#214c35;border:2px solid #b8d2c0;border-radius:11px;
+  padding:12px 13px;min-height:57px;font-size:17px;font-weight:750;
+  text-align:left;touch-action:manipulation;
+}
+.rhsc-skills-activity .selection-choices button[aria-pressed="true"] {
+  border-color:#285348;background:#e4f3e8;box-shadow:0 0 0 2px #bedcc7 inset;
+}
+.rhsc-skills-activity .selection-choices button:hover {border-color:#47805c}
+.rhsc-skills-activity .selection-writer {display:grid;gap:10px;max-width:970px;width:100%;flex:1}
+.rhsc-skills-activity .selection-writer .code-entry {min-height:215px;width:100%;font-size:15px;line-height:1.45}
+@media(max-width:720px) {
+  .rhsc-skills-activity .selection-grid {grid-template-columns:1fr;gap:12px}
+  .rhsc-skills-activity .selection-choices {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rhsc-skills-activity .selection-label {grid-column:1/-1}
+  .rhsc-skills-activity .selection-choices button {text-align:center;min-height:51px}
+  .rhsc-skills-activity .selection-writer .code-entry {min-height:245px}
+}
