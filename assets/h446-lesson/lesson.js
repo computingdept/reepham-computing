@@ -664,12 +664,10 @@ function resetPhaseState(id){
     }
     page.dataset.answerMode='false';
     page.dataset.answerIndex='0';
-    // J277 safeguard: returning to You Do must never carry over visible
-    // self-marking panels from an earlier visit to the same phase.
-    // Keep H446 and the established review navigation untouched.
-    if(/^\/lessons\/j277\/lesson-\d{3}\//i.test(location.pathname)){
-      page.querySelectorAll('.youdo-solution').forEach(answer=>{answer.hidden=true;});
-    }
+    // Returning to You Do must not expose answers from the previous review.
+    // Reset original question panels in every course, leaving cloned review
+    // panels alone so their guided self-marking stages still work.
+    page.querySelectorAll('.youdo-question .youdo-solution').forEach(answer=>{answer.hidden=true;});
     if(isH446RichReview(page)){
       prepareH446RichReview(page);
       showH446RichReview(page,false);
