@@ -86,6 +86,47 @@ test('Animated model traces include every iteration, stopping check and correct 
   assert.equal(never.final,0);
 });
 
+test('Every Play / Step event points to the actual executed code line',()=>{
+  for(const seed of [1,9,20261114]){
+    for(const level of ['easy','medium']){
+      for(let index=0;index<10;index++){
+        const q=engine.makeQuestion(level,index,seed);
+        const events=q.trace.events;
+        const iterations=q.mode==='while'?q.trace.rows.length-1:q.trace.rows.length;
+        const setup=level==='medium'?2:1;
+        const finalPrint=level==='medium'?1:0;
+        assert.equal(events.length,setup+iterations*(q.mode==='while'?3:4)+(q.mode==='while'?1:0)+finalPrint);
+        assert.deepEqual(events.slice(0,setup).map(event=>event.line),level==='medium'?[1,2]:[1]);
+        assert.equal(events.at(-1).total,q.trace.final);
+        for(const event of events){
+          assert.ok(Number.isInteger(event.line)&&event.line>=1&&event.line<=q.code.length,'line must exist');
+          assert.ok(typeof event.action==='string'&&event.action.length>4);
+          if(event.condition!==null){
+            assert.match(q.code[event.line-1].trim(),q.mode==='while'?/^while /:/^until /);
+            assert.match(event.condition,/^(?:-?\d+) (?:<=|>=|<|>|==|!=) -?\d+$/);
+          }
+        }
+        const checks=events.filter(event=>event.condition!==null);
+        assert.equal(checks.length,q.mode==='while'?iterations+1:iterations);
+        assert.equal(checks.at(-1).conditionResult,q.mode==='do');
+        if(level==='medium'){
+          assert.equal(events.at(-1).line,q.code.length);
+          assert.equal(q.code.at(-1),'print(total)');
+        }else{
+          assert.equal(events.filter(event=>event.action.startsWith('Print "Tick"')).length,iterations);
+        }
+      }
+    }
+  }
+  const zero=engine.makeQuestion('medium',1,9);
+  assert.deepEqual(zero.trace.events.map(event=>event.line),[1,2,3,7]);
+  assert.equal(zero.trace.events[2].conditionResult,false);
+  assert.equal(zero.trace.events.at(-1).total,0);
+  const once=engine.makeQuestion('easy',3,9);
+  assert.deepEqual(once.trace.events.map(event=>event.line),[1,2,3,4,5]);
+  assert.equal(once.trace.events.at(-1).conditionResult,true);
+});
+
 test('Hard supports alternate variable names and ERL assignment symbols',()=>{
   for(let index=0;index<10;index++){
     const q=engine.makeQuestion('hard',index,19);
