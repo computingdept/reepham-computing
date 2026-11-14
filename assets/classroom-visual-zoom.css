@@ -1,0 +1,81 @@
+/* One opt-in zoom affordance for classroom SVG diagrams, usable on a phone. */
+figure[data-classroom-zoom]{cursor:zoom-in;position:relative;outline-offset:4px}
+figure[data-classroom-zoom]:focus-visible{outline:3px solid #266b91}
+@media(max-width:900px){
+  figure[data-classroom-zoom]::after{
+    content:"⤢  Tap to enlarge";
+    display:block;
+    color:#225b47;
+    text-align:center;
+    font:700 13px/1.4 system-ui,-apple-system,sans-serif;
+    padding:4px 0 0;
+  }
+}
+.rhsc-visual-zoom{
+  box-sizing:border-box;
+  position:fixed;
+  inset:0;
+  margin:0;
+  width:100vw;
+  height:100vh;
+  width:100dvw;
+  height:100dvh;
+  max-width:none;
+  max-height:none;
+  padding:0;
+  border:0;
+  background:#f7fbf8;
+  color:#173d2e;
+  overflow:hidden;
+}
+.rhsc-visual-zoom:not([open]){display:none}
+.rhsc-visual-zoom::backdrop{background:rgba(11,33,25,.85)}
+.rhsc-visual-zoom-toolbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  min-height:60px;
+  box-sizing:border-box;
+  padding:10px 16px;
+  border-bottom:1px solid #c3d8cc;
+  background:#fff;
+  font:700 17px/1.3 system-ui,-apple-system,sans-serif;
+}
+.rhsc-visual-zoom-close{
+  border:1px solid #9eb9ab;
+  border-radius:9px;
+  background:#e7f3ea;
+  color:#173d2e;
+  padding:10px 15px;
+  min-height:44px;
+  font:700 16px system-ui,-apple-system,sans-serif;
+  cursor:pointer;
+}
+.rhsc-visual-zoom-close:focus-visible{outline:3px solid #266b91;outline-offset:2px}
+.rhsc-visual-zoom-canvas{
+  box-sizing:border-box;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:100%;
+  height:calc(100dvh - 60px);
+  padding:12px;
+  overflow:auto;
+  touch-action:auto;
+  overscroll-behavior:contain;
+}
+.rhsc-visual-zoom-canvas svg,
+.rhsc-visual-zoom-canvas img{
+  display:block;
+  width:min(100%,920px);
+  height:auto;
+  max-height:calc(100dvh - 84px);
+  object-fit:contain;
+}
+@media(max-width:600px){
+  .rhsc-visual-zoom-toolbar{padding:8px 12px}
+  .rhsc-visual-zoom-canvas{align-items:flex-start;padding:16px 8px}
+  .rhsc-visual-zoom-canvas svg,
+  .rhsc-visual-zoom-canvas img{width:100%;max-height:none}
+}
