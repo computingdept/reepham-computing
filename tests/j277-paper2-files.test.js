@@ -17,6 +17,33 @@ test('all 30 file tasks are deterministic and accept their model answers',()=>{
   }
 });
 
+test('all 30 File Handling demos use safe, analogous, step-by-step examples',()=>{
+  for(const level of ['easy','medium','hard']) {
+    for(let index=0;index<10;index++) {
+      const question=engine.makeQuestion(level,index,17);
+      const demo=engine.makeDemo(question);
+      assert.ok(demo.task.startsWith('Similar example:'),level+'/'+index);
+      assert.equal(demo.progressive,true);
+      assert.equal(demo.steps.length,demo.lines.length);
+      assert.equal(demo.placeholders.length,demo.lines.length);
+      assert.ok(demo.lines.length>=1);
+      demo.steps.forEach((step,i)=>{
+        assert.equal(step[0],i+1);
+        assert.ok(step[1]&&step[2]&&step[3],level+'/'+index+' step '+i);
+      });
+      assert.ok(demo.end.length>0);
+      assert.equal(demo.lines.some(line=>line.includes('names.txt')),false,
+        'demo uses a different file rather than copying the current question');
+    }
+  }
+  const open=engine.makeDemo(engine.makeQuestion('hard',0,1));
+  assert.match(open.lines[0],/saved = open\("scores.txt"\)/);
+  const loop=engine.makeDemo(engine.makeQuestion('medium',8,1));
+  assert.match(loop.end,/Prints 2/);
+  assert.ok(loop.lines.some(line=>line.includes('endOfFile()')));
+  assert.throws(()=>engine.makeDemo({level:'hard',index:10}));
+});
+
 test('Easy provides four unique clickable OCR commands and exactly one answer',()=>{
   for(let i=0;i<10;i++){
     const q=engine.makeQuestion('easy',i,72);

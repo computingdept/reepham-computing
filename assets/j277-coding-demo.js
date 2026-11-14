@@ -235,7 +235,6 @@
   title.append(launch);
 
   const section = make('section', 'skill-demo');
-  if (page === 'sql') section.classList.add('sql-step-reveal');
   section.id = 'skill-demo';
   section.hidden = true;
   section.setAttribute('aria-label', example.title + ' worked demonstration');
@@ -257,6 +256,7 @@
   function setExample(next) {
     if (!next || !Array.isArray(next.lines) || !Array.isArray(next.steps)) return;
     example = next;
+    section.classList.toggle('guided-step-reveal', page === 'sql' || !!next.progressive);
     label.textContent = next.codeLabel || 'OCR Exam Reference Language';
     heading.textContent = next.title + ' · Demo';
     subtitle.textContent = next.task
@@ -321,18 +321,20 @@
       body.append(row);
     }
     const current = visible[visible.length - 1];
+    const progressive = page === 'sql' || !!example.progressive;
     codeRows.forEach((row, idx) => {
       const active = !!current && idx === current[0] - 1;
       row.classList.toggle('is-tracing', active);
-      row.classList.toggle('is-upcoming', page === 'sql' && idx >= index);
-      if (page === 'sql') row.children[1].textContent = idx < index
-        ? example.lines[idx] : example.lines[idx].split(' ')[0] + ' …';
+      row.classList.toggle('is-upcoming', progressive && idx >= index);
+      if (progressive) row.children[1].textContent = idx < index
+        ? example.lines[idx]
+        : (example.placeholders && example.placeholders[idx]) || example.lines[idx].split(' ')[0] + ' …';
       if (active) row.setAttribute('aria-current', 'step');
       else row.removeAttribute('aria-current');
     });
     if (current) status.textContent = 'Line ' + String(current[0]).padStart(2, '0') + ' · ' + current[3];
-    else status.textContent = page === 'sql'
-      ? 'Press Step to build this similar query, one clause at a time.'
+    else status.textContent = progressive
+      ? 'Press Step to reveal this similar example, one line at a time.'
       : 'Ready. Press Play or Step.';
     const done = index === example.steps.length;
     step.disabled = done;
@@ -353,6 +355,9 @@
       try { setExample(window.RHSSkillsDemoProvider()); }
       catch (error) { /* A faulty provider must not prevent opening a demo. */ }
     }
+    traceLabel.textContent = example.traceTitle || (page === 'sql' ? 'Build the query' : 'Live trace table');
+    headRow.replaceChildren();
+    for (const headingText of ['Line', ...example.columns]) headRow.append(make('th', '', headingText));
     previousScroll = window.scrollY;
     practice.hidden = true;
     section.hidden = false;

@@ -145,3 +145,25 @@ test('SQL demo uses a question-specific similar example and hides forthcoming li
   controls.children[1].click();
   assert.ok(!code.children[1].className.includes('is-upcoming'));
 });
+
+test('File Handling demo swaps in a guided example without changing practice', () => {
+  const ui=mountDemo('files');
+  ui.practice.studentAnswer='myChosenFile = open("names.txt")';
+  ui.window.RHSSkillsDemoProvider=()=>({
+    title:'File Handling',codeLabel:'scores.txt',traceTitle:'Build the command',
+    task:'Similar example: Open scores.txt and save its reference.',
+    columns:['Action','Effect'],progressive:true,
+    lines:['saved = open("scores.txt")'],placeholders:['Open …'],
+    steps:[[1,'Open','saved','Any valid variable name can store the file reference.']],
+    end:'saved contains the file reference.'
+  });
+  find(ui.title,'skill-demo-open').click();
+  const demo=ui.practice.insertedSibling,code=find(demo,'skill-demo-source');
+  assert.equal(code.children[0].children[1].textContent,'Open …');
+  assert.equal(find(demo,'skill-demo-trace-title').textContent,'Build the command');
+  assert.equal(find(demo,'skill-demo-table').children[0].children[0].children[2].textContent,'Effect');
+  find(demo,'skill-demo-controls').children[1].click();
+  assert.equal(code.children[0].children[1].textContent,'saved = open("scores.txt")');
+  find(demo,'skill-demo-back').click();
+  assert.equal(ui.practice.studentAnswer,'myChosenFile = open("names.txt")');
+});

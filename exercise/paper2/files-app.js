@@ -117,8 +117,8 @@
       feedback('Correct! '+state.question.explanation,'good');disableInputs();return;
     }
     state.wrong++;
-    feedback(state.level==='easy'?'Read what each command does.':
-      state.level==='medium'?'Track which lines are read or added as you go.':
+    feedback(state.level==='easy'?state.question.hint:
+      state.level==='medium'?state.question.hint:
       result.feedback||'Check the file variable, command and brackets.','bad');
     if(state.wrong>=2)$('show-answer').hidden=false;
   }
@@ -126,7 +126,9 @@
     if(state.locked||state.wrong<2)return;
     state.locked=true;disableInputs();
     const panel=$('hint-panel');
-    panel.replaceChildren(el('strong','','Model answer'),el('pre','erl',state.question.model));panel.hidden=false;
+    panel.replaceChildren(el('strong','','Model answer'),el('pre','erl',state.question.model),
+      el('p','model-note',state.question.level==='hard'?state.question.hint:state.question.explanation));
+    panel.hidden=false;
     feedback('Compare with the model. No point was added.','neutral');
   }
   function clearAnswer() {
@@ -177,5 +179,8 @@
     const panel=$('hint-panel');panel.hidden=!panel.hidden;panel.textContent=state.question.hint;
     $('hint').textContent=panel.hidden?'Show hint':'Hide hint';
   });
+  // Uses a separate worked example for the active skill without changing
+  // the learner's response, attempt count or stored progress.
+  window.RHSSkillsDemoProvider=()=>engine.makeDemo(state.question);
   chooseLevel(core.levelFromUrl());
 })();
