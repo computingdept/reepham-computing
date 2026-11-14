@@ -134,11 +134,14 @@ test('SQL demo uses a question-specific similar example and hides forthcoming li
   const code = find(demo, 'skill-demo-source');
   assert.equal(code.children.length, 2);
   assert.ok(code.children[0].className.includes('is-upcoming'));
+  assert.equal(code.children[0].children[1].textContent, 'SELECT …');
   assert.match(find(demo, 'skill-demo-heading').children[1].textContent, /every book/);
   const controls = find(demo, 'skill-demo-controls');
   controls.children[1].click();
   assert.ok(!code.children[0].className.includes('is-upcoming'));
+  assert.equal(code.children[0].children[1].textContent, 'SELECT Title');
   assert.ok(code.children[1].className.includes('is-upcoming'));
+  assert.equal(code.children[1].children[1].textContent, 'FROM …');
   controls.children[1].click();
   assert.ok(!code.children[1].className.includes('is-upcoming'));
 });
