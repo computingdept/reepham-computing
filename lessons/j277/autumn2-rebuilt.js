@@ -2047,7 +2047,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20261025-exit-unified1">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=cf45749fa0cf">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
- <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261113-card-outlines1">${lessonStyles}<link rel="stylesheet" href="../../../assets/classroom-visual-zoom.css?v=20261114-j277-all1"></head>`;
+ <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261113-card-outlines1">${lessonStyles}<link rel="stylesheet" href="../../../assets/classroom-visual-zoom.css?v=20261114-clickclose2"></head>`;
  function renderLesson(number,lesson){
   // Canonicalise the Year 11 diagram schema before generating any phase.
   // A silent fallback would hide the dedicated SVGs and disable I Do / We Do reveals.
@@ -2076,7 +2076,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    <div class="nav-tools"><button id="advance" class="control-btn">Continue →</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div></div>
    <div class="signal-wrap"><div class="signals" aria-label="Classroom routine"><span id="phase-logo" class="signal-tile signal-phase"></span><span id="behaviour-logo" class="signal-tile signal-routine"></span><span id="response-logo" class="signal-tile signal-response"></span></div><div class="signal-meta"><span id="phase-time" class="signal-phase-time"></span><span class="lesson-label">OCR J277 · Lesson ${number}<br>${escape(lesson.t)}</span></div></div>
    <main id="main">${parts.join("")}</main><div class="lesson-footer">Lesson ${number} · ${escape(lesson.t)} <span>Year ${lesson.year11?11:10} · OCR J277 · Original exam-style questions</span></div>
-   <script src="../../../assets/h446-lesson/lesson.js?v=20261113-j277-q1-tf"></script>${cpuSync}${idoSync}${y11Sync}<script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"></script><script src="../../../assets/classroom-visual-zoom.js?v=20261114-j277-all1"></script></body></html>`;
+   <script src="../../../assets/h446-lesson/lesson.js?v=20261113-j277-q1-tf"></script>${cpuSync}${idoSync}${y11Sync}<script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"></script><script src="../../../assets/classroom-visual-zoom.js?v=20261114-clickclose2"></script></body></html>`;
   document.open();document.write(html);document.close();
  }
  function renderAnswers(number,lesson){
