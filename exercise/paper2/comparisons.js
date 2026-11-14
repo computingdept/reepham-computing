@@ -85,7 +85,7 @@
       context: 'Write one Boolean comparison using the variable names shown.',
       hint: 'Use == for equal and != for not equal. Use >= or <= when equality is included.',
       model: item.variable + ' ' + item.op + ' ' + (item.other ?? item.constant),
-      explanation: 'Correct. Your condition matches the requirement across different values.'
+      explanation: 'Your condition matches the requirement across different values.'
     };
   }
   function makeQuestion(level, index, seed) {
