@@ -7,7 +7,7 @@
   const STORAGE_KEY = 'rhs-j277-paper2-progress-v1';
   const LEVELS = ['easy', 'medium', 'hard'];
   const LEVEL_TEXT = { easy: 'Tap and explore', medium: 'Trace and complete', hard: 'Write in OCR ERL' };
-  const READY_SKILLS = new Set(['variables', 'data-types', 'casting', 'sequence', 'operators', 'comparisons', 'selection', 'for-loops', 'while-until']);
+  const READY_SKILLS = new Set(['variables', 'data-types', 'casting', 'sequence', 'operators', 'comparisons', 'selection', 'for-loops', 'while-until', 'array-1d']);
   const groups = [
     {
       name: 'Programming fundamentals', caption: 'Build first · OCR 2.2.1–2.2.2',
@@ -125,7 +125,8 @@
     main.append(label, sub);
     if (ready) {
       const spec = document.createElement('div');
-      spec.className = 'tile-spec'; spec.textContent = ['variables', 'sequence', 'operators', 'comparisons', 'selection', 'for-loops', 'while-until'].includes(id) ? '2.2.1' : '2.2.2';
+      spec.className = 'tile-spec'; spec.textContent = id === 'array-1d' ? '2.2.3' :
+        ['variables', 'sequence', 'operators', 'comparisons', 'selection', 'for-loops', 'while-until'].includes(id) ? '2.2.1' : '2.2.2';
       main.append(spec);
     }
     card.append(main);
@@ -178,7 +179,8 @@
       meta.className = 'group-meta';
       const count = document.createElement('span');
       count.className = 'count';
-      count.textContent = i === 0 ? group.items.filter(item => READY_SKILLS.has(item[0])).length + ' ready / ' + group.items.length : group.items.length + ' planned';
+      const ready = group.items.filter(item => READY_SKILLS.has(item[0])).length;
+      count.textContent = ready ? ready + ' ready / ' + group.items.length : group.items.length + ' planned';
       const chevron = document.createElement('span');
       chevron.className = 'group-chevron'; chevron.setAttribute('aria-hidden', 'true');
       meta.append(count, chevron); summary.append(name, meta);

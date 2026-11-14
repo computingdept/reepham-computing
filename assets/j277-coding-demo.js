@@ -59,6 +59,22 @@
       ],
       end: 'Output: 14'
     },
+    'array-1d': {
+      title: '1D Arrays', columns: ['Position / action', 'Value'],
+      lines: [
+        'array scores = [4, 7, 2, 9]',
+        'print(scores[1])',
+        'scores[2] = scores[1] + 3',
+        'print(scores[2])'
+      ],
+      steps: [
+        [1, 'scores', '[4, 7, 2, 9]', 'The four cells have indices 0, 1, 2 and 3.'],
+        [2, 'Output', '7', 'Index 1 is the second cell. Print 7.'],
+        [3, 'scores[2]', '10', 'Update index 2 using 7 + 3. The third cell now holds 10.'],
+        [4, 'Output', '10', 'Print the changed value at index 2.']
+      ],
+      end: 'Outputs: 7, then 10. Array indices start at zero.'
+    },
     selection: {
       title: 'Selection', columns: ['Check / action', 'Result'],
       lines: [
