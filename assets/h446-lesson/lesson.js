@@ -2449,3 +2449,17 @@ if(/^\/lessons\/(?:h446|j277|year[789])\/lesson-\d{3}\//i.test(location.pathname
   answerScript.async=true;
   document.body.appendChild(answerScript);
 }
+
+/* Adapt only legacy three-statement True/False tickets to the shared TV layout.
+   The authored question/answer/reflection stages and navigation are retained. */
+if(/^\/lessons\/(?:h446|j277|year[789])\/lesson-\d{3}\//i.test(location.pathname)
+  &&document.getElementById('exit')){
+  const exitStyle=document.createElement('link');
+  exitStyle.rel='stylesheet';
+  exitStyle.href='/assets/h446-lesson/exit-three-statements.css?v=20261114-exit3-1';
+  document.head.appendChild(exitStyle);
+  const exitScript=document.createElement('script');
+  exitScript.src='/assets/h446-lesson/exit-three-statements.js?v=20261114-exit3-1';
+  exitScript.async=true;
+  document.body.appendChild(exitScript);
+}
