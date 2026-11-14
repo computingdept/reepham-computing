@@ -7,8 +7,7 @@ are unchanged.
 ## Agreed Q2 rule
 
 - One 2×2 multiple-choice question with four distinct options.
-- Prefer a **one-word answer choice** wherever this does not distort a
-  technical term.
+- Use **four distinct, one-word answer choices**, suitable for the 2×2 grid.
 - Retrieve a lesson taught earlier than Q1's immediately previous lesson.
 - Keep the lesson source, correct choice and short explanation with the question.
 - Course/year-entry diagnostics are explicitly identified.
@@ -29,10 +28,15 @@ source before publication.
 
 ## Review and completion
 
-The seven example MCQs demonstrate the short 2×2 style. The remaining entries
-are authoring slots, not published MCQs. The legacy source labels are missing
-for many lessons and are left clearly marked for curriculum mapping rather
-than invented.
+Every one of the **300 lessons** now has a complete, short MCQ draft. They are
+**not teacher-approved or published**. The new source links are curriculum-
+mapped **proposals**, not verified claims; the legacy source labels are kept
+separately with the original questions, and are not treated as proof of when a
+concept was first taught. L001 and L002 are explicit GCSE-entry diagnostics.
+
+Questions are drawn from 202 source-linked prompts and rotated across the
+course so that the exact question does not repeat within eight lessons.
+The bank is a reviewable *authored set*, not a live random-question generator.
 
 For each entry before publication:
 
@@ -43,13 +47,16 @@ For each entry before publication:
 4. Confirm the source reference against the teaching sequence.
 5. Mark the row as teacher-approved before a separate classroom rollout.
 
-The JSON bank is in `data/do-now/q2-drafts/h446.json`. Regenerate it from
-the preserved lesson source with:
+The JSON bank is in `data/do-now/q2-drafts/h446.json`. To create the draft
+bank afresh from the preserved lesson source, then author the two batches:
 
 ```sh
 node scripts/do-now/build-h446-q2-drafts.cjs
+node scripts/do-now/author-h446-q2-batch1.cjs
+node scripts/do-now/author-h446-q2-remaining.cjs
 ```
 
-This generator seeds only seven worked examples. Once further items are
-reviewed, they should be retained in an independently edited bank rather than
-regenerated over teacher-approved content.
+These authoring scripts reset/rewrite unapproved entries and should **not** be
+run over later teacher-approved edits. Review decisions stay in GitHub, not
+on public lesson pages. A separate, controlled classroom rollout is required
+after approval and visual regression checks against J277 and H446 Q1–Q4.
