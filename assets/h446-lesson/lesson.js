@@ -2231,33 +2231,35 @@ function applyPublishedH446Q2(){
     }).catch(error=>console.warn('H446 Q2 bank unavailable; authored fallback retained:',error));
 }
 
-/* Staged provenance pilot for H446 Q3/Q4. Source IDs are checked against
-   their earlier teaching lessons before publication in the shared bank.
-   Only card/answer headings change; authored questions, answers, and the
-   previously published Q1/Q2 banks retain their current behaviour. */
-function applyPilotH446Q34Sources(){
+/* All H446 Do Now Q3/Q4 sources and reviewed retrieval corrections.
+   Q1/Q2, lesson presentation and navigation are not changed here.
+   If the bank is unavailable the authored Do Now remains functional. */
+function applyReviewedH446Q34Sources(){
   const match=location.pathname.match(/\/lessons\/h446\/lesson-(\d{3})(?:\/|\.html|$)/i);
   if(!match)return;
   const id=match[1],number=Number(id);
-  if(number<209||number>226)return;
   const section=document.querySelector('#do-now');
   const cards=[...(section?.querySelectorAll('.donow-questions .donow-question')||[])];
   const reviews=[...(section?.querySelectorAll('.donow-review-question')||[])];
   if(cards.length!==4||reviews.length!==4)return;
-  const bankFile=number<=217?'h446-209-217.json':'h446-218-226.json';
-  fetch('../../../data/do-now/q34-pilot/'+bankFile,{cache:'no-store'})
+  const answerCards=[...(section.querySelectorAll('.donow-review-answer')||[])];
+  if(answerCards.length!==4)return;
+  fetch('../../../data/do-now/h446-q34-sources.json',{cache:'no-store'})
     .then(response=>{
-      if(!response.ok)throw Error('H446 Q3/Q4 pilot source bank unavailable');
+      if(!response.ok)throw Error('H446 Q3/Q4 source bank unavailable');
       return response.json();
     }).then(bank=>{
-      if(bank.course!=='h446'||bank.status!=='pilot')return;
+      if(bank.course!=='h446'||bank.status!=='reviewed')return;
       const entry=bank.lessons?.[id];
       if(!entry)return;
       for(const position of [2,3]){
-        const refs=entry['q'+(position+1)]?.sourceRefs;
-        if(!Array.isArray(refs)||!refs.length||!refs.every(ref=>
-          /^L\d{3}$/.test(ref)&&Number(ref.slice(1))<number))continue;
-        const label='TAUGHT · '+refs.join(' + ');
+        const source=entry['q'+(position+1)];
+        if(!source)continue;
+        const refs=source.sourceRefs;
+        const prior=source.priorStage==='GCSE';
+        if(!prior&&(!Array.isArray(refs)||!refs.length||!refs.every(ref=>
+          /^L\d{3}$/.test(ref)&&Number(ref.slice(1))<number)))continue;
+        const label=prior?'PRIOR · GCSE':'TAUGHT · '+refs.join(' + ');
         const headingText=position===2?'RETRIEVAL':'CHALLENGE';
         const headings=[cards[position].querySelector(':scope > strong'),
           reviews[position].querySelector('.review-number')];
@@ -2269,11 +2271,23 @@ function applyPilotH446Q34Sources(){
           const tag=document.createElement('span');
           tag.className='h446-retrieval-origin';
           tag.textContent=label;
-          tag.title='Previously taught in '+refs.join(', ');
+          tag.title=prior?'Knowledge from GCSE':('Previously taught in '+refs.join(', '));
           heading.append(tag);
         }
+        const replacement=source.replacement;
+        if(replacement&&typeof replacement.question==='string'&&replacement.question.trim()
+          &&typeof replacement.answer==='string'&&replacement.answer.trim()){
+          const cardPrompt=cards[position].querySelector('p');
+          const reviewPrompt=reviews[position].querySelector('.review-question');
+          const reviewAnswer=answerCards[position].querySelector('.review-answer');
+          if(cardPrompt&&reviewPrompt&&reviewAnswer){
+            cardPrompt.textContent=replacement.question;
+            reviewPrompt.textContent=replacement.question;
+            reviewAnswer.textContent=replacement.answer;
+          }
+        }
       }
-      section.dataset.h446Q34Pilot='true';
+      section.dataset.h446Q34Reviewed='true';
     }).catch(error=>console.warn('H446 Q3/Q4 authored headings retained:',error));
 }
 
@@ -2325,7 +2339,7 @@ applyPublishedJ277Q1();
 prepareH446DoNowSourceLabels();
 applyPublishedH446Q1();
 applyPublishedH446Q2();
-applyPilotH446Q34Sources();
+applyReviewedH446Q34Sources();
 prepareMobileSwipeNavigation();
 /* Responsive binary place-value scaffold, generated from the SVG's actual
    eight column labels and eight bits: no question or answer data is rewritten. */

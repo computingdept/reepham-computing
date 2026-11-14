@@ -11,13 +11,13 @@ const D36=[
  question("Q1 · LAST LESSON · L035","Why is showing the method useful when working with a binary number?","It makes each step checkable, and the method may be credited even if a final result is wrong."),
  question("Q2 · EARLIER · L016","In a one-dimensional array, what does the index tell you?","The index identifies the position of an element; the element's value is what is stored there."),
  question("Q3 · EARLIER · L020","What does LIFO mean for a stack?","Last In, First Out — the most recently pushed item is popped first."),
- question("Q4 · CHALLENGE · L024","Why is a binary search not appropriate for an unsorted list?","The algorithm discards half of the search area based on ordering. Without ordering, it can discard the target.")
+ question("Q4 · CHALLENGE · L025","Why is a binary search not appropriate for an unsorted list?","The algorithm discards half of the search area based on ordering. Without ordering, it can discard the target.")
 ];
 const D37=[
  question("Q1 · LAST LESSON · L036","Name the four things you added to make a useful mind-map micro-branch.","A precise definition, a small method or example, a misconception, and a labelled connection."),
  question("Q2 · EARLIER · L030","What two output values does a full adder produce?","A Sum bit and a Carry-out bit."),
  question("Q3 · EARLIER · L011","What is the difference between a parameter and an argument?","A parameter is defined in a subroutine's header; an argument is the value passed when it is called."),
- question("Q4 · CHALLENGE · L026","Why can adjacent 1s be grouped on a Karnaugh map?","They represent combinations differing by one input, allowing changing variables to be eliminated.")
+ question("Q4 · CHALLENGE · L029","Why can adjacent 1s be grouped on a Karnaugh map?","They represent combinations differing by one input, allowing changing variables to be eliminated.")
 ];
 function doNow(){return {type:"questions",phase:"DO NOW",routine:"Silent working",response:"MWBs",mins:5,title:"Do Now · Retrieval",sub:"Four questions from lessons you have already studied",items:lesson===36?D36:D37};}
 function answers(){return {type:"answers",phase:"DO NOW",routine:"Listening",response:"Cold calling",mins:2,title:"Do Now · Answers",sub:"Green pen: improve the explanation, not just the final word",items:lesson===36?D36:D37};}
@@ -359,6 +359,27 @@ function applyPublishedH446MindMapQ2(){
   }).catch(error=>console.warn("H446 mind-map Q2 retained authored fallback:",error));
 }
 
+/* The two guided A3 lessons use the same central Q3/Q4 provenance bank
+   as every ordinary H446 lesson; the source IDs also exist as fallbacks. */
+function applyReviewedH446MindMapQ34(){
+ const id=String(lesson).padStart(3,"0");
+ fetch("../../../data/do-now/h446-q34-sources.json",{cache:"no-store"})
+  .then(response=>{
+   if(!response.ok)throw Error("H446 Q3/Q4 source bank unavailable");
+   return response.json();
+  }).then(bank=>{
+   const entry=bank.course==="h446"&&bank.status==="reviewed"?bank.lessons?.[id]:null;
+   if(!entry)return;
+   const items=lesson===36?D36:D37;
+   for(const n of [3,4]){
+    const source=entry["q"+n], refs=source?.sourceRefs;
+    if(!Array.isArray(refs)||!refs.length||!refs.every(ref=>/^L\d{3}$/.test(ref)&&Number(ref.slice(1))<lesson))continue;
+    items[n-1].label="Q"+n+" · "+(n===3?"RETRIEVAL":"CHALLENGE")+" · TAUGHT · "+refs.join(" + ");
+   }
+   if(index<=1)render();
+  }).catch(error=>console.warn("H446 guided source labels retained:",error));
+}
+
 function start(){
  $("#app").innerHTML='<header class="top"><div class="top-left"><a class="home" href="../../../h446-hub.html?year=12#lessons" aria-label="Back to Year 12 hub">⌂ Home</a><span class="lesson-tag" id="lesson-number"></span><div><div class="top-title" id="top-title"></div><div class="top-note">Teacher-led revision · One growing A3 sheet</div></div></div><div class="top-right"><button type="button" id="print" title="Print a blank A3 outline">Print blank A3</button><button type="button" id="fullscreen">Full screen ⛶</button></div></header><main class="scene-shell" id="main"><div class="scene-head"><div class="tags"><span class="tag tag-phase" id="phase-tag"></span><span class="tag tag-routine" id="routine-tag"></span><span class="tag tag-response" id="response-tag"></span></div><span class="time" id="time"></span></div><h1 id="slide-title"></h1><p class="subtitle" id="subtitle"></p><section class="scene-body" id="stage" aria-live="polite"></section></main><footer class="footer"><span class="progress" id="progress" aria-hidden="true"></span><div class="count" id="count"></div><div class="controls"><button type="button" id="back">← Back</button><button type="button" id="next" class="primary">Next →</button></div></footer>';
  $("#print").addEventListener("click",()=>{document.body.classList.remove("print-complete");window.print();});
@@ -372,6 +393,7 @@ function start(){
  render();
  applyPublishedH446MindMapQ1();
  applyPublishedH446MindMapQ2();
+ applyReviewedH446MindMapQ34();
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
 })();
