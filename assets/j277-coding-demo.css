@@ -1,0 +1,68 @@
+/* J277 Coding Skills: independent accessible demo, using existing Synergy colours. */
+.rhsc-skills-activity .practice-name .skill-demo-open{
+  display:inline-flex;align-items:center;justify-content:center;flex:none;
+  margin-left:8px;min-height:34px;padding:6px 11px;
+  background:#e8f3ec;border:1px solid #a5c8b1;border-radius:8px;
+  color:#25563e;font-size:12px;font-weight:800;white-space:nowrap;
+}
+.rhsc-skills-activity .practice-name .skill-demo-open:hover{background:#d7ebde}
+.rhsc-skills-activity .skill-demo[hidden]{display:none!important}
+.rhsc-skills-activity .skill-demo{width:100%;padding:4px 0 12px}
+.rhsc-skills-activity .skill-demo-header{display:flex;align-items:center;gap:16px;margin-bottom:11px}
+.rhsc-skills-activity .skill-demo-back{
+  flex:none;min-height:39px;padding:8px 10px;border:1px solid #bed3c6;
+  border-radius:9px;background:white;color:#285348;font-size:13px;font-weight:800;
+}
+.rhsc-skills-activity .skill-demo-header h1{font-size:clamp(19px,2.2vw,24px);line-height:1.2;margin:0;color:#263d31}
+.rhsc-skills-activity .skill-demo-header p{font-size:12px;line-height:1.35;margin:3px 0 0;color:#617769}
+.rhsc-skills-activity .skill-demo-grid{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.07fr);
+  align-items:start;gap:14px;padding:15px;border:1px solid #d5dfd8;
+  border-radius:13px;background:white;
+}
+.rhsc-skills-activity .skill-demo-code,
+.rhsc-skills-activity .skill-demo-trace{min-width:0}
+.rhsc-skills-activity .skill-demo-source{
+  font-size:clamp(15px,1.65vw,20px);line-height:1.48;padding:13px 11px;
+  white-space:normal;overflow-wrap:anywhere;
+}
+.rhsc-skills-activity .skill-demo-line{display:flex;border-radius:5px;padding:1px 4px;min-width:0}
+.rhsc-skills-activity .skill-demo-line.is-tracing{background:#cfead6;box-shadow:inset 3px 0 0 #43835e}
+.rhsc-skills-activity .skill-demo-line-number{flex:none;width:29px;color:#789684;font-size:.68em;font-weight:800;padding-top:.35em}
+.rhsc-skills-activity .skill-demo-line-text{display:block;white-space:pre-wrap;overflow-wrap:anywhere;min-width:0}
+.rhsc-skills-activity .skill-demo-trace{display:grid;gap:8px;align-content:start}
+.rhsc-skills-activity .skill-demo-trace-title{font-size:14px;color:#345c46}
+.rhsc-skills-activity .skill-demo-controls{display:flex;gap:6px;flex-wrap:wrap}
+.rhsc-skills-activity .skill-demo-controls button{
+  min-height:34px;padding:6px 10px;border:1px solid #a9c8b5;border-radius:8px;
+  color:#285348;background:white;font-size:12px;font-weight:800;
+}
+.rhsc-skills-activity .skill-demo-controls .skill-demo-play{background:#285348;border-color:#285348;color:white}
+.rhsc-skills-activity .skill-demo-controls button:disabled{opacity:.45;cursor:default}
+.rhsc-skills-activity .skill-demo-table-scroll{
+  min-width:0;max-height:clamp(185px,37vh,320px);overflow:auto;
+  border:1px solid #d9e4dc;border-radius:9px;overscroll-behavior:contain;
+}
+.rhsc-skills-activity .skill-demo-table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.rhsc-skills-activity .skill-demo-table th{
+  position:sticky;top:0;background:#eaf4ed;color:#426950;text-align:left;font-size:11px;
+}
+.rhsc-skills-activity .skill-demo-table td,
+.rhsc-skills-activity .skill-demo-table th{padding:7px 8px;border-bottom:1px solid #dfe9e1}
+.rhsc-skills-activity .skill-demo-table tr.current{background:#d8f0de;font-weight:800}
+.rhsc-skills-activity .skill-demo-table td:first-child{font-weight:800;color:#315d47}
+.rhsc-skills-activity .skill-demo-status{min-height:30px;margin:0;padding:7px 9px;background:#eef6ef;border-radius:8px;color:#29543e;font-size:12px}
+.rhsc-skills-activity .skill-demo-result{margin:0;border:1px solid #b6dbbf;background:#e7f6eb;color:#1d6940;border-radius:9px;padding:8px 10px;font-size:14px;font-weight:800}
+@media(max-width:700px){
+  .rhsc-skills-activity .practice-name .skill-demo-open{min-height:31px;margin-left:auto;padding:5px 8px}
+  .rhsc-skills-activity .skill-demo-header{gap:8px;align-items:flex-start}
+  .rhsc-skills-activity .skill-demo-back{min-height:34px;padding:6px 8px;font-size:11px}
+  .rhsc-skills-activity .skill-demo-header h1{font-size:17px}
+  .rhsc-skills-activity .skill-demo-header p{font-size:11px}
+  .rhsc-skills-activity .skill-demo-grid{grid-template-columns:1fr;gap:8px;padding:10px}
+  .rhsc-skills-activity .skill-demo-source{font-size:clamp(13px,3.8vw,16px);line-height:1.35;padding:8px 7px}
+  .rhsc-skills-activity .skill-demo-line-number{width:23px}
+  .rhsc-skills-activity .skill-demo-table-scroll{max-height:180px}
+  .rhsc-skills-activity .skill-demo-table td,.rhsc-skills-activity .skill-demo-table th{padding:4px 7px}
+  .rhsc-skills-activity .skill-demo-status{min-height:25px;padding:5px 8px}
+}
