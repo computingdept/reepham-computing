@@ -118,3 +118,27 @@ for (const skill of ['data-types', 'casting', 'operators', 'comparisons', 'seque
     assert.equal(find(demo, 'skill-demo-result').hidden, false);
   });
 }
+
+test('SQL demo uses a question-specific similar example and hides forthcoming lines', () => {
+  const ui = mountDemo('sql');
+  ui.window.RHSSkillsDemoProvider = () => ({
+    title: 'SQL Builder', codeLabel: 'Books table',
+    task: 'Similar example: Show the Title of every book.',
+    columns: ['Clause', 'What it does'],
+    lines: ['SELECT Title', 'FROM Books'],
+    steps: [[1, 'SELECT', 'Title', 'Pick the column.'], [2, 'FROM', 'Books', 'Pick the table.']],
+    end: 'No WHERE is needed because every row is included.'
+  });
+  find(ui.title, 'skill-demo-open').click();
+  const demo = ui.practice.insertedSibling;
+  const code = find(demo, 'skill-demo-source');
+  assert.equal(code.children.length, 2);
+  assert.ok(code.children[0].className.includes('is-upcoming'));
+  assert.match(find(demo, 'skill-demo-heading').children[1].textContent, /every book/);
+  const controls = find(demo, 'skill-demo-controls');
+  controls.children[1].click();
+  assert.ok(!code.children[0].className.includes('is-upcoming'));
+  assert.ok(code.children[1].className.includes('is-upcoming'));
+  controls.children[1].click();
+  assert.ok(!code.children[1].className.includes('is-upcoming'));
+});

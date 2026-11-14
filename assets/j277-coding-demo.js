@@ -216,7 +216,7 @@
 
   const parts = location.pathname.split('/').filter(Boolean);
   const page = parts[parts.length - 1] === 'index.html' ? parts[parts.length - 2] : parts[parts.length - 1];
-  const example = examples[page];
+  let example = examples[page];
   const practice = document.querySelector('main .practice');
   const title = practice && practice.querySelector('.practice-name');
   if (!example || !practice || !title) return;
@@ -235,6 +235,7 @@
   title.append(launch);
 
   const section = make('section', 'skill-demo');
+  if (page === 'sql') section.classList.add('sql-step-reveal');
   section.id = 'skill-demo';
   section.hidden = true;
   section.setAttribute('aria-label', example.title + ' worked demonstration');
@@ -253,19 +254,28 @@
   const label = make('span', 'code-label', example.codeLabel || 'OCR Exam Reference Language');
   const pre = make('pre', 'erl skill-demo-source');
   const codeRows = [];
-  example.lines.forEach((line, idx) => {
-    const row = make('span', 'skill-demo-line');
-    const number = make('span', 'skill-demo-line-number', String(idx + 1).padStart(2, '0'));
-    number.setAttribute('aria-hidden', 'true');
-    const source = make('span', 'skill-demo-line-text', line);
-    row.append(number, source);
-    pre.append(row);
-    codeRows.push(row);
-  });
+  function setExample(next) {
+    if (!next || !Array.isArray(next.lines) || !Array.isArray(next.steps)) return;
+    example = next;
+    label.textContent = next.codeLabel || 'OCR Exam Reference Language';
+    heading.textContent = next.title + ' · Demo';
+    subtitle.textContent = next.task
+      ? next.task + ' Follow the highlighted steps. Your marks are unchanged.'
+      : 'Follow the highlighted line. This worked example does not affect your marks.';
+    pre.replaceChildren(); codeRows.length = 0;
+    next.lines.forEach((line, idx) => {
+      const row = make('span', 'skill-demo-line');
+      const number = make('span', 'skill-demo-line-number', String(idx + 1).padStart(2, '0'));
+      number.setAttribute('aria-hidden', 'true');
+      const source = make('span', 'skill-demo-line-text', line);
+      row.append(number, source); pre.append(row); codeRows.push(row);
+    });
+  }
+  setExample(example);
   codePanel.append(label, pre);
 
   const trace = make('div', 'skill-demo-trace');
-  const traceLabel = make('strong', 'skill-demo-trace-title', 'Live trace table');
+  const traceLabel = make('strong', 'skill-demo-trace-title', page === 'sql' ? 'Build the query' : 'Live trace table');
   const controls = make('div', 'skill-demo-controls');
   const play = make('button', 'skill-demo-play', '▶ Play');
   const step = make('button', '', '⏭ Step');
@@ -314,11 +324,14 @@
     codeRows.forEach((row, idx) => {
       const active = !!current && idx === current[0] - 1;
       row.classList.toggle('is-tracing', active);
+      row.classList.toggle('is-upcoming', page === 'sql' && idx >= index);
       if (active) row.setAttribute('aria-current', 'step');
       else row.removeAttribute('aria-current');
     });
     if (current) status.textContent = 'Line ' + String(current[0]).padStart(2, '0') + ' · ' + current[3];
-    else status.textContent = 'Ready. Press Play or Step.';
+    else status.textContent = page === 'sql'
+      ? 'Press Step to build this similar query, one clause at a time.'
+      : 'Ready. Press Play or Step.';
     const done = index === example.steps.length;
     step.disabled = done;
     play.textContent = timer !== null ? 'Ⅱ Pause' : done ? '▶ Replay' : '▶ Play';
@@ -332,6 +345,12 @@
     paint();
   }
   function openDemo() {
+    // Optional shared hook: a skill can offer a different worked example for
+    // the active question. Other skills keep their established static demos.
+    if (typeof window.RHSSkillsDemoProvider === 'function') {
+      try { setExample(window.RHSSkillsDemoProvider()); }
+      catch (error) { /* A faulty provider must not prevent opening a demo. */ }
+    }
     previousScroll = window.scrollY;
     practice.hidden = true;
     section.hidden = false;
