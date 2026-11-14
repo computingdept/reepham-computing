@@ -45,3 +45,12 @@ test('one shared component selects each of the four H446 source pages',()=>{
   const code=fs.readFileSync(path.join(root,'assets/h446-skills-guided-demo.js'),'utf8');
   assert.ok(!/localStorage|setItem|\.check\(|\.submit\(|recordCorrect\(/.test(code));
 });
+
+test('Karnaugh Gray-code headers and accessible cell names use binary, not denary',()=>{
+  const src=fs.readFileSync(path.join(root,'exercise/h446/index.html'),'utf8');
+  assert.match(src,/gray\[c\]\.toString\(2\)\.padStart\(2,"0"\)/);
+  assert.match(src,/gray\[r\]\.toString\(2\)\.padStart\(2,"0"\)/);
+  assert.match(src,/inputOf\(pos\)\.toString\(2\)\.padStart\(variableCount\(\),"0"\)/);
+  const gray=[0,1,3,2];
+  assert.deepEqual(gray.map(x=>x.toString(2).padStart(2,'0')),['00','01','11','10']);
+});
