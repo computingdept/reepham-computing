@@ -38,6 +38,12 @@ Questions are drawn from 202 source-linked prompts and rotated across the
 course so that the exact question does not repeat within eight lessons.
 The bank is a reviewable *authored set*, not a live random-question generator.
 
+The source-lesson evidence screen is available in
+[`docs/h446-do-now-q2-source-audit.md`](h446-do-now-q2-source-audit.md).
+It records all 300 source links and explicitly flags where a correct answer
+does not appear literally in the cited lesson's teaching page. A text match
+does not amount to teacher approval; the links still need semantic QA.
+
 For each entry before publication:
 
 1. Confirm the source was taught before the current lesson, and is not the
@@ -54,6 +60,7 @@ bank afresh from the preserved lesson source, then author the two batches:
 node scripts/do-now/build-h446-q2-drafts.cjs
 node scripts/do-now/author-h446-q2-batch1.cjs
 node scripts/do-now/author-h446-q2-remaining.cjs
+node scripts/do-now/audit-h446-q2-sources.cjs
 ```
 
 These authoring scripts reset/rewrite unapproved entries and should **not** be

@@ -35,12 +35,12 @@ const pool = [
  ['L030','Which output records overflow from an adder column?',['Carry','Sum','Clock','Input'],0,'Carry-out records the binary carry from addition.'],
  ['L031','Which input does a D flip-flop sample?',['D','Q','CLK','RST'],0,'The D input is copied to Q on the active clock edge.'],
  ['L038','What is an instance of a class called?',['Object','Method','Field','Property'],0,'An object is an instance of a class.'],
- ['L039','What stores an object’s internal state?',['Field','Method','Constructor','Namespace'],0,'Fields hold the state of an object.'],
+ ['L039','Which class feature stores an object’s state?',['Attribute','Method','Constructor','Namespace'],0,'Attributes store an object’s data and state.'],
  ['L040','Which method initialises an object?',['Constructor','Destructor','Accessor','Override'],0,'A constructor runs when a new object is created.'],
  ['L041','Which access modifier hides class members externally?',['private','public','virtual','static'],0,'private restricts access to the declaring class.'],
  ['L042','Which OOP mechanism reuses a parent class?',['Inheritance','Encapsulation','Compilation','Indexing'],0,'Inheritance allows a derived class to reuse base-class behaviour.'],
  ['L043','Which keyword lets a derived method replace behaviour?',['override','private','static','readonly'],0,'An override supplies specialised behaviour for a virtual member.'],
- ['L047','Which C# method counts a chosen array dimension?',['GetLength','Count','Add','Insert'],0,'GetLength returns the size of the specified array dimension.'],
+ ['L047','In a 2D array, what does the second index identify?',['Column','Row','Depth','Page'],0,'For array[row,column], the second index selects a column.'],
  ['L048','Which List method appends an item?',['Add','Insert','Remove','Clear'],0,'Add places an item at the end of a List.'],
  ['L049','Which removal principle describes a stack?',['LIFO','FIFO','FILO','Random'],0,'Stacks remove the most recently pushed item first.'],
  ['L050','Which service order describes a queue?',['FIFO','LIFO','Random','Priority'],0,'FIFO removes the item that arrived earliest.'],
@@ -52,7 +52,7 @@ const pool = [
  ['L059','Which method removes irrelevant details?',['Abstraction','Validation','Compilation','Encryption'],0,'Abstraction keeps only details relevant to the problem.'],
  ['L060','What must be checked before trusting a model?',['Assumptions','Passwords','Registers','Opcodes'],0,'A model depends on assumptions which must be checked.'],
  ['L061','What must hold before an algorithm starts?',['Precondition','Postcondition','Breakpoint','Exception'],0,'A precondition is an input requirement before execution.'],
- ['L062','What breaks a task into smaller subtasks?',['Decomposition','Polymorphism','Encryption','Hashing'],0,'Decomposition identifies manageable subtasks.'],
+ ['L062','Which term means one task relies on another?',['Dependency','Iteration','Variable','Output'],0,'A dependency determines which subprocedure must run first.'],
  ['L063','Which operator combines two true conditions?',['AND','XOR','NOT','MOD'],0,'AND is true only when both inputs are true.'],
  ['L064','Which term describes simultaneous independent work?',['Parallelism','Caching','Recursion','Paging'],0,'Parallelism is actual work occurring at the same time.'],
  ['L066','Which method separates a complex problem into parts?',['Decomposition','Encapsulation','Compression','Compilation'],0,'Decomposition splits a problem into smaller solvable tasks.'],
@@ -63,7 +63,7 @@ const pool = [
  ['L071','Which CPU technique overlaps instruction stages?',['Pipelining','Paging','Caching','Swapping'],0,'Pipelining processes different instructions in overlapping stages.'],
  ['L072','What gives ordered steps for solving a problem?',['Algorithm','Protocol','Compiler','Opcode'],0,'An algorithm is a defined sequence of steps.'],
  ['L073','Which table tracks variables during execution?',['Trace','Truth','Lookup','Hash'],0,'A trace table records how variables change.'],
- ['L074','Which notation compares algorithm growth?',['BigO','ASCII','SQL','UML'],0,'Big O describes asymptotic growth in resource use.'],
+ ['L074','Which notation describes linear time?',['O(n)','O(1)','O(logn)','O(n²)'],0,'O(n) means the required work grows in proportion to the input size.'],
  ['L075','Which complexity grows with n squared?',['Quadratic','Linear','Constant','Logarithmic'],0,'Quadratic growth is O(n²).'],
  ['L076','Which measure records extra algorithm memory?',['Space','Time','Latency','Throughput'],0,'Auxiliary space counts extra working memory.'],
  ['L077','Which search checks items sequentially?',['Linear','Binary','Hash','Depth'],0,'Linear search examines one item after another.'],
@@ -74,7 +74,7 @@ const pool = [
  ['L082','Which value partitions an array in quicksort?',['Pivot','Index','Sentinel','Root'],0,'Quicksort rearranges elements around a pivot.'],
  ['L083','Which algorithm finds nonnegative shortest paths?',['Dijkstra','Kruskal','Bubble','Prim'],0,'Dijkstra finds shortest paths when edge weights are non-negative.'],
  ['L084','Which A* score estimates distance remaining?',['h','f','g','n'],0,'The h score is the heuristic estimate to the goal.'],
- ['L086','What pauses execution at a chosen code line?',['Breakpoint','Exception','Compiler','Watch'],0,'A breakpoint suspends execution for debugging.'],
+ ['L086','Which error gives a wrong result without invalid syntax?',['Logic','Syntax','Typing','Compilation'],0,'A logic error causes incorrect results even when code can execute.'],
  ['L089','Which CPU component performs arithmetic?',['ALU','MAR','PC','CIR'],0,'The arithmetic logic unit performs arithmetic and logic operations.'],
  ['L090','Which unit coordinates instruction execution?',['Control','ALU','Cache','Bus'],0,'The control unit decodes and coordinates CPU operations.'],
  ['L091','Which register holds a memory address?',['MAR','MDR','CIR','ACC'],0,'MAR stores the address for a memory access.'],
@@ -93,7 +93,7 @@ const pool = [
  ['L107','Which technique maps virtual pages to frames?',['Paging','Sorting','Hashing','Linking'],0,'Paging maps virtual pages to physical frames.'],
  ['L108','What signals that the CPU must handle an event?',['Interrupt','Cache','Index','Pointer'],0,'An interrupt diverts the processor to a handler.'],
  ['L109','Which scheduler runs jobs in arrival order?',['FCFS','SJF','SRT','RR'],0,'First Come First Served uses arrival order.'],
- ['L110','Which scheduler gives jobs repeated time slices?',['RoundRobin','FCFS','SJF','SRT'],0,'Round Robin cycles through runnable processes using time quanta.'],
+ ['L110','Which scheduler gives jobs repeated time slices?',['Round-robin','FCFS','SJF','SRT'],0,'Round Robin cycles through runnable processes using time quanta.'],
  ['L111','Which software bridges an OS and a device?',['Driver','Compiler','Browser','Protocol'],0,'A device driver exposes hardware operations to the OS.'],
  ['L113','Which source model permits code inspection?',['Open','Closed','Binary','Encrypted'],0,'Open-source licences permit access to source code.'],
  ['L114','Which translator compiles a complete program?',['Compiler','Interpreter','Assembler','Linker'],0,'A compiler translates source into target or intermediate code.'],
@@ -129,7 +129,7 @@ const pool = [
  ['L146','Which attack overwhelms a service with traffic?',['DDoS','Phishing','Spoofing','Malware'],0,'Distributed denial of service floods a target.'],
  ['L147','Which control filters network traffic by policy?',['Firewall','Router','Switch','Modem'],0,'A firewall enforces traffic rules.'],
  ['L148','Which device forwards packets between IP networks?',['Router','Switch','Hub','Repeater'],0,'Routers forward packets based on network addresses.'],
- ['L149','Which network model uses dedicated service hosts?',['ClientServer','PeerPeer','Mesh','Star'],0,'Client-server systems have servers providing network services.'],
+ ['L149','Which role provides services in a client-server network?',['Server','Client','Router','Switch'],0,'A server provides shared network resources to clients.'],
  ['L150','Which language structures a web page?',['HTML','CSS','SQL','JSON'],0,'HTML describes the structure and semantic content of pages.'],
  ['L151','Which language styles a web page?',['CSS','HTML','SQL','CSharp'],0,'CSS rules style HTML elements.'],
  ['L152','Which language handles browser DOM events?',['JavaScript','CSS','HTML','SQL'],0,'JavaScript responds to events and changes the DOM.'],
@@ -138,7 +138,7 @@ const pool = [
  ['L155','Which ranking method uses the link graph?',['PageRank','Quicksort','Dijkstra','Hashing'],0,'PageRank derives scores from the link structure.'],
  ['L156','Which side runs code on the user’s device?',['Client','Server','Proxy','Cloud'],0,'Client-side processing happens on the user’s device.'],
  ['L157','Which UK framework regulates personal data?',['GDPR','CMA','CDPA','RIPA'],0,'UK GDPR sets rules for processing personal data.'],
- ['L158','Which act concerns unauthorised computer access?',['CMA','CDPA','GDPR','RIPA'],0,'The Computer Misuse Act covers unauthorised access offences.'],
+ ['L158','Under the Computer Misuse Act, which access is prohibited?',['Unauthorised','Licensed','Permitted','Approved'],0,'Access without the owner’s permission is an offence under the Computer Misuse Act.'],
  ['L159','Which act protects software copyright?',['CDPA','CMA','RIPA','GDPR'],0,'The Copyright, Designs and Patents Act protects software and creative content.'],
  ['L160','Which law covers certain interception powers?',['RIPA','CMA','GDPR','CDPA'],0,'RIPA includes powers and safeguards concerning interception.'],
  // New Year 13 teaching, available only after its source lesson.
@@ -153,27 +153,27 @@ const pool = [
  ['L194','Which part stores a floating-point fraction?',['Mantissa','Exponent','Index','Opcode'],0,'The mantissa contains the significand bits.'],
  ['L197','Which structure removes the most recent item?',['Stack','Queue','Tree','Graph'],0,'A stack uses Last In First Out.'],
  ['L198','Which reference moves through linked nodes?',['Next','Root','Key','Index'],0,'Each next reference points to the next node.'],
- ['L199','Which traversal visits a BST in sorted order?',['Inorder','Preorder','Postorder','Breadth'],0,'Inorder traversal visits left, root and right.'],
+ ['L199','Which BST branch holds smaller values?',['Left','Right','Root','Parent'],0,'Smaller values belong in the left subtree of a binary search tree.'],
  ['L200','Which structure can store a graph’s neighbours?',['List','Stack','Queue','Record'],0,'An adjacency list records neighbours per vertex.'],
  ['L201','What happens when two keys hash to one bucket?',['Collision','Overflow','Recursion','Merge'],0,'A hash collision occurs when locations match.'],
  ['L202','Which operator replaces AND in a De Morgan rewrite?',['OR','AND','XOR','NOT'],0,'Negating an AND gives an OR of negated operands.'],
  ['L203','What do basic SOP Karnaugh-map groups contain?',['Ones','Zeroes','Bytes','Edges'],0,'Grouping adjacent 1s removes changing variables.'],
- ['L204','Which logic component stores one bit?',['Flipflop','Adder','Decoder','Encoder'],0,'A flip-flop stores a bit of state.'],
+ ['L204','Which logic component stores one bit?',['Flip-flop','Adder','Decoder','Encoder'],0,'A flip-flop stores a bit of state.'],
  ['L216','What defines a quicksort partition?',['Pivot','Index','Root','Queue'],0,'Quicksort partitions its input around a pivot.'],
  ['L218','Which algorithm requires nonnegative edge weights?',['Dijkstra','Quicksort','PageRank','Bubble'],0,'Dijkstra’s greedy shortest-path guarantee needs non-negative weights.'],
- ['L220','Which search uses g and h estimates?',['Astar','Dijkstra','Bubble','Binary'],0,'A* combines path cost g and heuristic estimate h.'],
+ ['L220','Which search uses g and h estimates?',['A*','Dijkstra','Bubble','Binary'],0,'A* combines path cost g and heuristic estimate h.'],
  ['L223','Which link identifies the next object in a list?',['Next','Root','Index','Value'],0,'Object-based linked lists use next references.'],
  ['L224','Which side of a BST holds smaller keys?',['Left','Right','Root','Parent'],0,'BST insertion compares with the current node.'],
  ['L229','Which paradigm centres on object state?',['OOP','Procedural','Functional','Assembly'],0,'OOP groups data and behaviour into objects.'],
  ['L233','Which lifecycle uses short Agile iterations?',['Sprint','Waterfall','Spiral','VModel'],0,'Agile teams often work in short sprints.'],
  ['L237','Which testing term means a previously fixed feature fails?',['Regression','Boundary','Unit','Normal'],0,'A regression reintroduces a defect after a change.'],
  ['L240','Which test type checks unusual boundary values?',['Boundary','Normal','Load','Smoke'],0,'Boundary tests probe values at and next to limits.'],
- ['L244','Which term means actually running independent work together?',['Parallelism','Sequential','Recursion','Abstraction'],0,'Parallelism requires simultaneous execution.'],
+ ['L244','Which term describes making progress on overlapping tasks?',['Concurrency','Recursion','Sorting','Encoding'],0,'Concurrency allows progress on independent tasks during overlapping periods.'],
  ['L249','Which complexity describes repeated halving?',['Logarithmic','Linear','Quadratic','Constant'],0,'Logarithmic time is typical of repeated halving.']
  ,['L251','Which CPU register stores the next instruction address?',['PC','MAR','MDR','ACC'],0,'The program counter stores the address of the next instruction.']
  ,['L252','Which bus carries a memory location?',['Address','Data','Control','Clock'],0,'The address bus carries the location being accessed.']
  ,['L253','Which memory provides fast CPU access to recent data?',['Cache','ROM','Flash','HDD'],0,'Cache retains copies of frequently or recently needed data.']
- ,['L254','Which architecture stores instructions and data together?',['Neumann','Harvard','RISC','CISC'],0,'Von Neumann architecture uses shared memory for data and instructions.']
+ ,['L254','Which architecture separates instruction and data memories?',['Harvard','RISC','CISC','Neumann'],0,'Harvard architecture uses separate instruction and data memories.']
  ,['L255','Which architecture favours simpler instructions?',['RISC','CISC','SIMD','GPU'],0,'RISC designs typically use simpler instructions.']
  ,['L256','Which processor excels at many similar calculations?',['GPU','CPU','ROM','SSD'],0,'A GPU supports highly parallel computation.']
  ,['L257','Which class of device reads a barcode?',['Input','Output','Storage','Memory'],0,'A barcode reader is an input device.']
@@ -186,7 +186,7 @@ const pool = [
  ,['L266','Which technique maps memory pages to frames?',['Paging','Sorting','Hashing','Encoding'],0,'Paging maps virtual pages into physical frames.']
  ,['L267','Which event diverts the CPU to a handler?',['Interrupt','Loop','Cache','Trace'],0,'An interrupt causes service code to run.']
  ,['L268','Which scheduling method rotates time slices?',['RoundRobin','FCFS','SJF','SRT'],0,'Round Robin assigns each runnable process a time quantum.']
- ,['L269','Which OS supports immediate time-critical responses?',['Realtime','Batch','Desktop','Network'],0,'A real-time operating system aims to satisfy timing deadlines.']
+ ,['L269','Which OS supports immediate time-critical responses?',['Real-time','Batch','Desktop','Network'],0,'A real-time operating system aims to satisfy timing deadlines.']
  ,['L270','Which software lets an OS operate a peripheral?',['Driver','Loader','Compiler','Browser'],0,'A device driver translates software requests into hardware operations.']
  ,['L271','Which licence model makes source code available?',['Open','Closed','Trial','Binary'],0,'Open-source licences make source code available under their terms.']
  ,['L273','Which translator executes statements directly?',['Interpreter','Compiler','Linker','Assembler'],0,'An interpreter processes instructions at runtime.']
