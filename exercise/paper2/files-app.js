@@ -60,15 +60,18 @@
   }
   function inputPanel(q,isHard) {
     const answer=el('div','file-answer'), label=el('label','work-label',isHard?'Your file-handling code':'Your answer');
-    const input=el(isHard?'textarea':'input',isHard?'code-entry':'number-entry');
+    const multiline=isHard&&q.lineCount>1;
+    const input=el(multiline?'textarea':'input',isHard?'code-entry'+(multiline?'':' file-one-line'):'number-entry');
     input.id='file-answer'; label.htmlFor=input.id;
-    if(isHard) {input.rows=4;input.spellcheck=false;input.autocapitalize='off';}
+    if(multiline) input.rows=Math.max(3,Math.min(5,q.lineCount+1));
     else input.type='text';
-    input.autocomplete='off';input.placeholder=isHard?'Type the OCR statements…':'?';
+    if(isHard) {input.spellcheck=false;input.autocapitalize='off';}
+    input.autocomplete='off';input.placeholder=isHard?(multiline?'Write your statements, one per line…':'Write one line of code…'):'?';
     input.addEventListener('input',()=>{state.response=input.value;});
-    if(!isHard)input.addEventListener('keydown',event=>{if(event.key==='Enter')$('check').click();});
-    const note=el('span','writer-note',isHard?'Use the OCR command names shown in the Demo.':'Read each command in order, then enter the result.');
-    answer.append(label,input,note);return answer;
+    if(!multiline)input.addEventListener('keydown',event=>{if(event.key==='Enter')$('check').click();});
+    answer.append(label,input);
+    if(!isHard)answer.append(el('span','writer-note','Read each command in order, then enter the result.'));
+    return answer;
   }
   function renderMedium(q,work) {
     const layout=el('div','file-layout'), left=el('div','file-source');
@@ -77,8 +80,14 @@
   function renderHard(q,work) {
     const layout=el('div','file-layout file-hard-layout');
     const guide=el('div','file-guide');
-    guide.append(el('strong','file-guide-title','OCR file commands'),
-      el('p','', 'open() · readLine() · writeLine() · close() · endOfFile() · newFile()'));
+    guide.append(el('strong','file-guide-title','Useful building blocks'));
+    const chips=el('div','file-build-chips');
+    q.helpers.forEach(helper=>{
+      const chip=el('div','file-build-chip');
+      chip.append(el('span','file-build-label',helper.label),el('code','file-build-code',helper.syntax));
+      chips.append(chip);
+    });
+    guide.append(chips);
     layout.append(guide,inputPanel(q,true));work.append(layout);
   }
   function renderQuestion() {
