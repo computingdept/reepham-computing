@@ -104,12 +104,13 @@
     panel.append(controls, output);
     state.response = {columns: '', table: '', filter: ''};
   }
-  function renderHard(panel) {
+  function renderHard(q, panel) {
     const answer = el('div', 'sql-answer');
     const label = el('label', 'work-label', 'Your SQL query');label.htmlFor = 'sql-answer';
     const area = el('textarea', 'code-entry sql-code-entry');
     area.id = 'sql-answer';area.rows = 3;area.spellcheck = false;area.autocapitalize = 'off';
-    area.autocomplete = 'off';area.placeholder = 'SELECT …\nFROM …\nWHERE …';
+    area.autocomplete = 'off';
+    area.placeholder = q.where ? 'SELECT …\nFROM …\nWHERE …' : 'SELECT …\nFROM …';
     area.addEventListener('input', () => {state.response = area.value;});
     answer.append(label, area);panel.append(answer);
   }
@@ -130,7 +131,7 @@
     left.append(tableCard(q));
     if (state.level === 'easy') renderEasy(q, right);
     else if (state.level === 'medium') renderMedium(q, right);
-    else renderHard(right);
+    else renderHard(q, right);
     grid.append(left, right);work.append(grid);
   }
   function disableInputs() {
@@ -166,7 +167,7 @@
     const work = $('workspace'), right = work.querySelector('.sql-task');right.replaceChildren();
     if (state.level === 'easy') renderEasy(q, right);
     else if (state.level === 'medium') renderMedium(q, right);
-    else renderHard(right);
+    else renderHard(q, right);
     $('show-answer').hidden = wrong < 2;
   }
   function finish() {
