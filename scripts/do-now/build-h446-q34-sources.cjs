@@ -28,11 +28,13 @@ for (const row of rows) {
       entry[slot] = { priorStage: 'GCSE' };
       continue;
     }
-    if (!/^\d{3}$/.test(source) || Number(source) >= Number(id) ||
-        !snapshot.lessons[source]) {
+    const refs = source.split('+');
+    if (!refs.length || refs.some(ref => !/^\d{3}$/.test(ref) ||
+        Number(ref) >= Number(id) || !snapshot.lessons[ref]) ||
+        new Set(refs).size !== refs.length) {
       throw Error(`Invalid ${slot} source for H446 ${id}: ${source}`);
     }
-    entry[slot] = { sourceRefs: [`L${source}`] };
+    entry[slot] = { sourceRefs: refs.map(ref => `L${ref}`) };
   }
   lessons[id] = entry;
 }
