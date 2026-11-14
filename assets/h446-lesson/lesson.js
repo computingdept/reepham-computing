@@ -2231,6 +2231,51 @@ function applyPublishedH446Q2(){
     }).catch(error=>console.warn('H446 Q2 bank unavailable; authored fallback retained:',error));
 }
 
+/* Staged provenance pilot for H446 Q3/Q4. Source IDs are checked against
+   their earlier teaching lessons before publication in the shared bank.
+   Only card/answer headings change; authored questions, answers, and the
+   previously published Q1/Q2 banks retain their current behaviour. */
+function applyPilotH446Q34Sources(){
+  const match=location.pathname.match(/\/lessons\/h446\/lesson-(\d{3})(?:\/|\.html|$)/i);
+  if(!match)return;
+  const id=match[1],number=Number(id);
+  if(number<209||number>217)return;
+  const section=document.querySelector('#do-now');
+  const cards=[...(section?.querySelectorAll('.donow-questions .donow-question')||[])];
+  const reviews=[...(section?.querySelectorAll('.donow-review-question')||[])];
+  if(cards.length!==4||reviews.length!==4)return;
+  fetch('../../../data/do-now/q34-pilot/h446-209-217.json',{cache:'no-store'})
+    .then(response=>{
+      if(!response.ok)throw Error('H446 Q3/Q4 pilot source bank unavailable');
+      return response.json();
+    }).then(bank=>{
+      if(bank.course!=='h446'||bank.status!=='pilot')return;
+      const entry=bank.lessons?.[id];
+      if(!entry)return;
+      for(const position of [2,3]){
+        const refs=entry['q'+(position+1)]?.sourceRefs;
+        if(!Array.isArray(refs)||!refs.length||!refs.every(ref=>
+          /^L\d{3}$/.test(ref)&&Number(ref.slice(1))<number))continue;
+        const label='TAUGHT · '+refs.join(' + ');
+        const headingText=position===2?'RETRIEVAL':'CHALLENGE';
+        const headings=[cards[position].querySelector(':scope > strong'),
+          reviews[position].querySelector('.review-number')];
+        for(const [index,heading] of headings.entries()){
+          if(!heading)continue;
+          heading.classList.add('h446-origin-heading');
+          heading.textContent=(index===0?String(position+1):'QUESTION '+(position+1)+' OF 4')
+            +' · '+headingText;
+          const tag=document.createElement('span');
+          tag.className='h446-retrieval-origin';
+          tag.textContent=label;
+          tag.title='Previously taught in '+refs.join(', ');
+          heading.append(tag);
+        }
+      }
+      section.dataset.h446Q34Pilot='true';
+    }).catch(error=>console.warn('H446 Q3/Q4 authored headings retained:',error));
+}
+
 /* Single published J277 Q1 source. Only Q1 is replaced; Q2–Q4, lesson
    navigation and H446 are untouched. If the bank cannot load, the authored
    lesson remains usable rather than displaying an invented answer. */
@@ -2279,6 +2324,7 @@ applyPublishedJ277Q1();
 prepareH446DoNowSourceLabels();
 applyPublishedH446Q1();
 applyPublishedH446Q2();
+applyPilotH446Q34Sources();
 prepareMobileSwipeNavigation();
 /* Responsive binary place-value scaffold, generated from the SVG's actual
    eight column labels and eight bits: no question or answer data is rewritten. */
