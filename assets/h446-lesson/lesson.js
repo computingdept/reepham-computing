@@ -2239,12 +2239,13 @@ function applyPilotH446Q34Sources(){
   const match=location.pathname.match(/\/lessons\/h446\/lesson-(\d{3})(?:\/|\.html|$)/i);
   if(!match)return;
   const id=match[1],number=Number(id);
-  if(number<209||number>217)return;
+  if(number<209||number>226)return;
   const section=document.querySelector('#do-now');
   const cards=[...(section?.querySelectorAll('.donow-questions .donow-question')||[])];
   const reviews=[...(section?.querySelectorAll('.donow-review-question')||[])];
   if(cards.length!==4||reviews.length!==4)return;
-  fetch('../../../data/do-now/q34-pilot/h446-209-217.json',{cache:'no-store'})
+  const bankFile=number<=217?'h446-209-217.json':'h446-218-226.json';
+  fetch('../../../data/do-now/q34-pilot/'+bankFile,{cache:'no-store'})
     .then(response=>{
       if(!response.ok)throw Error('H446 Q3/Q4 pilot source bank unavailable');
       return response.json();
