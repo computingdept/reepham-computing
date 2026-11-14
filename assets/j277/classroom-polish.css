@@ -395,3 +395,50 @@ body{
 #do-now .donow-stage:first-child .donow-questions > .donow-question:nth-child(4){
   --j277-donow-outline:#8662a8; /* Challenge: plum */
 }
+
+/* J277 Lesson 003: compact method map beside the existing step-by-step
+   explanation. Replaces a long, scrollable monospace duplicate. */
+#new-learning .nl-reference .j277-nl-glance{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  list-style:none;
+  gap:clamp(9px,1vw,14px);
+  padding:0;
+  margin:clamp(15px,1.4vw,22px) 0;
+}
+#new-learning .nl-reference .j277-nl-glance li{
+  display:flex;
+  align-items:center;
+  gap:clamp(8px,.85vw,12px);
+  min-width:0;
+  padding:clamp(10px,1vw,15px);
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:var(--green-soft);
+  color:var(--green-dark);
+  font-family:inherit; font-size:clamp(21px,1.7vw,27px); font-weight:800; line-height:1.2;
+  overflow-wrap:anywhere;
+}
+#new-learning .nl-reference .j277-nl-glance-index{
+  display:grid;
+  place-items:center;
+  flex:0 0 clamp(29px,2.7vw,38px);
+  width:clamp(29px,2.7vw,38px);
+  height:clamp(29px,2.7vw,38px);
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:50%;
+  font-size:clamp(15px,1.2vw,19px);
+  font-weight:900;
+}
+@media(max-width:600px){
+  #new-learning .nl-reference .j277-nl-glance{gap:8px}
+  #new-learning .nl-reference .j277-nl-glance li{
+    padding:9px 7px;
+    gap:6px;
+    font-size:clamp(16px,4.2vw,21px);
+  }
+}
+@media(max-width:380px){
+  #new-learning .nl-reference .j277-nl-glance{grid-template-columns:1fr}
+}
