@@ -17,7 +17,7 @@ test('all 30 FOR-loop models are deterministic and pass their checkers',()=>{
 });
 
 test('Easy: inclusive start/end values, STEP 2 and negative STEP',()=>{
-  const steps=new Set();
+  const expectedSteps=[1,1,2,2,2,3,3,-1,-1,-2];
   for(let i=0;i<10;i++){
     const q=engine.makeQuestion('easy',i,128);
     assert.equal(q.options.length,4);
@@ -27,10 +27,11 @@ test('Easy: inclusive start/end values, STEP 2 and negative STEP',()=>{
     assert.equal(q.code[q.code.length-1],'next i');
     assert.ok(q.explanation.includes('iterations'));
     assert.equal(engine.checkAnswer(q,q.options.find(x=>x!==q.expected)).correct,false);
-    steps.add(q.code[0].match(/step (-?\d+)/)?.[1]||'1');
+    const actualStep=Number(q.code[0].match(/step (-?\d+)/)?.[1]||'1');
+    assert.equal(actualStep,expectedSteps[i],`Easy Q${i+1} STEP progression`);
   }
-  assert.deepEqual(steps,new Set(['1','2','-1']));
   assert.deepEqual(engine.range(0,3,1),[0,1,2,3]);
+  assert.deepEqual(engine.range(0,9,3),[0,3,6,9]);
   assert.deepEqual(engine.range(2,8,2),[2,4,6,8]);
   assert.deepEqual(engine.range(8,2,-2),[8,6,4,2]);
   assert.deepEqual(engine.range(2,1,2),[]);

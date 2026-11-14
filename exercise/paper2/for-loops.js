@@ -24,8 +24,10 @@
     return result;
   }
   function easy(index,r){
-    const descending=index===8||index===9;
-    const step=index===6||index===7?2:descending?-1:1;
+    // Gradually introduce STEP: plain loops (1–2), +2 (3–5), +3 (6–7),
+    // then counting backwards with -1 (8–9) and -2 (10).
+    const step=index<2?1:index<5?2:index<7?3:index===9?-2:-1;
+    const descending=step<0;
     const count=int(r,3,8);
     const start=descending?int(r,8,14):int(r,0,5);
     const end=start+(count-1)*step;
@@ -33,7 +35,8 @@
     const options=shuffle([count,count-1,count+1,count+2].map(String),r);
     return {
       level:'easy',type:'choose',prompt:'How many times does this loop run?',
-      context:'OCR ERL counts both the starting and ending values.',
+      context:step===1?'OCR ERL counts both the starting and ending values.':
+        step>0?'Follow STEP '+step+' to count each iteration.':'Count backwards using STEP '+step+'.',
       code:['for i = '+start+' to '+end+(step===1?'':' step '+step),'    print("Hello")','next i'],
       expected:String(count),options,model:String(count)+' times',
       hint:'List the counter values from start to end. TO includes the final number. STEP says how much i changes.',
