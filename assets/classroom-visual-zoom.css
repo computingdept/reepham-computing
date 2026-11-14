@@ -1,6 +1,8 @@
 /* One opt-in zoom affordance for classroom SVG diagrams, usable on a phone. */
 figure[data-classroom-zoom]{cursor:zoom-in;position:relative;outline-offset:4px}
 figure[data-classroom-zoom]:focus-visible{outline:3px solid #266b91}
+svg[data-classroom-zoom]{cursor:zoom-in;outline-offset:4px}
+svg[data-classroom-zoom]:focus-visible{outline:3px solid #266b91}
 @media(max-width:900px){
   figure[data-classroom-zoom]::after{
     content:"⤢  Tap to enlarge";
@@ -10,6 +12,24 @@ figure[data-classroom-zoom]:focus-visible{outline:3px solid #266b91}
     font:700 13px/1.4 system-ui,-apple-system,sans-serif;
     padding:4px 0 0;
   }
+  /* J277: keep the current learning step first, with an optional compact diagram. */
+  #new-learning.a1-visual-learning .nl-focus{display:flex;flex-direction:column;gap:10px}
+  #new-learning.a1-visual-learning .nl-explanation{order:0;height:auto;padding:13px 15px}
+  #new-learning.a1-visual-learning .nl-reference{order:1;height:auto;min-height:0;padding:10px 13px;border-top-width:4px}
+  #new-learning.a1-visual-learning .nl-reference > .phase-tag,
+  #new-learning.a1-visual-learning .nl-reference > h2{display:none}
+  #new-learning.a1-visual-learning .nl-reference > svg{display:block;width:min(100%,270px);height:auto;margin:0 auto}
+  #new-learning.a1-visual-learning .nl-reference .a1-scene,
+  #new-learning.a1-visual-learning .nl-reference .y11-scene{width:min(100%,270px);max-width:270px;margin:0 auto}
+  #new-learning.a1-visual-learning .nl-reference svg{height:auto;max-height:none}
+  /* CPU and Year 11 visuals have stronger desktop selectors; scope their override. */
+  .j277-visual-lesson #new-learning.a1-visual-learning .nl-focus{display:flex;flex-direction:column;gap:10px}
+  .j277-visual-lesson #new-learning.a1-visual-learning .nl-explanation{order:0;height:auto;padding:13px 15px}
+  .j277-visual-lesson #new-learning.a1-visual-learning .nl-reference{order:1;height:auto;min-height:0;padding:10px 13px;border-top-width:4px}
+  .j277-visual-lesson #new-learning.a1-visual-learning .nl-reference .a1-scene,
+  .j277-visual-lesson #new-learning.a1-visual-learning .nl-reference .y11-scene{width:min(100%,270px);max-width:270px;margin:0 auto}
+  .j277-visual-lesson #new-learning.a1-visual-learning .nl-reference .j277-cpu-visual{flex:0 0 auto;min-height:0}
+  .j277-visual-lesson #new-learning.a1-visual-learning .nl-reference svg{width:100%;height:auto;max-height:none}
 }
 .rhsc-visual-zoom{
   box-sizing:border-box;

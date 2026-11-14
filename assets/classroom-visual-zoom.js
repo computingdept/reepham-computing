@@ -1,10 +1,25 @@
-/* Shared classroom diagram lightbox. Opt in with data-classroom-zoom on a figure.
+/* Shared classroom diagram lightbox. Opt in with data-classroom-zoom on a figure or SVG.
    Works with the existing SVG; no duplicate artwork or external dependency. */
 (() => {
   "use strict";
-  const selector = "figure[data-classroom-zoom]";
+  const selector = "[data-classroom-zoom]";
   let dialog;
   let opener;
+
+  function enhanceTeachingFigures() {
+    const standaloneReference = document.querySelector("#new-learning .nl-reference > svg");
+    if (standaloneReference) document.querySelector("#new-learning")?.classList.add("a1-visual-learning");
+    // The two J277 lesson generators render several SVG figure variants.
+    // Opt in their static teaching diagrams without changing lesson content.
+    document.querySelectorAll("#new-learning svg, #i-do svg, #we-do svg").forEach(svg => {
+      const target = svg.closest("figure") || svg;
+      if (target.hasAttribute("data-classroom-zoom")) return;
+      target.setAttribute("data-classroom-zoom", "");
+      target.setAttribute("tabindex", "0");
+      target.setAttribute("role", "button");
+      target.setAttribute("aria-label", "Enlarge " + (svg.getAttribute("aria-label") || "learning diagram"));
+    });
+  }
 
   function ensureDialog() {
     if (dialog) return dialog;
@@ -31,7 +46,7 @@
   }
 
   function enlarge(figure) {
-    const image = figure.querySelector("svg, img");
+    const image = figure.matches("svg, img") ? figure : figure.querySelector("svg, img");
     if (!image) return;
     const modal = ensureDialog();
     if (modal.open) return;
@@ -54,4 +69,9 @@
       enlarge(event.target);
     }
   });
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", enhanceTeachingFigures, {once:true});
+  } else {
+    enhanceTeachingFigures();
+  }
 })();

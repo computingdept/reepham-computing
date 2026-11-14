@@ -8,7 +8,7 @@
  };
  const escape=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
  function svgScene(label,contents){
-  return `<figure class="a1-scene"><svg viewBox="0 0 560 232" role="img" aria-label="${escape(label)}" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="554" height="226" rx="14" fill="#f7fbf8" stroke="#bfd5c7" stroke-width="2"/>${contents}</svg></figure>`;
+  return `<figure class="a1-scene" data-classroom-zoom tabindex="0" role="button" aria-label="Enlarge learning diagram: ${escape(label)}"><svg viewBox="0 0 560 232" role="img" aria-label="${escape(label)}" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="554" height="226" rx="14" fill="#f7fbf8" stroke="#bfd5c7" stroke-width="2"/>${contents}</svg></figure>`;
  }
  const pill=(x,y,w,h,label,color="#e6f3eb",font=17)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="${color}" stroke="#92b4a0"/><text x="${x+w/2}" y="${y+h/2+font/3}" fill="#1c573e" font-size="${font}" font-weight="800" text-anchor="middle" font-family="Arial,sans-serif">${escape(label)}</text>`;
  const note=(x,y,label,size=16)=>`<text x="${x}" y="${y}" fill="#254a3a" font-size="${size}" font-weight="700" font-family="Arial,sans-serif">${escape(label)}</text>`;
@@ -268,11 +268,11 @@
   return `<section id="do-now" class="page phase-donow" data-phase-time="Retrieval from earlier lessons"><div class="donow-deck"><div class="donow-stage"><div class="donow-questions">${qs}</div></div>${answers}</div></section>`;
  }
  function newLearning(lesson){
-  const cpuVisual=lesson.vis==="cpu-performance";
+  const hasDiagram=lesson.vis!=="review";
   const stages=arr(lesson.c,([title,body],i)=>`<div class="nl-stage"${i?' hidden':''}><span class="nl-stage-label">STEP ${i+1} OF ${lesson.c.length}</span><h2>${escape(title)}</h2>${lesson.teachingVisuals?.[title]||""}<p>${escape(body)}</p><span class="nl-stage-count">${i+1} of ${lesson.c.length}</span></div>`);
-  const referenceHeading=cpuVisual?'':`<span class="phase-tag">VISUAL REFERENCE · ${escape(lesson.s)}</span><h2>${escape(lesson.t)}</h2>`;
-  const referenceNote=cpuVisual?'':`<div class="nl-reference-note"><strong>Keep in mind:</strong> Use the vocabulary and method shown in the example.</div>`;
-  return `<section id="new-learning" class="page phase-focus${cpuVisual?' a1-cpu-learning':''}" data-phase-time="New learning"><div class="nl-focus"><article class="nl-reference">${referenceHeading}${diagram(lesson.vis,"reference")}${referenceNote}</article><article class="nl-explanation">${stages}</article></div></section>`;
+  const referenceHeading=hasDiagram?'':`<span class="phase-tag">VISUAL REFERENCE · ${escape(lesson.s)}</span><h2>${escape(lesson.t)}</h2>`;
+  const referenceNote=hasDiagram?'':`<div class="nl-reference-note"><strong>Keep in mind:</strong> Use the vocabulary and method shown in the example.</div>`;
+  return `<section id="new-learning" class="page phase-focus${hasDiagram?' a1-visual-learning':''}" data-phase-time="New learning"><div class="nl-focus"><article class="nl-reference">${referenceHeading}${diagram(lesson.vis,"reference")}${referenceNote}</article><article class="nl-explanation">${stages}</article></div></section>`;
  }
  function iDo(lesson){
   const steps=arr(lesson.m.st,(step,i)=>`<div class="ido-step"${i?' hidden':''}><span class="ido-step-label">STEP ${i+1} OF ${lesson.m.st.length}</span><h2>${escape(step)}</h2></div>`);
@@ -317,12 +317,6 @@
  /* Lesson 011: use the height of the visual panel as well as its width. */
  #new-learning .nl-reference .a1-scene--cpu-performance{width:100%;max-width:560px;margin:12px auto}
  #new-learning .nl-reference .a1-scene--cpu-performance svg{width:100%;height:auto;max-height:none}
- @media(max-width:900px){
-  #new-learning.a1-cpu-learning .nl-focus{display:flex;flex-direction:column;gap:10px}
-  #new-learning.a1-cpu-learning .nl-explanation{order:0;padding:13px 15px}
-  #new-learning.a1-cpu-learning .nl-reference{order:1;padding:10px 13px;border-top-width:4px}
-  #new-learning.a1-cpu-learning .nl-reference .a1-scene--cpu-performance{width:min(100%,270px);margin:0 auto}
- }
  #we-do .wedo-practice .wedo-step h2{font-size:clamp(19px,1.6vw,27px);line-height:1.35}
  #i-do .ido-method .ido-step h2{font-size:clamp(21px,1.75vw,30px);line-height:1.35}
  @media(max-height:740px) and (min-width:901px){.a1-scene svg{max-height:150px}#i-do .ido-reference .a1-scene{max-width:390px}}
@@ -332,7 +326,7 @@
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20261025-exit-unified1">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261014-j277retrievalrefs1">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
- <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261113-card-outlines1"><link rel="stylesheet" href="../../../assets/classroom-visual-zoom.css?v=20261114-1">${lessonStyles}</head>`;
+ <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261113-card-outlines1">${lessonStyles}<link rel="stylesheet" href="../../../assets/classroom-visual-zoom.css?v=20261114-j277-all1"></head>`;
  function renderLesson(number,lesson){
   const nav=["do-now","overview","new-learning","i-do","we-do","you-do","vocabulary","exit"];
   const names=["Do Now","Objectives","New Learning","I Do","We Do","You Do","Key Vocabulary","Exit Ticket"];
