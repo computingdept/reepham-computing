@@ -120,11 +120,40 @@
       ['Open names.txt as myFile, read the first line into name, then close it.', [
         'myFile = open("names.txt")','name = myFile.readLine()','myFile.close()']]
     ];
+    // Prompt-specific reminders, deliberately using placeholders instead of
+    // handing students the complete statement for this particular question.
+    const supports = [
+      [['Store a value','variable = expression'],['Open a file','open("filename")']],
+      [['Store a value','variable = expression'],['Read a line','file.readLine()']],
+      [['Print a value','print(value)'],['Read a line','file.readLine()']],
+      [['Add a line','file.writeLine("text")']],
+      [['Finish with a file','file.close()']],
+      [['Repeat until finished','while NOT condition … endwhile'],
+        ['Check the end','file.endOfFile()'],['Read a line','file.readLine()']],
+      [['Create a file','newFile("filename")']],
+      [['Add a line','file.writeLine("text")']],
+      [['Store the next line','variable = file.readLine()'],['Close afterwards','file.close()']],
+      [['Open and store','variable = open("filename")'],
+        ['Read and store','value = file.readLine()'],['Close afterwards','file.close()']]
+    ];
+    const tips = [
+      'Use an assignment to save the file returned by open().',
+      'The left side of = is the variable that should store the next line.',
+      'Put the expression that reads a line inside print().',
+      'writeLine() needs the text to add inside its brackets.',
+      'Use the file variable followed by the close command.',
+      'Repeat while the end has NOT been reached; read and print inside the loop.',
+      'newFile() takes the new filename as a string.',
+      'Place the text to append between quotation marks.',
+      'Read into the named variable first, then close the file on a second line.',
+      'First open, then read into name, then close. Use three separate lines.'
+    ];
     const [task, statements] = tasks[index];
     return {level:'hard',type:'write',filename:'names.txt',lines:[],code:[],
       prompt:'Write the file-handling statement'+(statements.length>1?'s':'')+'.',
       context:task, expected:statements.join('\n'), model:statements.join('\n'),
-      hint:'Use OCR commands: open, readLine, writeLine, close, endOfFile or newFile.',
+      lineCount:statements.length, helpers:supports[index].map(([label,syntax])=>({label,syntax})),
+      hint:tips[index],
       explanation:'One correct solution is shown in the model.'};
   }
   function makeQuestion(level,index,seed) {

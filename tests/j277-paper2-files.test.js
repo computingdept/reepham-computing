@@ -53,6 +53,13 @@ test('Hard accepts case, white space, assignment symbols and quote style',()=>{
   for(let i=0;i<10;i++){
     const q=engine.makeQuestion('hard',i,10);
     assert.equal(q.type,'write');
+    assert.equal(q.lineCount,q.expected.split('\n').length);
+    assert.ok(q.helpers.length>=1&&q.helpers.length<=3);
+    for(const helper of q.helpers){
+      assert.ok(helper.label.length>0&&helper.syntax.length>0);
+      assert.notEqual(helper.syntax,q.expected,'building blocks should not supply a whole answer');
+    }
+    assert.ok(q.hint.length>15);
     assert.equal(engine.checkAnswer(q,q.expected.toUpperCase()).correct,true);
     assert.equal(engine.checkAnswer(q,q.expected.replace(/ = /g,' ← ')).correct,true);
     assert.equal(engine.checkAnswer(q,q.expected.replace(/"/g,"'")).correct,true);
@@ -60,6 +67,8 @@ test('Hard accepts case, white space, assignment symbols and quote style',()=>{
   }
   assert.match(engine.makeQuestion('hard',5,1).expected,/while NOT myFile.endOfFile\(\)/);
   assert.match(engine.makeQuestion('hard',6,1).expected,/newFile\("results.txt"\)/);
+  assert.equal(engine.makeQuestion('hard',1,1).lineCount,1);
+  assert.equal(engine.makeQuestion('hard',9,1).lineCount,3);
 });
 
 test('Missing answers and invalid question coordinates are rejected',()=>{
