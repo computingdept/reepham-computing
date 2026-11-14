@@ -109,8 +109,14 @@
     const ready = ['variables', 'data-types', 'casting'].includes(id);
     const card = document.createElement('article');
     card.className = 'tile ' + (ready ? 'ready' : 'planned');
-    const main = document.createElement('div');
+    // Just like a lesson tile, the whole content area opens an available skill.
+    // Keep the Print action separate so it never triggers practice.
+    const main = document.createElement(ready ? 'a' : 'div');
     main.className = 'tile-main';
+    if (ready) {
+      main.href = '/exercise/paper2/' + id + '/';
+      main.setAttribute('aria-label', 'Practise ' + title);
+    }
     const label = document.createElement('div');
     label.className = 'tile-title'; label.textContent = String(index).padStart(2, '0') + ' · ' + title;
     const sub = document.createElement('div');
