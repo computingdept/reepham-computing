@@ -1,0 +1,16 @@
+name = "rhsc-my-work-pilot"
+main = "src/index.mjs"
+compatibility_date = "2026-11-14"
+workers_dev = true
+
+[vars]
+ALLOWED_ORIGINS = "https://rhsccs.org"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "rhsc-my-work-pilot"
+# Set this value from the Cloudflare D1 creation response, not from GitHub.
+database_id = "REPLACE_WITH_REAL_D1_DATABASE_ID"
+
+# Set TEACHER_TOKEN via `wrangler secret put TEACHER_TOKEN` only.
+# NEVER commit the teacher token or pupil code-to-name list.
