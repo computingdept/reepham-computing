@@ -42,6 +42,50 @@ mark.rhsc-shared-keyword,mark.rhsc-shared-command,body #you-do mark.j277-sm-comm
     text-decoration:underline;text-decoration-color:#937800;text-decoration-thickness:.15em;text-underline-offset:.06em;
   }
 }
+/* H446 OBJECTIVES KEYWORD READABILITY · shared single source.
+   Large, responsive terms in the dedicated Objectives keyword panel.
+   Preserve the existing site font and yellow pen-stroke highlighting.
+   Staged Objectives (data-objectives-vocab), J277, and KS3 keep their
+   independently sized layouts. No answer/reveal or lesson content changes. */
+body:has(.course-back[href*="h446-hub"])
+  #overview:not([data-objectives-vocab="true"])
+  .lesson-grid13 .lesson-pane13 > .vocab-intro-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,215px),1fr));
+  gap:clamp(10px,1.1vw,16px);
+  margin-top:clamp(12px,1.1vw,18px);
+  align-items:stretch;
+}
+body:has(.course-back[href*="h446-hub"])
+  #overview:not([data-objectives-vocab="true"])
+  .lesson-grid13 .lesson-pane13 > .vocab-intro-list > .rhsc-preview-term{
+  display:flex;
+  align-items:center;
+  min-width:0;
+  min-height:48px;
+  padding:.3em .4em;
+  font-size:clamp(24px,2.15vw,32px);
+  line-height:1.2;
+  letter-spacing:normal;
+  white-space:normal;
+  overflow-wrap:break-word;
+}
+@media(max-width:700px){
+  body:has(.course-back[href*="h446-hub"])
+    #overview:not([data-objectives-vocab="true"])
+    .lesson-grid13 .lesson-pane13 > .vocab-intro-list{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
+  }
+  body:has(.course-back[href*="h446-hub"])
+    #overview:not([data-objectives-vocab="true"])
+    .lesson-grid13 .lesson-pane13 > .vocab-intro-list > .rhsc-preview-term{
+    font-size:clamp(19px,5vw,24px);
+    min-height:46px;
+    padding:.32em .28em;
+  }
+}
+
 /* Consistent across authored Lesson 002 and shared J277/H446 rendering.
    Preserve the original pen-stroke SVG, never the rectangular mobile fallback. */
 body #overview mark.rhsc-keyword,
