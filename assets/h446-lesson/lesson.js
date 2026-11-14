@@ -2385,7 +2385,7 @@ catch (error) { console.error('Lesson identity decoration:', error); }
    It respects authored vocabulary, teacher reveals, and Code First. */
 if(/^\/lessons\/(?:j277|h446|year[789])\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname)){
   const markerModule=document.createElement('script');
-  markerModule.src='../../../assets/h446-lesson/keyword-highlighter.js?v=20261114-objectives1';
+  markerModule.src='../../../assets/h446-lesson/keyword-highlighter.js?v=20261114-objectives2';
   markerModule.async=true;
   document.body.appendChild(markerModule);
 }
