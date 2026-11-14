@@ -7,7 +7,7 @@
   const STORAGE_KEY = 'rhs-j277-paper2-progress-v1';
   const LEVELS = ['easy', 'medium', 'hard'];
   const LEVEL_TEXT = { easy: 'Tap and explore', medium: 'Trace and complete', hard: 'Write in OCR ERL' };
-  const READY_SKILLS = new Set(['variables', 'data-types', 'casting', 'sequence', 'operators', 'comparisons', 'selection', 'for-loops', 'while-until', 'array-1d', 'array-2d', 'records']);
+  const READY_SKILLS = new Set(['variables', 'data-types', 'casting', 'sequence', 'operators', 'comparisons', 'selection', 'for-loops', 'while-until', 'array-1d', 'array-2d', 'records', 'files']);
   const groups = [
     {
       name: 'Programming fundamentals', caption: 'Build first · OCR 2.2.1–2.2.2',
@@ -130,7 +130,7 @@
     main.append(label, sub);
     if (ready) {
       const spec = document.createElement('div');
-      spec.className = 'tile-spec'; spec.textContent = ['array-1d', 'array-2d', 'records'].includes(id) ? '2.2.3' :
+      spec.className = 'tile-spec'; spec.textContent = ['array-1d', 'array-2d', 'records', 'files'].includes(id) ? '2.2.3' :
         ['variables', 'sequence', 'operators', 'comparisons', 'selection', 'for-loops', 'while-until'].includes(id) ? '2.2.1' : '2.2.2';
       main.append(spec);
     }

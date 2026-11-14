@@ -118,6 +118,31 @@
       ],
       end: 'Outputs: Asha, then 17. One record stores related values of different types.'
     },
+    files: {
+      title: 'File Handling', codeLabel: 'OCR ERL · names.txt initially contains Asha, Ben',
+      columns: ['File / action', 'Value'],
+      lines: [
+        'myFile = open("names.txt")',
+        'first = myFile.readLine()',
+        'print(first)',
+        'second = myFile.readLine()',
+        'print(second)',
+        'print(myFile.endOfFile())',
+        'myFile.writeLine("Mia")',
+        'myFile.close()'
+      ],
+      steps: [
+        [1, 'myFile', 'Open', 'Open the existing names.txt and keep a reference to it.'],
+        [2, 'first', 'Asha', 'readLine() takes the first line and advances to the second.'],
+        [3, 'Output', 'Asha', 'Print the line stored in first.'],
+        [4, 'second', 'Ben', 'The next readLine() returns line two.'],
+        [5, 'Output', 'Ben', 'Print the line stored in second.'],
+        [6, 'endOfFile()', 'True', 'Both original lines have been read.'],
+        [7, 'names.txt', 'Asha, Ben, Mia', 'writeLine() adds Mia at the end, keeping the original lines.'],
+        [8, 'myFile', 'Closed', 'Close the file when the work is finished.']
+      ],
+      end: 'Outputs: Asha, Ben, True. Final file: Asha, Ben, Mia.'
+    },
     selection: {
       title: 'Selection', columns: ['Check / action', 'Result'],
       lines: [
