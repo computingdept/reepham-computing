@@ -1,3 +1,32 @@
+/* Projector-scale instructional diagrams: opt in with this shared class.
+   A diagram fills the teaching panel, while mobile uses the available width.
+   This deliberately excludes icons, badges and existing custom SVG layouts. */
+figure.rhsc-classroom-diagram{
+  box-sizing:border-box;
+  display:block;
+  width:min(100%,680px);
+  max-width:100%;
+  margin:12px auto 18px;
+}
+figure.rhsc-classroom-diagram > :is(svg,img){
+  display:block;
+  width:100%;
+  height:auto;
+  max-width:100%;
+}
+@media (min-width:901px) and (max-height:700px){
+  figure.rhsc-classroom-diagram{
+    width:min(100%,560px);
+    margin:6px auto 10px;
+  }
+}
+@media (max-width:900px){
+  figure.rhsc-classroom-diagram{
+    width:100%;
+    margin:10px auto;
+  }
+}
+
 /* One opt-in zoom affordance for classroom SVG diagrams, usable on a phone. */
 figure[data-classroom-zoom]{cursor:zoom-in;position:relative;outline-offset:4px}
 figure[data-classroom-zoom]:focus-visible{outline:3px solid #266b91}
