@@ -7,7 +7,7 @@
   const STORAGE_KEY = 'rhs-j277-paper2-progress-v1';
   const LEVELS = ['easy', 'medium', 'hard'];
   const LEVEL_TEXT = { easy: 'Tap and explore', medium: 'Trace and complete', hard: 'Write in OCR ERL' };
-  const READY_SKILLS = new Set(['variables', 'data-types', 'casting', 'sequence', 'operators', 'comparisons', 'selection', 'for-loops', 'while-until', 'array-1d']);
+  const READY_SKILLS = new Set(['variables', 'data-types', 'casting', 'sequence', 'operators', 'comparisons', 'selection', 'for-loops', 'while-until', 'array-1d', 'array-2d']);
   const groups = [
     {
       name: 'Programming fundamentals', caption: 'Build first · OCR 2.2.1–2.2.2',
@@ -24,17 +24,22 @@
       ]
     },
     {
-      name: 'Data structures & techniques', caption: 'Build on the basics · OCR 2.2.3',
+      name: 'Working with Data', caption: 'Arrays, records, files and SQL · OCR 2.2.3',
       items: [
         ['array-1d', '1D Arrays', '[ ]', 'Read, change and index'],
         ['array-2d', '2D Arrays', '▦', 'Rows, columns and loops'],
-        ['strings', 'String Handling', 'Aa', 'Slicing and character access'],
         ['records', 'Records', '{}', 'Fields and values'],
-        ['procedures', 'Procedures', 'P()', 'Call and pass values'],
-        ['functions', 'Functions', 'f(x)', 'Return a result'],
-        ['random', 'Random Numbers', '?', 'Choose values in a range'],
         ['files', 'File Handling', 'TXT', 'Read, write and close'],
         ['sql', 'SQL Builder', 'SQL', 'Write SELECT statements']
+      ]
+    },
+    {
+      name: 'Subprograms & other techniques', caption: 'Structure and extend code · OCR 2.2.3',
+      items: [
+        ['strings', 'String Handling', 'Aa', 'Slicing and character access'],
+        ['procedures', 'Procedures', 'P()', 'Call and pass values'],
+        ['functions', 'Functions', 'f(x)', 'Return a result'],
+        ['random', 'Random Numbers', '?', 'Choose values in a range']
       ]
     },
     {
@@ -68,7 +73,7 @@
     }
   ];
   const state = {
-    level: 'easy', index: 0, seed: 1, score: 0, firstTry: 0, wrong: 0,
+    level: 'easy', index: 0, seed: 1, score: 0, wrong: 0,
     question: null, response: null, locked: false
   };
 
@@ -125,7 +130,7 @@
     main.append(label, sub);
     if (ready) {
       const spec = document.createElement('div');
-      spec.className = 'tile-spec'; spec.textContent = id === 'array-1d' ? '2.2.3' :
+      spec.className = 'tile-spec'; spec.textContent = ['array-1d', 'array-2d'].includes(id) ? '2.2.3' :
         ['variables', 'sequence', 'operators', 'comparisons', 'selection', 'for-loops', 'while-until'].includes(id) ? '2.2.1' : '2.2.2';
       main.append(spec);
     }
@@ -202,7 +207,7 @@
     core.updateLevelUrl(state.level);
     state.index = 0;
     state.seed = Math.floor(Math.random() * 2147483647) + 1;
-    state.score = 0; state.firstTry = 0;
+    state.score = 0;
     document.querySelectorAll('.level').forEach(button => {
       const chosen = button.dataset.level === level;
       button.classList.toggle('active', chosen);
@@ -352,7 +357,6 @@
     }
     if (result.correct) {
       state.locked = true;
-      if (state.wrong === 0) state.firstTry += 1;
       state.score += 1;
       const current = readProgress('variables', state.level);
       updateProgress('variables', state.level, 'solved', (Number(current.solved) || 0) + 1);
@@ -390,7 +394,6 @@
     $('show-answer').hidden = state.wrong < 2;
   }
   function finish() {
-    core.reportCompletion(2, 'variables', state.level, state.firstTry, 10);
     const current = readProgress('variables', state.level);
     updateProgress('variables', state.level, 'best', Math.max(Number(current.best) || 0, state.score));
     updateProgress('variables', state.level, 'sessions', (Number(current.sessions) || 0) + 1);

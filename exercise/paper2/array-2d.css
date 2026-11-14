@@ -1,0 +1,45 @@
+/* Skill 11: compact row/column grid for J277 2D array practice. */
+.rhsc-skills-activity .array-layout{
+  display:grid;grid-template-columns:minmax(0,1.25fr) minmax(245px,.75fr);
+  align-items:start;gap:16px;width:100%;min-width:0;
+}
+.rhsc-skills-activity .array-left{min-width:0;display:grid;gap:10px}
+.rhsc-skills-activity .array-layout .code-panel{min-width:0;margin:0}
+.rhsc-skills-activity .array2d-grid-box{min-width:0;display:grid;gap:7px}
+.rhsc-skills-activity .array2d-title{color:#315f46;font-size:14px}
+.rhsc-skills-activity .array2d-grid{
+  display:grid;grid-template-columns:60px repeat(4,minmax(0,1fr));
+  gap:6px;align-items:stretch;min-width:0;
+}
+.rhsc-skills-activity .array2d-axis-corner,
+.rhsc-skills-activity .array2d-axis-col,
+.rhsc-skills-activity .array2d-axis-row{
+  display:flex;align-items:center;justify-content:center;
+  color:#476958;font-weight:750;font-size:11px;text-align:center;
+}
+.rhsc-skills-activity .array2d-axis-col{padding:5px 1px;border-bottom:2px solid #90b39e}
+.rhsc-skills-activity .array2d-axis-row{border-right:2px solid #90b39e}
+.rhsc-skills-activity .array2d-cell{
+  display:flex;align-items:center;justify-content:center;
+  min-width:0;min-height:64px;padding:4px;
+  background:#f0f7f2;border:1px solid #bcd2c2;border-radius:9px;
+  color:#244735;font:850 clamp(18px,2.3vw,28px)/1.05 ui-monospace,Consolas,monospace;
+}
+.rhsc-skills-activity button.array2d-cell{cursor:pointer;touch-action:manipulation}
+.rhsc-skills-activity button.array2d-cell:hover{background:#e2f1e6;border-color:#6d9f7b}
+.rhsc-skills-activity button.array2d-cell[aria-pressed="true"]{background:#d1ead8;border:3px solid #285348}
+.rhsc-skills-activity button.array2d-cell:disabled{cursor:default}
+.rhsc-skills-activity .array-answer{min-width:0;display:grid;gap:10px;align-content:start}
+.rhsc-skills-activity .array-answer .number-entry{width:min(100%,240px);min-height:58px;font-size:24px}
+.rhsc-skills-activity .array-answer .code-entry{min-height:140px;width:100%;font-size:16px;line-height:1.5}
+.rhsc-skills-activity .array-answer .writer-note{max-width:40ch;color:#5e7668;font-size:12px}
+@media(max-width:780px){
+  .rhsc-skills-activity .array-layout{grid-template-columns:minmax(0,1fr);gap:11px}
+  .rhsc-skills-activity .array2d-grid{grid-template-columns:49px repeat(4,minmax(0,1fr));gap:4px}
+  .rhsc-skills-activity .array2d-cell{min-height:53px;font-size:20px;padding:3px}
+  .rhsc-skills-activity .array2d-axis-corner,
+  .rhsc-skills-activity .array2d-axis-col,
+  .rhsc-skills-activity .array2d-axis-row{font-size:10px}
+  .rhsc-skills-activity .array-answer .number-entry{min-height:48px}
+  .rhsc-skills-activity .array-answer .code-entry{min-height:116px}
+}
