@@ -213,6 +213,28 @@ body.rhsc-skills-hub .tiles>.tile .tile-action--coming-soon span {color:#825d59}
 .rhsc-skills-system.rhsc-skills-activity .work-board {border-color:var(--skills-line)}
 .rhsc-skills-system.rhsc-skills-activity .levels {background:var(--skills-pale)}
 .rhsc-skills-system.rhsc-skills-activity .level.active {color:var(--skills-green)}
+/* Opt-in classroom-readable type scale for Skills activities.
+   Roll out activity by activity; do not change lesson or revision typography. */
+.rhsc-skills-activity.skills-readable-type {
+  --skills-instruction-size:clamp(18px,1.45vw,23px);
+  --skills-support-title-size:clamp(17px,1.2vw,20px);
+  --skills-support-label-size:clamp(15px,1.05vw,18px);
+  --skills-support-code-size:clamp(18px,1.45vw,23px);
+  --skills-answer-size:clamp(20px,1.55vw,24px);
+}
+.rhsc-skills-activity.skills-readable-type .question-text p {
+  font-size:var(--skills-instruction-size);
+  line-height:1.45;
+  color:var(--skills-ink);
+}
+.rhsc-skills-activity.skills-readable-type .question-status :is(strong,span) {font-size:14px}
+.rhsc-skills-activity.skills-readable-type :is(.code-label,.work-label) {font-size:14px}
+.rhsc-skills-activity.skills-readable-type .code-entry {
+  font-size:var(--skills-answer-size)!important;
+  line-height:1.45;
+}
+.rhsc-skills-activity.skills-readable-type .work-board {min-height:0;padding:clamp(14px,1.8vw,22px)}
+.rhsc-skills-activity.skills-readable-type :is(.hint,.message) {font-size:16px}
 @media(max-width:1100px){.rhsc-skills-hub .tiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:700px){
   .rhsc-skills-system .wrap,body.paper2-skills.rhsc-skills-system .wrap{padding:10px 12px 26px}
