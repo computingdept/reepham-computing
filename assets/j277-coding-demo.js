@@ -143,6 +143,17 @@
       ],
       end: 'Outputs: Asha, Ben, True. Final file: Asha, Ben, Mia.'
     },
+    sql: {
+      title: 'SQL Builder', codeLabel: 'SQL · Pupils table has Name, House, Score and Year',
+      columns: ['Clause', 'Purpose / result'],
+      lines: ['SELECT Name', 'FROM Pupils', "WHERE House = 'Red'"],
+      steps: [
+        [1, 'SELECT', 'Name column', 'Choose the column that will appear in the result.'],
+        [2, 'FROM', 'Pupils table', 'Read records from the Pupils table.'],
+        [3, 'WHERE', 'Red house only', 'Keep only pupils whose House is Red. Asha and Mia match.']
+      ],
+      end: 'Result: Asha and Mia. SELECT chooses columns; WHERE filters rows.'
+    },
     selection: {
       title: 'Selection', columns: ['Check / action', 'Result'],
       lines: [
