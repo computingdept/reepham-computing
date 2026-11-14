@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#006347">
+  <meta name="description" content="RHS Computing My Work — code-only pilot.">
+  <title>My Work Pilot · RHS Computing</title>
+  <style>
+    :root{color-scheme:light;--green:#006347;--ink:#193d2f;--muted:#526c5e;--line:#d2e2d7;--pale:#eff6f1;--bg:#f7faf8}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    button,input{font:inherit}button{cursor:pointer}a{color:var(--green)}:focus-visible{outline:3px solid #edb544;outline-offset:3px}
+    .skip{position:absolute;left:-10000px}.skip:focus{left:12px;top:12px;z-index:10;padding:12px;background:#fff}
+    header{background:#fff;border-bottom:1px solid var(--line)}.bar{max-width:1000px;margin:auto;padding:10px 18px;min-height:64px;display:flex;align-items:center;gap:12px}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}.mark{display:grid;place-items:center;width:36px;height:36px;border-radius:9px;background:var(--green);color:white;font-weight:900}
+    .brand strong{display:block;line-height:1.15}.brand small{display:block;color:var(--green);font-size:10px;font-weight:900;letter-spacing:.12em}
+    .back{margin-left:auto;font-size:14px;font-weight:750;text-decoration:none}
+    main{max-width:1000px;margin:auto;padding:24px 18px 56px}h1{font-size:clamp(30px,5vw,42px);letter-spacing:-.035em;line-height:1.15;margin:0 0 8px}
+    h2{font-size:20px;margin:0 0 10px}.intro{margin:0 0 20px;color:var(--muted)}.eyebrow{display:block;margin-bottom:5px;color:var(--green);font-size:12px;font-weight:900;letter-spacing:.11em;text-transform:uppercase}
+    .panel,.card{background:#fff;border:1px solid var(--line);border-radius:14px}.panel{padding:24px}.entry{max-width:570px;margin:30px auto}
+    label{display:block;font-weight:800;margin-bottom:7px}input{width:100%;max-width:400px;min-height:50px;padding:10px 14px;border:2px solid #9bb7a5;border-radius:9px;font-size:18px;letter-spacing:.05em;text-transform:uppercase}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:45px;padding:10px 18px;background:var(--green);color:#fff;border:1px solid var(--green);border-radius:9px;text-decoration:none;font-size:15px;font-weight:800}
+    .btn.secondary{background:#fff;color:var(--green)}.btn:disabled{cursor:wait;opacity:.65}.note{color:var(--muted);font-size:14px}.notice{margin-top:16px;padding:12px 14px;background:var(--pale);border-radius:9px;font-size:14px}
+    .error{color:#9d352f;font-weight:750;font-size:14px;margin:12px 0 0}.error[hidden]{display:none}
+    .heading{display:flex;justify-content:space-between;align-items:start;gap:18px;flex-wrap:wrap;margin:0 0 20px}.heading p{margin:0;color:var(--muted)}
+    .summary{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}.count{padding:10px 15px;background:var(--pale);border-radius:9px;font-weight:750}.count strong{font-size:22px;margin-right:5px}
+    .cards{display:grid;gap:12px}.card{padding:19px}.card-top{display:flex;justify-content:space-between;gap:12px;align-items:start}.card h2{font-size:19px;margin:3px 0}
+    .meta{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:900;color:var(--muted)}.status{font-weight:800;font-size:13px;background:var(--pale);border-radius:15px;padding:6px 10px;white-space:nowrap}
+    .card p{margin:7px 0;color:var(--muted);font-size:14px}.empty{text-align:center;padding:33px 20px}
+    .footer{text-align:center;color:var(--muted);font-size:12px;padding:15px}
+    @media(max-width:600px){.bar{padding:9px 12px}.back{font-size:12px}main{padding:20px 12px 45px}.panel{padding:18px}.entry{margin:10px auto}.btn{width:100%}.actions .btn{width:auto;flex:1}.card-top{flex-direction:column;gap:5px}.status{align-self:start}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to My Work</a>
+  <header><div class="bar">
+    <a class="brand" href="/" aria-label="RHS Computing home"><span class="mark">SA</span><span><small>SYNERGY ASSIST</small><strong>My Work</strong></span></a>
+    <a class="back" href="/">← Learning Hub</a>
+  </div></header>
+  <main id="main"><div id="app" aria-live="polite"><p>Loading My Work…</p></div></main>
+  <footer class="footer">RHS Computing · Code-only pilot · Formative practice</footer>
+  <script>
+  (() => {
+    'use strict';
+    const API = 'https://rhsccs-my-work-api.jeromedthompson.workers.dev';
+    const SESSION = 'rhs-my-work-pilot-code';
+    const PATTERN = /^P-[A-HJ-NP-Z2-9]{10}$/;
+    const app = document.getElementById('app');
+    let code = sessionStorage.getItem(SESSION) || '';
+    let catalog = [];
+
+    const escapeHtml = value => String(value).replace(/[&<>"']/g, char => ({
+      '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+    }[char]));
+
+    async function loadCatalog() {
+      try {
+        const response = await fetch('/assets/j277-assignment-catalog.json', { cache: 'no-cache' });
+        if (!response.ok) return;
+        const value = await response.json();
+        if (Array.isArray(value.items)) catalog = value.items;
+      } catch { /* Code entry still works if the catalogue is unavailable. */ }
+    }
+
+    function showEntry(error = '') {
+      app.innerHTML = `<span class="eyebrow">Independent practice</span>
+        <h1>My Work</h1><p class="intro">Your assigned Skills and Revision Practice, in one place.</p>
+        <section class="panel entry">
+          <h2>Enter your practice code</h2>
+          <p class="note">Your teacher will give you a code. You do not need to enter your name or school email.</p>
+          <form id="openWork">
+            <label for="code">Practice code</label>
+            <input id="code" name="code" placeholder="P-XXXXXXXXXX" maxlength="12" autocapitalize="characters" autocomplete="off" spellcheck="false" required>
+            <div class="actions"><button class="btn" id="openButton" type="submit">Open My Work</button></div>
+            <p id="error" class="error" role="alert" ${error ? '' : 'hidden'}>${escapeHtml(error)}</p>
+          </form>
+          <div class="notice">Independent work is available at 12:30–13:20 and after 15:30 (UK time).</div>
+        </section>`;
+      document.getElementById('openWork').addEventListener('submit', async event => {
+        event.preventDefault();
+        const input = document.getElementById('code');
+        const entered = input.value.trim().toUpperCase();
+        const errorElement = document.getElementById('error');
+        if (!PATTERN.test(entered)) {
+          errorElement.textContent = 'Check the practice code and try again.';
+          errorElement.hidden = false;
+          return;
+        }
+        const button = document.getElementById('openButton');
+        button.disabled = true;
+        button.textContent = 'Checking…';
+        await openWork(entered);
+      });
+    }
+
+    async function requestWork(value) {
+      const response = await fetch(API + '/v1/work', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ code: value }),
+        cache: 'no-store'
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || 'Could not open My Work. Please try again.');
+      if (!Array.isArray(data.work) || !/^Y(10|11|12|13)$/.test(data.cohort)) throw new Error('Unexpected response from My Work.');
+      return data;
+    }
+
+    function itemLink(item, level) {
+      if (!item || typeof item.url !== 'string' || !item.url.startsWith('/') || item.url.startsWith('//')) return null;
+      const link = new URL(item.url, location.origin);
+      if (level) link.searchParams.set('level', level);
+      return link.pathname + link.search + link.hash;
+    }
+
+    function workCard(row) {
+      const item = catalog.find(entry => entry.id === row.itemId);
+      const isSkill = row.itemId.includes('-skill-');
+      const kind = isSkill ? 'Skill' : 'Revision Practice';
+      const title = item?.title || row.itemId.replace(/^(j277|h446)-(skill|practice)-/, '').replace(/-/g, ' ');
+      const best = row.bestScore === null ? 'No result recorded' : 'Best recorded: ' + Number(row.bestScore) + '%';
+      const count = Number(row.attempts || 0);
+      const links = [];
+      if (isSkill && item?.paper === 2) {
+        for (const level of ['easy','medium']) {
+          const href = itemLink(item, level);
+          if (href) links.push(`<a class="btn ${level === 'easy' ? 'secondary' : ''}" href="${escapeHtml(href)}">${level === 'easy' ? 'Easy' : 'Medium'} practice</a>`);
+        }
+      } else {
+        const href = itemLink(item);
+        if (href) links.push(`<a class="btn" href="${escapeHtml(href)}">Open ${kind}</a>`);
+      }
+      return `<article class="card">
+        <div class="card-top"><div>
+          <div class="meta">${escapeHtml(kind)}${item?.spec ? ' · ' + escapeHtml(item.spec) : ''}</div>
+          <h2>${escapeHtml(title)}</h2></div>
+          <span class="status">${count ? escapeHtml(best) : 'Not started'}</span>
+        </div>
+        <p>${count} recorded attempt${count === 1 ? '' : 's'}</p>
+        <div class="actions">${links.join('') || '<span class="note">Your teacher will provide this activity link.</span>'}</div>
+      </article>`;
+    }
+
+    function showWork(data) {
+      const year = data.cohort.slice(1);
+      const recorded = data.work.filter(row => Number(row.attempts || 0) > 0).length;
+      app.innerHTML = `<div class="heading"><div><span class="eyebrow">RHS Computing · Year ${escapeHtml(year)}</span>
+        <h1>My Work</h1><p>Your assigned activities</p></div>
+        <button class="btn secondary" id="switchCode">Change code</button></div>
+        <div class="summary"><span class="count"><strong>${data.work.length}</strong> assigned</span>
+        <span class="count"><strong>${recorded}</strong> with recorded practice</span></div>
+        <section class="cards" aria-label="Assigned work">
+          ${data.work.length ? data.work.map(workCard).join('') : '<div class="panel empty"><h2>No work assigned yet</h2><p>Your code is valid. Your teacher has not assigned any activities to this year group yet.</p></div>'}
+        </section>
+        <div class="actions"><button class="btn secondary" id="refresh">Refresh My Work</button></div>
+        <p class="note">This pilot checks your assignments in Cloudflare. Automatic score reporting from the activity pages is still being connected.</p>`;
+      document.getElementById('switchCode').addEventListener('click', () => {
+        sessionStorage.removeItem(SESSION); code = ''; showEntry();
+      });
+      document.getElementById('refresh').addEventListener('click', async () => {
+        await openWork(code);
+      });
+    }
+
+    async function openWork(value) {
+      try {
+        const data = await requestWork(value);
+        code = value;
+        sessionStorage.setItem(SESSION, code);
+        showWork(data);
+      } catch (error) {
+        const message = error instanceof TypeError
+          ? 'The service could not be reached. Check your connection and try again.'
+          : error.message;
+        sessionStorage.removeItem(SESSION);
+        code = '';
+        showEntry(message);
+      }
+    }
+
+    (async () => {
+      await loadCatalog();
+      if (PATTERN.test(code)) await openWork(code);
+      else { sessionStorage.removeItem(SESSION); showEntry(); }
+    })();
+  })();
+  </script>
+</body>
+</html>
