@@ -7,7 +7,7 @@
   const STORAGE_KEY = 'rhs-j277-paper2-progress-v1';
   const LEVELS = ['easy', 'medium', 'hard'];
   const LEVEL_TEXT = { easy: 'Tap and explore', medium: 'Trace and complete', hard: 'Write in OCR ERL' };
-  const READY_SKILLS = new Set(['variables', 'data-types', 'casting', 'sequence', 'operators', 'comparisons', 'selection']);
+  const READY_SKILLS = new Set(['variables', 'data-types', 'casting', 'sequence', 'operators', 'comparisons', 'selection', 'for-loops']);
   const groups = [
     {
       name: 'Programming fundamentals', caption: 'Build first · OCR 2.2.1–2.2.2',
@@ -125,7 +125,7 @@
     main.append(label, sub);
     if (ready) {
       const spec = document.createElement('div');
-      spec.className = 'tile-spec'; spec.textContent = ['variables', 'sequence', 'operators', 'comparisons', 'selection'].includes(id) ? '2.2.1' : '2.2.2';
+      spec.className = 'tile-spec'; spec.textContent = ['variables', 'sequence', 'operators', 'comparisons', 'selection', 'for-loops'].includes(id) ? '2.2.1' : '2.2.2';
       main.append(spec);
     }
     card.append(main);
@@ -451,6 +451,9 @@
     }
     if (new URLSearchParams(window.location.search).get('skill') === 'selection') {
       window.location.replace('/exercise/paper2/selection/?level=' + core.levelFromUrl());
+    }
+    if (new URLSearchParams(window.location.search).get('skill') === 'for-loops') {
+      window.location.replace('/exercise/paper2/for-loops/?level=' + core.levelFromUrl());
     }
   }
   if ($('practice')) {
