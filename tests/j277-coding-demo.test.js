@@ -67,7 +67,7 @@ function find(root, name) {
   return null;
 }
 
-for (const skill of ['data-types', 'casting', 'operators', 'comparisons', 'sequence', 'selection', 'for-loops', 'while-until', 'array-1d', 'array-2d', 'records', 'files', 'sql']) {
+for (const skill of ['variables', 'data-types', 'casting', 'operators', 'comparisons', 'sequence', 'selection', 'for-loops', 'while-until', 'array-1d', 'array-2d', 'records', 'files', 'sql']) {
   test(`${skill}: always-available demo opens, traces correct code lines, and returns without losing practice`, () => {
     const ui = mountDemo(skill);
     const launch = find(ui.title, 'skill-demo-open');
@@ -166,4 +166,27 @@ test('File Handling demo swaps in a guided example without changing practice', (
   assert.equal(code.children[0].children[1].textContent,'saved = open("scores.txt")');
   find(demo,'skill-demo-back').click();
   assert.equal(ui.practice.studentAnswer,'myChosenFile = open("names.txt")');
+});
+
+test('The other 12 J277 coding skills reveal the appropriate guided example',()=>{
+  const guided=require('../assets/j277-skills-guided-examples.js');
+  const skills=['variables','data-types','casting','operators','comparisons','sequence',
+    'selection','for-loops','while-until','array-1d','array-2d','records'];
+  for(const skill of skills){
+    const ui=mountDemo(skill);
+    const q={level:'medium',type:'trace',mode:'while',cast:'int',code:['a = 9','b = 3','answer = a DIV b']};
+    ui.window.RHSSkillsDemoProvider=()=>guided.make(skill,q);
+    const button=find(ui.title,'skill-demo-open');
+    ui.practice.studentAnswer='unsaved work';
+    button.click();
+    const demo=ui.practice.insertedSibling,code=find(demo,'skill-demo-source');
+    const controls=find(demo,'skill-demo-controls');
+    assert.ok(code.children.length>0,skill);
+    assert.ok(code.children[0].className.includes('is-upcoming'),skill);
+    assert.equal(code.children[0].children[1].textContent,'Step 1 …',skill);
+    controls.children[1].click();
+    assert.ok(!code.children[0].className.includes('is-upcoming'),skill);
+    find(demo,'skill-demo-back').click();
+    assert.equal(ui.practice.studentAnswer,'unsaved work',skill);
+  }
 });
