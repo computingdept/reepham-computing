@@ -1,0 +1,61 @@
+/* Shared model-answer mark list. Inherits the lesson's font and Synergy palette. */
+.youdo-solution .rhsc-mark-scheme-heading{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:12px;
+}
+.youdo-solution .rhsc-mark-scheme-total,
+.youdo-solution .rhsc-mark-scheme-mark{
+  flex:none;
+  color:#225640;
+  background:#e0f0e5;
+  border:1px solid #bfdcc9;
+  border-radius:999px;
+  padding:.2em .65em;
+  font-size:.72em;
+  font-weight:800;
+  white-space:nowrap;
+}
+.youdo-solution .rhsc-mark-scheme-list{
+  list-style:none;
+  counter-reset:rhsc-answer-step;
+  display:grid;
+  padding:0;
+  margin:10px 0 0;
+  min-width:0;
+}
+#you-do .youdo-solution .rhsc-mark-scheme-list > .rhsc-mark-scheme-point{
+  display:grid;
+  grid-template-columns:2em minmax(0,1fr) auto;
+  align-items:center;
+  column-gap:clamp(8px,.85vw,14px);
+  padding:clamp(6px,.8vh,12px) 0;
+  margin:0;
+  min-width:0;
+  font-size:clamp(20px,1.65vw,28px);
+  line-height:1.35;
+}
+.youdo-solution .rhsc-mark-scheme-point + .rhsc-mark-scheme-point{
+  border-top:1px solid #d2e3d8;
+}
+.youdo-solution .rhsc-mark-scheme-point::before{
+  counter-increment:rhsc-answer-step;
+  content:counter(rhsc-answer-step);
+  display:grid;
+  place-items:center;
+  width:1.75em;
+  height:1.75em;
+  border-radius:8px;
+  background:#e7f1ea;
+  color:#245a40;
+  font-size:.8em;
+  font-weight:800;
+}
+.youdo-solution .rhsc-mark-scheme-wording{
+  min-width:0;
+  overflow-wrap:break-word;
+}
+@media(max-width:600px){
+  #you-do .youdo-solution .rhsc-mark-scheme-list > .rhsc-mark-scheme-point{font-size:18px;column-gap:7px}
+}

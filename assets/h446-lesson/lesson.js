@@ -2438,3 +2438,16 @@ if(/^\/lessons\/(?:h446|year[789])\/lesson-\d{3}\//i.test(location.pathname)){
   zoomScript.async=true;
   document.body.appendChild(zoomScript);
 }
+
+
+/* Shared mark-scheme presentation: only clearly marked You Do answers change. */
+if(/^\/lessons\/(?:h446|j277|year[789])\/lesson-\d{3}\//i.test(location.pathname)){
+  const answerStyle=document.createElement('link');
+  answerStyle.rel='stylesheet';
+  answerStyle.href='/assets/h446-lesson/model-answer-marks.css?v=20261114-marklist1';
+  document.head.appendChild(answerStyle);
+  const answerScript=document.createElement('script');
+  answerScript.src='/assets/h446-lesson/model-answer-marks.js?v=20261114-marklist1';
+  answerScript.async=true;
+  document.body.appendChild(answerScript);
+}
