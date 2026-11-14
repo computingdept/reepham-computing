@@ -93,13 +93,26 @@
     return bar("BOOKLET METHOD · MONO SOUND","20 samples/s × 100 s × 8 bits","16,000 bits = 2,000 bytes");
   }
   if(kind==="cpu-performance"){
-    return svgScene("CPU performance is affected by clock speed, cache and cores",
-      note(26,37,"CPU PERFORMANCE",20)+
-      pill(20,63,163,79,"CLOCK SPEED","#e0eef9",18)+
-      pill(198,63,163,79,"CACHE","#e4f2e9",21)+
-      pill(376,63,163,79,"CORES","#fff0d1",21)+
-      note(36,176,"Cycles per second",15)+note(206,176,"Fast local data",15)+note(385,176,"Parallel tasks",15)+
-      note(74,217,"Also consider software and architecture",18));
+    // This diagram occupies the left teaching panel. A wide, shallow row of
+    // tiny labels became illegible on a classroom screen; use its height too.
+    const row=(y,fill,title,description,icon)=>
+      `<rect x="18" y="${y}" width="524" height="109" rx="14" fill="${fill}" stroke="#adcbc0" stroke-width="2"/>`+
+      icon+
+      `<text x="150" y="${y+45}" fill="#174a36" font-size="28" font-weight="800" font-family="Arial,sans-serif">${title}</text>`+
+      `<text x="150" y="${y+80}" fill="#244e3c" font-size="20" font-weight="600" font-family="Arial,sans-serif">${description}</text>`;
+    const clock=`<circle cx="83" cy="112" r="32" fill="#fff" stroke="#236b89" stroke-width="4"/>`+
+      `<path d="M83 89 V112 L101 124" fill="none" stroke="#236b89" stroke-width="4" stroke-linecap="round"/>`;
+    const cache=`<rect x="51" y="202" width="65" height="65" rx="8" fill="#fff" stroke="#2f7654" stroke-width="4"/>`+
+      `<rect x="66" y="217" width="35" height="35" rx="4" fill="#c1e3d0" stroke="#2f7654" stroke-width="2"/>`+
+      [0,1,2,3].map(i=>`<path d="M${61+i*15} 194 V202 M${61+i*15} 267 V275" stroke="#2f7654" stroke-width="3"/>`).join("");
+    const cores=[0,1,2,3].map(i=>`<rect x="${48+(i%2)*38}" y="${329+Math.floor(i/2)*38}" width="33" height="33" rx="5" fill="#fff" stroke="#9b7238" stroke-width="3"/>`).join("");
+    return `<figure class="a1-scene a1-scene--cpu-performance"><svg viewBox="0 0 560 447" role="img" aria-label="Three factors influencing CPU performance: clock speed means cycles per second, cache stores frequently used data close to the CPU, and multiple cores can run tasks in parallel." xmlns="http://www.w3.org/2000/svg">`+
+      `<rect x="3" y="3" width="554" height="441" rx="14" fill="#f7fbf8" stroke="#bfd5c7" stroke-width="2"/>`+
+      `<text x="20" y="39" fill="#174a36" font-size="25" font-weight="800" font-family="Arial,sans-serif">CPU PERFORMANCE</text>`+
+      row(57,"#e5f2fa","CLOCK SPEED","Clock cycles each second (Hz)",clock)+
+      row(180,"#e5f4ec","CACHE","Frequently used data near the CPU",cache)+
+      row(303,"#fff1d3","CORES","Tasks can run in parallel",cores)+
+      `<text x="280" y="437" text-anchor="middle" fill="#244e3c" font-size="16" font-weight="700" font-family="Arial,sans-serif">Software and CPU design matter too.</text></svg></figure>`;
   }
   if(kind==="computational"){
     return svgScene("An algorithm transforms essential inputs through a process into outputs",
@@ -298,6 +311,9 @@
  #i-do .ido-reference .a1-scene{max-width:490px}
  #we-do .wedo-reference .a1-scene{max-width:460px}
  #new-learning .nl-reference .a1-scene{max-width:460px}
+ /* Lesson 011: use the height of the visual panel as well as its width. */
+ #new-learning .nl-reference .a1-scene--cpu-performance{width:100%;max-width:560px;margin:12px auto}
+ #new-learning .nl-reference .a1-scene--cpu-performance svg{width:100%;height:auto;max-height:none}
  #we-do .wedo-practice .wedo-step h2{font-size:clamp(19px,1.6vw,27px);line-height:1.35}
  #i-do .ido-method .ido-step h2{font-size:clamp(21px,1.75vw,30px);line-height:1.35}
  @media(max-height:740px) and (min-width:901px){.a1-scene svg{max-height:150px}#i-do .ido-reference .a1-scene{max-width:390px}}
