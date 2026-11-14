@@ -136,6 +136,7 @@ body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-wi
 <link rel="stylesheet" href="/assets/j277-network-skills.css?v=20261112-network1">
 <link rel="stylesheet" href="/assets/binary-shift-workspace.css?v=20261112-unified1">
 <link rel="stylesheet" href="/assets/skills-system.css?v=20261113-shared2">
+<link rel="stylesheet" href="/assets/j277-paper1-guided-demo.css?v=20261114-guided1">
 </head>
 <body class="course-hub course-inline-nav synergy-unified-hub rhsc-skills-system rhsc-skills-hub">
 <header class="topbar synergy-corners" aria-label="GCSE Computing navigation">
@@ -1499,12 +1500,15 @@ function recordPaperResult(correct){
 $('paper-correct').addEventListener('click',()=>recordPaperResult(true));
 $('paper-incorrect').addEventListener('click',()=>recordPaperResult(false));
 $('check').addEventListener('click',submit);$('next').addEventListener('click',next);$('clear').addEventListener('click',reset);$('hint').addEventListener('click',()=>{const e=$('hint-area');const shown=!e.classList.contains('hidden');e.classList.toggle('hidden',shown);e.textContent=question.hint||'Think about what the question is asking you to calculate.';$('hint').textContent=shown?'Show a hint':'Hide hint';});
+// Read-only teaching context. The separate Demo cannot modify the scoring state.
+window.RHSCPaper1DemoContext=()=>({skill,level,question});
 persist();
 // Deep link for lesson resources: ?skill=shift opens Bit Shifting directly.
 const directSkill=new URLSearchParams(window.location.search).get('skill');
 if(Object.prototype.hasOwnProperty.call(specs,directSkill)){openSkill(directSkill);const requestedLevel=new URLSearchParams(window.location.search).get('level');if(['easy','medium','hard'].includes(requestedLevel))chooseLevel(requestedLevel);}
 })();
 </script>
+<script src="/assets/j277-paper1-guided-demo.js?v=20261114-guided1"></script>
 <script src="/assets/site-nav.js?v=20261107-quickbar1" defer></script>
 </body>
 </html>
