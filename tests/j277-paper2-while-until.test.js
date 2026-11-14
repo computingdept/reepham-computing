@@ -58,6 +58,34 @@ test('Medium traces final numbers, including zero-run and at-least-once cases',(
   assert.ok(engine.makeQuestion('medium',2,3).expected>=5);
 });
 
+test('Animated model traces include every iteration, stopping check and correct final output',()=>{
+  for(const seed of [1,19,20261114]){
+    for(const level of ['easy','medium']){
+      for(let index=0;index<10;index++){
+        const q=engine.makeQuestion(level,index,seed),trace=q.trace;
+        assert.ok(trace,`${level}/${index} trace exists`);
+        assert.equal(trace.final,Number(q.expected),`${level}/${index} matches answer`);
+        assert.equal(trace.mode,q.mode);
+        assert.ok(trace.rows.length>=1);
+        assert.equal(trace.rows.at(-1).stop,true,'last row stops the loop');
+        assert.equal(trace.rows.at(-1).total,trace.final);
+        if(q.mode==='while'){
+          assert.equal(trace.rows.at(-1).conditionResult,false,'WHILE ends on false');
+          assert.ok(trace.rows.slice(0,-1).every(row=>row.conditionResult===true));
+        }else{
+          assert.equal(trace.rows.at(-1).conditionResult,true,'DO UNTIL ends on true');
+          assert.ok(trace.rows.slice(0,-1).every(row=>row.conditionResult===false));
+          assert.ok(trace.rows.length>=1,'DO UNTIL runs at least once');
+        }
+      }
+    }
+  }
+  const never=engine.makeQuestion('medium',1,9).trace;
+  assert.equal(never.rows.length,1);
+  assert.equal(never.rows[0].step,'Stop');
+  assert.equal(never.final,0);
+});
+
 test('Hard supports alternate variable names and ERL assignment symbols',()=>{
   for(let index=0;index<10;index++){
     const q=engine.makeQuestion('hard',index,19);

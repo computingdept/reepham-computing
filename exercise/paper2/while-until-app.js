@@ -9,6 +9,8 @@
   const SKILL='while-until';
   const LEVEL_TEXT={easy:'Compare WHILE with DO UNTIL',medium:'Trace the final printed number',hard:'Write condition-controlled loops in OCR ERL'};
   const state={level:'easy',index:0,seed:1,score:0,wrong:0,question:null,response:null,locked:false};
+  let traceTimer=null;
+  function stopTrace(){if(traceTimer!==null){clearInterval(traceTimer);traceTimer=null;}}
   const printSvg='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="6" y="15" width="12" height="6" rx="1"/><path d="M6 17H3v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6h-3M17 12h.01"/></svg>';
 
   function readProgress(){
@@ -38,7 +40,8 @@
   function codePanel(lines){
     const panel=document.createElement('div');panel.className='code-panel';
     const label=document.createElement('span');label.className='code-label';label.textContent='OCR Exam Reference Language';
-    const pre=document.createElement('pre');pre.className='erl';pre.textContent=lines.join('\n');
+    const pre=document.createElement('pre');pre.className='erl loop-code';
+    lines.forEach(line=>{const row=document.createElement('span');row.className='loop-code-line';row.textContent=line;pre.append(row);});
     panel.append(label,pre);return panel;
   }
   function renderEasy(q,work){
@@ -66,7 +69,8 @@
     input.inputMode='numeric';input.autocomplete='off';input.placeholder='?';
     input.addEventListener('input',()=>{state.response=input.value;});
     input.addEventListener('keydown',event=>{if(event.key==='Enter')$('check').click();});
-    const note=document.createElement('span');note.className='writer-note';note.textContent='Remember: TO includes the final value.';
+    const note=document.createElement('span');note.className='writer-note';
+    note.textContent=q.mode==='while'?'WHILE checks the condition before each iteration.':'DO UNTIL checks the condition after each iteration.';
     area.append(label,input,note);layout.append(codePanel(q.code),area);work.append(layout);
   }
   function renderHard(_,work){
@@ -81,6 +85,7 @@
     area.append(label,input,note);work.append(area);
   }
   function renderQuestion(){
+    stopTrace();
     state.question=engine.makeQuestion(state.level,state.index,state.seed);
     state.response=null;state.wrong=0;state.locked=false;
     $('question-card').classList.remove('finished');
@@ -121,10 +126,81 @@
   function showModel(){
     if(state.locked||state.wrong<2)return;
     state.locked=true;disableInputs();
+    if(state.question.trace){renderTrace(state.question);feedback('Follow the model trace. No point was added for this question.','neutral');return;}
     const panel=$('hint-panel');const label=document.createElement('strong');label.textContent='Model answer';
     const pre=document.createElement('pre');pre.className='erl';pre.textContent=state.question.model;
     panel.replaceChildren(label,pre);panel.hidden=false;
     feedback('Compare with the model. No point was added for this question.','neutral');
+  }
+  function renderTrace(q){
+    const trace=q.trace;
+    const layout=$('workspace').querySelector('.for-grid');
+    if(!layout)return;
+    layout.classList.add('loop-reveal-grid');
+    const original=layout.children[1];
+    const board=document.createElement('section');board.className='loop-trace';board.setAttribute('aria-label','Animated model trace');
+    const title=document.createElement('strong');title.className='loop-trace-title';title.textContent='Model trace · '+(trace.mode==='while'?'Check before':'Check after');
+    const controls=document.createElement('div');controls.className='loop-trace-controls';
+    const play=document.createElement('button'),step=document.createElement('button'),reset=document.createElement('button');
+    for(const button of [play,step,reset])button.type='button';
+    play.className='loop-trace-play';step.textContent='⏭ Step';reset.textContent='↺ Reset';
+    controls.append(play,step,reset);
+    const table=document.createElement('table');table.className='loop-trace-table';
+    const head=document.createElement('thead');const header=document.createElement('tr');
+    ['Step','i used',trace.mode==='while'?'WHILE check':'UNTIL check',trace.operation==='ticks'?'Prints':'total'].forEach(label=>{
+      const cell=document.createElement('th');cell.textContent=label;header.append(cell);
+    });
+    head.append(header);table.append(head);
+    const body=document.createElement('tbody');table.append(body);
+    const status=document.createElement('p');status.className='loop-trace-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+    const output=document.createElement('div');output.className='loop-trace-output';
+    const outputLabel=document.createElement('span');outputLabel.textContent=trace.operation==='ticks'?'Total prints':'Printed answer';
+    const outputValue=document.createElement('strong');output.append(outputLabel,outputValue);
+    board.append(title,controls,table,status,output);
+    original.replaceWith(board);
+    let index=0;
+    function paint(){
+      body.replaceChildren();
+      const first=document.createElement('tr');
+      for(const value of ['Start',trace.rows[0]?.i??0,'—',trace.initial]){
+        const cell=document.createElement('td');cell.textContent=String(value);first.append(cell);
+      }
+      body.append(first);
+      trace.rows.slice(0,index).forEach((row,i)=>{
+        const tr=document.createElement('tr');if(i===index-1)tr.classList.add('current');if(row.stop)tr.classList.add('stopped');
+        for(const value of [row.step,row.i,row.condition+' → '+(row.conditionResult?'True':'False'),row.total]){
+          const cell=document.createElement('td');cell.textContent=String(value);tr.append(cell);
+        }
+        body.append(tr);
+      });
+      const done=index===trace.rows.length;
+      const current=trace.rows[index-1];
+      if(!current)status.textContent='Ready. Use Play or Step to see each condition check and update.';
+      else if(current.stop)status.textContent=(current.conditionResult?'UNTIL is True':'WHILE is False')+' — the loop stops.';
+      else status.textContent=(trace.mode==='while'?'Condition checked before the body.':'Body ran before the UNTIL check.')+' Running '+(trace.operation==='ticks'?'prints':'total')+': '+current.total+'.';
+      outputValue.textContent=done?String(trace.final):'?';
+      output.classList.toggle('is-revealed',done);
+      step.disabled=done;
+      play.textContent=traceTimer?'Ⅱ Pause':done?'▶ Replay':'▶ Play';
+      const lines=layout.querySelectorAll('.loop-code-line');
+      lines.forEach(line=>line.classList.remove('is-tracing'));
+      if(lines.length){
+        const prefix=q.level==='medium'?1:0;
+        const active=done?lines.length-1:index===0?0:current.stop?(trace.mode==='while'?prefix+1:prefix+4):prefix+2;
+        if(lines[active])lines[active].classList.add('is-tracing');
+      }
+    }
+    function advance(){if(index<trace.rows.length)index++;if(index===trace.rows.length)stopTrace();paint();}
+    play.addEventListener('click',()=>{
+      if(traceTimer!==null){stopTrace();paint();return;}
+      if(index===trace.rows.length)index=0;
+      advance();
+      if(index<trace.rows.length)traceTimer=setInterval(advance,850);
+      paint();
+    });
+    step.addEventListener('click',()=>{stopTrace();advance();});
+    reset.addEventListener('click',()=>{stopTrace();index=0;paint();});
+    paint();
   }
   function clearAnswer(){
     if(state.locked)return;
@@ -135,6 +211,7 @@
     $('show-answer').hidden=state.wrong<2;
   }
   function finish(){
+    stopTrace();
     const previous=readProgress();updateProgress('best',Math.max(Number(previous.best)||0,state.score));
     updateProgress('sessions',(Number(readProgress().sessions)||0)+1);
     $('question-position').textContent='Completed';$('meter').setAttribute('aria-valuenow','10');$('meter-fill').style.width='100%';

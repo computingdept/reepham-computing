@@ -45,6 +45,28 @@
       [assignment,'while i '+plan.operator+' '+plan.bound,'    '+body,'    '+update,'endwhile']:
       [assignment,'do','    '+body,'    '+update,'until i '+plan.operator+' '+plan.bound];
   }
+  function traceRows(plan,values,initial,operation){
+    let total=initial;
+    const rows=[];
+    const conditionAt=i=>i+' '+plan.operator+' '+plan.bound;
+    for(let j=0;j<values.length;j++){
+      const i=values[j];
+      const next=i+plan.delta;
+      const checkedI=plan.mode==='while'?i:next;
+      if(operation==='ticks')total++;
+      else if(operation==='double')total+=i*2;
+      else if(operation==='product')total*=i;
+      else if(operation==='count')total++;
+      else total+=i;
+      const result=comparison(checkedI,plan.operator,plan.bound);
+      rows.push({step:j+1,i,checkedI,condition:conditionAt(checkedI),conditionResult:result,total,stop:plan.mode==='do'&&result});
+    }
+    if(plan.mode==='while'){
+      const checkedI=values.length?values[values.length-1]+plan.delta:plan.start;
+      rows.push({step:'Stop',i:checkedI,checkedI,condition:conditionAt(checkedI),conditionResult:false,total,stop:true});
+    }
+    return {mode:plan.mode,initial,operation,rows,final:total};
+  }
   const EASY_PLANS=[
     off=>({mode:'while',start:1,bound:5+off,operator:'<',delta:1}),
     off=>({mode:'while',start:5+off,bound:5+off,operator:'<',delta:1}),
@@ -65,7 +87,7 @@
     const alternatives=n===0?[0,1,2,3]:n===1?[1,0,2,3]:[n,n-1,n+1,n+2];
     const kind=plan.mode==='while'?'WHILE':'DO UNTIL';
     const code=loopCode(plan,'print("Tick")');
-    return {level:'easy',type:'choose',mode:plan.mode,
+    return {level:'easy',type:'choose',mode:plan.mode,trace:traceRows(plan,values,0,'ticks'),
       prompt:'How many times will "Tick" print?',
       context:plan.mode==='while'?'WHILE checks before running. It can run zero times.':
         'DO UNTIL checks after running. It always runs at least once.',
@@ -98,7 +120,7 @@
       else if(plan.operation==='count')total+=1;
       else total+=i;
     }
-    return {level:'medium',type:'number',mode:plan.mode,
+    return {level:'medium',type:'number',mode:plan.mode,trace:traceRows(plan,values,plan.initial,plan.operation),
       prompt:'What number will be printed?',
       context:plan.mode==='while'?'WHILE: check the condition first, then update total.':
         'DO UNTIL: update total once before the first condition check.',
