@@ -55,6 +55,9 @@ test('Easy provides four unique clickable OCR commands and exactly one answer',(
   }
   assert.deepEqual(engine.makeQuestion('easy',4,3).expected,'eof');
   assert.deepEqual(engine.makeQuestion('easy',5,3).expected,'new');
+  const opening = engine.makeQuestion('easy',0,3);
+  assert.equal(opening.choices.find(choice=>choice.id==='open').code,
+    'myFile = open("names.txt")', 'opening a file must also store its reference');
 });
 
 test('Medium models read cursor, append and endOfFile without changing original lines',()=>{

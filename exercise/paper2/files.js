@@ -8,7 +8,7 @@
   'use strict';
   const LEVELS = ['easy', 'medium', 'hard'];
   const OPTIONS = [
-    {id: 'open', label: 'Open', code: 'open("names.txt")'},
+    {id: 'open', label: 'Open', code: 'myFile = open("names.txt")'},
     {id: 'read', label: 'Read line', code: 'myFile.readLine()'},
     {id: 'write', label: 'Write line', code: 'myFile.writeLine("Kai")'},
     {id: 'close', label: 'Close', code: 'myFile.close()'},
