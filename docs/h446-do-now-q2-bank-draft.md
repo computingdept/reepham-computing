@@ -44,6 +44,26 @@ It records all 300 source links and explicitly flags where a correct answer
 does not appear literally in the cited lesson's teaching page. A text match
 does not amount to teacher approval; the links still need semantic QA.
 
+## Controlled classroom-layout preview (not live)
+
+The draft branch includes a **preview-only** Q2 renderer and compact 2×2
+option grid. It is guarded by `?h446-q2-preview=1` and the `/lessons/h446/`
+URL prefix, and reads only `data/do-now/q2-preview/h446.json` with the status
+`review-preview-not-published`. It never replaces Q1, Q3, Q4 or J277.
+The preview is **not deployed** on the public site. A separate approval and
+controlled publication are needed before actual lesson use. Its output is
+regenerated from the reviewed bank by:
+
+```sh
+node scripts/do-now/build-h446-q2-preview.cjs
+node --test tests/h446-q2-drafts.test.cjs tests/h446-q2-preview.test.cjs
+```
+
+**Coverage:** all 300 entries are in the preview bank; **298 standard lesson
+pages** share this Q2 renderer. L036 and L037 use a separate guided-mind-map
+presentation, so they deliberately retain their current interface and need
+a separate content/display decision before course-wide publication.
+
 For each entry before publication:
 
 1. Confirm the source was taught before the current lesson, and is not the

@@ -3,8 +3,8 @@
 > GitHub teacher-review document only. **This is not a published question bank or teacher approval.**
 
 - Total Q2 drafts: **300**.
-- Earlier-lesson pages containing the proposed answer as a separate token: **291**.
-- Source pages without a direct answer-token match: **7** (manual check).
+- Earlier-lesson pages containing the proposed answer as a separate token: **293**.
+- Source pages without a direct answer-token match: **5** (manual check).
 - GCSE-entry diagnostics: **2** (L001–L002).
 
 A keyword hit is **only a quick evidence screen**, not proof of good teaching
@@ -13,12 +13,19 @@ The automated check excludes Do Now sections and executable scripts.
 Each source must still be checked against the content actually taught.
 The existing H446 Q1, Q3 and Q4, shared CSS, and all live lessons are unchanged.
 
+## Four focused source checks
+
+- **L005 — floating point to denary:** the New Learning explains that a positive exponent multiplies the mantissa by a power of two. L007 Q2 now uses that exact concept.
+- **L010 — iteration:** the lesson explicitly teaches that a `do...while` loop runs at least once. L012 retrieves that loop.
+- **L123 — programming paradigms:** objectives and examples model objects with state and behaviour and use the full term *object-oriented*. L138 and L213 use the one-word abbreviation **OOP**.
+- **L249 — time and space complexity:** the lesson matches repeated halving to `O(log n)`. L257, L283 and L308 ask for the name **logarithmic**, which is a correct interpretation but is not written literally in that source lesson.
+
+These are content-evidence observations only; they do **not** set `teacherApproved` or authorise deployment.
+
 ## Questions needing a closer source-content check
 
 | Q2 lesson | Proposed source | Question | Answer | Source lesson title |
 |---|---|---|---|---|
-| L007 | [L005](../lessons/h446/lesson-005/index.html) | A positive exponent shifts the binary point which way? | Right | Floating point → denary |
-| L012 | [L010](../lessons/h446/lesson-010/index.html) | Which C# loop always runs at least once? | do-while | Iteration in C# |
 | L138 | [L123](../lessons/h446/lesson-123/index.html) | Which paradigm organises code around objects? | OOP | Programming Paradigms: How We Express Solutions |
 | L213 | [L123](../lessons/h446/lesson-123/index.html) | Which paradigm organises code around objects? | OOP | Programming Paradigms: How We Express Solutions |
 | L257 | [L249](../lessons/h446/lesson-249/index.html) | Which complexity describes repeated halving? | Logarithmic | Introduction to time and space complexity |
@@ -35,12 +42,12 @@ The existing H446 Q1, Q3 and Q4, shared CSS, and all live lessons are unchanged.
 | L004 | [L002](../lessons/h446/lesson-002/index.html) | Signed integers & binary arithmetic | Leftmost | Keyword present |
 | L005 | [L003](../lessons/h446/lesson-003/index.html) | Hexadecimal, shifts & masks | 16 | Keyword present |
 | L006 | [L004](../lessons/h446/lesson-004/index.html) | Denary → floating point | Exponent | Keyword present |
-| L007 | [L005](../lessons/h446/lesson-005/index.html) | Floating point → denary | Right | Check content |
+| L007 | [L005](../lessons/h446/lesson-005/index.html) | Floating point → denary | Multiplies | Keyword present |
 | L008 | [L003](../lessons/h446/lesson-003/index.html) | Hexadecimal, shifts & masks | Four | Keyword present |
 | L009 | [L003](../lessons/h446/lesson-003/index.html) | Hexadecimal, shifts & masks | 2 | Keyword present |
 | L010 | [L008](../lessons/h446/lesson-008/index.html) | Character sets: ASCII & Unicode | Unicode | Keyword present |
 | L011 | [L009](../lessons/h446/lesson-009/index.html) | Sequence & branching in C# | && | Keyword present |
-| L012 | [L010](../lessons/h446/lesson-010/index.html) | Iteration in C# | do-while | Check content |
+| L012 | [L010](../lessons/h446/lesson-010/index.html) | Iteration in C# | do...while | Keyword present |
 | L013 | [L010](../lessons/h446/lesson-010/index.html) | Iteration in C# | for | Keyword present |
 | L014 | [L010](../lessons/h446/lesson-010/index.html) | Iteration in C# | Condition | Keyword present |
 | L015 | [L013](../lessons/h446/lesson-013/index.html) | Noughts & Crosses: sequence first | First | Keyword present |
