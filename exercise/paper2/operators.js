@@ -1,15 +1,16 @@
-/* OCR J277/02 Skill 05: arithmetic operators, real division, DIV and MOD. */
+/* OCR J277/02 Skill 05: arithmetic operators, exponentiation, real division, DIV and MOD. */
 (function (root, factory) {
   const api = factory();
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.J277Paper2Operators = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
   'use strict';
-  const OPERATORS = ['+', '−', '×', '/', 'DIV', 'MOD'];
+  const OPERATORS = ['+', '−', '×', '^', '/', 'DIV', 'MOD'];
   const DESCRIPTIONS = {
     '+': 'Add the two numbers.',
     '−': 'Subtract the second number from the first.',
     '×': 'Multiply the numbers.',
+    '^': 'Raise the first number to the power of the second (exponentiation).',
     '/': '/ gives a real-number answer, including the fractional part.',
     DIV: 'DIV gives the whole-number quotient, dropping the remainder.',
     MOD: 'MOD gives only the remainder after division.'
@@ -30,6 +31,7 @@
     if (op === '+') return a + b;
     if (op === '−') return a - b;
     if (op === '×') return a * b;
+    if (op === '^') return a ** b;
     if (b === 0) return null;
     if (op === '/') return a / b;
     if (op === 'DIV') return Math.trunc(a / b);
@@ -37,12 +39,12 @@
     return null;
   }
   function easy(index, r) {
-    const op = ['+', '−', '×', '/', 'DIV', 'MOD', 'MOD', '/', 'DIV', '−'][index % 10];
+    const op = ['+', '−', '×', '/', 'DIV', 'MOD', '^', '/', 'DIV', '^'][index % 10];
     let a, b, result;
     for (let attempt = 0; attempt < 1000; attempt++) {
-      b = [2, 4][int(r, 0, 1)];
-      a = int(r, 9, 47);
-      if (a % b === 0) continue;
+      b = op === '^' ? int(r, 2, 3) : [2, 4][int(r, 0, 1)];
+      a = op === '^' ? int(r, 3, 9) : int(r, 9, 47);
+      if (op !== '^' && a % b === 0) continue;
       result = calculate(a, b, op);
       const matches = OPERATORS.filter(candidate => calculate(a, b, candidate) === result);
       if (matches.length === 1) break;
@@ -54,7 +56,7 @@
       level: 'easy', type: 'choose', options: OPERATORS.slice(), a, b, expected: op,
       prompt: 'Which operator completes the calculation?',
       context: a + '  ?  ' + b + '  =  ' + fmt(result),
-      hint: 'DIV is the whole-number answer. MOD is the remainder. / keeps the decimal part.',
+      hint: '^ means to the power of (e.g. 3 ^ 2 = 9). DIV is the quotient, MOD the remainder, and / keeps the decimal part.',
       model: a + ' ' + op + ' ' + b + ' = ' + fmt(result),
       explanation: DESCRIPTIONS[op]
     };
@@ -69,9 +71,9 @@
       { expression: 'a / b', output: a / b, why: '/ keeps the fractional part.' },
       { expression: 'a * b', output: a * b, why: '* means multiply in OCR ERL.' },
       { expression: 'a + b', output: a + b, why: 'The values are added.' },
-      { expression: 'a - b', output: a - b, why: 'Subtract b from a.' },
+      { expression: 'a ^ 2', output: a ** 2, why: 'Exponentiation: a ^ 2 means a squared.' },
       { expression: '(a DIV b) + ' + inc, output: Math.trunc(a / b) + inc, why: 'Perform DIV inside the brackets, then add.' },
-      { expression: '(a MOD b) * ' + inc, output: (a % b) * inc, why: 'Find the remainder, then multiply it.' },
+      { expression: 'b + ' + inc + ' ^ 2', output: b + inc ** 2, why: 'Work out the power before adding b.' },
       { expression: 'a DIV b', then: 'answer = answer + ' + inc, output: Math.trunc(a / b) + inc, why: 'Use the result of DIV in the next assignment.' },
       { expression: 'a MOD b', then: 'answer = answer * ' + inc, output: (a % b) * inc, why: 'Use the remainder in the next assignment.' }
     ];
@@ -81,7 +83,7 @@
       prompt: 'What number will be printed?',
       context: 'Follow the operations in order.',
       code: ['a = ' + a, 'b = ' + b, 'answer = ' + item.expression, ...(item.then ? [item.then] : []), 'print(answer)'],
-      output: item.output, hint: 'Work out DIV, MOD or / carefully. Then follow any next line.',
+      output: item.output, hint: '^ means a power and is worked out before multiplication or addition. DIV is quotient, MOD remainder, / real division.',
       model: 'Output: ' + fmt(item.output), explanation: item.why
     };
   }
@@ -95,7 +97,7 @@
       { inputs: 2, prompt: 'Ask for two whole numbers. Print their whole-number quotient using DIV.', rule: 'two-div', model: 'a = input("First")\nb = input("Second")\nanswer = a DIV b\nprint(answer)' },
       { inputs: 2, prompt: 'Ask for two whole numbers. Print the remainder of the first divided by the second.', rule: 'two-mod', model: 'a = input("First")\nb = input("Second")\nanswer = a MOD b\nprint(answer)' },
       { inputs: 1, prompt: 'Ask for a number. Multiply it by ' + k + ', then add ' + c + ' and print.', rule: 'multiply-add', model: 'n = input("Number")\nanswer = n * ' + k + ' + ' + c + '\nprint(answer)' },
-      { inputs: 1, prompt: 'Ask for a number. Subtract twice ' + c + ' from it, then print.', rule: 'subtract-double', model: 'n = input("Number")\nanswer = n - ' + c + ' * 2\nprint(answer)' },
+      { inputs: 1, prompt: 'Ask for a number. Add ' + c + ' to it, then square the result using ^ and print.', rule: 'add-square', model: 'n = input("Number")\nanswer = (n + ' + c + ') ^ 2\nprint(answer)' },
       { inputs: 1, prompt: 'Ask for a number. Divide it by 2 using /, keeping the fractional part.', rule: 'real-div', model: 'n = input("Number")\nanswer = n / 2\nprint(answer)' },
       { inputs: 1, prompt: 'Ask for a number. Divide it by ' + k + ', then add its whole-number quotient and remainder.', rule: 'quotient-plus-rem', model: 'n = input("Number")\nanswer = (n DIV ' + k + ') + (n MOD ' + k + ')\nprint(answer)' }
     ];
@@ -103,7 +105,7 @@
     return {
       level: 'hard', type: 'write', ...task, k, c,
       context: 'Write the input, calculation and print statements in OCR ERL.',
-      hint: 'Use input("Prompt"), then an assignment with the right operator, then print(answer).',
+      hint: 'Use input("Prompt"), a calculation, then print(answer). ^ means to the power of; use brackets to square an entire sum.',
       explanation: 'Your algorithm was tested with several inputs, not just one example.'
     };
   }
@@ -124,7 +126,7 @@
       case 'two-div': return Math.trunc(n / b);
       case 'two-mod': return n % b;
       case 'multiply-add': return n * q.k + q.c;
-      case 'subtract-double': return n - q.c * 2;
+      case 'add-square': return (n + q.c) ** 2;
       case 'real-div': return n / 2;
       case 'quotient-plus-rem': return Math.trunc(n / q.k) + n % q.k;
       default: return null;
@@ -134,7 +136,7 @@
     const result = [];
     let pos = 0;
     while (pos < expr.length) {
-      const match = expr.slice(pos).match(/^\s*(DIV\b|MOD\b|[A-Za-z_]\w*|\d+(?:\.\d+)?|[()+*\/\-])\s*/i);
+      const match = expr.slice(pos).match(/^\s*(DIV\b|MOD\b|[A-Za-z_]\w*|\d+(?:\.\d+)?|[()+*\/\-^])\s*/i);
       if (!match) return null;
       result.push(match[1]); pos += match[0].length;
     }
@@ -149,16 +151,29 @@
         const value = add(); if (tokens[i++] !== ')') return null;
         return value;
       }
-      if (token === '-' || token === '+') {
-        const value = primary(); return value === null ? null : token === '-' ? -value : value;
-      }
       if (/^\d/.test(token)) return Number(token);
       return Object.prototype.hasOwnProperty.call(env, token.toLowerCase()) ? env[token.toLowerCase()] : null;
     }
+    function power() {
+      const value = primary(); if (value === null) return null;
+      if (tokens[i] !== '^') return value;
+      i++;
+      const exponent = signed();
+      if (exponent === null) return null;
+      const result = value ** exponent;
+      return Number.isFinite(result) ? result : null;
+    }
+    function signed() {
+      if (tokens[i] === '-' || tokens[i] === '+') {
+        const sign = tokens[i++]; const value = signed();
+        return value === null ? null : sign === '-' ? -value : value;
+      }
+      return power();
+    }
     function multiply() {
-      let value = primary(); if (value === null) return null;
+      let value = signed(); if (value === null) return null;
       while (i < tokens.length && ['*', '/', 'DIV', 'MOD'].includes(tokens[i].toUpperCase())) {
-        const op = tokens[i++].toUpperCase(); const right = primary();
+        const op = tokens[i++].toUpperCase(); const right = signed();
         if (right === null || (right === 0 && ['/', 'DIV', 'MOD'].includes(op))) return null;
         if (op === '*') value *= right;
         if (op === '/') value /= right;
@@ -201,7 +216,7 @@
         env[name] = inputs[inputCount++]; continue;
       }
       const value = evaluateExpression(rhs, env); if (value === null) return null;
-      const usesOperator = /(?:\bDIV\b|\bMOD\b|[+*\/\-])/i.test(rhs);
+      const usesOperator = /(?:\bDIV\b|\bMOD\b|[+*\/\-^])/i.test(rhs);
       if (usesOperator) processCount++;
       env[name] = value;
     }
