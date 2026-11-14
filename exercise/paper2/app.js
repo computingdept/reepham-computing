@@ -76,6 +76,10 @@
     level: 'easy', index: 0, seed: 1, score: 0, wrong: 0,
     question: null, response: null, locked: false
   };
+  // The hub shares this script; only the Variables activity needs the Demo hook.
+  if (variables && document.querySelector('main .practice')) {
+    window.RHSSkillsDemoProvider = () => window.J277SkillsGuidedExamples.make('variables', state.question);
+  }
 
   function storage() {
     return core.readProgress(STORAGE_KEY);

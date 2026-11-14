@@ -200,5 +200,6 @@
     const panel = $('hint-panel'); panel.hidden = !panel.hidden; panel.textContent = state.question.hint;
     $('hint').textContent = panel.hidden ? 'Show hint' : 'Hide hint';
   });
+  window.RHSSkillsDemoProvider = () => window.J277SkillsGuidedExamples.make('array-2d', state.question);
   chooseLevel(core.levelFromUrl());
 })();

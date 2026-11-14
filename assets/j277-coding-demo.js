@@ -5,6 +5,16 @@
   'use strict';
 
   const examples = {
+    variables: {
+      title:'Variables & Constants',task:'Similar example: Update a changing value.',
+      progressive:true,traceTitle:'Trace the assignment',
+      columns:['Variable','Value'],
+      lines:['points = 4','points = points + 3'],
+      placeholders:['Store …','Update …'],
+      steps:[[1,'points','4','Store the starting value.'],
+        [2,'points','7','Read the previous value, add 3 and store the result.']],
+      end:'Final value: 7. The right-hand side is calculated before assignment.'
+    },
     'data-types': {
       title: 'Data Types', columns: ['Value', 'Type'],
       lines: ['score = 14', 'name = "Asha"', 'ready = True'],

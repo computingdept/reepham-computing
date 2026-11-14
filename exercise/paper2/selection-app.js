@@ -8,7 +8,7 @@
   const STORAGE_KEY = 'rhs-j277-paper2-progress-v1';
   const SKILL = 'selection';
   const LEVEL_TEXT = {easy:'Choose the IF or ELSE result',medium:'Trace IF → ELSEIF → ELSE',hard:'Write OCR ERL selection'};
-  const state = {level:'easy',index:0,seed:1,score:0,firstTry: 0, wrong:0,question:null,response:null,locked:false};
+  const state = {level:'easy',index:0,seed:1,score:0,wrong:0,question:null,response:null,locked:false};
   const printSvg='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="6" y="15" width="12" height="6" rx="1"/><path d="M6 17H3v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6h-3M17 12h.01"/></svg>';
 
   function readProgress() {
@@ -101,7 +101,7 @@
       return;
     }
     if(result.correct) {
-      state.locked=true;if(state.wrong===0)state.firstTry++;state.score++;
+      state.locked=true;state.score++;
       updateProgress('solved',(Number(readProgress().solved)||0)+1);
       feedback('Correct! '+state.question.explanation,'good');
       disableInputs();return;
@@ -128,7 +128,6 @@
     $('show-answer').hidden=state.wrong<2;
   }
   function finish() {
-    core.reportCompletion(2, 'selection', state.level, state.firstTry, 10);
     const entry=readProgress();
     updateProgress('best',Math.max(Number(entry.best)||0,state.score));
     updateProgress('sessions',(Number(entry.sessions)||0)+1);
@@ -153,7 +152,7 @@
   }
   function chooseLevel(level) {
     state.level=core.validLevel(level);core.updateLevelUrl(state.level);
-    state.index=0;state.seed=Math.floor(Math.random()*2147483647)+1;state.score=0; state.firstTry = 0;
+    state.index=0;state.seed=Math.floor(Math.random()*2147483647)+1;state.score=0;
     document.querySelectorAll('.level').forEach(button=>{
       const current=button.dataset.level===state.level;
       button.classList.toggle('active',current);button.setAttribute('aria-pressed',String(current));
@@ -176,5 +175,6 @@
   });
   const print=$('print-skill');
   if(print){print.innerHTML=printSvg+'<span>Soon</span>';print.title='Printable worksheet coming soon';}
+  window.RHSSkillsDemoProvider = () => window.J277SkillsGuidedExamples.make('selection', state.question);
   chooseLevel(core.levelFromUrl());
 })();
