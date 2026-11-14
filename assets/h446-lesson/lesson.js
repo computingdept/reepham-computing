@@ -2424,3 +2424,17 @@ if(/^\/lessons\/(?:j277|h446)\/lesson-\d{3}\//i.test(location.pathname)){
   script.dataset.rhscSiteNav='1';
   document.head.appendChild(script);
 })();
+
+
+/* One shared diagram viewer for A Level and modern KS3 lesson pages.
+   J277 already includes this viewer directly; do not load it twice there. */
+if(/^\/lessons\/(?:h446|year[789])\/lesson-\d{3}\//i.test(location.pathname)){
+  const zoomStyle=document.createElement('link');
+  zoomStyle.rel='stylesheet';
+  zoomStyle.href='/assets/classroom-visual-zoom.css?v=20261114-shared-stage1';
+  document.head.appendChild(zoomStyle);
+  const zoomScript=document.createElement('script');
+  zoomScript.src='/assets/classroom-visual-zoom.js?v=20261114-shared-stage1';
+  zoomScript.async=true;
+  document.body.appendChild(zoomScript);
+}

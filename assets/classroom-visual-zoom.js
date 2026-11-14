@@ -6,18 +6,32 @@
   let dialog;
   let opener;
 
+  function prepareZoomTarget(target, image) {
+    if (target.hasAttribute("data-classroom-zoom")) return;
+    const label = image.getAttribute("aria-label") || image.getAttribute("alt") || image.querySelector?.("title")?.textContent || "learning diagram";
+    target.setAttribute("data-classroom-zoom", "");
+    target.setAttribute("tabindex", "0");
+    target.setAttribute("role", "button");
+    target.setAttribute("aria-label", "Enlarge " + label);
+  }
+
   function enhanceTeachingFigures() {
-    const standaloneReference = document.querySelector("#new-learning .nl-reference > svg");
-    if (standaloneReference) document.querySelector("#new-learning")?.classList.add("a1-visual-learning");
-    // The two J277 lesson generators render several SVG figure variants.
-    // Opt in their static teaching diagrams without changing lesson content.
-    document.querySelectorAll("#new-learning svg, #i-do svg, #we-do svg").forEach(svg => {
-      const target = svg.closest("figure") || svg;
-      if (target.hasAttribute("data-classroom-zoom")) return;
-      target.setAttribute("data-classroom-zoom", "");
-      target.setAttribute("tabindex", "0");
-      target.setAttribute("role", "button");
-      target.setAttribute("aria-label", "Enlarge " + (svg.getAttribute("aria-label") || "learning diagram"));
+    if (/^\/lessons\/j277\/lesson-\d{3}\//i.test(location.pathname)) {
+      const standaloneReference = document.querySelector("#new-learning .nl-reference > svg");
+      if (standaloneReference) document.querySelector("#new-learning")?.classList.add("a1-visual-learning");
+      // Preserve the existing J277 presentation and its figure-wide tap target.
+      document.querySelectorAll("#new-learning svg, #i-do svg, #we-do svg").forEach(svg => {
+        prepareZoomTarget(svg.closest("figure") || svg, svg);
+      });
+      return;
+    }
+
+    // H446 and modern KS3 use the same viewer. Enlarge only static learning
+    // artwork: leave buttons, links, diagrams with controls and decorative icons alone.
+    if (!/^\/lessons\/(?:h446|year[789])\/lesson-\d{3}\//i.test(location.pathname)) return;
+    document.querySelectorAll(".page svg[role='img'], .page svg[aria-label], .page img:not(.iconimg)").forEach(image => {
+      if (image.matches("[aria-hidden='true']") || image.closest("a, button, [role='button'], [data-no-zoom], [data-interactive], .rhsc-visual-zoom")) return;
+      prepareZoomTarget(image, image);
     });
   }
 
