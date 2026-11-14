@@ -1,0 +1,88 @@
+/* Skill-specific workspaces only; shared Skills CSS owns the shell, cards and controls. */
+.rhsc-skills-activity .activity-links .print-soon,
+.rhsc-skills-activity .activity-links .print-soon:hover {
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  color:#a34b45;
+  cursor:default;
+  text-decoration:none;
+}
+.rhsc-skills-activity .print-soon svg {stroke:#a34b45}
+.rhsc-skills-activity .type-choice {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:9px;
+  width:min(100%,490px);
+  flex:1;
+}
+.rhsc-skills-activity .type-choice button {
+  min-height:54px;
+  border:2px solid #bed2c3;
+  border-radius:11px;
+  background:#fafdfa;
+  color:#284e36;
+  font-weight:850;
+  padding:10px 7px;
+  touch-action:manipulation;
+}
+.rhsc-skills-activity .type-choice button[aria-pressed="true"] {
+  background:#e4f3e8;
+  border-color:#285348;
+  box-shadow:0 0 0 2px #bedcc7 inset;
+}
+.rhsc-skills-activity .type-choice button:disabled {cursor:default}
+.rhsc-skills-activity .type-match {
+  width:min(100%,820px);
+  display:grid;
+  gap:10px;
+}
+.rhsc-skills-activity .type-match-row {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(155px,220px);
+  align-items:center;
+  gap:12px;
+  min-height:58px;
+}
+.rhsc-skills-activity .type-value {
+  display:block;
+  padding:12px 15px;
+  border:1px solid #d2e1d5;
+  border-radius:9px;
+  background:#f4faf5;
+  font:800 clamp(15px,1.7vw,19px)/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;
+  color:#1d4a35;
+  overflow-wrap:anywhere;
+}
+.rhsc-skills-activity .type-match-row select {
+  min-width:0;
+  width:100%;
+  min-height:48px;
+  padding:10px;
+  border:2px solid #a0c3ad;
+  border-radius:9px;
+  color:#284e36;
+  background:#fff;
+  font-weight:750;
+}
+.rhsc-skills-activity .type-code-entry {min-height:110px}
+.rhsc-skills-activity .sr-only {
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
+}
+@media(max-width:720px){
+  .rhsc-skills-activity .type-choice {width:100%;flex:none}
+}
+@media(max-width:490px){
+  .rhsc-skills-activity .type-match-row {grid-template-columns:minmax(0,1fr) minmax(120px,145px);gap:7px}
+  .rhsc-skills-activity .type-match-row select {font-size:13px;padding:7px}
+  .rhsc-skills-activity .type-value {font-size:14px;padding:10px}
+  .rhsc-skills-activity .type-choice button {min-height:49px}
+}
