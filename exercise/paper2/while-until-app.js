@@ -41,7 +41,12 @@
     const panel=document.createElement('div');panel.className='code-panel';
     const label=document.createElement('span');label.className='code-label';label.textContent='OCR Exam Reference Language';
     const pre=document.createElement('pre');pre.className='erl loop-code';
-    lines.forEach(line=>{const row=document.createElement('span');row.className='loop-code-line';row.textContent=line;pre.append(row);});
+    lines.forEach((line,index)=>{
+      const row=document.createElement('span');row.className='loop-code-line';
+      const number=document.createElement('span');number.className='loop-line-number';number.textContent=String(index+1).padStart(2,'0');number.setAttribute('aria-hidden','true');
+      const source=document.createElement('span');source.className='loop-code-text';source.textContent=line;
+      row.append(number,source);pre.append(row);
+    });
     panel.append(label,pre);return panel;
   }
   function renderEasy(q,work){
@@ -138,6 +143,7 @@
   }
   function renderTrace(q){
     const trace=q.trace;
+    const events=trace.events;
     const layout=$('workspace').querySelector('.for-grid');
     if(!layout)return;
     layout.classList.add('loop-reveal-grid');
@@ -151,7 +157,7 @@
     controls.append(play,step,reset);
     const table=document.createElement('table');table.className='loop-trace-table';
     const head=document.createElement('thead');const header=document.createElement('tr');
-    ['Step','i used',trace.mode==='while'?'WHILE check':'UNTIL check',trace.operation==='ticks'?'Prints':'total'].forEach(label=>{
+    ['Line','i',trace.mode==='while'?'WHILE check':'UNTIL check',trace.operation==='ticks'?'Prints':'total'].forEach(label=>{
       const cell=document.createElement('th');cell.textContent=label;header.append(cell);
     });
     head.append(header);table.append(head);
@@ -166,42 +172,37 @@
     let index=0;
     function paint(){
       body.replaceChildren();
-      const first=document.createElement('tr');
-      for(const value of ['Start',trace.rows[0]?.i??0,'—',trace.initial]){
-        const cell=document.createElement('td');cell.textContent=String(value);first.append(cell);
-      }
-      body.append(first);
-      trace.rows.slice(0,index).forEach((row,i)=>{
-        const tr=document.createElement('tr');if(i===index-1)tr.classList.add('current');if(row.stop)tr.classList.add('stopped');
-        for(const value of [row.step,row.i,row.condition+' → '+(row.conditionResult?'True':'False'),row.total]){
+      events.slice(0,index).forEach((item,i)=>{
+        const tr=document.createElement('tr');if(i===index-1)tr.classList.add('current');
+        if(item.conditionResult===false&&trace.mode==='while'||item.conditionResult===true&&trace.mode==='do')tr.classList.add('stopped');
+        for(const value of [String(item.line).padStart(2,'0'),item.i===null?'—':item.i,item.condition===null?'—':item.condition+' → '+(item.conditionResult?'True':'False'),item.total]){
           const cell=document.createElement('td');cell.textContent=String(value);tr.append(cell);
         }
         body.append(tr);
       });
       scroll.scrollTop=scroll.scrollHeight;
-      const done=index===trace.rows.length;
-      const current=trace.rows[index-1];
-      if(!current)status.textContent='Ready. Use Play or Step to see each condition check and update.';
-      else if(current.stop)status.textContent=(current.conditionResult?'UNTIL is True':'WHILE is False')+' — the loop stops.';
-      else status.textContent=(trace.mode==='while'?'Condition checked before the body.':'Body ran before the UNTIL check.')+' Running '+(trace.operation==='ticks'?'prints':'total')+': '+current.total+'.';
+      const done=index===events.length;
+      const current=events[index-1];
+      if(!current)status.textContent='Ready. Play or Step follows one code line at a time.';
+      else status.textContent='Line '+String(current.line).padStart(2,'0')+' · '+current.action;
       outputValue.textContent=done?String(trace.final):'?';
       output.classList.toggle('is-revealed',done);
       step.disabled=done;
       play.textContent=traceTimer?'Ⅱ Pause':done?'▶ Replay':'▶ Play';
       const lines=layout.querySelectorAll('.loop-code-line');
       lines.forEach(line=>line.classList.remove('is-tracing'));
-      if(lines.length){
-        const prefix=q.level==='medium'?1:0;
-        const active=done?lines.length-1:index===0?0:current.stop?(trace.mode==='while'?prefix+1:prefix+4):prefix+2;
-        if(lines[active])lines[active].classList.add('is-tracing');
+      if(current&&lines[current.line-1]){
+        lines[current.line-1].classList.add('is-tracing');
+        lines[current.line-1].setAttribute('aria-current','step');
       }
+      lines.forEach((line,i)=>{if(!current||i!==current.line-1)line.removeAttribute('aria-current');});
     }
-    function advance(){if(index<trace.rows.length)index++;if(index===trace.rows.length)stopTrace();paint();}
+    function advance(){if(index<events.length)index++;if(index===events.length)stopTrace();paint();}
     play.addEventListener('click',()=>{
       if(traceTimer!==null){stopTrace();paint();return;}
-      if(index===trace.rows.length)index=0;
+      if(index===events.length)index=0;
       advance();
-      if(index<trace.rows.length)traceTimer=setInterval(advance,850);
+      if(index<events.length)traceTimer=setInterval(advance,750);
       paint();
     });
     step.addEventListener('click',()=>{stopTrace();advance();});

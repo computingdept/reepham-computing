@@ -49,23 +49,43 @@
     let total=initial;
     const rows=[];
     const conditionAt=i=>i+' '+plan.operator+' '+plan.bound;
+    const events=[];
+    const prefix=operation==='ticks'?0:1;
+    let currentI=null;
+    function event(line,action,condition=null,conditionResult=null){
+      events.push({line:line+1,i:currentI,total,condition,conditionResult,action});
+    }
+    if(prefix)event(0,'Set total to '+initial+'.');
+    currentI=plan.start;
+    event(prefix,'Set i to '+currentI+'.');
     for(let j=0;j<values.length;j++){
       const i=values[j];
       const next=i+plan.delta;
       const checkedI=plan.mode==='while'?i:next;
+      if(plan.mode==='while'){
+        event(prefix+1,'WHILE is True — run the body.',conditionAt(i),true);
+      }else{
+        event(prefix+1,'Enter the DO block.');
+      }
       if(operation==='ticks')total++;
       else if(operation==='double')total+=i*2;
       else if(operation==='product')total*=i;
       else if(operation==='count')total++;
       else total+=i;
+      event(prefix+2,operation==='ticks'?'Print "Tick" — '+total+' print'+(total===1?'':'s')+'.':'Update total to '+total+'.');
+      currentI=next;
+      event(prefix+3,'Update i to '+next+'.');
       const result=comparison(checkedI,plan.operator,plan.bound);
+      if(plan.mode==='do')event(prefix+4,result?'UNTIL is True — stop.':'UNTIL is False — repeat.',conditionAt(checkedI),result);
       rows.push({step:j+1,i,checkedI,condition:conditionAt(checkedI),conditionResult:result,total,stop:plan.mode==='do'&&result});
     }
     if(plan.mode==='while'){
       const checkedI=values.length?values[values.length-1]+plan.delta:plan.start;
+      event(prefix+1,'WHILE is False — leave the loop.',conditionAt(checkedI),false);
       rows.push({step:'Stop',i:checkedI,checkedI,condition:conditionAt(checkedI),conditionResult:false,total,stop:true});
     }
-    return {mode:plan.mode,initial,operation,rows,final:total};
+    if(prefix)event(6,'Print the final total: '+total+'.');
+    return {mode:plan.mode,initial,operation,rows,events,final:total};
   }
   const EASY_PLANS=[
     off=>({mode:'while',start:1,bound:5+off,operator:'<',delta:1}),
