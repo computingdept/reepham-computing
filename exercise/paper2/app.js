@@ -96,7 +96,7 @@
     updateTileProgress();
   }
   function updateTileProgress() {
-    ['variables', 'data-types', 'casting'].forEach(skill => {
+    ['variables', 'data-types', 'casting', 'sequence'].forEach(skill => {
       const target = $(skill + '-progress');
       if (!target) return;
       const total = LEVELS.reduce((sum, level) => sum + (Number(readProgress(skill, level).solved) || 0), 0);
@@ -106,7 +106,7 @@
 
   function createTile(item, index) {
     const [id, title, , subtitle] = item;
-    const ready = ['variables', 'data-types', 'casting'].includes(id);
+    const ready = ['variables', 'data-types', 'casting', 'sequence'].includes(id);
     const card = document.createElement('article');
     card.className = 'tile ' + (ready ? 'ready' : 'planned');
     // Just like a lesson tile, the whole content area opens an available skill.
@@ -124,7 +124,7 @@
     main.append(label, sub);
     if (ready) {
       const spec = document.createElement('div');
-      spec.className = 'tile-spec'; spec.textContent = id === 'variables' ? '2.2.1' : '2.2.2';
+      spec.className = 'tile-spec'; spec.textContent = ['variables', 'sequence'].includes(id) ? '2.2.1' : '2.2.2';
       main.append(spec);
     }
     card.append(main);
@@ -177,7 +177,7 @@
       meta.className = 'group-meta';
       const count = document.createElement('span');
       count.className = 'count';
-      count.textContent = i === 0 ? '3 ready / 9' : group.items.length + ' planned';
+      count.textContent = i === 0 ? '4 ready / 9' : group.items.length + ' planned';
       const chevron = document.createElement('span');
       chevron.className = 'group-chevron'; chevron.setAttribute('aria-hidden', 'true');
       meta.append(count, chevron); summary.append(name, meta);
@@ -438,6 +438,9 @@
     }
     if (new URLSearchParams(window.location.search).get('skill') === 'casting') {
       window.location.replace('/exercise/paper2/casting/?level=' + core.levelFromUrl());
+    }
+    if (new URLSearchParams(window.location.search).get('skill') === 'sequence') {
+      window.location.replace('/exercise/paper2/sequence/?level=' + core.levelFromUrl());
     }
   }
   if ($('practice')) {
