@@ -67,7 +67,7 @@ function find(root, name) {
   return null;
 }
 
-for (const skill of ['data-types', 'casting', 'operators', 'comparisons', 'sequence', 'selection', 'for-loops', 'while-until']) {
+for (const skill of ['data-types', 'casting', 'operators', 'comparisons', 'sequence', 'selection', 'for-loops', 'while-until', 'array-1d']) {
   test(`${skill}: always-available demo opens, traces correct code lines, and returns without losing practice`, () => {
     const ui = mountDemo(skill);
     const launch = find(ui.title, 'skill-demo-open');
