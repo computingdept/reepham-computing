@@ -54,6 +54,13 @@
     const expanded = image.cloneNode(true);
     expanded.removeAttribute("width");
     expanded.removeAttribute("height");
+    expanded.removeAttribute("data-classroom-zoom");
+    expanded.removeAttribute("tabindex");
+    if (expanded.tagName.toLowerCase() === "svg") {
+      expanded.setAttribute("role", "img");
+      const label = expanded.getAttribute("aria-label");
+      if (label?.startsWith("Enlarge ")) expanded.setAttribute("aria-label", label.slice(8));
+    }
     modal.querySelector(".rhsc-visual-zoom-canvas").replaceChildren(expanded);
     modal.showModal();
     modal.querySelector(".rhsc-visual-zoom-close").focus();
