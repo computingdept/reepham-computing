@@ -1,0 +1,36 @@
+/* Skill 06 only: six OCR comparison operators and True/False tracing. */
+.rhsc-skills-activity .comparisons-pick {display:grid;gap:15px;width:min(100%,710px)}
+.rhsc-skills-activity .comparisons-meaning {
+  display:grid;place-items:center;min-height:105px;padding:15px 12px;
+  border:2px solid #b3d3bd;border-radius:12px;background:#f5faf6;
+  color:#204d34;text-align:center;font-size:clamp(23px,3.3vw,31px);font-weight:850;
+}
+.rhsc-skills-activity .comparisons-label {color:#345c46;font-size:14px}
+.rhsc-skills-activity .comparisons-options {
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;
+}
+.rhsc-skills-activity .comparisons-options button,
+.rhsc-skills-activity .comparisons-answer button {
+  min-height:62px;background:#fff;border:2px solid #b8d2c0;
+  border-radius:11px;color:#214c35;
+  font:850 clamp(21px,3vw,28px)/1.15 ui-monospace,SFMono-Regular,Consolas,monospace;
+  touch-action:manipulation;
+}
+.rhsc-skills-activity .comparisons-answer {
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;
+  width:min(100%,390px);align-content:center;
+}
+.rhsc-skills-activity .comparisons-answer button {font:850 23px/1.15 system-ui,sans-serif}
+.rhsc-skills-activity .comparisons-options button[aria-pressed="true"],
+.rhsc-skills-activity .comparisons-answer button[aria-pressed="true"] {
+  border-color:#285348;background:#e4f3e8;box-shadow:0 0 0 2px #bedcc7 inset;
+}
+.rhsc-skills-activity .comparisons-options button:hover,
+.rhsc-skills-activity .comparisons-answer button:hover {border-color:#47805c}
+.rhsc-skills-activity .comparisons-writer {display:grid;gap:10px;max-width:970px;flex:1}
+.rhsc-skills-activity .comparisons-writer .code-entry {min-height:95px;width:100%;font-size:19px;line-height:1.5}
+@media(max-width:520px) {
+  .rhsc-skills-activity .comparisons-options {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rhsc-skills-activity .comparisons-options button,.rhsc-skills-activity .comparisons-answer button {min-height:55px}
+  .rhsc-skills-activity .comparisons-answer {width:100%}
+}
