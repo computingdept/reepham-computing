@@ -75,6 +75,28 @@
       ],
       end: 'Outputs: 7, then 10. Array indices start at zero.'
     },
+    'array-2d': {
+      title: '2D Arrays', columns: ['Position / action', 'Value'],
+      lines: [
+        'array seats[2,3]',
+        'seats[0,0] = 4',
+        'seats[0,1] = 7',
+        'seats[1,0] = 3',
+        'print(seats[0,1])',
+        'seats[1,2] = seats[0,0] + seats[1,0]',
+        'print(seats[1,2])'
+      ],
+      steps: [
+        [1, 'seats', '2 rows × 3 columns', 'Rows 0–1 and columns 0–2. The first index is always the row.'],
+        [2, 'seats[0,0]', '4', 'Store 4 in the top-left cell.'],
+        [3, 'seats[0,1]', '7', 'Stay in row 0, move to column 1.'],
+        [4, 'seats[1,0]', '3', 'Move down to row 1, column 0.'],
+        [5, 'Output', '7', 'The value at row 0, column 1 is 7.'],
+        [6, 'seats[1,2]', '7', 'Add 4 and 3, then store 7 at row 1, column 2.'],
+        [7, 'Output', '7', 'Print the value just stored in row 1, column 2.']
+      ],
+      end: 'Outputs: 7, then 7. In seats[row,column], both indices start at zero.'
+    },
     selection: {
       title: 'Selection', columns: ['Check / action', 'Result'],
       lines: [
