@@ -1,0 +1,39 @@
+/* Skill 12: a readable named-field record that fits phones and classroom TVs. */
+.rhsc-skills-activity .array-layout{
+  display:grid;grid-template-columns:minmax(0,1.2fr) minmax(235px,.8fr);
+  align-items:start;gap:16px;width:100%;min-width:0;
+}
+.rhsc-skills-activity .array-left{min-width:0;display:grid;gap:10px}
+.rhsc-skills-activity .array-layout .code-panel{min-width:0;margin:0}
+.rhsc-skills-activity .record-board{min-width:0;display:grid;gap:9px}
+.rhsc-skills-activity .record-board-title{color:#315f46;font-size:14px}
+.rhsc-skills-activity .record-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;min-width:0}
+.rhsc-skills-activity .record-board:only-child{grid-column:1/-1}
+.rhsc-skills-activity .record-board:only-child .record-fields{grid-template-columns:repeat(4,minmax(0,1fr))}
+.rhsc-skills-activity .record-field{
+  min-width:0;min-height:96px;padding:10px 8px;
+  display:grid;align-content:space-between;justify-items:start;gap:6px;
+  text-align:left;background:#f0f7f2;border:1px solid #bcd2c2;
+  border-radius:10px;color:#244735;
+}
+.rhsc-skills-activity .record-field-name{font:750 13px/1.15 ui-monospace,Consolas,monospace;color:#315f46}
+.rhsc-skills-activity .record-field-value{font:850 clamp(18px,2vw,25px)/1.15 ui-monospace,Consolas,monospace;overflow-wrap:anywhere}
+.rhsc-skills-activity .record-field-type{font-size:10px;line-height:1.2;color:#5b7663;font-weight:700}
+.rhsc-skills-activity button.record-field{cursor:pointer;touch-action:manipulation}
+.rhsc-skills-activity button.record-field:hover{background:#e2f1e6;border-color:#6d9f7b}
+.rhsc-skills-activity button.record-field[aria-pressed="true"]{background:#d1ead8;border:3px solid #285348;padding:8px 6px}
+.rhsc-skills-activity button.record-field:disabled{cursor:default}
+.rhsc-skills-activity .array-answer{min-width:0;display:grid;gap:10px;align-content:start}
+.rhsc-skills-activity .array-answer .number-entry{width:min(100%,260px);min-height:58px;font-size:23px}
+.rhsc-skills-activity .array-answer .code-entry{min-height:140px;width:100%;font-size:16px;line-height:1.5}
+.rhsc-skills-activity .array-answer .writer-note{max-width:42ch;color:#5e7668;font-size:12px}
+@media(max-width:780px){
+  .rhsc-skills-activity .array-layout{grid-template-columns:minmax(0,1fr);gap:11px}
+  .rhsc-skills-activity .record-fields,
+  .rhsc-skills-activity .record-board:only-child .record-fields{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+  .rhsc-skills-activity .record-field{min-height:82px;padding:8px}
+  .rhsc-skills-activity .record-field-name{font-size:12px}
+  .rhsc-skills-activity .record-field-value{font-size:19px}
+  .rhsc-skills-activity .array-answer .number-entry{min-height:48px}
+  .rhsc-skills-activity .array-answer .code-entry{min-height:116px}
+}
