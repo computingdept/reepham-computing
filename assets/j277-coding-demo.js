@@ -182,6 +182,18 @@
       end: 'The exact result changes, but it is always between 1 and 6 inclusive.',
       progressive: true, showAllCode: true
     },
+    thinking: {
+      title: 'Computational Thinking', codeLabel: 'Plan before coding', entryLine: 1,
+      columns: ['Principle', 'Reason'],
+      lines: ['START: plan a lunch ordering system', 'Keep meals, prices and discounts',
+        'Separate choice, total and confirmation', 'Put the tasks into a useful order'],
+      steps: [[1, 'START HERE', 'Lunch orders', 'First understand what problem needs solving.'],
+        [2, 'Abstraction', 'Essential data', 'Ignore irrelevant details.'],
+        [3, 'Decomposition', 'Three jobs', 'Split a large problem into manageable parts.'],
+        [4, 'Algorithmic thinking', 'Ordered steps', 'Create a plan another person could follow.']],
+      end: 'A good solution starts with the right data, smaller tasks and clear steps.',
+      progressive: true, showAllCode: true
+    },
     strings: {
       title: 'String Handling', codeLabel: 'OCR ERL · substring(start, count)',
       columns: ['Index / action', 'Value'],
