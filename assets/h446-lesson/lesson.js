@@ -1945,6 +1945,59 @@ function prepareKS3VocabularyIntroduction(){
 }
 
 prepareKS3VocabularyIntroduction();
+/* Controlled pilot for three older H446 Objectives layouts. Read the existing
+   authored definitions; do not change any lesson content or other phases. */
+function prepareH446LegacyObjectivesPilot(){
+  if(!/^\/lessons\/h446\/lesson-(046|184|196)\/index\.html$/i.test(location.pathname))return;
+  const overview=document.getElementById('overview');
+  if(!overview||overview.dataset.objectivesVocab==='true')return;
+  const original=overview.firstElementChild;
+  const panels=original&&[...original.children];
+  if(!panels||panels.length!==2)return;
+  const chips=[...panels[1].querySelectorAll('.vocab-intro-list .vocab-tip')];
+  const entries=chips.map(chip=>({
+    term:chip.textContent.trim(),definition:(chip.dataset.definition||'').trim()
+  }));
+  if(entries.length<2||entries.some(entry=>!entry.term||!entry.definition))return;
+
+  const make=(tag,className,text)=>{
+    const node=document.createElement(tag);
+    if(className)node.className=className;
+    if(text!==undefined)node.textContent=text;
+    return node;
+  };
+  const layout=make('div','objectives-vocab-layout');
+  const left=make('article','objectives-vocab-left');
+  while(panels[0].firstChild)left.append(panels[0].firstChild);
+  const objectives=left.querySelector('ul');
+  if(objectives)objectives.classList.add('objectives');
+
+  const intro=make('div','vocab-intro');
+  intro.append(make('strong','','Key vocabulary for today'));
+  const list=panels[1].querySelector('.vocab-intro-list');
+  intro.append(list); // retain authored chips and their definitions
+  left.append(intro);
+
+  const right=make('div','objectives-vocab-right');
+  right.setAttribute('aria-live','polite');
+  entries.forEach((entry,i)=>{
+    const stage=make('article','objective-vocab-stage');
+    stage.hidden=i!==0;
+    stage.append(make('span','objective-vocab-count',`TERM ${i+1} OF ${entries.length}`));
+    stage.append(make('h2','',entry.term));
+    const definition=make('div','objective-vocab-definition');
+    definition.dataset.objectiveVocabDefinition='';
+    definition.hidden=true;
+    definition.append(make('span','','DEFINITION'),make('p','',entry.definition));
+    stage.append(definition);
+    right.append(stage);
+  });
+  layout.append(left,right);
+  original.replaceWith(layout);
+  overview.dataset.objectivesVocab='true';
+  overview.dataset.legacyObjectivesPilot='true';
+}
+prepareH446LegacyObjectivesPilot();
 // One shared Objectives presentation for H446 lessons that already use the
 // staged vocabulary renderer. Older layouts remain untouched until reviewed.
 // An authored 'classic' mode remains available for exceptional layouts.
