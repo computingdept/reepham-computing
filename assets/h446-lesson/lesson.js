@@ -1946,8 +1946,8 @@ function prepareKS3VocabularyIntroduction(){
 
 prepareKS3VocabularyIntroduction();
 /* Approved shared Objectives vocabulary presentation for legacy H446 layouts.
-   Only convert two-pane lessons with complete teacher-authored term definitions;
-   do not change their lesson content or other phases. */
+   Read existing term definitions, including earlier flat and plain-text layouts.
+   Retain assessment-specific Objectives screens and all other lesson phases. */
 function prepareH446LegacyObjectives(){
   if(!/^\/lessons\/h446\/lesson-\d{3}\/index\.html$/i.test(location.pathname))return;
   if(document.querySelector('meta[name="lesson-vocabulary-display"][content="classic"]'))return;
@@ -1955,11 +1955,25 @@ function prepareH446LegacyObjectives(){
   if(!overview||overview.dataset.objectivesVocab==='true')return;
   const original=overview.firstElementChild;
   const panels=original&&[...original.children];
-  if(!panels||panels.length!==2)return;
-  const chips=[...panels[1].querySelectorAll('.vocab-intro-list .vocab-tip')];
-  const entries=chips.map(chip=>({
+  const twoPane=panels?.length===2&&Boolean(panels[1].querySelector('.vocab-intro-list, p > strong'));
+  const flat=Boolean(overview.querySelector(':scope > .objectives')&&overview.querySelector(':scope > .vocab-intro .vocab-intro-list'));
+  if(!twoPane&&!flat)return;
+  const authoredList=twoPane?panels[1].querySelector('.vocab-intro-list'):
+    overview.querySelector(':scope > .vocab-intro .vocab-intro-list');
+  const chips=[...(authoredList?.querySelectorAll('span')||[])];
+  let entries=chips.map(chip=>({
     term:chip.textContent.trim(),definition:(chip.dataset.definition||'').trim()
   }));
+  // Some older lessons contain the definitions only in their unchanged
+  // Key Vocabulary phase. Reuse that authored source without rewriting terms.
+  if(!entries.length||entries.some(entry=>!entry.definition)){
+    entries=[...document.querySelectorAll('#vocabulary .vocab-stage')].map(stage=>({
+      term:(stage.querySelector('h2')?.textContent||'').trim(),
+      definition:(stage.querySelector('.vocab-question, p')?.textContent||'').trim()
+    }));
+    if(chips.length&&(chips.length!==entries.length||chips.some((chip,i)=>
+      chip.textContent.trim().toLowerCase()!==entries[i].term.toLowerCase())))return;
+  }
   if(entries.length<2||entries.some(entry=>!entry.term||!entry.definition))return;
 
   const make=(tag,className,text)=>{
@@ -1970,15 +1984,32 @@ function prepareH446LegacyObjectives(){
   };
   const layout=make('div','objectives-vocab-layout');
   const left=make('article','objectives-vocab-left');
-  while(panels[0].firstChild)left.append(panels[0].firstChild);
+  if(twoPane){
+    while(panels[0].firstChild)left.append(panels[0].firstChild);
+  }else{
+    while(overview.firstChild)left.append(overview.firstChild);
+  }
   const objectives=left.querySelector('ul');
   if(objectives)objectives.classList.add('objectives');
 
-  const intro=make('div','vocab-intro');
-  intro.append(make('strong','','Key vocabulary for today'));
-  const list=panels[1].querySelector('.vocab-intro-list');
-  intro.append(list); // retain authored chips and their definitions
-  left.append(intro);
+  let intro=flat?left.querySelector('.vocab-intro'):null;
+  if(!intro){
+    intro=make('div','vocab-intro');
+    intro.append(make('strong','','Key vocabulary for today'));
+    left.append(intro);
+  }
+  let list=intro.querySelector('.vocab-intro-list');
+  if(!list){
+    list=authoredList||make('div','vocab-intro-list');
+    intro.append(list);
+  }
+  if(!chips.length)entries.forEach(entry=>list.append(make('span','vocab-tip',entry.term)));
+  [...list.querySelectorAll('span')].forEach((chip,i)=>{
+    chip.classList.add('vocab-tip');
+    chip.tabIndex=0;
+    chip.dataset.definition=entries[i].definition;
+    chip.setAttribute('aria-label',entries[i].term+': '+entries[i].definition);
+  });
 
   const right=make('div','objectives-vocab-right');
   right.setAttribute('aria-live','polite');
@@ -1995,7 +2026,8 @@ function prepareH446LegacyObjectives(){
     right.append(stage);
   });
   layout.append(left,right);
-  original.replaceWith(layout);
+  if(twoPane)original.replaceWith(layout);
+  else overview.append(layout);
   overview.dataset.objectivesVocab='true';
   overview.dataset.legacyObjectivesShared='true';
 }
