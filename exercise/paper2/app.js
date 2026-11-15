@@ -7,8 +7,8 @@
   const STORAGE_KEY = 'rhs-j277-paper2-progress-v1';
   const LEVELS = ['easy', 'medium', 'hard'];
   const LEVEL_TEXT = { easy: 'Tap and explore', medium: 'Trace and complete', hard: 'Write in OCR ERL' };
-  const READY_SKILLS = new Set(['variables', 'data-types', 'casting', 'sequence', 'operators', 'comparisons', 'selection', 'for-loops', 'while-until', 'array-1d', 'array-2d', 'records', 'files', 'sql', 'strings', 'procedures', 'functions', 'random', 'thinking', 'linear-search']);
-  const EXTERNAL_SKILLS = {tracing:'/exercise/skills-review/?skill=trace-table','binary-search':'/exercise/skills-review/?skill=binary-search'};
+  const READY_SKILLS = new Set(['variables', 'data-types', 'casting', 'sequence', 'operators', 'comparisons', 'selection', 'for-loops', 'while-until', 'array-1d', 'array-2d', 'records', 'files', 'sql', 'strings', 'procedures', 'functions', 'random', 'thinking', 'linear-search', 'binary-search']);
+  const EXTERNAL_SKILLS = {tracing:'/exercise/skills-review/?skill=trace-table'};
   const groups = [
     {
       name: 'Programming fundamentals', caption: 'Build first · OCR 2.2.1–2.2.2',
@@ -50,7 +50,7 @@
         ['flowcharts', 'Flowchart Builder', '◇', 'Complete flowcharts'],
         ['tracing', 'Trace Table Lab', '#', 'Follow program state'],
         ['linear-search', 'Linear Search', '→', 'Understand, read code and trace'],
-        ['binary-search', 'Binary Search', '½', 'Choose the middle'],
+        ['binary-search', 'Binary Search', '½', 'Halve a sorted search range'],
         ['bubble-sort', 'Bubble Sort', '⇅', 'Compare and swap'],
         ['insertion-sort', 'Insertion Sort', '⇥', 'Put values in place'],
         ['merge-sort', 'Merge Sort', '⋈', 'Split and merge'],
@@ -136,7 +136,7 @@
     main.append(label, sub);
     if (ready) {
       const spec = document.createElement('div');
-      spec.className = 'tile-spec'; spec.textContent = ['thinking','linear-search'].includes(id) ? (id==='thinking'?'2.1.1':'2.1.3') : EXTERNAL_SKILLS[id] ? '2.1' : ['array-1d', 'array-2d', 'records', 'files', 'sql'].includes(id) ? '2.2.3' :
+      spec.className = 'tile-spec'; spec.textContent = ['thinking','linear-search','binary-search'].includes(id) ? (id==='thinking'?'2.1.1':'2.1.3') : EXTERNAL_SKILLS[id] ? '2.1' : ['array-1d', 'array-2d', 'records', 'files', 'sql'].includes(id) ? '2.2.3' :
         ['variables', 'sequence', 'operators', 'comparisons', 'selection', 'for-loops', 'while-until'].includes(id) ? '2.2.1' : '2.2.2';
       main.append(spec);
     }

@@ -209,6 +209,26 @@
       end: 'The first 5 is at index 2. Linear search checks from left to right.',
       dataTable: {layout:'array',name:'numbers',caption:'target = 5',values:[3,8,5]}
     },
+    'binary-search': {
+      title:'Binary Search',entryLine:17,progressive:true,showAllCode:true,
+      codeLabel:'OCR ERL · binary search in a sorted array',columns:['Check','Value'],
+      lines:['function binarySearch(values, target)','    low = 0','    high = values.length - 1',
+        '    while low <= high','        mid = (low + high) DIV 2',
+        '        if values[mid] == target then','            return mid',
+        '        elseif values[mid] < target then','            low = mid + 1',
+        '        else','            high = mid - 1','        endif','    endwhile',
+        '    return -1','endfunction','array numbers = [2,5,8,12,16]',
+        'print(binarySearch(numbers, 16))'],
+      steps:[[17,'START HERE','binarySearch','The function call begins the search.'],
+        [2,'low','0','Left boundary = 0.'],[3,'high','4','Right boundary = 4.'],
+        [5,'mid','2','The middle index is 2.'],[6,'value','8','8 is smaller than 16.'],
+        [9,'Keep right','3–4','Discard the left half.'],[5,'mid','3','Check the middle of 3–4.'],
+        [6,'value','12','12 is still too small.'],[9,'Keep right','4–4','Discard index 3.'],
+        [5,'mid','4','Check the only remaining value.'],[6,'value','16','Match!'],
+        [7,'RETURN','4','Return index 4.'],[17,'Output','4','Print the answer.']],
+      dataTable:{layout:'array',name:'numbers · SORTED',caption:'target = 16',values:[2,5,8,12,16]},
+      end:'The search halves the range until it finds 16 at index 4.'
+    },
     strings: {
       title: 'String Handling', codeLabel: 'OCR ERL · substring(start, count)',
       columns: ['Index / action', 'Value'],
@@ -472,6 +492,9 @@
       const focus = current && current[4];
       const active = !!focus && focus.row === row && focus.col === col;
       cell.classList.toggle('is-reading', active);
+      const range=current && current[5];
+      const excluded=!!(example.dataTable?.layout==='array'&&range&&(col<range.low||col>range.high));
+      cell.classList.toggle('is-excluded',excluded);
       if (active) cell.setAttribute('aria-current', 'true');
       else cell.removeAttribute('aria-current');
     }));

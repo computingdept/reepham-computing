@@ -1,0 +1,67 @@
+/* Binary search: central Skills surface, compact trace grid and visual range. */
+.rhsc-binary-search .question-text h2{font-size:clamp(22px,2.6vw,30px);line-height:1.2;margin:0 0 5px}
+.rhsc-binary-search .question-text p{font-size:clamp(13px,1.1vw,15px);line-height:1.35;color:#4c5f50}
+.rhsc-binary-search .work-board{padding:12px}
+.rhsc-binary-search .binary-caption{display:block;color:#326548;font:850 12px/1.3 system-ui,sans-serif;letter-spacing:.055em;margin:0 0 7px}
+.rhsc-binary-search .binary-array{padding:9px 12px 12px;background:#f6fbf7;border:1px solid #d5e3d9;border-radius:12px}
+.rhsc-binary-search .binary-strip-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:9px;color:#366448}
+.rhsc-binary-search .binary-strip-heading strong{font-size:12px;letter-spacing:.06em}
+.rhsc-binary-search .binary-strip-heading span{font-weight:850;font-size:13px;background:#fff0b8;padding:4px 9px;border-radius:7px;color:#76581c}
+.rhsc-binary-search .binary-cells{display:grid;grid-template-columns:repeat(var(--cell-count,7),minmax(0,1fr));gap:7px}
+.rhsc-binary-search .binary-cell{position:relative;min-width:0;min-height:56px;display:flex;align-items:center;justify-content:center;
+  padding:18px 2px 6px;border:1px solid #bcd2c2;border-radius:10px;background:white;
+  font:800 clamp(17px,1.9vw,24px)/1 system-ui,sans-serif;color:#315c43;transition:opacity .16s,background .16s}
+.rhsc-binary-search button.binary-cell{cursor:pointer}
+.rhsc-binary-search button.binary-cell:not(:disabled):hover{border-color:#397c55;background:#eaf6ed}
+.rhsc-binary-search .binary-index{position:absolute;top:5px;left:5px;font:750 10px/1 system-ui,sans-serif;color:#709780}
+.rhsc-binary-search .binary-cell.is-excluded{opacity:.25;background:#e8ede9;border-style:dashed}
+.rhsc-binary-search .binary-cell.is-mid{background:#ffec94;border:2px solid #bc9330;color:#59420c}
+.rhsc-binary-search .binary-choice{display:flex;align-items:center;gap:13px;flex-wrap:wrap;padding:12px 3px 2px}
+.rhsc-binary-search .binary-task{font-size:15px;color:#295a3b}
+.rhsc-binary-search .binary-choice p{font-size:13px;color:#57705f;margin:0;flex:1 1 190px}
+.rhsc-binary-search .binary-range{font:800 13px/1.35 ui-monospace,monospace;color:#386a4a;background:#edf6f0;border-radius:7px;padding:6px 8px}
+.rhsc-binary-search .binary-half-buttons{display:flex;gap:8px;flex-wrap:wrap}
+.rhsc-binary-search .binary-half{min-height:40px;border:1px solid #93bea0;border-radius:9px;background:#eef8f0;
+  padding:8px 15px;color:#275c3c;font:850 14px system-ui,sans-serif}
+.rhsc-binary-search .binary-half:hover{background:#d5ebdd}
+.rhsc-binary-search .binary-progress{margin-left:auto;font-size:12px;color:#5e816b;font-weight:850;white-space:nowrap}
+.rhsc-binary-search .binary-work-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(380px,.9fr);gap:12px;margin-top:10px;align-items:start}
+.rhsc-binary-search .binary-code,.rhsc-binary-search .binary-trace{min-width:0;padding:10px 11px;border:1px solid #d6e4d9;border-radius:12px;background:white}
+.rhsc-binary-search .binary-code-list{display:grid;gap:0;background:#f8faf8;padding:6px 5px;border-radius:8px}
+.rhsc-binary-search .binary-code-row{display:flex;align-items:center;gap:5px;min-width:0;min-height:22px}
+.rhsc-binary-search .binary-code-num{width:23px;flex:none;color:#85a18d;font:750 10px/1 ui-monospace,monospace;text-align:right}
+.rhsc-binary-search .binary-code-text{font:650 clamp(10px,1.04vw,13px)/1.35 ui-monospace,SFMono-Regular,Consolas,monospace;
+  white-space:pre-wrap;overflow-wrap:anywhere;color:#2a4e37;min-width:0}
+.rhsc-binary-search .binary-code-input{min-width:0;width:100%;height:24px;flex:1;padding:2px 5px;background:#fff8df;
+  border:1px solid #c4aa5b;border-radius:5px;font:700 clamp(10px,1vw,12px)/1.2 ui-monospace,monospace}
+.rhsc-binary-search .binary-code-row.is-entry{background:#fff9e8;border-radius:6px;flex-wrap:wrap}
+.rhsc-binary-search .binary-code-row.is-entry .rhsc-skill-start{margin-left:auto;font-size:10px}
+.rhsc-binary-search .binary-table{width:100%;border-collapse:collapse;text-align:center;font-size:12px}
+.rhsc-binary-search .binary-table th{color:#2d6944;background:#e7f2ea}
+.rhsc-binary-search .binary-table th,.rhsc-binary-search .binary-table td{border:1px solid #d8e4da;padding:5px 3px;min-width:40px}
+.rhsc-binary-search .binary-trace-input,.rhsc-binary-search .binary-result-input{width:44px;max-width:100%;height:30px;
+  border:1px solid #b7cdbd;border-radius:5px;text-align:center;font-size:13px;color:#28543a}
+.rhsc-binary-search .binary-decisions{display:flex;justify-content:center;gap:2px}
+.rhsc-binary-search .binary-decision{min-width:30px;min-height:29px;border:1px solid #c2d7c8;border-radius:5px;
+  background:#fafcfa;color:#306349;font:900 15px/1 system-ui,sans-serif;padding:2px}
+.rhsc-binary-search .binary-decision[aria-pressed=true]{background:#d8eddd;border:2px solid #368154}
+.rhsc-binary-search .binary-legend{color:#50705c;font-size:11px;text-align:center;margin:8px 0}
+.rhsc-binary-search .binary-return{display:flex;justify-content:flex-end;align-items:center;gap:9px;color:#345e46;font-size:13px}
+.rhsc-binary-search .binary-return .binary-result-input{width:78px}
+.rhsc-binary-search .binary-code-input:focus,.rhsc-binary-search .binary-trace-input:focus,.rhsc-binary-search .binary-result-input:focus{outline:2px solid #4b9267;outline-offset:1px}
+.rhsc-binary-search .skill-demo-record-table.is-array td.is-excluded{background:#edf1ed;opacity:.25;color:#9eaaa1;text-decoration:line-through}
+.rhsc-binary-search .skill-demo-record-table.is-array td.is-reading{opacity:1;text-decoration:none;background:#ffdc6c;color:#4b3407}
+.rhsc-binary-search .results{min-height:220px}
+@media(max-width:900px){.rhsc-binary-search .binary-work-grid{grid-template-columns:1fr}.rhsc-binary-search .binary-code-text{font-size:12px}}
+@media(max-width:570px){
+  .rhsc-binary-search .work-board{padding:9px}
+  .rhsc-binary-search .binary-array{padding:8px 7px}
+  .rhsc-binary-search .binary-cells{gap:3px}
+  .rhsc-binary-search .binary-cell{min-height:49px;padding:16px 1px 5px;font-size:16px}
+  .rhsc-binary-search .binary-index{font-size:9px;left:3px}
+  .rhsc-binary-search .binary-code,.rhsc-binary-search .binary-trace{padding:8px 6px}
+  .rhsc-binary-search .binary-code-text{font-size:10px}
+  .rhsc-binary-search .binary-table th,.rhsc-binary-search .binary-table td{padding:3px 2px;min-width:27px}
+  .rhsc-binary-search .binary-trace-input{width:32px;height:27px}
+  .rhsc-binary-search .binary-decision{min-width:25px;min-height:26px;font-size:13px}
+}
