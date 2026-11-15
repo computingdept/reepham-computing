@@ -172,6 +172,16 @@
         [4, 'Output', '8', 'The caller prints the returned result.']],
       end: 'Output: 8. RETURN sends a value back; it does not print by itself.'
     },
+    random: {
+      title: 'Random Numbers', codeLabel: 'OCR ERL · random(lower,upper)', entryLine: 1,
+      columns: ['Step', 'Value'],
+      lines: ['roll = random(1,6)', 'print(roll)'],
+      steps: [[1, 'START HERE', '1–6', 'Both 1 and 6 are possible results.'],
+        [1, 'Example draw', '4', 'Suppose random returns 4 for this run.'],
+        [2, 'PRINT', '4', 'The selected value is printed.']],
+      end: 'The exact result changes, but it is always between 1 and 6 inclusive.',
+      progressive: true, showAllCode: true
+    },
     strings: {
       title: 'String Handling', codeLabel: 'OCR ERL · substring(start, count)',
       columns: ['Index / action', 'Value'],
