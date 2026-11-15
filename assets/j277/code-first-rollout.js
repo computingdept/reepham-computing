@@ -1,4 +1,4 @@
-/* J277 Code First visual cycle and selective blank tracing.
+/* J277 Code First shared classroom presentation and selective blank tracing.
    Presentation only: never rewrites task, starter, model or marking. */
 (()=>{'use strict';
  const match=location.pathname.match(/\/lessons\/j277\/lesson-(\d{3})\//);
@@ -8,7 +8,7 @@
  if(except.has(id))return;
  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const base='../../../assets/j277/';
- const link=document.createElement('link');link.rel='stylesheet';link.href=base+'code-first-rollout.css?v=20261025-visible6';document.head.appendChild(link);
+ const link=document.createElement('link');link.rel='stylesheet';link.href=base+'code-first-rollout.css?v=20261115-apple-shared1';document.head.appendChild(link);
  const wait=()=>new Promise(resolve=>{let n=0;const poll=()=>{const card=document.querySelector('#you-do .j277-code-first');if(card||n++>30)return resolve(card);setTimeout(poll,80)};poll()});
  const stages=['predict','write','test','iterate'];
  async function run(){
@@ -16,7 +16,25 @@
   const data=await fetch('../code-first-master-20261021.json?v=20261025-stage-map1').then(r=>{if(!r.ok)throw Error('Missing master');return r.json()});
   const entry=data.lessons[id];if(!entry||!stages.includes(entry.focus_stage))return;
   card.dataset.cycleRollout='1';card.dataset.codeFocus=entry.focus_stage;
+  card.classList.add('j277-code-first-shared');
   const content=card.querySelector('.j277-code-tasks')||card.querySelector('.question-text')||card;
+  // Keep every original challenge and reference, but give the first task a clear,
+  // readable position. Existing static pilot cards opt out above.
+  const eyebrow=document.createElement('div');eyebrow.className='j277-shared-eyebrow';eyebrow.textContent='CODE FIRST';
+  const instruction=document.createElement('p');instruction.className='j277-shared-instruction';instruction.textContent='On your mini-whiteboard';
+  card.prepend(instruction);card.prepend(eyebrow);
+  const taskParagraph=[...content.querySelectorAll('p')].find(p=>/^YOUR TASK:|^1\s*[·.]\s*Predict:/i.test((p.textContent||'').trim()));
+  if(taskParagraph){
+    taskParagraph.classList.add('j277-shared-prompt');
+    const label=taskParagraph.querySelector('strong');
+    if(label&&/^YOUR TASK:/i.test(label.textContent.trim()))label.remove();
+  }
+  const prompts=content.querySelectorAll('p');
+  const code=[...content.querySelectorAll('pre.arithmetic')];
+  const lines=code.reduce((sum,pre)=>sum+(pre.textContent||'').split('\n').length,0);
+  const maxWidth=code.reduce((max,pre)=>Math.max(max,...(pre.textContent||'').split('\n').map(line=>line.length)),0);
+  card.dataset.codeDensity=lines<=3&&maxWidth<=52?'short':lines<=8&&maxWidth<=72?'medium':'long';
+  card.dataset.taskDensity=(taskParagraph?.textContent.length||0)>130||prompts.length>5?'dense':'normal';
   let host=card.querySelector('.j277-code-cycle');
   if(!host){
     host=document.createElement('div');host.className='j277-code-cycle';
@@ -26,15 +44,14 @@
   card.append(host);
   host.dataset.focus=entry.focus_stage;
   host.setAttribute('role','group');host.setAttribute('aria-label','Coding routine. Current focus: '+entry.focus_stage);
-  // Inline the SVG so all four stages remain visible and the active stage can change.
-  const response=await fetch(base+'code-first-cycle.svg?v=20261025-label-fit2');
-  if(!response.ok)throw Error('Cycle unavailable');
-  const doc=new DOMParser().parseFromString(await response.text(),'image/svg+xml');
-  if(doc.querySelector('parsererror'))throw Error('Invalid SVG');
-  const svg=document.importNode(doc.documentElement,true);
-  svg.setAttribute('class','j277-code-cycle-graphic');svg.setAttribute('aria-hidden','true');
-  svg.querySelectorAll('[data-cycle-step]').forEach(node=>node.classList.toggle('is-active',node.getAttribute('data-cycle-step')===entry.focus_stage));
-  host.replaceChildren(svg);
+  const strip=document.createElement('div');strip.className='j277-apple-steps';strip.setAttribute('aria-hidden','true');
+  [['predict','Predict'],['write','Write'],['test','Test'],['iterate','Improve']].forEach(([key,label],index)=>{
+    const step=document.createElement('span');step.className='j277-apple-step'+(key===entry.focus_stage?' is-active':'');step.dataset.codeFirstStep=key;
+    const number=document.createElement('small');number.textContent=String(index+1).padStart(2,'0');
+    const caption=document.createElement('b');caption.textContent=label;
+    step.append(number,caption);strip.append(step);
+  });
+  host.replaceChildren(strip);
   // Existing Lesson 057 trace stays intact; only its responsive placement changes.
   // Keep the full-width task until the teacher opens the optional trace.
   // On wide screens the two areas then share one row; mobile stays stacked.
