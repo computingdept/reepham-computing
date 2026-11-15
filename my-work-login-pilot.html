@@ -79,7 +79,7 @@
         <section class="panel entry"><h2>Student sign in</h2>
           <form id="signIn">
             <div class="field"><label for="username">Username</label><input id="username" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required maxlength="40" placeholder="Your RHS Computing ID"></div>
-            <div class="field"><label for="password">Password</label><input type="password" id="password" name="password" autocomplete="current-password" required placeholder="Your password"></div>
+            <div class="field"><label for="password">4-digit PIN</label><input type="password" id="password" name="password" inputmode="numeric" autocomplete="off" pattern="[0-9]{4}" minlength="4" maxlength="4" required placeholder="Your 4-digit PIN"></div>
             <button class="btn" id="submit" type="submit">Sign in</button>
             <p class="error" id="error" role="alert" ${message ? '' : 'hidden'}>${escapeHtml(message)}</p>
           </form>
