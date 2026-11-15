@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#006347">
+  <meta name="description" content="RHS Computing My Work — anonymous login pilot.">
+  <title>My Work · RHS Computing</title>
+  <style>
+    :root{--green:#006347;--ink:#193d2f;--muted:#526c5e;--line:#d2e2d7;--pale:#eff6f1;--bg:#f7faf8}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+    button,input{font:inherit}button{cursor:pointer}a{color:var(--green)}:focus-visible{outline:3px solid #edb544;outline-offset:3px}
+    header{background:white;border-bottom:1px solid var(--line)}.bar{max-width:990px;margin:auto;min-height:64px;padding:10px 18px;display:flex;align-items:center;gap:12px}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}.mark{width:36px;height:36px;display:grid;place-items:center;border-radius:9px;background:var(--green);color:white;font-weight:900}
+    .brand strong{display:block;line-height:1.1}.brand small{display:block;color:var(--green);font-size:10px;letter-spacing:.12em;font-weight:900}
+    .back{margin-left:auto;font-size:14px;font-weight:750;text-decoration:none}
+    main{max-width:990px;margin:auto;padding:26px 18px 55px}h1{font-size:clamp(30px,5vw,42px);letter-spacing:-.035em;line-height:1.15;margin:0 0 8px}h2{font-size:19px;margin:0 0 10px}
+    .intro,.note{color:var(--muted)}.intro{margin:0 0 18px}.note{font-size:14px}.eyebrow{display:block;margin-bottom:7px;color:var(--green);font-size:12px;font-weight:900;letter-spacing:.11em;text-transform:uppercase}
+    .panel,.card{background:#fff;border:1px solid var(--line);border-radius:14px}.panel{padding:24px}.entry{max-width:500px;margin:18px auto}
+    label{display:block;font-weight:800;margin:0 0 6px}input{width:100%;min-height:49px;border:2px solid #9bb7a5;border-radius:9px;padding:10px 13px;font-size:17px}
+    .field{margin-bottom:15px}.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px}
+    .btn{display:inline-flex;justify-content:center;align-items:center;min-height:46px;padding:10px 18px;background:var(--green);color:white;border:1px solid var(--green);border-radius:9px;text-decoration:none;font-size:15px;font-weight:800}
+    .btn.secondary{background:white;color:var(--green)}.btn:disabled{opacity:.65;cursor:wait}.error{color:#9d352f;font-weight:700;font-size:14px;margin:12px 0 0}.error[hidden]{display:none}
+    .notice{background:var(--pale);border-radius:9px;padding:12px 14px;margin-top:16px;font-size:14px}
+    .heading{display:flex;justify-content:space-between;align-items:start;flex-wrap:wrap;gap:16px;margin-bottom:20px}.heading p{margin:0;color:var(--muted)}
+    .summary{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 18px}.count{padding:10px 15px;background:var(--pale);border-radius:9px;font-weight:750}.count strong{font-size:22px;margin-right:5px}
+    .cards{display:grid;gap:12px}.card{padding:19px}.card-top{display:flex;justify-content:space-between;align-items:start;gap:12px}.card h2{margin:3px 0}
+    .meta{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:900;color:var(--muted)}.status{font-weight:800;font-size:13px;background:var(--pale);border-radius:15px;padding:6px 10px;white-space:nowrap}
+    .card p{margin:7px 0;color:var(--muted);font-size:14px}.empty{text-align:center;padding:32px 18px}
+    footer{text-align:center;color:var(--muted);font-size:12px;padding:16px}.skip{position:absolute;left:-10000px}.skip:focus{left:12px;top:12px;z-index:10;background:white;padding:12px}
+    @media(max-width:600px){.bar{padding:9px 12px}.back{font-size:12px}main{padding:20px 12px 45px}.panel{padding:18px}.entry{margin:10px auto}.card-top{flex-direction:column}.actions .btn{flex:1}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to My Work</a>
+  <header><div class="bar">
+    <a class="brand" href="/" aria-label="RHS Computing home"><span class="mark">SA</span><span><small>SYNERGY ASSIST</small><strong>My Work</strong></span></a>
+    <a class="back" href="/">← Learning Hub</a>
+  </div></header>
+  <main id="main"><div id="app" aria-live="polite"><p>Loading My Work…</p></div></main>
+  <footer>RHS Computing · Formative practice</footer>
+  <script>
+  (() => {
+    'use strict';
+    const API = 'https://rhsccs-my-work-api.jeromedthompson.workers.dev';
+    const SESSION_KEY = 'rhs-my-work-learner-session-v1';
+    const app = document.getElementById('app');
+    let session = sessionStorage.getItem(SESSION_KEY) || '';
+    let catalog = [];
+    const escapeHtml = value => String(value).replace(/[&<>"']/g, char => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[char]));
+
+    async function request(path, options = {}) {
+      const response = await fetch(API + path, {
+        method: 'POST', cache: 'no-store',
+        headers: { 'content-type': 'application/json', ...(options.session ? { authorization: 'Bearer ' + options.session } : {}) },
+        body: JSON.stringify(options.body || {})
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        const error = new Error(data.error || 'Could not connect to My Work.');
+        error.status = response.status;
+        throw error;
+      }
+      return data;
+    }
+
+    async function loadCatalog() {
+      try {
+        const response = await fetch('/assets/j277-assignment-catalog.json', { cache: 'no-cache' });
+        if (!response.ok) return;
+        const value = await response.json();
+        if (Array.isArray(value.items)) catalog = value.items;
+      } catch { /* Login remains available if the catalogue cannot load. */ }
+    }
+
+    function showEntry(message = '') {
+      app.innerHTML = `<span class="eyebrow">Independent practice</span><h1>My Work</h1>
+        <p class="intro">Sign in to see your assigned Skills and Revision Practice.</p>
+        <section class="panel entry"><h2>Student sign in</h2>
+          <form id="signIn">
+            <div class="field"><label for="username">Username</label><input id="username" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required maxlength="40" placeholder="Your RHS Computing ID"></div>
+            <div class="field"><label for="password">Password</label><input type="password" id="password" name="password" autocomplete="current-password" required placeholder="Your password"></div>
+            <button class="btn" id="submit" type="submit">Sign in</button>
+            <p class="error" id="error" role="alert" ${message ? '' : 'hidden'}>${escapeHtml(message)}</p>
+          </form>
+          <div class="notice">Independent work: 12:30–13:20 and after 15:30 (UK time).</div>
+        </section>`;
+      document.getElementById('signIn').addEventListener('submit', async event => {
+        event.preventDefault();
+        const button = document.getElementById('submit');
+        button.disabled = true; button.textContent = 'Checking…';
+        try {
+          const data = await request('/v1/login', { body: {
+            username: document.getElementById('username').value,
+            password: document.getElementById('password').value
+          } });
+          session = data.session;
+          sessionStorage.setItem(SESSION_KEY, session);
+          await showAssigned();
+        } catch (error) {
+          showEntry(error instanceof TypeError ? 'Connection failed. Please try again.' : error.message);
+        }
+      });
+    }
+
+    function itemLink(item, level) {
+      if (!item || typeof item.url !== 'string' || !item.url.startsWith('/') || item.url.startsWith('//')) return null;
+      const link = new URL(item.url, location.origin);
+      if (level) link.searchParams.set('level', level);
+      return link.pathname + link.search + link.hash;
+    }
+
+    function workCard(row) {
+      const item = catalog.find(entry => entry.id === row.itemId);
+      const isSkill = row.itemId.includes('-skill-');
+      const kind = isSkill ? 'Skill' : 'Revision Practice';
+      const title = item?.title || row.itemId.replace(/^(j277|h446)-(skill|practice)-/, '').replace(/-/g, ' ');
+      const count = Number(row.attempts || 0);
+      const links = [];
+      if (isSkill && item?.paper === 2) {
+        for (const level of ['easy','medium']) {
+          const href = itemLink(item, level);
+          if (href) links.push(`<a class="btn ${level === 'easy' ? 'secondary' : ''}" href="${escapeHtml(href)}">${level === 'easy' ? 'Easy' : 'Medium'}</a>`);
+        }
+      } else {
+        const href = itemLink(item);
+        if (href) links.push(`<a class="btn" href="${escapeHtml(href)}">Open ${kind}</a>`);
+      }
+      const best = count ? `Best recorded: ${Number(row.bestScore)}%` : 'Not started';
+      return `<article class="card"><div class="card-top"><div><span class="meta">${escapeHtml(kind)}${item?.spec ? ' · ' + escapeHtml(item.spec) : ''}</span>
+        <h2>${escapeHtml(title)}</h2></div><span class="status">${escapeHtml(best)}</span></div>
+        <p>${count} recorded attempt${count === 1 ? '' : 's'}</p>
+        <div class="actions">${links.join('') || '<span class="note">Your teacher will provide this activity link.</span>'}</div></article>`;
+    }
+
+    async function signOut() {
+      const previous = session;
+      session = ''; sessionStorage.removeItem(SESSION_KEY);
+      showEntry();
+      if (previous) await request('/v1/logout', { session: previous }).catch(() => {});
+    }
+
+    async function showAssigned() {
+      if (!session) { showEntry(); return; }
+      try {
+        const data = await request('/v1/work', { session });
+        if (!Array.isArray(data.work) || !/^Y(10|11|12|13)$/.test(data.cohort)) throw Error('Unexpected response from My Work.');
+        const recorded = data.work.filter(row => Number(row.attempts || 0) > 0).length;
+        app.innerHTML = `<div class="heading"><div><span class="eyebrow">RHS Computing · Year ${escapeHtml(data.cohort.slice(1))}</span>
+          <h1>My Work</h1><p>Your assigned activities</p></div><button class="btn secondary" id="signOut">Sign out</button></div>
+          <div class="summary"><span class="count"><strong>${data.work.length}</strong> assigned</span><span class="count"><strong>${recorded}</strong> with recorded practice</span></div>
+          <section class="cards" aria-label="Assigned work">${data.work.length ? data.work.map(workCard).join('') : '<div class="panel empty"><h2>No work assigned yet</h2><p>Your login is ready. Your teacher will add your activities.</p></div>'}</section>
+          <div class="actions"><button class="btn secondary" id="refresh">Refresh My Work</button></div>
+          <p class="note">Automatic scores from the activity pages are still being connected.</p>`;
+        document.getElementById('signOut').addEventListener('click', signOut);
+        document.getElementById('refresh').addEventListener('click', showAssigned);
+      } catch (error) {
+        if (error.status === 404 || error.status === 401) { await signOut(); return; }
+        app.innerHTML = `<section class="panel entry"><h1>My Work</h1><p>${escapeHtml(error.message || 'Connection problem.')}</p>
+          <div class="actions"><button class="btn" id="retry">Try again</button><button class="btn secondary" id="signOut">Sign out</button></div></section>`;
+        document.getElementById('retry').addEventListener('click', showAssigned);
+        document.getElementById('signOut').addEventListener('click', signOut);
+      }
+    }
+
+    (async () => { await loadCatalog(); if (session) await showAssigned(); else showEntry(); })();
+  })();
+  </script>
+</body>
+</html>
