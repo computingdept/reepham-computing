@@ -129,6 +129,15 @@ test('independent-work windows use UK local time, including boundaries', () => {
   assert.equal(isIndependentWorkTime(new Date('2026-07-16T11:30:00Z')), true);
 });
 
+test('weekends are open all day in UK local time, including BST midnight', () => {
+  assert.equal(isIndependentWorkTime(new Date('2026-11-14T00:00:00Z')), true); // Saturday
+  assert.equal(isIndependentWorkTime(new Date('2026-11-15T13:58:00Z')), true); // Sunday during weekday restriction
+  assert.equal(isIndependentWorkTime(new Date('2026-11-15T23:59:00Z')), true);
+  assert.equal(isIndependentWorkTime(new Date('2026-07-19T22:59:00Z')), true); // Sunday 23:59 BST
+  assert.equal(isIndependentWorkTime(new Date('2026-07-19T23:00:00Z')), false); // Monday 00:00 BST
+  assert.equal(isIndependentWorkTime(new Date('2026-11-16T00:00:00Z')), false); // Monday 00:00 GMT
+});
+
 test('one code format for all cohorts without identifying data', () => {
   const values = new Set(Array.from({ length: 100 }, newPracticeCode));
   assert.equal(values.size, 100);
