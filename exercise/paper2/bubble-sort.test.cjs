@@ -25,5 +25,8 @@ assert.equal(demo.steps[0][1],'START HERE');
 assert.equal(demo.entryLine,13);
 assert.ok(demo.steps.some(s=>s[6]?.swapped));
 assert.ok(demo.steps.some(s=>s[6]?.pair));
+assert.ok(demo.steps.some(s=>s[0]===9&&s[1]==='NEXT i'));
+assert.ok(demo.steps.some(s=>s[0]===10&&s[1]==='NEXT pass'));
+assert.equal(demo.loopBack.to,3);
 assert.deepEqual(demo.steps.at(-1)[6].values,[1,2,4,5]);
 console.log('Bubble Sort: 30 question models, swaps, full passes and code checks passed.');

@@ -44,7 +44,8 @@
       code:[...lines,'array numbers = ['+values.join(', ')+']','bubbleSort(numbers)','print(numbers)'],
       entryLine:13,gaps:level==='hard'?gapSets[index%gapSets.length]:[],
       hint:'Compare adjacent values. For ascending order, SWAP only when the LEFT value is greater than the RIGHT. Repeat passes until all values are sorted.',
-      explanation:'Each comparison moves larger values towards the right. After the full set of passes the array is sorted.'};
+      explanation:level==='hard'? 'After all four passes the array is sorted in ascending order.':
+        'One pass is complete: the largest value has moved to the right. More passes sort the remaining values.'};
   }
   function parseArray(answer){
     const s=String(answer??'').trim();if(!s||!/^-?\d+(?:[\s,]+-?\d+)*$/.test(s))return null;
@@ -83,17 +84,22 @@
       steps.push([2,'Pass '+(p.pass+1),last.join(', '),'Begin a pass over adjacent pairs.',null,null,{values:last.slice()}]);
       for(const e of t.events.filter(x=>x.pass===p.pass)){
         const pair=[e.i,e.i+1];
+        steps.push([3,'i',String(e.i),'The inner FOR loop moves to the next adjacent pair.',null,null,{values:e.before.slice(),pair}]);
         steps.push([4,'Compare',e.left+' > '+e.right+'?',
           e.swap?'Left is larger: swap.':'Already in order: do not swap.',null,null,{values:e.before.slice(),pair}]);
         steps.push([e.swap?7:8,e.swap?'SWAP':'Keep',e.after.join(', '),
           e.swap?'The adjacent values exchange positions.':'The array stays the same.',null,null,{values:e.after.slice(),pair,swapped:e.swap}]);
+        steps.push([9,'NEXT i',String(e.i+1),'Move to the next adjacent pair, if there is one.',null,null,{values:e.after.slice()}]);
       }
+      steps.push([10,'NEXT pass',String(p.pass+1),'Finish this pass. The largest remaining value is now on the right.',
+        null,null,{values:p.after.slice()}]);
     }
     steps.push([14,'Output',t.sorted.join(', '),'The caller prints the sorted array.',null,null,{values:t.sorted.slice()}]);
     return {title:'Bubble Sort',task:'Watch adjacent comparisons, swaps and repeated passes on a separate example.',
       entryLine:13,progressive:true,showAllCode:true,codeLabel:'OCR ERL · procedure call, nested loops and IF',
       traceTitle:'Trace each comparison',columns:['Action','Array / comparison'],lines:code,steps,
       dataTable:{layout:'array',name:'numbers · ASCENDING',caption:'Compare adjacent cells',values:values.slice()},
+      loopBack:{from:9,to:3},
       end:'Sorted result: 1, 2, 4, 5. Larger values move right after each pass.'};
   }
   return {makeQuestion,checkAnswer,makeDemo,model,trace,parseArray,cases,lines};
