@@ -10,16 +10,20 @@ const ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 const USERNAME_PATTERN = /^[a-z0-9][a-z0-9._-]{2,39}$/;
 const PASSWORD_PATTERN = /^[0-9]{4}$/;
 const SESSION_PATTERN = /^[A-Za-z0-9_-]{43}$/;
-const PASSWORD_ITERATIONS = 210_000;
+// Matches all 63 activated PIN hashes and Cloudflare's 100,000-iteration PBKDF2 limit.
+const PASSWORD_ITERATIONS = 100_000;
 const SESSION_LIFETIME_SECONDS = 8 * 60 * 60;
 const LOGIN_ATTEMPT_LIMIT = 5;
 const LOGIN_LOCK_SECONDS = 15 * 60;
 const encoder = new TextEncoder();
+const INDEPENDENT_WORK_SCHEDULE = 'Independent work is available Mon–Fri 12:30–13:20 and 15:30–midnight, and all day Sat–Sun (UK time).';
 
 export function isIndependentWorkTime(date = new Date()) {
   const parts = new Intl.DateTimeFormat('en-GB', {
-    timeZone: 'Europe/London', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+    timeZone: 'Europe/London', weekday: 'long', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
   }).formatToParts(date);
+  const weekday = parts.find(part => part.type === 'weekday')?.value;
+  if (weekday === 'Saturday' || weekday === 'Sunday') return true;
   const hour = Number(parts.find(part => part.type === 'hour')?.value);
   const minute = Number(parts.find(part => part.type === 'minute')?.value);
   const now = hour * 60 + minute;
@@ -207,7 +211,7 @@ async function handle(request, env) {
   }
 
   if (path === '/v1/work' && request.method === 'POST') {
-    if (!isIndependentWorkTime() && !teacherIsValid(request, env)) return respond({ error: 'Independent work opens at 12:30–13:20 and 15:30–midnight (UK time).' }, 403);
+    if (!isIndependentWorkTime() && !teacherIsValid(request, env)) return respond({ error: INDEPENDENT_WORK_SCHEDULE }, 403);
     const { code } = await jsonBody(request);
     const student = code === undefined ? await sessionLearner(request, env)
       : codeIsValid(code) ? await learner(env, code) : null;
@@ -216,7 +220,7 @@ async function handle(request, env) {
   }
 
   if (path === '/v1/attempts' && request.method === 'POST') {
-    if (!isIndependentWorkTime() && !teacherIsValid(request, env)) return respond({ error: 'Independent work is closed at this time.' }, 403);
+    if (!isIndependentWorkTime() && !teacherIsValid(request, env)) return respond({ error: INDEPENDENT_WORK_SCHEDULE }, 403);
     const { code, assignmentKey: key, attemptId, score, level, source } = await jsonBody(request);
     if (!codeIsValid(code) || typeof key !== 'string' || !ASSIGNMENT_PATTERN.test(key) ||
         typeof attemptId !== 'string' || !/^[0-9a-f-]{36}$/i.test(attemptId) ||
