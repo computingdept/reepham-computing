@@ -21,8 +21,8 @@ test('Every Q3/Q4 source exists and precedes its retrieval lesson', () => {
     const html = fs.readFileSync(page, 'utf8');
     assert.equal((html.match(/<article class="donow-question">/g) || []).length, 4,
       `L${lessonId} must retain its four Do Now cards`);
-    assert.match(html, /lesson\.js\?v=20261114-q34-pilot1/,
-      `L${lessonId} must load the updated shared source labelling`);
+    assert.match(html, /lesson\.js\?v=20261115-legacy-shared1/,
+      `L${lessonId} must load the current shared lesson script, including Q3/Q4 source labelling`);
     for (const slot of ['q3', 'q4']) {
       const refs = entry[slot]?.sourceRefs;
       assert.ok(Array.isArray(refs) && refs.length > 0,
