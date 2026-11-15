@@ -242,8 +242,10 @@
         explanation:q.why+' Output: '+q.expected+'.'};
     }
     const q=HARD[index];return {...q,level,index,type:'program',env:{word:q.word},
-      code:['word = "'+q.word+'"'],prompt:'Write the OCR ERL program.',
-      context:q.task+' The word variable is already given above; write the remaining code.',
+      code:['word = "'+q.word+'"'],prompt:q.task.replace(/\.$/,''),
+      context:'Given word = "'+q.word+'". Write the remaining OCR ERL code using a FOR loop'+
+        (q.needIf?' and IF selection':'')+'.',
+      expectedLines:expectedOutput(q.kind,q.word),
       model:q.model.join('\n'),
       hint:'Loop through indexes using for i = 0 to word.length - 1. Use word.substring(i,1) for a character.'+
         (q.needIf?' Put an IF test inside the loop.':''),

@@ -74,6 +74,21 @@ test('Hard requires complete FOR programs, with IF wherever the task needs selec
   assert.equal(engine.checkAnswer(vowels,vowels.model.replace(' OR ', ' AND ')).correct,false);
 });
 
+test('Hard task-first headings and example output make every goal explicit without exposing code',()=>{
+  for(let i=0;i<10;i++){
+    const q=engine.makeQuestion('hard',i);
+    assert.equal(q.prompt,q.task.replace(/\.$/,''));
+    assert.match(q.context,/Given word = "/);
+    assert.match(q.context,/FOR loop/);
+    assert.equal(q.context.includes('IF selection'),q.needIf);
+    assert.deepEqual(q.expectedLines,engine.expectedOutput(q.kind,q.word));
+    assert.equal(q.expectedLines.some(line=>/for |if |print\(/i.test(line)),false);
+  }
+  assert.deepEqual(engine.makeQuestion('hard',0).expectedLines,['N','E','T','W','O','R','K']);
+  assert.deepEqual(engine.makeQuestion('hard',4).expectedLines,['3']);
+  assert.deepEqual(engine.makeQuestion('hard',8).expectedLines,['D-A-T-A-B-A-S-E']);
+});
+
 test('Hard simulator executes bounded string programs on different input words',()=>{
   const model=engine.parseProgram(engine.makeQuestion('hard',0).model);
   assert.deepEqual(engine.runProgram(model,'CAT'),['C','A','T']);
@@ -124,7 +139,8 @@ test('Page, hub and reusable demo are connected without touching other skills',(
   assert.match(page,/strings-app\.js/);
   assert.match(page,/strings\.js/);
   assert.match(page,/j277-coding-demo\.js/);
-  assert.match(page,/strings2/,'Cache busting enables the new behaviour');
+  assert.match(page,/expected-preview/,'All Hard tasks have a dedicated expected-output panel');
+  assert.match(page,/strings3/,'The published page loads the task-first version');
   assert.match(hub,/'sql', 'strings'/);
   assert.match(demo,/strings: \{/);
 });

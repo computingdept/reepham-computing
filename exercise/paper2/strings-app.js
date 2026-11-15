@@ -42,10 +42,23 @@
     const note=el('span','writer-note',hard?'Write the complete program after the given word. Include NEXT and ENDIF where needed.':'Use the exact characters and capital letters printed by the code.');
     box.append(label,input,note);return box;
   }
+  function renderTaskPreview(q){
+    const task=$('question-text'),preview=$('expected-preview');
+    const hard=q.type==='program';task.classList.toggle('string-hard-task',hard);
+    preview.hidden=!hard;preview.replaceChildren();
+    if(!hard)return;
+    preview.append(el('span','string-output-label','EXPECTED OUTPUT'));
+    const output=el('div','string-output-lines');
+    q.expectedLines.forEach(line=>output.append(el('span','string-output-line',line||' ')));
+    preview.append(output);
+    preview.setAttribute('aria-label','Expected output for '+q.word);
+  }
   function renderQuestion(){const q=state.question=engine.makeQuestion(state.level,state.index,state.seed);
     state.wrong=0;state.response=null;state.locked=false;resetFeedback();
     $('question-card').classList.remove('finished');$('prompt').textContent=q.prompt;$('context').textContent=q.context;
+    renderTaskPreview(q);
     $('question-position').textContent='Question '+(state.index+1)+' of 10';$('meter').setAttribute('aria-valuenow',String(state.index));$('meter-fill').style.width=state.index*10+'%';
+    $('level-description').textContent=state.level==='hard'?(q.needIf?'Iteration + selection':'Iteration'):labels[state.level];
     ['check','clear','hint'].forEach(id=>$(id).hidden=false);$('show-answer').hidden=true;$('next').hidden=true;
     $('next').textContent=state.index===9?'See results →':'Next question →';
     const work=$('workspace');work.replaceChildren();
@@ -83,6 +96,7 @@
     updateProgress('sessions',(Number(progress().sessions)||0)+1);
     $('question-position').textContent='Completed';$('meter').setAttribute('aria-valuenow','10');$('meter-fill').style.width='100%';
     $('question-card').classList.add('finished');$('prompt').textContent='';$('context').textContent='';resetFeedback();
+    $('question-text').classList.remove('string-hard-task');$('expected-preview').hidden=true;
     ['check','clear','hint','show-answer','next'].forEach(id=>$(id).hidden=true);
     const work=$('workspace');work.replaceChildren();const result=el('div','results');
     const kicker=el('span','result-kicker','Skill 15 · '+state.level+' complete');
