@@ -87,7 +87,6 @@
     const input = document.createElement('textarea'); input.id = 'comparisons-code';
     input.className = 'code-entry'; input.rows = 2;
     input.autocomplete = 'off'; input.autocapitalize = 'off'; input.spellcheck = false;
-    input.placeholder = 'score >= 40';
     input.addEventListener('input', () => { state.response = input.value; });
     const note = document.createElement('span'); note.className = 'writer-note';
     note.textContent = 'Use the variable names shown. Your condition is checked with several values.';

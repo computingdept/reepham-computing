@@ -66,7 +66,6 @@
     label.htmlFor='selection-code';label.textContent='Your OCR ERL algorithm';
     const input=document.createElement('textarea');input.id='selection-code';input.className='code-entry';
     input.rows=8;input.autocomplete='off';input.autocapitalize='off';input.spellcheck=false;
-    input.placeholder='number = input("Number")\nif number > 0 then\n    print("Positive")\nelse\n    print("Other")\nendif';
     input.addEventListener('input',()=>{state.response=input.value;});
     const note=document.createElement('span');note.className='writer-note';
     note.textContent='Use your own variable names. All branches are tested, including the boundary numbers.';

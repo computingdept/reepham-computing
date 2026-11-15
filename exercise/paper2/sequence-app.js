@@ -111,7 +111,6 @@
     const input = document.createElement('textarea'); input.id = 'sequence-code';
     input.className = 'code-entry'; input.rows = 5;
     input.autocomplete = 'off'; input.autocapitalize = 'off'; input.spellcheck = false;
-    input.placeholder = 'number = input("Number")\nanswer = number + 3\nprint(answer)';
     input.addEventListener('input', () => { state.response = input.value; });
     const note = document.createElement('span'); note.className = 'writer-note';
     note.textContent = 'Use any variable names. Your algorithm is checked with several different inputs.';

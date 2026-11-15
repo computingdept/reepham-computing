@@ -103,7 +103,6 @@
     const label=document.createElement('label');label.className='work-label';label.htmlFor='for-erl';label.textContent='Your OCR ERL algorithm';
     const input=document.createElement('textarea');input.id='for-erl';input.className='code-entry';input.rows=8;
     input.autocomplete='off';input.autocapitalize='off';input.spellcheck=false;
-    input.placeholder='n = int(input("Number"))\nfor i = 1 to n\n    print(i)\nnext i';
     input.addEventListener('input',()=>{state.response=input.value;});
     const note=document.createElement('span');note.className='writer-note';
     note.textContent='Use any variable names. Your loop will be checked with multiple inputs, including the boundaries.';

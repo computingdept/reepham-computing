@@ -98,7 +98,6 @@
     const input = document.createElement('textarea');
     input.className = 'code-entry type-code-entry'; input.id = 'erl-answer'; input.rows = 2;
     input.autocomplete = 'off'; input.autocapitalize = 'off'; input.spellcheck = false;
-    input.placeholder = 'yourVariable = value';
     input.addEventListener('input', () => { state.response = input.value; });
     const note = document.createElement('span');
     note.className = 'writer-note'; note.textContent = 'Choose any sensible variable name. Use =, := or ←.';

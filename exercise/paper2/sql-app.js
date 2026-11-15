@@ -110,7 +110,6 @@
     const area = el('textarea', 'code-entry sql-code-entry');
     area.id = 'sql-answer';area.rows = 3;area.spellcheck = false;area.autocapitalize = 'off';
     area.autocomplete = 'off';
-    area.placeholder = q.where ? 'SELECT …\nFROM …\nWHERE …' : 'SELECT …\nFROM …';
     area.addEventListener('input', () => {state.response = area.value;});
     answer.append(label, area);panel.append(answer);
   }
