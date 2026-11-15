@@ -46,6 +46,15 @@
     .fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
     .field{min-width:0}
     .full{grid-column:1/-1}
+    .scope{border:0;margin:0 0 20px;padding:0;min-width:0}
+    .scope legend{font-weight:800;font-size:14px;margin-bottom:8px}
+    .scope-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+    .scope-option{display:flex;align-items:center;gap:9px;padding:12px;border:1.5px solid var(--line);border-radius:12px;background:white;cursor:pointer;font-weight:750;font-size:14px;margin:0}
+    .scope-option:has(input:checked){border-color:var(--green);background:var(--pale)}
+    .scope-option input{width:18px;height:18px;min-height:0;accent-color:var(--green);margin:0}
+    .target-note{font-size:13px;color:var(--muted);margin:6px 0 0}
+    .confirm-year{display:flex;align-items:flex-start;gap:10px;margin:11px 0 0;font-size:14px;font-weight:800;color:var(--dark)}
+    .confirm-year input{width:20px;height:20px;min-height:0;flex:none;accent-color:var(--green);margin-top:2px}
     .preview{background:var(--pale);border-radius:14px;padding:17px;min-height:128px;margin:16px 0}
     .mini{font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:var(--green);font-weight:850}
     .preview p{margin:7px 0;color:var(--muted)}
@@ -65,7 +74,7 @@
     .empty{color:var(--muted);padding:16px 2px}
     [hidden]{display:none!important}
     footer{max-width:1100px;margin:0 auto;padding:0 20px 28px;font-size:13px;color:var(--muted)}
-    @media(max-width:760px){.work-grid{grid-template-columns:1fr}.fields{grid-template-columns:1fr}.panel{padding:19px}.bar{padding:11px 15px}main{padding:24px 15px 50px}}
+    @media(max-width:760px){.work-grid{grid-template-columns:1fr}.fields,.scope-options{grid-template-columns:1fr}.panel{padding:19px}.bar{padding:11px 15px}main{padding:24px 15px 50px}}
   </style>
 </head>
 <body>
@@ -76,7 +85,7 @@
   <main>
     <span class="eyebrow">Staff pilot · OCR J277</span>
     <h1>Assign My Work</h1>
-    <p class="intro">Choose an activity for a whole year group. Pupils will see it when they open or refresh My Work.</p>
+    <p class="intro">Choose one anonymous pupil for testing, or explicitly assign an activity to a whole year group. Pupils will see it when they refresh My Work.</p>
 
     <section class="panel" aria-labelledby="access-title">
       <h2 id="access-title">Teacher access</h2>
@@ -97,8 +106,20 @@
         <section class="panel" aria-labelledby="choose-title">
           <h2 id="choose-title">1 · Choose an activity</h2>
           <p class="sub">Activities come from the same J277 catalogue used by the pupil page.</p>
+          <fieldset class="scope">
+            <legend>Who should receive this work?</legend>
+            <div class="scope-options">
+              <label class="scope-option"><input type="radio" name="scope" value="individual" checked> One anonymous pupil</label>
+              <label class="scope-option"><input type="radio" name="scope" value="cohort"> Whole year group</label>
+            </div>
+          </fieldset>
           <div class="fields">
-            <div class="field">
+            <div class="field full" id="individual-target">
+              <label for="username">Anonymous username</label>
+              <input id="username" type="text" autocomplete="off" spellcheck="false" autocapitalize="none" placeholder="Type the ID from your private CSV" maxlength="40">
+              <p class="target-note">Use a test login from your private CSV. No pupil name, PIN or practice code is required.</p>
+            </div>
+            <div class="field" id="cohort-target" hidden>
               <label for="cohort">Year group</label>
               <select id="cohort"><option value="Y10">Year 10</option><option value="Y11">Year 11</option></select>
             </div>
@@ -127,13 +148,14 @@
 
         <section class="panel" aria-labelledby="review-title">
           <h2 id="review-title">2 · Review & assign</h2>
-          <p class="sub">This will appear for <strong>every pupil in the chosen year group</strong>.</p>
+          <p class="sub" id="scope-description">This activity will appear <strong>only for the anonymous account you enter</strong>.</p>
           <div id="preview" class="preview" aria-live="polite">Choose an activity to preview it here.</div>
           <button type="button" class="button" id="review-button" disabled>Review assignment</button>
           <div id="review" class="review" hidden>
             <p class="mini">Check before publishing</p>
             <strong id="review-choice"></strong>
-            <small>All active pupil accounts in this year group will receive this activity. This pilot screen cannot remove assignments.</small>
+            <small id="review-warning">Only the chosen anonymous account will receive this activity. This pilot screen cannot remove assignments.</small>
+            <label class="confirm-year" id="year-confirmation" hidden><input type="checkbox" id="confirm-everyone"> I understand this assigns work to every active pupil in this year group.</label>
             <div class="actions">
               <button type="button" class="button" id="publish-button">Confirm assignment</button>
               <button type="button" class="button secondary" id="cancel-button">Cancel</button>
@@ -144,9 +166,9 @@
         </section>
       </div>
 
-      <section class="panel" aria-labelledby="current-title">
+      <section class="panel" id="year-assignments-panel" aria-labelledby="current-title" hidden>
         <div class="summary">
-          <div><h2 id="current-title">Current assignments</h2><p class="sub" id="year-caption">Year 10</p></div>
+          <div><h2 id="current-title">Whole-year assignments</h2><p class="sub" id="year-caption">Year 10 · Individual assignments are not listed here</p></div>
           <div class="actions">
             <span class="pill" id="counts">Checking…</span>
             <button type="button" class="button secondary" id="refresh">Refresh</button>
@@ -156,7 +178,7 @@
       </section>
     </div>
   </main>
-  <footer>RHS Computing · Formative practice pilot · No pupil names, codes or PINs are shown on this page.</footer>
+  <footer>RHS Computing · Formative practice pilot · No real pupil names, practice codes or PINs are needed.</footer>
 
   <script>
   (() => {
@@ -169,6 +191,9 @@
     let selected = null;
     let pending = null;
     let loading = false;
+    const chosenScope = () => document.querySelector('input[name="scope"]:checked')?.value || 'individual';
+    const anonymousUsername = () => $('username').value.trim().toLowerCase();
+    const usernameIsValid = () => /^[a-z0-9][a-z0-9._-]{2,39}$/.test(anonymousUsername());
 
     function status(id, message, kind = '') {
       const node = $(id);
@@ -199,6 +224,8 @@
     function disconnect(message = 'Not connected.') {
       teacherToken = '';
       $('token').value = '';
+      $('username').value = '';
+      cancelReview();
       $('workspace').hidden = true;
       $('disconnect').hidden = true;
       $('connect').hidden = false;
@@ -224,6 +251,27 @@
     function cancelReview() {
       pending = null;
       $('review').hidden = true;
+      $('confirm-everyone').checked = false;
+      $('publish-button').disabled = false;
+    }
+
+    function updateReviewAvailability() {
+      $('review-button').disabled = !selected || (chosenScope() === 'individual' && !usernameIsValid());
+    }
+
+    function renderScope() {
+      cancelReview();
+      const wholeYear = chosenScope() === 'cohort';
+      $('individual-target').hidden = wholeYear;
+      $('cohort-target').hidden = !wholeYear;
+      $('year-assignments-panel').hidden = !wholeYear;
+      $('scope-description').replaceChildren();
+      const description = document.createTextNode(wholeYear ? 'This will appear for ' : 'This will appear ');
+      const strong = document.createElement('strong');
+      strong.textContent = wholeYear ? 'every pupil in the chosen year group' : 'only the anonymous account you enter';
+      $('scope-description').append(description, strong, '.');
+      status('publish-status', '');
+      updateReviewAvailability();
     }
 
     function renderPreview() {
@@ -232,9 +280,9 @@
       selected = found || null;
       const preview = $('preview');
       preview.replaceChildren();
-      $('review-button').disabled = !found;
       if (!found) {
         preview.textContent = 'No matching activities. Try changing the filters.';
+        updateReviewAvailability();
         return;
       }
       const tag = document.createElement('span');
@@ -254,6 +302,7 @@
         anchor.textContent = 'Preview activity ↗';
         preview.append(anchor);
       }
+      updateReviewAvailability();
     }
 
     function renderActivities() {
@@ -274,7 +323,7 @@
 
     async function loadProgress() {
       const year = $('cohort').value;
-      $('year-caption').textContent = 'Year ' + year.slice(1);
+      $('year-caption').textContent = 'Year ' + year.slice(1) + ' · Individual assignments are not listed here';
       $('assignments').replaceChildren();
       $('assignments').textContent = 'Loading assignments…';
       $('counts').textContent = 'Checking…';
@@ -353,25 +402,42 @@
 
     function review() {
       if (!selected || !teacherToken) return;
-      pending = { cohort: $('cohort').value, itemId: selected.id, level: selected.type === 'skill' ? 'both' : '' };
-      $('review-choice').textContent = selected.title + ' → Year ' + pending.cohort.slice(1);
+      const scope = chosenScope();
+      if (scope === 'individual' && !usernameIsValid()) {
+        status('publish-status', 'Enter a valid anonymous username from your private CSV.', 'error');
+        return;
+      }
+      pending = { scope, itemId: selected.id, level: selected.type === 'skill' ? 'both' : '' };
+      if (scope === 'individual') pending.username = anonymousUsername();
+      else pending.cohort = $('cohort').value;
+      $('review-choice').textContent = scope === 'individual'
+        ? selected.title + ' → ONLY ' + pending.username
+        : selected.title + ' → ALL pupils in Year ' + pending.cohort.slice(1);
+      $('review-warning').textContent = scope === 'individual'
+        ? 'Only this one anonymous account will receive the activity. The pilot cannot remove assignments.'
+        : 'This activity will appear for every active pupil in this year group. The pilot cannot remove assignments.';
+      $('year-confirmation').hidden = scope !== 'cohort';
+      $('confirm-everyone').checked = false;
+      $('publish-button').disabled = scope === 'cohort';
       $('review').hidden = false;
       status('publish-status', '');
     }
 
     async function publish() {
       if (!pending || loading) return;
-      const body = { ...pending };
+      const { scope, ...body } = pending;
+      if (scope === 'cohort' && !$('confirm-everyone').checked) return;
       loading = true;
       $('publish-button').disabled = true;
       status('publish-status', 'Assigning activity…');
       try {
-        const result = await request('/v1/teacher/assignments', { method: 'POST', body });
+        const result = await request(scope === 'individual' ? '/v1/teacher/student-assignments' : '/v1/teacher/assignments', { method: 'POST', body });
         cancelReview();
-        await loadProgress();
+        if (scope === 'cohort') await loadProgress();
+        const destination = scope === 'individual' ? 'the one anonymous pupil (Year ' + result.cohort.slice(1) + ')' : 'Year ' + body.cohort.slice(1);
         status('publish-status', result.added
-          ? 'Assigned successfully to Year ' + body.cohort.slice(1) + '. Pupils can now refresh My Work.'
-          : 'Already assigned to Year ' + body.cohort.slice(1) + '. Nothing was duplicated.', 'good');
+          ? 'Assigned successfully to ' + destination + '. The pupil can refresh My Work.'
+          : 'Already assigned to ' + destination + '. Nothing was duplicated.', 'good');
       } catch (error) {
         if (error.status === 401) disconnect('Teacher access expired. Connect again.');
         else status('publish-status', error.message, 'error');
@@ -401,6 +467,9 @@
 
     $('connect-form').addEventListener('submit', connect);
     $('disconnect').addEventListener('click', () => disconnect());
+    for (const radio of document.querySelectorAll('input[name="scope"]')) radio.addEventListener('change', renderScope);
+    $('username').addEventListener('input', () => { cancelReview(); updateReviewAvailability(); });
+    $('confirm-everyone').addEventListener('change', () => { $('publish-button').disabled = !$('confirm-everyone').checked; });
     $('cohort').addEventListener('change', () => { cancelReview(); refresh(); });
     for (const id of ['paper', 'kind']) $(id).addEventListener('change', () => { renderGroups(); renderActivities(); });
     $('group').addEventListener('change', renderActivities);
@@ -410,6 +479,7 @@
     $('cancel-button').addEventListener('click', cancelReview);
     $('publish-button').addEventListener('click', publish);
     $('refresh').addEventListener('click', refresh);
+    renderScope();
     initialise();
   })();
   </script>
