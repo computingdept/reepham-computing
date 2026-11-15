@@ -90,9 +90,9 @@
       steps.push([6,'Compare',row.value+' vs '+target,'Inspect numbers['+row.mid+'] = '+row.value+'.',focus,range]);
       if(row.decision==='Found')steps.push([7,'RETURN',String(row.mid),'Target found at index '+row.mid+'.',focus,range]);
       else if(row.decision==='Right')steps.push([9,'Keep RIGHT',(row.mid+1)+'–'+row.high,
-        'Middle is too small. Discard the middle and LEFT half.',focus,{low:row.mid+1,high:row.high}]);
+        'Middle is too small. Discard the middle and LEFT half.',null,{low:row.mid+1,high:row.high}]);
       else steps.push([11,'Keep LEFT',row.low+'–'+(row.mid-1),
-        'Middle is too large. Discard the middle and RIGHT half.',focus,{low:row.low,high:row.mid-1}]);
+        'Middle is too large. Discard the middle and RIGHT half.',null,{low:row.low,high:row.mid-1}]);
     }
     steps.push([17,'Output','2','The caller prints the matching index.']);
     return {title:'Binary Search',task:'Follow the sorted array as the range halves. The yellow START HERE marks the function call.',

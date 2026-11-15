@@ -33,6 +33,7 @@ const demo=engine.makeDemo();
 assert.equal(demo.entryLine,17);
 assert.equal(demo.steps[0][1],'START HERE');
 assert.ok(demo.steps.some(s=>s[5]?.low>0));
+assert.ok(demo.steps.filter(s=>s[0]===9||s[0]===11).every(s=>s[4]===null));
 assert.equal(demo.steps.at(-1)[2],'2');
 assert.equal(demo.dataTable.values.length,7);
 assert.ok(demo.steps.every(s=>s[0]>0&&s[0]<=demo.lines.length));
