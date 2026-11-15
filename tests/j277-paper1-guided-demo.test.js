@@ -24,6 +24,14 @@ test('Paper 1 page includes the central component and read-only question context
   assert.match(html,/RHSCPaper1DemoContext=\(\)=>\(\{skill,level,question\}\)/);
 });
 
+test('Preview cards belong to the home hub, never the active practice screen',()=>{
+  const html=fs.readFileSync(path.join(__dirname,'../exercise/paper1/index.html'),'utf8');
+  const home=html.slice(html.indexOf('<section id="home">'),html.indexOf('<section id="practice"'));
+  assert.match(home,/<section class="rhsc-skills-review"/);
+  assert.match(home,/<\/div><\/section>\s*<\/section>\s*$/);
+  assert.match(html,/\$\('home'\)\.classList\.add\('hidden'\)/);
+});
+
 test('Opening and stepping a Demo does not change the question or progress',()=>{
   class Node {
     constructor(tag){this.tagName=tag;this.children=[];this.listeners={};this.className='';this.textContent='';this.hidden=false;this.classList={add:k=>{this.className+=' '+k;},remove:k=>{this.className=this.className.replace(k,'');}};}
