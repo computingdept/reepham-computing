@@ -15,6 +15,16 @@
 }
 .rhsc-skills-activity .skill-demo-header h1{font-size:clamp(19px,2.2vw,24px);line-height:1.2;margin:0;color:#263d31}
 .rhsc-skills-activity .skill-demo-header p{font-size:12px;line-height:1.35;margin:3px 0 0;color:#617769}
+.rhsc-skills-activity .skill-demo-variants[hidden],
+.rhsc-skills-activity .skill-demo-file-preview[hidden]{display:none!important}
+.rhsc-skills-activity .skill-demo-variants{display:flex;gap:7px;margin:0 0 10px;flex-wrap:wrap}
+.rhsc-skills-activity .skill-demo-variants button{
+  border:1px solid #a9c8b5;border-radius:8px;background:#f5faf6;color:#285348;
+  padding:8px 14px;min-height:36px;font-size:13px;font-weight:800;
+}
+.rhsc-skills-activity .skill-demo-variants button[aria-pressed="true"]{
+  background:#285348;color:white;border-color:#285348;
+}
 .rhsc-skills-activity .skill-demo-grid{
   display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.07fr);
   align-items:start;gap:14px;padding:15px;border:1px solid #d5dfd8;
@@ -31,6 +41,28 @@
 .rhsc-skills-activity .skill-demo.guided-step-reveal .skill-demo-line.is-upcoming{color:#7b9688}
 .rhsc-skills-activity .skill-demo-line-number{flex:none;width:29px;color:#789684;font-size:.68em;font-weight:800;padding-top:.35em}
 .rhsc-skills-activity .skill-demo-line-text{display:block;white-space:pre-wrap;overflow-wrap:anywhere;min-width:0}
+.rhsc-skills-activity .skill-demo-file-preview{
+  margin-top:10px;border:1px solid #a9cbb5;border-radius:10px;overflow:hidden;
+  background:#f7fbf8;
+}
+.rhsc-skills-activity .skill-demo-file-heading{
+  display:flex;justify-content:space-between;gap:8px;align-items:center;
+  padding:8px 12px;background:#e0f0e5;color:#27513b;font-size:14px;
+}
+.rhsc-skills-activity .skill-demo-file-heading span{
+  border:1px solid #bdd4c3;border-radius:20px;padding:2px 8px;background:white;
+  font-size:11px;font-weight:800;
+}
+.rhsc-skills-activity .skill-demo-file-lines{
+  list-style:decimal;margin:0;padding:8px 14px 8px 44px;min-height:40px;
+  font:600 clamp(15px,1.5vw,19px)/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;
+  color:#294336;
+}
+.rhsc-skills-activity .skill-demo-file-lines li{padding:0 8px;border-radius:5px}
+.rhsc-skills-activity .skill-demo-file-lines li::marker{font-size:12px;color:#6b8878}
+.rhsc-skills-activity .skill-demo-file-lines li.is-changed{background:#ccead5;box-shadow:inset 3px 0 #40875d}
+.rhsc-skills-activity .skill-demo-file-lines li.skill-demo-file-empty{list-style:none;color:#788b80;font-style:italic;font-size:14px}
+.rhsc-skills-activity .skill-demo-file-note{margin:0;padding:7px 12px;border-top:1px solid #d8e7dc;color:#3e5c4a;font-size:12px}
 .rhsc-skills-activity .skill-demo-trace{display:grid;gap:8px;align-content:start}
 .rhsc-skills-activity .skill-demo-trace-title{font-size:14px;color:#345c46}
 .rhsc-skills-activity .skill-demo-controls{display:flex;gap:6px;flex-wrap:wrap}
@@ -63,6 +95,7 @@
   .rhsc-skills-activity .skill-demo-grid{grid-template-columns:1fr;gap:8px;padding:10px}
   .rhsc-skills-activity .skill-demo-source{font-size:clamp(13px,3.8vw,16px);line-height:1.35;padding:8px 7px}
   .rhsc-skills-activity .skill-demo-line-number{width:23px}
+  .rhsc-skills-activity .skill-demo-file-lines{font-size:15px;padding:6px 9px 6px 39px}
   .rhsc-skills-activity .skill-demo-table-scroll{max-height:180px}
   .rhsc-skills-activity .skill-demo-table td,.rhsc-skills-activity .skill-demo-table th{padding:4px 7px}
   .rhsc-skills-activity .skill-demo-status{min-height:25px;padding:5px 8px}

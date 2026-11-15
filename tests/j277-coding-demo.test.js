@@ -168,6 +168,52 @@ test('File Handling demo swaps in a guided example without changing practice', (
   assert.equal(ui.practice.studentAnswer,'myChosenFile = open("names.txt")');
 });
 
+test('File Handling reference shows all source lines and file changes in two selectable demos',()=>{
+  const engine=require('../exercise/paper2/files.js');
+  const ui=mountDemo('files');
+  ui.practice.studentAnswer='draft answer';
+  ui.window.RHSSkillsDemoProvider=()=>engine.makeDemo(engine.makeQuestion('hard',3,31));
+  find(ui.title,'skill-demo-open').click();
+  const demo=ui.practice.insertedSibling;
+  const tabs=find(demo,'skill-demo-variants');
+  const code=find(demo,'skill-demo-source');
+  const file=find(demo,'skill-demo-file-preview');
+  const contents=find(demo,'skill-demo-file-lines');
+  const state=find(demo,'skill-demo-file-heading');
+  const [play,step,reset]=find(demo,'skill-demo-controls').children;
+  assert.equal(tabs.hidden,false);
+  assert.equal(tabs.children.length,2);
+  assert.equal(tabs.children[0].attributes['aria-pressed'],'true');
+  assert.equal(code.children.length,5);
+  assert.equal(code.children[0].children[1].textContent,'myFile = open("scores.txt")',
+    'the whole reusable program remains visible');
+  assert.equal(contents.children.length,3);
+  assert.equal(state.children[1].textContent,'Closed');
+  step.click();step.click();step.click();step.click();
+  assert.equal(contents.children.length,4);
+  assert.equal(contents.children[3].textContent,'Tara');
+  assert.match(contents.children[3].className,/is-changed/);
+  step.click();
+  assert.equal(state.children[1].textContent,'Closed');
+  reset.click();
+  assert.equal(contents.children.length,3);
+  tabs.children[1].click();
+  assert.equal(tabs.children[0].attributes['aria-pressed'],'false');
+  assert.equal(tabs.children[1].attributes['aria-pressed'],'true');
+  assert.equal(code.children.length,4);
+  assert.equal(state.children[1].textContent,'Not created');
+  assert.equal(contents.children[0].textContent,'(no file yet)');
+  step.click();
+  assert.equal(state.children[1].textContent,'Closed');
+  step.click();step.click();step.click();
+  assert.equal(contents.children[0].textContent,'Passed');
+  assert.equal(state.children[1].textContent,'Closed');
+  play.click();
+  find(demo,'skill-demo-back').click();
+  assert.equal(ui.practice.studentAnswer,'draft answer');
+  assert.equal(ui.timers.size,0);
+});
+
 test('The other 12 J277 coding skills reveal the appropriate guided example',()=>{
   const guided=require('../assets/j277-skills-guided-examples.js');
   const skills=['variables','data-types','casting','operators','comparisons','sequence',

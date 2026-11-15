@@ -17,30 +17,44 @@ test('all 30 file tasks are deterministic and accept their model answers',()=>{
   }
 });
 
-test('all 30 File Handling demos use safe, analogous, step-by-step examples',()=>{
+test('all 30 File Handling demos give the same complete, safe reference examples',()=>{
+  let reference;
   for(const level of ['easy','medium','hard']) {
     for(let index=0;index<10;index++) {
       const question=engine.makeQuestion(level,index,17);
       const demo=engine.makeDemo(question);
-      assert.ok(demo.task.startsWith('Similar example:'),level+'/'+index);
-      assert.equal(demo.progressive,true);
-      assert.equal(demo.steps.length,demo.lines.length);
-      assert.equal(demo.placeholders.length,demo.lines.length);
-      assert.ok(demo.lines.length>=1);
-      demo.steps.forEach((step,i)=>{
-        assert.equal(step[0],i+1);
-        assert.ok(step[1]&&step[2]&&step[3],level+'/'+index+' step '+i);
-      });
-      assert.ok(demo.end.length>0);
-      assert.equal(demo.lines.some(line=>line.includes('names.txt')),false,
-        'demo uses a different file rather than copying the current question');
+      if (!reference) reference=demo;
+      assert.deepEqual(demo,reference,'each level and question opens the same reference');
+      assert.equal(demo.variants.length,2);
+      assert.deepEqual(demo.variants.map(item=>item.label),['Existing file','New file']);
+      for(const {example} of demo.variants) {
+        assert.equal(example.steps.length,example.lines.length);
+        assert.equal(example.fileView.states.length,example.lines.length+1);
+        assert.equal(example.placeholders.length,example.lines.length);
+        assert.ok(example.lines.every(line=>!line.includes('names.txt')));
+        example.steps.forEach((step,i)=>{
+          assert.equal(step[0],i+1);
+          assert.ok(step[1]&&step[2]&&step[3],level+'/'+index+' step '+i);
+          const snapshot=example.fileView.states[i+1];
+          assert.equal(typeof snapshot.exists,'boolean');
+          assert.equal(typeof snapshot.open,'boolean');
+          assert.ok(Array.isArray(snapshot.lines));
+        });
+        assert.equal(example.fileView.states.at(-1).open,false,'finished file is closed');
+      }
     }
   }
-  const open=engine.makeDemo(engine.makeQuestion('hard',0,1));
-  assert.match(open.lines[0],/saved = open\("scores.txt"\)/);
-  const loop=engine.makeDemo(engine.makeQuestion('medium',8,1));
-  assert.match(loop.end,/Prints 2/);
-  assert.ok(loop.lines.some(line=>line.includes('endOfFile()')));
+  const full=engine.makeDemo(engine.makeQuestion('hard',0,1));
+  assert.deepEqual(full.lines,[
+    'myFile = open("scores.txt")','first = myFile.readLine()',
+    'atEnd = myFile.endOfFile()','myFile.writeLine("Tara")','myFile.close()']);
+  assert.deepEqual(full.fileView.states[0].lines,['Ivy','Owen','Finn']);
+  assert.deepEqual(full.fileView.states.at(-1).lines,['Ivy','Owen','Finn','Tara']);
+  const fresh=full.variants[1].example;
+  assert.match(fresh.lines[0],/^newFile\(/);
+  assert.match(fresh.lines[1],/= open\(/);
+  assert.deepEqual(fresh.fileView.states[0].exists,false);
+  assert.deepEqual(fresh.fileView.states.at(-1).lines,['Passed']);
   assert.throws(()=>engine.makeDemo({level:'hard',index:10}));
 });
 
