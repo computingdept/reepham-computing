@@ -19,6 +19,32 @@
   function writeProgress(key, data) {
     try { global.localStorage.setItem(key, JSON.stringify(data)); } catch (_) { /* Storage may be unavailable. */ }
   }
+  // Shared, opt-in source viewer for coding Skills. Display line numbers are
+  // separate from code text so copying code never includes the numbers.
+  function numberedCode(lines) {
+    const pre = global.document.createElement('pre');
+    pre.className = 'erl rhsc-code-lines';
+    lines.forEach((line, index) => {
+      const row = global.document.createElement('span');
+      row.className = 'rhsc-code-line';
+      row.dataset.line = String(index + 1);
+      const number = global.document.createElement('span');
+      number.className = 'rhsc-code-line-number';
+      number.textContent = String(index + 1).padStart(2, '0');
+      number.setAttribute('aria-hidden', 'true');
+      const source = global.document.createElement('span');
+      source.className = 'rhsc-code-line-text';
+      source.textContent = line;
+      row.append(number, source);
+      pre.append(row);
+    });
+    return pre;
+  }
+  function highlightCodeLine(pre, lineNumber) {
+    pre.querySelectorAll('.rhsc-code-line').forEach(row => {
+      row.classList.toggle('is-active', row.dataset.line === String(lineNumber));
+    });
+  }
   // A fictional, browser-only score bridge. URL context is set by My Work; it is
   // not authentication and must never be used for real pupil records.
   function reportCompletion(paper, sourceKey, level, correct, total) {
@@ -47,5 +73,5 @@
       return true;
     } catch (_) { return false; }
   }
-  global.RHSCSkills = Object.freeze({ LEVELS, validLevel, levelFromUrl, updateLevelUrl, readProgress, writeProgress, reportCompletion });
+  global.RHSCSkills = Object.freeze({ LEVELS, validLevel, levelFromUrl, updateLevelUrl, readProgress, writeProgress, numberedCode, highlightCodeLine, reportCompletion });
 })(window);

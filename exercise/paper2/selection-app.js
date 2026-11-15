@@ -38,14 +38,38 @@
   function codePanel(lines) {
     const panel=document.createElement('div');panel.className='code-panel';
     const label=document.createElement('span');label.className='code-label';label.textContent='OCR Exam Reference Language';
-    const pre=document.createElement('pre');pre.className='erl';pre.textContent=lines.join('\n');
+    const pre=core.numberedCode(lines);
     panel.append(label,pre);return panel;
+  }
+  function traceTable(q,code) {
+    const section=document.createElement('section');section.className='selection-trace';
+    section.setAttribute('aria-label','Your condition trace');
+    const title=document.createElement('strong');title.textContent='Trace the checks';
+    const table=document.createElement('table');
+    const tbody=document.createElement('tbody');
+    q.code.forEach((line,index)=>{
+      const kind=line.trim().match(/^(if|elseif)\s/i);
+      if(!kind)return;
+      const row=document.createElement('tr');
+      const lineCell=document.createElement('th');lineCell.scope='row';
+      lineCell.textContent=String(index+1).padStart(2,'0')+' · '+kind[1].toUpperCase();
+      const resultCell=document.createElement('td');
+      const select=document.createElement('select');
+      select.setAttribute('aria-label',kind[1].toUpperCase()+' result at line '+(index+1));
+      for(const value of ['?','True','False',...(kind[1]==='elseif'?['Skipped']:[])]){
+        const option=document.createElement('option');option.value=value==='?'?'':value;option.textContent=value;select.append(option);
+      }
+      const highlight=()=>core.highlightCodeLine(code,index+1);
+      select.addEventListener('focus',highlight);select.addEventListener('change',highlight);
+      resultCell.append(select);row.append(lineCell,resultCell);tbody.append(row);
+    });
+    table.append(tbody);section.append(title,table);return section;
   }
   function renderChoices(q,work) {
     state.response=null;
     const layout=document.createElement('div');layout.className='selection-grid';
     const controls=document.createElement('div');controls.className='selection-choices';
-    controls.setAttribute('role','group');controls.setAttribute('aria-label','Choose the printed message');
+    controls.setAttribute('role','group');controls.setAttribute('aria-label',q.level==='medium'?'Trace conditions and choose the printed message':'Choose the printed message');
     const label=document.createElement('strong');label.className='selection-label';
     label.textContent='Tap the message that prints';controls.append(label);
     q.options.forEach(option=>{
@@ -58,7 +82,9 @@
       });
       controls.append(button);
     });
-    layout.append(codePanel(q.code),controls);work.append(layout);
+    const code=codePanel(q.code);
+    if(q.level==='medium')controls.prepend(traceTable(q,code.querySelector('.rhsc-code-lines')));
+    layout.append(code,controls);work.append(layout);
   }
   function renderHard(_,work) {
     const field=document.createElement('div');field.className='selection-writer';

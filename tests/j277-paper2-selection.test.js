@@ -1,6 +1,8 @@
 /* Run with: node --test tests/j277-paper2-selection.test.js */
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
 const engine=require('../exercise/paper2/selection.js');
 
 test('all 30 Selection questions are deterministic and their models pass',()=>{
@@ -42,6 +44,21 @@ test('Medium uses OCR elseif and demonstrates all branches',()=>{
     outputs.add(q.expected);
   }
   assert.ok(outputs.size>=6);
+});
+
+test('Selection Medium trace references the actual numbered IF and ELSEIF lines',()=>{
+  const app=fs.readFileSync(path.join(__dirname,'../exercise/paper2/selection-app.js'),'utf8');
+  assert.match(app,/core\.numberedCode\(lines\)/);
+  assert.match(app,/core\.highlightCodeLine\(code,index\+1\)/);
+  assert.match(app,/if\(q\.level==='medium'\)controls\.prepend\(traceTable/);
+  for(const seed of [1,21,20261115]){
+    for(let index=0;index<10;index++){
+      const q=engine.makeQuestion('medium',index,seed);
+      const checks=q.code.map((line,i)=>(/^(?:if|elseif)\s/.test(line)?i+1:null)).filter(Boolean);
+      assert.deepEqual(checks,[2,4]);
+      assert.equal(engine.checkAnswer(q,q.expected).correct,true);
+    }
+  }
 });
 
 test('Hard accepts independent variable names and int(input())',()=>{

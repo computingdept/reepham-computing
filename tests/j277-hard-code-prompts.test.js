@@ -16,6 +16,7 @@ test('Hard coding editors never reveal example solutions as grey placeholders',(
     assert.ok(section,`${skill} has a Hard editor`);
     assert.doesNotMatch(section[0],/\.placeholder\s*=/,`${skill} Hard editor starts blank`);
     const page=fs.readFileSync(path.join(__dirname,'../exercise/paper2',skill,'index.html'),'utf8');
-    assert.match(page,new RegExp(`${skill}-app\\.js\\?v=20261115-hard-blank1`),`${skill} uses the corrected version`);
+    const version=skill==='selection'?'trace-pilot1':'hard-blank1';
+    assert.match(page,new RegExp(`${skill}-app\\.js\\?v=20261115-${version}`),`${skill} uses the corrected version`);
   }
 });
