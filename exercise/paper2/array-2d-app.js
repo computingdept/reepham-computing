@@ -39,7 +39,8 @@
   function codePanel(lines) {
     const panel = document.createElement('div'); panel.className = 'code-panel';
     const caption = document.createElement('span'); caption.className = 'code-label'; caption.textContent = 'OCR Exam Reference Language';
-    const pre = document.createElement('pre'); pre.className = 'erl'; pre.textContent = lines.join('\n');
+    const pre = document.createElement('pre'); pre.className = 'erl';
+    pre.append(core.numberedCode(lines));
     panel.append(caption, pre); return panel;
   }
   function arrayGrid(q, interactive) {

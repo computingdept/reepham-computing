@@ -200,6 +200,28 @@
     };
   }
   function arrays1d(q) {
+    if(q.level==='medium'&&q.code.some(line=>/^for i\s*=/i.test(line))){
+      const skip= q.code.some(line=>/\bstep 2\b/i.test(line));
+      const data=[3,6,4,2,5], visited=skip?[0,2,4]:[0,1,2,3,4];
+      const lines=['array marks = [3, 6, 4, 2, 5]','total = 0',
+        'for i = 0 to 4'+(skip?' step 2':''),
+        '    total = total + marks[i]','next i','print(total)'];
+      const steps=[[1,'Indices','0–4','The five values are stored in order, beginning at index 0.'],
+        [2,'total','0','Start the running total at zero.']];
+      let total=0;
+      visited.forEach(i=>{
+        steps.push([3,'i = '+i,'Continue','Index '+i+' is within the loop range.']);
+        total+=data[i];
+        steps.push([4,'marks['+i+'] = '+data[i],String(total),'Read this array element and add it to total.']);
+        steps.push([5,'i → '+(i+(skip?2:1)),String(total),'NEXT advances the index and returns to FOR.']);
+      });
+      steps.push([3,'i = '+(skip?6:5),'Stop','The index is beyond 4, so the loop body is skipped.']);
+      steps.push([6,'Output',String(total),'Print the running total after the loop finishes.']);
+      return {title:'1D Arrays',task:'Similar example: '+(skip?'visit every second array index.':'add every value using a FOR loop.'),
+        codeLabel:'OCR ERL · DIFFERENT ARRAY FROM YOUR QUESTION',traceTitle:'Follow the array index',
+        columns:['Index / action','total'],lines,steps,loopBack:{from:5,to:3},
+        end:'Output: '+total+'. The loop stops without reading a cell beyond index 4.'};
+    }
     if(q.level==='medium')return d('array-1d','trace another array change before printing.',
       ['array marks = [5, 8, 3]','marks[1] = marks[0] + 4','print(marks[1])'],
       [['Array','[5,8,3]','Indices are 0, 1, 2.'],['Update','marks[1] = 9','Change the second cell using 5 + 4.'],['Output','9','Print the updated value, not 8.']],
@@ -210,6 +232,50 @@
       'Output: 8. Array indices start at zero.');
   }
   function arrays2d(q) {
+    if(q.level==='medium'&&q.code.some(line=>/^for [rc]\s*=/i.test(line))){
+      // The practice activity already supplies a starting grid. Model a
+      // different, smaller grid without pretending the declaration fills it.
+      const grid=[[2,4,6],[3,5,7]];
+      const nested=q.code.some(line=>/^\s+for c\s*=/i.test(line));
+      const byRow=q.code.some(line=>/^for c\s*=/i.test(line));
+      const lines=nested?['total = 0','for r = 0 to 1','    for c = 0 to 2',
+        '        total = total + grid[r,c]','    next c','next r','print(total)']:
+        ['total = 0',byRow?'for c = 0 to 2':'for r = 0 to 1',
+        byRow?'    total = total + grid[1,c]':'    total = total + grid[r,2]',
+        byRow?'next c':'next r','print(total)'];
+      const steps=[[1,'total','0','Begin with total = 0. The grid values are given above the code.']];
+      let total=0;
+      if(nested){
+        for(let r=0;r<2;r++){
+          steps.push([2,'r = '+r,String(total),'The outer loop selects row '+r+'.']);
+          for(let c=0;c<3;c++){
+            steps.push([3,'c = '+c,String(total),'The inner loop selects column '+c+'.']);
+            total+=grid[r][c];
+            steps.push([4,'grid['+r+','+c+'] = '+grid[r][c],String(total),'Add the selected cell to total.']);
+            steps.push([5,'c → '+(c+1),String(total),'NEXT c returns to the inner loop condition.']);
+          }
+          steps.push([3,'c = 3',String(total),'Column 3 is out of range, so leave the inner loop.']);
+          steps.push([6,'r → '+(r+1),String(total),'NEXT r returns to the outer loop.']);
+        }
+        steps.push([2,'r = 2',String(total),'Row 2 is out of range, so the outer loop stops.']);
+      }else{
+        const visits=byRow?[[1,0],[1,1],[1,2]]:[[0,2],[1,2]];
+        visits.forEach(([r,c],n)=>{
+          steps.push([2,(byRow?'c = '+c:'r = '+r),String(total),'The loop selects the next '+(byRow?'column':'row')+'.']);
+          total+=grid[r][c];
+          steps.push([3,'grid['+r+','+c+'] = '+grid[r][c],String(total),'Add only the selected cell.']);
+          steps.push([4,(byRow?'c':'r')+' → '+(n+1),String(total),'NEXT returns to the loop condition.']);
+        });
+        steps.push([2,(byRow?'c = 3':'r = 2'),String(total),'The counter is past the last '+(byRow?'column':'row')+', so stop.']);
+      }
+      steps.push([lines.length,'Output',String(total),'Print the total after every required cell has been visited.']);
+      return {title:'2D Arrays',task:'Similar example: '+(nested?'visit every cell using nested FOR loops.':
+        byRow?'add one row of a different grid.':'add one column of a different grid.'),
+        codeLabel:'Given grid: row 0 [2, 4, 6] · row 1 [3, 5, 7]',
+        traceTitle:'Follow row and column indices',columns:['Cell / action','total'],lines,steps,
+        loopBack: nested?undefined:{from:4,to:2},
+        end:'Output: '+total+'. Row comes first in grid[row,column].'};
+    }
     if(q.level==='medium')return d('array-2d','trace a different grid-cell update.',
       ['array grid[2,3]','grid[0,1] = 6','grid[1,2] = grid[0,1] + 2','print(grid[1,2])'],
       [['Grid','2 × 3','Rows 0,1 and columns 0,1,2.'],['Set','[0,1] = 6','The first index names a row.'],['Update','[1,2] = 8','Use 6 + 2 in another cell.'],['Output','8','Print the new value at row 1 column 2.']],

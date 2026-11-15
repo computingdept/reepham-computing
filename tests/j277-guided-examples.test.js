@@ -17,13 +17,20 @@ test('Every active J277 coding question has a separate progressive Demo',()=>{
         for(const seed of [1,42,2026]){
           const q=engine.makeQuestion(level,i,seed);
           const demo=guided.make(skill,q);
-          assert.equal(demo.progressive,repeating.has(skill)?undefined:true,`${skill}/${level}/${i}`);
+          const arrayLoop=['array-1d','array-2d'].includes(skill)&&level==='medium'
+            &&q.code.some(line=>/^for [irc]\s*=/i.test(line));
+          const looping=repeating.has(skill)||arrayLoop;
+          assert.equal(demo.progressive,looping?undefined:true,`${skill}/${level}/${i}`);
           assert.match(demo.task,/^Similar example:/);
           assert.ok(demo.lines.length>0 && demo.lines.length<=10);
           if(repeating.has(skill)){
             assert.ok(demo.steps.length>demo.lines.length);
             assert.equal(demo.loopBack.to,skill==='for-loops'&&level==='easy'?1:2);
             assert.ok(demo.steps.some((step,j)=>j>0&&step[0]<demo.steps[j-1][0]),'Demo revisits the FOR line');
+          }else if(arrayLoop){
+            assert.ok(demo.steps.length>demo.lines.length,'Each array iteration is traced');
+            assert.ok(demo.steps.some((step,j)=>j>0&&step[0]<demo.steps[j-1][0]),'Loop revisits earlier source line');
+            assert.match(demo.end,/Output: \d+/);
           }else if(skill==='selection'){
             assert.equal(demo.steps.length,5,'only lines which execute should be traced');
             assert.deepEqual(demo.steps.map(step=>step[0]),[1,2,4,5,6]);
@@ -36,7 +43,7 @@ test('Every active J277 coding question has a separate progressive Demo',()=>{
           }
           assert.ok(demo.steps.every(s=>s[3].length>10));
           assert.ok(demo.end.length>8);
-          if(!repeating.has(skill))assert.ok(demo.lines.every((s,j)=>s!==demo.placeholders[j]));
+          if(!looping)assert.ok(demo.lines.every((s,j)=>s!==demo.placeholders[j]));
           count++;
         }
       }
@@ -65,6 +72,34 @@ test('Selection demos skip non-executing PRINT statements at every level',()=>{
     assert.deepEqual(demo.steps.map(step=>step[0]),[1,2,4,5,6],level);
     assert.ok(demo.steps[1][3].includes('line 03 is skipped'),level);
     assert.match(demo.end,level==='medium'?/Output: Pass/:/Output: Wait/);
+  }
+});
+
+test('1D array loop demos visit the correct zero-based indices',()=>{
+  const engine=require('../exercise/paper2/array-1d.js');
+  for(const [index,expected] of [[6,['0','1','2','3','4']],[9,['0','2','4']]]){
+    const demo=guided.make('array-1d',engine.makeQuestion('medium',index,42));
+    const visited=demo.steps.filter(step=>step[0]===4).map(step=>step[1].match(/\[(\d+)\]/)[1]);
+    assert.deepEqual(visited,expected);
+    assert.equal(demo.steps.at(-2)[0],3,'FOR must check its stopping condition');
+    assert.equal(demo.steps.at(-1)[0],6,'Print runs only after the loop');
+  }
+});
+
+test('2D array demos trace a row, column and nested-loop path',()=>{
+  const engine=require('../exercise/paper2/array-2d.js');
+  for(const [index,expectedCells,output] of [
+    [6,['1,0','1,1','1,2'],15],
+    [7,['0,2','1,2'],13],
+    [9,['0,0','0,1','0,2','1,0','1,1','1,2'],27]
+  ]){
+    const demo=guided.make('array-2d',engine.makeQuestion('medium',index,42));
+    const update=demo.lines.findIndex(line=>line.includes('total = total + grid'))+1;
+    const visited=demo.steps.filter(step=>step[0]===update)
+      .map(step=>step[1].match(/\[(\d+,\d+)\]/)[1]);
+    assert.deepEqual(visited,expectedCells);
+    assert.equal(Number(demo.steps.at(-1)[2]),output);
+    assert.match(demo.codeLabel,/Given grid/);
   }
 });
 
