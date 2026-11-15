@@ -61,7 +61,7 @@ test('Demo starts at the call and shows return to the caller',()=>{
   const shared=fs.readFileSync(path.join(__dirname,'../assets/j277-coding-demo.js'),'utf8');
   const page=fs.readFileSync(path.join(__dirname,'../exercise/paper2/functions/index.html'),'utf8');
   assert.match(shared,/functions:\s*\{\s*title:\s*'Functions'/);
-  assert.match(page,/j277-coding-demo\.js\?v=20261115-functions1/);
+  assert.match(page,/j277-coding-demo\.js\?v=20261115-skill-calls1/);
   for(const level of ['easy','medium','hard']){
     const d=skills.makeDemo(skills.makeQuestion(level,0,3));
     assert.equal(d.steps[0][0],d.entryLine);

@@ -21,7 +21,7 @@
   }
   // Shared, opt-in source viewer for coding Skills. Display line numbers are
   // separate from code text so copying code never includes the numbers.
-  function numberedCode(lines) {
+  function numberedCode(lines, options = {}) {
     const pre = global.document.createElement('pre');
     pre.className = 'erl rhsc-code-lines';
     lines.forEach((line, index) => {
@@ -35,6 +35,12 @@
       const source = global.document.createElement('span');
       source.className = 'rhsc-code-line-text';
       source.textContent = line;
+      if (options.startLine === index + 1) {
+        const marker = global.document.createElement('mark');
+        marker.className = 'rhsc-skill-start';
+        marker.textContent = 'START HERE';
+        source.append(' ', marker);
+      }
       row.append(number, source);
       pre.append(row);
     });

@@ -13,6 +13,26 @@ mark.rhsc-shared-keyword,mark.rhsc-shared-command,body #you-do mark.j277-sm-comm
   border:0;border-radius:0;box-shadow:none;
   box-decoration-break:clone;-webkit-box-decoration-break:clone;
 }
+/* Shared brush cue for the first executed subprogram call in J277 Skills.
+   The same pen-stroke variable is used by Objectives and Key Vocabulary. */
+.rhsc-skills-activity mark.rhsc-skill-start{
+  display:inline-block;flex:none;align-self:center;vertical-align:middle;
+  margin-left:.55em;padding:.04em .22em;
+  background-color:transparent!important;
+  background-image:var(--rhsc-central-ink-a);
+  background-repeat:no-repeat;background-position:center;background-size:100% 100%;
+  border:0;border-radius:0;box-shadow:none;
+  color:#24241a;font:850 clamp(12px,.75em,15px)/1.25 system-ui,sans-serif;
+  letter-spacing:.035em;white-space:nowrap;
+  user-select:none;-webkit-user-select:none;
+  box-decoration-break:clone;-webkit-box-decoration-break:clone;
+}
+@media(prefers-contrast:more){
+  .rhsc-skills-activity mark.rhsc-skill-start{
+    background-image:none;text-decoration:underline;
+    text-decoration-color:#937800;text-decoration-thickness:.15em;
+  }
+}
 #new-learning mark.rhsc-shared-keyword:nth-of-type(3n + 2),
 #i-do mark.rhsc-shared-keyword:nth-of-type(3n + 2),
 #we-do mark.rhsc-shared-keyword:nth-of-type(3n + 2){background-image:var(--rhsc-central-ink-b)}

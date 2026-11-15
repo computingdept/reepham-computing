@@ -8,14 +8,14 @@ test('the shared coding demo recognises Procedures and offers a separate demo', 
   const shared=fs.readFileSync(path.join(__dirname,'../assets/j277-coding-demo.js'),'utf8');
   const page=fs.readFileSync(path.join(__dirname,'../exercise/paper2/procedures/index.html'),'utf8');
   assert.match(shared,/procedures:\s*\{\s*title:\s*'Procedures'/);
-  assert.match(page,/j277-coding-demo\.js\?v=20261115-subprogram-call1/);
+  assert.match(page,/j277-coding-demo\.js\?v=20261115-skill-calls1/);
 });
 
 test('worked demos trace the call before entering the sub program at every level', () => {
   const shared=fs.readFileSync(path.join(__dirname,'../assets/j277-coding-demo.js'),'utf8');
   const style=fs.readFileSync(path.join(__dirname,'../assets/j277-coding-demo.css'),'utf8');
   assert.match(shared,/idx \\+ 1 === next\\.entryLine/);
-  assert.match(style,/\\.skill-demo-entry-badge/);
+  assert.match(style,/\\.skill-demo-line \.rhsc-skill-start/);
   for (const level of ['easy','medium','hard']) {
     const demo=skills.makeDemo(skills.makeQuestion(level,0,42));
     assert.equal(demo.entryLine,demo.lines.length,level);

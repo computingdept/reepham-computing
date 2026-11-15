@@ -348,7 +348,7 @@
       row.append(number, source);
       if (idx + 1 === next.entryLine) {
         row.classList.add('is-entry-line');
-        row.append(make('span', 'skill-demo-entry-badge', '▶ START HERE'));
+        row.append(make('mark', 'rhsc-skill-start', 'START HERE'));
       }
       pre.append(row); codeRows.push(row);
     });

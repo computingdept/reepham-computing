@@ -13,8 +13,10 @@
     p[SKILL][state.level]={solved:Number(before.solved)||0,best:Number(before.best)||0,sessions:Number(before.sessions)||0,[field]:value};
     core.writeProgress(KEY,p);
   }
-  function codePanel(lines,label){const box=node('div','code-panel');
-    box.append(node('span','code-label',label||'OCR Exam Reference Language'),core.numberedCode(lines));return box;}
+  function codePanel(lines,label,program){const box=node('div','code-panel');
+    const ending=lines.findIndex(line=>/^\s*endprocedure\s*$/i.test(line));
+    const startLine=program?1:(ending>=0&&ending+1<lines.length?ending+2:null);
+    box.append(node('span','code-label',label||'OCR Exam Reference Language'),core.numberedCode(lines,{startLine}));return box;}
   function resetMessages(){$('feedback').hidden=true;$('feedback').textContent='';$('hint-panel').replaceChildren();$('hint-panel').hidden=true;$('hint').textContent='Show hint';}
   function showFeedback(message,kind){const el=$('feedback');el.textContent=message;el.className='message '+kind;el.hidden=false;}
   function inputPanel(hard){const box=node('div','string-answer'+(hard?'':' procedure-trace'));
@@ -42,7 +44,7 @@
   }
   function renderWorkspace(q){const board=$('workspace');board.replaceChildren();
     const layout=node('div','string-layout'),left=node('div','string-left');
-    left.append(codePanel(q.code,q.type==='program'?'GIVEN EXAMPLE CALL':'OCR EXAM REFERENCE LANGUAGE'));
+    left.append(codePanel(q.code,q.type==='program'?'GIVEN EXAMPLE CALL':'OCR EXAM REFERENCE LANGUAGE',q.type==='program'));
     layout.append(left);
     if(q.type==='choose')layout.append(choices(q));
     else layout.append(inputPanel(q.type==='program'));
