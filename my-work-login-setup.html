@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>My Work · Staff login setup</title>
+  <style>
+    :root{--green:#006347;--ink:#193d2f;--muted:#526c5e;--line:#d2e2d7;--pale:#eff6f1}
+    *{box-sizing:border-box}body{margin:0;background:#f7faf8;color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+    main{max-width:740px;margin:32px auto;padding:0 15px 60px}h1{font-size:32px;letter-spacing:-.035em;margin-bottom:4px}h2{font-size:19px;margin:0 0 8px}
+    .sub{color:var(--muted);margin-top:0}.panel{background:white;border:1px solid var(--line);padding:22px;border-radius:14px;margin:16px 0}
+    label{display:block;font-weight:800;margin:12px 0 6px}textarea,input{font:inherit;width:100%;padding:12px;border:2px solid #9bb7a5;border-radius:8px;background:white}
+    textarea{min-height:185px;font:14px/1.6 ui-monospace,monospace;resize:vertical}input{min-height:46px}
+    button{font:inherit;cursor:pointer;border:1px solid var(--green);background:var(--green);color:white;padding:10px 16px;border-radius:9px;font-weight:800;min-height:44px}
+    button.secondary{background:white;color:var(--green)}button:disabled{opacity:.55;cursor:not-allowed}.actions{display:flex;flex-wrap:wrap;gap:10px;margin:15px 0}
+    .notice{border-radius:9px;background:var(--pale);padding:11px 14px;font-size:14px}.warning{background:#fff5dc}.status{padding:10px 0;font-weight:700;white-space:pre-line}
+    :focus-visible{outline:3px solid #edb544;outline-offset:3px}a{color:var(--green)}
+  </style>
+</head>
+<body>
+  <main>
+    <p><a href="/">← RHS Computing</a></p>
+    <h1>My Work · Staff setup</h1>
+    <p class="sub">Private preparation for anonymous student usernames. This page does not upload anything until you select <strong>Activate logins</strong>.</p>
+    <section class="panel">
+      <h2>1 · Prepare login details</h2>
+      <p>Paste two columns from your private school spreadsheet: <strong>Username</strong> then <strong>Practice code</strong>. One student per line. You can paste directly from Excel.</p>
+      <label for="rows">Username and code pairs</label>
+      <textarea id="rows" spellcheck="false" autocapitalize="off" placeholder="Y10-01&#9;P-XXXXXXXXXX&#10;Y10-02&#9;P-XXXXXXXXXX"></textarea>
+      <div class="actions"><button id="prepare">Prepare passwords</button></div>
+      <p class="notice warning">No names or school email addresses. The passwords will be generated on this device. Keep the downloaded file in restricted school OneDrive storage.</p>
+      <p id="prepareStatus" class="status" aria-live="polite"></p>
+    </section>
+    <section class="panel">
+      <h2>2 · Save the credentials privately</h2>
+      <p>Download the generated file <strong>before</strong> activating anything. It contains anonymous usernames, their existing practice codes and individual passwords.</p>
+      <div class="actions"><button id="download" disabled>Download credentials CSV</button></div>
+      <p class="notice">If you need to retry later, paste the saved three-column file back into the box above. It will reuse the same passwords.</p>
+    </section>
+    <section class="panel">
+      <h2>3 · Activate the logins</h2>
+      <p>Enter your private Cloudflare teacher token. It is used only for this request and is not stored by this page.</p>
+      <label for="token">Teacher token</label>
+      <input id="token" type="password" autocomplete="off" spellcheck="false">
+      <div class="actions"><button id="activate" disabled>Activate logins</button></div>
+      <p id="importStatus" class="status" aria-live="polite"></p>
+      <p class="notice">The teacher token is required for every batch. On interruption, use the same downloaded file to continue; already imported entries can safely be retried.</p>
+    </section>
+  </main>
+  <script>
+  (() => {
+    'use strict';
+    const API = 'https://rhsccs-my-work-api.jeromedthompson.workers.dev';
+    const ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    const USERNAME = /^[a-z0-9][a-z0-9._-]{2,39}$/;
+    const CODE = /^P-[A-HJ-NP-Z2-9]{10}$/;
+    let profiles = [];
+    let downloaded = false;
+    const $ = id => document.getElementById(id);
+    const randomPassword = () => {
+      const bytes = crypto.getRandomValues(new Uint8Array(12));
+      return [...bytes].map(b => ALPHABET[b & 31]).join('');
+    };
+    function parse(text) {
+      const lines = text.replace(/^\uFEFF/, '').trim().split(/\r?\n/).filter(Boolean);
+      if (/^username[\t,]/i.test(lines[0] || '')) lines.shift();
+      if (!lines.length || lines.length > 100) throw Error('Paste between 1 and 100 students.');
+      const seenCodes = new Set();
+      const seenUsers = new Set();
+      return lines.map((line, index) => {
+        const cols = line.split(line.includes('\t') ? '\t' : ',').map(c => c.trim());
+        const username = (cols[0] || '').toLowerCase();
+        const code = (cols[1] || '').toUpperCase();
+        const password = cols[2] || randomPassword();
+        if (![2, 3].includes(cols.length) || !USERNAME.test(username) || !CODE.test(code) || !/^[!-~]{12,128}$/.test(password)) {
+          throw Error(`Check row ${index + 1}: use anonymous username, existing code and optional 12+ character password.`);
+        }
+        if (seenUsers.has(username) || seenCodes.has(code)) throw Error(`Duplicate username or code on row ${index + 1}.`);
+        seenUsers.add(username); seenCodes.add(code);
+        return { username, code, password };
+      });
+    }
+    $('prepare').addEventListener('click', () => {
+      profiles = [];
+      downloaded = false;
+      $('download').disabled = true;
+      $('activate').disabled = true;
+      $('importStatus').textContent = '';
+      try {
+        profiles = parse($('rows').value);
+        $('prepareStatus').textContent = `${profiles.length} anonymous login details prepared. Save them before activating.`;
+        $('download').disabled = false;
+      } catch (error) { $('prepareStatus').textContent = error.message; }
+    });
+    $('download').addEventListener('click', () => {
+      if (!profiles.length) return;
+      const csv = ['Username,PracticeCode,Password', ...profiles.map(({username,code,password}) => `${username},${code},${password}`)].join('\r\n') + '\r\n';
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'RHS_My_Work_Private_Logins.csv';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      downloaded = true;
+      $('activate').disabled = false;
+    });
+    $('activate').addEventListener('click', async () => {
+      if (!downloaded || !profiles.length) return;
+      const token = $('token').value.trim();
+      if (!token) { $('importStatus').textContent = 'Enter your teacher token first.'; return; }
+      const button = $('activate');
+      button.disabled = true;
+      let done = 0;
+      try {
+        for (let index = 0; index < profiles.length; index += 5) {
+          const batch = profiles.slice(index, index + 5);
+          const response = await fetch(API + '/v1/teacher/logins', {
+            method: 'POST', cache: 'no-store',
+            headers: { 'content-type': 'application/json', authorization: 'Bearer ' + token },
+            body: JSON.stringify({ logins: batch })
+          });
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok) throw Error(data.error || `Server error ${response.status}`);
+          done += data.results.length;
+          $('importStatus').textContent = `${done} of ${profiles.length} login records checked or activated…`;
+        }
+        $('importStatus').textContent = `Done. All ${done} login records are activated. Keep the downloaded file private.`;
+        $('token').value = '';
+      } catch (error) {
+        $('importStatus').textContent = `Stopped after ${done} of ${profiles.length}: ${error.message}\nKeep your saved CSV. Paste it again to retry without changing passwords.`;
+        button.disabled = false;
+      }
+    });
+  })();
+  </script>
+</body>
+</html>
