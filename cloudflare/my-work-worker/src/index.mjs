@@ -7,6 +7,14 @@ const ASSIGNMENT_PATTERN = /^(10|11|12|13)\|(j277|h446)-(?:skill|practice)-[a-z0
 const LEVELS = new Set(['', 'easy', 'medium']);
 const MAX_BODY = 16_384;
 const ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+const USERNAME_PATTERN = /^[a-z0-9][a-z0-9._-]{2,39}$/;
+const PASSWORD_PATTERN = /^[!-~]{12,128}$/;
+const SESSION_PATTERN = /^[A-Za-z0-9_-]{43}$/;
+const PASSWORD_ITERATIONS = 210_000;
+const SESSION_LIFETIME_SECONDS = 8 * 60 * 60;
+const LOGIN_ATTEMPT_LIMIT = 5;
+const LOGIN_LOCK_SECONDS = 15 * 60;
+const encoder = new TextEncoder();
 
 export function isIndependentWorkTime(date = new Date()) {
   const parts = new Intl.DateTimeFormat('en-GB', {
@@ -40,6 +48,105 @@ function compareSecrets(a, b) {
   let difference = 0;
   for (let i = 0; i < left.length; i++) difference |= left[i] ^ right[i];
   return difference === 0;
+}
+
+function hex(bytes) { return [...bytes].map(byte => byte.toString(16).padStart(2, '0')).join(''); }
+function fromHex(value) { return new Uint8Array(value.match(/../g).map(part => parseInt(part, 16))); }
+function randomHex(length) { return hex(crypto.getRandomValues(new Uint8Array(length))); }
+function normalizeUsername(value) {
+  if (typeof value !== 'string') return null;
+  const username = value.trim().toLowerCase();
+  return USERNAME_PATTERN.test(username) ? username : null;
+}
+async function digest(value) {
+  return hex(new Uint8Array(await crypto.subtle.digest('SHA-256', encoder.encode(value))));
+}
+async function usernameKey(username) { return digest('rhs-my-work-login:v1:' + username); }
+async function passwordHash(password, salt) {
+  const key = await crypto.subtle.importKey('raw', encoder.encode(password), 'PBKDF2', false, ['deriveBits']);
+  const derived = await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: fromHex(salt), iterations: PASSWORD_ITERATIONS }, key, 256);
+  return hex(new Uint8Array(derived));
+}
+async function checkPassword(password, row) {
+  return compareSecrets(await passwordHash(password, row.password_salt), row.password_hash);
+}
+function newSessionToken() {
+  const bytes = crypto.getRandomValues(new Uint8Array(32));
+  return btoa(String.fromCharCode(...bytes)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+async function sessionLearner(request, env) {
+  const token = request.headers.get('authorization')?.replace(/^Bearer\s+/i, '') || '';
+  if (!SESSION_PATTERN.test(token)) return null;
+  return env.DB.prepare(`SELECT p.code, p.cohort FROM login_sessions s
+    JOIN practice_codes p ON p.code = s.code
+    WHERE s.token_hash = ? AND s.expires_at > ? AND p.enabled = 1`)
+    .bind(await digest(token), Math.floor(Date.now() / 1000)).first();
+}
+
+async function signIn(request, env) {
+  const { username: rawUsername, password } = await jsonBody(request);
+  const username = normalizeUsername(rawUsername);
+  if (!username || typeof password !== 'string' || !PASSWORD_PATTERN.test(password)) {
+    return respond({ error: 'Username or password not recognised' }, 401);
+  }
+  const key = await usernameKey(username);
+  const row = await env.DB.prepare(`SELECT l.code, l.password_salt, l.password_hash, l.failed_attempts, l.locked_until
+    FROM login_profiles l JOIN practice_codes p ON p.code = l.code
+    WHERE l.username_key = ? AND p.enabled = 1`).bind(key).first();
+  if (!row) return respond({ error: 'Username or password not recognised' }, 401);
+  const now = Math.floor(Date.now() / 1000);
+  if (row.locked_until > now) return respond({ error: 'Too many attempts. Please try again later.' }, 429);
+  if (!(await checkPassword(password, row))) {
+    const failures = row.locked_until && row.locked_until <= now ? 1 : row.failed_attempts + 1;
+    const locked = failures >= LOGIN_ATTEMPT_LIMIT ? now + LOGIN_LOCK_SECONDS : 0;
+    await env.DB.prepare('UPDATE login_profiles SET failed_attempts = ?, locked_until = ? WHERE username_key = ?')
+      .bind(failures, locked, key).run();
+    return respond({ error: 'Username or password not recognised' }, 401);
+  }
+  await env.DB.prepare('UPDATE login_profiles SET failed_attempts = 0, locked_until = 0 WHERE username_key = ?').bind(key).run();
+  const token = newSessionToken();
+  const expiresAt = now + SESSION_LIFETIME_SECONDS;
+  await env.DB.prepare('INSERT INTO login_sessions (token_hash, code, expires_at) VALUES (?, ?, ?)')
+    .bind(await digest(token), row.code, expiresAt).run();
+  return respond({ session: token, expiresAt });
+}
+
+async function provisionLogins(request, env) {
+  const { logins } = await jsonBody(request);
+  if (!Array.isArray(logins) || logins.length < 1 || logins.length > 5) return respond({ error: 'Provide 1–5 logins per request' }, 400);
+  const seen = new Set();
+  const prepared = [];
+  for (const entry of logins) {
+    const username = normalizeUsername(entry?.username);
+    const code = entry?.code;
+    const password = entry?.password;
+    if (!username || !codeIsValid(code) || typeof password !== 'string' || !PASSWORD_PATTERN.test(password) || seen.has(username)) {
+      return respond({ error: 'Check the anonymous usernames, codes and passwords' }, 400);
+    }
+    seen.add(username);
+    prepared.push({ username, code, password, key: await usernameKey(username) });
+  }
+  const result = [];
+  for (const entry of prepared) {
+    const code = await learner(env, entry.code);
+    if (!code) return respond({ error: 'One or more practice codes are not active. No more rows were imported.' }, 409);
+    const existing = await env.DB.prepare('SELECT code, password_salt, password_hash FROM login_profiles WHERE username_key = ?').bind(entry.key).first();
+    if (existing) {
+      if (existing.code !== entry.code || !(await checkPassword(entry.password, existing))) {
+        return respond({ error: 'A username is already assigned differently. No more rows were imported.' }, 409);
+      }
+      result.push({ username: entry.username, status: 'already-imported' });
+      continue;
+    }
+    const assigned = await env.DB.prepare('SELECT username_key FROM login_profiles WHERE code = ?').bind(entry.code).first();
+    if (assigned) return respond({ error: 'A practice code is already assigned. No more rows were imported.' }, 409);
+    const salt = randomHex(16);
+    const hash = await passwordHash(entry.password, salt);
+    await env.DB.prepare('INSERT INTO login_profiles (username_key, code, password_salt, password_hash) VALUES (?, ?, ?, ?)')
+      .bind(entry.key, entry.code, salt, hash).run();
+    result.push({ username: entry.username, status: 'created' });
+  }
+  return respond({ results: result }, 201);
 }
 
 function respond(body, status = 200, extraHeaders = {}) {
@@ -92,13 +199,20 @@ async function handle(request, env) {
   if (path === '/v1/health' && request.method === 'GET') return respond({ ok: true, pilot: true });
   if (!env.DB) return respond({ error: 'Database not configured' }, 503);
 
+  if (path === '/v1/login' && request.method === 'POST') return signIn(request, env);
+  if (path === '/v1/logout' && request.method === 'POST') {
+    const token = request.headers.get('authorization')?.replace(/^Bearer\s+/i, '') || '';
+    if (SESSION_PATTERN.test(token)) await env.DB.prepare('DELETE FROM login_sessions WHERE token_hash = ?').bind(await digest(token)).run();
+    return respond({ signedOut: true });
+  }
+
   if (path === '/v1/work' && request.method === 'POST') {
     if (!isIndependentWorkTime() && !teacherIsValid(request, env)) return respond({ error: 'Independent work opens at 12:30–13:20 and 15:30–midnight (UK time).' }, 403);
     const { code } = await jsonBody(request);
-    if (!codeIsValid(code)) return respond({ error: 'Check your practice code' }, 400);
-    const student = await learner(env, code);
+    const student = code === undefined ? await sessionLearner(request, env)
+      : codeIsValid(code) ? await learner(env, code) : null;
     if (!student) return respond({ error: 'Practice code not recognised' }, 404);
-    return respond({ cohort: student.cohort, work: await work(env, code, student.cohort) });
+    return respond({ cohort: student.cohort, work: await work(env, student.code, student.cohort) });
   }
 
   if (path === '/v1/attempts' && request.method === 'POST') {
@@ -129,6 +243,7 @@ async function handle(request, env) {
 
   if (path.startsWith('/v1/teacher/')) {
     if (!teacherIsValid(request, env)) return respond({ error: 'Teacher access required' }, 401);
+    if (path === '/v1/teacher/logins' && request.method === 'POST') return provisionLogins(request, env);
     if (path === '/v1/teacher/codes' && request.method === 'POST') {
       const { cohort, count } = await jsonBody(request);
       if (!cohortIsValid(cohort) || !Number.isInteger(count) || count < 1 || count > 100) return respond({ error: 'Choose a cohort and 1–100 codes' }, 400);
