@@ -54,3 +54,17 @@ test('Karnaugh Gray-code headers and accessible cell names use binary, not denar
   const gray=[0,1,3,2];
   assert.deepEqual(gray.map(x=>x.toString(2).padStart(2,'0')),['00','01','11','10']);
 });
+
+for(const level of ['easy','medium','hard'])test(`${level} H446 demonstrations finish with a worked answer`,()=>{
+  const expected={
+    convert:/2D/,shift:level==='easy'?/00110100 = 52/:/11100100 = −28/,
+    triple:/00010101 = 21/,borrow:/00011101 = 29/,twos:/11110011/,
+    fixed:/1101\.0100/,floating:/6 \+ 2 = 8/,kmap:/F = B/,
+    quicksort:level==='hard'?/\[2, 3, 5, 7, 7, 9\]/:/\[2, 3, 5, 7, 9\]/
+  };
+  for(const [skill,answer] of Object.entries(expected)){
+    const example=demo.get(skill,{level,width:8});
+    const last=example.steps.at(-1);
+    assert.match(last[1]+' '+last[2],answer,`${skill} ${level} final step`);
+  }
+});
