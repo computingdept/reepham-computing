@@ -1,0 +1,63 @@
+/* Skill 22 · linear search · one-screen visual, code and trace practice. */
+.rhsc-linear-search .question-text h2{font-size:clamp(23px,2.7vw,30px);line-height:1.2;margin:0 0 6px}
+.rhsc-linear-search .question-text p{font-size:clamp(13px,1.15vw,16px);line-height:1.4}
+.rhsc-linear-search .work-board{padding:14px}
+.rhsc-linear-search .search-caption{display:block;font:850 12px/1.35 system-ui,sans-serif;letter-spacing:.06em;color:#326548;margin:0 0 8px}
+.rhsc-linear-search .search-visual{padding:11px 12px 12px;border:1px solid #d9e5dc;border-radius:12px;background:#f7fbf8}
+.rhsc-linear-search .search-cells{display:grid;grid-template-columns:repeat(var(--cell-count,6),minmax(0,1fr));gap:8px;max-width:790px}
+.rhsc-linear-search .search-cell{position:relative;min-width:0;min-height:60px;padding:18px 5px 8px;border:1px solid #c9d8ce;
+  border-radius:10px;background:white;color:#284836;font:800 clamp(18px,2vw,25px)/1 system-ui,sans-serif;
+  display:flex;align-items:center;justify-content:center;cursor:default}
+.rhsc-linear-search button.search-cell{cursor:pointer}
+.rhsc-linear-search button.search-cell:not(:disabled):hover{background:#eef7f0;border-color:#498969}
+.rhsc-linear-search .search-index{position:absolute;top:5px;left:6px;color:#68907b;font:750 10px/1 system-ui,sans-serif}
+.rhsc-linear-search .search-cell.is-checked{background:#e8f1eb;border-color:#6c9f7f}
+.rhsc-linear-search .search-cell.is-match{background:#ffed9e;border:2px solid #be9631;color:#533c09}
+.rhsc-linear-search .search-easy-instructions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:12px 0 4px}
+.rhsc-linear-search .search-easy-instructions p{flex:1 1 310px;margin:0;font-weight:700;font-size:15px;color:#395e49}
+.rhsc-linear-search .search-progress{font-size:13px;color:#3f6b50;white-space:nowrap}
+.rhsc-linear-search .search-absent{min-height:40px;padding:8px 15px;border:1px solid #a3c5ae;border-radius:9px;
+  background:white;color:#285348;font-size:14px;font-weight:800}
+.rhsc-linear-search .search-absent:hover:not(:disabled){background:#eaf4ed}
+.rhsc-linear-search .search-work-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(340px,.9fr);gap:13px;margin-top:13px;align-items:start}
+.rhsc-linear-search .search-code,.rhsc-linear-search .search-trace{min-width:0;padding:11px 12px 13px;border:1px solid #d5e4d9;border-radius:12px;background:#fff}
+.rhsc-linear-search .search-code-lines{display:grid;gap:1px;background:#f7faf7;border-radius:9px;padding:8px 5px}
+.rhsc-linear-search .search-code-row{display:flex;align-items:center;gap:6px;min-width:0;min-height:28px}
+.rhsc-linear-search .search-code-number{width:24px;flex:none;font:750 10px/1 monospace;color:#7f9a86;text-align:right}
+.rhsc-linear-search .search-code-text{font:660 clamp(11px,1.12vw,14px)/1.45 ui-monospace,SFMono-Regular,Consolas,monospace;
+  white-space:pre-wrap;overflow-wrap:anywhere;color:#2d503c}
+.rhsc-linear-search .search-code-input{min-width:0;flex:1;width:100%;min-height:27px;padding:3px 7px;border:1px solid #c6b068;
+  border-radius:5px;background:#fff9e4;color:#3b4e3c;font:700 clamp(11px,1vw,13px)/1.3 ui-monospace,monospace}
+.rhsc-linear-search .search-code-input:focus,.rhsc-linear-search .search-value-input:focus,.rhsc-linear-search .search-result-input:focus{outline:2px solid #5d9670;outline-offset:1px}
+.rhsc-linear-search .search-table{border-collapse:collapse;width:100%;font-size:13px;text-align:center}
+.rhsc-linear-search .search-table th{background:#eaf3ed;color:#315d43;font-size:12px}
+.rhsc-linear-search .search-table th,.rhsc-linear-search .search-table td{border:1px solid #d9e5dc;padding:5px 4px;min-width:55px}
+.rhsc-linear-search .search-trace-index{font-weight:850;color:#366449}
+.rhsc-linear-search .search-value-input,.rhsc-linear-search .search-result-input{width:60px;max-width:100%;height:32px;
+  padding:3px 5px;border:1px solid #b8cdbd;border-radius:6px;text-align:center;font-size:14px;color:#284836}
+.rhsc-linear-search .search-boolean{display:flex;gap:4px;justify-content:center}
+.rhsc-linear-search .search-bool{min-width:43px;min-height:30px;padding:4px 5px;border:1px solid #c5dacb;border-radius:6px;
+  font:750 11px system-ui,sans-serif;color:#39634b;background:#f8fbf8}
+.rhsc-linear-search .search-bool[aria-pressed=true]{background:#d7eddd;border:2px solid #388253;padding:3px 4px}
+.rhsc-linear-search .search-return{display:flex;gap:10px;align-items:center;justify-content:flex-end;
+  margin-top:12px;color:#335e44;font-size:13px}
+.rhsc-linear-search .results{min-height:220px}
+.rhsc-linear-search .skill-demo-record-table.is-array{table-layout:fixed}
+.rhsc-linear-search .skill-demo-record-table.is-array th:first-child{width:auto;text-align:center}
+.rhsc-linear-search .skill-demo-record-table.is-array td{text-align:center;font-size:16px}
+.rhsc-linear-search .skill-demo-array-scroll{overflow-x:auto}
+@media(max-width:870px){
+  .rhsc-linear-search .search-work-grid{grid-template-columns:1fr}
+  .rhsc-linear-search .search-code-row{min-height:25px}
+}
+@media(max-width:600px){
+  .rhsc-linear-search .work-board{padding:10px}
+  .rhsc-linear-search .search-visual{padding:9px}
+  .rhsc-linear-search .search-cells{gap:4px}
+  .rhsc-linear-search .search-cell{min-height:52px;font-size:17px;padding:16px 2px 5px}
+  .rhsc-linear-search .search-index{left:4px;top:4px;font-size:9px}
+  .rhsc-linear-search .search-code,.rhsc-linear-search .search-trace{padding:9px}
+  .rhsc-linear-search .search-code-text{font-size:11px}
+  .rhsc-linear-search .search-bool{font-size:10px;min-width:39px}
+  .rhsc-linear-search .search-table th,.rhsc-linear-search .search-table td{min-width:42px;padding:4px 2px}
+}

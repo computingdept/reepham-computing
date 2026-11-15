@@ -194,6 +194,21 @@
       end: 'A good solution starts with the right data, smaller tasks and clear steps.',
       progressive: true, showAllCode: true
     },
+    'linear-search': {
+      title: 'Linear Search', entryLine: 10, progressive: true, showAllCode: true,
+      codeLabel: 'OCR ERL · called function and trace table', columns: ['Action','Value'],
+      lines: ['function linearSearch(values, target)','    for i = 0 to values.length - 1',
+        '        if values[i] == target then','            return i','        endif','    next i',
+        '    return -1','endfunction','array numbers = [3,8,5]','print(linearSearch(numbers, 5))'],
+      steps: [[10,'START HERE','linearSearch(numbers,5)','Start at the call, not the first function line.'],
+        [2,'i','0','Check index 0.'],[3,'3 == 5','False','Keep searching.'],
+        [6,'NEXT','1','Move forward one place.'],[2,'i','1','Check index 1.'],
+        [3,'8 == 5','False','Keep searching.'],[6,'NEXT','2','Move forward one place.'],
+        [2,'i','2','Check index 2.'],[3,'5 == 5','True','Match found.'],
+        [4,'RETURN','2','Return the first matching index.'],[10,'Output','2','Print the result.']],
+      end: 'The first 5 is at index 2. Linear search checks from left to right.',
+      dataTable: {layout:'array',name:'numbers',caption:'target = 5',values:[3,8,5]}
+    },
     strings: {
       title: 'String Handling', codeLabel: 'OCR ERL · substring(start, count)',
       columns: ['Index / action', 'Value'],
@@ -323,6 +338,19 @@
     recordData.replaceChildren();
     recordData.hidden = !data;
     if (!data) return;
+    if (data.layout === 'array' && Array.isArray(data.values)) {
+      const heading = make('div', 'skill-demo-record-heading');
+      heading.append(make('strong', '', data.name || 'Array'),make('span', '', data.caption || 'Array values'));
+      const wrapper = make('div', 'skill-demo-array-scroll');
+      const table = make('table', 'skill-demo-record-table is-array');
+      const head = make('thead'),headers = make('tr');
+      data.values.forEach((_,i)=>{const cell=make('th','','Index '+i);cell.scope='col';headers.append(cell);});
+      head.append(headers);
+      const body=make('tbody'),row=make('tr'),cells=[];
+      data.values.forEach(value=>{const td=make('td','',String(value));row.append(td);cells.push(td);});
+      body.append(row);table.append(head,body);wrapper.append(table);recordData.append(heading,wrapper);
+      recordCells.push(cells);return;
+    }
     const heading = make('div', 'skill-demo-record-heading');
     heading.append(make('strong', '', data.name),
       make('span', '', 'Column '+data.focusColumn+' = '+data.fields[data.focusColumn]));
