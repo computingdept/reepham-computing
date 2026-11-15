@@ -494,6 +494,14 @@ function prepareObjectiveVocabularySupport(){
     const p=existing||document.createElement('p');
     p.className='objective-vocab-support';
     p.textContent=support;
+    // The optional classroom-focus presentation labels supporting examples.
+    // Keep the existing shared reveal flow and other lessons unchanged.
+    if(stage.closest('#overview[data-vocab-display="focus"]')){
+      const label=document.createElement('strong');
+      label.className='objective-vocab-example-label';
+      label.textContent='EXAMPLE';
+      p.prepend(label);
+    }
     if(!existing)definition.appendChild(p);
   });
 }
@@ -1932,6 +1940,11 @@ function prepareKS3VocabularyIntroduction(){
 }
 
 prepareKS3VocabularyIntroduction();
+// Let lesson content opt into a centrally styled vocabulary presentation.
+// The lesson only declares a mode; no lesson-specific CSS or JS is required.
+if(document.querySelector('meta[name="lesson-vocabulary-display"]')?.content==='focus'){
+  document.getElementById('overview')?.setAttribute('data-vocab-display','focus');
+}
 prepareObjectiveVocabularySupport();
 prepareVocabulary();
 /* H446-only: publication status belongs in source and the staff workflow,

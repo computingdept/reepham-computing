@@ -942,6 +942,64 @@
   line-height:1.4;
   font-weight:600;
 }
+
+/* Opt-in vocabulary focus: one authoritative classroom presentation.
+   The preview chips remain available on mobile rather than being removed;
+   the shared Objectives reveal controls continue to own the interaction. */
+@media(min-width:701px){
+  #overview[data-vocab-display="focus"] .vocab-intro{display:none}
+  #overview[data-vocab-display="focus"] .objectives-vocab-layout{align-items:stretch}
+  #overview[data-vocab-display="focus"] .objectives-vocab-right{display:flex;min-width:0}
+  #overview[data-vocab-display="focus"] .objective-vocab-stage{
+    flex:1;
+    min-height:clamp(330px,55vh,550px);
+    padding:clamp(22px,2.4vw,34px);
+  }
+  #overview[data-vocab-display="focus"] .objective-vocab-stage h2{
+    font-size:clamp(44px,4.3vw,72px);
+    overflow-wrap:anywhere;
+  }
+  #overview[data-vocab-display="focus"] .objective-vocab-definition{
+    margin-top:clamp(24px,3.5vh,42px);
+    padding:clamp(16px,1.8vw,26px);
+    background:var(--green-soft);
+    border:1px solid var(--line);
+    border-left:6px solid var(--green);
+    border-radius:12px;
+  }
+  #overview[data-vocab-display="focus"] .objective-vocab-definition p:not(.objective-vocab-support){
+    font-size:clamp(25px,2.3vw,36px);
+    line-height:1.28;
+  }
+  #overview[data-vocab-display="focus"] .objective-vocab-support{
+    margin-top:clamp(15px,2.5vh,26px);
+    padding:13px 16px;
+    max-width:none;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:10px;
+    color:var(--ink);
+    font-size:clamp(20px,1.55vw,25px);
+    line-height:1.35;
+  }
+  #overview[data-vocab-display="focus"] .objective-vocab-example-label{
+    display:block;
+    margin-bottom:5px;
+    color:var(--green);
+    font-size:clamp(13px,1.05vw,16px);
+    letter-spacing:.08em;
+  }
+}
+/* H446 phones show the vocabulary preview, not the large term panel. */
+@media(max-width:700px){
+  #overview[data-vocab-display="focus"] .vocab-intro-list .vocab-tip{
+    min-height:44px;
+    display:inline-flex;
+    align-items:center;
+    padding:9px 12px;
+    font-size:clamp(17px,4.1vw,20px);
+  }
+}
 @media(max-height:760px) and (min-width:901px){
   #overview[data-objectives-vocab="true"] .objective-vocab-support{
     margin-top:7px;
