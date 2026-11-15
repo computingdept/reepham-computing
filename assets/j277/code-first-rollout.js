@@ -10,7 +10,7 @@
 
  const stylesheet=document.createElement('link');
  stylesheet.rel='stylesheet';
- stylesheet.href='../../../assets/j277/code-first-rollout.css?v=20261115-central1';
+ stylesheet.href='../../../assets/j277/code-first-rollout.css?v=20261115-focus-highlight1';
  document.head.append(stylesheet);
 
  const waitForCard=()=>new Promise(resolve=>{
@@ -65,8 +65,25 @@
   // Existing optional lesson-specific tracing remains available, not forced open.
   if(trace){trace.open=false;main.append(trace)}
 
-  const routine=make('p','j277-cf-routine','Predict  ·  Write  ·  Test  ·  Improve');
-  routine.setAttribute('aria-label','Code First routine: Predict, Write, Test, Improve');
+  // The existing central bank determines which part of the routine is in focus.
+  // Keep this a compact teaching cue, not four extra buttons or content panels.
+  const stages=[['predict','Predict'],['write','Write'],['test','Test'],['iterate','Improve']];
+  const focus=stages.some(([key])=>key===entry.focus_stage)?entry.focus_stage:'predict';
+  const focusedLabel=stages.find(([key])=>key===focus)[1];
+  const routine=make('p','j277-cf-routine');
+  routine.setAttribute('role','group');
+  routine.setAttribute('aria-label','Code First routine. Current focus: '+focusedLabel);
+  stages.forEach(([key,label],index)=>{
+   if(index){
+    const divider=make('span','j277-cf-divider',' · ');
+    divider.setAttribute('aria-hidden','true');
+    routine.append(divider);
+   }
+   const active=key===focus;
+   const step=make(active?'mark':'span','j277-cf-stage'+(active?' is-active':''),active?label.toUpperCase():label);
+   if(active)step.setAttribute('aria-current','step');
+   routine.append(step);
+  });
   card.replaceChildren(header,main,routine,...(answer?[answer]:[]));
 
   const lines=String(entry.starter).split('\n');
@@ -74,6 +91,7 @@
   card.dataset.codeDensity=lines.length<=3&&widest<=52?'short':lines.length<=7&&widest<=72?'medium':'long';
   card.dataset.taskDensity=instructions.length>115?'dense':'normal';
   card.dataset.cycleRollout='central';
+  card.dataset.codeFocus=focus;
   card.classList.add('j277-code-first-shared');
  }
  render().catch(error=>console.warn('Code First retained original lesson layout',error));
