@@ -291,6 +291,8 @@ export default {
     let reply;
     try { reply = await handle(request, env); }
     catch (error) {
+      // Log only exception type/message for diagnosis: never request headers or bodies.
+      console.error('MY_WORK_API_ERROR', error?.name || 'Error', String(error?.message || 'Unknown').slice(0, 300));
       const invalidInput = error instanceof Error && /^(JSON request required|Request too large|Invalid JSON|Object expected)$/.test(error.message);
       reply = respond({ error: invalidInput ? error.message : 'Service temporarily unavailable' }, invalidInput ? 400 : 503);
     }
