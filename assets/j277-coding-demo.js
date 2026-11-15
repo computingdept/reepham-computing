@@ -162,6 +162,16 @@
         [2, 'Output', 'Hello Asha', 'The procedure prints a message and returns nothing.']],
       end: 'Output: Hello Asha.'
     },
+    functions: {
+      title: 'Functions', codeLabel: 'OCR ERL · function + RETURN + call', entryLine: 4,
+      columns: ['Action', 'Value'],
+      lines: ['function double(number)', '    return number * 2', 'endfunction', 'print(double(4))'],
+      steps: [[4, 'START HERE', 'double(4)', 'The function is called by PRINT.'],
+        [1, 'Parameter', 'number = 4', 'The argument 4 fills number.'],
+        [2, 'RETURN', '8', 'The function sends 8 back to the caller.'],
+        [4, 'Output', '8', 'The caller prints the returned result.']],
+      end: 'Output: 8. RETURN sends a value back; it does not print by itself.'
+    },
     strings: {
       title: 'String Handling', codeLabel: 'OCR ERL · substring(start, count)',
       columns: ['Index / action', 'Value'],
