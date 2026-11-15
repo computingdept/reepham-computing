@@ -30,7 +30,7 @@ practice codes; do **not** generate replacement codes during login migration.
 - Scores reported by a public webpage are not independently tamper-proof.
   Keep them formative and review anomalous attempts.
 
-## Anonymous username/password login — staged extension
+## Anonymous username / four-digit PIN login — pilot
 
 The additions in this version are **not ready for student use** until the D1
 migration has been applied and the updated Worker deployed and verified.
@@ -38,17 +38,17 @@ migration has been applied and the updated Worker deployed and verified.
 - `migration-002-logins.sql` adds separate login and short-lived session tables.
   It does not change or delete any of the 90 active codes or old attempts.
 - `my-work-login-pilot.html` is a separate student interface. Students enter
-  their anonymous site ID and a unique password; the existing practice code is
+  their anonymous site ID and a four-digit numerical PIN; the existing practice code is
   looked up server-side and never appears on their screen.
 - `my-work-login-setup.html` is a staff-only provisioning workflow. Staff paste
   anonymous usernames and their existing practice codes from school Excel.
-  Passwords are generated **locally in the staff browser**; a private CSV is
+  PINs are generated **locally in the staff browser**; a private CSV is
   downloaded **before** any records are activated. It must remain in restricted
   school storage. The Teacher Token is never embedded in the public site.
 - Import accepts five records per teacher-authenticated request, is safe to
-  retry from the same saved CSV, and never returns password hashes or codes to
+  retry from the same saved CSV, and never returns PIN hashes or codes to
   students. Only a SHA-256 lookup key for the username, a salt, and a PBKDF2
-  password hash are stored in D1. Failed sign-ins lock that ID for 15 minutes
+  PIN hash are stored in D1. Failed sign-ins lock that ID for 15 minutes
   after five failures. Sessions expire after eight hours and can be signed out.
 - The original code-only API and pilot page remain available during transition.
   They must be reviewed and ultimately retired before claiming the new login
@@ -68,7 +68,7 @@ migration has been applied and the updated Worker deployed and verified.
    teacher. The static page is publicly viewable, but it cannot import logins
    without the private Teacher Token. Prepare and download the CSV first, then activate them,
    using the Teacher Token already stored privately in Cloudflare.
-5. Test one anonymous username/password and confirm the correct year and work;
+5. Test one anonymous username/PIN and confirm the correct year and work;
    finally share the student page only when the pilot is ready.
 
 Never send student usernames, credentials, teacher tokens or school registers to
@@ -78,7 +78,7 @@ New endpoints:
 
 | Method and path | Access | Purpose |
 | --- | --- | --- |
-| `POST /v1/login` | Anonymous username + password | Create eight-hour session |
+| `POST /v1/login` | Anonymous username + four-digit PIN | Create eight-hour session |
 | `POST /v1/logout` | Learner session | End session |
 | `POST /v1/work` with session bearer | Learner session | Read work without sending practice code |
 | `POST /v1/teacher/logins` | Teacher secret | Import five existing-code-to-login mappings |
