@@ -330,6 +330,11 @@
   const parts = location.pathname.split('/').filter(Boolean);
   const page = parts[parts.length - 1] === 'index.html' ? parts[parts.length - 2] : parts[parts.length - 1];
   let example = examples[page];
+  // New Skills can provide their own complete model without editing this catalogue.
+  if (!example && typeof window.RHSSkillsDemoProvider === 'function') {
+    try { example = window.RHSSkillsDemoProvider(); }
+    catch (_) { /* The practice screen must remain usable. */ }
+  }
   const practice = document.querySelector('main .practice');
   const title = practice && practice.querySelector('.practice-name');
   if (!example || !practice || !title) return;
