@@ -22,9 +22,10 @@ practice codes; do **not** generate replacement codes during login migration.
   and **Year 12 / Year 13 (H446)**. The initial A Level allocation is 10
   practice codes for Year 12 and 10 for Year 13. Codes are generated only
   when the backend is deployed, not committed to GitHub.
-- Practice entry and submission honour UK-time lunchtime (12:30–13:20) and
+- Practice entry and submission are available all day Saturday and Sunday.
+  Monday–Friday they honour UK-time lunchtime (12:30–13:20) and
   after-school (15:30–midnight) windows. Staff with the teacher token can
-  override them for classroom demonstrations.
+  override the weekday restriction for classroom demonstrations.
 - Rate limit: up to 8 completed attempts per code per minute. Replays of the
   same `attemptId` do not duplicate a score.
 - Scores reported by a public webpage are not independently tamper-proof.
