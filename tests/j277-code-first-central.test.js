@@ -39,7 +39,10 @@ test('Lesson 114 returns to the same shared Code First pipeline', () => {
   assert.doesNotMatch(lesson, /compactPilot|114-compact-pilot/);
   assert.doesNotMatch(html, /114-compact/);
   assert.match(loader, /code-first-rollout\.js\?v=20261115-central1/);
-  assert.match(html, /autumn2-rebuilt\.js\?v=20261115-central1/);
+  assert.match(html, /autumn2-rebuilt\.js\?v=20261115-central2/);
+  for (const file of ['lessons/j277/autumn1-rebuilt.js','lessons/j277/autumn2-rebuilt.js','lessons/j277/h446-adapter.js']) {
+    assert.match(read(file), /lesson\.js\?v=20261115-codefirst-central1/, `${file}: cache-busted shared loader`);
+  }
   assert.equal(fs.existsSync(path.join(root,'assets/j277/code-first-114-compact-pilot.css')),false);
 });
 
