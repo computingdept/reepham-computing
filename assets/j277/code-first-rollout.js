@@ -8,7 +8,7 @@
  if(except.has(id))return;
  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const base='../../../assets/j277/';
- const link=document.createElement('link');link.rel='stylesheet';link.href=base+'code-first-rollout.css?v=20261115-apple-shared1';document.head.appendChild(link);
+ const link=document.createElement('link');link.rel='stylesheet';link.href=base+'code-first-rollout.css?v=20261115-apple-shared2';document.head.appendChild(link);
  const wait=()=>new Promise(resolve=>{let n=0;const poll=()=>{const card=document.querySelector('#you-do .j277-code-first');if(card||n++>30)return resolve(card);setTimeout(poll,80)};poll()});
  const stages=['predict','write','test','iterate'];
  async function run(){
@@ -28,6 +28,12 @@
     taskParagraph.classList.add('j277-shared-prompt');
     const label=taskParagraph.querySelector('strong');
     if(label&&/^YOUR TASK:/i.test(label.textContent.trim()))label.remove();
+    // The activity still uses the identical question; avoid repeating the
+    // mini-whiteboard response cue now shown directly above it.
+    const lead=[...taskParagraph.childNodes].find(node=>node.nodeType===3&&node.textContent.trim());
+    if(lead&&/^\s*On your mini-whiteboard,?\s+/i.test(lead.textContent)){
+      lead.textContent=lead.textContent.replace(/^\s*On your mini-whiteboard,?\s+/i,'').replace(/^([a-z])/,(_,first)=>first.toUpperCase());
+    }
   }
   const prompts=content.querySelectorAll('p');
   const code=[...content.querySelectorAll('pre.arithmetic')];
