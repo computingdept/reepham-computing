@@ -24,11 +24,11 @@ test('Paper 1 page includes the central component and read-only question context
   assert.match(html,/RHSCPaper1DemoContext=\(\)=>\(\{skill,level,question\}\)/);
 });
 
-test('Preview cards belong to the home hub, never the active practice screen',()=>{
+test('CPU simulator uses a normal home tile, not a review banner',()=>{
   const html=fs.readFileSync(path.join(__dirname,'../exercise/paper1/index.html'),'utf8');
   const home=html.slice(html.indexOf('<section id="home">'),html.indexOf('<section id="practice"'));
-  assert.match(home,/<section class="rhsc-skills-review"/);
-  assert.match(home,/<\/div><\/section>\s*<\/section>\s*$/);
+  assert.match(home,/rhsc-resource-card--skill[\s\S]*?skill=cpu-cycle/);
+  assert.doesNotMatch(home,/rhsc-skills-review|PREVIEWS/);
   assert.match(html,/\$\('home'\)\.classList\.add\('hidden'\)/);
 });
 

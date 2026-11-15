@@ -8,6 +8,7 @@
   const LEVELS = ['easy', 'medium', 'hard'];
   const LEVEL_TEXT = { easy: 'Tap and explore', medium: 'Trace and complete', hard: 'Write in OCR ERL' };
   const READY_SKILLS = new Set(['variables', 'data-types', 'casting', 'sequence', 'operators', 'comparisons', 'selection', 'for-loops', 'while-until', 'array-1d', 'array-2d', 'records', 'files', 'sql']);
+  const EXTERNAL_SKILLS = {tracing:'/exercise/skills-review/?skill=trace-table','binary-search':'/exercise/skills-review/?skill=binary-search'};
   const groups = [
     {
       name: 'Programming fundamentals', caption: 'Build first · OCR 2.2.1–2.2.2',
@@ -116,7 +117,8 @@
 
   function createTile(item, index) {
     const [id, title, , subtitle] = item;
-    const ready = READY_SKILLS.has(id);
+    const ready = READY_SKILLS.has(id) || Boolean(EXTERNAL_SKILLS[id]);
+    const href = EXTERNAL_SKILLS[id] || '/exercise/paper2/' + id + '/';
     const card = document.createElement('article');
     card.className = 'tile ' + (ready ? 'ready' : 'planned');
     // Just like a lesson tile, the whole content area opens an available skill.
@@ -124,7 +126,7 @@
     const main = document.createElement(ready ? 'a' : 'div');
     main.className = 'tile-main';
     if (ready) {
-      main.href = '/exercise/paper2/' + id + '/';
+      main.href = href;
       main.setAttribute('aria-label', 'Practise ' + title);
     }
     const label = document.createElement('div');
@@ -134,21 +136,22 @@
     main.append(label, sub);
     if (ready) {
       const spec = document.createElement('div');
-      spec.className = 'tile-spec'; spec.textContent = ['array-1d', 'array-2d', 'records', 'files', 'sql'].includes(id) ? '2.2.3' :
+      spec.className = 'tile-spec'; spec.textContent = EXTERNAL_SKILLS[id] ? '2.1' : ['array-1d', 'array-2d', 'records', 'files', 'sql'].includes(id) ? '2.2.3' :
         ['variables', 'sequence', 'operators', 'comparisons', 'selection', 'for-loops', 'while-until'].includes(id) ? '2.2.1' : '2.2.2';
       main.append(spec);
     }
     card.append(main);
     if (ready) {
       const foot = document.createElement('div');
-      foot.id = id + '-progress'; foot.className = 'tile-foot';
+      if (!EXTERNAL_SKILLS[id]) foot.id = id + '-progress'; foot.className = 'tile-foot';
+      if (EXTERNAL_SKILLS[id]) foot.textContent = 'Practice activity';
       main.append(foot);
       const actions = document.createElement('div');
       actions.className = 'tile-actions';
       const play = document.createElement('a');
       play.className = 'tile-action';
       play.innerHTML = '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 5 11 7-11 7z"/></svg><span>Practise</span>';
-      play.href = '/exercise/paper2/' + id + '/';
+      play.href = href;
       play.setAttribute('aria-label', 'Practise ' + title);
       const print = document.createElement(id === 'variables' ? 'a' : 'span');
       print.className = 'tile-action' + (id === 'variables' ? '' : ' tile-action--coming-soon');
@@ -188,7 +191,7 @@
       meta.className = 'group-meta';
       const count = document.createElement('span');
       count.className = 'count';
-      const ready = group.items.filter(item => READY_SKILLS.has(item[0])).length;
+      const ready = group.items.filter(item => READY_SKILLS.has(item[0]) || EXTERNAL_SKILLS[item[0]]).length;
       count.textContent = ready ? ready + ' ready / ' + group.items.length : group.items.length + ' planned';
       const chevron = document.createElement('span');
       chevron.className = 'group-chevron'; chevron.setAttribute('aria-hidden', 'true');
