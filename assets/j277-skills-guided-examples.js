@@ -283,17 +283,37 @@
     return d('array-2d',q.level==='hard'?'write a statement for another row and column.':'locate another zero-based row and column.',
       ['array grid[2,3]','grid[1,2] = 9','print(grid[1,2])'],
       [['Grid','2 rows, 3 columns','Rows 0–1 and columns 0–2.'],['Position','row 1, column 2','Move to the second row and third column.'],['Output','9','Read grid[1,2].']],
-      'Output: 9. The first index is always the row.');
+      'Output: 9. In this example, the first index is the row.');
   }
   function records(q) {
-    if(q.level==='medium')return d('records','trace a change to one field in a different record.',
-      ['book.title = "Dune"','book.pages = 300','book.pages = book.pages + 20','print(book.pages)'],
-      [['title','Dune','A String field is stored in the book record.'],['pages','300','A separate Integer field is stored.'],['pages','320','Only pages changes: 300 + 20.'],['Output','320','Print the updated pages field.']],
-      'Output: 320. Other fields remain unchanged.');
-    return d('records',q.level==='hard'?'write a statement using a different record field.':'identify a different record field.',
-      ['book.title = "Dune"','book.pages = 300','print(book.title)'],
-      [['title','Dune','The dot identifies the title field.'],['pages','300','One record holds related fields of different types.'],['Output','Dune','book.title reads only the title field.']],
-      'Output: Dune. Use recordName.fieldName.');
+    if(q.level==='hard'){
+      const lines=['array team[3,3]','for r = 0 to 2','    print(team[r,1])','next r','print("Finished")'];
+      const surnames=['Reed','Shaw','Nash'];
+      const steps=[[1,'3 records','3 fields','team is a different table. Column 1 stores surnames.']];
+      surnames.forEach((surname,r)=>{
+        steps.push([2,'r = '+r,'Continue','The FOR counter selects record '+r+'.']);
+        steps.push([3,'team['+r+',1]',surname,'Print the surname in column 1 of this record.']);
+        steps.push([4,'NEXT r','r becomes '+(r+1),'Return to FOR to check the next record.']);
+      });
+      steps.push([2,'r = 3','Stop','There are no more records; leave the loop.']);
+      steps.push([5,'Output','Finished','Print the final message after the loop.']);
+      return {title:'Records',task:'Similar example: print every surname from a different table using a FOR loop.',
+        codeLabel:'Given team: 0 Ava Reed Red · 1 Eli Shaw Blue · 2 Zoe Nash Green',
+        traceTitle:'Visit each record and read its surname',columns:['Index / action','Output'],
+        lines,steps,progressive:false,loopBack:{from:4,to:2},
+        end:'Output: Reed, Shaw, Nash, Finished. The loop visited rows 0, 1 and 2.'};
+    }
+    if(q.level==='medium')return d('records','trace a surname update in a different table.',
+      ['array team[3,3]','team[1,1] = "Nash"','print(team[1,1])'],
+      [['Table','3 rows, 3 fields','Each row is a record and column 1 is surname.'],
+        ['Change','row 1 → Nash','The surname at index [1,1] is replaced.'],
+        ['Output','Nash','Print the new surname in row 1, column 1.']],
+      'Output: Nash. The array uses row, then column.');
+    return d('records','identify the surname in a different table.',
+      ['array team[3,3]','print(team[1,1])'],
+      [['Table','3 records','The surname is field 1 in each record.'],
+        ['Output','Shaw','Select row 1, column 1 from the team table.']],
+      'Output: Shaw. Row 1 is the second record and column 1 is surname.');
   }
   const makers={
     variables,'data-types':dataTypes,casting,operators,comparisons,sequence,selection,

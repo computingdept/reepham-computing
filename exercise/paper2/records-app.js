@@ -7,7 +7,7 @@
   const $ = id => document.getElementById(id);
   const KEY = 'rhs-j277-paper2-progress-v1';
   const SKILL = 'records';
-  const LEVEL_TEXT = {easy: 'Find the correct field', medium: 'Trace field updates', hard: 'Write field statements'};
+  const LEVEL_TEXT = {easy: 'Identify records and fields', medium: 'Trace indexed fields', hard: 'Write loops over records'};
   const state = {level: 'easy', index: 0, seed: 1, score: 0, firstTry: 0, wrong: 0, question: null, response: null, locked: false};
 
   function progress() {
@@ -38,35 +38,52 @@
   }
   function codePanel(lines) {
     const panel = document.createElement('div'); panel.className = 'code-panel';
-    const caption = document.createElement('span'); caption.className = 'code-label'; caption.textContent = 'Example record-field notation';
+    const caption = document.createElement('span'); caption.className = 'code-label'; caption.textContent = 'OCR Exam Reference Language';
     const pre = core.numberedCode(lines);
     panel.append(caption, pre); return panel;
   }
   function recordBoard(q, interactive) {
     const box = document.createElement('div'); box.className = 'record-board';
     const heading = document.createElement('strong'); heading.className = 'record-board-title';
-    heading.textContent = 'Player record · one person, four fields';
-    const grid = document.createElement('div'); grid.className = 'record-fields';
-    grid.setAttribute('role', 'group');
-    grid.setAttribute('aria-label', interactive ? 'Choose a record field' : 'Starting player record values');
-    engine.FIELD_NAMES.forEach(key => {
-      const cell = document.createElement(interactive ? 'button' : 'div'); cell.className = 'record-field';
-      if (interactive) {
-        cell.type = 'button'; cell.setAttribute('aria-pressed', 'false');
-        cell.setAttribute('aria-label', key + ' field, ' + String(q.values[key]));
-        cell.addEventListener('click', () => {
-          if (state.locked) return;
-          state.response = key;
-          grid.querySelectorAll('button').forEach(button => button.setAttribute('aria-pressed', String(button === cell)));
-        });
-      }
-      const field = document.createElement('span'); field.className = 'record-field-name'; field.textContent = key;
-      const value = document.createElement('strong'); value.className = 'record-field-value';
-      value.textContent = typeof q.values[key] === 'boolean' ? (q.values[key] ? 'True' : 'False') : String(q.values[key]);
-      const type = document.createElement('span'); type.className = 'record-field-type'; type.textContent = q.types[key];
-      cell.append(field, value, type); grid.append(cell);
+    heading.textContent = 'pupils[4,3] · four records, three fields';
+    const table = document.createElement('table'); table.className = 'record-table';
+    const head = document.createElement('thead'), headingRow = document.createElement('tr');
+    const corner = document.createElement('th'); corner.scope = 'col'; corner.textContent = 'Row'; headingRow.append(corner);
+    q.fields.forEach((field,col) => {
+      const th = document.createElement('th'); th.scope = 'col';
+      const index = document.createElement('span'); index.className = 'record-column-number'; index.textContent = String(col);
+      const label = document.createElement('span'); label.textContent = field;
+      th.append(index,label); headingRow.append(th);
     });
-    box.append(heading, grid); return box;
+    head.append(headingRow); table.append(head);
+    const body = document.createElement('tbody');
+    q.values.forEach((record,row) => {
+      const tr = document.createElement('tr'), number = document.createElement('th');
+      number.scope = 'row'; number.className = 'record-row-number'; number.textContent = String(row);
+      tr.append(number);
+      record.forEach((value,col) => {
+        const td = document.createElement('td');
+        const node = document.createElement(interactive ? 'button' : 'span');
+        node.className = 'record-value';
+        node.textContent = String(value);
+        if(interactive) {
+          node.type = 'button'; node.setAttribute('aria-pressed','false');
+          node.setAttribute('aria-label','Record '+row+', '+q.fields[col]+' field: '+value);
+          node.addEventListener('click',()=>{
+            if(state.locked)return;
+            state.response = row+','+col;
+            table.querySelectorAll('button').forEach(button =>
+              button.setAttribute('aria-pressed',String(button===node)));
+          });
+        }
+        td.append(node); tr.append(td);
+      });
+      body.append(tr);
+    });
+    table.append(body);
+    const note = document.createElement('span'); note.className = 'record-index-note';
+    note.textContent = 'Index order in this question: pupils[row, column] · counting starts at 0.';
+    box.append(heading,table,note); return box;
   }
   function renderEasy(q, work) {
     const layout = document.createElement('div'); layout.className = 'array-layout';
@@ -84,7 +101,7 @@
     input.type = 'text'; input.autocomplete = 'off'; input.placeholder = '?';
     input.addEventListener('input', () => { state.response = input.value; });
     input.addEventListener('keydown', event => { if (event.key === 'Enter') $('check').click(); });
-    const note = document.createElement('span'); note.className = 'writer-note'; note.textContent = 'A record update changes just one field.';
+    const note = document.createElement('span'); note.className = 'writer-note'; note.textContent = 'Each row is a pupil. Column 1 stores surnames.';
     answer.append(label, input, note); layout.append(left, answer); work.append(layout);
   }
   function renderHard(q, work) {
@@ -93,13 +110,14 @@
     left.append(recordBoard(q, false));
     if (q.code.length) left.append(codePanel(q.code));
     const answer = document.createElement('div'); answer.className = 'array-answer';
-    const label = document.createElement('label'); label.htmlFor = 'record-notation'; label.className = 'work-label'; label.textContent = 'Your record-field statement' + (q.model.includes('\n') ? 's' : '');
+    const label = document.createElement('label'); label.htmlFor = 'record-notation'; label.className = 'work-label'; label.textContent = 'Your OCR ERL code';
     const input = document.createElement('textarea'); input.id = 'record-notation'; input.className = 'code-entry';
-    input.rows = 3; input.autocomplete = 'off'; input.autocapitalize = 'off'; input.spellcheck = false;
-    input.placeholder = 'Type the missing statement…';
+    input.rows = Math.max(4,Math.min(8,q.model.split('\n').length + 1));
+    input.autocomplete = 'off'; input.autocapitalize = 'off'; input.spellcheck = false;
+    input.placeholder = 'Write a FOR loop…';
     input.addEventListener('input', () => { state.response = input.value; });
     const note = document.createElement('span'); note.className = 'writer-note';
-    note.textContent = 'Use player.field as shown in the example. Other valid syntax may be used in exams.';
+    note.textContent = 'Use the row counter as the index: pupils[row,1] is a surname.';
     answer.append(label, input, note); layout.append(left, answer); work.append(layout);
   }
   function renderQuestion() {
@@ -133,9 +151,9 @@
       feedback('Correct! ' + state.question.explanation, 'good'); disableInputs(); return;
     }
     state.wrong++;
-    feedback(state.level === 'easy' ? 'Read the field name and its value.' :
-      state.level === 'medium' ? 'Trace each assignment, then use the latest value of the named field.' :
-      'Check the record name, field name, value and assignment.', 'bad');
+    feedback(state.level === 'easy' ? 'Check the row and field column.' :
+      state.level === 'medium' ? 'Follow each assignment and read the indexed field.' :
+      'Check the FOR bounds, the array indexes and NEXT.', 'bad');
     if (state.wrong >= 2) $('show-answer').hidden = false;
   }
   function showModel() {

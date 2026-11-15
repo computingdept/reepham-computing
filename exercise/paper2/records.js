@@ -1,158 +1,149 @@
-/* OCR J277/02 Skill 12: records group named fields of different data types.
-   Field-access notation here is an illustrative teaching convention, not
-   a claim that OCR prescribes one record declaration syntax. */
+/* OCR J277/02 Skill 12: a 2D array used as a table of pupil records.
+   Each row is one record; columns 0, 1 and 2 are fields. */
 (function (root, factory) {
   const api = factory();
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.J277Paper2Records = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
   'use strict';
-  const LEVELS = ['easy', 'medium', 'hard'];
-  const FIELD_NAMES = ['name', 'score', 'house', 'active'];
-  const TYPES = {name: 'String', score: 'Integer', house: 'String', active: 'Boolean'};
-  const names = ['Asha', 'Ben', 'Mia', 'Sam', 'Leo', 'Zara', 'Noor', 'Ella'];
-  const houses = ['Red', 'Blue', 'Green', 'Yellow'];
-
-  function randomFor(seed, level, index) {
-    let n = (Number(seed) || 1) | 0;
-    for (const ch of level + ':' + index) n = (Math.imul(n, 31) + ch.charCodeAt(0)) | 0;
-    return function () {
-      n = (n + 0x6D2B79F5) | 0;
-      let t = Math.imul(n ^ (n >>> 15), 1 | n);
-      t ^= t + Math.imul(t ^ (t >>> 7), 61 | t);
-      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  const LEVELS=['easy','medium','hard'];
+  const FIELD_NAMES=['forename','surname','house'];
+  const FORENAMES=['Asha','Ben','Mia','Sam','Leo','Zara','Noor','Ella'];
+  const SURNAMES=['Khan','Smith','Jones','Patel','Brown','Wells','Green','Clarke'];
+  const HOUSES=['Red','Blue','Green','Yellow'];
+  const DECLARATION='array pupils[4,3]';
+  const address=(row,col)=>'pupils['+row+','+col+']';
+  const quote=value=>'"'+value+'"';
+  function randomFor(seed,level,index) {
+    let n=(Number(seed)||1)|0;
+    for(const ch of level+':'+index)n=(Math.imul(n,31)+ch.charCodeAt(0))|0;
+    return function(){
+      n=(n+0x6D2B79F5)|0;
+      let t=Math.imul(n^(n>>>15),1|n);
+      t^=t+Math.imul(t^(t>>>7),61|t);
+      return ((t^(t>>>14))>>>0)/4294967296;
     };
   }
-  const pick = (r, lo, hi) => lo + Math.floor(r() * (hi - lo + 1));
-  function startingRecord(r) {
-    return {
-      name: names[pick(r, 0, names.length - 1)],
-      score: pick(r, 8, 25),
-      house: houses[pick(r, 0, houses.length - 1)],
-      active: r() < 0.5
-    };
+  function startingTable(random) {
+    const start=Math.floor(random()*FORENAMES.length);
+    return Array.from({length:4},(_,row)=>{
+      const p=(start+row)%FORENAMES.length;
+      return [FORENAMES[p],SURNAMES[p],HOUSES[p%HOUSES.length]];
+    });
   }
-  const display = value => typeof value === 'boolean' ? (value ? 'True' : 'False') : String(value);
-  const quote = value => typeof value === 'string' ? '"' + value + '"' : display(value);
-  const fieldAccess = key => 'player.' + key;
-
-  function easy(index, r) {
-    const values = startingRecord(r);
-    const key = FIELD_NAMES[index % FIELD_NAMES.length];
-    const code = [];
-    let prompt, context, hint, explanation;
-    if (index < 4) {
-      code.push('print(' + fieldAccess(key) + ')');
-      prompt = 'Tap the ' + key + ' field.';
-      context = 'Each named field stores one part of this player record.';
-      hint = 'Read the field names: name, score, house and active.';
-      explanation = fieldAccess(key) + ' stores ' + quote(values[key]) + '.';
-    } else if (index < 7) {
-      prompt = 'Tap the field containing ' + quote(values[key]) + '.';
-      context = 'A record can store several different data types together.';
-      hint = 'Look at the values. Then read the field name above the matching value.';
-      explanation = 'The ' + key + ' field contains ' + quote(values[key]) + '.';
-    } else {
-      const changed = key === 'score' ? pick(r, 30, 50) : key === 'active' ? !values.active :
-        key === 'name' ? 'Kai' : 'Purple';
-      code.push(fieldAccess(key) + ' = ' + quote(changed));
-      prompt = 'Tap the field that will change.';
-      context = 'An assignment updates one named field of the record.';
-      hint = 'Look after player. in the assignment.';
-      explanation = 'Only the ' + key + ' field is updated.';
+  function easy(index,random) {
+    const values=startingTable(random);
+    let row,col,prompt;
+    if(index<4){row=index;col=1;prompt='Tap '+values[row][0]+'’s surname.';}
+    else if(index<7){row=index-4;col=2;prompt='Tap the house field in record '+row+'.';}
+    else {row=index-7;col=index===7?0:index===8?1:2;
+      prompt='Tap the value at row '+row+', column '+col+'.';}
+    return {level:'easy',type:'cell',values,fields:FIELD_NAMES,
+      code:[DECLARATION,'print('+address(row,col)+')'],
+      expected:row+','+col,prompt,
+      context:'Each row is one pupil record. Each numbered column is a field.',
+      hint:'Find record '+row+', then the '+FIELD_NAMES[col]+' field in column '+col+'.',
+      model:address(row,col),
+      explanation:'Record '+row+', '+FIELD_NAMES[col]+' (column '+col+') holds '+values[row][col]+'.'};
+  }
+  function medium(index,random) {
+    const values=startingTable(random);
+    let lines,expected,why;
+    switch(index) {
+      case 0:lines=['print(pupils[1,1])'];expected=values[1][1];
+        why='Row 1 is the second pupil; column 1 is surname.';break;
+      case 1:lines=['print(pupils[3,0])'];expected=values[3][0];
+        why='Row 3 is the fourth pupil; column 0 is forename.';break;
+      case 2:lines=['pupils[0,1] = "Moore"','print(pupils[0,1])'];expected='Moore';
+        why='The surname in record 0 changes before it is printed.';break;
+      case 3:lines=['pupils[2,2] = "Purple"','print(pupils[2,2])'];expected='Purple';
+        why='Column 2 holds house; the assignment replaces its old value.';break;
+      case 4:lines=['r = 2','print(pupils[r,1])'];expected=values[2][1];
+        why='r is 2, so the surname in record 2 is read.';break;
+      case 5:lines=['pupils[3,1] = pupils[0,1]','print(pupils[3,1])'];expected=values[0][1];
+        why='The surname from record 0 is copied into record 3.';break;
+      case 6:lines=['pupils[1,0] = "Kai"','print(pupils[1,0])'];expected='Kai';
+        why='Only the forename of record 1 is changed.';break;
+      case 7:lines=['pupils[0,1] = "Stone"','pupils[0,1] = "Hill"','print(pupils[0,1])'];
+        expected='Hill';why='The second assignment replaces Stone with Hill.';break;
+      case 8:lines=['saved = pupils[1,1]','pupils[1,1] = pupils[2,1]','print(pupils[1,1])'];
+        expected=values[2][1];why='The new surname comes from record 2.';break;
+      default:lines=['if pupils[3,2] == '+quote(values[3][2])+' then',
+        '    print(pupils[3,1])','else','    print("Other")','endif'];
+        expected=values[3][1];why='The house matches, so the IF branch prints the surname.';
     }
-    return {level: 'easy', type: 'field', values, types: TYPES, code,
-      prompt, context, hint, expected: key, model: fieldAccess(key), explanation};
+    return {level:'medium',type:'value',values,fields:FIELD_NAMES,
+      code:[DECLARATION,...lines],expected,prompt:'What is printed?',
+      context:'Read pupils[row,column]. Here the first index is the row.',
+      hint:'Follow each assignment. Read the current value in the numbered field.',
+      model:'Output: '+expected,explanation:why+' Output: '+expected+'.'};
   }
-
-  function medium(index, r) {
-    const values = startingRecord(r), n = pick(r, 2, 9);
-    const code = [];
-    let expected, why;
-    switch (index) {
-      case 0:
-        code.push('print(player.score)'); expected = values.score;
-        why = 'Read the score field of this one player.'; break;
-      case 1:
-        code.push('player.score = ' + n, 'print(player.score)'); expected = n;
-        why = 'The assignment replaces the old score with ' + n + '.'; break;
-      case 2:
-        code.push('player.score = player.score + ' + n, 'print(player.score)'); expected = values.score + n;
-        why = 'The score changes from ' + values.score + ' to ' + expected + '.'; break;
-      case 3:
-        code.push('player.active = False', 'print(player.active)'); expected = false;
-        why = 'The active field is now False, regardless of its starting value.'; break;
-      case 4:
-        code.push('player.name = "Kai"', 'print(player.name)'); expected = 'Kai';
-        why = 'Only the name field is changed.'; break;
-      case 5:
-        code.push('player.house = "Purple"', 'print(player.house)'); expected = 'Purple';
-        why = 'The house field now stores the string Purple.'; break;
-      case 6:
-        code.push('if player.score >= 20 then', '    print("Pass")', 'else', '    print("Retry")', 'endif');
-        expected = values.score >= 20 ? 'Pass' : 'Retry';
-        why = values.score + (values.score >= 20 ? ' meets ' : ' is below ') + 'the threshold of 20.'; break;
-      case 7:
-        code.push('bonus = ' + n, 'player.score = player.score + bonus', 'print(player.score)');
-        expected = values.score + n; why = 'Add the bonus of ' + n + ' to the starting score ' + values.score + '.'; break;
-      case 8:
-        code.push('player.score = player.score * 2', 'print(player.score)');
-        expected = values.score * 2; why = 'Double the score field, leaving the other fields unchanged.'; break;
-      default:
-        code.push('if player.active then', '    print(player.name)', 'else', '    print("Absent")', 'endif');
-        expected = values.active ? values.name : 'Absent';
-        why = 'The Boolean field active selects which branch runs.';
-    }
-    return {level: 'medium', type: 'value', values, types: TYPES, code,
-      expected: display(expected), prompt: 'What value will be printed?',
-      context: 'Use the starting record shown, then trace any field updates.',
-      hint: 'Follow the code from top to bottom. A change to one field does not change the others.',
-      model: 'Output: ' + display(expected),
-      explanation: why + ' Output: ' + display(expected) + '.'};
-  }
-
-  function hard(index, r) {
-    const values = startingRecord(r), n = pick(r, 2, 9);
-    const tasks = [
-      ['Print the player’s score.', ['print(player.score)']],
-      ['Set the player’s score to ' + n + '.', ['player.score = ' + n]],
-      ['Increase the player’s score by ' + n + '.', ['player.score = player.score + ' + n]],
-      ['Copy the player’s name into the variable chosenName.', ['chosenName = player.name']],
-      ['Set active to False.', ['player.active = False']],
-      ['Change the player’s house to Purple.', ['player.house = "Purple"']],
-      ['Print the player’s name.', ['print(player.name)']],
-      ['Double the player’s score.', ['player.score = player.score * 2']],
-      ['Set active to True and then print it.', ['player.active = True', 'print(player.active)']],
-      ['Print the player’s house and score on separate lines.', ['print(player.house)', 'print(player.score)']]
+  function hard(index,random) {
+    const values=startingTable(random);
+    const loop=(start,end,statement)=>[
+      'for row = '+start+' to '+end,'    '+statement,'next row'
     ];
-    const [task, lines] = tasks[index];
-    return {level: 'hard', type: 'write', values, types: TYPES, code: [],
-      prompt: 'Write the record-field statement' + (lines.length > 1 ? 's' : '') + '.',
-      context: task + ' Use the example notation player.field.',
-      hint: 'Use player.name, player.score, player.house or player.active. = assigns a value.',
-      expected: lines.join('\n'), model: lines.join('\n'),
-      explanation: 'One correct solution is ' + lines.join(' / ') + '.'};
+    const tasks=[
+      ['Print every surname in record order.',loop(0,3,'print(pupils[row,1])')],
+      ['Print every forename in record order.',loop(0,3,'print(pupils[row,0])')],
+      ['Print the house for every pupil.',loop(0,3,'print(pupils[row,2])')],
+      ['Print each pupil’s full name (forename, a space, then surname).',
+        loop(0,3,'print(pupils[row,0] + " " + pupils[row,1])')],
+      ['Print surnames of pupils in the Red house only.',[
+        'for row = 0 to 3','    if pupils[row,2] == "Red" then',
+        '        print(pupils[row,1])','    endif','next row']],
+      ['Count pupils in the Red house, then print the count.',[
+        'count = 0','for row = 0 to 3','    if pupils[row,2] == "Red" then',
+        '        count = count + 1','    endif','next row','print(count)']],
+      ['Change every pupil’s house to Blue.',loop(0,3,'pupils[row,2] = "Blue"')],
+      ['Print the surname of pupils whose surname is '+values[1][1]+'.',[
+        'for row = 0 to 3','    if pupils[row,1] == '+quote(values[1][1])+' then',
+        '        print(pupils[row,1])','    endif','next row']],
+      ['Print the forenames in records 1, 2 and 3 only.',loop(1,3,'print(pupils[row,0])')],
+      ['Print the surnames in records 0, 1 and 2 only.',loop(0,2,'print(pupils[row,1])')]
+    ];
+    const [task,lines]=tasks[index];
+    return {level:'hard',type:'write',values,fields:FIELD_NAMES,code:[DECLARATION],
+      prompt:'Write the OCR ERL statements.',
+      context:task+' Use a FOR loop and a row index.',
+      expected:lines.join('\n'),model:lines.join('\n'),
+      hint:'Use for row = … to … and next row. Columns: 0 forename, 1 surname, 2 house.',
+      explanation:'Use the FOR index to access each relevant field in pupils[row,column].'};
   }
-
-  function makeQuestion(level, index, seed) {
-    if (!LEVELS.includes(level) || !Number.isInteger(index) || index < 0 || index > 9) throw new Error('Invalid records question');
-    const r = randomFor(seed, level, index);
-    return level === 'easy' ? easy(index, r) : level === 'medium' ? medium(index, r) : hard(index, r);
+  function makeQuestion(level,index,seed) {
+    if(!LEVELS.includes(level)||!Number.isInteger(index)||index<0||index>9)
+      throw new Error('Invalid records question');
+    const random=randomFor(seed,level,index);
+    return level==='easy'?easy(index,random):level==='medium'?medium(index,random):hard(index,random);
   }
   function normaliseLines(source) {
-    return String(source ?? '').replace(/\r/g, '').split('\n').map(line =>
-      line.trim().replace(/\s*(?:←|:=)\s*/g, '=').replace(/[‘’']/g, '"')
-        .replace(/\s+/g, '').toLowerCase()
-    ).filter(Boolean).join('\n');
+    let value=String(source??'').replace(/\r/g,'');
+    // Accept any consistent name for the FOR counter (row, i, r, etc.).
+    const counter=/\bfor\s+([a-z][a-z0-9_]*)\s*=/i.exec(value);
+    if(counter&&counter[1].toLowerCase()!=='row')
+      value=value.replace(new RegExp('\\b'+counter[1]+'\\b','gi'),'row');
+    return value.split('\n').map(line=>{
+      const cleaned=line.trim().replace(/[‘’']/g,'"')
+        .replace(/\s*(?:←|:=)\s*/g,'=')
+        .replace(/pupils\[([^\],]+)\]\[([^\]]+)\]/gi,'pupils[$1,$2]');
+      // Ignore code spacing, but preserve literal spaces inside strings.
+      let quoted=false,result='';
+      for(const character of cleaned){
+        if(character==='"')quoted=!quoted;
+        if(quoted||character==='"'||!(/\s/.test(character)))result+=character;
+      }
+      return result.toLowerCase();
+    }).filter(Boolean).join('\n');
   }
-  function checkAnswer(q, response) {
-    const input = String(response ?? '').trim();
-    if (!input) return {complete: false, correct: false};
-    if (q.type === 'field') return {complete: true, correct: input === q.expected};
-    if (q.type === 'value') return {complete: true,
-      correct: input.replace(/^[\s'"“”]+|[\s'"“”]+$/g, '').toLowerCase() === String(q.expected).toLowerCase()};
-    if (q.type === 'write') return {complete: true, correct: normaliseLines(input) === normaliseLines(q.expected)};
-    return {complete: true, correct: false};
+  function checkAnswer(q,response) {
+    const input=String(response??'').trim();
+    if(!input)return {complete:false,correct:false};
+    if(q.type==='cell')return {complete:true,correct:input===q.expected};
+    if(q.type==='value')return {complete:true,
+      correct:input.replace(/^[\s'"“”]+|[\s'"“”]+$/g,'').toLowerCase()===q.expected.toLowerCase()};
+    if(q.type==='write')return {complete:true,
+      correct:normaliseLines(input)===normaliseLines(q.expected)};
+    return {complete:true,correct:false};
   }
-  return {FIELD_NAMES, TYPES, makeQuestion, checkAnswer, normaliseLines};
+  return {FIELD_NAMES,makeQuestion,checkAnswer,normaliseLines};
 });

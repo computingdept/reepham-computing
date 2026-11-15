@@ -19,8 +19,9 @@ test('Every active J277 coding question has a separate progressive Demo',()=>{
           const demo=guided.make(skill,q);
           const arrayLoop=['array-1d','array-2d'].includes(skill)&&level==='medium'
             &&q.code.some(line=>/^for [irc]\s*=/i.test(line));
-          const looping=repeating.has(skill)||arrayLoop;
-          assert.equal(demo.progressive,looping?undefined:true,`${skill}/${level}/${i}`);
+          const recordsLoop=skill==='records'&&level==='hard';
+          const looping=repeating.has(skill)||arrayLoop||recordsLoop;
+          assert.equal(demo.progressive,recordsLoop?false:looping?undefined:true,`${skill}/${level}/${i}`);
           assert.match(demo.task,/^Similar example:/);
           assert.ok(demo.lines.length>0 && demo.lines.length<=10);
           if(repeating.has(skill)){
@@ -31,6 +32,10 @@ test('Every active J277 coding question has a separate progressive Demo',()=>{
             assert.ok(demo.steps.length>demo.lines.length,'Each array iteration is traced');
             assert.ok(demo.steps.some((step,j)=>j>0&&step[0]<demo.steps[j-1][0]),'Loop revisits earlier source line');
             assert.match(demo.end,/Output: \d+/);
+          }else if(recordsLoop){
+            assert.ok(demo.steps.length>demo.lines.length,'The demo visits each pupil record');
+            assert.deepEqual(demo.steps.filter(step=>step[0]===3).map(step=>step[2]),['Reed','Shaw','Nash']);
+            assert.deepEqual(demo.loopBack,{from:4,to:2});
           }else if(skill==='selection'){
             assert.equal(demo.steps.length,5,'only lines which execute should be traced');
             assert.deepEqual(demo.steps.map(step=>step[0]),[1,2,4,5,6]);
