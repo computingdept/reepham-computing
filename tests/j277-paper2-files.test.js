@@ -17,23 +17,28 @@ test('all 30 file tasks are deterministic and accept their model answers',()=>{
   }
 });
 
-test('all 30 File Handling demos give the same complete, safe reference examples',()=>{
-  let reference;
+test('all 30 File Handling demos show safe level-appropriate reference examples',()=>{
   for(const level of ['easy','medium','hard']) {
+    let reference;
     for(let index=0;index<10;index++) {
       const question=engine.makeQuestion(level,index,17);
       const demo=engine.makeDemo(question);
       if (!reference) reference=demo;
-      assert.deepEqual(demo,reference,'each level and question opens the same reference');
-      assert.equal(demo.variants.length,2);
-      assert.deepEqual(demo.variants.map(item=>item.label),['Existing file','New file']);
+      assert.deepEqual(demo,reference,'each question at this level opens the same reference');
+      assert.deepEqual(demo.variants.map(item=>item.label),level==='easy'
+        ? ['Existing file','New file']
+        : ['Read all (WHILE)','Existing file','New file']);
       for(const {example} of demo.variants) {
-        assert.equal(example.steps.length,example.lines.length);
-        assert.equal(example.fileView.states.length,example.lines.length+1);
-        assert.equal(example.placeholders.length,example.lines.length);
+        if(example.fileView.filename==='pupils.txt')
+          assert.ok(example.steps.length>example.lines.length,'the loop must actually repeat');
+        else {
+          assert.equal(example.steps.length,example.lines.length);
+          assert.equal(example.placeholders.length,example.lines.length);
+        }
+        assert.equal(example.fileView.states.length,example.steps.length+1);
         assert.ok(example.lines.every(line=>!line.includes('names.txt')));
         example.steps.forEach((step,i)=>{
-          assert.equal(step[0],i+1);
+          assert.ok(step[0]>=1&&step[0]<=example.lines.length,'source line must exist');
           assert.ok(step[1]&&step[2]&&step[3],level+'/'+index+' step '+i);
           const snapshot=example.fileView.states[i+1];
           assert.equal(typeof snapshot.exists,'boolean');
@@ -44,7 +49,7 @@ test('all 30 File Handling demos give the same complete, safe reference examples
       }
     }
   }
-  const full=engine.makeDemo(engine.makeQuestion('hard',0,1));
+  const full=engine.makeDemo(engine.makeQuestion('easy',0,1));
   assert.deepEqual(full.lines,[
     'myFile = open("scores.txt")','first = myFile.readLine()',
     'atEnd = myFile.endOfFile()','myFile.writeLine("Tara")','myFile.close()']);
@@ -55,6 +60,14 @@ test('all 30 File Handling demos give the same complete, safe reference examples
   assert.match(fresh.lines[1],/= open\(/);
   assert.deepEqual(fresh.fileView.states[0].exists,false);
   assert.deepEqual(fresh.fileView.states.at(-1).lines,['Passed']);
+  const traced=engine.makeDemo(engine.makeQuestion('hard',0,1));
+  assert.deepEqual(traced.steps.map(step=>step[0]),
+    [1,2,3,4,5,2,3,4,5,2,3,4,5,2,6]);
+  assert.deepEqual(traced.steps.filter(step=>step[1]==='Print').map(step=>step[2]),['Ada','Leo','Mia']);
+  assert.deepEqual(traced.steps.filter(step=>step[1]==='Check end').map(step=>step[2]),
+    ['False','False','False','True']);
+  assert.equal(traced.fileView.states.at(-2).open,true);
+  assert.deepEqual(traced.fileView.states.at(-1).lines,['Ada','Leo','Mia']);
   assert.throws(()=>engine.makeDemo({level:'hard',index:10}));
 });
 

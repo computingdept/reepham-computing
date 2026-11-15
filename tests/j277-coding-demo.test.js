@@ -232,7 +232,7 @@ test('File Handling reference shows all source lines and file changes in two sel
   const engine=require('../exercise/paper2/files.js');
   const ui=mountDemo('files');
   ui.practice.studentAnswer='draft answer';
-  ui.window.RHSSkillsDemoProvider=()=>engine.makeDemo(engine.makeQuestion('hard',3,31));
+  ui.window.RHSSkillsDemoProvider=()=>engine.makeDemo(engine.makeQuestion('easy',3,31));
   find(ui.title,'skill-demo-open').click();
   const demo=ui.practice.insertedSibling;
   const tabs=find(demo,'skill-demo-variants');
@@ -272,6 +272,30 @@ test('File Handling reference shows all source lines and file changes in two sel
   find(demo,'skill-demo-back').click();
   assert.equal(ui.practice.studentAnswer,'draft answer');
   assert.equal(ui.timers.size,0);
+});
+
+test('Medium File Handling demo revisits WHILE and stops reading at end of file',()=>{
+  const engine=require('../exercise/paper2/files.js');
+  const ui=mountDemo('files');
+  ui.practice.studentAnswer='my answer';
+  ui.window.RHSSkillsDemoProvider=()=>engine.makeDemo(engine.makeQuestion('medium',8,31));
+  find(ui.title,'skill-demo-open').click();
+  const demo=ui.practice.insertedSibling;
+  const tabs=find(demo,'skill-demo-variants');
+  const code=find(demo,'skill-demo-source');
+  const lines=find(demo,'skill-demo-file-lines');
+  const controls=find(demo,'skill-demo-controls');
+  assert.equal(tabs.children.length,3);
+  assert.equal(tabs.children[0].textContent,'Read all (WHILE)');
+  assert.equal(code.children.length,6);
+  assert.equal(lines.children.length,3);
+  assert.equal(code.children[1].children[1].textContent,'while NOT myFile.endOfFile()');
+  for(let i=0;i<15;i++) controls.children[1].click();
+  assert.equal(lines.children.length,3,'reading does not alter the file');
+  assert.equal(find(demo,'skill-demo-table').children[1].children.length,15);
+  assert.equal(controls.children[1].disabled,true,'demo finishes after false WHILE condition and close');
+  find(demo,'skill-demo-back').click();
+  assert.equal(ui.practice.studentAnswer,'my answer');
 });
 
 test('The other 12 J277 coding skills reveal the appropriate guided example',()=>{

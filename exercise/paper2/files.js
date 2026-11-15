@@ -174,8 +174,9 @@
     const question=level==='easy'?easy(index,r):level==='medium'?medium(index,r):hard(index);
     return {...question,index};
   }
-  // Stable reference demonstrations for every difficulty: imaginary files only.
-  // Neither demo runs code or changes the student's practice answer or marks.
+  // Stable reference demonstrations: imaginary files only. Easy models basic
+  // commands; Medium/Hard begin with an executed WHILE trace. No demo changes
+  // the student's practice answer or marks.
   function makeDemo(q) {
     if(!q||!LEVELS.includes(q.level)||!Number.isInteger(q.index)||q.index<0||q.index>9)
       throw new Error('Invalid File Handling demo question');
@@ -244,10 +245,51 @@
       ],
       end:'results.txt contains one line: Passed. The file is closed.'
     });
-    return {...existing,variants:[
+    const pupilNames=['Ada','Leo','Mia'];
+    const loopLines=[
+      'myFile = open("pupils.txt")',
+      'while NOT myFile.endOfFile()',
+      '    name = myFile.readLine()',
+      '    print(name)',
+      'endwhile',
+      'myFile.close()'
+    ];
+    const loopSteps=[
+      [1,'Open','Ready to read','Open pupils.txt and start with the first unread line.']
+    ];
+    const loopStates=[
+      snapshot(true,false,pupilNames,'Before: three pupils are saved in this file.'),
+      snapshot(true,true,pupilNames,'Open. The next unread line is Ada.')
+    ];
+    pupilNames.forEach((name,index)=>{
+      const upcoming=pupilNames[index+1];
+      loopSteps.push([2,'Check end','False','An unread line remains, so NOT endOfFile() is True.']);
+      loopStates.push(snapshot(true,true,pupilNames,'The WHILE condition is True. Read '+name+' next.'));
+      loopSteps.push([3,'Read','name = '+name,'readLine() gets line '+(index+1)+' and advances the reading position.']);
+      loopStates.push(snapshot(true,true,pupilNames,'Read '+name+'. '+(upcoming?'Next unread: '+upcoming+'.':'No unread lines remain.'),index));
+      loopSteps.push([4,'Print',name,'Output the name just read, not a different line.']);
+      loopStates.push(snapshot(true,true,pupilNames,'Printed '+name+'. '+(upcoming?'Next unread: '+upcoming+'.':'The reading position is now at the end.'),index));
+      loopSteps.push([5,'Repeat','Back to WHILE','ENDWHILE returns to line 02 to check for another unread line.']);
+      loopStates.push(snapshot(true,true,pupilNames,'Return to line 02 and test endOfFile() again.',index));
+    });
+    loopSteps.push([2,'Check end','True','No lines remain. NOT endOfFile() is now False, so skip the loop body.']);
+    loopStates.push(snapshot(true,true,pupilNames,'At end of file. Leave the WHILE loop.',2));
+    loopSteps.push([6,'Close','File closed','Close the file after the loop finishes.']);
+    loopStates.push(snapshot(true,false,pupilNames,'Closed. The three original lines are unchanged.'));
+    const loopExample={
+      title:'File Handling',codeLabel:'OCR Exam Reference Language',
+      traceTitle:'Follow each read and end-of-file check',columns:['Action','Effect'],
+      task:'Worked example: Read and print every line using WHILE NOT endOfFile().',
+      end:'Output: Ada, Leo, Mia. Each line was read once; the file is closed.',
+      progressive:false,lines:loopLines,
+      steps:loopSteps,fileView:{filename:'pupils.txt',states:loopStates}
+    };
+    const variants=[
       {label:'Existing file',example:existing},
       {label:'New file',example:created}
-    ]};
+    ];
+    if(q.level==='easy') return {...existing,variants};
+    return {...loopExample,variants:[{label:'Read all (WHILE)',example:loopExample},...variants]};
   }
   function normaliseStatements(value) {
     return String(value??'').replace(/\r/g,'').split('\n')

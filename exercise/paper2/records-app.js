@@ -39,7 +39,7 @@
   function codePanel(lines) {
     const panel = document.createElement('div'); panel.className = 'code-panel';
     const caption = document.createElement('span'); caption.className = 'code-label'; caption.textContent = 'Example record-field notation';
-    const pre = document.createElement('pre'); pre.className = 'erl'; pre.textContent = lines.join('\n');
+    const pre = core.numberedCode(lines);
     panel.append(caption, pre); return panel;
   }
   function recordBoard(q, interactive) {

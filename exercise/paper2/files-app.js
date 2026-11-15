@@ -32,7 +32,7 @@
   }
   function codePanel(code) {
     const panel=el('div','code-panel'), label=el('span','code-label','OCR Exam Reference Language');
-    const pre=el('pre','erl',code.join('\n')); panel.append(label,pre); return panel;
+    const pre=core.numberedCode(code); panel.append(label,pre); return panel;
   }
   function fileSheet(q) {
     const box=el('div','file-sheet');
