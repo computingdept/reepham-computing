@@ -16,8 +16,8 @@ test('all 30 SQL questions have clear prompts and valid model answers', () => {
       }
     }
   }
-  assert.match(engine.makeDemo(engine.makeQuestion('easy', 6, 1)).lines[2], />/);
-  assert.match(engine.makeDemo(engine.makeQuestion('hard', 3, 1)).task, /where Genre is Science/);
+  assert.match(engine.makeDemo(engine.makeQuestion('easy', 6, 1)).lines[2], /WHERE Genre = 'Science'/);
+  assert.match(engine.makeDemo(engine.makeQuestion('hard', 3, 1)).task, /Science genre/);
 });
 
 test('valid alternative SQL syntax is accepted without literal model matching', () => {
@@ -90,7 +90,7 @@ test('reject malformed or dangerous SQL without evaluating anything', () => {
   assert.throws(() => engine.makeQuestion('hard', 10, 1));
 });
 
-test('SQL demos match each question structure without revealing its own answer', () => {
+test('SQL demos always model a complete three-clause query without revealing the question answer', () => {
   for (const level of ['easy', 'medium', 'hard']) {
     for (let index = 0; index < 10; index++) {
       const question = engine.makeQuestion(level, index, 1);
@@ -100,9 +100,19 @@ test('SQL demos match each question structure without revealing its own answer',
       assert.equal(demo.lines.length, demo.steps.length);
       assert.ok(demo.lines[0].startsWith('SELECT '));
       assert.ok(demo.lines[1].startsWith('FROM '));
-      const needsFilter = level === 'easy' ? [2, 5, 6, 8, 9].includes(index) : !!question.where;
-      assert.equal(demo.lines.some(line => line.startsWith('WHERE ')), needsFilter);
-      assert.ok(demo.end.includes(needsFilter ? 'WHERE filters' : 'No WHERE is needed'));
+      assert.equal(demo.lines.length, 3);
+      assert.ok(demo.lines[0].includes(','), 'Demo must show multiple selected columns');
+      assert.ok(demo.lines[2].startsWith('WHERE '), 'Demo must show filtering even for Easy');
+      assert.ok(demo.end.includes('Matching rows'), 'Demo must explain the result');
+      if (question.table === 'Pupils') {
+        assert.equal(demo.lines[0], 'SELECT Title, Pages');
+        assert.equal(demo.lines[2], "WHERE Genre = 'Science'");
+        assert.match(demo.end, /Orbit \| 320; Stars \| 240/);
+      } else {
+        assert.equal(demo.lines[0], 'SELECT Name, House');
+        assert.equal(demo.lines[2], 'WHERE Score >= 70');
+        assert.match(demo.end, /Asha \| Red; Leo \| Green/);
+      }
     }
   }
 });

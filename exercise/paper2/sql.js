@@ -91,50 +91,35 @@
       explanation: 'Correct — your query selects the requested columns and rows.'};
   }
 
-  // The demo uses a different table so it teaches the current question's method,
-  // without revealing the current question's model answer or changing progress.
+  // Always model a complete, single-table OCR SELECT/FROM/WHERE query.
+  // Use the other table so the demo never supplies the current answer.
   function makeDemo(q) {
     const other = q.table === 'Pupils' ? 'Books' : 'Pupils';
-    const easyIndex = q.level === 'easy' ? q.index : -1;
-    const filtered = q.level === 'easy' ? [2, 5, 6, 8, 9].includes(easyIndex) : !!q.where;
-    const wildcard = q.level === 'easy' ? easyIndex === 7 : q.columns.includes('*');
-    const multi = q.level !== 'easy' && q.columns.length > 1;
-    const columns = wildcard ? ['*'] : other === 'Books'
-      ? (multi ? ['Title', 'Pages'] : ['Title'])
-      : (multi ? ['Name', 'Score'] : ['Name']);
-    const numerical = q.level === 'easy' ? easyIndex === 6 : !!(q.where && typeof q.where.value === 'number');
-    const lessThan = numerical && !!q.where && q.where.op.startsWith('<');
-    const where = !filtered ? null : numerical
-      ? other === 'Books'
-        ? {field: 'Pages', op: lessThan ? '<' : numerical && easyIndex === 6 ? '>' : '>=', value: 200}
-        : {field: 'Score', op: lessThan ? '<' : numerical && easyIndex === 6 ? '>' : '>=', value: lessThan ? 75 : 70}
-      : other === 'Books'
-        ? {field: 'Genre', op: '=', value: 'Science'}
-        : {field: 'House', op: '=', value: 'Red'};
-    const example = {table: other, columns, where};
-    const lines = ['SELECT ' + columns.join(', '), 'FROM ' + other];
+    const columns = other === 'Books' ? ['Title', 'Pages'] : ['Name', 'House'];
+    const where = other === 'Books'
+      ? {field: 'Genre', op: '=', value: 'Science'}
+      : {field: 'Score', op: '>=', value: 70};
+    const condition = where.field + ' ' + where.op + ' ' + quote(where.value);
+    const lines = ['SELECT ' + columns.join(', '), 'FROM ' + other, 'WHERE ' + condition];
     const steps = [
-      [1, 'SELECT', columns.join(', '), wildcard
-        ? 'An asterisk after SELECT asks for every column, not every row.'
-        : 'Choose the heading(s) for the information to display.'],
-      [2, 'FROM', other, 'Name the table holding those columns.']
+      [1, 'SELECT', columns.join(', '), 'Choose the two columns to show, separated by a comma.'],
+      [2, 'FROM', other, 'Choose the one table containing the records.'],
+      [3, 'WHERE', condition, typeof where.value === 'string'
+        ? 'Filter the rows using Genre. Science is text, so it needs quotation marks.'
+        : 'Filter the rows by Score. 70 is a number, so it needs no quotation marks.']
     ];
-    if (where) {
-      const condition = where.field + ' ' + where.op + ' ' + quote(where.value);
-      lines.push('WHERE ' + condition);
-      steps.push([3, 'WHERE', condition,
-        'Keep only matching rows. Text needs quotation marks; numbers do not.']);
-    }
-    const condition = !where ? ' for every ' + (other === 'Books' ? 'book' : 'pupil')
-      : typeof where.value === 'string' ? ' where ' + where.field + ' is ' + where.value
-        : ' where ' + where.field + ' is ' +
-          (where.op === '<' ? 'below ' : where.op === '>' ? 'above ' : 'at least ') + where.value;
-    const task = 'Similar example: Show ' + (wildcard ? 'every column' : 'the ' + columns.join(' and ')) +
-      ' from ' + other + condition + '.';
+    const table = TABLES[other];
+    const filterIndex = table.columns.indexOf(where.field);
+    const output = table.rows.filter(row => typeof where.value === 'string'
+      ? row[filterIndex] === where.value : row[filterIndex] >= where.value)
+      .map(row => columns.map(name => row[table.columns.indexOf(name)]).join(' | '));
+    const task = other === 'Books'
+      ? 'Similar example: Show the Title and Pages of books in the Science genre.'
+      : 'Similar example: Show the Name and House of pupils who scored 70 or more.';
     return {title: 'SQL Builder', codeLabel: other + ' table · ' + TABLES[other].columns.join(', '),
       columns: ['Clause', 'What it does'], lines, steps, task,
-      end: 'Example query: ' + makeSQL(example) + '; ' +
-        (where ? 'WHERE filters the rows.' : 'No WHERE is needed because every row is included.')};
+      end: 'Matching rows (' + columns.join(' | ') + '): ' + output.join('; ') +
+        '. SELECT chooses columns; FROM names the table; WHERE filters rows.'};
   }
 
   // A deliberately small parser: only the OCR-required SELECT/FROM/WHERE subset.
