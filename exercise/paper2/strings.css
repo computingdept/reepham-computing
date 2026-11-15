@@ -1,0 +1,29 @@
+/* Skill 15 · clear zero-based character boxes; no shared layout overrides. */
+.rhsc-skills-activity .string-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(240px,.85fr);gap:17px;align-items:start;width:100%}
+.rhsc-skills-activity .string-left{display:grid;gap:12px;min-width:0}
+.rhsc-skills-activity .string-layout:not(:has(.string-answer)){grid-template-columns:1fr}
+.rhsc-skills-activity .string-strip{min-width:0;display:grid;gap:8px}
+.rhsc-skills-activity .string-strip-title{color:#315f46;font-size:14px}
+.rhsc-skills-activity .string-letters{display:flex;gap:5px;min-width:0;flex-wrap:wrap}
+.rhsc-skills-activity .string-letter{flex:1 1 43px;max-width:85px;min-width:38px;min-height:83px;border:1px solid #bdd4c4;border-radius:9px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;background:#f0f7f2;color:#244735}
+.rhsc-skills-activity .string-letter-value{font:850 clamp(19px,2vw,28px)/1.1 ui-monospace,Consolas,monospace}
+.rhsc-skills-activity .string-letter-index{font-size:11px;color:#587866;font-weight:800}
+.rhsc-skills-activity button.string-letter{cursor:pointer;touch-action:manipulation}
+.rhsc-skills-activity button.string-letter:hover{background:#e0efe5;border-color:#75a484}
+.rhsc-skills-activity button.string-letter[aria-pressed="true"]{border:3px solid #285348;background:#d5ebdc}
+.rhsc-skills-activity .string-values{display:flex;align-items:center;gap:12px;flex-wrap:wrap;color:#315f46;font-size:14px}
+.rhsc-skills-activity .string-value-chip{border:1px solid #bdd4c4;background:#eef7f0;border-radius:9px;padding:10px 13px;
+  font:700 16px ui-monospace,Consolas,monospace;color:#285348}
+.rhsc-skills-activity .string-layout .code-panel{min-width:0;margin:0}
+.rhsc-skills-activity .string-answer{min-width:0;display:grid;gap:10px;align-content:start}
+.rhsc-skills-activity .string-answer .number-entry{width:100%;max-width:290px;min-height:60px;font-size:24px}
+.rhsc-skills-activity .string-answer .code-entry{width:100%;min-height:125px;font-size:16px;line-height:1.5}
+.rhsc-skills-activity .string-answer .writer-note{color:#5b7668;font-size:12px;max-width:42ch}
+@media(max-width:780px){
+  .rhsc-skills-activity .string-layout{grid-template-columns:1fr;gap:12px}
+  .rhsc-skills-activity .string-letter{min-height:65px;min-width:36px;gap:4px}
+  .rhsc-skills-activity .string-letter-value{font-size:21px}
+  .rhsc-skills-activity .string-answer .number-entry{min-height:48px}
+  .rhsc-skills-activity .string-answer .code-entry{min-height:100px}
+}

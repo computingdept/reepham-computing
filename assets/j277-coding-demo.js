@@ -153,6 +153,17 @@
       ],
       end: 'Outputs: Asha, Ben, True. Final file: Asha, Ben, Mia.'
     },
+    strings: {
+      title: 'String Handling', codeLabel: 'OCR ERL · substring(start, count)',
+      columns: ['Index / action', 'Value'],
+      lines: ['word = "COMPUTER"', 'part = word.substring(2,3)', 'print(part)'],
+      steps: [
+        [1, 'word', 'COMPUTER', 'Characters are numbered from index 0.'],
+        [2, 'substring(2,3)', 'MPU', 'Start at index 2; take three characters.'],
+        [3, 'Output', 'MPU', 'The second parameter is a character count, not an ending index.']
+      ],
+      end: 'Output: MPU.'
+    },
     sql: {
       title: 'SQL Builder', codeLabel: 'SQL · Pupils table has Name, House, Score and Year',
       columns: ['Clause', 'Purpose / result'],
