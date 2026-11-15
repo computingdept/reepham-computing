@@ -33,33 +33,58 @@ test('Easy teaches correct zero-based character positions',()=>{
   }
 });
 
-test('Medium uses OCR ERL string operations and checks exact outputs',()=>{
-  const expected=['7','DAT','TER','GORI','SCHOOL','binary','Asha Khan','NET!','VALE','YTON'];
+test('Medium traces string operations within IF / ELSE / ELSEIF decisions',()=>{
+  const expected=['Long','Starts D','Match','GO','Yes','Not upper','Asha Khan','NET!','Different','Medium'];
   for(let index=0;index<10;index++){
     const q=engine.makeQuestion('medium',index);
     assert.equal(q.type,'value');
     assert.equal(q.expected,expected[index]);
+    assert.ok(q.code.some(line=>/^if /i.test(line)));
+    assert.ok(q.code.some(line=>/^else/i.test(line)));
+    assert.ok(q.code.includes('endif'));
     assert.equal(engine.checkAnswer(q,q.expected).correct,true);
     assert.equal(engine.checkAnswer(q,q.expected.toLowerCase()+'x').correct,false);
   }
 });
 
-test('Hard permits equivalent expressions but requires the requested operations',()=>{
-  const slice=engine.makeQuestion('hard',0);
-  assert.equal(engine.checkAnswer(slice,'word.substring(0,3)').correct,true);
-  assert.equal(engine.checkAnswer(slice,'"NET"').correct,false,'A literal is not an algorithmic solution');
-  assert.equal(engine.checkAnswer(slice,'word.left(2)').correct,false);
-  const join=engine.makeQuestion('hard',3);
-  assert.equal(engine.checkAnswer(join,"first + ' ' + last").correct,true);
-  assert.equal(engine.checkAnswer(join,'last + " " + first').correct,false);
-  assert.equal(engine.checkAnswer(join,'"Asha Khan"').correct,false);
-  const changeCase=engine.makeQuestion('hard',4);
-  assert.equal(engine.checkAnswer(changeCase,'word.upper').correct,true);
-  assert.equal(engine.checkAnswer(changeCase,'word.lower').correct,false);
-  const composite=engine.makeQuestion('hard',7);
-  assert.equal(engine.checkAnswer(composite,'word.substring(0,2) + word.right(2)').correct,true);
-  assert.equal(engine.checkAnswer(composite,'word.left(2) + "LE"').correct,true,'Other valid composition is accepted');
-  assert.equal(engine.checkAnswer(composite,'"VALE"').correct,false);
+test('Hard requires complete FOR programs, with IF wherever the task needs selection',()=>{
+  for(let i=0;i<10;i++){
+    const q=engine.makeQuestion('hard',i);
+    assert.equal(q.type,'program');
+    assert.match(q.model,/for i = /);
+    assert.match(q.model,/next i/);
+    assert.equal(engine.checkAnswer(q,q.model).correct,true,'Valid model '+i);
+    assert.equal(engine.checkAnswer(q,q.model.replace(/next i/, '')).correct,false,'Incomplete FOR '+i);
+    if(q.needIf){
+      assert.match(q.model,/if .* then/);
+      assert.match(q.model,/endif/);
+      assert.equal(engine.checkAnswer(q,q.model.replace('endif','')).correct,false,'Incomplete IF '+i);
+    }
+  }
+  const each=engine.makeQuestion('hard',0);
+  const equivalent=each.model.replace(/\bi\b/g,'position')
+    .replace('word.substring(position,1)','word.substring(position, 1)');
+  assert.equal(engine.checkAnswer(each,equivalent).correct,true,'Any consistent loop variable works');
+  assert.equal(engine.checkAnswer(each,'print("N")\nprint("E")').correct,false);
+  assert.equal(engine.checkAnswer(each,'for i = 0 to 2\n    print(word.substring(i,1))\nnext i').correct,false,
+    'Check several differently sized words to catch hardcoded end bounds');
+  const count=engine.makeQuestion('hard',4);
+  assert.equal(engine.checkAnswer(count,count.model.replace('count = count + 1','count = count + 2')).correct,false);
+  const vowels=engine.makeQuestion('hard',1);
+  assert.equal(engine.checkAnswer(vowels,vowels.model.replace(' OR ', ' AND ')).correct,false);
+});
+
+test('Hard simulator executes bounded string programs on different input words',()=>{
+  const model=engine.parseProgram(engine.makeQuestion('hard',0).model);
+  assert.deepEqual(engine.runProgram(model,'CAT'),['C','A','T']);
+  assert.deepEqual(engine.runProgram(model,''),[]);
+  assert.deepEqual(engine.expectedOutput('reverse','NETWORK'),['KROWTEN']);
+  assert.deepEqual(engine.expectedOutput('countVowels','Education'),['5']);
+  for(const candidate of [
+    'for i = 0 to word.length - 1\n    print(process.exit())\nnext i',
+    'while true\n    print(word)\nendwhile',
+    'for i = 0 to word.length - 1\n    window.location = word\nnext i'
+  ])assert.equal(engine.checkAnswer(engine.makeQuestion('hard',0),candidate).correct,false);
 });
 
 test('Expression reader does not execute student text',()=>{
@@ -79,12 +104,16 @@ test('Expression reader does not execute student text',()=>{
 
 test('Each difficulty offers a separate stepped worked example',()=>{
   const demos=['easy','medium','hard'].map(level=>engine.makeDemo(engine.makeQuestion(level,0)));
-  assert.deepEqual(demos.map(d=>d.steps.length),[2,3,5]);
+  assert.deepEqual(demos.map(d=>d.steps.length),[2,4,16]);
   for(const demo of demos){
     assert.ok(demo.lines.length>0);
     assert.ok(demo.steps.every(step=>step.length===4));
     assert.match(demo.end,/Output:/);
   }
+  assert.match(demos[1].lines.join('\n'),/if .* then/);
+  assert.match(demos[2].lines.join('\n'),/for .* to/);
+  assert.match(demos[2].lines.join('\n'),/if .* then/);
+  assert.deepEqual(demos[2].loopBack,{from:7,to:2});
 });
 
 test('Page, hub and reusable demo are connected without touching other skills',()=>{
@@ -95,6 +124,7 @@ test('Page, hub and reusable demo are connected without touching other skills',(
   assert.match(page,/strings-app\.js/);
   assert.match(page,/strings\.js/);
   assert.match(page,/j277-coding-demo\.js/);
+  assert.match(page,/strings2/,'Cache busting enables the new behaviour');
   assert.match(hub,/'sql', 'strings'/);
   assert.match(demo,/strings: \{/);
 });

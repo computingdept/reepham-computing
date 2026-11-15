@@ -4,7 +4,7 @@
   const engine=window.J277Paper2Strings,core=window.RHSCSkills;
   if(!engine||!core)throw Error('String Handling scripts did not load.');
   const $=id=>document.getElementById(id),KEY='rhs-j277-paper2-progress-v1',SKILL='strings';
-  const labels={easy:'Find a character',medium:'Trace string operations',hard:'Write OCR ERL expressions'};
+  const labels={easy:'Find a character',medium:'Trace IF decisions',hard:'Write complete programs'};
   const state={level:'easy',index:0,seed:1,score:0,firstTry:0,wrong:0,question:null,response:null,locked:false};
   const el=(tag,className,text)=>{const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node;};
   const progress=()=>{const p=core.readProgress(KEY),entry=p[SKILL]&&p[SKILL][state.level];return entry&&typeof entry==='object'?entry:{solved:0,best:0,sessions:0};};
@@ -33,13 +33,13 @@
   }
   function valuesPanel(env){const box=el('div','string-values');box.append(el('strong','','Given values'));
     Object.entries(env).forEach(([name,value])=>box.append(el('span','string-value-chip',name+' = "'+value+'"')));return box;}
-  function inputPanel(hard){const box=el('div','string-answer'),label=el('label','work-label',hard?'Your OCR ERL expression':'Final printed value');
+  function inputPanel(hard){const box=el('div','string-answer'),label=el('label','work-label',hard?'Your OCR ERL program':'Final printed value');
     label.htmlFor='string-entry';const input=el(hard?'textarea':'input',hard?'code-entry':'number-entry');
     input.id='string-entry';input.autocomplete='off';input.spellcheck=false;input.autocapitalize='off';
-    if(hard){input.rows=3;input.placeholder='Write your expression…';}else{input.type='text';input.placeholder='?';}
+    if(hard){input.rows=7;input.wrap='soft';input.placeholder='Write the FOR loop and any IF statements here…';}else{input.type='text';input.placeholder='?';}
     input.addEventListener('input',()=>{state.response=input.value;});
     if(!hard)input.addEventListener('keydown',event=>{if(event.key==='Enter')$('check').click();});
-    const note=el('span','writer-note',hard?'Write only the expression. Use the variable names shown.':'Use the exact characters and capital letters printed by the code.');
+    const note=el('span','writer-note',hard?'Write the complete program after the given word. Include NEXT and ENDIF where needed.':'Use the exact characters and capital letters printed by the code.');
     box.append(label,input,note);return box;
   }
   function renderQuestion(){const q=state.question=engine.makeQuestion(state.level,state.index,state.seed);
@@ -63,7 +63,7 @@
       updateProgress('solved',(Number(progress().solved)||0)+1);feedback('Correct! '+state.question.explanation,'good');disableInputs();return;}
     state.wrong++;feedback(state.level==='easy'?'Start counting at index 0.':
       state.level==='medium'?'Check the start position, character count and exact letter case.':
-      'Use the correct string operation and variable names; substring takes start, then count.','bad');
+      'Check your FOR loop, string indexes and IF logic. The answer is tested with different words.','bad');
     if(state.wrong>=2)$('show-answer').hidden=false;
   }
   function showModel(){if(state.locked||state.wrong<2)return;state.locked=true;disableInputs();
