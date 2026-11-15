@@ -6,7 +6,7 @@ const TOKEN = 'fictional-teacher-secret-for-local-tests-only';
 const ORIGIN = 'https://rhsccs.org';
 
 class FakeD1 {
-  constructor() { this.codes = new Map(); this.assignments = new Map(); this.attempts = new Map(); this.logins = new Map(); this.sessions = new Map(); }
+  constructor() { this.codes = new Map(); this.assignments = new Map(); this.individualAssignments = new Map(); this.attempts = new Map(); this.logins = new Map(); this.sessions = new Map(); }
   prepare(sql) {
     return { bind: (...args) => {
       const first = async () => {
@@ -18,12 +18,17 @@ class FakeD1 {
           const task = this.assignments.get(args[0]);
           return task?.cohort === args[1] && task.active ? task : null;
         }
+        if (sql.includes('SELECT assignment_key FROM student_assignments')) {
+          const row = this.individualAssignments.get(args[1] + '|' + args[0]);
+          return row?.active ? { assignment_key: args[0] } : null;
+        }
         if (sql.includes('COUNT(*) AS n FROM attempts')) {
           return { n: [...this.attempts.values()].filter(x => x.code === args[0]).length };
         }
-        if (sql.includes('FROM login_profiles l JOIN practice_codes p')) {
+        if (sql.includes('FROM login_profiles l') && sql.includes('JOIN practice_codes p')) {
           const login = this.logins.get(args[0]);
-          return login && this.codes.get(login.code)?.enabled ? login : null;
+          if (!login || !this.codes.get(login.code)?.enabled) return null;
+          return sql.includes('SELECT p.code, p.cohort') ? this.codes.get(login.code) : login;
         }
         if (sql.includes('FROM login_sessions s')) {
           const row = this.sessions.get(args[0]);
@@ -47,12 +52,27 @@ class FakeD1 {
         if (sql.includes('INSERT OR IGNORE INTO assignments')) {
           const [assignment_key, cohort, item_id, level] = args;
           if (this.assignments.has(assignment_key)) return { meta: { changes: 0 } };
-          this.assignments.set(assignment_key, { assignment_key, cohort, item_id, level, active: 1 });
+          this.assignments.set(assignment_key, { assignment_key, cohort, item_id, level, active: sql.includes('active) VALUES') ? 0 : 1 });
+          return { meta: { changes: 1 } };
+        }
+        if (sql.includes('UPDATE assignments SET active = 1')) {
+          const row = this.assignments.get(args[0]);
+          if (!row || row.active) return { meta: { changes: 0 } };
+          row.active = 1;
+          return { meta: { changes: 1 } };
+        }
+        if (sql.includes('INSERT OR IGNORE INTO student_assignments')) {
+          const [code, assignment_key] = args;
+          assert.ok(this.codes.has(code) && this.assignments.has(assignment_key), 'Individual assignment has valid FK targets');
+          const key = code + '|' + assignment_key;
+          if (this.individualAssignments.has(key)) return { meta: { changes: 0 } };
+          this.individualAssignments.set(key, { code, assignment_key, active: 1 });
           return { meta: { changes: 1 } };
         }
         if (sql.includes('INSERT OR IGNORE INTO attempts')) {
           const [attempt_id, code, assignment_key, score, level, source] = args;
           if (this.attempts.has(attempt_id)) return { meta: { changes: 0 } };
+          assert.ok(this.codes.has(code) && this.assignments.has(assignment_key), 'Attempt has valid FK targets');
           this.attempts.set(attempt_id, { attempt_id, code, assignment_key, score, level, source, created_at: '2026-11-14 16:00:00' });
           return { meta: { changes: 1 } };
         }
@@ -83,15 +103,23 @@ class FakeD1 {
         throw Error('Unrecognised test INSERT: ' + sql);
       };
       const all = async () => {
+        if (sql.includes('FROM student_assignments s JOIN assignments a')) {
+          const code = args[0];
+          return { results: [...this.individualAssignments.values()].filter(x => x.code === code && x.active).map(x => {
+            const a = this.assignments.get(x.assignment_key);
+            const scores = [...this.attempts.values()].filter(t => t.code === code && t.assignment_key === a.assignment_key);
+            return { assignmentKey: a.assignment_key, itemId: a.item_id, level: a.level, attempts: scores.length, bestScore: scores.length ? Math.max(...scores.map(y => y.score)) : null };
+          }) };
+        }
         if (sql.includes('COUNT(t.attempt_id)')) {
           const [code, cohort] = args;
-          return { results: [...this.assignments.values()].filter(x => x.cohort === cohort).map(a => {
+          return { results: [...this.assignments.values()].filter(x => x.cohort === cohort && x.active).map(a => {
             const scores = [...this.attempts.values()].filter(t => t.code === code && t.assignment_key === a.assignment_key);
             return { assignmentKey: a.assignment_key, itemId: a.item_id, level: a.level, attempts: scores.length, bestScore: scores.length ? Math.max(...scores.map(x => x.score)) : null };
           }) };
         }
         if (sql.includes('SELECT code FROM practice_codes')) return { results: [...this.codes.values()].filter(x => x.cohort === args[0]).map(x => ({ code: x.code })) };
-        if (sql.includes('SELECT assignment_key AS assignmentKey')) return { results: [...this.assignments.values()].filter(x => x.cohort === args[0]).map(x => ({ assignmentKey: x.assignment_key, itemId: x.item_id, level: x.level })) };
+        if (sql.includes('SELECT assignment_key AS assignmentKey')) return { results: [...this.assignments.values()].filter(x => x.cohort === args[0] && x.active).map(x => ({ assignmentKey: x.assignment_key, itemId: x.item_id, level: x.level })) };
         if (sql.includes('SELECT t.code, t.assignment_key')) return { results: [...this.attempts.values()].filter(x => this.codes.get(x.code)?.cohort === args[0]).map(x => ({ code: x.code, assignmentKey: x.assignment_key, level: x.level, attempts: 1, bestScore: x.score, lastAttempt: x.created_at })) };
         throw Error('Unrecognised test SELECT all: ' + sql);
       };
@@ -239,3 +267,58 @@ test('repeated wrong PINs lock one anonymous ID for 15 minutes', async () => {
   }
   assert.equal((await call(db, '/v1/login', 'POST', { username: 'Y11-01', password: '1436' })).status, 429);
 });
+
+test('individual assignment stays private, accepts scores and can later become year-wide', async () => {
+  const db = new FakeD1();
+  const codes = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y10', count: 2 }, { teacher: true })).data.codes;
+  const addLogins = await call(db, '/v1/teacher/logins', 'POST', { logins: [
+    { username: 'pilotbird', code: codes[0], password: '1234' },
+    { username: 'pilotfox', code: codes[1], password: '5678' }
+  ] }, { teacher: true });
+  assert.equal(addLogins.status, 201);
+
+  const activity = { username: 'PILOTBIRD', itemId: 'j277-practice-12-binary', level: '' };
+  const forbidden = await call(db, '/v1/teacher/student-assignments', 'POST', activity);
+  assert.equal(forbidden.status, 401);
+  const unknown = await call(db, '/v1/teacher/student-assignments', 'POST', { ...activity, username: 'nobody-here' }, { teacher: true });
+  assert.equal(unknown.status, 404);
+  const wrongYear = await call(db, '/v1/teacher/student-assignments', 'POST', { ...activity, itemId: 'h446-practice-141-data-types' }, { teacher: true });
+  assert.equal(wrongYear.status, 400);
+  const assign = await call(db, '/v1/teacher/student-assignments', 'POST', activity, { teacher: true });
+  assert.equal(assign.status, 201);
+  assert.equal(assign.data.scope, 'individual');
+  assert.equal(assign.data.cohort, 'Y10');
+  assert.equal(assign.data.added, true);
+  assert.equal(JSON.stringify(assign.data).includes('pilotbird'), false);
+  assert.equal(JSON.stringify(assign.data).includes(codes[0]), false);
+  assert.equal(db.assignments.get(assign.data.assignmentKey).active, 0, 'Inactive definition does not assign whole year');
+
+  const repeat = await call(db, '/v1/teacher/student-assignments', 'POST', activity, { teacher: true });
+  assert.equal(repeat.data.added, false);
+  const mine = await call(db, '/v1/work', 'POST', { code: codes[0] }, { teacher: true });
+  const other = await call(db, '/v1/work', 'POST', { code: codes[1] }, { teacher: true });
+  assert.equal(mine.data.work.length, 1);
+  assert.equal(other.data.work.length, 0);
+  const cohortProgress = await call(db, '/v1/teacher/progress?cohort=Y10', 'GET', undefined, { teacher: true });
+  assert.equal(cohortProgress.data.assignments.length, 0, 'Individual work is not listed as year-wide');
+
+  const attempt = { code: codes[0], assignmentKey: assign.data.assignmentKey,
+    attemptId: crypto.randomUUID(), score: 85, level: '', source: 'practice' };
+  const score = await call(db, '/v1/attempts', 'POST', attempt, { teacher: true });
+  assert.equal(score.status, 200); assert.equal(score.data.saved, true);
+  const otherScore = await call(db, '/v1/attempts', 'POST', { ...attempt, code: codes[1], attemptId: crypto.randomUUID() }, { teacher: true });
+  assert.equal(otherScore.status, 403);
+  const refreshed = await call(db, '/v1/work', 'POST', { code: codes[0] }, { teacher: true });
+  assert.equal(refreshed.data.work[0].attempts, 1);
+  assert.equal(refreshed.data.work[0].bestScore, 85);
+
+  const everyone = await call(db, '/v1/teacher/assignments', 'POST',
+    { cohort: 'Y10', itemId: activity.itemId, level: '' }, { teacher: true });
+  assert.equal(everyone.status, 201);
+  assert.equal(everyone.data.added, true, 'Whole-year assignment activates existing inactive definition');
+  assert.equal(db.assignments.get(assign.data.assignmentKey).active, 1);
+  const nowBoth = await Promise.all(codes.map(code => call(db, '/v1/work', 'POST', { code }, { teacher: true })));
+  assert.deepEqual(nowBoth.map(result => result.data.work.length), [1, 1], 'First pupil is not shown a duplicate');
+  assert.equal(nowBoth[0].data.work[0].bestScore, 85);
+});
+
