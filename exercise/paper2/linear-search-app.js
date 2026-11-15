@@ -71,7 +71,10 @@
         input.placeholder='Write line '+(i+1);input.value=state.response.code[i+1]||'';
         input.setAttribute('aria-label','OCR ERL line '+(i+1));input.addEventListener('input',()=>{state.response.code[i+1]=input.value;});
         input.disabled=state.locked;row.append(input);
-      }else row.append(node('code','search-code-text',line));
+      }else{
+        row.append(node('code','search-code-text',line));
+        if(i+1===q.entryLine){row.classList.add('is-entry');row.append(node('mark','rhsc-skill-start','START HERE'));}
+      }
       lines.append(row);
     });
     section.append(lines);return section;
@@ -115,7 +118,7 @@
     $('question-card').classList.remove('finished');
     $('prompt').textContent=state.level==='easy'?'Find '+q.target+' using Linear Search':
       state.level==='medium'?'Trace linearSearch(numbers, '+q.target+')':'Complete the function, then trace it';
-    $('context').textContent=q.context+'  numbers = ['+q.values.join(', ')+']';
+    $('context').textContent=q.context;
     $('level-description').textContent=descriptions[state.level];
     $('question-position').textContent='Question '+(state.index+1)+' of 10';
     $('meter').setAttribute('aria-valuenow',String(state.index));$('meter-fill').style.width=state.index*10+'%';

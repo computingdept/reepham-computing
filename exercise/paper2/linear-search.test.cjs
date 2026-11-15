@@ -3,6 +3,7 @@ const engine=require('./linear-search.js');
 for(let i=0;i<10;i++){
   for(const level of ['easy','medium','hard']){
     const q=engine.makeQuestion(level,i);
+    assert.equal(q.code[9],'print(linearSearch(numbers, '+q.target+'))');
     const matches=q.visits.map(j=>q.values[j]===q.target);
     const values=Object.fromEntries(q.visits.filter(j=>j%2===1).map(j=>[j,String(q.values[j])]));
     const code=Object.fromEntries(q.gaps.map(line=>[line,q.code[line-1]]));

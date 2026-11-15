@@ -34,8 +34,10 @@
     const found=item.values.indexOf(item.target);
     const visits=Array.from({length:found===-1?item.values.length:found+1},(_,i)=>i);
     const gaps=level==='hard'?codeGaps[index%4]:[];
+    const program=[...code,'array numbers = ['+item.values.join(', ')+']',
+      'print(linearSearch(numbers, '+item.target+'))'];
     return {level,index,values:item.values.slice(),target:item.target,context:item.context,
-      found,visits,code:code.slice(),gaps,
+      found,visits,code:program,gaps,entryLine:10,
       explanation:found<0?'No element matches '+item.target+'. The search reaches the end and returns -1.':
         'The first '+item.target+' is at index '+found+'. Search stops at the first match.',
       hint:'Begin at index 0. Compare one item at a time from left to right. Stop at the first match, or return -1 if there is none.'};
