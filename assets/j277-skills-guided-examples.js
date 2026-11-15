@@ -147,18 +147,29 @@
       'Output: Wait. One IF/ELSE decision runs one branch.');
   }
   function forLoops(q) {
-    if(q.level==='easy')return d('for-loops','count a different inclusive FOR loop.',
-      ['for counter = 2 to 6','    print(counter)','next counter'],
-      [['Counter','2,3,4,5,6','TO includes the ending value.'],['Output','2 3 4 5 6','The body runs once per counter value.'],['NEXT','Stop after 6','The loop finishes when the counter passes 6.']],
-      'There are 5 iterations, not 4.');
-    if(q.level==='medium')return d('for-loops','trace another running total.',
-      ['total = 0','for i = 1 to 3','    total = total + i','next i','print(total)'],
-      [['total','0','Begin at zero.'],['i','1,2,3','The counter takes 1, 2 and 3.'],['total','1→3→6','Add each counter value to the previous total.'],['NEXT','Finish','After i=3 the loop ends.'],['Output','6','Print the accumulated total.']],
-      'Output: 6 because 1 + 2 + 3 = 6.');
-    return d('for-loops','print from 1 to a different entered limit.',
-      ['limit = int(input("Limit"))','for i = 1 to limit','    print(i)','next i'],
-      [['Input','limit','Read the limit before the loop.'],['FOR','1 to limit','Run from 1 up to and including the input.'],['Output','i','Print the changing counter.'],['NEXT','i grows','Continue to the next value and then stop.']],
-      'The same algorithm handles limit 2, 5 or 10.');
+    const easy=q.level==='easy',hard=q.level==='hard';
+    const lines=easy?['for i = 2 to 4','    print(i)','next i']:
+      hard?['limit = int(input("Limit"))','for i = 1 to limit','    print(i)','next i']:
+      ['total = 0','for i = 1 to 3','    total = total + i','next i','print(total)'];
+    const steps=[],values=easy?[2,3,4]:[1,2,3];
+    let total=0;
+    if(!easy)steps.push([1,hard?'3':'—',hard?'limit = 3':'0',hard?'Use the example input 3.':'Start total at zero.']);
+    const forLine=easy?1:2,bodyLine=easy?2:3,nextLine=easy?3:4;
+    for(const i of values){
+      steps.push([forLine,String(i),easy?'Check':'Continue','FOR checks that '+i+' is within the limit.']);
+      if(!easy&&!hard)total+=i;
+      steps.push([bodyLine,String(i),hard||easy?'Print '+i:String(total),hard||easy?'Run the PRINT statement with i = '+i+'.':'Add '+i+' to the running total.']);
+      steps.push([nextLine,String(i+1),hard||easy?'Repeat':String(total),'NEXT increases i, then returns to FOR to check the next value.']);
+    }
+    steps.push([forLine,String(values.at(-1)+1),'Stop','The counter is beyond the limit, so do not run the body again.']);
+    if(!easy&&!hard)steps.push([5,'—','6','Print the final running total.']);
+    return {
+      title:'FOR Loops',task:'Similar example: '+(easy?'count the iterations from 2 to 4.':hard?'print numbers for a different input of 3.':'trace another running total from 1 to 3.'),
+      codeLabel:'OCR ERL · DIFFERENT EXAMPLE FROM YOUR QUESTION',traceTitle:'Follow each loop and return',
+      columns:['i','total / output'],lines,steps,
+      loopBack:{from:nextLine,to:forLine},
+      end:easy?'Outputs: 2, 3, 4. Three complete iterations.':hard?'With limit = 3, output: 1, 2, 3.':'Output: 6 because 1 + 2 + 3 = 6.'
+    };
   }
   function whileUntil(q) {
     const until=q.mode==='do';

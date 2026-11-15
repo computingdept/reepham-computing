@@ -285,6 +285,10 @@
   }
   setExample(example);
   codePanel.append(label, pre);
+  const loopBack = make('div', 'skill-demo-loop-back');
+  loopBack.hidden = true;
+  loopBack.setAttribute('role','status');
+  codePanel.append(loopBack);
   const filePanel = make('section', 'skill-demo-file-preview');
   filePanel.hidden = true;
   filePanel.setAttribute('aria-label', 'Simulated text file contents');
@@ -345,9 +349,14 @@
     }
     const current = visible[visible.length - 1];
     const progressive = page === 'sql' || !!example.progressive;
+    const nextEvent = example.steps[index];
+    const returning = !!(example.loopBack && current && nextEvent &&
+      current[0] === example.loopBack.from && nextEvent[0] === example.loopBack.to);
     codeRows.forEach((row, idx) => {
       const active = !!current && idx === current[0] - 1;
       row.classList.toggle('is-tracing', active);
+      row.classList.toggle('is-loop-target', returning && idx === example.loopBack.to - 1);
+      row.classList.toggle('is-loop-back', returning && idx === example.loopBack.from - 1);
       row.classList.toggle('is-upcoming', progressive && idx >= index);
       if (progressive) row.children[1].textContent = idx < index
         ? example.lines[idx]
@@ -355,6 +364,8 @@
       if (active) row.setAttribute('aria-current', 'step');
       else row.removeAttribute('aria-current');
     });
+    loopBack.hidden = !returning;
+    loopBack.textContent = returning ? '↶ NEXT returns to FOR · line '+String(example.loopBack.to).padStart(2,'0') : '';
     const view = example.fileView;
     const snapshot = view && Array.isArray(view.states) && view.states[index];
     filePanel.hidden = !snapshot;
@@ -372,7 +383,7 @@
       }
       fileNote.textContent = snapshot.note || '';
     }
-    if (current) status.textContent = 'Line ' + String(current[0]).padStart(2, '0') + ' · ' + current[3];
+    if (current) status.textContent = 'Line ' + String(current[0]).padStart(2, '0') + ' · ' + current[3] + (returning ? ' ↶ Back to FOR.' : '');
     else status.textContent = progressive
       ? 'Press Step to reveal this similar example, one line at a time.'
       : 'Ready. Press Play or Step.';

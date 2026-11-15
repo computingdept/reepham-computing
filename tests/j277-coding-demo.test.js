@@ -119,6 +119,24 @@ for (const skill of ['variables', 'data-types', 'casting', 'operators', 'compari
   });
 }
 
+test('FOR Demo visibly returns from NEXT to FOR before repeating the body',()=>{
+  const guided=require('../assets/j277-skills-guided-examples.js');
+  const ui=mountDemo('for-loops');
+  ui.window.RHSSkillsDemoProvider=()=>guided.make('for-loops',{level:'medium'});
+  find(ui.title,'skill-demo-open').click();
+  const demo=ui.practice.insertedSibling;
+  const button=find(demo,'skill-demo-controls').children[1];
+  const badge=find(demo,'skill-demo-loop-back');
+  const code=find(demo,'skill-demo-source');
+  for(let i=0;i<4;i++)button.click();
+  assert.equal(badge.hidden,false);
+  assert.match(badge.textContent,/NEXT returns to FOR · line 02/);
+  assert.match(code.children[1].className,/is-loop-target/);
+  button.click();
+  assert.equal(badge.hidden,true);
+  assert.equal(code.children[1].attributes['aria-current'],'step');
+});
+
 test('SQL demo uses a question-specific similar example and hides forthcoming lines', () => {
   const ui = mountDemo('sql');
   ui.window.RHSSkillsDemoProvider = () => ({
@@ -228,8 +246,11 @@ test('The other 12 J277 coding skills reveal the appropriate guided example',()=
     const demo=ui.practice.insertedSibling,code=find(demo,'skill-demo-source');
     const controls=find(demo,'skill-demo-controls');
     assert.ok(code.children.length>0,skill);
-    assert.ok(code.children[0].className.includes('is-upcoming'),skill);
-    assert.equal(code.children[0].children[1].textContent,'Step 1 …',skill);
+    if(skill==='for-loops')assert.match(code.children[0].children[1].textContent,/total = 0/);
+    else{
+      assert.ok(code.children[0].className.includes('is-upcoming'),skill);
+      assert.equal(code.children[0].children[1].textContent,'Step 1 …',skill);
+    }
     controls.children[1].click();
     assert.ok(!code.children[0].className.includes('is-upcoming'),skill);
     find(demo,'skill-demo-back').click();

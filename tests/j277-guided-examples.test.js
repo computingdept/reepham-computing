@@ -16,14 +16,21 @@ test('Every active J277 coding question has a separate progressive Demo',()=>{
         for(const seed of [1,42,2026]){
           const q=engine.makeQuestion(level,i,seed);
           const demo=guided.make(skill,q);
-          assert.equal(demo.progressive,true,`${skill}/${level}/${i}`);
+          assert.equal(demo.progressive,skill==='for-loops'?undefined:true,`${skill}/${level}/${i}`);
           assert.match(demo.task,/^Similar example:/);
           assert.ok(demo.lines.length>0 && demo.lines.length<=10);
-          assert.equal(demo.steps.length,demo.lines.length);
-          assert.equal(demo.placeholders.length,demo.lines.length);
-          assert.ok(demo.steps.every((s,j)=>s[0]===j+1&&s[3].length>10));
+          if(skill==='for-loops'){
+            assert.ok(demo.steps.length>demo.lines.length);
+            assert.equal(demo.loopBack.to,level==='easy'?1:2);
+            assert.ok(demo.steps.some((step,j)=>j>0&&step[0]<demo.steps[j-1][0]),'Demo revisits the FOR line');
+          }else{
+            assert.equal(demo.steps.length,demo.lines.length);
+            assert.equal(demo.placeholders.length,demo.lines.length);
+            assert.ok(demo.steps.every((s,j)=>s[0]===j+1&&s[3].length>10));
+          }
+          assert.ok(demo.steps.every(s=>s[3].length>10));
           assert.ok(demo.end.length>8);
-          assert.ok(demo.lines.every((s,j)=>s!==demo.placeholders[j]));
+          if(skill!=='for-loops')assert.ok(demo.lines.every((s,j)=>s!==demo.placeholders[j]));
           count++;
         }
       }
