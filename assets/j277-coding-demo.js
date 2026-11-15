@@ -262,6 +262,40 @@
 
   const grid = make('div', 'skill-demo-grid');
   const codePanel = make('div', 'skill-demo-code');
+  const recordData = make('section', 'skill-demo-record-data');
+  recordData.hidden = true;
+  recordData.setAttribute('aria-label', 'Given table of records');
+  const recordCells = [];
+  function renderRecordData(data) {
+    recordCells.length = 0;
+    recordData.replaceChildren();
+    recordData.hidden = !data;
+    if (!data) return;
+    const heading = make('div', 'skill-demo-record-heading');
+    heading.append(make('strong', '', data.name),
+      make('span', '', 'Column '+data.focusColumn+' = '+data.fields[data.focusColumn]));
+    const table = make('table', 'skill-demo-record-table');
+    const head = make('thead'), headers = make('tr');
+    const corner = make('th', '', 'Row'); corner.scope = 'col'; headers.append(corner);
+    data.fields.forEach((field, column) => {
+      const th = make('th', column === data.focusColumn ? 'is-target-field' : '', column+' · '+field);
+      th.scope = 'col'; headers.append(th);
+    });
+    head.append(headers);
+    const body = make('tbody');
+    data.rows.forEach((values, row) => {
+      const tr = make('tr');
+      const number = make('th', '', String(row)); number.scope = 'row'; tr.append(number);
+      const cells = [];
+      values.forEach((value, column) => {
+        const td = make('td', column === data.focusColumn ? 'is-target-field' : '', String(value));
+        tr.append(td); cells.push(td);
+      });
+      body.append(tr); recordCells.push(cells);
+    });
+    table.append(head, body);
+    recordData.append(heading, table);
+  }
   const label = make('span', 'code-label', example.codeLabel || 'OCR Exam Reference Language');
   const pre = make('pre', 'erl skill-demo-source');
   const codeRows = [];
@@ -269,6 +303,7 @@
     if (!next || !Array.isArray(next.lines) || !Array.isArray(next.steps)) return;
     example = next;
     section.classList.toggle('guided-step-reveal', page === 'sql' || !!next.progressive);
+    renderRecordData(next.dataTable);
     label.textContent = next.codeLabel || 'OCR Exam Reference Language';
     heading.textContent = next.title + ' · Demo';
     subtitle.textContent = next.task
@@ -284,7 +319,7 @@
     });
   }
   setExample(example);
-  codePanel.append(label, pre);
+  codePanel.append(recordData, label, pre);
   const loopBack = make('div', 'skill-demo-loop-back');
   loopBack.hidden = true;
   loopBack.setAttribute('role','status');
@@ -348,6 +383,13 @@
       body.append(row);
     }
     const current = visible[visible.length - 1];
+    recordCells.forEach((cells,row) => cells.forEach((cell,col) => {
+      const focus = current && current[4];
+      const active = !!focus && focus.row === row && focus.col === col;
+      cell.classList.toggle('is-reading', active);
+      if (active) cell.setAttribute('aria-current', 'true');
+      else cell.removeAttribute('aria-current');
+    }));
     const progressive = page === 'sql' || !!example.progressive;
     const nextEvent = example.steps[index];
     const returning = !!(example.loopBack && current && nextEvent &&

@@ -292,13 +292,15 @@
       const steps=[[1,'3 records','3 fields','team is a different table. Column 1 stores surnames.']];
       surnames.forEach((surname,r)=>{
         steps.push([2,'r = '+r,'Continue','The FOR counter selects record '+r+'.']);
-        steps.push([3,'team['+r+',1]',surname,'Print the surname in column 1 of this record.']);
+        steps.push([3,'team['+r+',1]',surname,'Print the surname in column 1 of this record.',{row:r,col:1}]);
         steps.push([4,'NEXT r','r becomes '+(r+1),'Return to FOR to check the next record.']);
       });
       steps.push([2,'r = 3','Stop','There are no more records; leave the loop.']);
       steps.push([5,'Output','Finished','Print the final message after the loop.']);
       return {title:'Records',task:'Similar example: print every surname from a different table using a FOR loop.',
-        codeLabel:'Given team: 0 Ava Reed Red · 1 Eli Shaw Blue · 2 Zoe Nash Green',
+        codeLabel:'OCR Exam Reference Language',
+        dataTable:{name:'team[3,3]',fields:['forename','surname','house'],
+          rows:[['Ava','Reed','Red'],['Eli','Shaw','Blue'],['Zoe','Nash','Green']],focusColumn:1},
         traceTitle:'Visit each record and read its surname',columns:['Index / action','Output'],
         lines,steps,progressive:false,loopBack:{from:4,to:2},
         end:'Output: Reed, Shaw, Nash, Finished. The loop visited rows 0, 1 and 2.'};
