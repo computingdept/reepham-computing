@@ -187,14 +187,23 @@ async function learner(env, code) {
 }
 
 async function work(env, code, cohort) {
-  const { results } = await env.DB.prepare(`
+  const groupWork = await env.DB.prepare(`
     SELECT a.assignment_key AS assignmentKey, a.item_id AS itemId, a.level,
       COUNT(t.attempt_id) AS attempts, MAX(t.score) AS bestScore
     FROM assignments a LEFT JOIN attempts t ON t.assignment_key = a.assignment_key AND t.code = ?
     WHERE a.cohort = ? AND a.active = 1
     GROUP BY a.assignment_key ORDER BY a.created_at DESC
   `).bind(code, cohort).all();
-  return results;
+  const individualWork = await env.DB.prepare(`
+    SELECT a.assignment_key AS assignmentKey, a.item_id AS itemId, a.level,
+      COUNT(t.attempt_id) AS attempts, MAX(t.score) AS bestScore
+    FROM student_assignments s JOIN assignments a ON a.assignment_key = s.assignment_key
+    LEFT JOIN attempts t ON t.assignment_key = a.assignment_key AND t.code = s.code
+    WHERE s.code = ? AND s.active = 1
+    GROUP BY a.assignment_key ORDER BY s.created_at DESC
+  `).bind(code).all();
+  return [...new Map([...groupWork.results, ...individualWork.results]
+    .map(item => [item.assignmentKey, item])).values()];
 }
 
 async function handle(request, env) {
@@ -234,7 +243,8 @@ async function handle(request, env) {
     }
     const student = await learner(env, code);
     if (!student || !key.startsWith(student.cohort.slice(1) + '|')) return respond({ error: 'Practice code not recognised' }, 404);
-    const activity = await env.DB.prepare('SELECT assignment_key FROM assignments WHERE assignment_key = ? AND cohort = ? AND active = 1').bind(key, student.cohort).first();
+    let activity = await env.DB.prepare('SELECT assignment_key FROM assignments WHERE assignment_key = ? AND cohort = ? AND active = 1').bind(key, student.cohort).first();
+    if (!activity) activity = await env.DB.prepare('SELECT assignment_key FROM student_assignments WHERE assignment_key = ? AND code = ? AND active = 1').bind(key, code).first();
     if (!activity) return respond({ error: 'This activity is not assigned' }, 403);
     const recent = await env.DB.prepare("SELECT COUNT(*) AS n FROM attempts WHERE code = ? AND created_at > datetime('now', '-1 minute')").bind(code).first();
     if (Number(recent?.n || 0) >= 8) return respond({ error: 'Please wait before submitting more attempts' }, 429);
@@ -269,7 +279,25 @@ async function handle(request, env) {
       const key = assignmentKey(cohort, itemId, level || '');
       if (!key) return respond({ error: 'Invalid activity assignment' }, 400);
       const result = await env.DB.prepare('INSERT OR IGNORE INTO assignments (assignment_key, cohort, item_id, level) VALUES (?, ?, ?, ?)').bind(key, cohort, itemId, level || '').run();
-      return respond({ assignmentKey: key, added: Boolean(result.meta?.changes) }, 201);
+      const activated = result.meta?.changes ? null : await env.DB.prepare('UPDATE assignments SET active = 1 WHERE assignment_key = ? AND active = 0').bind(key).run();
+      return respond({ assignmentKey: key, added: Boolean(result.meta?.changes || activated?.meta?.changes) }, 201);
+    }
+    if (path === '/v1/teacher/student-assignments' && request.method === 'POST') {
+      const { username: rawUsername, itemId, level } = await jsonBody(request);
+      const username = normalizeUsername(rawUsername);
+      if (!username || typeof itemId !== 'string' || typeof level !== 'string') return respond({ error: 'Choose an anonymous username and activity' }, 400);
+      const profile = await env.DB.prepare(`SELECT p.code, p.cohort FROM login_profiles l
+        JOIN practice_codes p ON p.code = l.code
+        WHERE l.username_key = ? AND p.enabled = 1`).bind(await usernameKey(username)).first();
+      if (!profile) return respond({ error: 'Anonymous username not found among active logins' }, 404);
+      const key = assignmentKey(profile.cohort, itemId, level);
+      if (!key) return respond({ error: 'Activity does not match the pupil year or level' }, 400);
+      // Keep an inactive activity definition for the attempts foreign key; do not grant it to the cohort.
+      await env.DB.prepare('INSERT OR IGNORE INTO assignments (assignment_key, cohort, item_id, level, active) VALUES (?, ?, ?, ?, 0)')
+        .bind(key, profile.cohort, itemId, level).run();
+      const result = await env.DB.prepare('INSERT OR IGNORE INTO student_assignments (code, assignment_key) VALUES (?, ?)')
+        .bind(profile.code, key).run();
+      return respond({ cohort: profile.cohort, assignmentKey: key, added: Boolean(result.meta?.changes), scope: 'individual' }, 201);
     }
     if (path === '/v1/teacher/progress' && request.method === 'GET') {
       const cohort = url.searchParams.get('cohort');
@@ -305,3 +333,4 @@ export default {
     return new Response(reply.body, { status: reply.status, headers });
   }
 };
+
