@@ -1945,10 +1945,12 @@ function prepareKS3VocabularyIntroduction(){
 }
 
 prepareKS3VocabularyIntroduction();
-/* Controlled pilot for three older H446 Objectives layouts. Read the existing
-   authored definitions; do not change any lesson content or other phases. */
-function prepareH446LegacyObjectivesPilot(){
-  if(!/^\/lessons\/h446\/lesson-(046|184|196)\/index\.html$/i.test(location.pathname))return;
+/* Approved shared Objectives vocabulary presentation for legacy H446 layouts.
+   Only convert two-pane lessons with complete teacher-authored term definitions;
+   do not change their lesson content or other phases. */
+function prepareH446LegacyObjectives(){
+  if(!/^\/lessons\/h446\/lesson-\d{3}\/index\.html$/i.test(location.pathname))return;
+  if(document.querySelector('meta[name="lesson-vocabulary-display"][content="classic"]'))return;
   const overview=document.getElementById('overview');
   if(!overview||overview.dataset.objectivesVocab==='true')return;
   const original=overview.firstElementChild;
@@ -1995,11 +1997,11 @@ function prepareH446LegacyObjectivesPilot(){
   layout.append(left,right);
   original.replaceWith(layout);
   overview.dataset.objectivesVocab='true';
-  overview.dataset.legacyObjectivesPilot='true';
+  overview.dataset.legacyObjectivesShared='true';
 }
-prepareH446LegacyObjectivesPilot();
+prepareH446LegacyObjectives();
 // One shared Objectives presentation for H446 lessons that already use the
-// staged vocabulary renderer. Older layouts remain untouched until reviewed.
+// staged vocabulary renderer, including eligible older two-pane layouts.
 // An authored 'classic' mode remains available for exceptional layouts.
 const objectivesVocabularyMode=document.querySelector('meta[name="lesson-vocabulary-display"]')?.content;
 const objectivesOverview=document.getElementById('overview');
