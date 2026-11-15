@@ -8,7 +8,7 @@ for(const level of ['easy','medium','hard']){
     assert.equal(q.options.length,level==='easy'?4:level==='medium'?5:8);
     assert.equal(new Set(q.options.map(x=>x.id)).size,q.options.length);
     assert.equal(engine.checkAnswer(q,null).complete,false);
-    const bad=level==='easy'?'Not a principle':level==='medium'?[0,1,4]:[1,0,2,3,4,5];
+    const bad=level==='easy'?'Not a principle':level==='medium'?[0,1,4]:[0,2,1,3,4,5];
     assert.equal(engine.checkAnswer(q,bad).correct,false);
     const demo=engine.makeDemo(q);
     assert.equal(demo.steps[0][1],'START HERE');
@@ -18,4 +18,5 @@ for(const level of ['easy','medium','hard']){
 const hard=engine.makeQuestion('hard',0,123);
 assert.equal(engine.checkAnswer(hard,[0,1,2,3,4]).complete,false);
 assert.equal(engine.checkAnswer(hard,[0,1,2,3,4,7]).correct,false);
+assert.equal(engine.checkAnswer(hard,[1,0,2,3,4,5]).correct,true);
 console.log('Computational Thinking: 30 questions, 30 demos and wrong-answer checks passed.');

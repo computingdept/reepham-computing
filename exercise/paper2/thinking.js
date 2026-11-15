@@ -118,8 +118,12 @@
     if(!Array.isArray(response)||response.length<(q.type==='multi'?3:6))return {complete:false,correct:false};
     if(q.type==='multi')return {complete:true,correct:response.length===3&&
       response.every(id=>q.expected.includes(id))&&new Set(response).size===3};
-    return {complete:true,correct:response.length===6&&
-      response.every((id,i)=>id===q.expected[i])};
+    // In genuine design work, choosing the subprogram before listing the
+    // essential inputs is also a valid planning order.
+    const standard=response.length===6&&response.every((id,i)=>id===q.expected[i]);
+    const swapped=response.length===6&&response[0]===1&&response[1]===0&&
+      response.slice(2).every((id,i)=>id===q.expected[i+2]);
+    return {complete:true,correct:standard||swapped};
   }
   function makeDemo(q){
     if(q.level==='easy')return {title:'Computational Thinking',task:'Similar example: plan a journey app using the three thinking principles.',
