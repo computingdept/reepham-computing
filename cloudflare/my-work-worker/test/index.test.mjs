@@ -6,7 +6,7 @@ const TOKEN = 'fictional-teacher-secret-for-local-tests-only';
 const ORIGIN = 'https://rhsccs.org';
 
 class FakeD1 {
-  constructor() { this.codes = new Map(); this.assignments = new Map(); this.attempts = new Map(); }
+  constructor() { this.codes = new Map(); this.assignments = new Map(); this.attempts = new Map(); this.logins = new Map(); this.sessions = new Map(); }
   prepare(sql) {
     return { bind: (...args) => {
       const first = async () => {
@@ -20,6 +20,20 @@ class FakeD1 {
         }
         if (sql.includes('COUNT(*) AS n FROM attempts')) {
           return { n: [...this.attempts.values()].filter(x => x.code === args[0]).length };
+        }
+        if (sql.includes('FROM login_profiles l JOIN practice_codes p')) {
+          const login = this.logins.get(args[0]);
+          return login && this.codes.get(login.code)?.enabled ? login : null;
+        }
+        if (sql.includes('FROM login_sessions s')) {
+          const row = this.sessions.get(args[0]);
+          const code = this.codes.get(row?.code);
+          return row && row.expires_at > args[1] && code?.enabled ? code : null;
+        }
+        if (sql.includes('FROM login_profiles WHERE username_key')) return this.logins.get(args[0]) || null;
+        if (sql.includes('SELECT username_key FROM login_profiles WHERE code')) {
+          const row = [...this.logins.values()].find(login => login.code === args[0]);
+          return row ? { username_key: row.username_key } : null;
         }
         throw Error('Unrecognised test SELECT one: ' + sql);
       };
@@ -40,6 +54,30 @@ class FakeD1 {
           const [attempt_id, code, assignment_key, score, level, source] = args;
           if (this.attempts.has(attempt_id)) return { meta: { changes: 0 } };
           this.attempts.set(attempt_id, { attempt_id, code, assignment_key, score, level, source, created_at: '2026-11-14 16:00:00' });
+          return { meta: { changes: 1 } };
+        }
+        if (sql.includes('INSERT INTO login_profiles')) {
+          const [username_key, code, password_salt, password_hash] = args;
+          if (this.logins.has(username_key) || [...this.logins.values()].some(login => login.code === code)) throw Error('Duplicate login');
+          this.logins.set(username_key, { username_key, code, password_salt, password_hash, failed_attempts: 0, locked_until: 0 });
+          return { meta: { changes: 1 } };
+        }
+        if (sql.includes('UPDATE login_profiles SET failed_attempts = ?, locked_until = ?')) {
+          const [failed_attempts, locked_until, key] = args;
+          Object.assign(this.logins.get(key), { failed_attempts, locked_until });
+          return { meta: { changes: 1 } };
+        }
+        if (sql.includes('UPDATE login_profiles SET failed_attempts = 0')) {
+          Object.assign(this.logins.get(args[0]), { failed_attempts: 0, locked_until: 0 });
+          return { meta: { changes: 1 } };
+        }
+        if (sql.includes('INSERT INTO login_sessions')) {
+          const [token_hash, code, expires_at] = args;
+          this.sessions.set(token_hash, { token_hash, code, expires_at });
+          return { meta: { changes: 1 } };
+        }
+        if (sql.includes('DELETE FROM login_sessions')) {
+          this.sessions.delete(args[0]);
           return { meta: { changes: 1 } };
         }
         throw Error('Unrecognised test INSERT: ' + sql);
@@ -143,4 +181,50 @@ test('10 Year 12 and 10 Year 13 codes, assignment, repeat score saving', async (
   assert.equal(teacher.data.progress.length, 2);
   const wrongCohort = await call(db, '/v1/attempts', 'POST', { ...submission, code: y13.data.codes[0], attemptId: crypto.randomUUID() }, { teacher: true });
   assert.equal(wrongCohort.status, 404);
+});
+
+test('anonymous username and password sign-in can read work but not teacher data', async () => {
+  const db = new FakeD1();
+  const issued = await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y12', count: 1 }, { teacher: true });
+  const code = issued.data.codes[0];
+  const privatePassword = '7FRM-n4K6-QpE';
+  const notTeacher = await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'Y12-04', code, password: privatePassword }] });
+  assert.equal(notTeacher.status, 401);
+  const added = await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'Y12-04', code, password: privatePassword }] }, { teacher: true });
+  assert.equal(added.status, 201);
+  assert.deepEqual(added.data.results, [{ username: 'y12-04', status: 'created' }]);
+  assert.equal([...db.logins.values()][0].password_hash.includes(privatePassword), false);
+  const retry = await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'Y12-04', code, password: privatePassword }] }, { teacher: true });
+  assert.equal(retry.data.results[0].status, 'already-imported');
+  const bad = await call(db, '/v1/login', 'POST', { username: 'Y12-04', password: 'WrongPassword123' });
+  assert.equal(bad.status, 401);
+  const good = await call(db, '/v1/login', 'POST', { username: 'y12-04', password: privatePassword });
+  assert.equal(good.status, 200);
+  assert.match(good.data.session, /^[A-Za-z0-9_-]{43}$/);
+  assert.equal(good.data.session.includes(code), false);
+  const response = await worker.fetch(new Request('https://example.workers.dev/v1/work', {
+    method: 'POST', headers: { origin: ORIGIN, 'content-type': 'application/json', authorization: 'Bearer ' + good.data.session }, body: '{}'
+  }), { DB: db, TEACHER_TOKEN: TOKEN, ALLOWED_ORIGINS: ORIGIN });
+  // Session authentication is valid; the same UK-time window still gates access.
+  assert.ok([200, 403].includes(response.status));
+  const teacher = await worker.fetch(new Request('https://example.workers.dev/v1/teacher/progress?cohort=Y12', {
+    headers: { origin: ORIGIN, authorization: 'Bearer ' + good.data.session }
+  }), { DB: db, TEACHER_TOKEN: TOKEN, ALLOWED_ORIGINS: ORIGIN });
+  assert.equal(teacher.status, 401);
+  const logout = await worker.fetch(new Request('https://example.workers.dev/v1/logout', {
+    method: 'POST', headers: { origin: ORIGIN, authorization: 'Bearer ' + good.data.session }
+  }), { DB: db, TEACHER_TOKEN: TOKEN, ALLOWED_ORIGINS: ORIGIN });
+  assert.equal(logout.status, 200);
+  assert.equal(db.sessions.size, 0);
+});
+
+test('repeated wrong passwords lock one anonymous ID for 15 minutes', async () => {
+  const db = new FakeD1();
+  const code = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y11', count: 1 }, { teacher: true })).data.codes[0];
+  await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'Y11-01', code, password: 'StrongPass1234' }] }, { teacher: true });
+  for (let i = 0; i < 5; i++) {
+    const bad = await call(db, '/v1/login', 'POST', { username: 'Y11-01', password: 'WrongPassword123' });
+    assert.equal(bad.status, 401);
+  }
+  assert.equal((await call(db, '/v1/login', 'POST', { username: 'Y11-01', password: 'StrongPass1234' })).status, 429);
 });
