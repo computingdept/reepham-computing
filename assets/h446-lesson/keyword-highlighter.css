@@ -109,6 +109,43 @@ body #overview .vocab-intro-list .vocab-tip,
 body #overview .rhsc-preview-term{
   background-color:transparent!important;
 }
+
+/* J277 + H446 Key Vocabulary: match the large yellow Objectives term.
+   Only style the revealed answer; the existing stage/teacher controls retain
+   full ownership of when it becomes visible. Leave KS3 out of this rollout. */
+body:has(.course-back[href*="j277-hub"]) #vocabulary .vocab-answer-value,
+body:has(.course-back[href*="h446-hub"]) #vocabulary .vocab-answer-value{
+  display:block;
+  width:fit-content;
+  max-width:100%;
+  padding:.02em .14em;
+  background-color:transparent;
+  background-image:var(--rhsc-central-ink-a);
+  background-repeat:no-repeat;
+  background-position:center 68%;
+  background-size:100% 80%;
+  color:#24241a;
+  font-size:clamp(44px,4.3vw,72px);
+  font-weight:950;
+  line-height:1.1;
+  overflow-wrap:anywhere;
+}
+@media(max-width:700px){
+  body:has(.course-back[href*="j277-hub"]) #vocabulary .vocab-answer-value,
+  body:has(.course-back[href*="h446-hub"]) #vocabulary .vocab-answer-value{
+    font-size:clamp(34px,7vw,48px);
+  }
+}
+@media(prefers-contrast:more){
+  body:has(.course-back[href*="j277-hub"]) #vocabulary .vocab-answer-value,
+  body:has(.course-back[href*="h446-hub"]) #vocabulary .vocab-answer-value{
+    background-image:none;
+    text-decoration:underline;
+    text-decoration-color:#937800;
+    text-decoration-thickness:.12em;
+    text-underline-offset:.07em;
+  }
+}
 @media(max-width:700px){
   /* Keep the mobile keyword strip compact but unboxed. */
   body #overview[data-objectives-vocab="true"] .objectives:has(mark.rhsc-keyword){
