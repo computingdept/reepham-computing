@@ -229,6 +229,22 @@
       dataTable:{layout:'array',name:'numbers · SORTED',caption:'target = 16',values:[2,5,8,12,16]},
       end:'The search halves the range until it finds 16 at index 4.'
     },
+    'bubble-sort': {
+      title:'Bubble Sort',entryLine:13,progressive:true,showAllCode:true,
+      codeLabel:'OCR ERL · repeated adjacent comparisons',columns:['Action','Array'],
+      lines:['procedure bubbleSort(values)','    for pass = 0 to values.length - 2',
+        '        for i = 0 to values.length - pass - 2',
+        '            if values[i] > values[i+1] then','                temp = values[i]',
+        '                values[i] = values[i+1]','                values[i+1] = temp',
+        '            endif','        next i','    next pass','endprocedure',
+        'array numbers = [4,2,3]','bubbleSort(numbers)','print(numbers)'],
+      steps:[[13,'START HERE','bubbleSort(numbers)','The procedure call begins sorting.'],
+        [4,'Compare','4 > 2?','The left value is larger.'],[7,'SWAP','2, 4, 3','Swap these adjacent values.'],
+        [4,'Compare','4 > 3?','Again, the left value is larger.'],[7,'SWAP','2, 3, 4','Swap again.'],
+        [14,'Output','2, 3, 4','Print the sorted array.']],
+      dataTable:{layout:'array',name:'numbers · ASCENDING',caption:'Compare neighbours',values:[4,2,3]},
+      end:'Bubble Sort moves the largest unsorted value right after each pass.'
+    },
     strings: {
       title: 'String Handling', codeLabel: 'OCR ERL · substring(start, count)',
       columns: ['Index / action', 'Value'],
@@ -495,6 +511,15 @@
       const range=current && current[5];
       const excluded=!!(example.dataTable?.layout==='array'&&range&&(col<range.low||col>range.high));
       cell.classList.toggle('is-excluded',excluded);
+      const arrayFrame=current && current[6];
+      const isArray=example.dataTable?.layout==='array';
+      if(isArray&&row===0){
+        const values=Array.isArray(arrayFrame?.values)?arrayFrame.values:example.dataTable.values;
+        cell.textContent=String(values[col]);
+      }
+      const pair=isArray&&Array.isArray(arrayFrame?.pair)?arrayFrame.pair:[];
+      cell.classList.toggle('is-comparing',pair.includes(col)&&!arrayFrame?.swapped);
+      cell.classList.toggle('is-swapped',pair.includes(col)&&!!arrayFrame?.swapped);
       if (active) cell.setAttribute('aria-current', 'true');
       else cell.removeAttribute('aria-current');
     }));
