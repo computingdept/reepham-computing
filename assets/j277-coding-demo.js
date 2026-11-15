@@ -354,11 +354,13 @@
       current[0] === example.loopBack.from && nextEvent[0] === example.loopBack.to);
     codeRows.forEach((row, idx) => {
       const active = !!current && idx === current[0] - 1;
+      const skipped = index >= 2 && Array.isArray(example.skippedLines) && example.skippedLines.includes(idx+1);
       row.classList.toggle('is-tracing', active);
+      row.classList.toggle('is-skipped', skipped);
       row.classList.toggle('is-loop-target', returning && idx === example.loopBack.to - 1);
       row.classList.toggle('is-loop-back', returning && idx === example.loopBack.from - 1);
-      row.classList.toggle('is-upcoming', progressive && idx >= index);
-      if (progressive) row.children[1].textContent = idx < index
+      row.classList.toggle('is-upcoming', progressive && !example.showAllCode && idx >= index);
+      if (progressive) row.children[1].textContent = example.showAllCode || idx < index
         ? example.lines[idx]
         : (example.placeholders && example.placeholders[idx]) || example.lines[idx].split(' ')[0] + ' …';
       if (active) row.setAttribute('aria-current', 'step');

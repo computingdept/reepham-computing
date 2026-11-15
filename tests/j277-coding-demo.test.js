@@ -137,6 +137,29 @@ test('FOR Demo visibly returns from NEXT to FOR before repeating the body',()=>{
   assert.equal(code.children[1].attributes['aria-current'],'step');
 });
 
+test('Selection demo highlights only the executed branch and shows skipped line clearly',()=>{
+  const guided=require('../assets/j277-skills-guided-examples.js');
+  for(const level of ['easy','medium','hard']){
+    const ui=mountDemo('selection');
+    ui.window.RHSSkillsDemoProvider=()=>guided.make('selection',{level});
+    find(ui.title,'skill-demo-open').click();
+    const demo=ui.practice.insertedSibling;
+    const code=find(demo,'skill-demo-source');
+    const [play,step,reset]=find(demo,'skill-demo-controls').children;
+    assert.match(code.children[2].children[1].textContent,/print/,'full code visible before tracing');
+    step.click();step.click();
+    assert.match(code.children[2].className,/is-skipped/,'false branch visibly skipped');
+    assert.ok(!code.children[2].attributes['aria-current'],'skipped line is never active');
+    step.click();
+    assert.equal(code.children[3].attributes['aria-current'],'step','control jumps from IF to ELSE/ELSEIF');
+    assert.ok(!code.children[2].attributes['aria-current']);
+    reset.click();
+    assert.ok(!code.children[2].className.includes('is-skipped'),'reset removes skip marking');
+    assert.equal(code.children[2].children[1].textContent,level==='medium'?'    print("High")':'    print("Eligible")');
+    assert.equal(play.disabled,false);
+  }
+});
+
 test('WHILE and UNTIL demos highlight the return only when another check is due',()=>{
   const guided=require('../assets/j277-skills-guided-examples.js');
   for(const mode of ['while','do']){
@@ -266,6 +289,8 @@ test('The other 12 J277 coding skills reveal the appropriate guided example',()=
     const controls=find(demo,'skill-demo-controls');
     assert.ok(code.children.length>0,skill);
     if(skill==='for-loops'||skill==='while-until')assert.match(code.children[0].children[1].textContent,skill==='for-loops'?/total = 0/:/i = 1/);
+    else if(skill==='selection')assert.equal(code.children[0].children[1].textContent,'mark = 52',
+      'the complete IF/ELSEIF structure is visible before the trace');
     else{
       assert.ok(code.children[0].className.includes('is-upcoming'),skill);
       assert.equal(code.children[0].children[1].textContent,'Step 1 …',skill);

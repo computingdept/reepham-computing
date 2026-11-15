@@ -14,19 +14,26 @@
     'for-loops':'FOR Loops','while-until':'WHILE / UNTIL',
     'array-1d':'1D Arrays','array-2d':'2D Arrays',records:'Records'
   };
-  function worked(skill, task, lines, notes, end, labels) {
-    if (lines.length !== notes.length) throw new Error('Every demo line needs its own explanation.');
+  function worked(skill, task, lines, notes, end, labels, executionPath) {
+    if (!executionPath && lines.length !== notes.length) throw new Error('Every demo line needs its own explanation.');
+    if (executionPath && (executionPath.length !== notes.length ||
+      executionPath.some(line => !Number.isInteger(line) || line < 1 || line > lines.length))) {
+      throw new Error('Every executed step must point to a real code line.');
+    }
     return {
       title:titles[skill], task:'Similar example: ' + task,
       codeLabel:'OCR ERL · DIFFERENT EXAMPLE FROM YOUR QUESTION',
       traceTitle:'Build and understand the method',
       columns:labels || ['Action','Why / result'],
       lines, progressive:true,
+      // Conditional branches can jump past source lines which do not execute.
+      showAllCode:!!executionPath,
+      skippedLines:executionPath ? lines.map((_,i)=>i+1).filter(n=>!executionPath.includes(n)) : [],
       placeholders:lines.map((_,i)=>'Step '+(i+1)+' …'),
-      steps:notes.map((note,i)=>[i+1,note[0],note[1],note[2]]),end
+      steps:notes.map((note,i)=>[executionPath ? executionPath[i] : i+1,note[0],note[1],note[2]]),end
     };
   }
-  const d=(skill,task,lines,notes,end)=>worked(skill,task,lines,notes,end);
+  const d=(skill,task,lines,notes,end,executionPath)=>worked(skill,task,lines,notes,end,undefined,executionPath);
   const typeValues={
     Integer:['pupils = 23','23','Integer','A whole number with no decimal point.'],
     Real:['temperature = 18.75','18.75','Real','A decimal number.'],
@@ -139,12 +146,12 @@
   function selection(q) {
     if(q.level==='medium')return d('selection','trace an ELSEIF chain with a different mark.',
       ['mark = 52','if mark >= 75 then','    print("High")','elseif mark >= 40 then','    print("Pass")','endif'],
-      [['mark','52','Store the mark.'],['IF','False','52 is not at least 75.'],['Skip','High','Do not print from a failed branch.'],['ELSEIF','True','52 is at least 40.'],['Output','Pass','Run only the first matching branch.'],['End','—','Selection finishes.']],
-      'Output: Pass. Check IF before ELSEIF, and stop at the first True condition.');
+      [['mark','52','Store the mark.'],['IF','False','52 is not at least 75, so line 03 is skipped.'],['ELSEIF','True','52 is at least 40.'],['Output','Pass','Run only the first matching branch.'],['End','—','Selection finishes.']],
+      'Output: Pass. Line 03 never runs; only the matching branch prints.',[1,2,4,5,6]);
     return d('selection',q.level==='hard'?'write a different IF/ELSE algorithm.':'trace a different IF/ELSE choice.',
       ['age = 14','if age >= 16 then','    print("Eligible")','else','    print("Wait")','endif'],
-      [['age','14','Start with the current value.'],['IF','False','14 is below 16.'],['Skip','Eligible','This branch does not run.'],['ELSE','Chosen','The condition was False.'],['Output','Wait','Print only from ELSE.'],['End','—','ENDIF closes the decision.']],
-      'Output: Wait. One IF/ELSE decision runs one branch.');
+      [['age','14','Start with the current value.'],['IF','False','14 is below 16, so line 03 is skipped.'],['ELSE','Chosen','The condition was False.'],['Output','Wait','Print only from ELSE.'],['End','—','ENDIF closes the decision.']],
+      'Output: Wait. Line 03 never runs; only the ELSE branch prints.',[1,2,4,5,6]);
   }
   function forLoops(q) {
     const easy=q.level==='easy',hard=q.level==='hard';

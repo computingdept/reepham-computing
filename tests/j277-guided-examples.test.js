@@ -24,6 +24,11 @@ test('Every active J277 coding question has a separate progressive Demo',()=>{
             assert.ok(demo.steps.length>demo.lines.length);
             assert.equal(demo.loopBack.to,skill==='for-loops'&&level==='easy'?1:2);
             assert.ok(demo.steps.some((step,j)=>j>0&&step[0]<demo.steps[j-1][0]),'Demo revisits the FOR line');
+          }else if(skill==='selection'){
+            assert.equal(demo.steps.length,5,'only lines which execute should be traced');
+            assert.deepEqual(demo.steps.map(step=>step[0]),[1,2,4,5,6]);
+            assert.deepEqual(demo.skippedLines,[3]);
+            assert.equal(demo.showAllCode,true,'students need to see which complete branch is skipped');
           }else{
             assert.equal(demo.steps.length,demo.lines.length);
             assert.equal(demo.placeholders.length,demo.lines.length);
@@ -51,6 +56,16 @@ test('WHILE and DO UNTIL demos show different control flow',()=>{
   assert.equal(wh.steps.at(-1)[2],'False · stop');
   assert.equal(until.steps.at(-1)[0],5,'DO UNTIL stops at the test following the body');
   assert.equal(until.steps.at(-1)[2],'True · stop');
+});
+
+test('Selection demos skip non-executing PRINT statements at every level',()=>{
+  for(const level of ['easy','medium','hard']){
+    const engine=require('../exercise/paper2/selection.js');
+    const demo=guided.make('selection',engine.makeQuestion(level,0,42));
+    assert.deepEqual(demo.steps.map(step=>step[0]),[1,2,4,5,6],level);
+    assert.ok(demo.steps[1][3].includes('line 03 is skipped'),level);
+    assert.match(demo.end,level==='medium'?/Output: Pass/:/Output: Wait/);
+  }
 });
 
 test('Guided demos are not full model answers to the live question',()=>{
