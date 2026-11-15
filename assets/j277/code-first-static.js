@@ -37,9 +37,10 @@
       const permitted=new Set(["predict","write","test","iterate"]);
       const declared=String(item.focus_stage||"").trim().toLowerCase();
       const focus=permitted.has(declared)?declared:focusFromTask(item.task);
-      const names={predict:"Predict",write:"Write",test:"Test",iterate:"Iterate"};
+      const finalStage=num==='002'?"Improve":"Iterate";
+      const names={predict:"Predict",write:"Write",test:"Test",iterate:finalStage};
       cycle.dataset.focus=focus;
-      cycle.setAttribute("aria-label","Code First routine: Predict, Write, Test, Iterate. Current task: "+names[focus]+".");
+      cycle.setAttribute("aria-label","Code First routine: Predict, Write, Test, "+finalStage+". Current task: "+names[focus]+".");
       cycle.querySelectorAll("[data-code-first-step]").forEach(el=>{
         el.classList.toggle("is-active",el.dataset.codeFirstStep===focus);
       });
