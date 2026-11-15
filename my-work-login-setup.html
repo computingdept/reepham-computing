@@ -28,15 +28,15 @@
       <p>Paste two columns from your private school spreadsheet: <strong>Username</strong> then <strong>Practice code</strong>. One student per line. You can paste directly from Excel.</p>
       <label for="rows">Username and code pairs</label>
       <textarea id="rows" spellcheck="false" autocapitalize="off" placeholder="Y10-01&#9;P-XXXXXXXXXX&#10;Y10-02&#9;P-XXXXXXXXXX"></textarea>
-      <div class="actions"><button id="prepare">Prepare passwords</button></div>
-      <p class="notice warning">No names or school email addresses. The passwords will be generated on this device. Keep the downloaded file in restricted school OneDrive storage.</p>
+      <div class="actions"><button id="prepare">Prepare PINs</button></div>
+      <p class="notice warning">No names or school email addresses. The PINs will be generated on this device. Keep the downloaded file in restricted school OneDrive storage.</p>
       <p id="prepareStatus" class="status" aria-live="polite"></p>
     </section>
     <section class="panel">
       <h2>2 · Save the credentials privately</h2>
-      <p>Download the generated file <strong>before</strong> activating anything. It contains anonymous usernames, their existing practice codes and individual passwords.</p>
+      <p>Download the generated file <strong>before</strong> activating anything. It contains anonymous usernames, their existing practice codes and individual PINs.</p>
       <div class="actions"><button id="download" disabled>Download credentials CSV</button></div>
-      <p class="notice">If you need to retry later, paste the saved three-column file back into the box above. It will reuse the same passwords.</p>
+      <p class="notice">If you need to retry later, paste the saved three-column file back into the box above. It will reuse the same PINs.</p>
     </section>
     <section class="panel">
       <h2>3 · Activate the logins</h2>
@@ -52,15 +52,15 @@
   (() => {
     'use strict';
     const API = 'https://rhsccs-my-work-api.jeromedthompson.workers.dev';
-    const ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
     const USERNAME = /^[a-z0-9][a-z0-9._-]{2,39}$/;
     const CODE = /^P-[A-HJ-NP-Z2-9]{10}$/;
     let profiles = [];
     let downloaded = false;
     const $ = id => document.getElementById(id);
-    const randomPassword = () => {
-      const bytes = crypto.getRandomValues(new Uint8Array(12));
-      return [...bytes].map(b => ALPHABET[b & 31]).join('');
+    const randomPin = () => {
+      const bytes = new Uint32Array(1);
+      do { crypto.getRandomValues(bytes); } while (bytes[0] >= 4294962000);
+      return String(1000 + (bytes[0] % 9000));
     };
     function parse(text) {
       const lines = text.replace(/^\uFEFF/, '').trim().split(/\r?\n/).filter(Boolean);
@@ -72,9 +72,9 @@
         const cols = line.split(line.includes('\t') ? '\t' : ',').map(c => c.trim());
         const username = (cols[0] || '').toLowerCase();
         const code = (cols[1] || '').toUpperCase();
-        const password = cols[2] || randomPassword();
-        if (![2, 3].includes(cols.length) || !USERNAME.test(username) || !CODE.test(code) || !/^[!-~]{12,128}$/.test(password)) {
-          throw Error(`Check row ${index + 1}: use anonymous username, existing code and optional 12+ character password.`);
+        const password = cols[2] || randomPin();
+        if (![2, 3].includes(cols.length) || !USERNAME.test(username) || !CODE.test(code) || !/^[0-9]{4}$/.test(password)) {
+          throw Error(`Check row ${index + 1}: use anonymous username, existing code and optional 4-digit PIN.`);
         }
         if (seenUsers.has(username) || seenCodes.has(code)) throw Error(`Duplicate username or code on row ${index + 1}.`);
         seenUsers.add(username); seenCodes.add(code);
@@ -95,11 +95,11 @@
     });
     $('download').addEventListener('click', () => {
       if (!profiles.length) return;
-      const csv = ['Username,PracticeCode,Password', ...profiles.map(({username,code,password}) => `${username},${code},${password}`)].join('\r\n') + '\r\n';
+      const csv = ['Username,PracticeCode,PIN', ...profiles.map(({username,code,password}) => `${username},${code},${password}`)].join('\r\n') + '\r\n';
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url; a.download = 'RHS_My_Work_Private_Logins.csv';
+      a.href = url; a.download = 'RHS_My_Work_Private_PINs.csv';
       document.body.appendChild(a); a.click(); a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
       downloaded = true;
