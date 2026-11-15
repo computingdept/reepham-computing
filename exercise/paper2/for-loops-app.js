@@ -38,8 +38,36 @@
   function codePanel(lines){
     const panel=document.createElement('div');panel.className='code-panel';
     const label=document.createElement('span');label.className='code-label';label.textContent='OCR Exam Reference Language';
-    const pre=document.createElement('pre');pre.className='erl';pre.textContent=lines.join('\n');
+    const pre=document.createElement('pre');pre.className='erl for-numbered-code';
+    lines.forEach((line,index)=>{
+      const row=document.createElement('span');row.className='for-source-line';row.dataset.line=String(index+1);
+      const number=document.createElement('span');number.className='for-source-number';number.textContent=String(index+1).padStart(2,'0');number.setAttribute('aria-hidden','true');
+      const source=document.createElement('span');source.className='for-source-text';source.textContent=line;
+      row.append(number,source);pre.append(row);
+    });
     panel.append(label,pre);return panel;
+  }
+  function traceScaffold(q,code){
+    const loop=q.code[1].match(/^for i = (-?\d+) to (-?\d+)(?: step (-?\d+))?/i);
+    if(!loop)return document.createElement('div');
+    const start=Number(loop[1]),end=Number(loop[2]),step=Number(loop[3]||1);
+    const section=document.createElement('section');section.className='for-trace-work';section.setAttribute('aria-label','Your trace table');
+    const title=document.createElement('strong');title.className='work-label';title.textContent='Your trace table';
+    const hint=document.createElement('span');hint.className='writer-note';hint.textContent='Follow line 3 for each value of i. Fill in the new total.';
+    const table=document.createElement('table');table.className='for-trace-table';
+    const header=document.createElement('tr');['Line','i','total'].forEach(value=>{const th=document.createElement('th');th.textContent=value;header.append(th);});
+    const head=document.createElement('thead');head.append(header);table.append(head);
+    const body=document.createElement('tbody');
+    const initial=document.createElement('tr');for(const value of ['01','—',q.code[0].match(/-?\d+/)?.[0]||'0']){const cell=document.createElement('td');cell.textContent=value;initial.append(cell);}body.append(initial);
+    for(let i=start,n=0;n<20&&(step>0?i<=end:i>=end);i+=step,n++){
+      const row=document.createElement('tr');
+      for(const value of ['03',String(i)]){const cell=document.createElement('td');cell.textContent=value;row.append(cell);}
+      const cell=document.createElement('td');const input=document.createElement('input');input.type='text';input.inputMode='numeric';input.className='for-trace-input';input.setAttribute('aria-label','Total after iteration i = '+i);
+      input.addEventListener('focus',()=>{code.querySelectorAll('.for-source-line').forEach(line=>line.classList.toggle('active',line.dataset.line==='3'));});
+      input.addEventListener('blur',()=>{code.querySelectorAll('.for-source-line').forEach(line=>line.classList.remove('active'));});
+      cell.append(input);row.append(cell);body.append(row);
+    }
+    table.append(body);section.append(title,hint,table);return section;
   }
   function renderEasy(q,work){
     const layout=document.createElement('div');layout.className='for-grid';
@@ -67,7 +95,8 @@
     input.addEventListener('input',()=>{state.response=input.value;});
     input.addEventListener('keydown',event=>{if(event.key==='Enter')$('check').click();});
     const note=document.createElement('span');note.className='writer-note';note.textContent='Remember: TO includes the final value.';
-    area.append(label,input,note);layout.append(codePanel(q.code),area);work.append(layout);
+    const code=codePanel(q.code);
+    area.append(traceScaffold(q,code),label,input,note);layout.append(code,area);work.append(layout);
   }
   function renderHard(_,work){
     const area=document.createElement('div');area.className='for-writer';

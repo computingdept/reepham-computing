@@ -2,6 +2,19 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const engine=require('../exercise/paper2/for-loops.js');
+const fs=require('node:fs');
+const path=require('node:path');
+
+test('FOR-loop practice uses numbered source lines and an unmarked trace scaffold',()=>{
+  const app=fs.readFileSync(path.join(__dirname,'../exercise/paper2/for-loops-app.js'),'utf8');
+  const css=fs.readFileSync(path.join(__dirname,'../exercise/paper2/for-loops.css'),'utf8');
+  assert.match(app,/for-source-number/);
+  assert.match(app,/traceScaffold\(q,code\)/);
+  assert.match(app,/for-trace-table/);
+  assert.match(app,/line\.dataset\.line==='3'/);
+  assert.match(css,/for-trace-work/);
+  assert.match(app,/input\.setAttribute\('aria-label','Total after iteration i = '/);
+});
 
 test('all 30 FOR-loop models are deterministic and pass their checkers',()=>{
   for(const seed of [1,17,20261114,90001]){
