@@ -183,11 +183,11 @@ test('10 Year 12 and 10 Year 13 codes, assignment, repeat score saving', async (
   assert.equal(wrongCohort.status, 404);
 });
 
-test('anonymous username and password sign-in can read work but not teacher data', async () => {
+test('anonymous username and four-digit PIN sign-in can read work but not teacher data', async () => {
   const db = new FakeD1();
   const issued = await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y12', count: 1 }, { teacher: true });
   const code = issued.data.codes[0];
-  const privatePassword = '7FRM-n4K6-QpE';
+  const privatePassword = '4821';
   const notTeacher = await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'Y12-04', code, password: privatePassword }] });
   assert.equal(notTeacher.status, 401);
   const added = await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'Y12-04', code, password: privatePassword }] }, { teacher: true });
@@ -196,8 +196,10 @@ test('anonymous username and password sign-in can read work but not teacher data
   assert.equal([...db.logins.values()][0].password_hash.includes(privatePassword), false);
   const retry = await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'Y12-04', code, password: privatePassword }] }, { teacher: true });
   assert.equal(retry.data.results[0].status, 'already-imported');
-  const bad = await call(db, '/v1/login', 'POST', { username: 'Y12-04', password: 'WrongPassword123' });
+  const bad = await call(db, '/v1/login', 'POST', { username: 'Y12-04', password: '9999' });
   assert.equal(bad.status, 401);
+  const invalidPin = await call(db, '/v1/login', 'POST', { username: 'y12-04', password: '12345' });
+  assert.equal(invalidPin.status, 401);
   const good = await call(db, '/v1/login', 'POST', { username: 'y12-04', password: privatePassword });
   assert.equal(good.status, 200);
   assert.match(good.data.session, /^[A-Za-z0-9_-]{43}$/);
@@ -218,13 +220,13 @@ test('anonymous username and password sign-in can read work but not teacher data
   assert.equal(db.sessions.size, 0);
 });
 
-test('repeated wrong passwords lock one anonymous ID for 15 minutes', async () => {
+test('repeated wrong PINs lock one anonymous ID for 15 minutes', async () => {
   const db = new FakeD1();
   const code = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y11', count: 1 }, { teacher: true })).data.codes[0];
-  await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'Y11-01', code, password: 'StrongPass1234' }] }, { teacher: true });
+  await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'Y11-01', code, password: '1436' }] }, { teacher: true });
   for (let i = 0; i < 5; i++) {
-    const bad = await call(db, '/v1/login', 'POST', { username: 'Y11-01', password: 'WrongPassword123' });
+    const bad = await call(db, '/v1/login', 'POST', { username: 'Y11-01', password: '9999' });
     assert.equal(bad.status, 401);
   }
-  assert.equal((await call(db, '/v1/login', 'POST', { username: 'Y11-01', password: 'StrongPass1234' })).status, 429);
+  assert.equal((await call(db, '/v1/login', 'POST', { username: 'Y11-01', password: '1436' })).status, 429);
 });
