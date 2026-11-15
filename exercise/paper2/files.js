@@ -174,137 +174,80 @@
     const question=level==='easy'?easy(index,r):level==='medium'?medium(index,r):hard(index);
     return {...question,index};
   }
-  // A separate, analogous file scenario for the shared Skills Demo. None of
-  // these statements is executed or written back to the student's answer.
+  // Stable reference demonstrations for every difficulty: imaginary files only.
+  // Neither demo runs code or changes the student's practice answer or marks.
   function makeDemo(q) {
     if(!q||!LEVELS.includes(q.level)||!Number.isInteger(q.index)||q.index<0||q.index>9)
       throw new Error('Invalid File Handling demo question');
-    const rows=[];
-    const add=(line,action,effect,explanation)=>rows.push({line,action,effect,explanation});
-    let task='',end='',source='scores.txt · starting lines: Ivy, Owen, Finn';
-    const open='demoFile = open("scores.txt")',read='demoFile.readLine()';
-    const append=word=>'demoFile.writeLine("'+word+'")';
-    if(q.level==='easy') {
-      const easyTasks={
-        open:'Similar example: Open scores.txt and store a file reference.',
-        read:'Similar example: Read the next line from an open file.',
-        write:'Similar example: Add Tara as a new line at the end of a file.',
-        close:'Similar example: Close a file when you have finished.',
-        eof:'Similar example: Check whether an open file has unread lines.',
-        new:'Similar example: Create a new file called log.txt.'
+    function demo({filename,task,code,actions,states,end}) {
+      return {
+        title:'File Handling',codeLabel:'OCR Exam Reference Language',
+        traceTitle:'Watch each command',columns:['Action','Effect'],
+        task,end,progressive:false,
+        lines:code,placeholders:actions.map(([action])=>action+' …'),
+        steps:actions.map(([action,effect,why],i)=>[i+1,action,effect,why]),
+        fileView:{filename,states}
       };
-      const examples={
-        open:['store = open("scores.txt")','Open','File reference','open() returns a file reference; any valid variable name can store it.','A file reference is now saved in store.'],
-        read:['entry = demoFile.readLine()','Read','Ivy','readLine() returns the next unread line and advances the reading position.','The first unread line was Ivy.'],
-        write:[append('Tara'),'Append','Tara','writeLine() places new text after the existing lines.','The last line is now Tara.'],
-        close:['demoFile.close()','Close','Finished','close() releases the open file when the work is finished.','The file has been closed.'],
-        eof:['demoFile.endOfFile()','Check','False','Three lines remain unread, so endOfFile() returns False.','The file has unread lines.'],
-        new:['newFile("log.txt")','Create','log.txt','newFile() creates a new file; open() uses an existing one.','A new file called log.txt is created.']
-      };
-      const e=examples[q.expected];
-      add(e[0],e[1],e[2],e[3]);
-      task=easyTasks[q.expected];
-      end=e[4];
-    } else if(q.level==='medium') {
-      const mediumTasks=[
-        'Similar example: Find the line printed by the first read.',
-        'Similar example: Find the line printed after an earlier read.',
-        'Similar example: Identify the new final line after appending.',
-        'Similar example: Count lines after two append operations.',
-        'Similar example: Find the third line read and printed.',
-        'Similar example: Check endOfFile() after reading one line.',
-        'Similar example: Check endOfFile() after every line has been read.',
-        'Similar example: Identify the last of two appended lines.',
-        'Similar example: Count how many lines a file-reading loop processes.',
-        'Similar example: Trace a line saved in a variable and printed.'
-      ];
-      task=mediumTasks[q.index];
-      if([3,7,8].includes(q.index)) source='scores.txt · starting lines: Ivy, Owen';
-      add(open,'Open','scores.txt','Open the file; its reading position starts at line 1.');
-      switch(q.index) {
-        case 0:
-          add('print('+read+')','Read + print','Ivy','The first readLine() returns line 1: Ivy.');
-          end='Prints Ivy.';break;
-        case 1:
-          add('skip = '+read,'Read','Ivy','The first line is consumed, even though it is not printed.');
-          add('print('+read+')','Read + print','Owen','The next readLine() returns line 2.');
-          end='Prints Owen.';break;
-        case 2:
-          add(append('Tara'),'Append','Tara','A new line is added after Finn.');
-          add('demoFile.close()','Close','Finished','Close the file after writing.');
-          end='The new final line is Tara.';break;
-        case 3:
-          add(append('Tara'),'Append','3 lines','Two starting lines plus one new line.');
-          add(append('Eli'),'Append','4 lines','The second writeLine() adds another line.');
-          add('demoFile.close()','Close','Finished','The file keeps all four lines.');
-          end='2 starting lines + 2 appended lines = 4 lines.';break;
-        case 4:
-          add('a = '+read,'Read','Ivy','The first read moves to line 2.');
-          add('b = '+read,'Read','Owen','The second read moves to line 3.');
-          add('print('+read+')','Read + print','Finn','The third read returns Finn.');
-          end='Prints Finn.';break;
-        case 5:
-          add('a = '+read,'Read','Ivy','The first line is consumed.');
-          add('print(demoFile.endOfFile())','Check end','False','Two unread lines remain.');
-          end='Prints False: the end has not been reached.';break;
-        case 6:
-          for(const [i,name] of ['Ivy','Owen','Finn'].entries())
-            add('item'+(i+1)+' = '+read,'Read',name,'Read the next line and move the cursor forward.');
-          add('print(demoFile.endOfFile())','Check end','True','No unread lines remain.');
-          end='Prints True: every line has been read.';break;
-        case 7:
-          add(append('Tara'),'Append','Tara','Add a line after Owen.');
-          add(append('Eli'),'Append','Eli','The newest line is now Eli.');
-          add('demoFile.close()','Close','Finished','Close the file.');
-          end='The final line is Eli.';break;
-        case 8:
-          add('count = 0','Start count','0','Nothing has been read yet.');
-          add('while NOT demoFile.endOfFile()','Loop','Read next','Repeat while there are unread lines.');
-          add('    item = '+read,'Read','Next line','Read one new line per repetition.');
-          add('    count = count + 1','Count','+1','Add one for each read line.');
-          add('endwhile','Repeat','Stop at end','The loop ends after both starting lines.');
-          add('print(count)','Print','2','Two original lines were read.');
-          end='Prints 2 because this example started with two lines.';break;
-        default:
-          add('first = '+read,'Read','Ivy','The first variable stores line 1.');
-          add('second = '+read,'Read','Owen','The second variable stores line 2.');
-          add('print(second)','Print','Owen','The stored second line is printed.');
-          add('demoFile.close()','Close','Finished','Close the file after reading.');
-          end='Prints Owen.';
-      }
-    } else {
-      const cases=[
-        ['Similar example: Open scores.txt and save its file reference.','saved = open("scores.txt")','Open','saved','You can choose a valid name such as saved; open() returns the reference.','The file reference is stored in saved.'],
-        ['Similar example: Read a line from demoFile into a chosen variable.','entry = demoFile.readLine()','Read','entry','Read the next line and store it in entry.','entry contains the next unread line.'],
-        ['Similar example: Print the next line of demoFile.','print(demoFile.readLine())','Print','Next line','Place the readLine() call inside print().','One line is read and printed.'],
-        ['Similar example: Append Tara to demoFile.','demoFile.writeLine("Tara")','Append','Tara','The text to write goes in quotation marks.','Tara is appended to the file.'],
-        ['Similar example: Finish using demoFile.','demoFile.close()','Close','Finished','close() is called on the file reference.','demoFile is closed.'],
-        ['Similar example: Print all the lines in demoFile until it ends.','while NOT demoFile.endOfFile()\n    print(demoFile.readLine())\nendwhile','Loop','One line each time','NOT endOfFile() repeats while there are unread lines.','Every original line is printed once.'],
-        ['Similar example: Create a new file called log.txt.','newFile("log.txt")','Create','log.txt','Use newFile() rather than open() for a new file.','A new file called log.txt is created.'],
-        ['Similar example: Append Ready to demoFile.','demoFile.writeLine("Ready")','Append','Ready','writeLine() adds a new line without replacing earlier ones.','Ready becomes the new final line.'],
-        ['Similar example: Read a line into entry, then close demoFile.','entry = demoFile.readLine()\ndemoFile.close()','Read then close','entry','Read first, then close the same file.','entry stores one line and demoFile is closed.'],
-        ['Similar example: Open scores.txt, read a line, then close it.','saved = open("scores.txt")\nentry = saved.readLine()\nsaved.close()','Open, read, close','saved','Reuse the same file variable for every command; use another variable for the line.','The file is opened, one line is saved, and then it is closed.']
-      ];
-      const [prompt,code,action,effect,reason,result]=cases[q.index];
-      task=prompt;end=result;
-      for(const [i,line] of code.split('\n').entries()) {
-        const descriptions=q.index===5
-          ? [['Check end','Unread?','NOT keeps the loop running until no lines remain.'],
-            ['Read + print','One line','Each repetition prints the next line.'],
-            ['Repeat','Until end','The loop returns to its condition and eventually stops.']]
-          : q.index===8
-            ? [['Read','entry','Store one line in any valid variable.'],['Close','Finished','Close the file afterwards.']]
-          : q.index===9
-            ? [['Open','saved','Store the file reference.'],['Read','entry','Read using saved and store the line separately.'],['Close','Finished','Close the same saved reference.']]
-            : [[action,effect,reason]];
-        const [label,value,detail]=descriptions[i];add(line,label,value,detail);
-      }
     }
-    return {title:'File Handling',codeLabel:source,traceTitle:q.level==='medium'?'Trace the file':'Build the command',
-      columns:['Action','Effect'], task,end,progressive:true,
-      lines:rows.map(row=>row.line),
-      placeholders:rows.map(row=>row.action+' …'),
-      steps:rows.map((row,i)=>[i+1,row.action,row.effect,row.explanation])};
+    const snapshot=(exists,open,lines,note,highlightIndex=-1)=>({
+      exists,open,lines,note,highlightIndex
+    });
+    const names=['Ivy','Owen','Finn'];
+    const existing=demo({
+      filename:'scores.txt',
+      task:'Worked example: Open, read, check, append and close one text file.',
+      code:[
+        'myFile = open("scores.txt")',
+        'first = myFile.readLine()',
+        'atEnd = myFile.endOfFile()',
+        'myFile.writeLine("Tara")',
+        'myFile.close()'
+      ],
+      actions:[
+        ['Open','Ready to read','open() returns a file reference stored in myFile.'],
+        ['Read','first = Ivy','readLine() returns Ivy; Owen and Finn are still unread.'],
+        ['Check end','atEnd = False','endOfFile() is False because Owen and Finn remain unread.'],
+        ['Append','Tara added','writeLine() adds Tara after Finn without replacing earlier lines.'],
+        ['Close','File closed','close() finishes work with this file.']
+      ],
+      states:[
+        snapshot(true,false,names,'Before: scores.txt already contains three lines.'),
+        snapshot(true,true,names,'Opened. The next read takes line 1.'),
+        snapshot(true,true,names,'Read Ivy. Next unread line: Owen.',0),
+        snapshot(true,true,names,'Not at end: two unread lines remain.',0),
+        snapshot(true,true,[...names,'Tara'],'Tara is appended after Finn.',3),
+        snapshot(true,false,[...names,'Tara'],'Closed. All four lines remain saved.',3)
+      ],
+      end:'scores.txt contains Ivy, Owen, Finn, Tara. The file is closed.'
+    });
+    const created=demo({
+      filename:'results.txt',
+      task:'Worked example: Create a new file, open it, write a line and close it.',
+      code:[
+        'newFile("results.txt")',
+        'myFile = open("results.txt")',
+        'myFile.writeLine("Passed")',
+        'myFile.close()'
+      ],
+      actions:[
+        ['Create','Empty file','newFile() creates the file, but does not open it.'],
+        ['Open','Ready to write','Store the reference from open() before using writeLine().'],
+        ['Write','Passed added','writeLine() adds the first line to the empty file.'],
+        ['Close','File closed','close() finishes writing while keeping the text.']
+      ],
+      states:[
+        snapshot(false,false,[],'Before: results.txt does not exist.'),
+        snapshot(true,false,[],'Created, but not yet opened.'),
+        snapshot(true,true,[],'Opened. The file is still empty.'),
+        snapshot(true,true,['Passed'],'Passed is the first line.',0),
+        snapshot(true,false,['Passed'],'Closed. The line remains in the file.',0)
+      ],
+      end:'results.txt contains one line: Passed. The file is closed.'
+    });
+    return {...existing,variants:[
+      {label:'Existing file',example:existing},
+      {label:'New file',example:created}
+    ]};
   }
   function normaliseStatements(value) {
     return String(value??'').replace(/\r/g,'').split('\n')

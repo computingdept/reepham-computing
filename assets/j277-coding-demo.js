@@ -257,6 +257,8 @@
   const headText = make('div', 'skill-demo-heading');
   headText.append(heading, subtitle);
   header.append(back, headText);
+  const variants = make('div', 'skill-demo-variants');
+  variants.hidden = true;
 
   const grid = make('div', 'skill-demo-grid');
   const codePanel = make('div', 'skill-demo-code');
@@ -283,6 +285,17 @@
   }
   setExample(example);
   codePanel.append(label, pre);
+  const filePanel = make('section', 'skill-demo-file-preview');
+  filePanel.hidden = true;
+  filePanel.setAttribute('aria-label', 'Simulated text file contents');
+  const fileHeading = make('div', 'skill-demo-file-heading');
+  const fileName = make('strong', '', 'Text file');
+  const fileStatus = make('span', '', 'Closed');
+  fileHeading.append(fileName, fileStatus);
+  const fileLines = make('ol', 'skill-demo-file-lines');
+  const fileNote = make('p', 'skill-demo-file-note', '');
+  filePanel.append(fileHeading, fileLines, fileNote);
+  codePanel.append(filePanel);
 
   const trace = make('div', 'skill-demo-trace');
   const traceLabel = make('strong', 'skill-demo-trace-title', page === 'sql' ? 'Build the query' : 'Live trace table');
@@ -310,7 +323,7 @@
   result.hidden = true;
   trace.append(traceLabel, controls, scroll, status, result);
   grid.append(codePanel, trace);
-  section.append(header, grid);
+  section.append(header, variants, grid);
   practice.after(section);
 
   let index = 0;
@@ -342,6 +355,23 @@
       if (active) row.setAttribute('aria-current', 'step');
       else row.removeAttribute('aria-current');
     });
+    const view = example.fileView;
+    const snapshot = view && Array.isArray(view.states) && view.states[index];
+    filePanel.hidden = !snapshot;
+    if (snapshot) {
+      fileName.textContent = view.filename;
+      fileStatus.textContent = !snapshot.exists ? 'Not created' : snapshot.open ? 'Open' : 'Closed';
+      fileLines.replaceChildren();
+      if (!snapshot.exists || !snapshot.lines.length) {
+        fileLines.append(make('li', 'skill-demo-file-empty', snapshot.exists ? '(empty file)' : '(no file yet)'));
+      } else {
+        snapshot.lines.forEach((line, number) => {
+          const item = make('li', number === snapshot.highlightIndex ? 'is-changed' : '', line);
+          fileLines.append(item);
+        });
+      }
+      fileNote.textContent = snapshot.note || '';
+    }
     if (current) status.textContent = 'Line ' + String(current[0]).padStart(2, '0') + ' · ' + current[3];
     else status.textContent = progressive
       ? 'Press Step to reveal this similar example, one line at a time.'
@@ -358,21 +388,46 @@
     if (index === example.steps.length) pause();
     paint();
   }
-  function openDemo() {
-    // Optional shared hook: a skill can offer a different worked example for
-    // the active question. Other skills keep their established static demos.
-    if (typeof window.RHSSkillsDemoProvider === 'function') {
-      try { setExample(window.RHSSkillsDemoProvider()); }
-      catch (error) { /* A faulty provider must not prevent opening a demo. */ }
-    }
+  function selectExample(next) {
+    pause();
+    setExample(next);
     traceLabel.textContent = example.traceTitle || (page === 'sql' ? 'Build the query' : 'Live trace table');
     headRow.replaceChildren();
     for (const headingText of ['Line', ...example.columns]) headRow.append(make('th', '', headingText));
+    index = 0;
+    paint();
+  }
+  function openDemo() {
+    // Optional shared hook: a skill can offer a different worked example for
+    // the active question. Other skills keep their established static demos.
+    let supplied = null;
+    if (typeof window.RHSSkillsDemoProvider === 'function') {
+      try { supplied = window.RHSSkillsDemoProvider(); }
+      catch (error) { /* A faulty provider must not prevent opening a demo. */ }
+    }
+    variants.replaceChildren();
+    if (supplied && Array.isArray(supplied.variants) && supplied.variants.length > 1) {
+      variants.hidden = false;
+      const buttons = supplied.variants.map(({label,example:choice}) => {
+        const button = make('button', '', label);
+        button.type = 'button';
+        button.addEventListener('click', () => {
+          buttons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+          selectExample(choice);
+        });
+        variants.append(button);
+        return button;
+      });
+      buttons[0].setAttribute('aria-pressed', 'true');
+      selectExample(supplied.variants[0].example);
+    } else {
+      variants.hidden = true;
+      selectExample(supplied || example);
+    }
     previousScroll = window.scrollY;
     practice.hidden = true;
     section.hidden = false;
     launch.setAttribute('aria-expanded', 'true');
-    pause(); index = 0; paint();
     window.scrollTo(0, 0);
     back.focus({ preventScroll: true });
   }
