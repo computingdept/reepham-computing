@@ -35,7 +35,7 @@
       ]
     },
     {
-      name: 'Subprograms & other techniques', caption: 'Structure and extend code · OCR 2.2.3',
+      name: 'Sub programs & other techniques', caption: 'Structure and extend code · OCR 2.2.3',
       items: [
         ['strings', 'String Handling', 'Aa', 'Slicing and character access'],
         ['procedures', 'Procedures', 'P()', 'Call and pass values'],

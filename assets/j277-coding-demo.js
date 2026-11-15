@@ -335,7 +335,12 @@
       const number = make('span', 'skill-demo-line-number', String(idx + 1).padStart(2, '0'));
       number.setAttribute('aria-hidden', 'true');
       const source = make('span', 'skill-demo-line-text', line);
-      row.append(number, source); pre.append(row); codeRows.push(row);
+      row.append(number, source);
+      if (idx + 1 === next.entryLine) {
+        row.classList.add('is-entry-line');
+        row.append(make('span', 'skill-demo-entry-badge', '▶ START HERE'));
+      }
+      pre.append(row); codeRows.push(row);
     });
   }
   setExample(example);
