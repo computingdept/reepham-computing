@@ -10,7 +10,7 @@
 
  const stylesheet=document.createElement('link');
  stylesheet.rel='stylesheet';
- stylesheet.href='../../../assets/j277/code-first-rollout.css?v=20261115-focus-highlight1';
+ stylesheet.href='../../../assets/j277/code-first-rollout.css?v=20261115-brush2';
  document.head.append(stylesheet);
 
  const waitForCard=()=>new Promise(resolve=>{

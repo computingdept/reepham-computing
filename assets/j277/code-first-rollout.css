@@ -64,20 +64,27 @@
 #you-do .j277-code-first-shared .j277-cf-stage{white-space:nowrap}
 #you-do .j277-code-first-shared .j277-cf-divider{color:#91a699}
 #you-do .j277-code-first-shared mark.j277-cf-stage.is-active{
- display:inline;white-space:nowrap;
- padding:.05em .25em;margin:0 1px;
- background-color:transparent!important;
- background-image:var(--rhsc-central-ink-a);
- background-position:center;background-size:100% 100%;background-repeat:no-repeat;
+ display:inline-block;position:relative;isolation:isolate;z-index:0;
+ padding:0 .2em;margin:0 2px;white-space:nowrap;
+ background-color:transparent!important;background-image:none!important;
  border:0;border-radius:0;box-shadow:none;
- box-decoration-break:clone;-webkit-box-decoration-break:clone;
- color:#243d30!important;font-weight:850!important;
+ color:#243d30!important;font-size:1.06em;font-weight:850!important;
+}
+/* Visible, irregular hand-painted stroke — not a solid yellow badge.
+   The stroke extends beyond the letters without making the routine taller. */
+#you-do .j277-code-first-shared mark.j277-cf-stage.is-active::before{
+ content:'';position:absolute;z-index:-1;pointer-events:none;
+ left:-.23em;right:-.27em;top:-.19em;bottom:-.13em;
+ transform:rotate(-2.4deg);
+ background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20480%2090%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20d%3D%22M12%2027%20Q42%2014%2077%2022%20Q112%2012%20144%2017%20Q193%207%20235%2018%20Q274%208%20316%2016%20Q380%209%20424%2018%20L468%2017%20L459%2030%20Q476%2038%20467%2049%20L477%2061%20Q449%2070%20415%2066%20Q374%2078%20344%2070%20Q301%2082%20266%2075%20Q213%2084%20179%2077%20Q127%2089%2089%2079%20Q42%2087%2010%2075%20L18%2060%20L3%2053%20L14%2039%20Z%22%20fill%3D%22%23FFE84A%22%20fill-opacity%3D%22.96%22%2F%3E%3Cpath%20d%3D%22M27%2026%20Q86%2016%20139%2020%20T259%2019%20Q349%2015%20452%2023%22%20fill%3D%22none%22%20stroke%3D%22%23FFF77B%22%20stroke-width%3D%229%22%20stroke-linecap%3D%22round%22%20opacity%3D%22.62%22%2F%3E%3Cpath%20d%3D%22M32%2072%20Q112%2078%20181%2073%20T340%2071%20Q405%2068%20459%2062%22%20fill%3D%22none%22%20stroke%3D%22%23EAC72E%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20opacity%3D%22.32%22%2F%3E%3C%2Fsvg%3E");
+ background-repeat:no-repeat;background-position:center;background-size:100% 100%;
 }
 @media(prefers-contrast:more){
  #you-do .j277-code-first-shared mark.j277-cf-stage.is-active{
-  background-image:none;text-decoration:underline;
+  text-decoration:underline;
   text-decoration-color:#8c7000;text-decoration-thickness:.16em;text-underline-offset:.07em;
  }
+ #you-do .j277-code-first-shared mark.j277-cf-stage.is-active::before{display:none}
 }
 /* A requested trace can open below the starter. It is not a compulsory panel. */
 #you-do .j277-code-first-shared .j277-code-trace{
