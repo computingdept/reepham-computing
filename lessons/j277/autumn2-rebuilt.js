@@ -1646,6 +1646,20 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   if(lesson.isAssessment){
     return `<section id="you-do" class="page phase-youdo j277-assessment" data-assessment-mode="true" data-phase-time="Independent assessment"><article class="j277-assessment-panel"><span class="phase-tag">${escape(lesson.assessmentMinutes||45)} MINUTES · ${escape(lesson.assessmentMarks||45)} MARKS · INDEPENDENT</span><h2>${escape(lesson.t)}</h2><p>Before starting the timer, complete the short Code First warm-up on mini-whiteboards. It is NOT part of the assessed marks.</p><div class="j277-assessment-warmup"><h3>CODE FIRST · 2 MINUTES (UNASSESSED)</h3><p>${escape(lesson.k.q)}</p><pre class="arithmetic">${escape(lesson.k.code)}</pre></div><p>When instructed, open the question paper. Answer all questions independently, showing working. No calculators. Do not view the marking guidance during the assessment.</p><a class="j277-assessment-open" href="assessment.html" target="_blank" rel="noopener">Open the ${escape(lesson.assessmentMarks||45)}-mark assessment paper →</a></article></section>`;
   }
+  // Lesson 114 only: compact Classroom TV pilot for a complete no-scroll task.
+  // Keep the original lesson data, exams, challenge sequence and marking intact.
+  const compactPilot=String(number)==="114";
+  const compactCodeFirst=`<article class="exam-card youdo-question j277-code-first j277-114-compact-pilot" data-cycle-rollout="apple-pilot">
+    <div class="j277-114-pilot-topline"><span>CODE FIRST · MWB</span><span class="j277-114-pilot-focus">WRITE</span></div>
+    <div class="question-text"><div class="j277-code-content"><div class="j277-code-tasks">
+      <h2 class="j277-114-pilot-prompt">Complete the missing assignment.</h2>
+      <p class="j277-114-pilot-subtask">Make the program print <strong>MAT-27</strong> using <code>.upper</code> and string concatenation.</p>
+      <pre class="arithmetic">${escape(lesson.k.code)}</pre>
+    </div></div></div>
+    <div class="j277-114-pilot-steps" aria-label="Code First routine: Predict, Write, Test, Improve. Current stage: Write.">
+      <span>Predict</span><span class="is-active">Write</span><span>Test</span><span>Improve</span>
+    </div>
+  </article>`;
   const codeFirst=`<article class="exam-card youdo-question j277-code-first">
    <h3 class="j277-code-first-title"><img class="j277-code-first-logo" src="../../../assets/j277/code-first.svg" width="440" height="92" alt="CODE FIRST"></h3><p class="j277-code-topic">${escape(lesson.t)}</p>
    <div class="question-text"><div class="j277-code-content"><div class="j277-code-tasks">
@@ -1689,7 +1703,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       const c=lesson.challenge[level],kind=i?"MASTERY · INDEPENDENT DESIGN":"STRETCH · ADAPT THE CODE";
       return `<article class="exam-card youdo-question" hidden><span class="phase-tag">${kind}</span><h3>${i?"Mastery · Design and test":"Stretch · Modify and apply"}</h3><div class="question-text"><p>${examWords(lesson,c.task)}</p><details class="y11-challenge-hint"><summary>Need a hint?</summary><p>${escape(c.hint)}</p></details><p class="source-note">Continue from Code First. These are optional extensions after exam practice.</p></div></article>`;
     }).join(""):"";
-  return `<section id="you-do" class="page phase-youdo" data-phase-time="Code first · then exam practice" data-window-size="3" data-coding-first="true"><div class="youdo-deck"><div class="youdo-rolling">${codeFirst}${prior}${exams}${extensions}</div></div></section>`;
+  return `<section id="you-do" class="page phase-youdo" data-phase-time="Code first · then exam practice" data-window-size="3" data-coding-first="true"><div class="youdo-deck"><div class="youdo-rolling">${compactPilot?compactCodeFirst:codeFirst}${prior}${exams}${extensions}</div></div></section>`;
  }
  function vocabulary(lesson){
   const cards=arr(lesson.v,([term,def],i)=>`<article class="vocab-stage"${i?' hidden':''}><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION ${i+1} OF ${lesson.v.length}</span><h2>What is the term?</h2><p class="vocab-question">${escape(def)}</p><span class="vocab-stage-count">${i+1} of ${lesson.v.length}</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">${escape(term)}</div></div></article>`);
@@ -2069,6 +2083,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  const baseHead=sharedHead(number,lesson.t,lesson.year11);
   const pageHead=String(number)==="057"
     ?baseHead.replace("</head>",'<link rel="stylesheet" href="../../../assets/j277/code-first-trace.css?v=20261025-loop-trace1"></head>')
+    :String(number)==="114"
+    ?baseHead.replace("</head>",'<link rel="stylesheet" href="../../../assets/j277/code-first-114-compact-pilot.css?v=20261115-compact1"></head>')
     :baseHead;
   const html=pageHead+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")+(lesson.visualAuditV3?" j277-visual-v3":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
    <a class="course-back" href="../../../j277-hub.html?year=${lesson.year11?11:10}#lessons">← Year ${lesson.year11?11:10} lessons</a>
