@@ -4,11 +4,13 @@ const fs = require('node:fs');
 const path = require('node:path');
 const file = relative => fs.readFileSync(path.join(__dirname, '..', relative), 'utf8');
 
-test('the call marker reuses the sitewide yellow brush SVG, not a rectangular highlight', () => {
+test('the call marker uses the exact irregular Code First WRITE stroke', () => {
   const marker = file('assets/h446-lesson/keyword-highlighter.css');
   const demo = file('assets/j277-coding-demo.css');
   assert.match(marker, /\.rhsc-skills-activity mark\.rhsc-skill-start\s*\{/);
-  assert.match(marker, /background-image:var\(--rhsc-central-ink-a\)/);
+  assert.match(marker, /\.rhsc-skills-activity mark\.rhsc-skill-start::before\s*\{/);
+  assert.match(marker, /transform:rotate\(-2\.4deg\)/);
+  assert.match(marker, /background-image:url\("data:image\/svg\+xml/);
   assert.match(marker, /background-color:transparent!important/);
   assert.match(demo, /\.skill-demo-line \.rhsc-skill-start\{margin-left:auto\}/);
 });
@@ -27,7 +29,7 @@ for (const skill of ['procedures', 'functions']) {
     const page = file(`exercise/paper2/${skill}/index.html`);
     assert.match(app, /startLine=program\?1:/);
     assert.match(app, /ending\+2:null/);
-    assert.match(page, /keyword-highlighter\.css\?v=20261115-skill-calls1/);
+    assert.match(page, /keyword-highlighter\.css\?v=20261115-write-brush2/);
   });
 }
 
