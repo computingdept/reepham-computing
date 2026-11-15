@@ -15,8 +15,7 @@
       if(num==='002'){
         // Teacher-approved lesson 002 pilot: task-first, no duplicate binary panel.
         tasks.innerHTML='<h2 class="j277-code-prompt">'+esc(item.task)+'</h2>'+
-          '<pre class="arithmetic">'+esc(item.starter)+'</pre>'+
-          '<p class="j277-code-instruction">Work on your mini-whiteboard.</p>';
+          '<pre class="arithmetic">'+esc(item.starter)+'</pre>';
       }else{
         tasks.innerHTML='<p class="j277-code-start">One short task. Start on your mini-whiteboard.</p>'+
          '<p><strong>YOUR TASK:</strong> '+esc(item.task)+'</p>'+
