@@ -26,19 +26,19 @@
       body:['for i = 1 to limit','    if i MOD 2 != 0 then','        print(i)','    endif','next i'],expected:([limit])=>range(limit).filter(i=>i%2!==0).map(String)},
     {name:'showMultiples',params:['limit'],sample:[10],hint:'Use i MOD 3 == 0.',task:'Print multiples of 3 from 1 to limit, one per line.',
       body:['for i = 1 to limit','    if i MOD 3 == 0 then','        print(i)','    endif','next i'],expected:([limit])=>range(limit).filter(i=>i%3===0).map(String)},
-    {name:'showSize',params:['limit'],sample:[5],hint:'Use IF i >= 4 THEN ... ELSE ... ENDIF inside a loop.',task:'For numbers 1 to limit, print "Big" when the number is at least 4; otherwise print "Small".',
+    {name:'showSize',params:['limit'],sample:[5],hint:'Use IF i >= 4 THEN ... ELSE ... ENDIF inside a loop.',task:'For numbers 1 to limit, print "Big" when the number is at least 4; otherwise print "Small".',goal:'print "Big" for numbers from 1 to limit that are at least 4, and "Small" otherwise',
       body:['for i = 1 to limit','    if i >= 4 then','        print("Big")','    else','        print("Small")','    endif','next i'],expected:([limit])=>range(limit).map(i=>i>=4?'Big':'Small')},
     {name:'oddCountdown',params:['limit'],sample:[7],hint:'Count down with STEP -1, then test MOD 2.',task:'Count backwards from limit to 1, printing only odd numbers.',
       body:['for i = limit to 1 step -1','    if i MOD 2 == 1 then','        print(i)','    endif','next i'],expected:([limit])=>range(limit).filter(i=>i%2).reverse().map(String)},
-    {name:'showResults',params:['limit','passMark'],sample:[6,40],hint:'Calculate i * 10 and compare with passMark inside IF.',task:'For scores 10, 20, ... up to limit × 10, print "Pass" when a score meets passMark; otherwise print "Retry".',
+    {name:'showResults',params:['limit','passMark'],sample:[6,40],hint:'Calculate i * 10 and compare with passMark inside IF.',task:'For scores 10, 20, ... up to limit × 10, print "Pass" when a score meets passMark; otherwise print "Retry".',goal:'print "Pass" for scores 10, 20, and so on up to limit × 10 when the score meets passMark, and "Retry" otherwise',
       body:['for i = 1 to limit','    if i * 10 >= passMark then','        print("Pass")','    else','        print("Retry")','    endif','next i'],expected:([limit,mark])=>range(limit).map(i=>i*10>=mark?'Pass':'Retry')},
     {name:'countOdds',params:['limit'],sample:[9],hint:'Start count at 0, add 1 inside IF, and PRINT once after NEXT.',task:'Count odd numbers from 1 to limit and print the final total once.',
       body:['count = 0','for i = 1 to limit','    if i MOD 2 != 0 then','        count = count + 1','    endif','next i','print(count)'],expected:([limit])=>[String(range(limit).filter(i=>i%2).length)]},
     {name:'sumEvens',params:['limit'],sample:[8],hint:'Start total at 0. Add i whenever i MOD 2 == 0.',task:'Add all even numbers from 1 to limit and print their sum once.',
       body:['total = 0','for i = 1 to limit','    if i MOD 2 == 0 then','        total = total + i','    endif','next i','print(total)'],expected:([limit])=>[String(range(limit).filter(i=>i%2===0).reduce((a,b)=>a+b,0))]},
-    {name:'fizzThrees',params:['limit'],sample:[7],hint:'Use i MOD 3 == 0. PRINT "Fizz" in IF, otherwise PRINT i.',task:'From 1 to limit, print "Fizz" instead of each multiple of 3; print the number otherwise.',
+    {name:'fizzThrees',params:['limit'],sample:[7],hint:'Use i MOD 3 == 0. PRINT "Fizz" in IF, otherwise PRINT i.',task:'From 1 to limit, print "Fizz" instead of each multiple of 3; print the number otherwise.',goal:'print "Fizz" for multiples of 3 from 1 to limit, and print the number otherwise',
       body:['for i = 1 to limit','    if i MOD 3 == 0 then','        print("Fizz")','    else','        print(i)','    endif','next i'],expected:([limit])=>range(limit).map(i=>i%3===0?'Fizz':String(i))},
-    {name:'smallSquares',params:['limit','maximum'],sample:[7,25],hint:'Test i * i <= maximum inside the FOR loop.',task:'For numbers 1 to limit, print each square only if it is at most maximum.',
+    {name:'smallSquares',params:['limit','maximum'],sample:[7,25],hint:'Test i * i <= maximum inside the FOR loop.',task:'For numbers 1 to limit, print each square only if it is at most maximum.',goal:'print the square of each number from 1 to limit only when its square is at most maximum',
       body:['for i = 1 to limit','    if i * i <= maximum then','        print(i * i)','    endif','next i'],expected:([limit,max])=>range(limit).filter(i=>i*i<=max).map(i=>String(i*i))}
   ];
   function range(limit){return Array.from({length:Math.min(Math.max(Number(limit)||0,0),100)},(_,i)=>i+1);}
@@ -51,8 +51,10 @@
     const code=model(c,args),expectedLines=c.expected(args);
     if(level==='medium')return {level,index,type:'trace',prompt:'What will this procedure print?',context:'Follow the call, trace the FOR loop and IF, then write each output on its own line.',code,expectedLines,model:expectedLines.join('\n')||'(no output)',
       hint:'The first argument fills the first parameter. Check the IF condition on every loop pass.',explanation:'The procedure runs with arguments '+args.join(', ')+'.'};
-    return {level,index,type:'program',...c,args,code:[c.name+'('+args.join(', ')+')'],expectedLines,
-      prompt:c.task,context:'Write the complete procedure '+c.name+'('+c.params.join(', ')+') and its call. Use a FOR loop and IF selection.',
+    const action=(c.goal||c.task[0].toLowerCase()+c.task.slice(1)).replace(/\.$/,'');
+    const signature=c.name+'('+c.params.join(', ')+')',call=c.name+'('+args.join(', ')+')';
+    return {level,index,type:'program',...c,args,code:[call],expectedLines,
+      prompt:'Write an OCR ERL procedure called '+signature+' that uses a FOR loop and IF statement to '+action+'. Then call the procedure with '+call+'.',context:'',
       model:code.join('\n'),hint:'Start with procedure '+c.name+'('+c.params.join(', ')+'). '+c.hint+' Finish with endprocedure and call it.',
       explanation:'Your procedure passed several unseen argument values, not just the example.'};
   }

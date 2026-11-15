@@ -40,6 +40,10 @@ test('each level offers ten usable questions and a separate demo', () => {
 test('hard exercises require full procedures, iteration and selection', () => {
   for (let i=0;i<10;i++) {
     const q=skills.makeQuestion('hard',i,4);
+    assert.match(q.prompt,/^Write an OCR ERL procedure called/);
+    assert.match(q.prompt,/FOR loop and IF statement/);
+    assert.match(q.prompt,/Then call the procedure with/);
+    assert.equal(q.context,'');
     assert.equal(q.expectedLines.length>0,true);
     assert.equal(skills.checkAnswer(q,q.model).correct,true);
     assert.equal(skills.checkAnswer(q,`print(${q.expectedLines[0]})`).correct,false);
