@@ -47,6 +47,12 @@
       <p id="importStatus" class="status" aria-live="polite"></p>
       <p class="notice">The teacher token is required for every batch. On interruption, use the same downloaded file to continue; already imported entries can safely be retried.</p>
     </section>
+    <details class="panel" id="diagnostics">
+      <summary style="cursor:pointer;font-weight:800">Activation diagnostics (safe to share)</summary>
+      <p class="sub">Shows the response status and explanation only. It never displays your teacher token, pupil codes, usernames or PINs.</p>
+      <pre id="debugInfo" style="white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.5 ui-monospace,monospace">No activation attempt yet.</pre>
+      <button id="copyDebug" type="button" class="secondary">Copy diagnostics</button>
+    </details>
   </main>
   <script>
   (() => {
@@ -57,6 +63,19 @@
     let profiles = [];
     let downloaded = false;
     const $ = id => document.getElementById(id);
+    const debug = text => { $('debugInfo').textContent = text; $('diagnostics').open = true; };
+    const reason = status => ({
+      400: 'The login details were rejected. Check that the Cloudflare Worker has been updated to accept four-digit PINs.',
+      401: 'The teacher token was not accepted. Check the Worker secret without sharing it.',
+      403: 'The website origin was not permitted by the Worker.',
+      409: 'A username or practice code conflicts with an existing or inactive record.',
+      429: 'Too many requests. Wait before trying again.',
+      503: 'The Worker or database is temporarily unavailable.'
+    }[status] || 'The Worker returned an error; see its message below.');
+    $('copyDebug').addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText($('debugInfo').textContent); $('copyDebug').textContent = 'Copied'; }
+      catch { $('copyDebug').textContent = 'Select the diagnostic text to copy'; }
+    });
     const randomPin = () => {
       const bytes = new Uint32Array(1);
       do { crypto.getRandomValues(bytes); } while (bytes[0] >= 4294962000);
@@ -108,27 +127,40 @@
     $('activate').addEventListener('click', async () => {
       if (!downloaded || !profiles.length) return;
       const token = $('token').value.trim();
-      if (!token) { $('importStatus').textContent = 'Enter your teacher token first.'; return; }
+      if (!token) { $('importStatus').textContent = 'Enter your teacher token first.'; debug('No request sent: teacher token field was empty.'); return; }
       const button = $('activate');
       button.disabled = true;
       let done = 0;
+      let batchNumber = 0;
+      let lastHttp = null;
+      debug('Activation started. Waiting for a response from the Worker…');
       try {
         for (let index = 0; index < profiles.length; index += 5) {
           const batch = profiles.slice(index, index + 5);
+          batchNumber = Math.floor(index / 5) + 1;
+          lastHttp = null;
           const response = await fetch(API + '/v1/teacher/logins', {
             method: 'POST', cache: 'no-store',
             headers: { 'content-type': 'application/json', authorization: 'Bearer ' + token },
             body: JSON.stringify({ logins: batch })
           });
+          lastHttp = response.status;
           const data = await response.json().catch(() => ({}));
-          if (!response.ok) throw Error(data.error || `Server error ${response.status}`);
+          if (!response.ok) {
+            const message = typeof data.error === 'string' ? data.error : 'No JSON error message returned';
+            debug(`Time (UTC): ${new Date().toISOString()}\nRequest: POST /v1/teacher/logins\nBatch: ${batchNumber}\nHTTP status: ${response.status}\nExplanation: ${reason(response.status)}\nWorker message: ${message.slice(0, 180)}\nCompleted before error: ${done} of ${profiles.length}`);
+            throw Error(message === 'No JSON error message returned' ? `HTTP ${response.status}` : message);
+          }
+          if (!Array.isArray(data.results)) throw Error('Unexpected response format from Worker');
           done += data.results.length;
+          debug(`Time (UTC): ${new Date().toISOString()}\nRequest: POST /v1/teacher/logins\nBatch: ${batchNumber}\nHTTP status: ${response.status}\nExplanation: Login records accepted.\nCompleted: ${done} of ${profiles.length}`);
           $('importStatus').textContent = `${done} of ${profiles.length} login records checked or activated…`;
         }
         $('importStatus').textContent = `Done. All ${done} login records are activated. Keep the downloaded file private.`;
         $('token').value = '';
       } catch (error) {
-        $('importStatus').textContent = `Stopped after ${done} of ${profiles.length}: ${error.message}\nKeep your saved CSV. Paste it again to retry without changing passwords.`;
+        $('importStatus').textContent = `Stopped after ${done} of ${profiles.length}: ${error.message}\nKeep your saved CSV. Paste it again to retry without changing PINs.`;
+        if (lastHttp === null) debug(`Time (UTC): ${new Date().toISOString()}\nRequest: POST /v1/teacher/logins\nBatch: ${batchNumber}\nHTTP status: No response\nExplanation: Network or browser connection failure. Check the Worker is live and that you are using https://rhsccs.org.\nError type: ${error.name === 'TypeError' ? 'Network error' : 'Unexpected client error'}\nCompleted before error: ${done} of ${profiles.length}`);
         button.disabled = false;
       }
     });
