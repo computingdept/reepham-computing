@@ -1,10 +1,17 @@
-/* Skill 09 model reveal: the trace replaces the answer box, keeping code alongside it. */
+/* Skill 09: learner-owned condition trace and model reveal beside numbered code. */
 .rhsc-skills-activity .for-grid.loop-reveal-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.22fr)}
-.rhsc-skills-activity .loop-code-line{display:flex;white-space:pre;padding:0 5px;border-radius:5px;transition:background .18s}
-.rhsc-skills-activity .loop-line-number{flex:0 0 3ch;margin-right:1.2ch;color:#869c8d;font-size:.75em;align-self:baseline;font-weight:500;user-select:none}
-.rhsc-skills-activity .loop-code-text{white-space:pre}
-.rhsc-skills-activity .loop-code-line.is-tracing{background:#cfebd6;box-shadow:inset 3px 0 0 #43835e}
-.rhsc-skills-activity .loop-code-line.is-tracing .loop-line-number{color:#236342;font-weight:800}
+.rhsc-skills-activity .loop-code .rhsc-code-line{transition:background .18s}
+.rhsc-skills-activity .loop-code .rhsc-code-line.is-active{background:#cfebd6;box-shadow:inset 3px 0 0 #43835e}
+.rhsc-skills-activity .loop-practice-answer{display:grid;grid-template-columns:minmax(0,1fr);gap:9px;align-content:start}
+.rhsc-skills-activity .loop-practice-trace{max-height:240px;overflow:auto}
+.rhsc-skills-activity .loop-practice-trace .writer-note{text-align:left}
+.rhsc-skills-activity .loop-practice-table td:nth-child(2){min-width:145px}
+.rhsc-skills-activity .loop-practice-condition{font:600 12px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;display:inline-block;margin-right:8px}
+.rhsc-skills-activity .loop-practice-check{min-height:29px;width:72px;border:1px solid #a8c9b2;border-radius:6px;background:white;color:#204a34;font-size:13px}
+.rhsc-skills-activity .loop-practice-check:focus-visible{outline:2px solid #3b8a58;outline-offset:1px}
+.rhsc-skills-activity .loop-final-row{display:flex;gap:12px;align-items:center;justify-content:space-between}
+.rhsc-skills-activity .loop-final-row .work-label{margin:0;font-size:13px}
+.rhsc-skills-activity .loop-final-row .number-entry{width:130px;max-width:45%;min-height:45px}
 .rhsc-skills-activity .loop-trace{display:grid;align-content:start;gap:10px;min-width:0}
 .rhsc-skills-activity .loop-model-open .loop-code{font-size:clamp(16px,1.65vw,21px);line-height:1.4}
 .rhsc-skills-activity .loop-model-open .loop-trace{gap:6px}
@@ -34,13 +41,14 @@
   .rhsc-skills-activity .for-grid{gap:8px}
   .rhsc-skills-activity .loop-model-open .for-grid{gap:6px}
   .rhsc-skills-activity .loop-code,
-  .rhsc-skills-activity .loop-model-open .loop-code{padding:8px 9px;font-size:clamp(13px,3.7vw,16px);line-height:1.33}
+  .rhsc-skills-activity .loop-model-open .loop-code{padding:8px 0;font-size:clamp(13px,3.7vw,16px);line-height:1.33}
   .rhsc-skills-activity .code-panel .code-label{margin-bottom:3px}
-  .rhsc-skills-activity .loop-line-number{margin-right:1ch}
-  .rhsc-skills-activity .for-answer{grid-template-columns:minmax(0,1fr) 95px;align-items:center;gap:5px 7px}
+  .rhsc-skills-activity .for-answer.loop-practice-answer{grid-template-columns:minmax(0,1fr);align-items:stretch;gap:5px}
   .rhsc-skills-activity .for-answer .work-label{margin:0;font-size:10px}
   .rhsc-skills-activity .for-answer .number-entry{width:95px;height:43px;font-size:20px!important}
   .rhsc-skills-activity .for-answer .writer-note{grid-column:1 / -1;text-align:left;font-size:10px}
+  .rhsc-skills-activity .loop-practice-trace{max-height:195px}
+  .rhsc-skills-activity .loop-practice-table td:nth-child(2){min-width:125px}
   .rhsc-skills-activity .loop-model-open .loop-trace{gap:4px}
   .rhsc-skills-activity .loop-trace-title{font-size:13px}
   .rhsc-skills-activity .loop-trace-controls button{padding:5px 8px;min-height:32px;font-size:12px}

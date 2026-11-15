@@ -40,14 +40,52 @@
   function codePanel(lines){
     const panel=document.createElement('div');panel.className='code-panel';
     const label=document.createElement('span');label.className='code-label';label.textContent='OCR Exam Reference Language';
-    const pre=document.createElement('pre');pre.className='erl loop-code';
-    lines.forEach((line,index)=>{
-      const row=document.createElement('span');row.className='loop-code-line';
-      const number=document.createElement('span');number.className='loop-line-number';number.textContent=String(index+1).padStart(2,'0');number.setAttribute('aria-hidden','true');
-      const source=document.createElement('span');source.className='loop-code-text';source.textContent=line;
-      row.append(number,source);pre.append(row);
-    });
+    const pre=core.numberedCode(lines);pre.classList.add('loop-code');
     panel.append(label,pre);return panel;
+  }
+  function traceScaffold(q,code){
+    const isWhile=q.mode==='while',checkLine=isWhile?3:6;
+    const section=document.createElement('section');section.className='for-trace-work loop-practice-trace';
+    section.setAttribute('aria-label','Your condition and total trace');
+    const title=document.createElement('strong');title.className='work-label';
+    title.textContent='Your trace · '+(isWhile?'check first':'check after');
+    const hint=document.createElement('span');hint.className='writer-note';
+    hint.textContent='Decide each condition, then enter the new total. The final answer is yours to work out.';
+    const table=document.createElement('table');table.className='for-trace-table loop-practice-table';
+    const head=document.createElement('thead'),header=document.createElement('tr');
+    ['i','Condition','total'].forEach(value=>{const th=document.createElement('th');th.textContent=value;header.append(th);});
+    head.append(header);table.append(head);
+    const body=document.createElement('tbody');
+    const initial=document.createElement('tr');
+    for(const value of ['Start','—',q.code[0].match(/-?\d+/)?.[0]||'0']){
+      const cell=document.createElement('td');cell.textContent=value;initial.append(cell);
+    }
+    body.append(initial);
+    for(const row of q.trace.rows){
+      const tr=document.createElement('tr');
+      const i=document.createElement('td');i.textContent=String(row.i);tr.append(i);
+      const condition=document.createElement('td');
+      const expression=document.createElement('span');expression.className='loop-practice-condition';
+      expression.textContent=row.condition;
+      const select=document.createElement('select');select.className='loop-practice-check';
+      select.setAttribute('aria-label','Condition '+row.condition+' is True or False');
+      for(const value of ['?','True','False']){
+        const option=document.createElement('option');option.value=value==='?'?'':value;option.textContent=value;select.append(option);
+      }
+      select.addEventListener('focus',()=>core.highlightCodeLine(code,checkLine));
+      select.addEventListener('change',()=>core.highlightCodeLine(code,checkLine));
+      condition.append(expression,select);tr.append(condition);
+      const total=document.createElement('td');
+      if(row.step==='Stop')total.textContent='—';
+      else{
+        const input=document.createElement('input');input.type='text';input.inputMode='numeric';
+        input.className='for-trace-input';input.setAttribute('aria-label','Total after i = '+row.i);
+        input.addEventListener('focus',()=>core.highlightCodeLine(code,4));
+        total.append(input);
+      }
+      tr.append(total);body.append(tr);
+    }
+    table.append(body);section.append(title,hint,table);return section;
   }
   function renderEasy(q,work){
     const layout=document.createElement('div');layout.className='for-grid';
@@ -68,7 +106,7 @@
   }
   function renderMedium(q,work){
     const layout=document.createElement('div');layout.className='for-grid';
-    const area=document.createElement('div');area.className='for-answer';
+    const area=document.createElement('div');area.className='for-answer loop-practice-answer';
     const label=document.createElement('label');label.className='work-label';label.htmlFor='for-final';label.textContent='Final printed number';
     const input=document.createElement('input');input.className='number-entry';input.id='for-final';input.type='text';
     input.inputMode='numeric';input.autocomplete='off';input.placeholder='?';
@@ -76,7 +114,9 @@
     input.addEventListener('keydown',event=>{if(event.key==='Enter')$('check').click();});
     const note=document.createElement('span');note.className='writer-note';
     note.textContent=q.mode==='while'?'WHILE checks the condition before each iteration.':'DO UNTIL checks the condition after each iteration.';
-    area.append(label,input,note);layout.append(codePanel(q.code),area);work.append(layout);
+    const code=codePanel(q.code),source=code.querySelector('.rhsc-code-lines');
+    const final=document.createElement('div');final.className='loop-final-row';final.append(label,input);
+    area.append(traceScaffold(q,source),final,note);layout.append(code,area);work.append(layout);
   }
   function renderHard(_,work){
     const area=document.createElement('div');area.className='for-writer';
@@ -106,7 +146,7 @@
     else renderEasy(state.question,work);
   }
   function disableInputs(){
-    $('workspace').querySelectorAll('button,input,textarea').forEach(el=>{el.disabled=true;});
+    $('workspace').querySelectorAll('button,input,textarea,select').forEach(el=>{el.disabled=true;});
     ['check','clear','hint'].forEach(id=>{$(id).hidden=true;});
     $('next').hidden=false;
   }
@@ -188,10 +228,10 @@
       output.classList.toggle('is-revealed',done);
       step.disabled=done;
       play.textContent=traceTimer?'Ⅱ Pause':done?'▶ Replay':'▶ Play';
-      const lines=layout.querySelectorAll('.loop-code-line');
-      lines.forEach(line=>line.classList.remove('is-tracing'));
+      const lines=layout.querySelectorAll('.rhsc-code-line');
+      lines.forEach(line=>line.classList.remove('is-active'));
       if(current&&lines[current.line-1]){
-        lines[current.line-1].classList.add('is-tracing');
+        lines[current.line-1].classList.add('is-active');
         lines[current.line-1].setAttribute('aria-current','step');
       }
       lines.forEach((line,i)=>{if(!current||i!==current.line-1)line.removeAttribute('aria-current');});

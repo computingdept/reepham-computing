@@ -5,13 +5,13 @@ const engine=require('../exercise/paper2/for-loops.js');
 const fs=require('node:fs');
 const path=require('node:path');
 
-test('FOR-loop practice uses numbered source lines and an unmarked trace scaffold',()=>{
+test('FOR-loop practice uses shared numbered source lines and an unmarked trace scaffold',()=>{
   const app=fs.readFileSync(path.join(__dirname,'../exercise/paper2/for-loops-app.js'),'utf8');
   const css=fs.readFileSync(path.join(__dirname,'../exercise/paper2/for-loops.css'),'utf8');
-  assert.match(app,/for-source-number/);
+  assert.match(app,/core\.numberedCode\(lines\)/);
   assert.match(app,/traceScaffold\(q,code\)/);
   assert.match(app,/for-trace-table/);
-  assert.match(app,/line\.dataset\.line==='3'/);
+  assert.match(app,/core\.highlightCodeLine\(code\.querySelector\('\.rhsc-code-lines'\),3\)/);
   assert.match(css,/for-trace-work/);
   assert.match(app,/input\.setAttribute\('aria-label','Total after iteration i = '/);
 });

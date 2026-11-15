@@ -2,6 +2,22 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const engine=require('../exercise/paper2/while-until.js');
+const fs=require('node:fs');
+const path=require('node:path');
+
+test('Medium has a learner trace for WHILE check-first and DO UNTIL check-after',()=>{
+  const app=fs.readFileSync(path.join(__dirname,'../exercise/paper2/while-until-app.js'),'utf8');
+  const css=fs.readFileSync(path.join(__dirname,'../exercise/paper2/while-until.css'),'utf8');
+  assert.match(app,/core\.numberedCode\(lines\)/);
+  assert.match(app,/area\.append\(traceScaffold\(q,source\),final,note\)/);
+  assert.match(app,/for\(const row of q\.trace\.rows\)/);
+  assert.match(app,/isWhile\?3:6/);
+  assert.match(app,/row\.step==='Stop'/);
+  assert.match(app,/core\.highlightCodeLine\(code,4\)/);
+  assert.match(css,/loop-practice-trace/);
+  assert.doesNotMatch(app.slice(app.indexOf('function traceScaffold'),app.indexOf('function renderEasy')),/q\.expected|q\.model/,
+    'student trace does not show the answer');
+});
 
 test('all WHILE / DO UNTIL models are correct and deterministic across seeds',()=>{
   for(const seed of [1,9,47,20261114]){

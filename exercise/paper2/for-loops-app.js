@@ -38,13 +38,7 @@
   function codePanel(lines){
     const panel=document.createElement('div');panel.className='code-panel';
     const label=document.createElement('span');label.className='code-label';label.textContent='OCR Exam Reference Language';
-    const pre=document.createElement('pre');pre.className='erl for-numbered-code';
-    lines.forEach((line,index)=>{
-      const row=document.createElement('span');row.className='for-source-line';row.dataset.line=String(index+1);
-      const number=document.createElement('span');number.className='for-source-number';number.textContent=String(index+1).padStart(2,'0');number.setAttribute('aria-hidden','true');
-      const source=document.createElement('span');source.className='for-source-text';source.textContent=line;
-      row.append(number,source);pre.append(row);
-    });
+    const pre=core.numberedCode(lines);pre.classList.add('for-numbered-code');
     panel.append(label,pre);return panel;
   }
   function traceScaffold(q,code){
@@ -63,8 +57,8 @@
       const row=document.createElement('tr');
       for(const value of ['03',String(i)]){const cell=document.createElement('td');cell.textContent=value;row.append(cell);}
       const cell=document.createElement('td');const input=document.createElement('input');input.type='text';input.inputMode='numeric';input.className='for-trace-input';input.setAttribute('aria-label','Total after iteration i = '+i);
-      input.addEventListener('focus',()=>{code.querySelectorAll('.for-source-line').forEach(line=>line.classList.toggle('active',line.dataset.line==='3'));});
-      input.addEventListener('blur',()=>{code.querySelectorAll('.for-source-line').forEach(line=>line.classList.remove('active'));});
+      input.addEventListener('focus',()=>core.highlightCodeLine(code.querySelector('.rhsc-code-lines'),3));
+      input.addEventListener('blur',()=>core.highlightCodeLine(code.querySelector('.rhsc-code-lines'),null));
       cell.append(input);row.append(cell);body.append(row);
     }
     table.append(body);section.append(title,hint,table);return section;
