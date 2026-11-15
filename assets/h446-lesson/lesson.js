@@ -1990,7 +1990,7 @@ function prepareH446LegacyObjectives(){
     while(overview.firstChild)left.append(overview.firstChild);
   }
   const objectives=left.querySelector('ul');
-  if(objectives)objectives.classList.add('objectives');
+  if(objectives&&!objectives.parentElement.closest('.objectives'))objectives.classList.add('objectives');
 
   let intro=flat?left.querySelector('.vocab-intro'):null;
   if(!intro){
