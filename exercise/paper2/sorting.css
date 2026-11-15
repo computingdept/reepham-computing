@@ -1,14 +1,14 @@
 /* Shared compact, classroom/projector-friendly sorting exercise layout. */
 .rhsc-sorting .question-text h2{font-size:clamp(22px,2.5vw,29px);line-height:1.18;margin:0 0 5px}
 .rhsc-sorting .question-text p{font-size:clamp(13px,1.1vw,15px);line-height:1.35}
-.rhsc-sorting .work-board{padding:12px}
+.rhsc-sorting .work-board{display:block;padding:12px;min-height:0}
 .rhsc-sorting .sort-caption{display:block;font:850 12px/1.35 system-ui,sans-serif;letter-spacing:.055em;color:#376d4d;margin-bottom:7px}
-.rhsc-sorting .sort-array{background:#f7fbf8;border:1px solid #d7e4d9;border-radius:12px;padding:10px 12px}
+.rhsc-sorting .sort-array{width:100%;background:#f7fbf8;border:1px solid #d7e4d9;border-radius:12px;padding:12px 18px}
 .rhsc-sorting .sort-array-head{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:9px;color:#346448}
 .rhsc-sorting .sort-array-head strong{font-size:12px;letter-spacing:.04em}
 .rhsc-sorting .sort-array-head span{font-size:11px;font-weight:750;color:#678570}
-.rhsc-sorting .sort-cells{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;max-width:700px}
-.rhsc-sorting .sort-cell{position:relative;min-width:0;min-height:58px;display:flex;align-items:center;justify-content:center;padding:17px 4px 5px;background:white;border:1px solid #c3d8c9;border-radius:10px;font:850 clamp(18px,2.05vw,26px)/1 system-ui,sans-serif;color:#284d39}
+.rhsc-sorting .sort-cells{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;max-width:700px;margin:0 auto}
+.rhsc-sorting .sort-cell{position:relative;min-width:0;min-height:69px;display:flex;align-items:center;justify-content:center;padding:17px 4px 5px;background:white;border:1px solid #c3d8c9;border-radius:10px;font:850 clamp(20px,2.3vw,30px)/1 system-ui,sans-serif;color:#284d39}
 .rhsc-sorting .sort-index{position:absolute;top:5px;left:7px;font:700 10px/1 system-ui,sans-serif;color:#71947b}
 .rhsc-sorting .sort-cell.is-sorted{background:#e3f3e7;border:2px solid #6aac80}
 .rhsc-sorting .sort-cell.is-key{background:#ffec9b;border:2px solid #b68c23;color:#5c4614}
@@ -17,7 +17,7 @@
 .rhsc-sorting .sort-stage strong{font-size:11px;letter-spacing:.04em;color:#3e7254}
 .rhsc-sorting .sort-stage span{font:750 clamp(12px,1.2vw,16px)/1.4 ui-monospace,Consolas,monospace;color:#284b37;overflow-wrap:anywhere}
 .rhsc-sorting .sort-stage:last-child{background:#e7f4eb}
-.rhsc-sorting .sort-choice-panel{padding:12px 3px 3px;color:#2c5940;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.rhsc-sorting .sort-choice-panel{padding:13px 3px 3px;color:#2c5940;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
 .rhsc-sorting .sort-choice-panel>strong{font-size:15px}
 .rhsc-sorting .sort-choice-panel>small{font-size:12px;color:#577661}
 .rhsc-sorting .sort-choices{display:flex;flex-wrap:wrap;gap:7px}
@@ -25,7 +25,7 @@
 .rhsc-sorting .sort-choice:hover{background:#d6ecdd}
 .rhsc-sorting .sort-choice:disabled{opacity:.45;cursor:not-allowed}
 .rhsc-sorting .sort-move-count{font-size:12px;font-weight:800;color:#61816e;margin-left:auto}
-.rhsc-sorting .sort-merge-board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;flex:1 1 100%}
+.rhsc-sorting .sort-merge-board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;flex:1 1 100%;max-width:900px;margin:0 auto}
 .rhsc-sorting .sort-merge-board>div{background:#fff;padding:10px;border:1px solid #c9dfd0;border-radius:9px;font:800 13px/1.4 ui-monospace,Consolas,monospace;overflow-wrap:anywhere}
 .rhsc-sorting .sort-merge-board .sort-merged{background:#fff3c7;border-color:#e0c674}
 .rhsc-sorting .sort-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr);gap:11px;margin-top:10px;align-items:start}
