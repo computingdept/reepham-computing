@@ -173,14 +173,24 @@
   }
   function whileUntil(q) {
     const until=q.mode==='do';
-    if(until)return d('while-until','trace a different DO UNTIL loop.',
-      ['i = 1','do','    print(i)','    i = i + 1','until i > 3'],
-      [['i','1','Start the counter at 1.'],['DO','First run','DO always runs the body before testing.'],['Output','1,2,3','Print during each repetition.'],['Update','2,3,4','Increase i, so the loop can finish.'],['UNTIL','4 > 3','Stop when this condition becomes True.']],
-      'Outputs: 1, 2, 3. DO UNTIL checks after the body.');
-    return d('while-until','trace a different WHILE loop.',
-      ['i = 1','while i < 4','    print(i)','    i = i + 1','endwhile'],
-      [['i','1','Set a starting value.'],['WHILE','True for 1,2,3','Check the condition before each repetition.'],['Output','1,2,3','Print only while the test is True.'],['Update','2,3,4','Move towards the stopping value.'],['ENDWHILE','Stop at 4','At 4 the condition becomes False.']],
-      'Outputs: 1, 2, 3. WHILE checks before the body.');
+    const lines=until?['i = 1','do','    print(i)','    i = i + 1','until i > 3']:
+      ['i = 1','while i < 4','    print(i)','    i = i + 1','endwhile'];
+    const steps=[[1,'1','Start','Set i to 1 before entering the loop.']];
+    for(let i=1;i<=3;i++){
+      steps.push([2,String(i),until?'DO body':'True','Begin the body.'+(until?' DO does not test first.':' The WHILE condition is True.')]);
+      steps.push([3,String(i),'Print '+i,'Print the current value of i.']);
+      steps.push([4,String(i+1),'Update','Increase i so the loop can finish.']);
+      steps.push([5,String(i+1),until?(i===3?'True · stop':'False · repeat'):'Repeat',until?
+        'UNTIL checks i > 3 after the body; '+(i===3?'it is True, so stop.':'it is False, so repeat.'):
+        'ENDWHILE goes back to the WHILE condition.']);
+    }
+    if(!until)steps.push([2,'4','False · stop','WHILE checks 4 < 4 before the body. It is False, so stop.']);
+    return {
+      title:'WHILE / UNTIL',task:'Similar example: trace a different '+(until?'DO UNTIL':'WHILE')+' loop.',
+      codeLabel:'OCR ERL · DIFFERENT EXAMPLE FROM YOUR QUESTION',traceTitle:'Follow each repetition and condition',
+      columns:['i / check','Output / effect'],lines,steps,loopBack:{from:5,to:2},
+      end:'Outputs: 1, 2, 3. '+(until?'UNTIL stops when its after-body condition becomes True.':'WHILE stops when its before-body condition becomes False.')
+    };
   }
   function arrays1d(q) {
     if(q.level==='medium')return d('array-1d','trace another array change before printing.',

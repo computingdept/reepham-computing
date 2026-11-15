@@ -137,6 +137,25 @@ test('FOR Demo visibly returns from NEXT to FOR before repeating the body',()=>{
   assert.equal(code.children[1].attributes['aria-current'],'step');
 });
 
+test('WHILE and UNTIL demos highlight the return only when another check is due',()=>{
+  const guided=require('../assets/j277-skills-guided-examples.js');
+  for(const mode of ['while','do']){
+    const ui=mountDemo('while-until');
+    ui.window.RHSSkillsDemoProvider=()=>guided.make('while-until',{level:'medium',mode});
+    find(ui.title,'skill-demo-open').click();
+    const demo=ui.practice.insertedSibling;
+    const step=find(demo,'skill-demo-controls').children[1];
+    const cue=find(demo,'skill-demo-loop-back');
+    for(let i=0;i<5;i++)step.click();
+    assert.equal(cue.hidden,false,mode);
+    assert.match(cue.textContent,/line 02/);
+    step.click();assert.equal(cue.hidden,true,mode);
+    while(!step.disabled)step.click();
+    assert.equal(cue.hidden,true,'completed loop has no return cue');
+    assert.match(find(demo,'skill-demo-result').textContent,/1, 2, 3/);
+  }
+});
+
 test('SQL demo uses a question-specific similar example and hides forthcoming lines', () => {
   const ui = mountDemo('sql');
   ui.window.RHSSkillsDemoProvider = () => ({
@@ -246,7 +265,7 @@ test('The other 12 J277 coding skills reveal the appropriate guided example',()=
     const demo=ui.practice.insertedSibling,code=find(demo,'skill-demo-source');
     const controls=find(demo,'skill-demo-controls');
     assert.ok(code.children.length>0,skill);
-    if(skill==='for-loops')assert.match(code.children[0].children[1].textContent,/total = 0/);
+    if(skill==='for-loops'||skill==='while-until')assert.match(code.children[0].children[1].textContent,skill==='for-loops'?/total = 0/:/i = 1/);
     else{
       assert.ok(code.children[0].className.includes('is-upcoming'),skill);
       assert.equal(code.children[0].children[1].textContent,'Step 1 …',skill);

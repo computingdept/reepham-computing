@@ -6,6 +6,7 @@ const path=require('node:path');
 const guided=require('../assets/j277-skills-guided-examples.js');
 const skills=['data-types','casting','operators','comparisons','sequence','selection',
   'for-loops','while-until','array-1d','array-2d','records'];
+const repeating=new Set(['for-loops','while-until']);
 
 test('Every active J277 coding question has a separate progressive Demo',()=>{
   let count=0;
@@ -16,12 +17,12 @@ test('Every active J277 coding question has a separate progressive Demo',()=>{
         for(const seed of [1,42,2026]){
           const q=engine.makeQuestion(level,i,seed);
           const demo=guided.make(skill,q);
-          assert.equal(demo.progressive,skill==='for-loops'?undefined:true,`${skill}/${level}/${i}`);
+          assert.equal(demo.progressive,repeating.has(skill)?undefined:true,`${skill}/${level}/${i}`);
           assert.match(demo.task,/^Similar example:/);
           assert.ok(demo.lines.length>0 && demo.lines.length<=10);
-          if(skill==='for-loops'){
+          if(repeating.has(skill)){
             assert.ok(demo.steps.length>demo.lines.length);
-            assert.equal(demo.loopBack.to,level==='easy'?1:2);
+            assert.equal(demo.loopBack.to,skill==='for-loops'&&level==='easy'?1:2);
             assert.ok(demo.steps.some((step,j)=>j>0&&step[0]<demo.steps[j-1][0]),'Demo revisits the FOR line');
           }else{
             assert.equal(demo.steps.length,demo.lines.length);
@@ -30,7 +31,7 @@ test('Every active J277 coding question has a separate progressive Demo',()=>{
           }
           assert.ok(demo.steps.every(s=>s[3].length>10));
           assert.ok(demo.end.length>8);
-          if(skill!=='for-loops')assert.ok(demo.lines.every((s,j)=>s!==demo.placeholders[j]));
+          if(!repeating.has(skill))assert.ok(demo.lines.every((s,j)=>s!==demo.placeholders[j]));
           count++;
         }
       }
@@ -46,6 +47,10 @@ test('WHILE and DO UNTIL demos show different control flow',()=>{
   assert.match(wh.lines.join(' '),/endwhile/);
   assert.match(until.lines.join(' '),/until i/);
   assert.doesNotMatch(until.lines.join(' '),/endwhile/);
+  assert.equal(wh.steps.at(-1)[0],2,'WHILE rechecks its condition after ENDWHILE');
+  assert.equal(wh.steps.at(-1)[2],'False · stop');
+  assert.equal(until.steps.at(-1)[0],5,'DO UNTIL stops at the test following the body');
+  assert.equal(until.steps.at(-1)[2],'True · stop');
 });
 
 test('Guided demos are not full model answers to the live question',()=>{
