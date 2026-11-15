@@ -66,6 +66,13 @@
     .review small{display:block;color:#77582d;line-height:1.5}
     .notice{font-size:14px;color:var(--muted);margin:14px 0 0}
     .notice strong{color:var(--dark)}
+    .pupil-progress{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+    .pupil-progress .summary{margin-bottom:4px}
+    .pupil-progress .button{min-height:40px;padding:7px 12px;font-size:14px}
+    .pupil-progress .preview{min-height:0;margin:12px 0 0}
+    .score-line{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 0}
+    .score-line span{background:white;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:14px}
+    .score-line strong{display:block;font-size:21px}
     .summary{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px;flex-wrap:wrap}
     .pill{border-radius:999px;background:var(--pale);color:var(--green);padding:6px 12px;font-size:13px;font-weight:800}
     .list{display:grid;gap:10px}
@@ -162,7 +169,15 @@
             </div>
           </div>
           <p id="publish-status" class="state" role="status" aria-live="polite"></p>
-          <p class="notice"><strong>Scores:</strong> Pupils can open assigned activities now. Automatic score recording is the next pilot stage.</p>
+          <p class="notice"><strong>Scores:</strong> Conversion Grid Easy and Medium is the first automatic recording pilot.</p>
+          <section class="pupil-progress" id="pupil-progress-section" aria-labelledby="pupil-progress-title">
+            <div class="summary">
+              <h3 id="pupil-progress-title">3 · Check pupil progress</h3>
+              <button type="button" class="button secondary" id="check-pupil-progress">Refresh score</button>
+            </div>
+            <p class="sub">Uses the anonymous username entered on the left.</p>
+            <div id="pupil-progress" class="preview" aria-live="polite">Check progress after the pupil completes ten Conversion Grid questions.</div>
+          </section>
         </section>
       </div>
 
@@ -225,6 +240,7 @@
       teacherToken = '';
       $('token').value = '';
       $('username').value = '';
+      $('pupil-progress').textContent = 'Connect again to check pupil progress.';
       cancelReview();
       $('workspace').hidden = true;
       $('disconnect').hidden = true;
@@ -265,6 +281,7 @@
       $('individual-target').hidden = wholeYear;
       $('cohort-target').hidden = !wholeYear;
       $('year-assignments-panel').hidden = !wholeYear;
+      $('pupil-progress-section').hidden = wholeYear;
       $('scope-description').replaceChildren();
       const description = document.createTextNode(wholeYear ? 'This will appear for ' : 'This will appear ');
       const strong = document.createElement('strong');
@@ -272,6 +289,51 @@
       $('scope-description').append(description, strong, '.');
       status('publish-status', '');
       updateReviewAvailability();
+    }
+
+    async function checkPupilProgress() {
+      if (!usernameIsValid()) {
+        $('pupil-progress').textContent = 'Enter a valid anonymous username first.';
+        return;
+      }
+      $('pupil-progress').textContent = 'Checking recorded work…';
+      try {
+        const data = await request('/v1/teacher/student-progress', {
+          method: 'POST', body: { username: anonymousUsername() }
+        });
+        const row = Array.isArray(data.work) ? data.work.find(item => item.itemId === 'j277-skill-p1-convert') : null;
+        const node = $('pupil-progress');
+        node.replaceChildren();
+        const heading = document.createElement('strong');
+        heading.textContent = anonymousUsername() + ' · Conversion Grid';
+        node.append(heading);
+        const rounds = Number(row?.attempts || 0);
+        if (!rounds) {
+          const p = document.createElement('p');
+          p.textContent = row ? 'Assigned · No completed rounds recorded yet.' : 'No Conversion Grid assignment for this pupil.';
+          node.append(p);
+          return;
+        }
+        const best = Number(row.bestScore);
+        const firstTime = Math.round(best / 10);
+        const stats = document.createElement('div');
+        stats.className = 'score-line';
+        for (const [number, label] of [
+          [String(rounds), 'Rounds completed'],
+          [String(firstTime) + '/10', 'Best first time'],
+          [String(10 - firstTime), 'Not first time']
+        ]) {
+          const box = document.createElement('span');
+          const numberEl = document.createElement('strong');
+          numberEl.textContent = number;
+          box.append(numberEl, document.createTextNode(label));
+          stats.append(box);
+        }
+        node.append(stats);
+      } catch (error) {
+        if (error.status === 401) disconnect('Teacher access expired. Connect again.');
+        else $('pupil-progress').textContent = error.message;
+      }
     }
 
     function renderPreview() {
@@ -434,6 +496,7 @@
         const result = await request(scope === 'individual' ? '/v1/teacher/student-assignments' : '/v1/teacher/assignments', { method: 'POST', body });
         cancelReview();
         if (scope === 'cohort') await loadProgress();
+        else await checkPupilProgress();
         const destination = scope === 'individual' ? 'the one anonymous pupil (Year ' + result.cohort.slice(1) + ')' : 'Year ' + body.cohort.slice(1);
         status('publish-status', result.added
           ? 'Assigned successfully to ' + destination + '. The pupil can refresh My Work.'
@@ -468,7 +531,7 @@
     $('connect-form').addEventListener('submit', connect);
     $('disconnect').addEventListener('click', () => disconnect());
     for (const radio of document.querySelectorAll('input[name="scope"]')) radio.addEventListener('change', renderScope);
-    $('username').addEventListener('input', () => { cancelReview(); updateReviewAvailability(); });
+    $('username').addEventListener('input', () => { cancelReview(); updateReviewAvailability(); $('pupil-progress').textContent = 'Refresh score for this anonymous pupil.'; });
     $('confirm-everyone').addEventListener('change', () => { $('publish-button').disabled = !$('confirm-everyone').checked; });
     $('cohort').addEventListener('change', () => { cancelReview(); refresh(); });
     for (const id of ['paper', 'kind']) $(id).addEventListener('change', () => { renderGroups(); renderActivities(); });
@@ -479,6 +542,7 @@
     $('cancel-button').addEventListener('click', cancelReview);
     $('publish-button').addEventListener('click', publish);
     $('refresh').addEventListener('click', refresh);
+    $('check-pupil-progress').addEventListener('click', checkPupilProgress);
     renderScope();
     initialise();
   })();

@@ -103,10 +103,13 @@
       });
     }
 
-    function itemLink(item, level) {
+    function itemLink(item, level, assignmentKey) {
       if (!item || typeof item.url !== 'string' || !item.url.startsWith('/') || item.url.startsWith('//')) return null;
       const link = new URL(item.url, location.origin);
       if (level) link.searchParams.set('level', level);
+      // An activity reference only. The Worker checks the real learner session
+      // and assignment before accepting a recorded attempt.
+      if (item.id === 'j277-skill-p1-convert' && assignmentKey) link.searchParams.set('workKey', assignmentKey);
       return link.pathname + link.search + link.hash;
     }
 
@@ -119,17 +122,24 @@
       const links = [];
       if (isSkill && item?.paper === 2) {
         for (const level of ['easy','medium']) {
-          const href = itemLink(item, level);
+          const href = itemLink(item, level, row.assignmentKey);
           if (href) links.push(`<a class="btn ${level === 'easy' ? 'secondary' : ''}" href="${escapeHtml(href)}">${level === 'easy' ? 'Easy' : 'Medium'}</a>`);
         }
       } else {
-        const href = itemLink(item);
+        const href = itemLink(item, null, row.assignmentKey);
         if (href) links.push(`<a class="btn" href="${escapeHtml(href)}">Open ${kind}</a>`);
       }
-      const best = count ? `Best recorded: ${Number(row.bestScore)}%` : 'Not started';
+      const isConversionPilot = row.itemId === 'j277-skill-p1-convert';
+      const best = count
+        ? (isConversionPilot ? `Best first try: ${Number(row.bestScore)}%` : `Best recorded: ${Number(row.bestScore)}%`)
+        : 'Not started';
+      const practiceText = isConversionPilot
+        ? (count ? `${count} completed 10-question round${count === 1 ? '' : 's'} · ${Math.round(Number(row.bestScore) / 10)} out of 10 correct first time on your best round. Keep improving!`
+          : 'Complete ten questions to record your first practice round.')
+        : `${count} recorded attempt${count === 1 ? '' : 's'}`;
       return `<article class="card"><div class="card-top"><div><span class="meta">${escapeHtml(kind)}${item?.spec ? ' · ' + escapeHtml(item.spec) : ''}</span>
         <h2>${escapeHtml(title)}</h2></div><span class="status">${escapeHtml(best)}</span></div>
-        <p>${count} recorded attempt${count === 1 ? '' : 's'}</p>
+        <p>${escapeHtml(practiceText)}</p>
         <div class="actions">${links.join('') || '<span class="note">Your teacher will provide this activity link.</span>'}</div></article>`;
     }
 
@@ -151,7 +161,7 @@
           <div class="summary"><span class="count"><strong>${data.work.length}</strong> assigned</span><span class="count"><strong>${recorded}</strong> with recorded practice</span></div>
           <section class="cards" aria-label="Assigned work">${data.work.length ? data.work.map(workCard).join('') : '<div class="panel empty"><h2>No work assigned yet</h2><p>Your login is ready. Your teacher will add your activities.</p></div>'}</section>
           <div class="actions"><button class="btn secondary" id="refresh">Refresh My Work</button></div>
-          <p class="note">Automatic scores from the activity pages are still being connected.</p>`;
+           <p class="note">Conversion Grid Easy and Medium now record completed ten-question rounds automatically. Other activities are still being connected.</p>`;
         document.getElementById('signOut').addEventListener('click', signOut);
         document.getElementById('refresh').addEventListener('click', showAssigned);
       } catch (error) {

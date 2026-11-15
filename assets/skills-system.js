@@ -51,6 +51,36 @@
       row.classList.toggle('is-active', row.dataset.line === String(lineNumber));
     });
   }
+  // Central automatic score bridge for the first live My Work pilot.
+  // All identity is resolved by the Worker from the anonymous session; a
+  // workKey in the URL is only an activity reference, never authentication.
+  function reportPilotScore(paper, sourceKey, level, correct, total, assignmentKey) {
+    if (paper !== 1 || sourceKey !== 'convert' ||
+        !['easy', 'medium'].includes(level) || total !== 10 ||
+        !/^(10|11)\|j277-skill-p1-convert\|both$/.test(assignmentKey || '')) return false;
+    let session = '';
+    try { session = global.sessionStorage.getItem('rhs-my-work-learner-session-v1') || ''; } catch (_) {}
+    if (!/^[A-Za-z0-9_-]{43}$/.test(session) || !global.crypto?.randomUUID || !global.fetch) return false;
+    const attemptId = global.crypto.randomUUID();
+    global.fetch('https://rhsccs-my-work-api.jeromedthompson.workers.dev/v1/attempts', {
+      method: 'POST', keepalive: true, cache: 'no-store',
+      headers: { 'content-type': 'application/json', authorization: 'Bearer ' + session },
+      body: JSON.stringify({
+        assignmentKey, attemptId, score: Math.round(100 * correct / total),
+        level, source: 'skill'
+      })
+    }).then(response => {
+      if (!response.ok) throw new Error('My Work did not save this score.');
+      if (global.CustomEvent) global.dispatchEvent?.(new global.CustomEvent('rhsc-my-work-score-saved', {
+        detail: { paper, sourceKey, level, correct, total }
+      }));
+    }).catch(() => {
+      if (global.CustomEvent) global.dispatchEvent?.(new global.CustomEvent('rhsc-my-work-score-failed', {
+        detail: { paper, sourceKey, level }
+      }));
+    });
+    return true;
+  }
   // A fictional, browser-only score bridge. URL context is set by My Work; it is
   // not authentication and must never be used for real pupil records.
   function reportCompletion(paper, sourceKey, level, correct, total) {
@@ -58,10 +88,11 @@
       const params = new URLSearchParams(global.location.search);
       const student = params.get('workCode');
       const assignmentKey = params.get('workKey');
-      if (!/^Y(10|11)-(0[1-9]|[12][0-9]|30)$/.test(student || '') || !assignmentKey) return false;
       if (![1, 2].includes(paper) || !global.location.pathname.startsWith('/exercise/paper' + paper + '/')) return false;
       if (!/^[a-z-]+$/.test(sourceKey) || !['easy', 'medium'].includes(level)) return false;
       if (!Number.isInteger(correct) || !Number.isInteger(total) || total < 1 || correct < 0 || correct > total) return false;
+      if (reportPilotScore(paper, sourceKey, level, correct, total, assignmentKey)) return true;
+      if (!/^Y(10|11)-(0[1-9]|[12][0-9]|30)$/.test(student || '') || !assignmentKey) return false;
       const key = 'rhs-j277-teacher-demo-v1';
       const data = JSON.parse(global.localStorage.getItem(key) || '{}');
       if (!data || !Array.isArray(data.assignments) || !Array.isArray(data.results)) return false;
