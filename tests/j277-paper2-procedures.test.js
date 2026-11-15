@@ -1,6 +1,15 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
 const skills = require('../exercise/paper2/procedures.js');
+
+test('the shared coding demo recognises Procedures and offers a separate demo', () => {
+  const shared=fs.readFileSync(path.join(__dirname,'../assets/j277-coding-demo.js'),'utf8');
+  const page=fs.readFileSync(path.join(__dirname,'../exercise/paper2/procedures/index.html'),'utf8');
+  assert.match(shared,/procedures:\s*\{\s*title:\s*'Procedures'/);
+  assert.match(page,/j277-coding-demo\.js\?v=20261115-procedures1/);
+});
 
 test('each level offers ten usable questions and a separate demo', () => {
   for (const level of ['easy','medium','hard']) for (let i=0;i<10;i++) {

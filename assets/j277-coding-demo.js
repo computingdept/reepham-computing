@@ -153,6 +153,15 @@
       ],
       end: 'Outputs: Asha, Ben, True. Final file: Asha, Ben, Mia.'
     },
+    procedures: {
+      title: 'Procedures', codeLabel: 'OCR ERL · procedure + call',
+      columns: ['Step', 'Value'],
+      lines: ['procedure welcome(person)', '    print("Hello " + person)', 'endprocedure', 'welcome("Asha")'],
+      steps: [[1, 'Parameter', 'person', 'The named parameter belongs to the procedure.'],
+        [4, 'Argument', 'Asha', 'The call passes Asha into person.'],
+        [2, 'Output', 'Hello Asha', 'The procedure prints a message and returns nothing.']],
+      end: 'Output: Hello Asha.'
+    },
     strings: {
       title: 'String Handling', codeLabel: 'OCR ERL · substring(start, count)',
       columns: ['Index / action', 'Value'],
