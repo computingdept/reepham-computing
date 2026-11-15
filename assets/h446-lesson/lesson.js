@@ -479,6 +479,7 @@ function setYouDoWindow(page,start){
 }
 
 function prepareObjectiveVocabularySupport(){
+  const lessonSupportLabel=document.querySelector('meta[name="lesson-vocabulary-support-label"]')?.content.trim();
   document.querySelectorAll('.objective-vocab-stage').forEach(stage=>{
     const definition=stage.querySelector('[data-objective-vocab-definition]');
     if(!definition)return;
@@ -494,12 +495,16 @@ function prepareObjectiveVocabularySupport(){
     const p=existing||document.createElement('p');
     p.className='objective-vocab-support';
     p.textContent=support;
-    // The optional classroom-focus presentation labels supporting examples.
-    // Keep the existing shared reveal flow and other lessons unchanged.
+    // Preserve the author's distinction between an example, thinking prompt,
+    // reminder and an unlabelled note. A lesson or term may override the label
+    // as content metadata, without introducing lesson-specific behaviour.
     if(stage.closest('#overview[data-vocab-display="focus"]')){
+      const prefix=support.match(/^(Example|Think|Remember)\s*:\s*/i);
+      const labelText=(stage.dataset.supportLabel||lessonSupportLabel||prefix?.[1]||'Note').trim();
+      p.textContent=prefix?support.slice(prefix[0].length).trim():support;
       const label=document.createElement('strong');
-      label.className='objective-vocab-example-label';
-      label.textContent='EXAMPLE';
+      label.className='objective-vocab-support-label';
+      label.textContent=labelText.toUpperCase();
       p.prepend(label);
     }
     if(!existing)definition.appendChild(p);
@@ -1940,10 +1945,17 @@ function prepareKS3VocabularyIntroduction(){
 }
 
 prepareKS3VocabularyIntroduction();
-// Let lesson content opt into a centrally styled vocabulary presentation.
-// The lesson only declares a mode; no lesson-specific CSS or JS is required.
-if(document.querySelector('meta[name="lesson-vocabulary-display"]')?.content==='focus'){
-  document.getElementById('overview')?.setAttribute('data-vocab-display','focus');
+// One shared Objectives presentation for H446 lessons that already use the
+// staged vocabulary renderer. Older layouts remain untouched until reviewed.
+// An authored 'classic' mode remains available for exceptional layouts.
+const objectivesVocabularyMode=document.querySelector('meta[name="lesson-vocabulary-display"]')?.content;
+const objectivesOverview=document.getElementById('overview');
+if(objectivesVocabularyMode==='focus'||(
+  objectivesVocabularyMode!=='classic'&&
+  document.querySelector('.course-back[href*="h446-hub"]')&&
+  objectivesOverview?.dataset.objectivesVocab==='true'
+)){
+  objectivesOverview?.setAttribute('data-vocab-display','focus');
 }
 prepareObjectiveVocabularySupport();
 prepareVocabulary();
