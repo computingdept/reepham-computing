@@ -182,7 +182,7 @@ body.course-hub main{max-width:1380px;padding:12px 20px 30px}
 <h1>Binary number skills</h1>
 <p class="intro">Practise one small step at a time. Click binary digits, show every carry or borrow, and check your method before moving on.</p></div>
 <div id="menu" class="cards">
-<article class="card"><span class="spec">1.4.1(b, e, f) · GCSE FOUNDATION</span><h2>Denary, binary &amp; hex</h2><p>Reuse the J277 conversion question generator. Complete the missing representations with clickable binary boxes.</p><button class="btn primary" data-skill="convert">Practise conversion</button></article>
+<article class="card"><span class="spec">1.4.1(b, e, f) · CONVERSION</span><h2>Denary, binary &amp; hex</h2><p>Convert between denary, binary and hexadecimal using the interactive whiteboard.</p><a class="btn primary" href="/exercise/paper1/?skill=convert&amp;course=h446">Practise conversion</a></article>
 <article class="card"><span class="spec">1.4.1(i) · SHIFTING</span><h2>Logical &amp; arithmetic shifts</h2><p>Compare zero-fill and sign-preserving shifts. See how negative binary numbers behave.</p><button class="btn primary" data-skill="shift">Practise shifts</button></article>
 <article class="card"><span class="spec">1.4.1(d) · ADDITION</span><h2>Add three binary numbers</h2><p>Add column by column. Enter the written bit and the outgoing carry — including a carry of 2.</p><button class="btn primary" data-skill="triple">Practise addition</button></article>
 <article class="card"><span class="spec">1.4.1(d) · SUBTRACTION</span><h2>Borrow across zeros</h2><p>Subtract column by column, borrowing 1 as binary 10 when necessary. Practise chains of borrows.</p><button class="btn primary" data-skill="borrow">Practise subtraction</button></article>
@@ -220,6 +220,12 @@ body.course-hub main{max-width:1380px;padding:12px 20px 30px}
 <script>
 (function(){
 'use strict';
+// Older H446 conversion bookmarks now open the shared conversion whiteboard.
+if(new URLSearchParams(location.search).get('skill')==='convert'){
+ const level=new URLSearchParams(location.search).get('level');
+ location.replace('/exercise/paper1/?skill=convert&course=h446'+(['easy','medium','hard'].includes(level)?'&level='+level:''));
+ return;
+}
 var $=function(id){return document.getElementById(id);};
 var names={convert:'Denary, binary & hexadecimal',shift:'Logical & arithmetic shifts',triple:'Add three binary numbers',borrow:'Borrow across zeros',twos:"Two's complement",fixed:'Fixed-point representation'};
 var refs={convert:'1.4.1(b, e, f)',shift:'1.4.1(i)',triple:'1.4.1(d)',borrow:'1.4.1(d)',twos:'1.4.1(c)',fixed:'Supports 1.4.1(c, g)'};
