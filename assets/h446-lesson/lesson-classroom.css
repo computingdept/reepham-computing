@@ -1598,6 +1598,21 @@ body:has(.course-back[href*="h446-hub"]) .wedo-example > .guided-example:has(> :
   max-width:none;
   width:100%;
 }
+/* H446 teaching grid width parity (2026-11-16).
+   A specialist two-panel layout can be the sole child of the shared I Do /
+   We Do two-track wrapper. It must span both outer tracks; otherwise its two
+   internal cards are compressed into half the available classroom width.
+   Scoped to the three audited missing layout families, desktop only. */
+@media (min-width:901px){
+  body:has(.course-back[href*="h446-hub"])
+    :is(.ido-example,.wedo-example) > :is(.yn-grid,.y13-layout,.h-grid){
+    grid-column:1 / -1;
+    min-width:0;
+    max-width:none;
+    width:100%;
+  }
+}
+
 /* H446 mobile: long database field names and identifiers must wrap inside
    their teaching panels, never expand the entire page beyond the viewport.
    This changes presentation only; model questions and code remain unchanged. */
