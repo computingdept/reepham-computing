@@ -60,7 +60,7 @@ const FAULTS = {
 };
 const FAULT_SETS = {
   easy: [["base"],["pivot"],["left"],["swap"],["return"]],
-  medium: [["pivot","loop","return"],["base","left","right"],["index","condition","swap"],["pivot","right","swap"],["loop","left","return"]],
+  medium: [["pivot"],["base"],["condition"],["left"],["loop"]],
   hard: [
     ["base","left","pivot","loop","condition","swap"],
     ["right","index","increment","inner","swap","return"],
@@ -69,6 +69,33 @@ const FAULT_SETS = {
     ["base","right","index","condition","inner","return"]
   ]
 };
+
+// Give students a concrete situation before asking them to read or repair C#.
+const FIX_SCENARIOS = {
+  base: {title:"One element remains", values:[3,7,2,9],low:3,high:3,pivotAt:-1,
+    note:"Only index 3 remains. A range with zero or one element is already sorted, so the recursion must stop."},
+  pivot: {title:"Choose the last-element pivot",values:[7,2,9,4],low:0,high:3,pivotAt:3,
+    note:"low = 0 and high = 3. The pivot is 4, the value at the last index."},
+  left: {title:"Sort the values left of the pivot",values:[2,4,7,9],low:0,high:3,pivotAt:2,
+    note:"The pivot is fixed at index p = 2. Only indices 0 and 1 belong in the left recursive call."},
+  right: {title:"Sort the values right of the pivot",values:[2,4,7,9],low:0,high:3,pivotAt:2,
+    note:"The pivot is fixed at index p = 2. The right recursive call begins at index 3."},
+  index: {title:"Start with an empty left group",values:[7,2,9,4],low:0,high:3,pivotAt:3,
+    note:"Before checking any value, the smaller-or-equal group is empty. Its end index i begins one before low."},
+  loop: {title:"Leave the pivot out of the loop",values:[7,2,9,4],low:0,high:3,pivotAt:3,
+    note:"The loop examines indices 0, 1 and 2. Index high = 3 holds the pivot and is handled after the loop."},
+  condition: {title:"Move small values to the left",values:[7,2,9,4],low:0,high:3,pivotAt:3,
+    note:"The pivot is 4. A value such as 2 belongs on its left; a value such as 7 does not."},
+  increment: {title:"Grow the smaller-or-equal group",values:[2,7,4],low:0,high:2,pivotAt:2,
+    note:"When 2 is found, the left group grows from empty to one element. The boundary i moves forwards."},
+  inner: {title:"Swap the value being examined",values:[7,2,4],low:0,high:2,pivotAt:2,
+    note:"At j = 1, value 2 is ≤ pivot 4. Swap positions i = 0 and j = 1; leave the pivot at high."},
+  swap: {title:"Put the pivot in its final place",values:[2,7,4],low:0,high:2,pivotAt:2,
+    note:"After checking the other values, i = 0. The pivot 4 belongs at index i + 1 = 1."},
+  return: {title:"Return the pivot's final index",values:[2,4,7],low:0,high:2,pivotAt:1,
+    note:"The pivot 4 has reached index 1, and i = 0. The partition function must return the pivot's index."}
+};
+
 const DEMO_INPUT = [5, 1, 7, 3];
 // Five distinct recursive algorithms rotate through the Hard questions.
 // The OCR June 2017 calculate(4,10) task is modelled in the worked demo;
@@ -362,45 +389,94 @@ function checkRecursion(){
   }
   renderFix();feedback("Recursion trace complete. Now correct the C# quicksort errors.",true);
 }
-function renderFix(){
-  shown("fix-stage");clearFeedback();
-  if(level==="hard")$("rule-text").textContent="Base case: low ≥ high · last element is pivot · recursive calls exclude the pivot.";
-  $("stage").textContent="2 · DEBUG CODE";$("step-count").textContent=`${selectedFaults().length} faulty line(s)`;
-  $("task-title").textContent="Debug the C# quicksort";
-  const faults=selectedFaults(), faultyByLine=new Map(faults.map(f=>[f.line,f]));
-  $("mistake-count").textContent=`${faults.length} incorrect ${faults.length===1?"line":"lines"}`;
-  $("faulty-code").replaceChildren();
-  // Keep the code and answer fields in the same viewport where possible.
-  // Show the method headers and each faulty line with its nearest context.
-  const visible=new Set([1,7]);
-  faults.forEach(f=>{for(let n=f.line-1;n<=f.line+1;n++)if(n>=1&&n<=CODE.length)visible.add(n);});
-  let previous=0;
-  CODE.forEach((line,i)=>{
-    if(!visible.has(i+1))return;
-    if(previous && i+1>previous+1){const ellipsis=document.createElement("div");ellipsis.className="code-line";ellipsis.textContent="   ⋯";$("faulty-code").append(ellipsis);}
-    const row=document.createElement("div"),number=document.createElement("span"),txt=document.createElement("span"),fault=faultyByLine.get(i+1);
-    row.className="code-line"+(fault?" bad":"");number.className="number";number.textContent=String(i+1).padStart(2,"0");
-    txt.textContent=fault?fault.bad:line;row.append(number,txt);$("faulty-code").append(row);
-    previous=i+1;
-  });
-  $("fix-fields").replaceChildren();
-  faults.forEach(f=>{
-    const div=document.createElement("div"),label=document.createElement("label"),input=document.createElement("input"),hint=document.createElement("small");
-    div.className="fix-field";label.htmlFor=`fix-${f.key}`;label.textContent=`Replace line ${f.line}`;
-    input.id=`fix-${f.key}`;input.autocomplete="off";input.spellcheck=false;input.placeholder="Type the complete corrected C# line";
-    hint.textContent=`Faulty: ${f.bad.trim()}`;div.append(label,input,hint);$("fix-fields").append(div);
-  });
+function showFixContext(faults){
+  const example=level==="hard"
+    ?{title:"Full algorithm challenge",values:arrayForQuestion(),low:0,high:arrayForQuestion().length-1,
+      pivotAt:arrayForQuestion().length-1,
+      note:"Start with low = 0 and high = "+(arrayForQuestion().length-1)+
+      ". The final value is the pivot. The complete C# implementation appears below."}
+    :FIX_SCENARIOS[faults[0].key];
+  $("fix-context-title").textContent=example.title;
+  renderArray(example.values,example.low,example.high,example.pivotAt,$("fix-example-array"));
+  $("fix-context-note").textContent=example.note;
 }
-function checkFix(){
-  const faults=selectedFaults();
-  const wrong=faults.find(f=>!sameLine($(`fix-${f.key}`).value,f.correct));
-  if(wrong){fixFirstTry=false;feedback(`Line ${wrong.line} still needs correcting. ${wrong.hint}`,false);return;}
+function finishFix(){
   scores[question]={trace:level==="hard"?0:Number(traceFirstTry),recursion:level==="hard"?Number(recursionFirstTry):0,fix:Number(fixFirstTry)};
   if(scores.every(s=>s!==null)){
     const total=scores.reduce((n,s)=>n+earned(s),0);
     if(best[level]===undefined||total>best[level]){best[level]=total;try{localStorage.setItem(STORAGE_KEY,JSON.stringify(best));}catch(_){}}
   }
   header();showComplete();
+}
+function renderFix(){
+  shown("fix-stage");clearFeedback();
+  if(level==="hard")$("rule-text").textContent="Base case: low ≥ high · last element is pivot · recursive calls exclude the pivot.";
+  $("stage").textContent="2 · "+(level==="easy"?"CHOOSE CODE":level==="medium"?"REPAIR ONE LINE":"DEBUG CODE");
+  const faults=selectedFaults(),faultyByLine=new Map(faults.map(f=>[f.line,f]));
+  $("step-count").textContent=level==="easy"?"Choose one line":level==="medium"?"One line to repair":faults.length+" faulty lines";
+  $("task-title").textContent=level==="easy"?"Choose the correct C# line":level==="medium"?"Repair one C# line":"Debug the C# quicksort";
+  $("fix-intro").textContent=level==="easy"
+    ?"Study the array and choose the line of C# that makes quicksort behave correctly."
+    :level==="medium"
+      ?"Use the array to understand the task. Replace the highlighted line directly inside the function."
+      :"Use the example and complete function to locate and replace every highlighted faulty line.";
+  showFixContext(faults);
+  $("faulty-code").replaceChildren();
+  $("fix-fields").replaceChildren();
+  $("fix-fields").classList.toggle("easy-choices",level==="easy");
+  $("fix-code-panel").hidden=level==="easy";
+  $("check-fix").hidden=level==="easy";
+
+  if(level==="easy"){
+    const fault=faults[0],choices=(question+offset)%2===0?[fault.bad,fault.correct]:[fault.correct,fault.bad];
+    const prompt=document.createElement("p");prompt.className="fix-choice-prompt";
+    prompt.textContent="Which C# line is correct for this situation?";
+    $("fix-fields").append(prompt);
+    choices.forEach((line,i)=>{
+      const option=document.createElement("button");option.type="button";option.className="fix-code-choice";
+      option.textContent=line.trim();option.setAttribute("aria-label","Option "+(i+1)+": "+line.trim());
+      option.addEventListener("click",()=>{
+        if(sameLine(line,fault.correct)){finishFix();}
+        else{fixFirstTry=false;feedback("Not quite. "+fault.hint,false);}
+      });
+      $("fix-fields").append(option);
+    });
+    return;
+  }
+
+  // Medium shows the full relevant function, with its only faulty line editable in place.
+  // Hard shows the complete two-function algorithm so no missing lines hide important logic.
+  const start=level==="medium"?(faults[0].line<=5?1:7):1;
+  const end=level==="medium"?(faults[0].line<=5?6:18):CODE.length;
+  for(let lineNo=start;lineNo<=end;lineNo++){
+    const line=CODE[lineNo-1],fault=faultyByLine.get(lineNo);
+    const row=document.createElement("div"),number=document.createElement("span");
+    row.className="code-line"+(fault?" bad":"");if(fault&&level==="medium")row.classList.add("editable");number.className="number";
+    number.textContent=String(lineNo).padStart(2,"0");row.append(number);
+    if(fault&&level==="medium"){
+      const input=document.createElement("input");input.id="fix-"+fault.key;
+      input.className="fix-inline";input.autocomplete="off";input.spellcheck=false;
+      input.value=fault.bad.trim();input.setAttribute("aria-label","Edit line "+lineNo+" in C#");
+      row.append(input);
+    }else{
+      const txt=document.createElement("span");txt.textContent=fault?fault.bad:line;row.append(txt);
+    }
+    $("faulty-code").append(row);
+  }
+  if(level==="medium")return;
+  faults.forEach(f=>{
+    const div=document.createElement("div"),label=document.createElement("label"),input=document.createElement("input"),hint=document.createElement("small");
+    div.className="fix-field";label.htmlFor="fix-"+f.key;label.textContent="Replace line "+f.line;
+    input.id="fix-"+f.key;input.autocomplete="off";input.spellcheck=false;input.placeholder="Type the complete corrected C# line";
+    hint.textContent="Faulty: "+f.bad.trim();div.append(label,input,hint);$("fix-fields").append(div);
+  });
+}
+function checkFix(){
+  if(level==="easy")return;
+  const faults=selectedFaults();
+  const wrong=faults.find(f=>!sameLine($("fix-"+f.key).value,f.correct));
+  if(wrong){fixFirstTry=false;feedback("Line "+wrong.line+" still needs correcting. "+wrong.hint,false);return;}
+  finishFix();
 }
 function showComplete(){
   shown("complete-stage");clearFeedback();

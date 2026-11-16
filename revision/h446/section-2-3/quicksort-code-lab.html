@@ -91,6 +91,19 @@ dialog{border:1px solid #b6cdbd;border-radius:16px;box-shadow:0 20px 65px #102a1
 .dialog-top{display:flex;justify-content:space-between;align-items:center;gap:10px}.dialog-top h2{font-size:21px}.dialog-copy{font-size:14px;color:#435e4d}
 .demo-row{display:flex;gap:5px;overflow-x:auto;padding:11px 0}.demo-cell{min-width:46px;padding:11px 6px;text-align:center;border:1px solid #bed0c3;border-radius:7px;font-size:17px;font-weight:800}.demo-cell.pivot{background:#ffefb0;border-color:#d4a330}
 .reference-code{background:#172e32;color:#f5fff7;padding:16px;border-radius:10px;overflow:auto;font:12.5px/1.5 ui-monospace,Consolas,monospace;white-space:pre}
+
+/* Understand the array before reading code: one compact, consistent workflow. */
+.fix-context{margin:10px 0 12px;padding:11px 14px;background:#f3f8f4;border:1px solid #c9dfd0;border-radius:10px}
+.fix-context-title{font-size:15px;font-weight:850;color:#24543a;margin:0 0 8px}
+.fix-context .array{margin:0 0 3px;padding:0}.fix-context .cell{height:49px;min-width:49px}
+.fix-context-note{font-size:14px;line-height:1.42;color:#3a5948;margin:7px 0 0}
+.fix-grid.easy-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.fix-grid.easy-choices .fix-choice-prompt{grid-column:1/-1;font-size:15px;font-weight:800;color:#24513c;margin:0}
+.fix-code-choice{width:100%;text-align:left;padding:14px 12px;background:#fff;border:1px solid #9dbfaa;border-radius:10px;color:#173e31;font:700 13.5px/1.5 ui-monospace,Consolas,monospace;overflow-wrap:anywhere}
+.fix-code-choice:hover,.fix-code-choice:focus-visible{background:#ecf7ec;border-color:#377958}
+.code-line.editable{min-width:0;width:100%;align-items:center;white-space:normal;padding:3px 12px}
+.fix-inline{font:700 12.5px/1.4 ui-monospace,Consolas,monospace;color:#15382d;background:#fff9df;border:2px solid #d9a33a;border-radius:5px;padding:7px 9px;width:100%;min-width:0;flex:1}
+@media(max-width:550px){.fix-grid.easy-choices{grid-template-columns:1fr}.fix-context{padding:10px}.fix-code-choice{font-size:12px}.fix-inline{font-size:12px}}
 @media(max-width:800px){main{padding:12px 12px 28px}.workspace,.stack-workspace{grid-template-columns:1fr}.array.long-array{display:flex;flex-wrap:wrap}.array.long-array .cell{min-width:43px;width:auto}.array.long-array .cell strong{font-size:17px}.task-buttons .primary{flex:1}.heading{margin-bottom:8px}.main-card{padding:13px}.controls{margin:7px 0}.progress-row{margin:6px 0 10px}.array-panel{padding:9px}.cell{min-width:43px;height:48px}.cell strong{font-size:18px}.method{margin:9px 0}.level-btn{min-height:40px;min-width:74px;padding:8px 10px}.fix-grid{grid-template-columns:1fr}}
 @media(max-width:470px){.brand{display:none}.actions{width:100%}.actions .btn{flex:1;font-size:12px}.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.progress-row{align-items:center}.mastery{font-size:11px}.task-head{gap:5px}.cell{min-width:40px}}
 </style>
@@ -98,7 +111,7 @@ dialog{border:1px solid #b6cdbd;border-radius:16px;box-shadow:0 20px 65px #102a1
 <body>
 <header class="topbar"><a class="back" href="/exercise/h446/tools.html">← H446 Skills</a><span class="brand">RHS COMPUTING · H446</span></header>
 <main>
-<div class="heading"><div><p class="eyebrow">OCR H446 · 2.3.1(f) · Interactive Skills</p><h1>Quicksort: Code Lab</h1><p class="subtitle">Easy/Medium: partition trace · Hard: exam-style recursion → debug C#.</p></div><div class="actions"><button class="btn" id="open-demo" type="button">▶ Worked demo</button><button class="btn" id="open-reference" type="button">&lt;/&gt; Working C#</button></div></div>
+<div class="heading"><div><p class="eyebrow">OCR H446 · 2.3.1(f) · Interactive Skills</p><h1>Quicksort: Code Lab</h1><p class="subtitle">Easy: choose code · Medium: repair one line · Hard: debug code and trace recursion.</p></div><div class="actions"><button class="btn" id="open-demo" type="button">▶ Worked demo</button><button class="btn" id="open-reference" type="button">&lt;/&gt; Working C#</button></div></div>
 <div class="controls"><div class="levels" role="group" aria-label="Choose difficulty"><strong>Difficulty</strong><button class="level-btn" data-level="easy" aria-pressed="true">Easy</button><button class="level-btn" data-level="medium" aria-pressed="false">Medium</button><button class="level-btn" data-level="hard" aria-pressed="false">Hard</button></div><span class="mastery" id="mastery">Best: not attempted</span></div>
 <div class="progress-row"><span id="progress-label">Challenge 1 of 5</span><progress id="progress" max="5" value="0" aria-label="Completed challenges"></progress><span id="points">0 / 10</span></div>
 <section class="card main-card" aria-labelledby="task-title">
@@ -125,15 +138,15 @@ dialog{border:1px solid #b6cdbd;border-radius:16px;box-shadow:0 20px 65px #102a1
   </div>
   <div class="task-buttons"><button class="btn primary" type="button" id="check-recursion">Check calls → Return values</button><button class="btn quiet" type="button" id="show-recursion-hint">Hint</button></div>
  </div>
- <div id="fix-stage" hidden><p class="task-intro">The code below contains <strong id="mistake-count">one error</strong>. <span class="marker">Replace the incorrect line(s)</span> so this last-pivot quicksort works.</p><div class="code-panel"><div class="code-label">C# · LINES TO DEBUG ARE HIGHLIGHTED</div><div class="code-lines" id="faulty-code" aria-label="Faulty C# code with numbered lines"></div></div><div class="fix-grid" id="fix-fields"></div><div class="task-buttons"><button class="btn primary" type="button" id="check-fix">Test fixes</button><button class="btn quiet" type="button" id="show-fix-hint">Hint</button></div></div>
+ <div id="fix-stage" hidden><p class="task-intro" id="fix-intro">Understand the array first, then choose or repair C#.</p><div class="fix-context"><p class="fix-context-title"><span class="marker" id="fix-context-title">Look at the array</span></p><div class="array" id="fix-example-array" role="group" aria-label="Example array with indices"></div><p class="fix-context-note" id="fix-context-note"></p></div><div class="code-panel" id="fix-code-panel"><div class="code-label">C# · THE FAULTY LINE IS HIGHLIGHTED</div><div class="code-lines" id="faulty-code" aria-label="C# code with numbered lines"></div></div><div class="fix-grid" id="fix-fields"></div><div class="task-buttons"><button class="btn primary" type="button" id="check-fix">Test fix</button><button class="btn quiet" type="button" id="show-fix-hint">Hint</button></div></div>
  <div id="complete-stage" hidden><div class="result"><strong id="result-heading">Code checked</strong><p id="result-text"></p><div class="task-buttons"><button class="btn primary" id="next-challenge" type="button">Next challenge →</button><button class="btn" id="copy-code" type="button">Copy working C#</button><a class="btn" href="https://dotnetfiddle.net/" target="_blank" rel="noopener noreferrer">Open .NET Fiddle ↗</a></div></div></div>
  <div class="feedback" id="feedback" role="status" aria-live="polite" hidden></div>
 </section>
 <div class="scores" id="scores" aria-label="Challenge results"></div>
-<p class="footer-note">Five challenges per level · 80% target · first-attempt marks (partition trace on Easy/Medium; exam-style recursion on Hard; C# debug on all) · best result saved in this browser only, not sent to your teacher. <button class="btn quiet" type="button" id="new-set">↻ New practice set</button></p>
+<p class="footer-note">Five challenges per level · 80% target · first-attempt marks (partition trace + code selection on Easy; partition trace + one-line C# repair on Medium; exam-style recursion + full C# debugging on Hard) · best result saved in this browser only, not sent to your teacher. <button class="btn quiet" type="button" id="new-set">↻ New practice set</button></p>
 </main>
 <dialog id="demo-dialog" aria-labelledby="demo-title"><div class="dialog-top"><h2 id="demo-title">Worked demo</h2><button class="btn" type="button" data-close="demo-dialog">Close ✕</button></div><p class="dialog-copy" id="demo-copy">A different example from the scored tasks.</p><p class="stage" id="demo-count"></p><pre class="recursion-code" id="demo-code" hidden></pre><p id="demo-description"></p><div class="demo-row" id="demo-array"></div><div class="stack-frames" id="demo-stack" hidden></div><div class="task-buttons"><button class="btn" type="button" id="demo-prev">← Previous</button><button class="btn primary" type="button" id="demo-next">Next step →</button></div></dialog>
 <dialog id="reference-dialog" aria-labelledby="reference-title"><div class="dialog-top"><h2 id="reference-title">Working C# quicksort</h2><button class="btn" type="button" data-close="reference-dialog">Close ✕</button></div><p class="dialog-copy">Commented, runnable C# using the <strong>last-element pivot</strong>. Copy the code, open .NET Fiddle, paste and press Run. Change the input array to experiment.</p><pre class="reference-code" id="reference-code"></pre><div class="task-buttons"><button class="btn primary" type="button" id="copy-reference">Copy C#</button><a class="btn" href="https://dotnetfiddle.net/" target="_blank" rel="noopener noreferrer">Open .NET Fiddle ↗</a></div></dialog>
-<script src="./quicksort-code-lab.js?v=hard-20261116-exam-trace"></script>
+<script src="./quicksort-code-lab.js?v=context-20261116-v1"></script>
 </body>
 </html>
