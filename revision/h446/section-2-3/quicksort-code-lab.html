@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#ffffff">
-<meta name="description" content="OCR H446 Quicksort Code Lab: trace last-pivot quicksort, trace recursive call stacks, repair C# errors and test code.">
+<meta name="description" content="OCR H446 Quicksort Code Lab: trace recursion in exam style, repair C# errors and test code.">
 <title>Quicksort Code Lab | OCR H446 | RHS Computing</title>
 <style>
 :root{font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#243a31;background:#f8faf8;line-height:1.43;--green:#285348;--line:#d4dfd8;--muted:#586b61}
@@ -46,18 +46,38 @@ h1{font-size:clamp(1.6rem,2.7vw,2.35rem);line-height:1.1;margin:4px 0 5px;letter
 .field input:focus{border-color:#386d51}.input-hint{font-size:11px;color:var(--muted)}
 .side-note{margin:0;color:#3c5949;font-size:13px}.side-note li{margin:0 0 7px}.support-title{font-size:12px;text-transform:uppercase;letter-spacing:.05em;font-weight:850;color:var(--green);margin:0 0 7px}
 .support-details{margin:10px 0 0;font-size:12px;color:#3b6d52}.support-details summary{cursor:pointer;font-weight:800}.support-details ol{margin:10px 0 4px;padding-left:24px}
-.stack-workspace{display:grid;grid-template-columns:minmax(0,.9fr) minmax(310px,1.1fr);gap:16px;align-items:start}
+.stack-workspace{display:grid;grid-template-columns:minmax(310px,1.1fr) minmax(0,.9fr);gap:16px;align-items:start}
 .stack-panel{background:#f6f9f7;border:1px solid var(--line);border-radius:11px;padding:13px;min-width:0}
+.stack-question-panel{min-width:0}
 .stack-label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:850;color:#4c6859;margin:0 0 9px}
 .stack-frames{display:flex;flex-direction:column;gap:6px}
 .stack-frame{border:1px solid #c3d5c8;background:#fff;border-radius:8px;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;gap:9px;flex-wrap:wrap}
 .stack-frame strong{font:700 14px/1.3 ui-monospace,Consolas,monospace;color:#274437}
 .stack-frame small{font-size:10px;letter-spacing:.025em;color:#6b8174;font-weight:800}
 .stack-frame.stack-top{background:#fff4ca;border-color:#d6aa48}
-.stack-frame.stack-top small{color:#855e15}.stack-context{background:#eef7f0;border-left:3px solid #438d63;border-radius:5px;padding:11px 13px;margin:0 0 12px;font-size:14px}
+.stack-frame.stack-top small{color:#855e15}.stack-context{color:#496256;margin:8px 0 14px;font-size:13px}
+.stack-code{display:block;background:#173336;color:#fff9d7;border-radius:9px;padding:13px 14px;margin:0;font:700 clamp(13px,1.4vw,16px)/1.45 ui-monospace,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+.stack-prompt{font-size:clamp(16px,1.8vw,20px);line-height:1.35;font-weight:800;color:#203e31;margin:11px 0 10px}
+.stack-result{background:#eef8f0;border:1px solid #bddbc5;border-radius:10px;padding:13px;margin-top:11px}
+.stack-result strong{font-size:16px;color:#235a3b}.stack-result p{font-size:14px;margin:7px 0 0}
+.stack-frame.stack-updated{animation:stack-arrive .4s ease-out}
+@keyframes stack-arrive{from{transform:translateY(-9px);opacity:.4}to{transform:translateY(0);opacity:1}}
+@media(prefers-reduced-motion:reduce){.stack-frame.stack-updated{animation:none}}
 .stack-actions{display:flex;gap:8px;margin:6px 0 12px}.stack-actions .btn{flex:1}
 .stack-actions .btn[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#fff}
 .stack-actions .btn small{display:block;font-size:11px;font-weight:500;opacity:.85}
+.recursion-code-panel{border-radius:11px;align-self:start}
+.recursion-code{margin:0;padding:14px 15px;color:#f5fff7;background:#172e32;font:13px/1.55 ui-monospace,Consolas,monospace;white-space:pre;overflow:auto}
+.recursion-worksheet{background:#f6f9f7;border:1px solid var(--line);border-radius:11px;padding:13px;min-width:0}
+.recursion-start{font:750 15px/1.4 ui-monospace,Consolas,monospace;color:#204d38;background:#fff4ca;border:1px solid #d6aa48;border-radius:8px;padding:10px 12px;display:inline-block;margin-bottom:8px}
+.recursion-rows{display:flex;flex-direction:column;gap:7px;margin-top:10px}
+.recursion-row{display:grid;grid-template-columns:26px minmax(0,1fr);gap:9px;align-items:center}
+.recursion-row .number{font-size:12px;font-weight:850;color:#5b7563;text-align:center}
+.recursion-row .given{font:750 13px/1.4 ui-monospace,Consolas,monospace;color:#294d38;padding:9px 10px;background:#edf2ed;border-radius:7px}
+.recursion-row input{min-width:0;width:100%;border:1px solid #b2c7b9;background:#fff;border-radius:8px;padding:9px 10px;height:41px;font:14px/1.3 ui-monospace,Consolas,monospace}
+.recursion-row.return-row{grid-template-columns:minmax(0,1fr) 100px}.recursion-row .call-label{font:700 13px/1.4 ui-monospace,Consolas,monospace;color:#365b46;overflow-wrap:anywhere}
+.recursion-row.return-row input{text-align:center}
+.recursion-explanation{font-size:13px;color:#4a6653;margin:8px 0 0}
 .task-buttons{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:13px}.feedback{margin-top:12px;padding:10px 13px;border-radius:9px;background:#fff8e7;border:1px solid #e9d495;color:#674c13;font-size:14px}.feedback.good{background:#eef9ef;border-color:#b9dac1;color:#205a38}
 .code-panel{border:1px solid var(--line);border-radius:11px;overflow:hidden;background:#172e32}.code-label{padding:8px 12px;background:#244447;color:#e6f4ed;font-size:11px;font-weight:800;letter-spacing:.05em}
 .code-lines{padding:9px 0;overflow-x:auto}.code-line{display:flex;gap:12px;font:12.5px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;color:#e9f5ee;white-space:pre;min-width:max-content;padding:1px 12px}
@@ -78,7 +98,7 @@ dialog{border:1px solid #b6cdbd;border-radius:16px;box-shadow:0 20px 65px #102a1
 <body>
 <header class="topbar"><a class="back" href="/exercise/h446/tools.html">← H446 Skills</a><span class="brand">RHS COMPUTING · H446</span></header>
 <main>
-<div class="heading"><div><p class="eyebrow">OCR H446 · 2.3.1(f) · Interactive Skills</p><h1>Quicksort: Code Lab</h1><p class="subtitle">Trace on Easy/Medium · recursion on Hard → debug C#.</p></div><div class="actions"><button class="btn" id="open-demo" type="button">▶ Worked demo</button><button class="btn" id="open-reference" type="button">&lt;/&gt; Working C#</button></div></div>
+<div class="heading"><div><p class="eyebrow">OCR H446 · 2.3.1(f) · Interactive Skills</p><h1>Quicksort: Code Lab</h1><p class="subtitle">Easy/Medium: partition trace · Hard: exam-style recursion → debug C#.</p></div><div class="actions"><button class="btn" id="open-demo" type="button">▶ Worked demo</button><button class="btn" id="open-reference" type="button">&lt;/&gt; Working C#</button></div></div>
 <div class="controls"><div class="levels" role="group" aria-label="Choose difficulty"><strong>Difficulty</strong><button class="level-btn" data-level="easy" aria-pressed="true">Easy</button><button class="level-btn" data-level="medium" aria-pressed="false">Medium</button><button class="level-btn" data-level="hard" aria-pressed="false">Hard</button></div><span class="mastery" id="mastery">Best: not attempted</span></div>
 <div class="progress-row"><span id="progress-label">Challenge 1 of 5</span><progress id="progress" max="5" value="0" aria-label="Completed challenges"></progress><span id="points">0 / 10</span></div>
 <section class="card main-card" aria-labelledby="task-title">
@@ -93,23 +113,27 @@ dialog{border:1px solid #b6cdbd;border-radius:16px;box-shadow:0 20px 65px #102a1
   </div>
   <div class="task-buttons"><button class="btn primary" type="button" id="check-trace">Check trace</button><button class="btn quiet" type="button" id="show-hint">Hint</button></div>
  </div>
- <div id="stack-stage" hidden>
-  <p class="task-intro"><span class="marker">Think like the computer:</span> a recursive call is <strong>pushed</strong> when it starts, and <strong>popped</strong> when it returns. Predict the <strong>very next</strong> change.</p>
+ <div id="recursion-stage" hidden>
+  <p class="task-intro" id="recursion-intro">Follow the function calls until the base case, then work backwards to find the return values.</p>
   <div class="stack-workspace">
-   <div class="stack-panel"><p class="stack-label">Current call stack · top first</p><div class="stack-frames" id="stack-frames" aria-label="Current recursive calls, from top of stack to bottom"></div></div>
-   <div><p class="stack-context" id="stack-context"></p><p class="support-title">What happens next?</p><div class="stack-actions" role="group" aria-label="Next stack operation"><button class="btn" type="button" data-stack-action="push" aria-pressed="false">PUSH <small>Start a call</small></button><button class="btn" type="button" data-stack-action="pop" aria-pressed="false">POP <small>Return from a call</small></button></div><div class="field"><label for="stack-top-answer">Top call AFTER that operation (low..high)</label><input id="stack-top-answer" autocomplete="off" placeholder="e.g. 0..3 or empty" aria-describedby="stack-answer-hint"><span id="stack-answer-hint" class="input-hint">Enter its low..high range, or <strong>empty</strong> if no calls remain.</span></div></div>
+   <div class="code-panel recursion-code-panel"><div class="code-label">RECURSIVE FUNCTION · OCR EXAM STYLE</div><pre class="recursion-code" id="recursion-code"></pre></div>
+   <div class="recursion-worksheet">
+    <p class="stack-label">Starting instruction</p><div class="recursion-start" id="recursion-start"></div>
+    <div id="recursion-calls-phase"><p class="stack-prompt"><span class="marker">1.</span> Which recursive calls happen next?</p><p class="recursion-explanation">Write each new function call in order. Stop when the base case is reached.</p><div class="recursion-rows" id="recursion-call-fields"></div></div>
+    <div id="recursion-returns-phase" hidden><p class="stack-prompt"><span class="marker">2.</span> What does each call return?</p><p class="recursion-explanation">Start with the base case at the bottom. Work back up to the first call.</p><div class="recursion-rows" id="recursion-return-fields"></div></div>
+   </div>
   </div>
-  <div class="task-buttons"><button class="btn primary" type="button" id="check-stack">Check stack</button><button class="btn quiet" type="button" id="show-stack-hint">Hint</button></div>
+  <div class="task-buttons"><button class="btn primary" type="button" id="check-recursion">Check calls → Return values</button><button class="btn quiet" type="button" id="show-recursion-hint">Hint</button></div>
  </div>
  <div id="fix-stage" hidden><p class="task-intro">The code below contains <strong id="mistake-count">one error</strong>. <span class="marker">Replace the incorrect line(s)</span> so this last-pivot quicksort works.</p><div class="code-panel"><div class="code-label">C# · LINES TO DEBUG ARE HIGHLIGHTED</div><div class="code-lines" id="faulty-code" aria-label="Faulty C# code with numbered lines"></div></div><div class="fix-grid" id="fix-fields"></div><div class="task-buttons"><button class="btn primary" type="button" id="check-fix">Test fixes</button><button class="btn quiet" type="button" id="show-fix-hint">Hint</button></div></div>
  <div id="complete-stage" hidden><div class="result"><strong id="result-heading">Code checked</strong><p id="result-text"></p><div class="task-buttons"><button class="btn primary" id="next-challenge" type="button">Next challenge →</button><button class="btn" id="copy-code" type="button">Copy working C#</button><a class="btn" href="https://dotnetfiddle.net/" target="_blank" rel="noopener noreferrer">Open .NET Fiddle ↗</a></div></div></div>
  <div class="feedback" id="feedback" role="status" aria-live="polite" hidden></div>
 </section>
 <div class="scores" id="scores" aria-label="Challenge results"></div>
-<p class="footer-note">Five challenges per level · 80% target · first-attempt marks (trace on Easy/Medium; recursion on Hard; C# debug on all) · best result saved in this browser only, not sent to your teacher. <button class="btn quiet" type="button" id="new-set">↻ New practice set</button></p>
+<p class="footer-note">Five challenges per level · 80% target · first-attempt marks (partition trace on Easy/Medium; exam-style recursion on Hard; C# debug on all) · best result saved in this browser only, not sent to your teacher. <button class="btn quiet" type="button" id="new-set">↻ New practice set</button></p>
 </main>
-<dialog id="demo-dialog" aria-labelledby="demo-title"><div class="dialog-top"><h2 id="demo-title">Worked demo · last-pivot quicksort</h2><button class="btn" type="button" data-close="demo-dialog">Close ✕</button></div><p class="dialog-copy" id="demo-copy">A different example from the scored tasks.</p><p class="stage" id="demo-count"></p><p id="demo-description"></p><div class="demo-row" id="demo-array"></div><div class="stack-frames" id="demo-stack" hidden></div><div class="task-buttons"><button class="btn" type="button" id="demo-prev">← Previous</button><button class="btn primary" type="button" id="demo-next">Next step →</button></div></dialog>
+<dialog id="demo-dialog" aria-labelledby="demo-title"><div class="dialog-top"><h2 id="demo-title">Worked demo</h2><button class="btn" type="button" data-close="demo-dialog">Close ✕</button></div><p class="dialog-copy" id="demo-copy">A different example from the scored tasks.</p><p class="stage" id="demo-count"></p><pre class="recursion-code" id="demo-code" hidden></pre><p id="demo-description"></p><div class="demo-row" id="demo-array"></div><div class="stack-frames" id="demo-stack" hidden></div><div class="task-buttons"><button class="btn" type="button" id="demo-prev">← Previous</button><button class="btn primary" type="button" id="demo-next">Next step →</button></div></dialog>
 <dialog id="reference-dialog" aria-labelledby="reference-title"><div class="dialog-top"><h2 id="reference-title">Working C# quicksort</h2><button class="btn" type="button" data-close="reference-dialog">Close ✕</button></div><p class="dialog-copy">Commented, runnable C# using the <strong>last-element pivot</strong>. Copy the code, open .NET Fiddle, paste and press Run. Change the input array to experiment.</p><pre class="reference-code" id="reference-code"></pre><div class="task-buttons"><button class="btn primary" type="button" id="copy-reference">Copy C#</button><a class="btn" href="https://dotnetfiddle.net/" target="_blank" rel="noopener noreferrer">Open .NET Fiddle ↗</a></div></dialog>
-<script src="./quicksort-code-lab.js?v=hard-20261116-3"></script>
+<script src="./quicksort-code-lab.js?v=hard-20261116-exam-trace"></script>
 </body>
 </html>

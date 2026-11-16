@@ -3,8 +3,8 @@
 // Lesson 217's Lomuto-style, last-element-pivot implementation is the ONE
 // convention used for all worked examples, traces, fixes and reference code.
 const $ = id => document.getElementById(id);
-// v3 scores Hard's recursion stack + debugging, without partition tracing.
-const STORAGE_KEY = "rhsc.h446.quicksortCodeLab.best.v3";
+// v4 scores Hard's exam-style recursive calls/returns + C# debugging.
+const STORAGE_KEY = "rhsc.h446.quicksortCodeLab.best.v4";
 const QUESTIONS = {
   easy: [
     [5, 1, 3], [8, 2, 6, 4], [7, 3, 1, 5], [6, 2, 4, 1], [9, 4, 7, 2]
@@ -70,11 +70,55 @@ const FAULT_SETS = {
   ]
 };
 const DEMO_INPUT = [5, 1, 7, 3];
-let level = "easy", question = 0, traceStep = 0, stackStep = 0, stackChoice = "", offset = 0;
+// Five distinct recursive algorithms rotate through the Hard questions.
+// The OCR June 2017 calculate(4,10) task is modelled in the worked demo;
+// the scored problems use different inputs and other function patterns.
+const RECURSION_TYPES = ["calculate","sumTo","factorial","power","digitSum"];
+const RECURSION_CODE = {
+  calculate:`function calculate(a, b)\n    if a == b then\n        return a\n    elseif a > b then\n        return calculate(a - b, b)\n    else\n        return calculate(a, b - a)\n    endif\nendfunction`,
+  sumTo:`function sumTo(n)\n    if n <= 1 then\n        return n\n    endif\n    return n + sumTo(n - 1)\nendfunction`,
+  factorial:`function factorial(n)\n    if n <= 1 then\n        return 1\n    endif\n    return n * factorial(n - 1)\nendfunction`,
+  power:`function power(base, exponent)\n    if exponent == 0 then\n        return 1\n    endif\n    return base * power(base, exponent - 1)\nendfunction`,
+  digitSum:`function digitSum(n)\n    if n < 10 then\n        return n\n    endif\n    return (n MOD 10) + digitSum(n DIV 10)\nendfunction`
+};
+const CALCULATE_PAIRS = [[6,14],[4,14],[6,16],[8,18],[8,22]];
+
+function makeRecursionExercise(kind,randomize=false){
+  const calls=[],returns=[];
+  if(kind==="calculate"){
+    let [a,b]=CALCULATE_PAIRS[randomize?Math.floor(Math.random()*CALCULATE_PAIRS.length):0];
+    while(true){
+      calls.push(`calculate(${a},${b})`);
+      if(a===b)break;
+      if(a>b)a-=b;else b-=a;
+    }
+    for(let i=0;i<calls.length;i++)returns.push(a);
+  }else if(kind==="sumTo"){
+    const n=randomize?4+Math.floor(Math.random()*3):5;
+    for(let k=n;k>=1;k--){calls.push(`sumTo(${k})`);returns.push(k*(k+1)/2);}
+  }else if(kind==="factorial"){
+    const n=randomize?4+Math.floor(Math.random()*2):5;
+    let product=1;
+    const factorials=[1];for(let k=1;k<=n;k++){product*=k;factorials[k]=product;}
+    for(let k=n;k>=1;k--){calls.push(`factorial(${k})`);returns.push(factorials[k]);}
+  }else if(kind==="power"){
+    const base=randomize?2+Math.floor(Math.random()*3):3;
+    const exponent=randomize?3+Math.floor(Math.random()*3):4;
+    for(let e=exponent;e>=0;e--){calls.push(`power(${base},${e})`);returns.push(base**e);}
+  }else if(kind==="digitSum"){
+    let n=randomize?23456+Math.floor(Math.random()*70000):47382;
+    function sumDigits(value){return String(value).split("").reduce((sum,ch)=>sum+Number(ch),0);}
+    while(true){calls.push(`digitSum(${n})`);returns.push(sumDigits(n));if(n<10)break;n=Math.floor(n/10);}
+  }
+  return {kind,code:RECURSION_CODE[kind],calls,returns,result:returns[0],start:`print(${calls[0]})`};
+}
+
+let level = "easy", question = 0, traceStep = 0, recursionPhase = "calls", offset = 0;
 let scores = [null,null,null,null,null];
-let traceFirstTry = true, stackFirstTry = true, fixFirstTry = true;
-let currentSteps = [], stackCheckpoints = [], demoIndex = 0;
+let traceFirstTry = true, recursionFirstTry = true, fixFirstTry = true;
+let currentSteps = [], recursionExercise = null, demoIndex = 0;
 let activeQuestions = QUESTIONS.easy.map(a=>a.slice());
+let activeRecursions = RECURSION_TYPES.map(kind=>makeRecursionExercise(kind));
 let best = {};
 try { best = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch (_) { best = {}; }
 
@@ -149,7 +193,8 @@ function chooseStackCheckpoints(input){
   return picked.map(({event,i})=>({
     ...event,
     nextAction:events[i+1].action,
-    nextTop:events[i+1].stack.at(-1)||null
+    nextTop:events[i+1].stack.at(-1)||null,
+    nextStack:events[i+1].stack
   }));
 }
 
@@ -176,9 +221,9 @@ function feedback(text,ok) {
   const el=$("feedback");el.hidden=false;el.textContent=text;el.className="feedback"+(ok?" good":"");
 }
 function clearFeedback(){ $("feedback").hidden=true; }
-function shown(id){for(const name of ["trace-stage","stack-stage","fix-stage","complete-stage"])$(name).hidden=name!==id;}
+function shown(id){for(const name of ["trace-stage","recursion-stage","fix-stage","complete-stage"])$(name).hidden=name!==id;}
 function scoreMax(){return 10;}
-function earned(s){return s?s.trace+s.fix+(s.stack||0):0;}
+function earned(s){return s?s.trace+s.fix+(s.recursion||0):0;}
 function header() {
   const complete=scores.filter(v=>v!==null).length;
   const points=scores.reduce((sum,v)=>sum+earned(v),0);
@@ -196,14 +241,14 @@ function header() {
 }
 function startQuestion() {
   currentSteps=level==="hard"?[]:visibleSteps();
-  stackCheckpoints=level==="hard"?chooseStackCheckpoints(arrayForQuestion()):[];
-  traceStep=0;stackStep=0;stackChoice="";
-  traceFirstTry=true;stackFirstTry=true;fixFirstTry=true;
+  recursionExercise=level==="hard"?activeRecursions[question]:null;
+  traceStep=0;recursionPhase="calls";
+  traceFirstTry=true;recursionFirstTry=true;fixFirstTry=true;
   $("rule-text").textContent=level==="hard"
-    ?"A recursive call is PUSHED when it starts and POPPED when it returns. low ≥ high means return."
+    ?"Trace the calls down to the base case. Then follow their return values back up."
     :"Last element = pivot · values ≤ pivot move left · partition in place. Indices start at 0.";
   header();
-  if(level==="hard")renderStack();
+  if(level==="hard")renderRecursion();
   else renderTrace();
 }
 function renderArray(values,low,high,pivotAt,container){
@@ -252,42 +297,74 @@ function checkTrace(){
   else {renderFix();feedback("Trace complete. Now repair the C# implementation.",true);}
 }
 
-function renderStack(){
-  shown("stack-stage");clearFeedback();
-  const s=stackCheckpoints[stackStep];
-  $("stage").textContent="1 · RECURSION STACK";
-  $("step-count").textContent=`Checkpoint ${stackStep+1} of ${stackCheckpoints.length}`;
-  $("task-title").textContent="Predict the next stack change";
-  $("stack-context").textContent=s.context;
-  $("stack-frames").replaceChildren();
-  [...s.stack].reverse().forEach((f,i)=>{
-    const frame=document.createElement("div");frame.className="stack-frame"+(i===0?" stack-top":"");
-    const name=document.createElement("strong");name.textContent=`QuickSort(a, ${f.low}, ${f.high})`;
-    const label=document.createElement("small");label.textContent=i===0?"TOP · CURRENT CALL":"WAITING · PARENT CALL";
-    frame.append(name,label);$("stack-frames").append(frame);
-  });
-  stackChoice="";
-  document.querySelectorAll("[data-stack-action]").forEach(b=>b.setAttribute("aria-pressed","false"));
-  $("stack-top-answer").value="";
-  $("check-stack").textContent=stackStep===stackCheckpoints.length-1?"Check stack → Debug code":"Check stack → Next checkpoint";
+function renderRecursion(){
+  shown("recursion-stage");clearFeedback();
+  const exercise=recursionExercise;
+  $("stage").textContent="1 · TRACE RECURSION";
+  $("step-count").textContent=recursionPhase==="calls"?"Step 1 of 2 · Calls":"Step 2 of 2 · Returns";
+  $("task-title").textContent="Trace the calls and final result";
+  $("recursion-code").textContent=exercise.code;
+  $("recursion-start").textContent=exercise.start;
+  $("recursion-intro").textContent=recursionPhase==="calls"
+    ?"Write every recursive call in order, starting from the instruction shown. The first call is provided."
+    :"You have reached the base case. Work back up the calls to find the value returned to print.";
+  $("recursion-calls-phase").hidden=recursionPhase!=="calls";
+  $("recursion-returns-phase").hidden=recursionPhase!=="returns";
+  if(recursionPhase==="calls"){
+    $("recursion-call-fields").replaceChildren();
+    exercise.calls.forEach((call,i)=>{
+      const row=document.createElement("div"),number=document.createElement("span");
+      row.className="recursion-row";number.className="number";number.textContent=String(i+1);
+      if(i===0){const given=document.createElement("span");given.className="given";given.textContent=call;row.append(number,given);}
+      else{
+        const input=document.createElement("input");input.id=`recursion-call-${i}`;
+        input.setAttribute("aria-label",`Recursive call ${i+1}`);input.placeholder="Write next function call";
+        input.autocomplete="off";input.spellcheck=false;row.append(number,input);
+      }
+      $("recursion-call-fields").append(row);
+    });
+    $("check-recursion").textContent="Check calls → Return values";
+  }else{
+    $("recursion-return-fields").replaceChildren();
+    exercise.calls.forEach((call,i)=>{
+      const row=document.createElement("div"),label=document.createElement("label"),input=document.createElement("input");
+      row.className="recursion-row return-row";label.className="call-label";label.htmlFor=`recursion-return-${i}`;label.textContent=call;
+      input.id=`recursion-return-${i}`;input.inputMode="numeric";input.autocomplete="off";
+      input.setAttribute("aria-label",`Return value of ${call}`);input.placeholder="value";
+      row.append(label,input);$("recursion-return-fields").append(row);
+    });
+    $("check-recursion").textContent="Check returns → Debug C#";
+  }
 }
 
-function checkStack(){
-  const s=stackCheckpoints[stackStep];
-  const expected=s.nextTop?`${s.nextTop.low}..${s.nextTop.high}`:"empty";
-  const answer=$("stack-top-answer").value.trim();
-  const topCorrect=s.nextTop?sameRange(answer,expected):/^(empty|none)$/i.test(answer);
-  if(stackChoice!==s.nextAction||!topCorrect){
-    stackFirstTry=false;
-    feedback(stackChoice!==s.nextAction?"Think about whether the next call begins (PUSH) or an existing call returns (POP).":"Check the new top of the stack: which QuickSort(low, high) call is active after that change?",false);
+function sameCall(answer,expected){return answer.replace(/\s+/g,"").toLowerCase()===expected.toLowerCase();}
+function checkRecursion(){
+  const exercise=recursionExercise;
+  if(recursionPhase==="calls"){
+    const incorrect=exercise.calls.findIndex((call,i)=>i>0&&!sameCall($(`recursion-call-${i}`).value,call));
+    if(incorrect!==-1){
+      recursionFirstTry=false;
+      feedback(`Check call ${incorrect+1}. Substitute the current values into the recursive call shown in the function.`,false);
+      return;
+    }
+    recursionPhase="returns";renderRecursion();
+    feedback("All calls correct. Now start at the base case and trace the return values back upwards.",true);
     return;
   }
-  stackStep++;
-  if(stackStep<stackCheckpoints.length){renderStack();feedback("Correct. The stack changes as recursive calls start and return.",true);}
-  else{renderFix();feedback("Stack trace complete. Now repair the C# logic errors.",true);}
+  const incorrect=exercise.returns.findIndex((value,i)=>{
+    const answer=$(`recursion-return-${i}`).value.trim();
+    return answer===""||!/^[-]?\d+$/.test(answer)||Number(answer)!==value;
+  });
+  if(incorrect!==-1){
+    recursionFirstTry=false;
+    feedback(`Check the return value for ${exercise.calls[incorrect]}. Start with the final (base-case) call, then work backwards.`,false);
+    return;
+  }
+  renderFix();feedback("Recursion trace complete. Now correct the C# quicksort errors.",true);
 }
 function renderFix(){
   shown("fix-stage");clearFeedback();
+  if(level==="hard")$("rule-text").textContent="Base case: low ≥ high · last element is pivot · recursive calls exclude the pivot.";
   $("stage").textContent="2 · DEBUG CODE";$("step-count").textContent=`${selectedFaults().length} faulty line(s)`;
   $("task-title").textContent="Debug the C# quicksort";
   const faults=selectedFaults(), faultyByLine=new Map(faults.map(f=>[f.line,f]));
@@ -318,7 +395,7 @@ function checkFix(){
   const faults=selectedFaults();
   const wrong=faults.find(f=>!sameLine($(`fix-${f.key}`).value,f.correct));
   if(wrong){fixFirstTry=false;feedback(`Line ${wrong.line} still needs correcting. ${wrong.hint}`,false);return;}
-  scores[question]={trace:level==="hard"?0:Number(traceFirstTry),stack:level==="hard"?Number(stackFirstTry):0,fix:Number(fixFirstTry)};
+  scores[question]={trace:level==="hard"?0:Number(traceFirstTry),recursion:level==="hard"?Number(recursionFirstTry):0,fix:Number(fixFirstTry)};
   if(scores.every(s=>s!==null)){
     const total=scores.reduce((n,s)=>n+earned(s),0);
     if(best[level]===undefined||total>best[level]){best[level]=total;try{localStorage.setItem(STORAGE_KEY,JSON.stringify(best));}catch(_){}}
@@ -347,8 +424,17 @@ function randomArray(){
   }
   return values;
 }
-function newSet(){offset=(offset+1)%5;question=0;activeQuestions=Array.from({length:5},randomArray);scores=[null,null,null,null,null];startQuestion();}
-function chooseLevel(next){if(!QUESTIONS[next])return;level=next;question=0;offset=0;activeQuestions=QUESTIONS[next].map(a=>a.slice());scores=[null,null,null,null,null];startQuestion();}
+function newSet(){
+  offset=(offset+1)%5;question=0;activeQuestions=Array.from({length:5},randomArray);
+  if(level==="hard")activeRecursions=RECURSION_TYPES.map(kind=>makeRecursionExercise(kind,true));
+  scores=[null,null,null,null,null];startQuestion();
+}
+function chooseLevel(next){
+  if(!QUESTIONS[next])return;
+  level=next;question=0;offset=0;activeQuestions=QUESTIONS[next].map(a=>a.slice());
+  if(level==="hard")activeRecursions=RECURSION_TYPES.map(kind=>makeRecursionExercise(kind));
+  scores=[null,null,null,null,null];startQuestion();
+}
 
 // This is a genuine compilable C# console program, not code executed by JS.
 function csharpSource(values){
@@ -426,15 +512,37 @@ async function copyWorkingCode(button){
 
 const demo=traceQuickSort(DEMO_INPUT);
 const demoStack=chooseStackCheckpoints(DEMO_INPUT);
+const DEMO_RECURSIVE_CALLS=["calculate(4,10)","calculate(4,6)","calculate(4,2)","calculate(2,2)"];
+const DEMO_RECURSION_DESCRIPTIONS=[
+  "Begin with print(calculate(4,10)). The first call is now running. Look at the conditions before you follow the next call.",
+  "4 is smaller than 10, so the function calls calculate(4,10-4) = calculate(4,6). That new call is PUSHED onto the stack.",
+  "4 is smaller than 6, so the next call is calculate(4,6-4) = calculate(4,2). The earlier calls wait for a result.",
+  "4 is greater than 2, so the next call is calculate(4-2,2) = calculate(2,2). Here a == b, so the BASE CASE returns 2.",
+  "Now unwind the recursion: calculate(2,2) returns 2; each waiting call returns that same 2; print outputs 2. Each return POPS a call off the stack."
+];
 function renderDemo(){
-  const onStack=demoIndex>=demo.steps.length;
-  $("demo-array").hidden=onStack;
-  $("demo-stack").hidden=!onStack;
-  if(onStack){
-    const s=demoStack[demoIndex-demo.steps.length];
-    $("demo-count").textContent=`RECURSION STACK · CHECKPOINT ${demoIndex-demo.steps.length+1} OF ${demoStack.length}`;
+  const hard=level==="hard", examSteps=DEMO_RECURSION_DESCRIPTIONS.length;
+  const examTrace=hard&&demoIndex<examSteps;
+  const onStack=hard?demoIndex>=examSteps:demoIndex>=demo.steps.length;
+  $("demo-array").hidden=hard||onStack;
+  $("demo-stack").hidden=!(hard||onStack);
+  $("demo-code").hidden=!examTrace;
+  if(examTrace){
+    $("demo-code").textContent=RECURSION_CODE.calculate;
+    $("demo-count").textContent=`OCR-STYLE RECURSION TRACE · STEP ${demoIndex+1} OF ${examSteps}`;
+    $("demo-description").textContent=DEMO_RECURSION_DESCRIPTIONS[demoIndex];
+    $("demo-stack").replaceChildren();
+    [...DEMO_RECURSIVE_CALLS.slice(0,Math.min(demoIndex+1,4))].reverse().forEach((call,i)=>{
+      const el=document.createElement("div");el.className="stack-frame"+(i===0?" stack-top stack-updated":"");
+      el.textContent=demoIndex===4?`${call} · returns 2`:`${i===0?"TOP · ":"WAITING · "}${call}`;
+      $("demo-stack").append(el);
+    });
+  }else if(onStack){
+    const stackIndex=hard?demoIndex-examSteps:demoIndex-demo.steps.length;
+    const s=demoStack[stackIndex];
+    $("demo-count").textContent=`QUICKSORT STACK · PUSH/POP EXAMPLE ${stackIndex+1} OF ${demoStack.length}`;
     const top=s.nextTop?`QuickSort(a, ${s.nextTop.low}, ${s.nextTop.high})`:"empty";
-    $("demo-description").textContent=`${s.context} NEXT: ${s.nextAction.toUpperCase()}. New top of stack: ${top}.`;
+    $("demo-description").textContent=`Quicksort modifies its array rather than returning a number. ${s.context} NEXT: ${s.nextAction.toUpperCase()}. New top of stack: ${top}.`;
     $("demo-stack").replaceChildren();
     [...s.stack].reverse().forEach((f,i)=>{
       const el=document.createElement("div");el.className="stack-frame"+(i===0?" stack-top":"");
@@ -450,38 +558,35 @@ function renderDemo(){
       const el=document.createElement("span");el.className="demo-cell"+(i===s.p?" pivot":"");el.textContent=String(n);$("demo-array").append(el);
     });
   }
-  $("demo-prev").disabled=demoIndex===(level==="hard"?demo.steps.length:0);
-  $("demo-next").textContent=demoIndex===demo.steps.length+demoStack.length-1?"Start again ↻":"Next step →";
+  $("demo-prev").disabled=demoIndex===0;
+  const count=hard?examSteps+demoStack.length:demo.steps.length+demoStack.length;
+  $("demo-next").textContent=demoIndex===count-1?"Start again ↻":"Next step →";
 }
 
 document.querySelectorAll("[data-level]").forEach(b=>b.addEventListener("click",()=>chooseLevel(b.dataset.level)));
-document.querySelectorAll("[data-stack-action]").forEach(b=>b.addEventListener("click",()=>{
-  stackChoice=b.dataset.stackAction;
-  document.querySelectorAll("[data-stack-action]").forEach(other=>other.setAttribute("aria-pressed",String(other===b)));
-}));
 $("check-trace").addEventListener("click",checkTrace);
-$("check-stack").addEventListener("click",checkStack);
+$("check-recursion").addEventListener("click",checkRecursion);
 $("check-fix").addEventListener("click",checkFix);
 $("show-hint").addEventListener("click",()=>feedback("Follow the exact loop: examine j from low to high-1; swap each value ≤ pivot into the left section; finally swap the pivot into index i+1.",false));
-$("show-stack-hint").addEventListener("click",()=>{
-  const s=stackCheckpoints[stackStep];
-  feedback(s.nextAction==="push"?"The current call has reached a recursive QuickSort(...) line. A new call is about to be pushed on top.":"The current call has finished or hit its base case. Returning removes its frame from the stack.",false);
-});
+$("show-recursion-hint").addEventListener("click",()=>feedback(recursionPhase==="calls"
+  ?"Substitute the current arguments into the recursive call. Repeat until the base-case condition becomes true."
+  :"Work from the last row upwards. The base case gives the first return value; use it to evaluate each waiting call.",false));
 $("show-fix-hint").addEventListener("click",()=>feedback(selectedFaults().map(f=>`Line ${f.line}: ${f.hint}`).join("  "),false));
 $("next-challenge").addEventListener("click",()=>{if(question===4)newSet();else{question++;startQuestion();}});
 $("new-set").addEventListener("click",newSet);
 $("open-demo").addEventListener("click",()=>{
-  demoIndex=level==="hard"?demo.steps.length:0;
+  demoIndex=0;
   $("demo-copy").textContent=level==="hard"
-    ?"Four worked PUSH/POP transitions. Predict the next stack change, then read the answer."
+    ?"First, an OCR-style worked trace of calculate(4,10), adapted from the June 2017 paper. Then see how the QuickSort call stack PUSHES and POPS."
     :"A different example from the scored tasks. Follow each partition, then optionally explore the recursion stack.";
   renderDemo();$("demo-dialog").showModal();
 });
 $("demo-next").addEventListener("click",()=>{
-  demoIndex=demoIndex===demo.steps.length+demoStack.length-1?(level==="hard"?demo.steps.length:0):demoIndex+1;
+  const count=level==="hard"?DEMO_RECURSION_DESCRIPTIONS.length+demoStack.length:demo.steps.length+demoStack.length;
+  demoIndex=demoIndex===count-1?0:demoIndex+1;
   renderDemo();
 });
-$("demo-prev").addEventListener("click",()=>{demoIndex=Math.max(level==="hard"?demo.steps.length:0,demoIndex-1);renderDemo();});
+$("demo-prev").addEventListener("click",()=>{demoIndex=Math.max(0,demoIndex-1);renderDemo();});
 $("open-reference").addEventListener("click",()=>{$("reference-code").textContent=csharpSource(arrayForQuestion());$("reference-dialog").showModal();});
 $("copy-reference").addEventListener("click",()=>copyWorkingCode($("copy-reference")));
 $("copy-code").addEventListener("click",()=>copyWorkingCode($("copy-code")));
