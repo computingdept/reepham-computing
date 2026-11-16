@@ -34,6 +34,11 @@ h1{font-size:clamp(1.6rem,2.7vw,2.35rem);line-height:1.1;margin:4px 0 5px;letter
 .array-panel{border:1px solid var(--line);border-radius:12px;background:#fafcfb;padding:13px;min-width:0}
 .array-label{font-size:11px;color:#5c6f62;text-transform:uppercase;letter-spacing:.06em;font-weight:850;margin-bottom:10px}
 .array{display:flex;flex-wrap:wrap;gap:5px;padding:3px 0 7px}.cell{min-width:49px;height:53px;border:1px solid #b9cfc0;border-radius:8px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none}.cell strong{font-size:20px;line-height:1.15}.cell small{font-size:10px;color:#60786a}.cell.pivot{background:#fff5cc;border-color:#cd9b28}.cell.inactive{opacity:.4}.cell.pivot small{font-weight:800;color:#765512}
+/* Keep a 10–15 element array on one line beside its answer fields at desktop width. */
+.array.long-array{display:grid;grid-template-columns:repeat(var(--cell-count),minmax(0,1fr));gap:3px}
+.array.long-array .cell{min-width:0;width:100%;height:48px;flex:none}
+.array.long-array .cell strong{font-size:clamp(13px,1.3vw,18px)}
+.array.long-array .cell small{font-size:9px}
 .range-note{font-size:13px;color:var(--muted);margin:7px 0 0}
 .fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:0}
 .field{display:flex;flex-direction:column;gap:5px;min-width:0}.field.full{grid-column:1/-1}.field label{font-size:12px;color:#425d4d;font-weight:800}
@@ -66,7 +71,7 @@ dialog{border:1px solid #b6cdbd;border-radius:16px;box-shadow:0 20px 65px #102a1
 .dialog-top{display:flex;justify-content:space-between;align-items:center;gap:10px}.dialog-top h2{font-size:21px}.dialog-copy{font-size:14px;color:#435e4d}
 .demo-row{display:flex;gap:5px;overflow-x:auto;padding:11px 0}.demo-cell{min-width:46px;padding:11px 6px;text-align:center;border:1px solid #bed0c3;border-radius:7px;font-size:17px;font-weight:800}.demo-cell.pivot{background:#ffefb0;border-color:#d4a330}
 .reference-code{background:#172e32;color:#f5fff7;padding:16px;border-radius:10px;overflow:auto;font:12.5px/1.5 ui-monospace,Consolas,monospace;white-space:pre}
-@media(max-width:800px){main{padding:12px 12px 28px}.workspace,.stack-workspace{grid-template-columns:1fr}.task-buttons .primary{flex:1}.heading{margin-bottom:8px}.main-card{padding:13px}.controls{margin:7px 0}.progress-row{margin:6px 0 10px}.array-panel{padding:9px}.cell{min-width:43px;height:48px}.cell strong{font-size:18px}.method{margin:9px 0}.level-btn{min-height:40px;min-width:74px;padding:8px 10px}.fix-grid{grid-template-columns:1fr}}
+@media(max-width:800px){main{padding:12px 12px 28px}.workspace,.stack-workspace{grid-template-columns:1fr}.array.long-array{display:flex;flex-wrap:wrap}.array.long-array .cell{min-width:43px;width:auto}.array.long-array .cell strong{font-size:17px}.task-buttons .primary{flex:1}.heading{margin-bottom:8px}.main-card{padding:13px}.controls{margin:7px 0}.progress-row{margin:6px 0 10px}.array-panel{padding:9px}.cell{min-width:43px;height:48px}.cell strong{font-size:18px}.method{margin:9px 0}.level-btn{min-height:40px;min-width:74px;padding:8px 10px}.fix-grid{grid-template-columns:1fr}}
 @media(max-width:470px){.brand{display:none}.actions{width:100%}.actions .btn{flex:1;font-size:12px}.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.progress-row{align-items:center}.mastery{font-size:11px}.task-head{gap:5px}.cell{min-width:40px}}
 </style>
 </head>
