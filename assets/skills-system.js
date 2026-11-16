@@ -55,9 +55,13 @@
   // All identity is resolved by the Worker from the anonymous session; a
   // workKey in the URL is only an activity reference, never authentication.
   function reportPilotScore(paper, sourceKey, level, correct, total, assignmentKey) {
+    const isH446 = new URLSearchParams(global.location.search).get('course') === 'h446';
+    const assignmentPattern = isH446
+      ? /^(12|13)\|h446-skill-p1-convert\|both$/
+      : /^(10|11)\|j277-skill-p1-convert\|both$/;
     if (paper !== 1 || sourceKey !== 'convert' ||
         !['easy', 'medium'].includes(level) || total !== 10 ||
-        !/^(10|11)\|j277-skill-p1-convert\|both$/.test(assignmentKey || '')) return false;
+        !assignmentPattern.test(assignmentKey || '')) return false;
     let session = '';
     try { session = global.sessionStorage.getItem('rhs-my-work-learner-session-v1') || ''; } catch (_) {}
     if (!/^[A-Za-z0-9_-]{43}$/.test(session) || !global.crypto?.randomUUID || !global.fetch) return false;
@@ -92,6 +96,8 @@
       if (!/^[a-z-]+$/.test(sourceKey) || !['easy', 'medium'].includes(level)) return false;
       if (!Number.isInteger(correct) || !Number.isInteger(total) || total < 1 || correct < 0 || correct > total) return false;
       if (reportPilotScore(paper, sourceKey, level, correct, total, assignmentKey)) return true;
+      // H446 scores are assignment-only, never stored in the J277 demo.
+      if (params.get('course') === 'h446') return false;
       if (!/^Y(10|11)-(0[1-9]|[12][0-9]|30)$/.test(student || '') || !assignmentKey) return false;
       const key = 'rhs-j277-teacher-demo-v1';
       const data = JSON.parse(global.localStorage.getItem(key) || '{}');
