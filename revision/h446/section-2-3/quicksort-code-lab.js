@@ -69,7 +69,6 @@ const FAULT_SETS = {
     ["base","right","index","condition","inner","return"]
   ]
 };
-
 // Give students a concrete situation before asking them to read or repair C#.
 const FIX_SCENARIOS = {
   base: {title:"One element remains", values:[3,7,2,9],low:3,high:3,pivotAt:-1,
@@ -95,7 +94,6 @@ const FIX_SCENARIOS = {
   return: {title:"Return the pivot's final index",values:[2,4,7],low:0,high:2,pivotAt:1,
     note:"The pivot 4 has reached index 1, and i = 0. The partition function must return the pivot's index."}
 };
-
 const DEMO_INPUT = [5, 1, 7, 3];
 // Five distinct recursive algorithms rotate through the Hard questions.
 // The OCR June 2017 calculate(4,10) task is modelled in the worked demo;
@@ -588,6 +586,64 @@ async function copyWorkingCode(button){
 
 const demo=traceQuickSort(DEMO_INPUT);
 const demoStack=chooseStackCheckpoints(DEMO_INPUT);
+// This uses a DIFFERENT array from the scored Medium questions, but the same
+// 0..3 / pivot at 4 / 5..7 split that learners need to understand.
+const MEDIUM_DEMO_INPUT=[8,3,7,2,5,9,1,6];
+const mediumDemo=traceQuickSort(MEDIUM_DEMO_INPUT);
+const MEDIUM_DEMO_INTRO_STEPS=4;
+function demoLength(){
+  if(level==="hard")return DEMO_RECURSION_DESCRIPTIONS.length+demoStack.length;
+  if(level==="medium")return MEDIUM_DEMO_INTRO_STEPS+mediumDemo.steps.length-1;
+  return demo.steps.length+demoStack.length;
+}
+function renderMediumDemo(){
+  const first=mediumDemo.steps[0],step=demoIndex;
+  const later=step>=MEDIUM_DEMO_INTRO_STEPS;
+  const partition=later?mediumDemo.steps[step-MEDIUM_DEMO_INTRO_STEPS+1]:first;
+  const values=step===0?first.before:partition.after;
+  $("demo-count").textContent=later
+    ?`MEDIUM · PARTITION ${step-MEDIUM_DEMO_INTRO_STEPS+2} OF ${mediumDemo.steps.length}`
+    :`MEDIUM · UNDERSTAND THE RECURSIVE CALLS · STEP ${step+1} OF ${MEDIUM_DEMO_INTRO_STEPS}`;
+  const explanations=[
+    "Start with this array. The LAST value, 6, is the pivot (index 7). Partition the values around 6, without sorting the whole array yet.",
+    "After the FIRST partition, 6 is fixed at index 4. Values on the left are ≤ 6 and those on the right are > 6. The two sides are NOT sorted yet.",
+    "LEFT: the next call sorts the four values at indices 0 to 3. We stop just BEFORE the pivot at index 4.",
+    "RIGHT: another call sorts the three values at indices 5 to 7. We start just AFTER the pivot at index 4."
+  ];
+  $("demo-description").textContent=later
+    ?`Now continue partitioning only indices ${partition.low} to ${partition.high}. Pivot ${partition.pivot} finishes at index ${partition.p}. The other indices outside this range stay unchanged.`
+    :explanations[step];
+  $("demo-array").replaceChildren();
+  values.forEach((n,i)=>{
+    const el=document.createElement("span"),value=document.createElement("strong"),index=document.createElement("small");
+    el.className="demo-cell";value.textContent=String(n);index.textContent=`[${i}]`;
+    if(!later){
+      if(step===0 && i===first.high)el.classList.add("pivot");
+      else if(step>0 && i===first.p)el.classList.add("pivot");
+      else if(step>0 && i<first.p)el.classList.add(step===3?"muted":"left");
+      else if(step>0 && i>first.p)el.classList.add(step===2?"muted":"right");
+    }else{
+      if(i===partition.p)el.classList.add("pivot");
+      else if(i<partition.low||i>partition.high)el.classList.add("muted");
+      else el.classList.add("left");
+    }
+    el.append(value,index);$("demo-array").append(el);
+  });
+  $("demo-callout").hidden=step===0||later;
+  if(step===1){
+    $("demo-callout-title").textContent="PIVOT FINISHED · INDEX 4";
+    $("demo-callout-code").textContent="p = 4";
+    $("demo-callout-rule").textContent="The pivot will not be included in either recursive call.";
+  }else if(step===2){
+    $("demo-callout-title").textContent="LEFT · INDICES 0..3";
+    $("demo-callout-code").textContent="QuickSort(a, 0, 3);";
+    $("demo-callout-rule").textContent="low = 0, high = p − 1 = 3. Sort only [3, 2, 5, 1].";
+  }else if(step===3){
+    $("demo-callout-title").textContent="RIGHT · INDICES 5..7";
+    $("demo-callout-code").textContent="QuickSort(a, 5, 7);";
+    $("demo-callout-rule").textContent="low = p + 1 = 5, high = 7. Sort only [9, 8, 7].";
+  }
+}
 const DEMO_RECURSIVE_CALLS=["calculate(4,10)","calculate(4,6)","calculate(4,2)","calculate(2,2)"];
 const DEMO_RECURSION_DESCRIPTIONS=[
   "Begin with print(calculate(4,10)). The first call is now running. Look at the conditions before you follow the next call.",
@@ -599,11 +655,14 @@ const DEMO_RECURSION_DESCRIPTIONS=[
 function renderDemo(){
   const hard=level==="hard", examSteps=DEMO_RECURSION_DESCRIPTIONS.length;
   const examTrace=hard&&demoIndex<examSteps;
-  const onStack=hard?demoIndex>=examSteps:demoIndex>=demo.steps.length;
+  const onStack=hard?demoIndex>=examSteps:level==="easy"&&demoIndex>=demo.steps.length;
   $("demo-array").hidden=hard||onStack;
   $("demo-stack").hidden=!(hard||onStack);
   $("demo-code").hidden=!examTrace;
-  if(examTrace){
+  $("demo-callout").hidden=true;
+  if(level==="medium"){
+    renderMediumDemo();
+  }else if(examTrace){
     $("demo-code").textContent=RECURSION_CODE.calculate;
     $("demo-count").textContent=`OCR-STYLE RECURSION TRACE · STEP ${demoIndex+1} OF ${examSteps}`;
     $("demo-description").textContent=DEMO_RECURSION_DESCRIPTIONS[demoIndex];
@@ -635,8 +694,7 @@ function renderDemo(){
     });
   }
   $("demo-prev").disabled=demoIndex===0;
-  const count=hard?examSteps+demoStack.length:demo.steps.length+demoStack.length;
-  $("demo-next").textContent=demoIndex===count-1?"Start again ↻":"Next step →";
+  $("demo-next").textContent=demoIndex===demoLength()-1?"Start again ↻":"Next step →";
 }
 
 document.querySelectorAll("[data-level]").forEach(b=>b.addEventListener("click",()=>chooseLevel(b.dataset.level)));
@@ -654,12 +712,13 @@ $("open-demo").addEventListener("click",()=>{
   demoIndex=0;
   $("demo-copy").textContent=level==="hard"
     ?"First, an OCR-style worked trace of calculate(4,10), adapted from the June 2017 paper. Then see how the QuickSort call stack PUSHES and POPS."
+    :level==="medium"
+    ?"First see exactly why the next recursive calls use indices 0..3 and 5..7. This example is different from your scored questions."
     :"A different example from the scored tasks. Follow each partition, then optionally explore the recursion stack.";
   renderDemo();$("demo-dialog").showModal();
 });
 $("demo-next").addEventListener("click",()=>{
-  const count=level==="hard"?DEMO_RECURSION_DESCRIPTIONS.length+demoStack.length:demo.steps.length+demoStack.length;
-  demoIndex=demoIndex===count-1?0:demoIndex+1;
+  demoIndex=demoIndex===demoLength()-1?0:demoIndex+1;
   renderDemo();
 });
 $("demo-prev").addEventListener("click",()=>{demoIndex=Math.max(0,demoIndex-1);renderDemo();});
