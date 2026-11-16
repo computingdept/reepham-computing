@@ -3,8 +3,8 @@
 // Lesson 217's Lomuto-style, last-element-pivot implementation is the ONE
 // convention used for all worked examples, traces, fixes and reference code.
 const $ = id => document.getElementById(id);
-// v2 includes a separately assessed recursion-stack stage in Hard.
-const STORAGE_KEY = "rhsc.h446.quicksortCodeLab.best.v2";
+// v3 scores Hard's recursion stack + debugging, without partition tracing.
+const STORAGE_KEY = "rhsc.h446.quicksortCodeLab.best.v3";
 const QUESTIONS = {
   easy: [
     [5, 1, 3], [8, 2, 6, 4], [7, 3, 1, 5], [6, 2, 4, 1], [9, 4, 7, 2]
@@ -177,7 +177,7 @@ function feedback(text,ok) {
 }
 function clearFeedback(){ $("feedback").hidden=true; }
 function shown(id){for(const name of ["trace-stage","stack-stage","fix-stage","complete-stage"])$(name).hidden=name!==id;}
-function scoreMax(){return level==="hard"?15:10;}
+function scoreMax(){return 10;}
 function earned(s){return s?s.trace+s.fix+(s.stack||0):0;}
 function header() {
   const complete=scores.filter(v=>v!==null).length;
@@ -190,16 +190,21 @@ function header() {
   $("scores").replaceChildren();
   scores.forEach((v,i)=>{
     const el=document.createElement("span");el.className="score-pill"+(i===question?" current":"")+(v?" done":"");
-    el.textContent=`${i+1} · ${v===null?"—":earned(v)+"/"+(level==="hard"?3:2)}`;
+    el.textContent=`${i+1} · ${v===null?"—":earned(v)+"/2"}`;
     $("scores").append(el);
   });
 }
 function startQuestion() {
-  currentSteps=visibleSteps();
+  currentSteps=level==="hard"?[]:visibleSteps();
   stackCheckpoints=level==="hard"?chooseStackCheckpoints(arrayForQuestion()):[];
   traceStep=0;stackStep=0;stackChoice="";
   traceFirstTry=true;stackFirstTry=true;fixFirstTry=true;
-  header(); renderTrace();
+  $("rule-text").textContent=level==="hard"
+    ?"A recursive call is PUSHED when it starts and POPPED when it returns. low ≥ high means return."
+    :"Last element = pivot · values ≤ pivot move left · partition in place. Indices start at 0.";
+  header();
+  if(level==="hard")renderStack();
+  else renderTrace();
 }
 function renderArray(values,low,high,pivotAt,container){
   container.replaceChildren();
@@ -225,7 +230,7 @@ function renderTrace(){
   for(const id of ["pivot-answer","position-answer","array-answer","left-answer","right-answer"])$(id).value="";
   const showCalls=level!=="easy"&&traceStep===0;
   $("left-field").hidden=!showCalls;$("right-field").hidden=!showCalls;
-  $("check-trace").textContent=traceStep===currentSteps.length-1?(level==="hard"?"Check trace → Stack":"Check trace → Fix code"):"Check trace → Next partition";
+  $("check-trace").textContent=traceStep===currentSteps.length-1?"Check trace → Fix code":"Check trace → Next partition";
 }
 function checkTrace(){
   const s=currentSteps[traceStep], pivot=Number($("pivot-answer").value),position=Number($("position-answer").value);
@@ -244,14 +249,13 @@ function checkTrace(){
   }
   traceStep++;
   if(traceStep<currentSteps.length){renderTrace();feedback("Correct. Follow the next recursive partition.",true);}
-  else if(level==="hard"){renderStack();feedback("Trace complete. Now work through the recursive call stack.",true);}
   else {renderFix();feedback("Trace complete. Now repair the C# implementation.",true);}
 }
 
 function renderStack(){
   shown("stack-stage");clearFeedback();
   const s=stackCheckpoints[stackStep];
-  $("stage").textContent="2 · RECURSION STACK";
+  $("stage").textContent="1 · RECURSION STACK";
   $("step-count").textContent=`Checkpoint ${stackStep+1} of ${stackCheckpoints.length}`;
   $("task-title").textContent="Predict the next stack change";
   $("stack-context").textContent=s.context;
@@ -284,7 +288,7 @@ function checkStack(){
 }
 function renderFix(){
   shown("fix-stage");clearFeedback();
-  $("stage").textContent=level==="hard"?"3 · DEBUG CODE":"2 · FIX CODE";$("step-count").textContent=`${selectedFaults().length} faulty line(s)`;
+  $("stage").textContent="2 · DEBUG CODE";$("step-count").textContent=`${selectedFaults().length} faulty line(s)`;
   $("task-title").textContent="Debug the C# quicksort";
   const faults=selectedFaults(), faultyByLine=new Map(faults.map(f=>[f.line,f]));
   $("mistake-count").textContent=`${faults.length} incorrect ${faults.length===1?"line":"lines"}`;
@@ -314,7 +318,7 @@ function checkFix(){
   const faults=selectedFaults();
   const wrong=faults.find(f=>!sameLine($(`fix-${f.key}`).value,f.correct));
   if(wrong){fixFirstTry=false;feedback(`Line ${wrong.line} still needs correcting. ${wrong.hint}`,false);return;}
-  scores[question]={trace:Number(traceFirstTry),stack:level==="hard"?Number(stackFirstTry):0,fix:Number(fixFirstTry)};
+  scores[question]={trace:level==="hard"?0:Number(traceFirstTry),stack:level==="hard"?Number(stackFirstTry):0,fix:Number(fixFirstTry)};
   if(scores.every(s=>s!==null)){
     const total=scores.reduce((n,s)=>n+earned(s),0);
     if(best[level]===undefined||total>best[level]){best[level]=total;try{localStorage.setItem(STORAGE_KEY,JSON.stringify(best));}catch(_){}}
@@ -323,11 +327,11 @@ function checkFix(){
 }
 function showComplete(){
   shown("complete-stage");clearFeedback();
-  $("stage").textContent=level==="hard"?"4 · TEST":"3 · TEST";$("step-count").textContent="Challenge complete";
+  $("stage").textContent="3 · TEST";$("step-count").textContent="Challenge complete";
   $("task-title").textContent="Your repairs match the reference code";
   const mark=earned(scores[question]);
   const last=question===4;
-  $("result-heading").textContent=`${mark}/${level==="hard"?3:2} first-attempt marks`;
+  $("result-heading").textContent=`${mark}/2 first-attempt marks`;
   $("result-text").textContent="The corrected lines match this lesson's reference implementation. This check does not compile C#. Copy the working program and run it in .NET Fiddle to verify the output or change the input."+
     (last?` Level total: ${scores.reduce((n,s)=>n+earned(s),0)}/${scoreMax()}; target ${Math.ceil(scoreMax()*.8)}/${scoreMax()}.`:"");
   $("next-challenge").textContent=last?"New practice set ↻":"Next challenge →";
@@ -446,7 +450,7 @@ function renderDemo(){
       const el=document.createElement("span");el.className="demo-cell"+(i===s.p?" pivot":"");el.textContent=String(n);$("demo-array").append(el);
     });
   }
-  $("demo-prev").disabled=demoIndex===0;
+  $("demo-prev").disabled=demoIndex===(level==="hard"?demo.steps.length:0);
   $("demo-next").textContent=demoIndex===demo.steps.length+demoStack.length-1?"Start again ↻":"Next step →";
 }
 
@@ -466,9 +470,18 @@ $("show-stack-hint").addEventListener("click",()=>{
 $("show-fix-hint").addEventListener("click",()=>feedback(selectedFaults().map(f=>`Line ${f.line}: ${f.hint}`).join("  "),false));
 $("next-challenge").addEventListener("click",()=>{if(question===4)newSet();else{question++;startQuestion();}});
 $("new-set").addEventListener("click",newSet);
-$("open-demo").addEventListener("click",()=>{demoIndex=0;renderDemo();$("demo-dialog").showModal();});
-$("demo-next").addEventListener("click",()=>{demoIndex=(demoIndex+1)%(demo.steps.length+demoStack.length);renderDemo();});
-$("demo-prev").addEventListener("click",()=>{demoIndex=Math.max(0,demoIndex-1);renderDemo();});
+$("open-demo").addEventListener("click",()=>{
+  demoIndex=level==="hard"?demo.steps.length:0;
+  $("demo-copy").textContent=level==="hard"
+    ?"Four worked PUSH/POP transitions. Predict the next stack change, then read the answer."
+    :"A different example from the scored tasks. Follow each partition, then optionally explore the recursion stack.";
+  renderDemo();$("demo-dialog").showModal();
+});
+$("demo-next").addEventListener("click",()=>{
+  demoIndex=demoIndex===demo.steps.length+demoStack.length-1?(level==="hard"?demo.steps.length:0):demoIndex+1;
+  renderDemo();
+});
+$("demo-prev").addEventListener("click",()=>{demoIndex=Math.max(level==="hard"?demo.steps.length:0,demoIndex-1);renderDemo();});
 $("open-reference").addEventListener("click",()=>{$("reference-code").textContent=csharpSource(arrayForQuestion());$("reference-dialog").showModal();});
 $("copy-reference").addEventListener("click",()=>copyWorkingCode($("copy-reference")));
 $("copy-code").addEventListener("click",()=>copyWorkingCode($("copy-code")));
