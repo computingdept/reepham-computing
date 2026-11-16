@@ -55,7 +55,7 @@ pre .focus{color:#ffe39c;font-weight:850}.code-answer{width:100%;min-height:57px
 </main>
 <script>
 (()=>{'use strict';
-const qs=new URLSearchParams(location.search),classroom=qs.get('classroom')==='1';
+const qs=new URLSearchParams(location.search),classroom=qs.get('classroom')==='1',classroomBoard=classroom&&qs.get('model')==='1';
 if(classroom)document.body.classList.add('classroom');
 let mode=qs.get('mode')==='code'?'code':'graph';let level=['easy','medium','hard'].includes(qs.get('level'))?qs.get('level'):'easy';
 const levelNames={easy:'Guided',medium:'Independent',hard:'Challenge'};
@@ -114,7 +114,52 @@ if(state.stage==='update'){const neighbours=adjacent(state.focus).filter(e=>!sta
 return `<p class="prompt">From ${state.focus}, check each neighbour. Enter its <span class="brush">best distance</span> and previous node.</p><div class="table-wrap"><table class="update-table"><thead><tr><th>Neighbour</th><th>Old best</th><th>Edge</th><th>Best after check</th><th>Previous</th></tr></thead><tbody>${neighbours.map(x=>`<tr><td>${x.to}</td><td>${fmt(state.dist[x.to])}</td><td>${x.w}</td><td><input aria-label="Distance to ${x.to}" data-distance="${x.to}" inputmode="numeric" value="${fmt(state.dist[x.to])}"></td><td><select aria-label="Previous node for ${x.to}" data-prev="${x.to}"><option value="">—</option>${state.g.v.map(v=>`<option value="${v[0]}" ${state.previous[x.to]===v[0]?'selected':''}>${v[0]}</option>`).join('')}</select></td></tr>`).join('')}</tbody></table></div><div class="actions"><button id="apply" class="primary">Check updates →</button></div>`}
 return `<p class="prompt">Give the shortest route from ${state.g.start} to ${state.g.goal}.</p><div class="work-row"><label class="field">Route (e.g. A-B-C)<input id="route-answer" placeholder="${state.g.start}-...-${state.g.goal}" autocomplete="off"></label><label class="field">Total distance<input id="cost-answer" inputmode="numeric" placeholder="Total cost"></label></div><div class="actions"><button id="check-route" class="primary">Check route →</button></div>`}
 function graphAside(){const instructions=level==='easy'?'Start at distance 0. Other nodes begin at ∞.':level==='medium'?'Remember that a longer direct edge may not be the best route.':'Compare every new total with the best distance already recorded.';return `<div class="panel panel-pad"><h3 class="side-title">Distance table</h3>${distanceTable()}<div class="aside-box"><strong>Remember</strong><p>${instructions}</p><p>Choose the unvisited node with the smallest <em>total distance</em> from the start.</p></div><details class="aside-box" id="hint"><summary>Hint</summary><p>${state.stage==='update'&&state.focus?'Add the distance to '+state.focus+' to the edge weight; only change a node if the result is smaller.':'Look for the smallest total distance, not the smallest individual edge.'}</p></details><details class="aside-box" id="model"><summary>Show the worked step</summary><div id="model-text"></div></details><div class="actions"><button class="secondary" id="reset-graph">Reset graph</button></div></div>`}
-function renderGraph(){workspace.innerHTML=`<div class="layout"><div class="panel panel-pad"><div class="head-row"><span class="kicker">${classroom?'Classroom example':levelNames[level]+' · graph '+Math.max(1,sampleIndex[level])}</span><span class="mark">${state.g.start} → ${state.g.goal}</span></div><h2>Find the shortest route</h2><p class="explain">Weights show the cost of each connection. All weights are non-negative.</p>${drawGraph()}${graphPrompt()}<div class="feedback ${feedbackType}" role="status">${esc(feedback)}</div></div>${graphAside()}</div>`;
+// A teacher-led graph trace uses the same Dijkstra state and weighted graph as
+// independent practice. One decision per click; calculations appear before the
+// next decision so the class can explain why O follows M.
+function classroomGraphPrompt(){
+  if(state.finished)return `<p class="prompt">Shortest route: <strong>${route().join(' → ')}</strong> · total cost <strong>${fmt(state.dist[state.g.goal])}</strong></p><button id="reset-graph" class="secondary">Start again</button>`;
+  const unvisited=state.g.v.map(v=>v[0]).filter(n=>!state.visited.has(n));
+  const question=state.visited.size===0
+    ?`Start at <strong>${state.g.start}</strong> (distance 0). Select ${state.g.start} first.`
+    :'Choose the unvisited node with the smallest <strong>best distance</strong> in the table.';
+  return `<p class="prompt">${question}</p><div class="pick-row">${unvisited.map(n=>`<button class="pick" data-pick="${n}">${n}</button>`).join('')}</div>`;
+}
+function classroomChoose(n){
+  const available=state.g.v.map(v=>v[0]).filter(x=>!state.visited.has(x));
+  const best=Math.min(...available.map(x=>state.dist[x]));
+  if(!available.includes(n)||state.dist[n]!==best){
+    feedback=state.visited.size===0
+      ?`Start at ${state.g.start}: its distance is 0, while the other distances are ∞.`
+      :'Look at the best-distance column. Choose the smallest unvisited value.';
+    feedbackType='bad';renderGraph();return;
+  }
+  const current=state.dist[n];
+  const updates=[];
+  for(const edge of adjacent(n).filter(e=>!state.visited.has(e.to))){
+    const candidate=current+edge.w;
+    if(candidate<state.dist[edge.to]){
+      const old=fmt(state.dist[edge.to]);
+      state.dist[edge.to]=candidate;state.previous[edge.to]=n;
+      updates.push(`${edge.to}: ${fmt(current)} + ${edge.w} = ${candidate}${old==='∞'?'':` (was ${old})`}`);
+    }
+  }
+  state.visited.add(n);
+  state.focus=null;state.stage='pick';feedbackType='good';
+  if(n===state.g.goal){
+    state.finished=true;
+    feedback=`Reached ${n} at distance ${fmt(current)}. Trace the previous nodes back to ${state.g.start}.`;
+  }else{
+    feedback=`Visited ${n} (${fmt(current)}). ${updates.length?updates.join('; ')+'.':'No shorter routes found.'}`;
+  }
+  renderGraph();
+}
+function renderClassroomGraph(){
+  workspace.innerHTML=`<div class="panel panel-pad"><div class="head-row"><span class="kicker">Classroom model · ${state.g.start} → ${state.g.goal}</span></div>${drawGraph()}${feedback?`<p class="explain" role="status">${esc(feedback)}</p>`:''}${distanceTable()}${classroomGraphPrompt()}</div>`;
+  workspace.querySelectorAll('[data-pick]').forEach(b=>b.addEventListener('click',()=>classroomChoose(b.dataset.pick)));
+  workspace.querySelector('#reset-graph')?.addEventListener('click',()=>{sampleIndex[level]=Math.max(0,sampleIndex[level]-1);nextGraph()});
+}
+function renderGraph(){if(classroomBoard){renderClassroomGraph();return;}workspace.innerHTML=`<div class="layout"><div class="panel panel-pad"><div class="head-row"><span class="kicker">${classroom?'Classroom example':levelNames[level]+' · graph '+Math.max(1,sampleIndex[level])}</span><span class="mark">${state.g.start} → ${state.g.goal}</span></div><h2>Find the shortest route</h2><p class="explain">Weights show the cost of each connection. All weights are non-negative.</p>${drawGraph()}${graphPrompt()}<div class="feedback ${feedbackType}" role="status">${esc(feedback)}</div></div>${graphAside()}</div>`;
 workspace.querySelectorAll('[data-pick]').forEach(b=>b.addEventListener('click',()=>choose(b.dataset.pick)));
 workspace.querySelector('#apply')?.addEventListener('click',applyUpdate);workspace.querySelector('#check-route')?.addEventListener('click',checkRoute);workspace.querySelector('#next-graph')?.addEventListener('click',nextGraph);workspace.querySelector('#reset-graph')?.addEventListener('click',()=>{sampleIndex[level]=Math.max(0,sampleIndex[level]-1);nextGraph()});
 workspace.querySelector('#model')?.addEventListener('toggle',e=>{if(e.target.open){const el=workspace.querySelector('#model-text');if(el)el.innerHTML=modelGraphStep()}});
