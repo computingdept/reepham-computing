@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>Dijkstra Skills · H446 · RHS Computing</title>
+<meta name="description" content="Practise Dijkstra's shortest path algorithm with interactive weighted graphs, distance tables and contextual C# code challenges.">
+<style>
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#153d30;background:#f6f9f7;line-height:1.4}
+*{box-sizing:border-box}body{margin:0}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{cursor:default;opacity:.6}a{color:#075d43}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #e2ac44;outline-offset:3px}
+[hidden]{display:none!important}header{background:#fff;border-bottom:1px solid #dce6df;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px max(20px,calc((100vw - 1200px)/2))}
+.back{font-weight:800;text-decoration:none}.brand{font-size:.88rem;font-weight:850;color:#376953;letter-spacing:.045em}main{max-width:1200px;margin:0 auto;padding:21px 20px 40px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}.eyebrow{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#487561;font-weight:850;margin:0 0 4px}
+h1{font-size:clamp(1.7rem,3vw,2.35rem);line-height:1.08;letter-spacing:-.04em;margin:0 0 6px}.intro{margin:0;color:#60776a;font-size:.96rem}
+.score{border-radius:99px;background:#e9f5ec;border:1px solid #bddbc7;padding:8px 13px;color:#13583b;font-weight:850;white-space:nowrap}
+.controls{display:flex;align-items:center;gap:8px;margin:18px 0 12px;flex-wrap:wrap}.seg{display:inline-flex;padding:4px;gap:3px;background:#e9efeb;border-radius:12px}
+.seg button{border:0;border-radius:9px;background:transparent;color:#466859;padding:9px 15px;font-weight:850;min-height:40px}
+.seg button[aria-pressed="true"]{background:#fff;color:#075c42;box-shadow:0 2px 6px #183c2820}.controls .levels{margin-left:auto}
+.layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,.85fr);gap:16px;align-items:start}
+.panel{background:#fff;border:1px solid #d7e4da;border-radius:19px;box-shadow:0 7px 25px #183c2809;overflow:hidden;min-width:0}.panel-pad{padding:clamp(15px,2vw,24px)}
+.head-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.kicker{font-weight:850;font-size:.76rem;color:#3d7b59;letter-spacing:.06em;text-transform:uppercase}
+.brush{background:linear-gradient(176deg,transparent 16%,#fff0b4 17%,#ffe585 79%,transparent 84%);padding:0 4px;color:#4a3b13}
+h2{font-size:clamp(1.26rem,2vw,1.65rem);line-height:1.18;margin:7px 0 8px;letter-spacing:-.015em}.explain{margin:0 0 10px;color:#587063;font-size:.93rem}
+.graph{display:block;width:100%;max-height:295px;background:#f7faf8;border:1px solid #e2eae4;border-radius:14px}
+.table-wrap{overflow-x:auto}table{border-collapse:separate;border-spacing:0;width:100%;font-size:.91rem}th{text-align:left;background:#f0f6f2;color:#285440;font-size:.77rem;letter-spacing:.02em}
+td,th{padding:11px 9px;border-bottom:1px solid #e6eee8}td:first-child{font-weight:850}tr:last-child td{border-bottom:0}.visited{color:#26784d;font-weight:800}
+.prompt{margin:14px 0 10px;font-size:1.08rem;font-weight:800}.pick-row{display:flex;gap:8px;flex-wrap:wrap}.pick{min-width:57px;min-height:51px;font-size:1.14rem;font-weight:900;border:1px solid #bdd0c3;border-radius:11px;background:#f5faf6;color:#15553d}.pick:hover{background:#dff2e6}
+.update-table{width:100%}.update-table th{font-size:.74rem}.update-table td{padding:7px 5px}.update-table input,.update-table select{height:42px;min-width:0;width:100%;border-radius:8px;border:1px solid #abc7b5;background:#fff;padding:7px;font-size:.91rem}
+.update-table .edge-label{white-space:nowrap}.work-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{display:grid;gap:5px;font-size:.82rem;font-weight:800;color:#446957}.field input,.answer{width:100%;min-height:49px;border:1px solid #9fbcaa;border-radius:10px;padding:11px;font-size:1rem}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:13px;align-items:center}.primary,.secondary{min-height:45px;border-radius:10px;padding:9px 18px;font-weight:850}
+.primary{border:1px solid #075e43;background:#075e43;color:#fff}.primary:hover{background:#004f36}.secondary{border:1px solid #bdd3c4;background:#fff;color:#245b43}.secondary:hover{background:#eff7f1}
+.feedback{min-height:38px;margin:13px 0 0;font-size:.91rem;color:#48695b}.feedback.good{color:#126342;font-weight:750}.feedback.bad{color:#8a5519;font-weight:750}
+.side-title{font-size:1.01rem;margin:0 0 8px}.side-note{font-size:.9rem;color:#60786b;margin:4px 0 12px}.aside-box{background:#f1f8f3;border:1px solid #d8e9dc;padding:13px;border-radius:12px;margin-top:12px}
+.aside-box p{margin:4px 0;font-size:.91rem}.aside-box strong{font-size:.86rem}.aside-box[open] summary{margin-bottom:8px}details summary{cursor:pointer;color:#1d6046;font-weight:800}
+.mark{display:inline-flex;align-items:center;gap:6px;border:1px solid #b7dec4;background:#eaf7ed;border-radius:9px;padding:7px 10px;color:#1d6743;font-size:.85rem;font-weight:800}
+.meter{height:9px;display:block;width:100%;accent-color:#167650;border-radius:99px;margin-top:11px}
+pre{background:#142f27;color:#eefdf2;padding:18px;border-radius:13px;white-space:pre-wrap;overflow:auto;line-height:1.57;font-size:clamp(.83rem,1.15vw,.99rem);margin:12px 0}
+pre .focus{color:#ffe39c;font-weight:850}.code-answer{width:100%;min-height:57px;border:1px solid #92b5a0;border-radius:10px;padding:11px 13px;font-family:ui-monospace,Consolas,monospace;font-size:1rem;resize:vertical}
+.code-panel{grid-column:1/-1}.code-layout{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(280px,.7fr);gap:17px}
+.finish{padding:20px;text-align:center;background:#eff8f2;border:1px solid #d6e7da;border-radius:13px}.finish h2{margin-top:0}
+.small{font-size:.86rem;color:#6b8074}.classroom header,.classroom .top,.classroom .controls{display:none}.classroom{background:#fff}.classroom main{padding:6px;max-width:none}.classroom .layout{gap:10px;grid-template-columns:minmax(0,1.4fr) minmax(265px,.9fr)}.classroom .panel{border-radius:10px;box-shadow:none}.classroom .panel-pad{padding:10px}.classroom .graph{max-height:235px}.classroom .prompt{margin:8px 0}.classroom td,.classroom th{padding:8px 6px}
+.classroom .code-panel{max-width:100%}.classroom pre{font-size:clamp(.84rem,1.32vw,1.05rem);max-height:34vh}
+@media(max-width:850px){.layout,.classroom .layout,.code-layout{grid-template-columns:1fr}.controls .levels{margin-left:0}.top{align-items:center}.graph{max-height:255px}main{padding:14px}.classroom .graph{max-height:260px}}
+@media(max-width:520px){.score{font-size:.75rem}.top{flex-wrap:wrap}.intro{font-size:.87rem}.seg button{padding:8px 11px}.controls{margin-top:14px}.panel-pad{padding:14px}.update-table th,.update-table td{padding:6px 3px}.update-table input,.update-table select{font-size:.82rem}.work-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><a class="back" href="/exercise/h446/tools.html">← H446 Skills</a><span class="brand">RHS COMPUTING · H446</span></header>
+<main>
+  <div class="top"><div><p class="eyebrow">OCR H446 · 2.3.1(f) · Skills</p><h1>Dijkstra's shortest path</h1><p class="intro">Understand the route. Practise the steps. Then read the code.</p></div><div class="score" id="score">First attempts: —</div></div>
+  <div class="controls"><div class="seg" role="group" aria-label="Choose activity"><button id="tab-graph" type="button" aria-pressed="true">Graph practice</button><button id="tab-code" type="button" aria-pressed="false">Code practice</button></div><div class="seg levels" role="group" aria-label="Choose difficulty"><button data-level="easy" aria-pressed="true">Easy</button><button data-level="medium" aria-pressed="false">Medium</button><button data-level="hard" aria-pressed="false">Hard</button></div></div>
+  <div id="workspace" aria-live="off"></div>
+</main>
+<script>
+(()=>{'use strict';
+const qs=new URLSearchParams(location.search),classroom=qs.get('classroom')==='1';
+if(classroom)document.body.classList.add('classroom');
+let mode=qs.get('mode')==='code'?'code':'graph';let level=['easy','medium','hard'].includes(qs.get('level'))?qs.get('level'):'easy';
+const graphs={
+ easy:[
+ {v:[['M',55,135],['N',190,42],['O',190,220],['P',345,135]],e:[['M','N',5],['M','O',2],['N','O',1],['N','P',3],['O','P',8]],start:'M',goal:'P'},
+ {v:[['A',55,135],['B',190,42],['C',190,220],['D',345,135]],e:[['A','B',4],['A','C',1],['B','C',2],['B','D',3],['C','D',9]],start:'A',goal:'D'},
+ {v:[['S',55,135],['A',190,42],['B',190,220],['T',345,135]],e:[['S','A',2],['S','B',6],['A','B',2],['A','T',8],['B','T',2]],start:'S',goal:'T'}],
+ medium:[
+ {v:[['A',45,140],['B',150,35],['C',150,245],['D',295,40],['E',375,165]],e:[['A','B',4],['A','C',2],['C','B',1],['B','D',5],['C','D',8],['C','E',10],['D','E',2],['B','E',12]],start:'A',goal:'E'},
+ {v:[['P',45,140],['Q',150,35],['R',150,245],['S',295,40],['T',375,165]],e:[['P','Q',7],['P','R',3],['R','Q',2],['Q','S',3],['R','S',9],['S','T',2],['Q','T',10]],start:'P',goal:'T'}],
+ hard:[
+ {v:[['S',36,140],['A',132,35],['B',132,245],['C',255,35],['D',255,245],['T',385,140]],e:[['S','A',8],['S','B',2],['B','A',3],['A','C',2],['B','C',9],['B','D',12],['C','D',3],['D','T',2],['C','T',8]],start:'S',goal:'T'},
+ {v:[['A',36,140],['B',132,35],['C',132,245],['D',255,35],['E',255,245],['F',385,140]],e:[['A','B',9],['A','C',2],['C','B',3],['B','D',2],['C','E',6],['E','D',1],['D','F',3],['E','F',9]],start:'A',goal:'F'}]
+};
+const codeBank={
+ easy:[
+ {title:'Set the starting distance',task:'A route begins at A. What value must its distance start with?',code:'var distance = new Dictionary<string,int>();\ndistance["A"] = ______;\n// All other nodes start at a very large value.',answer:['0'],model:'0',why:'The start is zero distance away from itself.'},
+ {title:'Add the edge weight',task:'Current distance is 3 and the edge weight is 4. Complete the calculation.',code:'int currentDistance = 3;\nint weight = 4;\nint newDistance = currentDistance + ______;',answer:['weight'],model:'weight',why:'The new route cost is 3 + 4 = 7.'},
+ {title:'Only update shorter routes',task:'Write the comparison used before replacing a best-known distance.',code:'int newDistance = distance[current] + weight;\nif (newDistance ______ distance[neighbour])\n{\n    distance[neighbour] = newDistance;\n}',answer:['<'],model:'<',why:'Only a smaller route cost should replace the old value.'},
+ {title:'Remember the previous node',task:'We found a shorter route to B through A. Complete the assignment.',code:'distance["B"] = newDistance;\nprevious["B"] = ______;',answer:['"A"','A'],model:'"A"',why:'The previous node lets us rebuild the route from the destination.'},
+ {title:'Ignore nodes already visited',task:'Which C# method checks whether a node is in a HashSet?',code:'HashSet<string> visited = new();\nif (!visited.______(neighbour))\n{\n    // Consider this neighbour\n}',answer:['Contains'],model:'Contains',why:'Contains checks membership of the visited set.'}],
+ medium:[
+ {title:'Fix the comparison',task:'The code wrongly replaces a shorter route with a longer one. Replace the entire IF condition.',code:'int newDistance = distance[current] + weight;\nif (newDistance > distance[neighbour]) // WRONG\n{\n    distance[neighbour] = newDistance;\n}',answer:['newDistance < distance[neighbour]'],model:'newDistance < distance[neighbour]',why:'A new route is used only when its cost is smaller.'},
+ {title:'Complete the update',task:'When a route improves, record how we reached that node. Write the missing C# statement.',code:'if (newDistance < distance[neighbour])\n{\n    distance[neighbour] = newDistance;\n    // Missing: remember the previous node\n}',answer:['previous[neighbour] = current;'],model:'previous[neighbour] = current;',why:'The previous-node mapping records the route.'},
+ {title:'Choose the best unvisited node',task:'Inside the selection loop, which variable is compared against the smallest distance found so far?',code:'foreach (string node in vertices)\n{\n    if (!visited.Contains(node) &&\n        distance[node] < bestDistance)\n    {\n        bestDistance = ______;\n        current = node;\n    }\n}',answer:['distance[node]'],model:'distance[node]',why:'The selection must use total distance from the start.'},
+ {title:'Add both distances',task:'The candidate route must include the full distance to the current node. Write the missing expression.',code:'foreach (var edge in graph[current])\n{\n    string neighbour = edge.To;\n    int weight = edge.Weight;\n    int candidate = ______;\n}',answer:['distance[current] + weight'],model:'distance[current] + weight',why:'Using edge weight alone would produce the wrong shortest path.'},
+ {title:'Stop when the goal is visited',task:'Complete this condition for stopping after the goal has been selected.',code:'while (visited.Count < vertices.Count)\n{\n    string current = FindClosestUnvisited();\n    if (current == ______) break;\n    // Visit neighbours\n}',answer:['goal'],model:'goal',why:'Once the destination is selected as the closest unvisited node, its shortest distance is final.'}],
+ hard:[
+ {title:'Trace an improvement',task:'A=0, B=7 and C=2. Edge C→B has weight 3. What number must be stored for B?',code:'distance["C"] = 2;\ndistance["B"] = 7;\nint candidate = distance["C"] + 3;\nif (candidate < distance["B"])\n    distance["B"] = candidate;',answer:['5'],model:'5',why:'2 + 3 = 5, which improves the previous value of 7.'},
+ {title:'Fix a logic bug',task:'The code selects the *largest* distance. Replace the incorrect comparison only.',code:'foreach (string node in vertices)\n{\n    if (!visited.Contains(node) &&\n        distance[node] > bestDistance) // WRONG\n    {\n        bestDistance = distance[node];\n        current = node;\n    }\n}',answer:['distance[node] < bestDistance'],model:'distance[node] < bestDistance',why:'Dijkstra always chooses the unvisited node with the smallest current total distance.'},
+ {title:'Trace the previous-node table',task:'Write the previous-node assignment after a better path to T is found from B.',code:'if (candidate < distance["T"])\n{\n    distance["T"] = candidate;\n    // Record how T was reached\n}',answer:['previous["T"] = "B";','previous["T"]="B";'],model:'previous["T"] = "B";',why:'The previous entry lets us reconstruct the shortest route.'},
+ {title:'Handle unreachable nodes',task:'Complete the C# condition so we stop if no more nodes can be reached.',code:'string? current = FindClosestUnvisited();\nif (current == ______) break;\n// Continue with reachable nodes',answer:['null'],model:'null',why:'A null result means no reachable unvisited node remains.'},
+ {title:'Explain the runtime',task:'Using a simple array scan to choose the next node, the selection repeats over V vertices. What is its Big O order?',code:'for (int i = 0; i < vertices.Count; i++)\n{\n    // Scan every vertex to find the\n    // smallest unvisited distance.\n}',answer:['O(V^2)','O(v²)','O(V²)'],model:'O(V²)',why:'Scanning V nodes repeatedly for up to V selections gives a quadratic selection cost.'}]
+};
+let sampleIndex={easy:0,medium:0,hard:0},state=null,stageFirst=true,feedback='',feedbackType='',codeIndex=0,codeFirst=true,codeFeedback='',codeFeedbackType='';
+const workspace=document.getElementById('workspace');
+const norm=s=>String(s).toLowerCase().replace(/[\s;]/g,'').replace(/²/g,'^2');
+const storeKey='rhs-h446-dijkstra-skills-v1';
+function getProgress(){try{return JSON.parse(localStorage.getItem(storeKey)||'{}')}catch(_){return {}}}
+function updateScore(){const p=getProgress()[mode+'-'+level]||{attempts:0,correct:0};document.getElementById('score').textContent=p.attempts?`First attempts: ${Math.round(p.correct/p.attempts*100)}%`:'First attempts: —';}
+function record(correct){if(classroom)return;const all=getProgress();const k=mode+'-'+level;const p=all[k]||{attempts:0,correct:0};p.attempts++;if(correct)p.correct++;all[k]=p;try{localStorage.setItem(storeKey,JSON.stringify(all))}catch(_){}updateScore()}
+function firstAttempt(ok){if(stageFirst){record(ok);stageFirst=false}}
+function firstCode(ok){if(codeFirst){record(ok);codeFirst=false}}
+function adjacent(node){return state.g.e.filter(e=>e[0]===node||e[1]===node).map(([a,b,w])=>({to:a===node?b:a,w}))}
+function solve(g){const d=Object.fromEntries(g.v.map(v=>[v[0],Infinity]));const prev={};const done=new Set();d[g.start]=0;while(done.size<g.v.length){let pick=g.v.map(v=>v[0]).filter(n=>!done.has(n)).sort((a,b)=>d[a]-d[b])[0];if(!pick||!isFinite(d[pick]))break;done.add(pick);for(const [a,b,w] of g.e){const n=a===pick?b:b===pick?a:null;if(n&&!done.has(n)&&d[pick]+w<d[n]){d[n]=d[pick]+w;prev[n]=pick}}}return {d,prev}}
+function nextGraph(){const list=graphs[level];const i=sampleIndex[level]++;const g=structuredClone(list[i%list.length]);if(i>=list.length){const delta=i%3-1;g.e=g.e.map(([a,b,w],j)=>[a,b,Math.max(1,w+(j%3===0?delta:0))]);}state={g,dist:Object.fromEntries(g.v.map(v=>[v[0],v[0]===g.start?0:Infinity])),previous:{},visited:new Set(),stage:'pick',focus:null,finished:false};stageFirst=true;feedback='';feedbackType='';render()}
+function fmt(n){return Number.isFinite(n)?String(n):'∞'}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function drawGraph(){const g=state.g;const pts=Object.fromEntries(g.v.map(v=>[v[0],{x:v[1],y:v[2]}]));const edges=g.e.map(([a,b,w])=>{const p=pts[a],q=pts[b],mx=(p.x+q.x)/2,my=(p.y+q.y)/2;return `<path d="M${p.x} ${p.y} L${q.x} ${q.y}" stroke="#92ad9d" stroke-width="3" fill="none"/><rect x="${mx-13}" y="${my-12}" width="26" height="23" rx="6" fill="#fff" stroke="#c7d9ce"/><text x="${mx}" y="${my+4}" fill="#1d5240" text-anchor="middle" font-size="14" font-weight="850">${w}</text>`}).join('');const nodes=g.v.map(([n,x,y])=>{let bg=state.focus===n?'#e5ac4b':state.visited.has(n)?'#0e7c55':'#e7f1ea';let fg=state.focus===n||state.visited.has(n)?'#fff':'#184c36';return `<circle cx="${x}" cy="${y}" r="22" fill="${bg}" stroke="#fff" stroke-width="4"/><text x="${x}" y="${y+6}" text-anchor="middle" font-size="17" font-weight="900" fill="${fg}">${n}</text>`}).join('');return `<svg class="graph" viewBox="0 0 420 280" role="img" aria-label="Weighted graph from ${g.start} to ${g.goal}; edge weights are shown">${edges}${nodes}</svg>`}
+function distanceTable(){return `<div class="table-wrap"><table><thead><tr><th>Node</th><th>Best distance</th><th>Previous</th><th>Visited</th></tr></thead><tbody>${state.g.v.map(v=>{const n=v[0];return `<tr><td>${n}</td><td>${fmt(state.dist[n])}</td><td>${state.previous[n]||'—'}</td><td>${state.visited.has(n)?'<span class="visited">✓</span>':'—'}</td></tr>`}).join('')}</tbody></table></div>`}
+function route(){const goal=state.g.goal,p=[];let n=goal;const seen=new Set();while(n&&!seen.has(n)){p.unshift(n);seen.add(n);n=state.previous[n]}return p}
+function graphPrompt(){if(state.finished)return `<div class="finish"><h2>Route completed</h2><p><strong>${route().join(' → ')}</strong> · total cost <strong>${fmt(state.dist[state.g.goal])}</strong></p><p class="small">Your next challenge uses a different graph.</p><div class="actions" style="justify-content:center"><button class="primary" id="next-graph">Next graph →</button></div></div>`;
+if(state.stage==='pick'){const unvisited=state.g.v.map(v=>v[0]).filter(n=>!state.visited.has(n));return `<p class="prompt"><span class="brush">Choose the next node</span> with the smallest total distance.</p><div class="pick-row">${unvisited.map(n=>`<button class="pick" data-pick="${n}">${n}</button>`).join('')}</div>`}
+if(state.stage==='update'){const neighbours=adjacent(state.focus).filter(e=>!state.visited.has(e.to));if(!neighbours.length)return `<p class="prompt">No unvisited neighbours. Continue.</p><button id="apply" class="primary">Mark ${state.focus} visited →</button>`;
+return `<p class="prompt">From ${state.focus}, check each neighbour. Enter its <span class="brush">best distance</span> and previous node.</p><div class="table-wrap"><table class="update-table"><thead><tr><th>Neighbour</th><th>Old best</th><th>Edge</th><th>Best after check</th><th>Previous</th></tr></thead><tbody>${neighbours.map(x=>`<tr><td>${x.to}</td><td>${fmt(state.dist[x.to])}</td><td>${x.w}</td><td><input aria-label="Distance to ${x.to}" data-distance="${x.to}" inputmode="numeric" value="${fmt(state.dist[x.to])}"></td><td><select aria-label="Previous node for ${x.to}" data-prev="${x.to}"><option value="">—</option>${state.g.v.map(v=>`<option value="${v[0]}" ${state.previous[x.to]===v[0]?'selected':''}>${v[0]}</option>`).join('')}</select></td></tr>`).join('')}</tbody></table></div><div class="actions"><button id="apply" class="primary">Check updates →</button></div>`}
+return `<p class="prompt">Give the shortest route from ${state.g.start} to ${state.g.goal}.</p><div class="work-row"><label class="field">Route (e.g. A-B-C)<input id="route-answer" placeholder="${state.g.start}-...-${state.g.goal}" autocomplete="off"></label><label class="field">Total distance<input id="cost-answer" inputmode="numeric" placeholder="Total cost"></label></div><div class="actions"><button id="check-route" class="primary">Check route →</button></div>`}
+function graphAside(){const instructions=level==='easy'?'Start at distance 0. Other nodes begin at ∞.':level==='medium'?'Remember that a longer direct edge may not be the best route.':'Compare every new total with the best distance already recorded.';return `<div class="panel panel-pad"><h3 class="side-title">Distance table</h3>${distanceTable()}<div class="aside-box"><strong>Remember</strong><p>${instructions}</p><p>Choose the unvisited node with the smallest <em>total distance</em> from the start.</p></div><details class="aside-box" id="hint"><summary>Hint</summary><p>${state.stage==='update'&&state.focus?'Add the distance to '+state.focus+' to the edge weight; only change a node if the result is smaller.':'Look for the smallest total distance, not the smallest individual edge.'}</p></details><details class="aside-box" id="model"><summary>Show the worked step</summary><div id="model-text"></div></details><div class="actions"><button class="secondary" id="reset-graph">Reset graph</button></div></div>`}
+function renderGraph(){workspace.innerHTML=`<div class="layout"><div class="panel panel-pad"><div class="head-row"><span class="kicker">${classroom?'Classroom example':level+' · graph '+Math.max(1,sampleIndex[level])}</span><span class="mark">${state.g.start} → ${state.g.goal}</span></div><h2>Find the shortest route</h2><p class="explain">Weights show the cost of each connection. All weights are non-negative.</p>${drawGraph()}${graphPrompt()}<div class="feedback ${feedbackType}" role="status">${esc(feedback)}</div></div>${graphAside()}</div>`;
+workspace.querySelectorAll('[data-pick]').forEach(b=>b.addEventListener('click',()=>choose(b.dataset.pick)));
+workspace.querySelector('#apply')?.addEventListener('click',applyUpdate);workspace.querySelector('#check-route')?.addEventListener('click',checkRoute);workspace.querySelector('#next-graph')?.addEventListener('click',nextGraph);workspace.querySelector('#reset-graph')?.addEventListener('click',()=>{sampleIndex[level]=Math.max(0,sampleIndex[level]-1);nextGraph()});
+workspace.querySelector('#model')?.addEventListener('toggle',e=>{if(e.target.open){const el=workspace.querySelector('#model-text');if(el)el.innerHTML=modelGraphStep()}});
+// Teacher-only step reveal: fill the proposed table, then discuss/check it.
+if(classroom&&state.stage==='update'&&workspace.querySelector('#apply')){
+ const fill=document.createElement('button');fill.type='button';fill.className='secondary';fill.textContent='Fill model values';
+ workspace.querySelector('#apply').after(fill);
+ fill.addEventListener('click',()=>{
+   for(const e of adjacent(state.focus).filter(x=>!state.visited.has(x.to))){
+     const best=state.dist[state.focus]+e.w;
+     const better=best<state.dist[e.to];
+     const distance=workspace.querySelector(`[data-distance="${e.to}"]`);
+     const previous=workspace.querySelector(`[data-prev="${e.to}"]`);
+     if(distance)distance.value=fmt(better?best:state.dist[e.to]);
+     if(previous)previous.value=better?state.focus:(state.previous[e.to]||'');
+   }
+ });
+}
+}
+function modelGraphStep(){if(state.stage==='pick'){const best=Math.min(...state.g.v.map(v=>v[0]).filter(n=>!state.visited.has(n)).map(n=>state.dist[n]));return `<p>Choose ${state.g.v.map(v=>v[0]).filter(n=>!state.visited.has(n)&&state.dist[n]===best).join(' or ')}: smallest distance is ${fmt(best)}.</p>`}
+if(state.stage==='update')return adjacent(state.focus).filter(e=>!state.visited.has(e.to)).map(e=>{const candidate=state.dist[state.focus]+e.w,better=candidate<state.dist[e.to];return `<p>${state.focus}→${e.to}: ${fmt(state.dist[state.focus])}+${e.w}=${candidate}. ${better?`Update ${e.to} to ${candidate}; previous = ${state.focus}.`:`Keep ${fmt(state.dist[e.to])}; no improvement.`}</p>`}).join('')||'<p>No neighbours to update.</p>';
+return `<p>Follow the previous nodes backwards, then reverse: ${route().join(' → ')}. Distance ${fmt(state.dist[state.g.goal])}.</p>`}
+function choose(n){const available=state.g.v.map(v=>v[0]).filter(x=>!state.visited.has(x));const best=Math.min(...available.map(x=>state.dist[x]));const ok=state.dist[n]===best;firstAttempt(ok);if(!ok){feedback='Not quite. Choose the smallest total distance from the start.';feedbackType='bad';renderGraph();return}state.focus=n;state.stage='update';stageFirst=true;feedback=`Good. Check routes through ${n}.`;feedbackType='good';renderGraph()}
+function applyUpdate(){const edges=adjacent(state.focus).filter(e=>!state.visited.has(e.to));const updated=[];let error='';for(const e of edges){const candidate=state.dist[state.focus]+e.w;const better=candidate<state.dist[e.to];const expected=better?candidate:state.dist[e.to];const previous=better?state.focus:(state.previous[e.to]||'');const raw=workspace.querySelector(`[data-distance="${e.to}"]`)?.value.trim()||'';const input=raw==='∞'||/^inf(inity)?$/i.test(raw)?Infinity:Number(raw);const prev=workspace.querySelector(`[data-prev="${e.to}"]`)?.value||'';if(raw===''||input!==expected||prev!==previous){error=`Check ${e.to}: add the route so far to the edge weight, then compare with its old best.`;break}updated.push({to:e.to,d:expected,prev:previous})}
+const ok=!error;firstAttempt(ok);if(!ok){feedback=error;feedbackType='bad';const node=workspace.querySelector('.feedback');if(node){node.textContent=feedback;node.className='feedback bad'}return}
+updated.forEach(x=>{state.dist[x.to]=x.d;if(x.prev)state.previous[x.to]=x.prev});state.visited.add(state.focus);if(state.focus===state.g.goal){state.stage='route'}else state.stage='pick';state.focus=null;stageFirst=true;feedback='Correct. The table is now updated.';feedbackType='good';renderGraph()}
+function checkRoute(){const raw=workspace.querySelector('#route-answer')?.value||'';const parts=raw.toUpperCase().split(/[^A-Z]+/).filter(Boolean);const cost=Number(workspace.querySelector('#cost-answer')?.value);let sum=0,valid=parts[0]===state.g.start&&parts.at(-1)===state.g.goal;for(let i=1;i<parts.length;i++){const e=state.g.e.find(x=>(x[0]===parts[i-1]&&x[1]===parts[i])||(x[1]===parts[i-1]&&x[0]===parts[i]));if(!e){valid=false;break}sum+=e[2]}const ok=valid&&sum===state.dist[state.g.goal]&&cost===sum;firstAttempt(ok);if(!ok){feedback='Check the previous nodes and add every edge weight on your route.';feedbackType='bad';const el=workspace.querySelector('.feedback');if(el){el.textContent=feedback;el.className='feedback bad'}return}state.finished=true;feedback='';feedbackType='';renderGraph()}
+function codeTask(){return codeBank[level][codeIndex%codeBank[level].length]}
+function renderCode(){const t=codeTask();workspace.innerHTML=`<div class="panel panel-pad code-panel"><div class="head-row"><span class="kicker">${classroom?'Classroom coding example':level+' · code '+(codeIndex%5+1)+' of 5'}</span><span class="mark">C# · read → complete → check</span></div><div class="code-layout"><div><h2>${esc(t.title)}</h2><p class="prompt">${esc(t.task)}</p><pre aria-label="Code context"><code>${esc(t.code)}</code></pre></div><div><label class="field" for="code-answer">Replace the blank or incorrect code with:</label><textarea id="code-answer" class="code-answer" rows="3" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="Write the missing C# code"></textarea><div class="actions"><button class="primary" id="check-code">Check code</button><button class="secondary" id="next-code">Next task →</button></div><div class="feedback ${codeFeedbackType}" role="status">${esc(codeFeedback)}</div><details class="aside-box"><summary>Hint</summary><p>${esc(t.why)}</p></details><details class="aside-box"><summary>Model and explanation</summary><p><code>${esc(t.model)}</code></p><p>${esc(t.why)}</p></details><div class="aside-box"><strong>Code in context</strong><p>The task shows the surrounding lines. You only need to complete the specified part.</p></div></div></div></div>`;
+workspace.querySelector('#check-code').addEventListener('click',()=>{const answer=workspace.querySelector('#code-answer').value;const ok=t.answer.some(a=>norm(answer)===norm(a));firstCode(ok);const box=workspace.querySelector('.feedback');box.className='feedback '+(ok?'good':'bad');box.textContent=ok?'Correct. '+t.why:'Check the surrounding code and try again. Use the Hint if needed.'});
+workspace.querySelector('#next-code').addEventListener('click',()=>{codeIndex++;codeFirst=true;codeFeedback='';codeFeedbackType='';renderCode()});}
+function render(){document.querySelector('#tab-graph').setAttribute('aria-pressed',String(mode==='graph'));document.querySelector('#tab-code').setAttribute('aria-pressed',String(mode==='code'));document.querySelectorAll('[data-level]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.level===level)));updateScore();if(mode==='graph'){if(!state)nextGraph();else renderGraph()}else renderCode()}
+document.querySelector('#tab-graph').addEventListener('click',()=>{mode='graph';state=null;render()});document.querySelector('#tab-code').addEventListener('click',()=>{mode='code';codeIndex=0;codeFirst=true;render()});document.querySelectorAll('[data-level]').forEach(b=>b.addEventListener('click',()=>{level=b.dataset.level;state=null;codeIndex=0;codeFirst=true;render()}));
+render();
+})();
+</script>
+</body>
+</html>
