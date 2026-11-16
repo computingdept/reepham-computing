@@ -99,8 +99,18 @@ function showOnly(items,index){
   items.forEach((item,i)=>item.hidden=i!==index);
 }
 // -1 means the starting problem is visible and no modelled step is revealed.
-function modellingStepIndex(steps){return steps.findIndex(step=>!step.hidden);}
+// Reading from the end also supports opt-in cumulative examples.
+function modellingStepIndex(steps){
+  for(let i=steps.length-1;i>=0;i--)if(!steps[i].hidden)return i;
+  return -1;
+}
 function resetModelSteps(steps){steps.forEach(step=>{step.hidden=true;});}
+// Existing lessons still reveal one model step at a time; opt-in phases retain
+// all decisions up to the newly revealed step.
+function showIdoModelSteps(steps,index,page){
+  if(page?.dataset.idoReveal!=='cumulative'){showOnly(steps,index);return;}
+  steps.forEach((step,i)=>{step.hidden=i>index;});
+}
 
 /* Opt-in J277 Welcome review only: Code First, then Q2–Q4 together on TV
    or one at a time on mobile. Numbered lessons remain unchanged. */
@@ -870,8 +880,9 @@ function syncClassroomFocus(){
     const example=page.querySelector(phase==='i-do'
       ?'.ido-example:not([hidden])':'.wedo-example:not([hidden])');
     if(!example)continue;
-    const step=example.querySelector(phase==='i-do'
-      ?'.ido-step:not([hidden])':'.wedo-step:not([hidden])');
+    const visibleSteps=[...example.querySelectorAll(phase==='i-do'
+      ?'.ido-step:not([hidden])':'.wedo-step:not([hidden])')];
+    const step=visibleSteps[visibleSteps.length-1];
     const panel=example.querySelector('.method-panel,.ido-method,.wedo-practice');
     if(step){
       step.classList.add('classroom-focus-active');
@@ -1118,7 +1129,7 @@ function next(){
       const steps=[...example.querySelectorAll('.ido-step')];
       const stepIndex=modellingStepIndex(steps);
       if(steps.length && stepIndex<steps.length-1){
-        showOnly(steps,stepIndex+1);updateControl();return;
+        showIdoModelSteps(steps,stepIndex+1,page);updateControl();return;
       }
       if(exampleIndex<examples.length-1){
         showOnly(examples,exampleIndex+1);
@@ -1512,7 +1523,7 @@ function previousAction(){
 
       if(stepIndex>=0){
         if(stepIndex===0)resetModelSteps(steps);
-        else showOnly(steps,stepIndex-1);
+        else showIdoModelSteps(steps,stepIndex-1,page);
         updateControl();
         return;
       }
@@ -1520,7 +1531,7 @@ function previousAction(){
       if(exampleIndex>0){
         showOnly(examples,exampleIndex-1);
         const previousSteps=[...examples[exampleIndex-1].querySelectorAll('.ido-step')];
-        if(previousSteps.length)showOnly(previousSteps,previousSteps.length-1);
+        if(previousSteps.length)showIdoModelSteps(previousSteps,previousSteps.length-1,page);
         updateControl();
         return;
       }
