@@ -239,6 +239,9 @@ body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-wi
 <script src="/assets/skills-system.js?v=20261115-mywork-score-pilot1"></script>
 <script>
 (()=>{'use strict';
+const query = new URLSearchParams(window.location.search);
+// H446 shares the existing J277 conversion whiteboard, not the GCSE navigation.
+const h446Conversion = query.get('course') === 'h446' && query.get('skill') === 'convert';
 const specs={
  convert:{name:'Conversion grid',sub:'Denary · Binary · Hex',glyph:'⇅',cat:'data',ref:'1.2.4',tint:'#e6f1ff',ink:'#165db2',kind:'grid'},
  add:{name:'Binary addition',sub:'Add, carry and detect overflow',glyph:'＋',cat:'data',ref:'1.2.4',tint:'#e8f7f0',ink:'#13744d',kind:'add'},
@@ -257,9 +260,29 @@ const specs={
  protocol:{name:'Protocol Paths',sub:'Send · Receive · Repair',glyph:'⇢',cat:'network',ref:'1.3.2',tint:'#edf7ee',ink:'#285348',kind:'protocol'},
  impact:{name:'Impact Answer Builder',sub:'Model · Improve · Evaluate',glyph:'✎',cat:'application',ref:'1.6',tint:'#e9f4ed',ink:'#285348',kind:'impact'},
 };
+if(h446Conversion){
+ specs.convert.ref='1.4.1(b, e, f)';
+ document.title='Conversion grid · OCR H446 · RHS Computing';
+ const header=document.querySelector('header.topbar');
+ header.setAttribute('aria-label','A Level Computing navigation');
+ header.querySelector('.synergy-corner-title').textContent='A Level Computer Science';
+ const years=header.querySelectorAll('.year-switch .year-btn');
+ years[0].href='/h446-hub.html?year=12#lessons';
+ years[0].setAttribute('aria-label','Year 12');
+ years[1].href='/h446-hub.html?year=13#lessons';
+ years[1].setAttribute('aria-label','Year 13');
+ const nav=header.querySelector('.course-nav');
+ nav.setAttribute('aria-label','A Level Computer Science resources');
+ const tabs=nav.querySelectorAll('.tabs a');
+ tabs[0].href='/h446-hub.html#lessons';
+ tabs[1].href='/h446-hub.html#booklet';
+ tabs[2].href='/h446-hub.html#revisionhub';
+ nav.querySelector('.j277-skills-nav').href='/exercise/h446/tools.html';
+ document.getElementById('back').textContent='← All H446 skills';
+}
 const $=id=>document.getElementById(id); const levelnames=['easy','medium','hard'];
 let skill=null,level='easy',index=0,question=null,answer=null,locked=false,wrong=0,score=0,firstTryScore=0,lastReportedScore=0,matchMistakes=0,attempts=[],hexCursor=0,lastConversionValue=null,lastAsciiWord=null;
-function reportWork(correct,total){window.RHSCSkills?.reportCompletion(1,skill,level,correct,total);}
+function reportWork(correct,total){if(!h446Conversion)window.RHSCSkills?.reportCompletion(1,skill,level,correct,total);}
 function randseed(x){return()=>{x|=0;x=x+0x6D2B79F5|0;let t=Math.imul(x^x>>>15,1|x);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296;};}
 function rngFor(id,l,n){let h=0;const s=id+'-'+l+'-'+n;for(const c of s)h=Math.imul(h,31)+c.charCodeAt(0)|0;return randseed(h)}
 function rint(r,a,b){return a+Math.floor(r()*(b-a+1))}function pick(r,a){return a[rint(r,0,a.length-1)]}function binary(n){return (n&255).toString(2).padStart(8,'0')}function format(n){return n.toLocaleString('en-GB')}
@@ -493,8 +516,8 @@ function tile(key){
  card.append(primary,actions);return card;
 }
 Object.keys(specs).forEach(key=>$(specs[key].cat==='data'?'data-tiles':specs[key].cat==='network'?'network-tiles':'application-tiles').append(tile(key)));
-function getStorage(){try{return JSON.parse(localStorage.getItem('rhs-j277-paper1-progress')||'{}')}catch{return {}}}
-function saveStorage(o){try{localStorage.setItem('rhs-j277-paper1-progress',JSON.stringify(o))}catch{}}
+function getStorage(){try{return JSON.parse(localStorage.getItem(h446Conversion?'rhs-h446-conversion-progress':'rhs-j277-paper1-progress')||'{}')}catch{return {}}}
+function saveStorage(o){try{localStorage.setItem(h446Conversion?'rhs-h446-conversion-progress':'rhs-j277-paper1-progress',JSON.stringify(o))}catch{}}
 function persist(){
  const all=getStorage();
  const legacyCount=levelnames.reduce((n,l)=>n+(Array.isArray(all['convert-'+l])?all['convert-'+l].length:0),0);
@@ -554,8 +577,8 @@ function mark(){
  if(!all[key].includes(index)){all[key].push(index);saveStorage(all);persist()}
 }
 function scrollTop(){window.scrollTo({top:0,behavior:'instant'})}
-function openSkill(k){skill=k;level='easy';index=0;score=0;$('practice').classList.toggle('is-conversion',k==='convert');$('practice').classList.toggle('is-standard',k!=='convert');$('practice').classList.toggle('is-network',['address','hardware','topology'].includes(k));$('home').classList.add('hidden');$('practice').classList.remove('hidden');$('skill-title').textContent=specs[k].name;$('skill-subtitle').textContent=specs[k].sub;$('skill-spec').textContent=`OCR J277 · ${specs[k].ref}`;chooseLevel('easy');scrollTop();}
-function home(){skill=null;$('practice').classList.remove('is-conversion','is-standard','is-network');$('home').classList.remove('hidden');$('practice').classList.add('hidden');persist();scrollTop();}
+function openSkill(k){skill=k;level='easy';index=0;score=0;$('practice').classList.toggle('is-conversion',k==='convert');$('practice').classList.toggle('is-standard',k!=='convert');$('practice').classList.toggle('is-network',['address','hardware','topology'].includes(k));$('home').classList.add('hidden');$('practice').classList.remove('hidden');$('skill-title').textContent=specs[k].name;$('skill-subtitle').textContent=specs[k].sub;$('skill-spec').textContent=`OCR ${h446Conversion?'H446':'J277'} · ${specs[k].ref}`;chooseLevel('easy');scrollTop();}
+function home(){if(h446Conversion){window.location.assign('/exercise/h446/tools.html');return;}skill=null;$('practice').classList.remove('is-conversion','is-standard','is-network');$('home').classList.remove('hidden');$('practice').classList.add('hidden');persist();scrollTop();}
 function chooseLevel(l){level=l;index=0;score=0;firstTryScore=0;lastReportedScore=0;matchMistakes=0;lastConversionValue=null;lastAsciiWord=null;if(skill==='units')matchDeck=buildMatches(l);levelnames.forEach(x=>document.querySelector(`[data-level="${x}"]`).classList.toggle('active',x===l));document.body.classList.toggle('exam',l==='hard');renderQuestion();}
 
 const matchSizes={easy:5,medium:4,hard:4},matchTotals={easy:10,medium:8,hard:12};
