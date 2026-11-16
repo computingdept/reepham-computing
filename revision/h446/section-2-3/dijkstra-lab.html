@@ -119,10 +119,10 @@ function graphAside(){const instructions=level==='easy'?'Start at distance 0. Ot
 // next decision so the class can explain why O follows M.
 function classroomGraphPrompt(){
   if(state.finished)return `<p class="prompt">Shortest route: <strong>${route().join(' → ')}</strong> · total cost <strong>${fmt(state.dist[state.g.goal])}</strong></p><button id="reset-graph" class="secondary">Start again</button>`;
-  const unvisited=state.g.v.map(v=>v[0]).filter(n=>!state.visited.has(n));
+  const unvisited=state.visited.size===0?[state.g.start]:state.g.v.map(v=>v[0]).filter(n=>!state.visited.has(n));
   const question=state.visited.size===0
     ?`Start at <strong>${state.g.start}</strong> (distance 0). Select ${state.g.start} first.`
-    :'Choose the unvisited node with the smallest <strong>best distance</strong> in the table.';
+    :'Next: smallest <strong>unvisited distance</strong>?';
   return `<p class="prompt">${question}</p><div class="pick-row">${unvisited.map(n=>`<button class="pick" data-pick="${n}">${n}</button>`).join('')}</div>`;
 }
 function classroomChoose(n){
@@ -155,7 +155,7 @@ function classroomChoose(n){
   renderGraph();
 }
 function renderClassroomGraph(){
-  workspace.innerHTML=`<div class="panel panel-pad"><div class="head-row"><span class="kicker">Classroom model · ${state.g.start} → ${state.g.goal}</span></div>${drawGraph(true)}${feedback?`<p class="explain" role="status">${esc(feedback)}</p>`:''}${distanceTable()}${classroomGraphPrompt()}</div>`;
+  workspace.innerHTML=`<div class="panel panel-pad">${drawGraph(true)}${feedback?`<p class="explain" role="status">${esc(feedback)}</p>`:''}${distanceTable()}${classroomGraphPrompt()}</div>`;
   workspace.querySelectorAll('[data-pick]').forEach(b=>b.addEventListener('click',()=>classroomChoose(b.dataset.pick)));
   workspace.querySelector('#reset-graph')?.addEventListener('click',()=>{sampleIndex[level]=Math.max(0,sampleIndex[level]-1);nextGraph()});
 }
