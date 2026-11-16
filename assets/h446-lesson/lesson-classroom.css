@@ -2941,3 +2941,20 @@ body.h446-donow-layout-parity #do-now .donow-stage:first-child .donow-questions 
 body.h446-donow-layout-parity #do-now .donow-stage:first-child .donow-questions > .donow-question:nth-child(4){
   --h446-donow-outline:#8662a8;
 }
+
+/* Opt-in cumulative I Do history · 2026-11-16
+   Earlier revealed steps remain in view as a compact record; only the
+   latest revealed step keeps full classroom-TV prominence. */
+body:not(.answer-page) #i-do[data-ido-compact-history="true"] .ido-method
+  .ido-step:not([hidden]):has(~ .ido-step:not([hidden])) .ido-step-label{
+  font-size:11px;
+  line-height:1.1;
+  letter-spacing:.06em;
+  margin-bottom:2px;
+}
+body:not(.answer-page) #i-do[data-ido-compact-history="true"] .ido-method
+  .ido-step:not([hidden]):has(~ .ido-step:not([hidden])) :is(p,li){
+  font-size:clamp(15px,1.05vw,18px)!important;
+  line-height:1.18!important;
+  margin:2px 0 5px;
+}
