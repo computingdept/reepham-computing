@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import worker, { assignmentKey, isIndependentWorkTime, newPracticeCode } from '../src/index.mjs';
+import worker, { assignmentKey, isIndependentWorkTime, newPracticeCode, liveClasswork } from '../src/index.mjs';
 
 const TOKEN = 'fictional-teacher-secret-for-local-tests-only';
 const ORIGIN = 'https://rhsccs.org';
@@ -13,6 +13,16 @@ class FakeD1 {
         if (sql.includes('SELECT code, cohort FROM practice_codes')) {
           const code = this.codes.get(args[0]);
           return code?.enabled ? code : null;
+        }
+        if (sql.includes('SELECT s.assignment_key FROM student_assignments s')) {
+          const task = this.individualAssignments.get(args[1] + '|' + args[0]);
+          return task?.active && Date.parse(task.created_at) >= Date.now() - 7 * 86400000
+            ? { assignment_key: task.assignment_key } : null;
+        }
+        if (sql.includes('AND created_at >= datetime')) {
+          const task = this.assignments.get(args[0]);
+          return task?.active && task.cohort === args[1] && Date.parse(task.created_at) >= Date.now() - 7 * 86400000
+            ? { assignment_key: task.assignment_key } : null;
         }
         if (sql.includes('SELECT assignment_key FROM assignments')) {
           const task = this.assignments.get(args[0]);
@@ -52,7 +62,7 @@ class FakeD1 {
         if (sql.includes('INSERT OR IGNORE INTO assignments')) {
           const [assignment_key, cohort, item_id, level] = args;
           if (this.assignments.has(assignment_key)) return { meta: { changes: 0 } };
-          this.assignments.set(assignment_key, { assignment_key, cohort, item_id, level, active: sql.includes('active) VALUES') ? 0 : 1 });
+          this.assignments.set(assignment_key, { assignment_key, cohort, item_id, level, active: sql.includes('active) VALUES') ? 0 : 1, created_at: new Date().toISOString() });
           return { meta: { changes: 1 } };
         }
         if (sql.includes('UPDATE assignments SET active = 1')) {
@@ -66,7 +76,7 @@ class FakeD1 {
           assert.ok(this.codes.has(code) && this.assignments.has(assignment_key), 'Individual assignment has valid FK targets');
           const key = code + '|' + assignment_key;
           if (this.individualAssignments.has(key)) return { meta: { changes: 0 } };
-          this.individualAssignments.set(key, { code, assignment_key, active: 1 });
+          this.individualAssignments.set(key, { code, assignment_key, active: 1, created_at: new Date().toISOString() });
           return { meta: { changes: 1 } };
         }
         if (sql.includes('INSERT OR IGNORE INTO attempts')) {
@@ -180,6 +190,22 @@ test('J277 and H446 assignment keys cannot cross year groups', () => {
   assert.equal(assignmentKey('Y12', 'j277-skill-p1-convert', 'both'), null);
   assert.equal(assignmentKey('Y10', 'h446-practice-141-data-types', ''), null);
   assert.equal(assignmentKey('Y12', 'h446-practice-141-data-types', 'both'), null);
+});
+
+test('H446 conversion Classwork is limited to an assigned seven-day window', async () => {
+  const db = new FakeD1();
+  const student = { code: 'P-ABCDEFGHJK', cohort: 'Y13' };
+  const key = '13|h446-skill-p1-convert|both';
+  db.assignments.set(key, { assignment_key: key, cohort: 'Y13', active: 1, created_at: new Date().toISOString() });
+  assert.equal(await liveClasswork({ DB: db }, student, key), true);
+  assert.equal(await liveClasswork({ DB: db }, student, '13|h446-skill-kmaps|both'), false);
+  assert.equal(await liveClasswork({ DB: db }, student, '10|j277-skill-p1-convert|both'), false);
+  db.assignments.get(key).created_at = '2020-01-01 00:00:00';
+  assert.equal(await liveClasswork({ DB: db }, student, key), false);
+  db.individualAssignments.set(student.code + '|' + key, {
+    code: student.code, assignment_key: key, active: 1, created_at: new Date().toISOString()
+  });
+  assert.equal(await liveClasswork({ DB: db }, student, key), true);
 });
 
 test('health, CORS and teacher-only write access', async () => {
