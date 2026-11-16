@@ -90,7 +90,7 @@
     <a class="back" href="/my-work-login-pilot.html">Student view ↗</a>
   </div></header>
   <main>
-    <span class="eyebrow">Staff pilot · OCR J277</span>
+    <span class="eyebrow">Staff pilot · OCR J277 / H446</span>
     <h1>Assign My Work</h1>
     <p class="intro">Choose one anonymous pupil for testing, or explicitly assign an activity to a whole year group. Pupils will see it when they refresh My Work.</p>
 
@@ -112,7 +112,7 @@
       <div class="work-grid">
         <section class="panel" aria-labelledby="choose-title">
           <h2 id="choose-title">1 · Choose an activity</h2>
-          <p class="sub">Activities come from the same J277 catalogue used by the pupil page.</p>
+          <p class="sub">Activities come from the shared catalogue used by pupils.</p>
           <fieldset class="scope">
             <legend>Who should receive this work?</legend>
             <div class="scope-options">
@@ -126,9 +126,9 @@
               <input id="username" type="text" autocomplete="off" spellcheck="false" autocapitalize="none" placeholder="Type the ID from your private CSV" maxlength="40">
               <p class="target-note">Use a test login from your private CSV. No pupil name, PIN or practice code is required.</p>
             </div>
-            <div class="field" id="cohort-target" hidden>
+            <div class="field" id="cohort-target">
               <label for="cohort">Year group</label>
-              <select id="cohort"><option value="Y10">Year 10</option><option value="Y11">Year 11</option></select>
+              <select id="cohort"><option value="Y10">Year 10</option><option value="Y11">Year 11</option><option value="Y12">Year 12</option><option value="Y13">Year 13</option></select>
             </div>
             <div class="field">
               <label for="paper">OCR paper</label>
@@ -258,7 +258,8 @@
 
     function renderGroups() {
       const chosen = $('group').value;
-      const candidates = catalog.filter(item => item.paper === Number($('paper').value) && item.type === $('kind').value);
+      const coursePrefix = ['Y12','Y13'].includes($('cohort').value) ? 'h446-' : 'j277-';
+      const candidates = catalog.filter(item => item.id.startsWith(coursePrefix) && item.paper === Number($('paper').value) && item.type === $('kind').value);
       const groups = [...new Set(candidates.map(item => item.group).filter(Boolean))].sort();
       $('group').replaceChildren(new Option('All topics', ''), ...groups.map(group => new Option(group, group)));
       if (groups.includes(chosen)) $('group').value = chosen;
@@ -279,7 +280,7 @@
       cancelReview();
       const wholeYear = chosenScope() === 'cohort';
       $('individual-target').hidden = wholeYear;
-      $('cohort-target').hidden = !wholeYear;
+      $('cohort-target').hidden = false;
       $('year-assignments-panel').hidden = !wholeYear;
       $('pupil-progress-section').hidden = wholeYear;
       $('scope-description').replaceChildren();
@@ -301,7 +302,8 @@
         const data = await request('/v1/teacher/student-progress', {
           method: 'POST', body: { username: anonymousUsername() }
         });
-        const row = Array.isArray(data.work) ? data.work.find(item => item.itemId === 'j277-skill-p1-convert') : null;
+        const conversionId = ['Y12','Y13'].includes($('cohort').value) ? 'h446-skill-p1-convert' : 'j277-skill-p1-convert';
+        const row = Array.isArray(data.work) ? data.work.find(item => item.itemId === conversionId) : null;
         const node = $('pupil-progress');
         node.replaceChildren();
         const heading = document.createElement('strong');
@@ -370,7 +372,9 @@
     function renderActivities() {
       const query = $('search').value.trim().toLowerCase();
       const group = $('group').value;
+      const coursePrefix = ['Y12','Y13'].includes($('cohort').value) ? 'h446-' : 'j277-';
       const matches = catalog.filter(item =>
+        item.id.startsWith(coursePrefix) &&
         item.paper === Number($('paper').value) &&
         item.type === $('kind').value &&
         (!group || item.group === group) &&
@@ -409,7 +413,7 @@
         title.textContent = item?.title || row.itemId;
         const desc = document.createElement('p');
         desc.className = 'detail';
-        desc.textContent = item ? 'Paper ' + item.paper + ' · ' + (item.type === 'skill' ? 'Skill' : 'Revision Practice') + (item.spec ? ' · ' + item.spec : '') : 'J277 activity';
+        desc.textContent = item ? 'Paper ' + item.paper + ' · ' + (item.type === 'skill' ? 'Skill' : 'Revision Practice') + (item.spec ? ' · ' + item.spec : '') : 'Activity';
         content.append(title, desc);
         card.append(content);
         const link = itemUrl(item);
@@ -513,13 +517,13 @@
     async function initialise() {
       try {
         const response = await fetch(CATALOG_URL, { cache: 'no-cache' });
-        if (!response.ok) throw new Error('Could not load the J277 activity catalogue.');
+        if (!response.ok) throw new Error('Could not load the activity catalogue.');
         const result = await response.json();
         catalog = Array.isArray(result.items) ? result.items.filter(item =>
-          typeof item.id === 'string' && /^j277-(skill|practice)-[a-z0-9-]{1,80}$/.test(item.id) &&
+          typeof item.id === 'string' && /^(j277|h446)-(skill|practice)-[a-z0-9-]{1,80}$/.test(item.id) &&
           [1,2].includes(item.paper) && ['skill','practice'].includes(item.type)
         ) : [];
-        if (!catalog.length) throw new Error('No J277 activities were found.');
+        if (!catalog.length) throw new Error('No activities were found.');
         renderGroups();
         renderActivities();
       } catch (error) {
@@ -533,7 +537,7 @@
     for (const radio of document.querySelectorAll('input[name="scope"]')) radio.addEventListener('change', renderScope);
     $('username').addEventListener('input', () => { cancelReview(); updateReviewAvailability(); $('pupil-progress').textContent = 'Refresh score for this anonymous pupil.'; });
     $('confirm-everyone').addEventListener('change', () => { $('publish-button').disabled = !$('confirm-everyone').checked; });
-    $('cohort').addEventListener('change', () => { cancelReview(); refresh(); });
+    $('cohort').addEventListener('change', () => { cancelReview(); renderGroups(); renderActivities(); refresh(); });
     for (const id of ['paper', 'kind']) $(id).addEventListener('change', () => { renderGroups(); renderActivities(); });
     $('group').addEventListener('change', renderActivities);
     $('search').addEventListener('input', renderActivities);
