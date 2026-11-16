@@ -3,19 +3,23 @@
 // Lesson 217's Lomuto-style, last-element-pivot implementation is the ONE
 // convention used for all worked examples, traces, fixes and reference code.
 const $ = id => document.getElementById(id);
-const STORAGE_KEY = "rhsc.h446.quicksortCodeLab.best.v1";
+// v2 includes a separately assessed recursion-stack stage in Hard.
+const STORAGE_KEY = "rhsc.h446.quicksortCodeLab.best.v2";
 const QUESTIONS = {
   easy: [
     [5, 1, 3], [8, 2, 6, 4], [7, 3, 1, 5], [6, 2, 4, 1], [9, 4, 7, 2]
   ],
   medium: [
-    [8, 3, 7, 2, 5], [5, 1, 7, 3, 6], [9, 4, 6, 2, 8, 1],
-    [10, 3, 8, 4, 7, 6], [7, 2, 9, 3, 6, 4, 5]
-  ],
-  hard: [
     [9, 4, 7, 2, 4, 8, 1, 6], [12, 3, 9, 3, 10, 5, 7, 5, 11],
     [6, 6, 2, 9, 1, 6, 8, 4], [10, 1, 10, 5, 3, 3, 8, 7, 2, 9],
     [14, 2, 11, 5, 11, 1, 9, 3, 6, 12, 7, 4]
+  ],
+  hard: [
+    [13, 5, 8, 1, 11, 3, 8, 6, 2, 14, 4],
+    [12, 3, 9, 3, 10, 5, 7, 5, 11, 2, 8, 6],
+    [6, 6, 2, 9, 1, 6, 8, 4, 11, 3, 7, 5, 10],
+    [10, 1, 10, 5, 3, 3, 8, 7, 2, 9, 4, 11, 6, 12],
+    [14, 2, 11, 5, 11, 1, 9, 3, 6, 12, 7, 4, 10, 8, 13]
   ]
 };
 
@@ -49,19 +53,27 @@ const FAULTS = {
   index: {line:9, bad:"    int i = low + 1;", hint:"Before the first value ≤ pivot is found, the left partition must be empty."},
   loop: {line:10, bad:"    for (int j = low; j <= high; j++) {", hint:"The last value is the pivot. The loop must stop before that index."},
   condition: {line:11, bad:"        if (a[j] >= pivot) {", hint:"Smaller or equal values belong on the LEFT of the pivot."},
+  increment: {line:12, bad:"            i--;", hint:"Every value ≤ pivot extends the left section by one place, not backwards."},
+  inner: {line:13, bad:"            Swap(a, i, high);", hint:"During the loop, swap the current value at j with the next left-side position at i. The pivot stays at high until the end."},
   swap: {line:16, bad:"    Swap(a, i, high);", hint:"The pivot belongs immediately after the final smaller-or-equal value."},
   return: {line:17, bad:"    return i;", hint:"Return the position where the pivot was placed, not the last smaller-value index."}
 };
 const FAULT_SETS = {
   easy: [["base"],["pivot"],["left"],["swap"],["return"]],
-  medium: [["left","right"],["pivot","loop"],["index","swap"],["base","condition"],["right","return"]],
-  hard: [["pivot","loop","return"],["base","left","right"],["index","condition","swap"],["pivot","right","swap"],["loop","left","return"]]
+  medium: [["pivot","loop","return"],["base","left","right"],["index","condition","swap"],["pivot","right","swap"],["loop","left","return"]],
+  hard: [
+    ["base","left","pivot","loop","condition","swap"],
+    ["right","index","increment","inner","swap","return"],
+    ["base","left","right","pivot","inner"],
+    ["left","pivot","loop","increment","swap","return"],
+    ["base","right","index","condition","inner","return"]
+  ]
 };
 const DEMO_INPUT = [5, 1, 7, 3];
-let level = "easy", question = 0, traceStep = 0, offset = 0;
+let level = "easy", question = 0, traceStep = 0, stackStep = 0, stackChoice = "", offset = 0;
 let scores = [null,null,null,null,null];
-let traceFirstTry = true, fixFirstTry = true;
-let currentSteps = [], demoIndex = 0;
+let traceFirstTry = true, stackFirstTry = true, fixFirstTry = true;
+let currentSteps = [], stackCheckpoints = [], demoIndex = 0;
 let activeQuestions = QUESTIONS.easy.map(a=>a.slice());
 let best = {};
 try { best = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch (_) { best = {}; }
@@ -94,6 +106,53 @@ function traceQuickSort(input) {
   return {steps, sorted:a};
 }
 
+// Model the actual call stack, INCLUDING zero/one-element base-case calls.
+// Every event is a real PUSH on entry or POP on return, so the exercises
+// ask what happens next at four different points in the execution.
+function traceRecursionStack(input) {
+  const partitions = new Map(traceQuickSort(input).steps.map(s=>[`${s.low}:${s.high}`,s]));
+  const stack = [], events = [];
+  const snapshot = (action,kind,context) => events.push({
+    action,kind,context,stack:stack.map(f=>({...f}))
+  });
+  function sort(low,high,from) {
+    const p = partitions.get(`${low}:${high}`)?.p;
+    stack.push({low,high});
+    if(low>=high){
+      snapshot("push","base",`QuickSort(a, ${low}, ${high}) just started. The base case low >= high is TRUE, so this call must return.`);
+    }else{
+      snapshot("push","partition",`QuickSort(a, ${low}, ${high}) has just partitioned the range. Pivot index p = ${p}. The NEXT line calls QuickSort(a, ${low}, ${p-1}) on the left.`);
+      sort(low,p-1,"left");
+      sort(p+1,high,"right");
+    }
+    stack.pop();
+    if(stack.length){
+      const parent=stack[stack.length-1];
+      const parentPivot=partitions.get(`${parent.low}:${parent.high}`).p;
+      if(from==="left")snapshot("pop","left-return",`The LEFT call QuickSort(a, ${low}, ${high}) has returned. Its parent QuickSort(a, ${parent.low}, ${parent.high}) resumes; pivot p = ${parentPivot}. The NEXT line calls the RIGHT side, QuickSort(a, ${parentPivot+1}, ${parent.high}).`);
+      else snapshot("pop","right-return",`The RIGHT call QuickSort(a, ${low}, ${high}) has returned. Both sides of parent QuickSort(a, ${parent.low}, ${parent.high}) are finished, so its NEXT action is to return.`);
+    }else snapshot("pop","finished","The original call has returned. Quicksort is finished.");
+  }
+  sort(0,input.length-1,"root");
+  return events;
+}
+
+function chooseStackCheckpoints(input){
+  const events=traceRecursionStack(input);
+  const kinds=["partition","base","left-return","right-return"];
+  const picked=kinds.map(kind=>{
+    const candidates=events.map((event,i)=>({event,i})).filter(v=>v.event.kind===kind&&v.i<events.length-1);
+    // Prefer the deepest useful example; ties use the earliest occurrence.
+    candidates.sort((a,b)=>b.event.stack.length-a.event.stack.length||a.i-b.i);
+    return candidates[0];
+  }).filter(Boolean).sort((a,b)=>a.i-b.i);
+  return picked.map(({event,i})=>({
+    ...event,
+    nextAction:events[i+1].action,
+    nextTop:events[i+1].stack.at(-1)||null
+  }));
+}
+
 function arrayForQuestion() {
   return activeQuestions[question].slice();
 }
@@ -102,7 +161,7 @@ function selectedFaults() {
 }
 function visibleSteps() {
   const all = traceQuickSort(arrayForQuestion()).steps;
-  return level === "easy" ? all.slice(0,1) : level === "medium" ? all.slice(0,2) : all;
+  return level === "easy" ? all.slice(0,1) : all;
 }
 function tidyList(s) {
   const items = s.trim().replace(/[\[\]]/g,"").split(/[\s,;]+/).filter(Boolean);
@@ -117,24 +176,29 @@ function feedback(text,ok) {
   const el=$("feedback");el.hidden=false;el.textContent=text;el.className="feedback"+(ok?" good":"");
 }
 function clearFeedback(){ $("feedback").hidden=true; }
-function shown(id){for(const name of ["trace-stage","fix-stage","complete-stage"])$(name).hidden=name!==id;}
+function shown(id){for(const name of ["trace-stage","stack-stage","fix-stage","complete-stage"])$(name).hidden=name!==id;}
+function scoreMax(){return level==="hard"?15:10;}
+function earned(s){return s?s.trace+s.fix+(s.stack||0):0;}
 function header() {
   const complete=scores.filter(v=>v!==null).length;
-  const points=scores.reduce((sum,v)=>sum+(v===null?0:v.trace+v.fix),0);
+  const points=scores.reduce((sum,v)=>sum+earned(v),0);
   $("progress-label").textContent=`Challenge ${question+1} of 5`;
   $("progress").value=complete;
-  $("points").textContent=`${points} / 10`;
-  $("mastery").textContent=best[level]===undefined?"Best: not attempted":`Best: ${best[level]} / 10`;
+  $("points").textContent=`${points} / ${scoreMax()}`;
+  $("mastery").textContent=best[level]===undefined?"Best: not attempted":`Best: ${best[level]} / ${scoreMax()}`;
   document.querySelectorAll("[data-level]").forEach(btn=>btn.setAttribute("aria-pressed",String(btn.dataset.level===level)));
   $("scores").replaceChildren();
   scores.forEach((v,i)=>{
     const el=document.createElement("span");el.className="score-pill"+(i===question?" current":"")+(v?" done":"");
-    el.textContent=`${i+1} · ${v===null?"—":(v.trace+v.fix)+"/2"}`;
+    el.textContent=`${i+1} · ${v===null?"—":earned(v)+"/"+(level==="hard"?3:2)}`;
     $("scores").append(el);
   });
 }
 function startQuestion() {
-  currentSteps=visibleSteps(); traceStep=0;traceFirstTry=true;fixFirstTry=true;
+  currentSteps=visibleSteps();
+  stackCheckpoints=level==="hard"?chooseStackCheckpoints(arrayForQuestion()):[];
+  traceStep=0;stackStep=0;stackChoice="";
+  traceFirstTry=true;stackFirstTry=true;fixFirstTry=true;
   header(); renderTrace();
 }
 function renderArray(values,low,high,pivotAt,container){
@@ -151,7 +215,7 @@ function renderTrace(){
   const s=currentSteps[traceStep];
   $("stage").textContent="1 · TRACE";
   $("step-count").textContent=`Partition ${traceStep+1} of ${currentSteps.length}`;
-  $("task-title").textContent=level==="hard"?"Trace the full recursive quicksort":level==="medium"?"Trace the first two partitions":"Trace the first partition";
+  $("task-title").textContent=level==="easy"?"Trace the first partition":"Trace the full quicksort";
   $("task-intro").textContent="Work out the pivot's final position and the whole array after this partition.";
   $("array-label").textContent=`Before partition ${traceStep+1}`;
   renderArray(s.before,s.low,s.high,s.high,$("array"));
@@ -159,7 +223,7 @@ function renderTrace(){
   for(const id of ["pivot-answer","position-answer","array-answer","left-answer","right-answer"])$(id).value="";
   const showCalls=level!=="easy"&&traceStep===0;
   $("left-field").hidden=!showCalls;$("right-field").hidden=!showCalls;
-  $("check-trace").textContent=traceStep===currentSteps.length-1?"Check trace → Fix code":"Check trace → Next partition";
+  $("check-trace").textContent=traceStep===currentSteps.length-1?(level==="hard"?"Check trace → Stack":"Check trace → Fix code"):"Check trace → Next partition";
 }
 function checkTrace(){
   const s=currentSteps[traceStep], pivot=Number($("pivot-answer").value),position=Number($("position-answer").value);
@@ -178,11 +242,47 @@ function checkTrace(){
   }
   traceStep++;
   if(traceStep<currentSteps.length){renderTrace();feedback("Correct. Follow the next recursive partition.",true);}
+  else if(level==="hard"){renderStack();feedback("Trace complete. Now work through the recursive call stack.",true);}
   else {renderFix();feedback("Trace complete. Now repair the C# implementation.",true);}
+}
+
+function renderStack(){
+  shown("stack-stage");clearFeedback();
+  const s=stackCheckpoints[stackStep];
+  $("stage").textContent="2 · RECURSION STACK";
+  $("step-count").textContent=`Checkpoint ${stackStep+1} of ${stackCheckpoints.length}`;
+  $("task-title").textContent="Predict the next stack change";
+  $("stack-context").textContent=s.context;
+  $("stack-frames").replaceChildren();
+  [...s.stack].reverse().forEach((f,i)=>{
+    const frame=document.createElement("div");frame.className="stack-frame"+(i===0?" stack-top":"");
+    const name=document.createElement("strong");name.textContent=`QuickSort(a, ${f.low}, ${f.high})`;
+    const label=document.createElement("small");label.textContent=i===0?"TOP · CURRENT CALL":"WAITING · PARENT CALL";
+    frame.append(name,label);$("stack-frames").append(frame);
+  });
+  stackChoice="";
+  document.querySelectorAll("[data-stack-action]").forEach(b=>b.setAttribute("aria-pressed","false"));
+  $("stack-top-answer").value="";
+  $("check-stack").textContent=stackStep===stackCheckpoints.length-1?"Check stack → Debug code":"Check stack → Next checkpoint";
+}
+
+function checkStack(){
+  const s=stackCheckpoints[stackStep];
+  const expected=s.nextTop?`${s.nextTop.low}..${s.nextTop.high}`:"empty";
+  const answer=$("stack-top-answer").value.trim();
+  const topCorrect=s.nextTop?sameRange(answer,expected):/^(empty|none)$/i.test(answer);
+  if(stackChoice!==s.nextAction||!topCorrect){
+    stackFirstTry=false;
+    feedback(stackChoice!==s.nextAction?"Think about whether the next call begins (PUSH) or an existing call returns (POP).":"Check the new top of the stack: which QuickSort(low, high) call is active after that change?",false);
+    return;
+  }
+  stackStep++;
+  if(stackStep<stackCheckpoints.length){renderStack();feedback("Correct. The stack changes as recursive calls start and return.",true);}
+  else{renderFix();feedback("Stack trace complete. Now repair the C# logic errors.",true);}
 }
 function renderFix(){
   shown("fix-stage");clearFeedback();
-  $("stage").textContent="2 · FIX CODE";$("step-count").textContent=`${selectedFaults().length} faulty line(s)`;
+  $("stage").textContent=level==="hard"?"3 · DEBUG CODE":"2 · FIX CODE";$("step-count").textContent=`${selectedFaults().length} faulty line(s)`;
   $("task-title").textContent="Debug the C# quicksort";
   const faults=selectedFaults(), faultyByLine=new Map(faults.map(f=>[f.line,f]));
   $("mistake-count").textContent=`${faults.length} incorrect ${faults.length===1?"line":"lines"}`;
@@ -212,31 +312,31 @@ function checkFix(){
   const faults=selectedFaults();
   const wrong=faults.find(f=>!sameLine($(`fix-${f.key}`).value,f.correct));
   if(wrong){fixFirstTry=false;feedback(`Line ${wrong.line} still needs correcting. ${wrong.hint}`,false);return;}
-  scores[question]={trace:Number(traceFirstTry),fix:Number(fixFirstTry)};
+  scores[question]={trace:Number(traceFirstTry),stack:level==="hard"?Number(stackFirstTry):0,fix:Number(fixFirstTry)};
   if(scores.every(s=>s!==null)){
-    const total=scores.reduce((n,s)=>n+s.trace+s.fix,0);
+    const total=scores.reduce((n,s)=>n+earned(s),0);
     if(best[level]===undefined||total>best[level]){best[level]=total;try{localStorage.setItem(STORAGE_KEY,JSON.stringify(best));}catch(_){}}
   }
   header();showComplete();
 }
 function showComplete(){
   shown("complete-stage");clearFeedback();
-  $("stage").textContent="3 · TEST";$("step-count").textContent="Challenge complete";
+  $("stage").textContent=level==="hard"?"4 · TEST":"3 · TEST";$("step-count").textContent="Challenge complete";
   $("task-title").textContent="Your repairs match the reference code";
-  const mark=scores[question].trace+scores[question].fix;
+  const mark=earned(scores[question]);
   const last=question===4;
-  $("result-heading").textContent=`${mark}/2 first-attempt marks`;
+  $("result-heading").textContent=`${mark}/${level==="hard"?3:2} first-attempt marks`;
   $("result-text").textContent="The corrected lines match this lesson's reference implementation. This check does not compile C#. Copy the working program and run it in .NET Fiddle to verify the output or change the input."+
-    (last?` Level total: ${scores.reduce((n,s)=>n+s.trace+s.fix,0)}/10; target 8/10.`:"");
+    (last?` Level total: ${scores.reduce((n,s)=>n+earned(s),0)}/${scoreMax()}; target ${Math.ceil(scoreMax()*.8)}/${scoreMax()}.`:"");
   $("next-challenge").textContent=last?"New practice set ↻":"Next challenge →";
 }
 function randomArray(){
-  const size=level==="easy"?3+Math.floor(Math.random()*2):level==="medium"?5+Math.floor(Math.random()*3):8+Math.floor(Math.random()*5);
+  const size=level==="easy"?3+Math.floor(Math.random()*2):level==="medium"?8+Math.floor(Math.random()*5):10+Math.floor(Math.random()*6);
   const values=[];
   while(values.length<size){
-    const n=1+Math.floor(Math.random()*(level==="easy"?9:level==="medium"?18:24));
-    if(level==="hard"&&values.length===Math.floor(size/2)){values.push(values[1]);continue;}
-    if(level!=="hard"&&values.includes(n))continue;
+    const n=1+Math.floor(Math.random()*(level==="easy"?9:level==="medium"?20:26));
+    if(level!=="easy"&&values.length===Math.floor(size/2)){values.push(values[1]);continue;}
+    if(level==="easy"&&values.includes(n))continue;
     values.push(n);
   }
   return values;
@@ -319,27 +419,53 @@ async function copyWorkingCode(button){
 }
 
 const demo=traceQuickSort(DEMO_INPUT);
+const demoStack=chooseStackCheckpoints(DEMO_INPUT);
 function renderDemo(){
-  const s=demo.steps[demoIndex],first=demoIndex===0;
-  $("demo-count").textContent=`PARTITION ${demoIndex+1} OF ${demo.steps.length}`;
-  $("demo-description").textContent=`${first?"Start with":"Continue on"} low=${s.low}, high=${s.high}. Pivot = ${s.pivot} (last element). After partition: [${s.after.join(", ")}]. Pivot ${s.pivot} is fixed at index ${s.p}. Next ranges: ${s.left} and ${s.right}.`;
-  $("demo-array").replaceChildren();
-  s.after.forEach((n,i)=>{
-    const el=document.createElement("span");el.className="demo-cell"+(i===s.p?" pivot":"");el.textContent=String(n);$("demo-array").append(el);
-  });
+  const onStack=demoIndex>=demo.steps.length;
+  $("demo-array").hidden=onStack;
+  $("demo-stack").hidden=!onStack;
+  if(onStack){
+    const s=demoStack[demoIndex-demo.steps.length];
+    $("demo-count").textContent=`RECURSION STACK · CHECKPOINT ${demoIndex-demo.steps.length+1} OF ${demoStack.length}`;
+    const top=s.nextTop?`QuickSort(a, ${s.nextTop.low}, ${s.nextTop.high})`:"empty";
+    $("demo-description").textContent=`${s.context} NEXT: ${s.nextAction.toUpperCase()}. New top of stack: ${top}.`;
+    $("demo-stack").replaceChildren();
+    [...s.stack].reverse().forEach((f,i)=>{
+      const el=document.createElement("div");el.className="stack-frame"+(i===0?" stack-top":"");
+      el.textContent=`${i===0?"TOP · ":"WAITING · "}QuickSort(a, ${f.low}, ${f.high})`;
+      $("demo-stack").append(el);
+    });
+  }else{
+    const s=demo.steps[demoIndex],first=demoIndex===0;
+    $("demo-count").textContent=`PARTITION ${demoIndex+1} OF ${demo.steps.length}`;
+    $("demo-description").textContent=`${first?"Start with":"Continue on"} low=${s.low}, high=${s.high}. Pivot = ${s.pivot} (last element). After partition: [${s.after.join(", ")}]. Pivot ${s.pivot} is fixed at index ${s.p}. Next ranges: ${s.left} and ${s.right}.`;
+    $("demo-array").replaceChildren();
+    s.after.forEach((n,i)=>{
+      const el=document.createElement("span");el.className="demo-cell"+(i===s.p?" pivot":"");el.textContent=String(n);$("demo-array").append(el);
+    });
+  }
   $("demo-prev").disabled=demoIndex===0;
-  $("demo-next").textContent=demoIndex===demo.steps.length-1?"Start again ↻":"Next step →";
+  $("demo-next").textContent=demoIndex===demo.steps.length+demoStack.length-1?"Start again ↻":"Next step →";
 }
 
 document.querySelectorAll("[data-level]").forEach(b=>b.addEventListener("click",()=>chooseLevel(b.dataset.level)));
+document.querySelectorAll("[data-stack-action]").forEach(b=>b.addEventListener("click",()=>{
+  stackChoice=b.dataset.stackAction;
+  document.querySelectorAll("[data-stack-action]").forEach(other=>other.setAttribute("aria-pressed",String(other===b)));
+}));
 $("check-trace").addEventListener("click",checkTrace);
+$("check-stack").addEventListener("click",checkStack);
 $("check-fix").addEventListener("click",checkFix);
 $("show-hint").addEventListener("click",()=>feedback("Follow the exact loop: examine j from low to high-1; swap each value ≤ pivot into the left section; finally swap the pivot into index i+1.",false));
+$("show-stack-hint").addEventListener("click",()=>{
+  const s=stackCheckpoints[stackStep];
+  feedback(s.nextAction==="push"?"The current call has reached a recursive QuickSort(...) line. A new call is about to be pushed on top.":"The current call has finished or hit its base case. Returning removes its frame from the stack.",false);
+});
 $("show-fix-hint").addEventListener("click",()=>feedback(selectedFaults().map(f=>`Line ${f.line}: ${f.hint}`).join("  "),false));
 $("next-challenge").addEventListener("click",()=>{if(question===4)newSet();else{question++;startQuestion();}});
 $("new-set").addEventListener("click",newSet);
 $("open-demo").addEventListener("click",()=>{demoIndex=0;renderDemo();$("demo-dialog").showModal();});
-$("demo-next").addEventListener("click",()=>{demoIndex=(demoIndex+1)%demo.steps.length;renderDemo();});
+$("demo-next").addEventListener("click",()=>{demoIndex=(demoIndex+1)%(demo.steps.length+demoStack.length);renderDemo();});
 $("demo-prev").addEventListener("click",()=>{demoIndex=Math.max(0,demoIndex-1);renderDemo();});
 $("open-reference").addEventListener("click",()=>{$("reference-code").textContent=csharpSource(arrayForQuestion());$("reference-dialog").showModal();});
 $("copy-reference").addEventListener("click",()=>copyWorkingCode($("copy-reference")));
