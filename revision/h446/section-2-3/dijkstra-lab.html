@@ -40,7 +40,7 @@ pre{background:#142f27;color:#eefdf2;padding:18px;border-radius:13px;white-space
 pre .focus{color:#ffe39c;font-weight:850}.code-answer{width:100%;min-height:57px;border:1px solid #92b5a0;border-radius:10px;padding:11px 13px;font-family:ui-monospace,Consolas,monospace;font-size:1rem;resize:vertical}
 .code-panel{grid-column:1/-1}.code-layout{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(280px,.7fr);gap:17px}
 .finish{padding:20px;text-align:center;background:#eff8f2;border:1px solid #d6e7da;border-radius:13px}.finish h2{margin-top:0}
-.small{font-size:.86rem;color:#6b8074}.classroom header,.classroom .top,.classroom .controls{display:none}.classroom{background:#fff}.classroom main{padding:6px;max-width:none}.classroom .layout{gap:10px;grid-template-columns:minmax(0,1.4fr) minmax(265px,.9fr)}.classroom .panel{border-radius:10px;box-shadow:none}.classroom .panel-pad{padding:12px}.classroom .graph{max-height:270px}.classroom .prompt{margin:8px 0}
+.small{font-size:.86rem;color:#6b8074}.classroom header,.classroom .top,.classroom .controls{display:none}.classroom{background:#fff}.classroom main{padding:6px;max-width:none}.classroom .layout{gap:10px;grid-template-columns:minmax(0,1.4fr) minmax(265px,.9fr)}.classroom .panel{border-radius:10px;box-shadow:none}.classroom .panel-pad{padding:10px}.classroom .graph{max-height:235px}.classroom .prompt{margin:8px 0}.classroom td,.classroom th{padding:8px 6px}
 .classroom .code-panel{max-width:100%}.classroom pre{font-size:clamp(.84rem,1.32vw,1.05rem);max-height:34vh}
 @media(max-width:850px){.layout,.classroom .layout,.code-layout{grid-template-columns:1fr}.controls .levels{margin-left:0}.top{align-items:center}.graph{max-height:255px}main{padding:14px}.classroom .graph{max-height:260px}}
 @media(max-width:520px){.score{font-size:.75rem}.top{flex-wrap:wrap}.intro{font-size:.87rem}.seg button{padding:8px 11px}.controls{margin-top:14px}.panel-pad{padding:14px}.update-table th,.update-table td{padding:6px 3px}.update-table input,.update-table select{font-size:.82rem}.work-row{grid-template-columns:1fr}}
@@ -116,7 +116,23 @@ function graphAside(){const instructions=level==='easy'?'Start at distance 0. Ot
 function renderGraph(){workspace.innerHTML=`<div class="layout"><div class="panel panel-pad"><div class="head-row"><span class="kicker">${classroom?'Classroom example':level+' · graph '+Math.max(1,sampleIndex[level])}</span><span class="mark">${state.g.start} → ${state.g.goal}</span></div><h2>Find the shortest route</h2><p class="explain">Weights show the cost of each connection. All weights are non-negative.</p>${drawGraph()}${graphPrompt()}<div class="feedback ${feedbackType}" role="status">${esc(feedback)}</div></div>${graphAside()}</div>`;
 workspace.querySelectorAll('[data-pick]').forEach(b=>b.addEventListener('click',()=>choose(b.dataset.pick)));
 workspace.querySelector('#apply')?.addEventListener('click',applyUpdate);workspace.querySelector('#check-route')?.addEventListener('click',checkRoute);workspace.querySelector('#next-graph')?.addEventListener('click',nextGraph);workspace.querySelector('#reset-graph')?.addEventListener('click',()=>{sampleIndex[level]=Math.max(0,sampleIndex[level]-1);nextGraph()});
-workspace.querySelector('#model')?.addEventListener('toggle',e=>{if(e.target.open){const el=workspace.querySelector('#model-text');if(el)el.innerHTML=modelGraphStep()}})}
+workspace.querySelector('#model')?.addEventListener('toggle',e=>{if(e.target.open){const el=workspace.querySelector('#model-text');if(el)el.innerHTML=modelGraphStep()}});
+// Teacher-only step reveal: fill the proposed table, then discuss/check it.
+if(classroom&&state.stage==='update'&&workspace.querySelector('#apply')){
+ const fill=document.createElement('button');fill.type='button';fill.className='secondary';fill.textContent='Fill model values';
+ workspace.querySelector('#apply').after(fill);
+ fill.addEventListener('click',()=>{
+   for(const e of adjacent(state.focus).filter(x=>!state.visited.has(x.to))){
+     const best=state.dist[state.focus]+e.w;
+     const better=best<state.dist[e.to];
+     const distance=workspace.querySelector(`[data-distance="${e.to}"]`);
+     const previous=workspace.querySelector(`[data-prev="${e.to}"]`);
+     if(distance)distance.value=fmt(better?best:state.dist[e.to]);
+     if(previous)previous.value=better?state.focus:(state.previous[e.to]||'');
+   }
+ });
+}
+}
 function modelGraphStep(){if(state.stage==='pick'){const best=Math.min(...state.g.v.map(v=>v[0]).filter(n=>!state.visited.has(n)).map(n=>state.dist[n]));return `<p>Choose ${state.g.v.map(v=>v[0]).filter(n=>!state.visited.has(n)&&state.dist[n]===best).join(' or ')}: smallest distance is ${fmt(best)}.</p>`}
 if(state.stage==='update')return adjacent(state.focus).filter(e=>!state.visited.has(e.to)).map(e=>{const candidate=state.dist[state.focus]+e.w,better=candidate<state.dist[e.to];return `<p>${state.focus}→${e.to}: ${fmt(state.dist[state.focus])}+${e.w}=${candidate}. ${better?`Update ${e.to} to ${candidate}; previous = ${state.focus}.`:`Keep ${fmt(state.dist[e.to])}; no improvement.`}</p>`}).join('')||'<p>No neighbours to update.</p>';
 return `<p>Follow the previous nodes backwards, then reverse: ${route().join(' → ')}. Distance ${fmt(state.dist[state.g.goal])}.</p>`}
