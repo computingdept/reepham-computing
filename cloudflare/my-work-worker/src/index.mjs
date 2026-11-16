@@ -206,6 +206,26 @@ async function work(env, code, cohort) {
     .map(item => [item.assignmentKey, item])).values()];
 }
 
+// One-off H446 Classwork pilot. Only assigned conversion work is available
+// during lessons, and it expires seven days after the teacher assigns it.
+const CLASSWORK_CONVERSION = /^(12|13)\|h446-skill-p1-convert\|both$/;
+export async function liveClasswork(env, student, key) {
+  if (!CLASSWORK_CONVERSION.test(key || '')) return false;
+  const cohort = await env.DB.prepare(`
+    SELECT assignment_key FROM assignments
+    WHERE assignment_key = ? AND cohort = ? AND active = 1
+      AND created_at >= datetime('now', '-7 days')
+  `).bind(key, student.cohort).first();
+  if (cohort) return true;
+  const individual = await env.DB.prepare(`
+    SELECT s.assignment_key FROM student_assignments s
+    JOIN assignments a ON a.assignment_key = s.assignment_key
+    WHERE s.assignment_key = ? AND s.code = ? AND s.active = 1
+      AND s.created_at >= datetime('now', '-7 days')
+  `).bind(key, student.code).first();
+  return Boolean(individual);
+}
+
 async function handle(request, env) {
   const url = new URL(request.url);
   const path = url.pathname;
@@ -220,16 +240,24 @@ async function handle(request, env) {
   }
 
   if (path === '/v1/work' && request.method === 'POST') {
-    if (!isIndependentWorkTime() && !teacherIsValid(request, env)) return respond({ error: INDEPENDENT_WORK_SCHEDULE }, 403);
     const { code } = await jsonBody(request);
     const student = code === undefined ? await sessionLearner(request, env)
       : codeIsValid(code) ? await learner(env, code) : null;
     if (!student) return respond({ error: 'Practice code not recognised' }, 404);
-    return respond({ cohort: student.cohort, work: await work(env, student.code, student.cohort) });
+    const outsideLesson = isIndependentWorkTime() || teacherIsValid(request, env);
+    const assigned = await work(env, student.code, student.cohort);
+    const visible = [];
+    for (const item of assigned) {
+      const classwork = CLASSWORK_CONVERSION.test(item.assignmentKey || '');
+      if (classwork) {
+        if (await liveClasswork(env, student, item.assignmentKey)) visible.push(item);
+      } else if (outsideLesson) visible.push(item);
+    }
+    if (!outsideLesson && !visible.length) return respond({ error: INDEPENDENT_WORK_SCHEDULE }, 403);
+    return respond({ cohort: student.cohort, work: visible });
   }
 
   if (path === '/v1/attempts' && request.method === 'POST') {
-    if (!isIndependentWorkTime() && !teacherIsValid(request, env)) return respond({ error: INDEPENDENT_WORK_SCHEDULE }, 403);
     const { code, assignmentKey: key, attemptId, score, level, source } = await jsonBody(request);
     // Pilot Skills can submit through the anonymous login session. Legacy
     // practice-code submissions remain supported for existing clients.
@@ -251,6 +279,13 @@ async function handle(request, env) {
     let activity = await env.DB.prepare('SELECT assignment_key FROM assignments WHERE assignment_key = ? AND cohort = ? AND active = 1').bind(key, student.cohort).first();
     if (!activity) activity = await env.DB.prepare('SELECT assignment_key FROM student_assignments WHERE assignment_key = ? AND code = ? AND active = 1').bind(key, student.code).first();
     if (!activity) return respond({ error: 'This activity is not assigned' }, 403);
+    const isClasswork = CLASSWORK_CONVERSION.test(key);
+    if (isClasswork && !(await liveClasswork(env, student, key))) {
+      return respond({ error: 'This Classwork assignment has expired' }, 403);
+    }
+    if (!isIndependentWorkTime() && !teacherIsValid(request, env) && !isClasswork) {
+      return respond({ error: INDEPENDENT_WORK_SCHEDULE }, 403);
+    }
     const recent = await env.DB.prepare("SELECT COUNT(*) AS n FROM attempts WHERE code = ? AND created_at > datetime('now', '-1 minute')").bind(student.code).first();
     if (Number(recent?.n || 0) >= 8) return respond({ error: 'Please wait before submitting more attempts' }, 429);
     const result = await env.DB.prepare(`
