@@ -203,6 +203,8 @@ function startQuestion() {
 }
 function renderArray(values,low,high,pivotAt,container){
   container.replaceChildren();
+  container.classList.toggle("long-array",values.length>=10);
+  container.style.setProperty("--cell-count",String(values.length));
   values.forEach((value,i)=>{
     const el=document.createElement("div");el.className="cell"+(i===pivotAt?" pivot":"")+(i<low||i>high?" inactive":"");
     const n=document.createElement("strong");n.textContent=value;
