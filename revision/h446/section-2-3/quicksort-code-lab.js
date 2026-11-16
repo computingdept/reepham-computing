@@ -62,6 +62,7 @@ let level = "easy", question = 0, traceStep = 0, offset = 0;
 let scores = [null,null,null,null,null];
 let traceFirstTry = true, fixFirstTry = true;
 let currentSteps = [], demoIndex = 0;
+let activeQuestions = QUESTIONS.easy.map(a=>a.slice());
 let best = {};
 try { best = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch (_) { best = {}; }
 
@@ -94,7 +95,7 @@ function traceQuickSort(input) {
 }
 
 function arrayForQuestion() {
-  return QUESTIONS[level][(question+offset)%5].slice();
+  return activeQuestions[question].slice();
 }
 function selectedFaults() {
   return FAULT_SETS[level][(question+offset)%5].map(key=>({key,...FAULTS[key],correct:CODE[FAULTS[key].line-1]}));
@@ -186,10 +187,18 @@ function renderFix(){
   const faults=selectedFaults(), faultyByLine=new Map(faults.map(f=>[f.line,f]));
   $("mistake-count").textContent=`${faults.length} incorrect ${faults.length===1?"line":"lines"}`;
   $("faulty-code").replaceChildren();
+  // Keep the code and answer fields in the same viewport where possible.
+  // Show the method headers and each faulty line with its nearest context.
+  const visible=new Set([1,7]);
+  faults.forEach(f=>{for(let n=f.line-1;n<=f.line+1;n++)if(n>=1&&n<=CODE.length)visible.add(n);});
+  let previous=0;
   CODE.forEach((line,i)=>{
+    if(!visible.has(i+1))return;
+    if(previous && i+1>previous+1){const ellipsis=document.createElement("div");ellipsis.className="code-line";ellipsis.textContent="   ⋯";$("faulty-code").append(ellipsis);}
     const row=document.createElement("div"),number=document.createElement("span"),txt=document.createElement("span"),fault=faultyByLine.get(i+1);
     row.className="code-line"+(fault?" bad":"");number.className="number";number.textContent=String(i+1).padStart(2,"0");
     txt.textContent=fault?fault.bad:line;row.append(number,txt);$("faulty-code").append(row);
+    previous=i+1;
   });
   $("fix-fields").replaceChildren();
   faults.forEach(f=>{
@@ -221,8 +230,19 @@ function showComplete(){
     (last?` Level total: ${scores.reduce((n,s)=>n+s.trace+s.fix,0)}/10; target 8/10.`:"");
   $("next-challenge").textContent=last?"New practice set ↻":"Next challenge →";
 }
-function newSet(){offset=(offset+1)%5;question=0;scores=[null,null,null,null,null];startQuestion();}
-function chooseLevel(next){if(!QUESTIONS[next])return;level=next;question=0;offset=0;scores=[null,null,null,null,null];startQuestion();}
+function randomArray(){
+  const size=level==="easy"?3+Math.floor(Math.random()*2):level==="medium"?5+Math.floor(Math.random()*3):8+Math.floor(Math.random()*5);
+  const values=[];
+  while(values.length<size){
+    const n=1+Math.floor(Math.random()*(level==="easy"?9:level==="medium"?18:24));
+    if(level==="hard"&&values.length===Math.floor(size/2)){values.push(values[1]);continue;}
+    if(level!=="hard"&&values.includes(n))continue;
+    values.push(n);
+  }
+  return values;
+}
+function newSet(){offset=(offset+1)%5;question=0;activeQuestions=Array.from({length:5},randomArray);scores=[null,null,null,null,null];startQuestion();}
+function chooseLevel(next){if(!QUESTIONS[next])return;level=next;question=0;offset=0;activeQuestions=QUESTIONS[next].map(a=>a.slice());scores=[null,null,null,null,null];startQuestion();}
 
 // This is a genuine compilable C# console program, not code executed by JS.
 function csharpSource(values){
