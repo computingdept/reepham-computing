@@ -94,6 +94,30 @@ const codeBank={
 let sampleIndex={easy:0,medium:0,hard:0},state=null,stageFirst=true,feedback='',feedbackType='',codeIndex=0,codeFirst=true,codeFeedback='',codeFeedbackType='';
 const workspace=document.getElementById('workspace');
 const norm=s=>String(s).toLowerCase().replace(/[\s;]/g,'').replace(/²/g,'^2');
+function acceptsCodeAnswer(task, raw){
+  const typed=norm(raw);
+  if(!typed)return false;
+  const accepted=[...task.answer];
+  const missingLine=task.code.split('\n').find(line=>line.includes('______'));
+  if(missingLine){
+    accepted.push(missingLine.replace('______',task.model));
+    accepted.push(task.code.replace('______',task.model));
+  }
+  if(task.title==='Add the edge weight'){
+    accepted.push('4','int newDistance = currentDistance + 4;');
+  }
+  if(task.title==='Fix the comparison'){
+    accepted.push('if ('+task.model+')');
+  }
+  if(task.title==='Fix a logic bug'){
+    accepted.push('if ('+task.model+')');
+    accepted.push('if (!visited.Contains(node) && '+task.model+')');
+  }
+  if(task.title==='Trace an improvement'){
+    accepted.push('distance["B"] = 5;','distance["B"] = candidate;');
+  }
+  return accepted.some(answer=>norm(answer)===typed);
+}
 const storeKey='rhs-h446-dijkstra-skills-v1';
 function getProgress(){try{return JSON.parse(localStorage.getItem(storeKey)||'{}')}catch(_){return {}}}
 function updateScore(){const p=getProgress()[mode+'-'+level]||{attempts:0,correct:0};document.getElementById('score').textContent=p.attempts?`First attempts: ${Math.round(p.correct/p.attempts*100)}%`:'First attempts: —';}
@@ -193,8 +217,8 @@ const ok=!error;firstAttempt(ok);if(!ok){feedback=error;feedbackType='bad';const
 updated.forEach(x=>{state.dist[x.to]=x.d;if(x.prev)state.previous[x.to]=x.prev});state.visited.add(state.focus);if(state.focus===state.g.goal){state.stage='route'}else state.stage='pick';state.focus=null;stageFirst=true;feedback='Correct. The table now shows the best distances.';feedbackType='good';renderGraph()}
 function checkRoute(){const raw=workspace.querySelector('#route-answer')?.value||'';const parts=raw.toUpperCase().split(/[^A-Z]+/).filter(Boolean);const cost=Number(workspace.querySelector('#cost-answer')?.value);let sum=0,valid=parts[0]===state.g.start&&parts.at(-1)===state.g.goal;for(let i=1;i<parts.length;i++){const e=state.g.e.find(x=>(x[0]===parts[i-1]&&x[1]===parts[i])||(x[1]===parts[i-1]&&x[0]===parts[i]));if(!e){valid=false;break}sum+=e[2]}const ok=valid&&sum===state.dist[state.g.goal]&&cost===sum;firstAttempt(ok);if(!ok){feedback='Check the previous nodes and add every edge weight on your route.';feedbackType='bad';const el=workspace.querySelector('.feedback');if(el){el.textContent=feedback;el.className='feedback bad'}return}state.finished=true;feedback='';feedbackType='';renderGraph()}
 function codeTask(){return codeBank[level][codeIndex%codeBank[level].length]}
-function renderCode(){const t=codeTask();workspace.innerHTML=`<div class="panel panel-pad code-panel"><div class="head-row"><span class="kicker">${classroom?'Classroom coding example':levelNames[level]+' · code '+(codeIndex%5+1)+' of 5'}</span><span class="mark">C# · read → complete → check</span></div><div class="code-layout"><div><h2>${esc(t.title)}</h2><p class="prompt">${esc(t.task)}</p><pre aria-label="Code context"><code>${esc(t.code)}</code></pre></div><div><label class="field" for="code-answer">Replace the blank or incorrect code with:</label><textarea id="code-answer" class="code-answer" rows="3" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="Write the missing C# code"></textarea><div class="actions"><button class="primary" id="check-code">Check code</button><button class="secondary" id="next-code">Next task →</button></div><div class="feedback ${codeFeedbackType}" role="status">${esc(codeFeedback)}</div><details class="aside-box"><summary>Hint</summary><p>${esc(t.why)}</p></details><details class="aside-box"><summary>Model and explanation</summary><p><code>${esc(t.model)}</code></p><p>${esc(t.why)}</p></details><div class="aside-box"><strong>Code in context</strong><p>The task shows the surrounding lines. You only need to complete the specified part.</p></div></div></div></div>`;
-workspace.querySelector('#check-code').addEventListener('click',()=>{const answer=workspace.querySelector('#code-answer').value;const ok=t.answer.some(a=>norm(answer)===norm(a));firstCode(ok);const box=workspace.querySelector('.feedback');box.className='feedback '+(ok?'good':'bad');box.textContent=ok?'Correct. '+t.why:'Check the surrounding code and try again. Use the Hint if needed.'});
+function renderCode(){const t=codeTask();workspace.innerHTML=`<div class="panel panel-pad code-panel"><div class="head-row"><span class="kicker">${classroom?'Classroom coding example':levelNames[level]+' · code '+(codeIndex%5+1)+' of 5'}</span><span class="mark">C# · read → complete → check</span></div><div class="code-layout"><div><h2>${esc(t.title)}</h2><p class="prompt">${esc(t.task)}</p><pre aria-label="Code context"><code>${esc(t.code)}</code></pre></div><div><label class="field" for="code-answer">Enter the missing part or the complete corrected line:</label><textarea id="code-answer" class="code-answer" rows="3" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="Missing part or full C# line"></textarea><div class="actions"><button class="primary" id="check-code">Check code</button><button class="secondary" id="next-code">Next task →</button></div><div class="feedback ${codeFeedbackType}" role="status">${esc(codeFeedback)}</div><details class="aside-box"><summary>Hint</summary><p>${esc(t.why)}</p></details><details class="aside-box"><summary>Model and explanation</summary><p><code>${esc(t.model)}</code></p><p>${esc(t.why)}</p></details><div class="aside-box"><strong>Code in context</strong><p>The task shows the surrounding lines. You only need to complete the specified part.</p></div></div></div></div>`;
+workspace.querySelector('#check-code').addEventListener('click',()=>{const answer=workspace.querySelector('#code-answer').value;const ok=acceptsCodeAnswer(t,answer);firstCode(ok);const box=workspace.querySelector('.feedback');box.className='feedback '+(ok?'good':'bad');box.textContent=ok?'Correct. '+t.why:'Not quite. Check the value or comparison. You can enter just the missing part or the full corrected line.'});
 workspace.querySelector('#next-code').addEventListener('click',()=>{codeIndex++;codeFirst=true;codeFeedback='';codeFeedbackType='';renderCode()});}
 function render(){document.querySelector('#tab-graph').setAttribute('aria-pressed',String(mode==='graph'));document.querySelector('#tab-code').setAttribute('aria-pressed',String(mode==='code'));document.querySelectorAll('[data-level]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.level===level)));updateScore();if(mode==='graph'){if(!state)nextGraph();else renderGraph()}else renderCode()}
 document.querySelector('#tab-graph').addEventListener('click',()=>{mode='graph';state=null;render()});document.querySelector('#tab-code').addEventListener('click',()=>{mode='code';codeIndex=0;codeFirst=true;render()});document.querySelectorAll('[data-level]').forEach(b=>b.addEventListener('click',()=>{level=b.dataset.level;state=null;codeIndex=0;codeFirst=true;render()}));
