@@ -2958,3 +2958,14 @@ body:not(.answer-page) #i-do[data-ido-compact-history="true"] .ido-method
   line-height:1.18!important;
   margin:2px 0 5px;
 }
+
+
+/* Compact previously revealed code when the cumulative I Do history is enabled.
+   The active step keeps its normal readable size. */
+body:not(.answer-page) #i-do[data-ido-compact-history="true"] .ido-method
+  .ido-step:not([hidden]):has(~ .ido-step:not([hidden])) pre{
+  font-size:clamp(12px,1vw,15px)!important;
+  line-height:1.25!important;
+  padding:5px 9px!important;
+  margin:3px 0 5px!important;
+}
