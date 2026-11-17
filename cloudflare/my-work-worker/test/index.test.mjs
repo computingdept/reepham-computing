@@ -6,18 +6,21 @@ const TOKEN = 'fictional-teacher-secret-for-local-tests-only';
 const ORIGIN = 'https://rhsccs.org';
 
 function attemptStats(scores) {
-  const rounds = scores.filter(row => row.level !== 'q-easy' && row.level !== 'q-medium');
+  const rounds = scores.filter(row => !row.level.startsWith('q-'));
   const easy = scores.filter(row => row.level === 'q-easy');
   const medium = scores.filter(row => row.level === 'q-medium');
+  const quiz = scores.filter(row => row.level === 'q-quiz');
   return {
     attempts: rounds.length,
     bestScore: rounds.length ? Math.max(...rounds.map(row => row.score)) : null,
-    questionsAttempted: easy.length + medium.length,
-    firstTryCorrect: [...easy, ...medium].filter(row => row.score === 100).length,
+    questionsAttempted: easy.length + medium.length + quiz.length,
+    firstTryCorrect: [...easy, ...medium, ...quiz].filter(row => row.score === 100).length,
     easyQuestions: easy.length,
     easyCorrect: easy.filter(row => row.score === 100).length,
     mediumQuestions: medium.length,
-    mediumCorrect: medium.filter(row => row.score === 100).length
+    mediumCorrect: medium.filter(row => row.score === 100).length,
+    quizQuestions: quiz.length,
+    quizCorrect: quiz.filter(row => row.score === 100).length
   };
 }
 
@@ -54,7 +57,7 @@ class FakeD1 {
         }
         if (sql.includes('COUNT(*) AS n FROM attempts')) {
           return { n: [...this.attempts.values()].filter(x => x.code === args[0] &&
-            (!sql.includes("level IN ('q-easy', 'q-medium')") || ['q-easy','q-medium'].includes(x.level))).length };
+            (!sql.includes("level LIKE 'q-%'") || x.level.startsWith('q-'))).length };
         }
         if (sql.includes('FROM login_profiles l') && sql.includes('JOIN practice_codes p')) {
           const login = this.logins.get(args[0]);
@@ -228,6 +231,17 @@ test('H446 conversion Classwork is limited to an assigned seven-day window', asy
     code: student.code, assignment_key: key, active: 1, created_at: new Date().toISOString()
   });
   assert.equal(await liveClasswork({ DB: db }, student, key), true);
+});
+
+test('H446 1.4.1(a) MCQ Classwork uses the same seven-day assigned window', async () => {
+  const db = new FakeD1();
+  const student = { code: 'P-ABCDEFGHJK', cohort: 'Y12' };
+  const key = '12|h446-practice-141-a|';
+  db.assignments.set(key, { assignment_key: key, cohort: 'Y12', active: 1, created_at: new Date().toISOString() });
+  assert.equal(await liveClasswork({ DB: db }, student, key), true);
+  assert.equal(await liveClasswork({ DB: db }, student, '12|h446-practice-141-b|'), false);
+  db.assignments.get(key).created_at = '2020-01-01 00:00:00';
+  assert.equal(await liveClasswork({ DB: db }, student, key), false);
 });
 
 test('health, CORS and teacher-only write access', async () => {
@@ -460,6 +474,54 @@ test('one checked Conversion Grid answer immediately updates pupil and teacher p
     assert.equal(teacher.data.work[0].firstTryCorrect, 1);
     assert.equal([...db.attempts.values()].filter(row => row.level.startsWith('q-')).length, 2);
     assert.equal((await call(db, '/v1/teacher/student-progress', 'POST', { username: 'testfox' }, { teacher: true })).data.work.length, 0);
+  } finally {
+    globalThis.Date = RealDate;
+  }
+});
+
+test('Year 12 1.4.1(a) MCQ records each checked answer during lessons without changing old results', async () => {
+  const RealDate = globalThis.Date;
+  const duringLesson = new RealDate('2026-11-17T10:00:00Z');
+  globalThis.Date = class extends RealDate {
+    constructor(...args) { super(...(args.length ? args : [duringLesson.valueOf()])); }
+    static now() { return duringLesson.valueOf(); }
+  };
+  try {
+    const db = new FakeD1();
+    const codes = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y12', count: 2 }, { teacher: true })).data.codes;
+    await call(db, '/v1/teacher/logins', 'POST', { logins: [
+      { username: 'quizbird', code: codes[0], password: '1234' },
+      { username: 'quizfox', code: codes[1], password: '5678' }
+    ] }, { teacher: true });
+    const assigned = await call(db, '/v1/teacher/student-assignments', 'POST',
+      { username: 'quizbird', itemId: 'h446-practice-141-a', level: '' }, { teacher: true });
+    assert.equal(assigned.status, 201);
+    assert.equal(assigned.data.assignmentKey, '12|h446-practice-141-a|');
+    const session = (await call(db, '/v1/login', 'POST', { username: 'quizbird', password: '1234' })).data.session;
+    const other = (await call(db, '/v1/login', 'POST', { username: 'quizfox', password: '5678' })).data.session;
+    const workDuringLesson = await call(db, '/v1/work', 'POST', {}, { bearer: session });
+    assert.equal(workDuringLesson.status, 200, 'Assigned MCQ is visible during a school lesson');
+    assert.equal(workDuringLesson.data.work[0].itemId, 'h446-practice-141-a');
+    const question = { assignmentKey: assigned.data.assignmentKey, attemptId: crypto.randomUUID(), level: 'quiz', firstTryCorrect: true };
+    assert.equal((await call(db, '/v1/questions', 'POST', question)).status, 401);
+    assert.equal((await call(db, '/v1/questions', 'POST', question, { bearer: other })).status, 403);
+    assert.equal((await call(db, '/v1/questions', 'POST', { ...question, level: 'easy' }, { bearer: session })).status, 400);
+    assert.equal((await call(db, '/v1/questions', 'POST', { ...question, assignmentKey: '12|h446-practice-141-b|' }, { bearer: session })).status, 400);
+    const saved = await call(db, '/v1/questions', 'POST', question, { bearer: session });
+    assert.equal(saved.status, 200);
+    assert.equal(saved.data.saved, true);
+    assert.equal((await call(db, '/v1/questions', 'POST', question, { bearer: session })).data.duplicate, true);
+    await call(db, '/v1/questions', 'POST', { ...question, attemptId: crypto.randomUUID(), firstTryCorrect: false }, { bearer: session });
+    const updated = await call(db, '/v1/work', 'POST', {}, { bearer: session });
+    assert.deepEqual({ attempts: updated.data.work[0].attempts, answered: updated.data.work[0].questionsAttempted,
+      correct: updated.data.work[0].firstTryCorrect, quizQuestions: updated.data.work[0].quizQuestions,
+      quizCorrect: updated.data.work[0].quizCorrect },
+    { attempts: 0, answered: 2, correct: 1, quizQuestions: 2, quizCorrect: 1 });
+    const teacher = await call(db, '/v1/teacher/student-progress', 'POST', { username: 'quizbird' }, { teacher: true });
+    assert.equal(teacher.data.work[0].quizQuestions, 2);
+    assert.equal([...db.attempts.values()].every(row => row.level === 'q-quiz' && row.source === 'practice'), true);
+    db.individualAssignments.get(codes[0] + '|' + assigned.data.assignmentKey).created_at = '2020-01-01 00:00:00';
+    assert.equal((await call(db, '/v1/questions', 'POST', { ...question, attemptId: crypto.randomUUID() }, { bearer: session })).status, 403);
   } finally {
     globalThis.Date = RealDate;
   }

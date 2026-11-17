@@ -176,7 +176,7 @@
               <button type="button" class="button secondary" id="check-pupil-progress">Refresh score</button>
             </div>
             <p class="sub">Uses the anonymous username entered on the left.</p>
-            <div id="pupil-progress" class="preview" aria-live="polite">Progress updates after each checked Conversion Grid question.</div>
+            <div id="pupil-progress" class="preview" aria-live="polite">Progress updates after each checked Conversion Grid or assigned 1.4.1(a) MCQ answer.</div>
           </section>
         </section>
       </div>
@@ -302,26 +302,46 @@
         const data = await request('/v1/teacher/student-progress', {
           method: 'POST', body: { username: anonymousUsername() }
         });
-        const conversionId = ['Y12','Y13'].includes($('cohort').value) ? 'h446-skill-p1-convert' : 'j277-skill-p1-convert';
-        const row = Array.isArray(data.work) ? data.work.find(item => item.itemId === conversionId) : null;
+        const h446 = ['Y12','Y13'].includes(data.cohort);
+        const tasks = [
+          { id: h446 ? 'h446-skill-p1-convert' : 'j277-skill-p1-convert', label: 'Conversion Grid', quiz: false },
+          ...(h446 ? [{ id: 'h446-practice-141-a', label: '1.4.1(a) · Primitive data types MCQ', quiz: true }] : [])
+        ];
         const node = $('pupil-progress');
         node.replaceChildren();
         const heading = document.createElement('strong');
-        heading.textContent = anonymousUsername() + ' · Conversion Grid';
+        heading.textContent = anonymousUsername() + ' · Year ' + data.cohort.slice(1);
         node.append(heading);
-        const rounds = Number(row?.attempts || 0);
-        const questions = Number(row?.questionsAttempted || 0);
-        if (questions > 0) {
+        for (const task of tasks) {
+          const row = Array.isArray(data.work) ? data.work.find(item => item.itemId === task.id) : null;
+          const title = document.createElement('h4');
+          title.textContent = task.label;
+          title.style.margin = '16px 0 4px';
+          node.append(title);
+          const rounds = Number(row?.attempts || 0);
+          const questions = Number(row?.questionsAttempted || 0);
+          if (!row || (!rounds && !questions)) {
+            const p = document.createElement('p');
+            p.textContent = row ? 'Assigned · No questions checked yet.' : 'Not assigned.';
+            node.append(p);
+            continue;
+          }
           const correct = Number(row.firstTryCorrect || 0);
+          const entries = questions > 0 ? [
+            [String(questions), task.quiz ? 'MCQs answered' : 'Questions attempted'],
+            [String(correct), 'Correct first time'],
+            [Math.round(100 * correct / questions) + '%', 'First-attempt accuracy'],
+            ...(task.quiz
+              ? [[`${Number(row.quizCorrect || 0)}/${Number(row.quizQuestions || 0)}`, 'Quiz correct']]
+              : [[`${Number(row.easyCorrect || 0)}/${Number(row.easyQuestions || 0)}`, 'Easy correct'],
+                 [`${Number(row.mediumCorrect || 0)}/${Number(row.mediumQuestions || 0)}`, 'Medium correct']])
+          ] : [
+            [String(rounds), 'Earlier rounds'],
+            [String(Math.round(Number(row.bestScore || 0) / 10)) + '/10', 'Best first time']
+          ];
           const stats = document.createElement('div');
           stats.className = 'score-line';
-          for (const [number, label] of [
-            [String(questions), 'Questions attempted'],
-            [String(correct), 'Correct first time'],
-            [String(Math.round(100 * correct / questions)) + '%', 'First-attempt accuracy'],
-            [String(Number(row.easyCorrect || 0)) + '/' + String(Number(row.easyQuestions || 0)), 'Easy correct'],
-            [String(Number(row.mediumCorrect || 0)) + '/' + String(Number(row.mediumQuestions || 0)), 'Medium correct']
-          ]) {
+          for (const [number, label] of entries) {
             const box = document.createElement('span');
             const numberEl = document.createElement('strong');
             numberEl.textContent = number;
@@ -329,35 +349,12 @@
             stats.append(box);
           }
           node.append(stats);
-          if (rounds) {
+          if (rounds && questions) {
             const p = document.createElement('p');
-            p.textContent = `${rounds} earlier completed 10-question round${rounds === 1 ? '' : 's'} also recorded.`;
+            p.textContent = `${rounds} earlier completed round${rounds === 1 ? '' : 's'} also recorded.`;
             node.append(p);
           }
-          return;
         }
-        if (!rounds) {
-          const p = document.createElement('p');
-          p.textContent = row ? 'Assigned · No questions checked yet.' : 'No Conversion Grid assignment for this pupil.';
-          node.append(p);
-          return;
-        }
-        const best = Number(row.bestScore);
-        const firstTime = Math.round(best / 10);
-        const stats = document.createElement('div');
-        stats.className = 'score-line';
-        for (const [number, label] of [
-          [String(rounds), 'Rounds completed'],
-          [String(firstTime) + '/10', 'Best first time'],
-          [String(10 - firstTime), 'Not first time']
-        ]) {
-          const box = document.createElement('span');
-          const numberEl = document.createElement('strong');
-          numberEl.textContent = number;
-          box.append(numberEl, document.createTextNode(label));
-          stats.append(box);
-        }
-        node.append(stats);
       } catch (error) {
         if (error.status === 401) disconnect('Teacher access expired. Connect again.');
         else $('pupil-progress').textContent = error.message;

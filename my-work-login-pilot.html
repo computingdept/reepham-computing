@@ -109,7 +109,7 @@
       if (level) link.searchParams.set('level', level);
       // An activity reference only. The Worker checks the real learner session
       // and assignment before accepting a recorded attempt.
-      if (['j277-skill-p1-convert','h446-skill-p1-convert'].includes(item.id) && assignmentKey) link.searchParams.set('workKey', assignmentKey);
+      if (['j277-skill-p1-convert','h446-skill-p1-convert','h446-practice-141-a'].includes(item.id) && assignmentKey) link.searchParams.set('workKey', assignmentKey);
       return link.pathname + link.search + link.hash;
     }
 
@@ -130,10 +130,11 @@
         if (href) links.push(`<a class="btn" href="${escapeHtml(href)}">Open ${kind}</a>`);
       }
       const isConversionPilot = ['j277-skill-p1-convert','h446-skill-p1-convert'].includes(row.itemId);
+      const isQuizPilot = row.itemId === 'h446-practice-141-a';
       const questions = Number(row.questionsAttempted || 0);
       const correct = Number(row.firstTryCorrect || 0);
       const accuracy = questions ? Math.round(100 * correct / questions) : 0;
-      const best = isConversionPilot && questions
+      const best = (isConversionPilot || isQuizPilot) && questions
         ? `${accuracy}% correct first time`
         : count ? (isConversionPilot ? `Best round: ${Number(row.bestScore)}%` : `Best recorded: ${Number(row.bestScore)}%`)
           : 'Not started';
@@ -141,6 +142,9 @@
         ? (questions ? `${questions} question${questions === 1 ? '' : 's'} attempted · ${correct} correct on the first check. Easy: ${Number(row.easyCorrect || 0)}/${Number(row.easyQuestions || 0)} · Medium: ${Number(row.mediumCorrect || 0)}/${Number(row.mediumQuestions || 0)}.${count ? ` ${count} earlier completed round${count === 1 ? '' : 's'} also recorded.` : ''}`
           : count ? `${count} earlier completed 10-question round${count === 1 ? '' : 's'}. New questions will save individually.`
             : 'Your first checked answer saves straight away. You can stop after one question.')
+        : isQuizPilot
+          ? (questions ? `${questions} MCQ answer${questions === 1 ? '' : 's'} recorded · ${correct} correct first time. The quiz has five questions; you can stop at any point.`
+            : 'Five MCQs. Every checked answer saves to My Work; you can stop after one.')
         : `${count} recorded attempt${count === 1 ? '' : 's'}`;
       return `<article class="card"><div class="card-top"><div><span class="meta">${escapeHtml(item?.workType === "classwork" ? "Classwork · " + kind : kind)}${item?.spec ? ' · ' + escapeHtml(item.spec) : ''}</span>
         <h2>${escapeHtml(title)}</h2></div><span class="status">${escapeHtml(best)}</span></div>
@@ -166,7 +170,7 @@
           <div class="summary"><span class="count"><strong>${data.work.length}</strong> assigned</span><span class="count"><strong>${recorded}</strong> with recorded practice</span></div>
           <section class="cards" aria-label="Assigned work">${data.work.length ? data.work.map(workCard).join('') : '<div class="panel empty"><h2>No work assigned yet</h2><p>Your login is ready. Your teacher will add your activities.</p></div>'}</section>
           <div class="actions"><button class="btn secondary" id="refresh">Refresh My Work</button></div>
-           <p class="note">Assigned Conversion Grid Easy and Medium save each question on its first check. Other activities are still being connected.</p>`;
+           <p class="note">Assigned Conversion Grid Easy and Medium and H446 1.4.1(a) MCQ save each first-checked answer. Other activities are still being connected.</p>`;
         document.getElementById('signOut').addEventListener('click', signOut);
         document.getElementById('refresh').addEventListener('click', showAssigned);
       } catch (error) {

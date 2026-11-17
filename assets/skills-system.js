@@ -51,25 +51,28 @@
       row.classList.toggle('is-active', row.dataset.line === String(lineNumber));
     });
   }
-  // Shared first-answer recording bridge for assigned Conversion Grid work.
+  // Shared first-answer recording bridge for assigned Skills and MCQ pilots.
   // The Worker resolves the anonymous pupil from their existing session.
   // A workKey in the URL is an activity reference, never authentication.
   function pilotQuestionContext(paper, sourceKey, level, assignmentKey) {
-    const isH446 = new URLSearchParams(global.location.search).get('course') === 'h446';
-    const assignmentPattern = isH446
-      ? /^(12|13)\|h446-skill-p1-convert\|both$/
-      : /^(10|11)\|j277-skill-p1-convert\|both$/;
-    if (paper !== 1 || sourceKey !== 'convert' ||
-        !['easy', 'medium'].includes(level) ||
-        !assignmentPattern.test(assignmentKey || '')) return null;
+    const isConversion = sourceKey === 'convert' &&
+      global.location.pathname.startsWith('/exercise/paper1/') &&
+      ['easy', 'medium'].includes(level) &&
+      (new URLSearchParams(global.location.search).get('course') === 'h446'
+        ? /^(12|13)\|h446-skill-p1-convert\|both$/.test(assignmentKey || '')
+        : /^(10|11)\|j277-skill-p1-convert\|both$/.test(assignmentKey || ''));
+    const isH446Quiz = sourceKey === 'h446-practice-141-a' && level === 'quiz' &&
+      global.location.pathname === '/revision/h446/section-1-4/index.html' &&
+      global.location.hash === '#1.4.1/141-a' &&
+      /^(12|13)\|h446-practice-141-a\|$/.test(assignmentKey || '');
+    if (paper !== 1 || (!isConversion && !isH446Quiz)) return null;
     let session = '';
     try { session = global.sessionStorage.getItem('rhs-my-work-learner-session-v1') || ''; } catch (_) {}
     if (!/^[A-Za-z0-9_-]{43}$/.test(session) || !global.crypto?.randomUUID || !global.fetch) return null;
     return { assignmentKey, session };
   }
   function reportQuestion(paper, sourceKey, level, firstTryCorrect) {
-    if (typeof firstTryCorrect !== 'boolean' ||
-        !global.location.pathname.startsWith('/exercise/paper1/')) return false;
+    if (typeof firstTryCorrect !== 'boolean') return false;
     const assignmentKey = new URLSearchParams(global.location.search).get('workKey');
     const context = pilotQuestionContext(paper, sourceKey, level, assignmentKey);
     if (!context) return false;

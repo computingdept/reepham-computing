@@ -189,28 +189,32 @@ async function learner(env, code) {
 async function work(env, code, cohort) {
   const groupWork = await env.DB.prepare(`
     SELECT a.assignment_key AS assignmentKey, a.item_id AS itemId, a.level,
-      COUNT(CASE WHEN t.level NOT IN ('q-easy', 'q-medium') THEN t.attempt_id END) AS attempts,
-      MAX(CASE WHEN t.level NOT IN ('q-easy', 'q-medium') THEN t.score END) AS bestScore,
-      COUNT(CASE WHEN t.level IN ('q-easy', 'q-medium') THEN t.attempt_id END) AS questionsAttempted,
-      COALESCE(SUM(CASE WHEN t.level IN ('q-easy', 'q-medium') AND t.score = 100 THEN 1 ELSE 0 END), 0) AS firstTryCorrect,
+      COUNT(CASE WHEN t.level NOT LIKE 'q-%' THEN t.attempt_id END) AS attempts,
+      MAX(CASE WHEN t.level NOT LIKE 'q-%' THEN t.score END) AS bestScore,
+      COUNT(CASE WHEN t.level LIKE 'q-%' THEN t.attempt_id END) AS questionsAttempted,
+      COALESCE(SUM(CASE WHEN t.level LIKE 'q-%' AND t.score = 100 THEN 1 ELSE 0 END), 0) AS firstTryCorrect,
       COUNT(CASE WHEN t.level = 'q-easy' THEN t.attempt_id END) AS easyQuestions,
       COALESCE(SUM(CASE WHEN t.level = 'q-easy' AND t.score = 100 THEN 1 ELSE 0 END), 0) AS easyCorrect,
       COUNT(CASE WHEN t.level = 'q-medium' THEN t.attempt_id END) AS mediumQuestions,
-      COALESCE(SUM(CASE WHEN t.level = 'q-medium' AND t.score = 100 THEN 1 ELSE 0 END), 0) AS mediumCorrect
+      COALESCE(SUM(CASE WHEN t.level = 'q-medium' AND t.score = 100 THEN 1 ELSE 0 END), 0) AS mediumCorrect,
+      COUNT(CASE WHEN t.level = 'q-quiz' THEN t.attempt_id END) AS quizQuestions,
+      COALESCE(SUM(CASE WHEN t.level = 'q-quiz' AND t.score = 100 THEN 1 ELSE 0 END), 0) AS quizCorrect
     FROM assignments a LEFT JOIN attempts t ON t.assignment_key = a.assignment_key AND t.code = ?
     WHERE a.cohort = ? AND a.active = 1
     GROUP BY a.assignment_key ORDER BY a.created_at DESC
   `).bind(code, cohort).all();
   const individualWork = await env.DB.prepare(`
     SELECT a.assignment_key AS assignmentKey, a.item_id AS itemId, a.level,
-      COUNT(CASE WHEN t.level NOT IN ('q-easy', 'q-medium') THEN t.attempt_id END) AS attempts,
-      MAX(CASE WHEN t.level NOT IN ('q-easy', 'q-medium') THEN t.score END) AS bestScore,
-      COUNT(CASE WHEN t.level IN ('q-easy', 'q-medium') THEN t.attempt_id END) AS questionsAttempted,
-      COALESCE(SUM(CASE WHEN t.level IN ('q-easy', 'q-medium') AND t.score = 100 THEN 1 ELSE 0 END), 0) AS firstTryCorrect,
+      COUNT(CASE WHEN t.level NOT LIKE 'q-%' THEN t.attempt_id END) AS attempts,
+      MAX(CASE WHEN t.level NOT LIKE 'q-%' THEN t.score END) AS bestScore,
+      COUNT(CASE WHEN t.level LIKE 'q-%' THEN t.attempt_id END) AS questionsAttempted,
+      COALESCE(SUM(CASE WHEN t.level LIKE 'q-%' AND t.score = 100 THEN 1 ELSE 0 END), 0) AS firstTryCorrect,
       COUNT(CASE WHEN t.level = 'q-easy' THEN t.attempt_id END) AS easyQuestions,
       COALESCE(SUM(CASE WHEN t.level = 'q-easy' AND t.score = 100 THEN 1 ELSE 0 END), 0) AS easyCorrect,
       COUNT(CASE WHEN t.level = 'q-medium' THEN t.attempt_id END) AS mediumQuestions,
-      COALESCE(SUM(CASE WHEN t.level = 'q-medium' AND t.score = 100 THEN 1 ELSE 0 END), 0) AS mediumCorrect
+      COALESCE(SUM(CASE WHEN t.level = 'q-medium' AND t.score = 100 THEN 1 ELSE 0 END), 0) AS mediumCorrect,
+      COUNT(CASE WHEN t.level = 'q-quiz' THEN t.attempt_id END) AS quizQuestions,
+      COALESCE(SUM(CASE WHEN t.level = 'q-quiz' AND t.score = 100 THEN 1 ELSE 0 END), 0) AS quizCorrect
     FROM student_assignments s JOIN assignments a ON a.assignment_key = s.assignment_key
     LEFT JOIN attempts t ON t.assignment_key = a.assignment_key AND t.code = s.code
     WHERE s.code = ? AND s.active = 1
@@ -220,11 +224,11 @@ async function work(env, code, cohort) {
     .map(item => [item.assignmentKey, item])).values()];
 }
 
-// One-off H446 Classwork pilot. Only assigned conversion work is available
-// during lessons, and it expires seven days after the teacher assigns it.
-const CLASSWORK_CONVERSION = /^(12|13)\|h446-skill-p1-convert\|both$/;
+// Assigned H446 pilot Classwork can run during lessons. Assignments expire
+// seven days after the teacher sets them; other practice remains time-gated.
+const CLASSWORK_PILOT = /^(12|13)\|h446-(?:skill-p1-convert\|both|practice-141-a\|)$/;
 export async function liveClasswork(env, student, key) {
-  if (!CLASSWORK_CONVERSION.test(key || '')) return false;
+  if (!CLASSWORK_PILOT.test(key || '')) return false;
   const cohort = await env.DB.prepare(`
     SELECT assignment_key FROM assignments
     WHERE assignment_key = ? AND cohort = ? AND active = 1
@@ -262,7 +266,7 @@ async function handle(request, env) {
     const assigned = await work(env, student.code, student.cohort);
     const visible = [];
     for (const item of assigned) {
-      const classwork = CLASSWORK_CONVERSION.test(item.assignmentKey || '');
+      const classwork = CLASSWORK_PILOT.test(item.assignmentKey || '');
       if (classwork) {
         if (await liveClasswork(env, student, item.assignmentKey)) visible.push(item);
       } else if (outsideLesson) visible.push(item);
@@ -293,7 +297,7 @@ async function handle(request, env) {
     let activity = await env.DB.prepare('SELECT assignment_key FROM assignments WHERE assignment_key = ? AND cohort = ? AND active = 1').bind(key, student.cohort).first();
     if (!activity) activity = await env.DB.prepare('SELECT assignment_key FROM student_assignments WHERE assignment_key = ? AND code = ? AND active = 1').bind(key, student.code).first();
     if (!activity) return respond({ error: 'This activity is not assigned' }, 403);
-    const isClasswork = CLASSWORK_CONVERSION.test(key);
+    const isClasswork = CLASSWORK_PILOT.test(key);
     if (isClasswork && !(await liveClasswork(env, student, key))) {
       return respond({ error: 'This Classwork assignment has expired' }, 403);
     }
@@ -316,9 +320,10 @@ async function handle(request, env) {
     const { assignmentKey: key, attemptId, level, firstTryCorrect } = await jsonBody(request);
     const student = await sessionLearner(request, env);
     if (!student) return respond({ error: 'Sign in to save your progress' }, 401);
-    if (typeof key !== 'string' ||
-        !/^(?:(?:10|11)\|j277-skill-p1-convert\|both|(?:12|13)\|h446-skill-p1-convert\|both)$/.test(key) ||
-        !['easy', 'medium'].includes(level) || typeof firstTryCorrect !== 'boolean' ||
+    const conversion = /^(?:(?:10|11)\|j277-skill-p1-convert\|both|(?:12|13)\|h446-skill-p1-convert\|both)$/.test(key || '') &&
+      ['easy', 'medium'].includes(level);
+    const dataTypesQuiz = /^(?:12|13)\|h446-practice-141-a\|$/.test(key || '') && level === 'quiz';
+    if (typeof key !== 'string' || (!conversion && !dataTypesQuiz) || typeof firstTryCorrect !== 'boolean' ||
         typeof attemptId !== 'string' || !/^[0-9a-f-]{36}$/i.test(attemptId)) {
       return respond({ error: 'Invalid question attempt' }, 400);
     }
@@ -328,7 +333,7 @@ async function handle(request, env) {
     if (!activity) activity = await env.DB.prepare('SELECT assignment_key FROM student_assignments WHERE assignment_key = ? AND code = ? AND active = 1')
       .bind(key, student.code).first();
     if (!activity) return respond({ error: 'This activity is not assigned' }, 403);
-    const classwork = CLASSWORK_CONVERSION.test(key);
+    const classwork = CLASSWORK_PILOT.test(key);
     if (classwork && !(await liveClasswork(env, student, key))) return respond({ error: 'This Classwork assignment has expired' }, 403);
     if (!classwork && !isIndependentWorkTime() && !teacherIsValid(request, env)) {
       return respond({ error: INDEPENDENT_WORK_SCHEDULE }, 403);
@@ -337,12 +342,12 @@ async function handle(request, env) {
       .bind(attemptId, student.code).first();
     if (previous) return respond({ saved: false, duplicate: true });
     const recent = await env.DB.prepare(`SELECT COUNT(*) AS n FROM attempts
-      WHERE code = ? AND level IN ('q-easy', 'q-medium') AND created_at > datetime('now', '-1 minute')`)
+      WHERE code = ? AND level LIKE 'q-%' AND created_at > datetime('now', '-1 minute')`)
       .bind(student.code).first();
     if (Number(recent?.n || 0) >= 40) return respond({ error: 'Please wait before saving more questions' }, 429);
     const result = await env.DB.prepare(`INSERT OR IGNORE INTO attempts
-      (attempt_id, code, assignment_key, score, level, source) VALUES (?, ?, ?, ?, ?, 'skill')`)
-      .bind(attemptId, student.code, key, firstTryCorrect ? 100 : 0, 'q-' + level).run();
+      (attempt_id, code, assignment_key, score, level, source) VALUES (?, ?, ?, ?, ?, ?)`)
+      .bind(attemptId, student.code, key, firstTryCorrect ? 100 : 0, 'q-' + level, dataTypesQuiz ? 'practice' : 'skill').run();
     return respond({ saved: Boolean(result.meta?.changes), duplicate: !result.meta?.changes });
   }
 

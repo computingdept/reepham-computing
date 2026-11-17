@@ -8,11 +8,12 @@ const script = fs.readFileSync(path.join(__dirname, 'skills-system.js'), 'utf8')
 const assignment = '10|j277-skill-p1-convert|both';
 const token = 'T'.repeat(43);
 
-function loadBridge({ session = token, query = '?skill=convert&workKey=' + encodeURIComponent(assignment) } = {}) {
+function loadBridge({ session = token, query = '?skill=convert&workKey=' + encodeURIComponent(assignment),
+  pathname = '/exercise/paper1/', hash = '' } = {}) {
   const calls = [];
   const events = [];
   const window = {
-    location: { pathname: '/exercise/paper1/', search: query },
+    location: { pathname, search: query, hash },
     sessionStorage: { getItem: () => session },
     localStorage: { getItem: () => null, setItem: () => {} },
     crypto: { randomUUID: () => '11111111-1111-4111-8111-111111111111' },
@@ -66,4 +67,26 @@ test('H446 assigned classwork uses the same question recording, with separate as
   const y12 = loadBridge({ query: '?course=h446&skill=convert&workKey=12%7Ch446-skill-p1-convert%7Cboth' });
   assert.equal(y12.bridge.reportQuestion(1, 'convert', 'medium', true), true);
   assert.equal(JSON.parse(y12.calls[0].options.body).assignmentKey, '12|h446-skill-p1-convert|both');
+});
+
+test('H446 1.4.1(a) MCQ saves individual answers without altering unrelated quizzes', () => {
+  const quiz = loadBridge({
+    pathname: '/revision/h446/section-1-4/index.html', hash: '#1.4.1/141-a',
+    query: '?workKey=12%7Ch446-practice-141-a%7C'
+  });
+  assert.equal(quiz.bridge.reportQuestion(1, 'h446-practice-141-a', 'quiz', false), true);
+  assert.equal(quiz.calls.length, 1);
+  const payload = JSON.parse(quiz.calls[0].options.body);
+  assert.deepEqual({ assignmentKey: payload.assignmentKey, level: payload.level, firstTryCorrect: payload.firstTryCorrect },
+    { assignmentKey: '12|h446-practice-141-a|', level: 'quiz', firstTryCorrect: false });
+  assert.equal(quiz.calls[0].options.headers.authorization, 'Bearer ' + token);
+  assert.equal('code' in payload, false);
+  const otherQuiz = loadBridge({
+    pathname: '/revision/h446/section-1-4/index.html', hash: '#1.4.1/141-b',
+    query: '?workKey=12%7Ch446-practice-141-a%7C'
+  });
+  assert.equal(otherQuiz.bridge.reportQuestion(1, 'h446-practice-141-a', 'quiz', true), false);
+  assert.equal(otherQuiz.calls.length, 0);
+  const noAssignment = loadBridge({ pathname: '/revision/h446/section-1-4/index.html', hash: '#1.4.1/141-a', query: '' });
+  assert.equal(noAssignment.bridge.reportQuestion(1, 'h446-practice-141-a', 'quiz', true), false);
 });

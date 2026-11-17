@@ -21,7 +21,28 @@ function renderQuestion(){checked=false;const q=questions[position];$('counter')
 // Choose freely before committing; Enter submits only from an answer radio.
 $('answer-form').addEventListener('change',event=>{if(!checked&&event.target.matches('input[name="answer"]'))$('check').disabled=false;});
 $('answer-form').addEventListener('keydown',event=>{if(event.key==='Enter'&&event.target.matches('input[name="answer"]')&&!checked){event.preventDefault();$('answer-form').requestSubmit();}});
-$('answer-form').addEventListener('submit',event=>{event.preventDefault();if(checked)return;const chosen=document.querySelector('input[name="answer"]:checked');if(!chosen)return;checked=true;const q=questions[position],correct=chosen.value===q.answer;responses.push({question:q,chosen:chosen.value,correct});for(const radio of document.querySelectorAll('input[name="answer"]')){radio.disabled=true;if(radio.value===q.answer)radio.closest('label').classList.add('correct');else if(radio===chosen&&!correct)radio.closest('label').classList.add('incorrect');}$('feedback').append(el('strong',correct?'Correct':'Not quite — '+q.answer),el('p',q.explanation));$('feedback').hidden=false;$('check').hidden=true;$('next').hidden=false;$('next').focus({preventScroll:true});});
+// Only the explicitly assigned 1.4.1(a) quiz reports; all other quizzes retain
+// their existing browser-only progress and original question bank.
+function recordAssignedAnswer(correct){
+  if(active?.id!=='141-a')return;
+  if(window.RHSCSkills?.reportQuestion(1,'h446-practice-141-a','quiz',correct)){
+    $('my-work-status').hidden=false;
+    $('my-work-status').textContent='Saving this answer to My Work…';
+  }
+}
+window.addEventListener('rhsc-my-work-score-saved',event=>{
+  if(event.detail?.sourceKey==='h446-practice-141-a'){
+    $('my-work-status').hidden=false;
+    $('my-work-status').textContent='Answer saved to My Work.';
+  }
+});
+window.addEventListener('rhsc-my-work-score-failed',event=>{
+  if(event.detail?.sourceKey==='h446-practice-141-a'){
+    $('my-work-status').hidden=false;
+    $('my-work-status').textContent='Could not save to My Work. Please tell your teacher.';
+  }
+});
+$('answer-form').addEventListener('submit',event=>{event.preventDefault();if(checked)return;const chosen=document.querySelector('input[name="answer"]:checked');if(!chosen)return;checked=true;const q=questions[position],correct=chosen.value===q.answer;responses.push({question:q,chosen:chosen.value,correct});recordAssignedAnswer(correct);for(const radio of document.querySelectorAll('input[name="answer"]')){radio.disabled=true;if(radio.value===q.answer)radio.closest('label').classList.add('correct');else if(radio===chosen&&!correct)radio.closest('label').classList.add('incorrect');}$('feedback').append(el('strong',correct?'Correct':'Not quite — '+q.answer),el('p',q.explanation));$('feedback').hidden=false;$('check').hidden=true;$('next').hidden=false;$('next').focus({preventScroll:true});});
 $('next').onclick=()=>{if(!checked)return;position++;if(position===questions.length){sessions.set(active.id,{done:true,questions:[...questions],responses:[...responses]});renderResults(true);return;}renderQuestion();$('prompt').setAttribute('tabindex','-1');$('prompt').focus();};
 function link(text,href){const a=el('a',text,'resource-button');a.href=href;a.target='_blank';a.rel='noopener';return a;}
 function supportLessons(missed){let lessons=active.lessons;if(active.id==='141-g')lessons=missed.every(s=>s==='normalisation')?[4]:missed.every(s=>s==='decode floating point')?[5]:[4,5];if(active.id==='141-h')lessons=missed.every(s=>s==='floating-point subtraction')?[7]:missed.every(s=>s==='floating-point addition')?[6]:[6,7];return lessons;}
