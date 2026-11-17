@@ -189,14 +189,28 @@ async function learner(env, code) {
 async function work(env, code, cohort) {
   const groupWork = await env.DB.prepare(`
     SELECT a.assignment_key AS assignmentKey, a.item_id AS itemId, a.level,
-      COUNT(t.attempt_id) AS attempts, MAX(t.score) AS bestScore
+      COUNT(CASE WHEN t.level NOT IN ('q-easy', 'q-medium') THEN t.attempt_id END) AS attempts,
+      MAX(CASE WHEN t.level NOT IN ('q-easy', 'q-medium') THEN t.score END) AS bestScore,
+      COUNT(CASE WHEN t.level IN ('q-easy', 'q-medium') THEN t.attempt_id END) AS questionsAttempted,
+      COALESCE(SUM(CASE WHEN t.level IN ('q-easy', 'q-medium') AND t.score = 100 THEN 1 ELSE 0 END), 0) AS firstTryCorrect,
+      COUNT(CASE WHEN t.level = 'q-easy' THEN t.attempt_id END) AS easyQuestions,
+      COALESCE(SUM(CASE WHEN t.level = 'q-easy' AND t.score = 100 THEN 1 ELSE 0 END), 0) AS easyCorrect,
+      COUNT(CASE WHEN t.level = 'q-medium' THEN t.attempt_id END) AS mediumQuestions,
+      COALESCE(SUM(CASE WHEN t.level = 'q-medium' AND t.score = 100 THEN 1 ELSE 0 END), 0) AS mediumCorrect
     FROM assignments a LEFT JOIN attempts t ON t.assignment_key = a.assignment_key AND t.code = ?
     WHERE a.cohort = ? AND a.active = 1
     GROUP BY a.assignment_key ORDER BY a.created_at DESC
   `).bind(code, cohort).all();
   const individualWork = await env.DB.prepare(`
     SELECT a.assignment_key AS assignmentKey, a.item_id AS itemId, a.level,
-      COUNT(t.attempt_id) AS attempts, MAX(t.score) AS bestScore
+      COUNT(CASE WHEN t.level NOT IN ('q-easy', 'q-medium') THEN t.attempt_id END) AS attempts,
+      MAX(CASE WHEN t.level NOT IN ('q-easy', 'q-medium') THEN t.score END) AS bestScore,
+      COUNT(CASE WHEN t.level IN ('q-easy', 'q-medium') THEN t.attempt_id END) AS questionsAttempted,
+      COALESCE(SUM(CASE WHEN t.level IN ('q-easy', 'q-medium') AND t.score = 100 THEN 1 ELSE 0 END), 0) AS firstTryCorrect,
+      COUNT(CASE WHEN t.level = 'q-easy' THEN t.attempt_id END) AS easyQuestions,
+      COALESCE(SUM(CASE WHEN t.level = 'q-easy' AND t.score = 100 THEN 1 ELSE 0 END), 0) AS easyCorrect,
+      COUNT(CASE WHEN t.level = 'q-medium' THEN t.attempt_id END) AS mediumQuestions,
+      COALESCE(SUM(CASE WHEN t.level = 'q-medium' AND t.score = 100 THEN 1 ELSE 0 END), 0) AS mediumCorrect
     FROM student_assignments s JOIN assignments a ON a.assignment_key = s.assignment_key
     LEFT JOIN attempts t ON t.assignment_key = a.assignment_key AND t.code = s.code
     WHERE s.code = ? AND s.active = 1
@@ -292,6 +306,43 @@ async function handle(request, env) {
       INSERT OR IGNORE INTO attempts (attempt_id, code, assignment_key, score, level, source)
       VALUES (?, ?, ?, ?, ?, ?)
     `).bind(attemptId, student.code, key, score, level || '', source).run();
+    return respond({ saved: Boolean(result.meta?.changes), duplicate: !result.meta?.changes });
+  }
+
+  // One row per first checked answer. Reuses the existing attempts table: the
+  // q- prefix distinguishes individual questions from legacy completed rounds,
+  // so no live D1 migration or changes to existing pupil records are needed.
+  if (path === '/v1/questions' && request.method === 'POST') {
+    const { assignmentKey: key, attemptId, level, firstTryCorrect } = await jsonBody(request);
+    const student = await sessionLearner(request, env);
+    if (!student) return respond({ error: 'Sign in to save your progress' }, 401);
+    if (typeof key !== 'string' ||
+        !/^(?:(?:10|11)\|j277-skill-p1-convert\|both|(?:12|13)\|h446-skill-p1-convert\|both)$/.test(key) ||
+        !['easy', 'medium'].includes(level) || typeof firstTryCorrect !== 'boolean' ||
+        typeof attemptId !== 'string' || !/^[0-9a-f-]{36}$/i.test(attemptId)) {
+      return respond({ error: 'Invalid question attempt' }, 400);
+    }
+    if (!key.startsWith(student.cohort.slice(1) + '|')) return respond({ error: 'Activity does not match your year group' }, 403);
+    let activity = await env.DB.prepare('SELECT assignment_key FROM assignments WHERE assignment_key = ? AND cohort = ? AND active = 1')
+      .bind(key, student.cohort).first();
+    if (!activity) activity = await env.DB.prepare('SELECT assignment_key FROM student_assignments WHERE assignment_key = ? AND code = ? AND active = 1')
+      .bind(key, student.code).first();
+    if (!activity) return respond({ error: 'This activity is not assigned' }, 403);
+    const classwork = CLASSWORK_CONVERSION.test(key);
+    if (classwork && !(await liveClasswork(env, student, key))) return respond({ error: 'This Classwork assignment has expired' }, 403);
+    if (!classwork && !isIndependentWorkTime() && !teacherIsValid(request, env)) {
+      return respond({ error: INDEPENDENT_WORK_SCHEDULE }, 403);
+    }
+    const previous = await env.DB.prepare('SELECT attempt_id FROM attempts WHERE attempt_id = ? AND code = ?')
+      .bind(attemptId, student.code).first();
+    if (previous) return respond({ saved: false, duplicate: true });
+    const recent = await env.DB.prepare(`SELECT COUNT(*) AS n FROM attempts
+      WHERE code = ? AND level IN ('q-easy', 'q-medium') AND created_at > datetime('now', '-1 minute')`)
+      .bind(student.code).first();
+    if (Number(recent?.n || 0) >= 40) return respond({ error: 'Please wait before saving more questions' }, 429);
+    const result = await env.DB.prepare(`INSERT OR IGNORE INTO attempts
+      (attempt_id, code, assignment_key, score, level, source) VALUES (?, ?, ?, ?, ?, 'skill')`)
+      .bind(attemptId, student.code, key, firstTryCorrect ? 100 : 0, 'q-' + level).run();
     return respond({ saved: Boolean(result.meta?.changes), duplicate: !result.meta?.changes });
   }
 

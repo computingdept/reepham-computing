@@ -176,7 +176,7 @@
               <button type="button" class="button secondary" id="check-pupil-progress">Refresh score</button>
             </div>
             <p class="sub">Uses the anonymous username entered on the left.</p>
-            <div id="pupil-progress" class="preview" aria-live="polite">Check progress after the pupil completes ten Conversion Grid questions.</div>
+            <div id="pupil-progress" class="preview" aria-live="polite">Progress updates after each checked Conversion Grid question.</div>
           </section>
         </section>
       </div>
@@ -310,9 +310,35 @@
         heading.textContent = anonymousUsername() + ' · Conversion Grid';
         node.append(heading);
         const rounds = Number(row?.attempts || 0);
+        const questions = Number(row?.questionsAttempted || 0);
+        if (questions > 0) {
+          const correct = Number(row.firstTryCorrect || 0);
+          const stats = document.createElement('div');
+          stats.className = 'score-line';
+          for (const [number, label] of [
+            [String(questions), 'Questions attempted'],
+            [String(correct), 'Correct first time'],
+            [String(Math.round(100 * correct / questions)) + '%', 'First-attempt accuracy'],
+            [String(Number(row.easyCorrect || 0)) + '/' + String(Number(row.easyQuestions || 0)), 'Easy correct'],
+            [String(Number(row.mediumCorrect || 0)) + '/' + String(Number(row.mediumQuestions || 0)), 'Medium correct']
+          ]) {
+            const box = document.createElement('span');
+            const numberEl = document.createElement('strong');
+            numberEl.textContent = number;
+            box.append(numberEl, document.createTextNode(label));
+            stats.append(box);
+          }
+          node.append(stats);
+          if (rounds) {
+            const p = document.createElement('p');
+            p.textContent = `${rounds} earlier completed 10-question round${rounds === 1 ? '' : 's'} also recorded.`;
+            node.append(p);
+          }
+          return;
+        }
         if (!rounds) {
           const p = document.createElement('p');
-          p.textContent = row ? 'Assigned · No completed rounds recorded yet.' : 'No Conversion Grid assignment for this pupil.';
+          p.textContent = row ? 'Assigned · No questions checked yet.' : 'No Conversion Grid assignment for this pupil.';
           node.append(p);
           return;
         }

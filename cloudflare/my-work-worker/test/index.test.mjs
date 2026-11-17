@@ -5,6 +5,22 @@ import worker, { assignmentKey, isIndependentWorkTime, newPracticeCode, liveClas
 const TOKEN = 'fictional-teacher-secret-for-local-tests-only';
 const ORIGIN = 'https://rhsccs.org';
 
+function attemptStats(scores) {
+  const rounds = scores.filter(row => row.level !== 'q-easy' && row.level !== 'q-medium');
+  const easy = scores.filter(row => row.level === 'q-easy');
+  const medium = scores.filter(row => row.level === 'q-medium');
+  return {
+    attempts: rounds.length,
+    bestScore: rounds.length ? Math.max(...rounds.map(row => row.score)) : null,
+    questionsAttempted: easy.length + medium.length,
+    firstTryCorrect: [...easy, ...medium].filter(row => row.score === 100).length,
+    easyQuestions: easy.length,
+    easyCorrect: easy.filter(row => row.score === 100).length,
+    mediumQuestions: medium.length,
+    mediumCorrect: medium.filter(row => row.score === 100).length
+  };
+}
+
 class FakeD1 {
   constructor() { this.codes = new Map(); this.assignments = new Map(); this.individualAssignments = new Map(); this.attempts = new Map(); this.logins = new Map(); this.sessions = new Map(); }
   prepare(sql) {
@@ -32,8 +48,13 @@ class FakeD1 {
           const row = this.individualAssignments.get(args[1] + '|' + args[0]);
           return row?.active ? { assignment_key: args[0] } : null;
         }
+        if (sql.includes('SELECT attempt_id FROM attempts WHERE attempt_id = ? AND code = ?')) {
+          const row = this.attempts.get(args[0]);
+          return row?.code === args[1] ? { attempt_id: row.attempt_id } : null;
+        }
         if (sql.includes('COUNT(*) AS n FROM attempts')) {
-          return { n: [...this.attempts.values()].filter(x => x.code === args[0]).length };
+          return { n: [...this.attempts.values()].filter(x => x.code === args[0] &&
+            (!sql.includes("level IN ('q-easy', 'q-medium')") || ['q-easy','q-medium'].includes(x.level))).length };
         }
         if (sql.includes('FROM login_profiles l') && sql.includes('JOIN practice_codes p')) {
           const login = this.logins.get(args[0]);
@@ -80,7 +101,8 @@ class FakeD1 {
           return { meta: { changes: 1 } };
         }
         if (sql.includes('INSERT OR IGNORE INTO attempts')) {
-          const [attempt_id, code, assignment_key, score, level, source] = args;
+          const [attempt_id, code, assignment_key, score, level, sourceArg] = args;
+          const source = sourceArg || (sql.includes("'skill')") ? 'skill' : undefined);
           if (this.attempts.has(attempt_id)) return { meta: { changes: 0 } };
           assert.ok(this.codes.has(code) && this.assignments.has(assignment_key), 'Attempt has valid FK targets');
           this.attempts.set(attempt_id, { attempt_id, code, assignment_key, score, level, source, created_at: '2026-11-14 16:00:00' });
@@ -118,14 +140,14 @@ class FakeD1 {
           return { results: [...this.individualAssignments.values()].filter(x => x.code === code && x.active).map(x => {
             const a = this.assignments.get(x.assignment_key);
             const scores = [...this.attempts.values()].filter(t => t.code === code && t.assignment_key === a.assignment_key);
-            return { assignmentKey: a.assignment_key, itemId: a.item_id, level: a.level, attempts: scores.length, bestScore: scores.length ? Math.max(...scores.map(y => y.score)) : null };
+            return { assignmentKey: a.assignment_key, itemId: a.item_id, level: a.level, ...attemptStats(scores) };
           }) };
         }
-        if (sql.includes('COUNT(t.attempt_id)')) {
+        if (sql.includes('FROM assignments a LEFT JOIN attempts t')) {
           const [code, cohort] = args;
           return { results: [...this.assignments.values()].filter(x => x.cohort === cohort && x.active).map(a => {
             const scores = [...this.attempts.values()].filter(t => t.code === code && t.assignment_key === a.assignment_key);
-            return { assignmentKey: a.assignment_key, itemId: a.item_id, level: a.level, attempts: scores.length, bestScore: scores.length ? Math.max(...scores.map(x => x.score)) : null };
+            return { assignmentKey: a.assignment_key, itemId: a.item_id, level: a.level, ...attemptStats(scores) };
           }) };
         }
         if (sql.includes('SELECT code FROM practice_codes')) return { results: [...this.codes.values()].filter(x => x.cohort === args[0]).map(x => ({ code: x.code })) };
@@ -388,6 +410,56 @@ test('Conversion Grid reports with the pupil session only to their own assignmen
     const forbiddenProgress = await call(db, '/v1/teacher/student-progress', 'POST', { username: 'testbird' });
     assert.equal(forbiddenProgress.status, 401);
     assert.equal(JSON.stringify(teacherResult.data).includes(codes[0]), false, 'Teacher progress excludes raw practice codes');
+  } finally {
+    globalThis.Date = RealDate;
+  }
+});
+
+test('one checked Conversion Grid answer immediately updates pupil and teacher progress', async () => {
+  const RealDate = globalThis.Date;
+  const when = new RealDate('2026-11-15T16:00:00Z');
+  globalThis.Date = class extends RealDate {
+    constructor(...args) { super(...(args.length ? args : [when.valueOf()])); }
+    static now() { return when.valueOf(); }
+  };
+  try {
+    const db = new FakeD1();
+    const codes = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y10', count: 2 }, { teacher: true })).data.codes;
+    await call(db, '/v1/teacher/logins', 'POST', { logins: [
+      { username: 'testbird', code: codes[0], password: '1234' },
+      { username: 'testfox', code: codes[1], password: '5678' }
+    ] }, { teacher: true });
+    const assigned = await call(db, '/v1/teacher/student-assignments', 'POST',
+      { username: 'testbird', itemId: 'j277-skill-p1-convert', level: 'both' }, { teacher: true });
+    const assignmentKey = assigned.data.assignmentKey;
+    const firstSession = (await call(db, '/v1/login', 'POST', { username: 'testbird', password: '1234' })).data.session;
+    const secondSession = (await call(db, '/v1/login', 'POST', { username: 'testfox', password: '5678' })).data.session;
+    const question = { assignmentKey, attemptId: crypto.randomUUID(), level: 'easy', firstTryCorrect: true };
+    assert.equal((await call(db, '/v1/questions', 'POST', question)).status, 401, 'Requires a pupil session');
+    assert.equal((await call(db, '/v1/questions', 'POST', question, { bearer: secondSession })).status, 403, 'Cannot record a different pupil assignment');
+    assert.equal((await call(db, '/v1/questions', 'POST', { ...question, level: 'hard' }, { bearer: firstSession })).status, 400);
+    const saved = await call(db, '/v1/questions', 'POST', question, { bearer: firstSession });
+    assert.equal(saved.status, 200);
+    assert.equal(saved.data.saved, true);
+    assert.equal((await call(db, '/v1/questions', 'POST', question, { bearer: firstSession })).data.duplicate, true, 'Retry is idempotent');
+
+    let work = await call(db, '/v1/work', 'POST', {}, { bearer: firstSession });
+    assert.equal(work.data.work[0].questionsAttempted, 1);
+    assert.equal(work.data.work[0].firstTryCorrect, 1);
+    assert.equal(work.data.work[0].attempts, 0, 'Question does not count as a completed round');
+    assert.equal(work.data.work[0].bestScore, null);
+    const another = await call(db, '/v1/questions', 'POST',
+      { assignmentKey, attemptId: crypto.randomUUID(), level: 'medium', firstTryCorrect: false }, { bearer: firstSession });
+    assert.equal(another.data.saved, true);
+    work = await call(db, '/v1/work', 'POST', {}, { bearer: firstSession });
+    assert.deepEqual({ attempted: work.data.work[0].questionsAttempted, correct: work.data.work[0].firstTryCorrect,
+      easy: work.data.work[0].easyQuestions, medium: work.data.work[0].mediumQuestions },
+    { attempted: 2, correct: 1, easy: 1, medium: 1 });
+    const teacher = await call(db, '/v1/teacher/student-progress', 'POST', { username: 'testbird' }, { teacher: true });
+    assert.equal(teacher.data.work[0].questionsAttempted, 2);
+    assert.equal(teacher.data.work[0].firstTryCorrect, 1);
+    assert.equal([...db.attempts.values()].filter(row => row.level.startsWith('q-')).length, 2);
+    assert.equal((await call(db, '/v1/teacher/student-progress', 'POST', { username: 'testfox' }, { teacher: true })).data.work.length, 0);
   } finally {
     globalThis.Date = RealDate;
   }

@@ -29,19 +29,20 @@ function loadBridge({ session = token, query = '?skill=convert&workKey=' + encod
   return { bridge: window.RHSCSkills, calls, events };
 }
 
-test('Conversion Grid submits first-time score with session, never a PIN or practice code', async () => {
+test('Conversion Grid saves one first-checked answer immediately, never a PIN or practice code', async () => {
   const { bridge, calls, events } = loadBridge();
-  assert.equal(bridge.reportCompletion(1, 'convert', 'easy', 7, 10), true);
+  assert.equal(bridge.reportQuestion(1, 'convert', 'easy', false), true);
+  assert.equal(bridge.reportCompletion(1, 'convert', 'easy', 7, 10), true, 'No second write for a completed round');
   await new Promise(resolve => setImmediate(resolve));
   assert.equal(calls.length, 1);
-  assert.match(calls[0].url, /\/v1\/attempts$/);
+  assert.match(calls[0].url, /\/v1\/questions$/);
   assert.equal(calls[0].options.keepalive, true);
   assert.equal(calls[0].options.headers.authorization, 'Bearer ' + token);
   const payload = JSON.parse(calls[0].options.body);
-  assert.equal(payload.score, 70);
+  assert.equal(payload.firstTryCorrect, false);
   assert.equal(payload.assignmentKey, assignment);
   assert.equal(payload.level, 'easy');
-  assert.equal(payload.source, 'skill');
+  assert.match(payload.attemptId, /^[0-9a-f-]{36}$/i);
   assert.equal('code' in payload, false);
   assert.equal('password' in payload, false);
   assert.deepEqual(events, ['rhsc-my-work-score-saved']);
@@ -49,10 +50,20 @@ test('Conversion Grid submits first-time score with session, never a PIN or prac
 
 test('unassigned Skills, hard level and missing session cannot record', () => {
   const x = loadBridge();
-  assert.equal(x.bridge.reportCompletion(1, 'add', 'easy', 7, 10), false);
-  assert.equal(x.bridge.reportCompletion(1, 'convert', 'hard', 7, 10), false);
+  assert.equal(x.bridge.reportQuestion(1, 'add', 'easy', true), false);
+  assert.equal(x.bridge.reportQuestion(1, 'convert', 'hard', true), false);
+  assert.equal(x.bridge.reportQuestion(1, 'convert', 'easy', null), false);
   assert.equal(x.calls.length, 0);
   const y = loadBridge({ session: '' });
-  assert.equal(y.bridge.reportCompletion(1, 'convert', 'easy', 7, 10), false);
+  assert.equal(y.bridge.reportQuestion(1, 'convert', 'easy', true), false);
   assert.equal(y.calls.length, 0);
+  const z = loadBridge({ query: '?skill=convert' });
+  assert.equal(z.bridge.reportQuestion(1, 'convert', 'easy', true), false);
+  assert.equal(z.calls.length, 0);
+});
+
+test('H446 assigned classwork uses the same question recording, with separate assignment', () => {
+  const y12 = loadBridge({ query: '?course=h446&skill=convert&workKey=12%7Ch446-skill-p1-convert%7Cboth' });
+  assert.equal(y12.bridge.reportQuestion(1, 'convert', 'medium', true), true);
+  assert.equal(JSON.parse(y12.calls[0].options.body).assignmentKey, '12|h446-skill-p1-convert|both');
 });

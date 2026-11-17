@@ -51,32 +51,37 @@
       row.classList.toggle('is-active', row.dataset.line === String(lineNumber));
     });
   }
-  // Central automatic score bridge for the first live My Work pilot.
-  // All identity is resolved by the Worker from the anonymous session; a
-  // workKey in the URL is only an activity reference, never authentication.
-  function reportPilotScore(paper, sourceKey, level, correct, total, assignmentKey) {
+  // Shared first-answer recording bridge for assigned Conversion Grid work.
+  // The Worker resolves the anonymous pupil from their existing session.
+  // A workKey in the URL is an activity reference, never authentication.
+  function pilotQuestionContext(paper, sourceKey, level, assignmentKey) {
     const isH446 = new URLSearchParams(global.location.search).get('course') === 'h446';
     const assignmentPattern = isH446
       ? /^(12|13)\|h446-skill-p1-convert\|both$/
       : /^(10|11)\|j277-skill-p1-convert\|both$/;
     if (paper !== 1 || sourceKey !== 'convert' ||
-        !['easy', 'medium'].includes(level) || total !== 10 ||
-        !assignmentPattern.test(assignmentKey || '')) return false;
+        !['easy', 'medium'].includes(level) ||
+        !assignmentPattern.test(assignmentKey || '')) return null;
     let session = '';
     try { session = global.sessionStorage.getItem('rhs-my-work-learner-session-v1') || ''; } catch (_) {}
-    if (!/^[A-Za-z0-9_-]{43}$/.test(session) || !global.crypto?.randomUUID || !global.fetch) return false;
+    if (!/^[A-Za-z0-9_-]{43}$/.test(session) || !global.crypto?.randomUUID || !global.fetch) return null;
+    return { assignmentKey, session };
+  }
+  function reportQuestion(paper, sourceKey, level, firstTryCorrect) {
+    if (typeof firstTryCorrect !== 'boolean' ||
+        !global.location.pathname.startsWith('/exercise/paper1/')) return false;
+    const assignmentKey = new URLSearchParams(global.location.search).get('workKey');
+    const context = pilotQuestionContext(paper, sourceKey, level, assignmentKey);
+    if (!context) return false;
     const attemptId = global.crypto.randomUUID();
-    global.fetch('https://rhsccs-my-work-api.jeromedthompson.workers.dev/v1/attempts', {
+    global.fetch('https://rhsccs-my-work-api.jeromedthompson.workers.dev/v1/questions', {
       method: 'POST', keepalive: true, cache: 'no-store',
-      headers: { 'content-type': 'application/json', authorization: 'Bearer ' + session },
-      body: JSON.stringify({
-        assignmentKey, attemptId, score: Math.round(100 * correct / total),
-        level, source: 'skill'
-      })
+      headers: { 'content-type': 'application/json', authorization: 'Bearer ' + context.session },
+      body: JSON.stringify({ assignmentKey, attemptId, level, firstTryCorrect })
     }).then(response => {
-      if (!response.ok) throw new Error('My Work did not save this score.');
+      if (!response.ok) throw new Error('My Work did not save this answer.');
       if (global.CustomEvent) global.dispatchEvent?.(new global.CustomEvent('rhsc-my-work-score-saved', {
-        detail: { paper, sourceKey, level, correct, total }
+        detail: { paper, sourceKey, level, firstTryCorrect }
       }));
     }).catch(() => {
       if (global.CustomEvent) global.dispatchEvent?.(new global.CustomEvent('rhsc-my-work-score-failed', {
@@ -95,7 +100,9 @@
       if (![1, 2].includes(paper) || !global.location.pathname.startsWith('/exercise/paper' + paper + '/')) return false;
       if (!/^[a-z-]+$/.test(sourceKey) || !['easy', 'medium'].includes(level)) return false;
       if (!Number.isInteger(correct) || !Number.isInteger(total) || total < 1 || correct < 0 || correct > total) return false;
-      if (reportPilotScore(paper, sourceKey, level, correct, total, assignmentKey)) return true;
+      // These learners save on the first valid Check, not after ten questions.
+      // Keep the old round-reporting path only for fictional local demos.
+      if (pilotQuestionContext(paper, sourceKey, level, assignmentKey)) return true;
       // H446 scores are assignment-only, never stored in the J277 demo.
       if (params.get('course') === 'h446') return false;
       if (!/^Y(10|11)-(0[1-9]|[12][0-9]|30)$/.test(student || '') || !assignmentKey) return false;
@@ -116,5 +123,5 @@
       return true;
     } catch (_) { return false; }
   }
-  global.RHSCSkills = Object.freeze({ LEVELS, validLevel, levelFromUrl, updateLevelUrl, readProgress, writeProgress, numberedCode, highlightCodeLine, reportCompletion });
+  global.RHSCSkills = Object.freeze({ LEVELS, validLevel, levelFromUrl, updateLevelUrl, readProgress, writeProgress, numberedCode, highlightCodeLine, reportQuestion, reportCompletion });
 })(window);
