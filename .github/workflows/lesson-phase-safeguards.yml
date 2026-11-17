@@ -1,0 +1,60 @@
+name: Lesson phase and retrieval safeguards
+
+on:
+  pull_request:
+    paths:
+      - 'lessons/**'
+      - 'assets/h446-lesson/lesson.js'
+      - 'assets/h446-lesson/*.css'
+      - 'assets/h446-mindmap/presentation.js'
+      - 'lessons/j277/*.css'
+      - 'data/do-now/**'
+      - 'scripts/quality/**'
+      - 'tests/lesson-phase-guard.test.cjs'
+      - 'tests/h446-do-now-spacing-guard.test.cjs'
+      - '.github/workflows/lesson-phase-safeguards.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'lessons/**'
+      - 'assets/h446-lesson/lesson.js'
+      - 'assets/h446-lesson/*.css'
+      - 'assets/h446-mindmap/presentation.js'
+      - 'lessons/j277/*.css'
+      - 'data/do-now/**'
+      - 'scripts/quality/**'
+      - 'tests/lesson-phase-guard.test.cjs'
+      - 'tests/h446-do-now-spacing-guard.test.cjs'
+      - '.github/workflows/lesson-phase-safeguards.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lesson-safety:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check safeguard script syntax
+        run: node --check scripts/quality/check-lesson-phase-changes.cjs
+      - name: Validate retrieval, origins and phase guard
+        run: |
+          node --test \
+            tests/lesson-phase-guard.test.cjs \
+            tests/h446-do-now-spacing-guard.test.cjs \
+            tests/h446-q1-published.test.cjs \
+            tests/h446-q2-published.test.cjs \
+            tests/h446-do-now-q34-all.test.cjs
+      - name: Protect declared lesson phases
+        if: github.event_name != 'workflow_dispatch'
+        env:
+          BASE_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+          HEAD_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+          PHASE_SCOPE: ${{ github.event.pull_request.body || '' }}
+        run: node scripts/quality/check-lesson-phase-changes.cjs --base "$BASE_SHA" --head "$HEAD_SHA"
