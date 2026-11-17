@@ -12,7 +12,7 @@
 <g fill="#fff" text-anchor="middle" font-size="29" font-weight="900"><text x="78" y="185">A</text><text x="255" y="72">B</text><text x="255" y="297">C</text><text x="515" y="185">D</text></g></svg><p><strong>Start at A. Finish at D.</strong> Every distance is counted from A.</p></div><div class="ido-method"><h2>From the graph to C#</h2>
 <div class="ido-step" hidden><span class="ido-step-label">STEP 1 · START AT A</span><p>Start at A: <mark class="rhsc-shared-keyword">A = 0</mark>. All other distances begin at <strong>∞</strong>.</p><p>A dictionary keeps these best-known distances.</p></div>
 <div class="ido-step" hidden><span class="ido-step-label">STEP 2 · ADD THE COSTS</span><p>From A, <strong>B = 4</strong> and <strong>C = 1</strong>. Visit C next because 1 is smaller.</p><p>Via C, <mark class="rhsc-shared-keyword">B = 1 + 2 = 3</mark>. This beats B's old distance of 4.</p></div>
-<div class="ido-step" hidden><span class="ido-step-label">STEP 3 · READ THE C#</span><p>Calculate the total, then save it only if smaller:</p><pre class="arithmetic">int candidate = distance[current] + weight;
+<div class="ido-step" hidden><span class="ido-step-label">STEP 3 · READ THE C#</span><p>Calculate the total, then save it only if smaller:</p><pre class="route-code">int candidate = distance[current] + weight;
 if (candidate &lt; distance[neighbour])
 {
     distance[neighbour] = candidate;
