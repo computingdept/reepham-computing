@@ -442,3 +442,23 @@ body{
 @media(max-width:380px){
   #new-learning .nl-reference .j277-nl-glance{grid-template-columns:1fr}
 }
+
+/* J277 WE DO — prevent diagrams from pushing the question beneath the
+   fixed teacher navigation. Keep full-size question text and the SVG first;
+   if a zoomed or short projector screen still overflows, allow vertical
+   scrolling inside We Do instead of permanently clipping the question.
+   Do Now, other phases and H446 are deliberately unchanged. */
+@media (min-width:901px){
+  #we-do.phase-wedo{
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    padding-bottom:16px;
+  }
+  body.j277-dense-visual #we-do .wedo-reference .a1-scene{
+    margin-top:4px;
+    margin-bottom:8px;
+  }
+  body.j277-dense-visual #we-do .wedo-reference .a1-scene svg{
+    max-height:min(33vh,265px)!important;
+  }
+}
