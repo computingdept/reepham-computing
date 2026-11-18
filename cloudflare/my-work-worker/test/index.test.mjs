@@ -91,8 +91,10 @@ class FakeD1 {
         }
         if (sql.includes('UPDATE assignments SET active = 1')) {
           const row = this.assignments.get(args[0]);
-          if (!row || row.active) return { meta: { changes: 0 } };
+          const expired = row && Date.parse(row.created_at) < Date.now() - 7 * 86400000;
+          if (!row || (row.active && (!sql.includes("created_at = datetime('now')") || !expired))) return { meta: { changes: 0 } };
           row.active = 1;
+          if (sql.includes("created_at = datetime('now')")) row.created_at = new Date().toISOString();
           return { meta: { changes: 1 } };
         }
         if (sql.includes('INSERT OR IGNORE INTO student_assignments')) {
@@ -101,6 +103,13 @@ class FakeD1 {
           const key = code + '|' + assignment_key;
           if (this.individualAssignments.has(key)) return { meta: { changes: 0 } };
           this.individualAssignments.set(key, { code, assignment_key, active: 1, created_at: new Date().toISOString() });
+          return { meta: { changes: 1 } };
+        }
+        if (sql.includes('UPDATE student_assignments SET active = 1')) {
+          const row = this.individualAssignments.get(args[0] + '|' + args[1]);
+          if (!row || (row.active && Date.parse(row.created_at) >= Date.now() - 7 * 86400000)) return { meta: { changes: 0 } };
+          row.active = 1;
+          row.created_at = new Date().toISOString();
           return { meta: { changes: 1 } };
         }
         if (sql.includes('INSERT OR IGNORE INTO attempts')) {
@@ -242,6 +251,72 @@ test('H446 1.4.1(a) MCQ Classwork uses the same seven-day assigned window', asyn
   assert.equal(await liveClasswork({ DB: db }, student, '12|h446-practice-141-b|'), false);
   db.assignments.get(key).created_at = '2020-01-01 00:00:00';
   assert.equal(await liveClasswork({ DB: db }, student, key), false);
+});
+
+test('Year 12 has a clear message before classwork is assigned, not a wrong-time error', async () => {
+  const RealDate = globalThis.Date;
+  const duringLesson = new RealDate('2026-11-18T10:00:00Z');
+  globalThis.Date = class extends RealDate {
+    constructor(...args) { super(...(args.length ? args : [duringLesson.valueOf()])); }
+    static now() { return duringLesson.valueOf(); }
+  };
+  try {
+    const db = new FakeD1();
+    const [code] = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y12', count: 1 }, { teacher: true })).data.codes;
+    const view = await call(db, '/v1/work', 'POST', { code });
+    assert.equal(view.status, 200);
+    assert.deepEqual(view.data.work, []);
+    assert.match(view.data.notice, /No Classwork is available yet/);
+    const beforeClass = await call(db, '/v1/teacher/assignments', 'POST', { cohort: 'Y12', itemId: 'h446-practice-141-b', level: '' }, { teacher: true });
+    assert.equal(beforeClass.data.workType, 'independent');
+    assert.deepEqual((await call(db, '/v1/work', 'POST', { code })).data.work, [], 'Independent practice stays restricted during lessons');
+  } finally { globalThis.Date = RealDate; }
+});
+
+test('teacher can renew expired Year 12 Classwork without losing previous attempts', async () => {
+  const RealDate = globalThis.Date;
+  const duringLesson = new RealDate('2026-11-18T10:00:00Z');
+  globalThis.Date = class extends RealDate {
+    constructor(...args) { super(...(args.length ? args : [duringLesson.valueOf()])); }
+    static now() { return duringLesson.valueOf(); }
+  };
+  try {
+    const db = new FakeD1();
+    const [code] = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y12', count: 1 }, { teacher: true })).data.codes;
+    const body = { cohort: 'Y12', itemId: 'h446-skill-p1-convert', level: 'both' };
+    const first = await call(db, '/v1/teacher/assignments', 'POST', body, { teacher: true });
+    const key = first.data.assignmentKey;
+    assert.equal(first.data.workType, 'classwork');
+    db.attempts.set('previous-attempt', { attempt_id: 'previous-attempt', code, assignment_key: key, level: 'q-easy', score: 100, source: 'skill' });
+    db.assignments.get(key).created_at = '2020-01-01 00:00:00';
+    const expired = await call(db, '/v1/work', 'POST', { code });
+    assert.deepEqual(expired.data.work, []);
+    assert.match(expired.data.notice, /expired/);
+    const renewal = await call(db, '/v1/teacher/assignments', 'POST', body, { teacher: true });
+    assert.equal(renewal.data.renewed, true);
+    assert.equal(renewal.data.added, false);
+    const visible = await call(db, '/v1/work', 'POST', { code });
+    assert.equal(visible.data.work[0].workType, 'classwork');
+    assert.equal(visible.data.work[0].firstTryCorrect, 1, 'Previous recorded answers remain intact');
+    assert.equal(db.attempts.size, 1);
+    assert.equal((await call(db, '/v1/teacher/assignments', 'POST', body, { teacher: true })).data.renewed, false, 'Re-assigning current Classwork does not silently extend its deadline');
+  } finally { globalThis.Date = RealDate; }
+});
+
+test('renewing an individual Classwork assignment does not grant access to the whole year', async () => {
+  const db = new FakeD1();
+  const [firstCode, otherCode] = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y12', count: 2 }, { teacher: true })).data.codes;
+  await call(db, '/v1/teacher/logins', 'POST', { logins: [
+    { username: 'renewbird', code: firstCode, password: '1234' },
+    { username: 'renewfox', code: otherCode, password: '5678' }
+  ] }, { teacher: true });
+  const body = { username: 'renewbird', itemId: 'h446-practice-141-a', level: '' };
+  const assigned = await call(db, '/v1/teacher/student-assignments', 'POST', body, { teacher: true });
+  db.individualAssignments.get(firstCode + '|' + assigned.data.assignmentKey).created_at = '2020-01-01 00:00:00';
+  const renewed = await call(db, '/v1/teacher/student-assignments', 'POST', body, { teacher: true });
+  assert.equal(renewed.data.renewed, true);
+  assert.equal(await liveClasswork({ DB: db }, { code: firstCode, cohort: 'Y12' }, assigned.data.assignmentKey), true);
+  assert.equal(await liveClasswork({ DB: db }, { code: otherCode, cohort: 'Y12' }, assigned.data.assignmentKey), false);
 });
 
 test('health, CORS and teacher-only write access', async () => {

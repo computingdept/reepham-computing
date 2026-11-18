@@ -560,7 +560,7 @@
       }
       const tag = document.createElement('span');
       tag.className = 'mini';
-      tag.textContent = 'Paper ' + found.paper + ' · ' + (found.type === 'skill' ? 'Skill' : 'Revision Practice') + (found.spec ? ' · ' + found.spec : '');
+      tag.textContent = (found.workType === 'classwork' ? 'CLASSWORK · ' : 'INDEPENDENT PRACTICE · ') + 'Paper ' + found.paper + ' · ' + (found.type === 'skill' ? 'Skill' : 'Revision Practice') + (found.spec ? ' · ' + found.spec : '');
       const heading = document.createElement('h3');
       heading.textContent = found.title;
       const sub = document.createElement('p');
@@ -622,7 +622,7 @@
         title.textContent = item?.title || row.itemId;
         const desc = document.createElement('p');
         desc.className = 'detail';
-        desc.textContent = item ? 'Paper ' + item.paper + ' · ' + (item.type === 'skill' ? 'Skill' : 'Revision Practice') + (item.spec ? ' · ' + item.spec : '') : 'Activity';
+        desc.textContent = item ? (item.workType === 'classwork' ? 'Classwork · open during lessons for 7 days · ' : 'Independent practice · ') + 'Paper ' + item.paper + ' · ' + (item.type === 'skill' ? 'Skill' : 'Revision Practice') + (item.spec ? ' · ' + item.spec : '') : 'Activity';
         content.append(title, desc);
         card.append(content);
         const link = itemUrl(item);
@@ -692,6 +692,8 @@
       $('review-warning').textContent = scope === 'individual'
         ? 'Only this one anonymous account will receive the activity. The pilot cannot remove assignments.'
         : 'This activity will appear for every active pupil in this year group. The pilot cannot remove assignments.';
+      if (selected.workType === 'classwork') $('review-warning').textContent += ' Classwork is open during lessons for 7 days; reassign after expiry to renew it without losing scores.';
+      else $('review-warning').textContent += ' Independent practice follows the UK-time restrictions.';
       $('year-confirmation').hidden = scope !== 'cohort';
       $('confirm-everyone').checked = false;
       $('publish-button').disabled = scope === 'cohort';
@@ -712,9 +714,11 @@
         if (scope === 'cohort') await loadProgress();
         else await checkPupilProgress();
         const destination = scope === 'individual' ? 'the one anonymous pupil (Year ' + result.cohort.slice(1) + ')' : 'Year ' + body.cohort.slice(1);
-        status('publish-status', result.added
-          ? 'Assigned successfully to ' + destination + '. The pupil can refresh My Work.'
-          : 'Already assigned to ' + destination + '. Nothing was duplicated.', 'good');
+        status('publish-status', result.renewed
+          ? 'Classwork renewed for 7 days for ' + destination + '. Previous scores are kept. Pupils can refresh My Work.'
+          : result.added
+            ? 'Assigned successfully to ' + destination + '. The pupil can refresh My Work.'
+            : 'Already assigned to ' + destination + '. Nothing was duplicated.', 'good');
       } catch (error) {
         if (error.status === 401) disconnect('Teacher access expired. Connect again.');
         else status('publish-status', error.message, 'error');

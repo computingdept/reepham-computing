@@ -224,11 +224,13 @@ async function work(env, code, cohort) {
     .map(item => [item.assignmentKey, item])).values()];
 }
 
-// Assigned H446 pilot Classwork can run during lessons. Assignments expire
-// seven days after the teacher sets them; other practice remains time-gated.
+// Classwork can run during lessons for seven days after assignment. This
+// registry mirrors the catalogue's workType: "classwork" entries. Other
+// activities remain independent practice and keep their UK-time restrictions.
 const CLASSWORK_PILOT = /^(12|13)\|h446-(?:skill-p1-convert\|both|practice-141-a\|)$/;
+const isClasswork = key => CLASSWORK_PILOT.test(key || '');
 export async function liveClasswork(env, student, key) {
-  if (!CLASSWORK_PILOT.test(key || '')) return false;
+  if (!isClasswork(key)) return false;
   const cohort = await env.DB.prepare(`
     SELECT assignment_key FROM assignments
     WHERE assignment_key = ? AND cohort = ? AND active = 1
@@ -265,11 +267,20 @@ async function handle(request, env) {
     const outsideLesson = isIndependentWorkTime() || teacherIsValid(request, env);
     const assigned = await work(env, student.code, student.cohort);
     const visible = [];
+    let expiredClasswork = false;
     for (const item of assigned) {
-      const classwork = CLASSWORK_PILOT.test(item.assignmentKey || '');
+      const classwork = isClasswork(item.assignmentKey);
       if (classwork) {
-        if (await liveClasswork(env, student, item.assignmentKey)) visible.push(item);
-      } else if (outsideLesson) visible.push(item);
+        if (await liveClasswork(env, student, item.assignmentKey)) visible.push({ ...item, workType: 'classwork' });
+        else expiredClasswork = true;
+      } else if (outsideLesson) visible.push({ ...item, workType: 'independent' });
+    }
+    // A Year 12/13 pupil with no live Classwork should see the real reason,
+    // rather than a misleading "wrong time" error during their lesson.
+    if (!outsideLesson && !visible.length && ['Y12', 'Y13'].includes(student.cohort)) {
+      return respond({ cohort: student.cohort, work: [], notice: expiredClasswork
+        ? 'Your Classwork has expired. Ask your teacher to renew it for another seven days.'
+        : 'No Classwork is available yet. Your teacher can assign it for lessons.' });
     }
     if (!outsideLesson && !visible.length) return respond({ error: INDEPENDENT_WORK_SCHEDULE }, 403);
     return respond({ cohort: student.cohort, work: visible });
@@ -297,11 +308,11 @@ async function handle(request, env) {
     let activity = await env.DB.prepare('SELECT assignment_key FROM assignments WHERE assignment_key = ? AND cohort = ? AND active = 1').bind(key, student.cohort).first();
     if (!activity) activity = await env.DB.prepare('SELECT assignment_key FROM student_assignments WHERE assignment_key = ? AND code = ? AND active = 1').bind(key, student.code).first();
     if (!activity) return respond({ error: 'This activity is not assigned' }, 403);
-    const isClasswork = CLASSWORK_PILOT.test(key);
-    if (isClasswork && !(await liveClasswork(env, student, key))) {
+    const classwork = isClasswork(key);
+    if (classwork && !(await liveClasswork(env, student, key))) {
       return respond({ error: 'This Classwork assignment has expired' }, 403);
     }
-    if (!isIndependentWorkTime() && !teacherIsValid(request, env) && !isClasswork) {
+    if (!isIndependentWorkTime() && !teacherIsValid(request, env) && !classwork) {
       return respond({ error: INDEPENDENT_WORK_SCHEDULE }, 403);
     }
     const recent = await env.DB.prepare("SELECT COUNT(*) AS n FROM attempts WHERE code = ? AND created_at > datetime('now', '-1 minute')").bind(student.code).first();
@@ -333,7 +344,7 @@ async function handle(request, env) {
     if (!activity) activity = await env.DB.prepare('SELECT assignment_key FROM student_assignments WHERE assignment_key = ? AND code = ? AND active = 1')
       .bind(key, student.code).first();
     if (!activity) return respond({ error: 'This activity is not assigned' }, 403);
-    const classwork = CLASSWORK_PILOT.test(key);
+    const classwork = isClasswork(key);
     if (classwork && !(await liveClasswork(env, student, key))) return respond({ error: 'This Classwork assignment has expired' }, 403);
     if (!classwork && !isIndependentWorkTime() && !teacherIsValid(request, env)) {
       return respond({ error: INDEPENDENT_WORK_SCHEDULE }, 403);
@@ -375,8 +386,15 @@ async function handle(request, env) {
       const key = assignmentKey(cohort, itemId, level || '');
       if (!key) return respond({ error: 'Invalid activity assignment' }, 400);
       const result = await env.DB.prepare('INSERT OR IGNORE INTO assignments (assignment_key, cohort, item_id, level) VALUES (?, ?, ?, ?)').bind(key, cohort, itemId, level || '').run();
-      const activated = result.meta?.changes ? null : await env.DB.prepare('UPDATE assignments SET active = 1 WHERE assignment_key = ? AND active = 0').bind(key).run();
-      return respond({ assignmentKey: key, added: Boolean(result.meta?.changes || activated?.meta?.changes) }, 201);
+      const classwork = isClasswork(key);
+      // Explicitly reassigning expired Classwork restarts its seven-day window.
+      // The assignment key and existing pupil attempts stay unchanged.
+      const renewed = result.meta?.changes ? null : classwork
+        ? await env.DB.prepare("UPDATE assignments SET active = 1, created_at = datetime('now') WHERE assignment_key = ? AND (active = 0 OR created_at < datetime('now', '-7 days'))").bind(key).run()
+        : null;
+      const activated = result.meta?.changes || classwork ? null
+        : await env.DB.prepare('UPDATE assignments SET active = 1 WHERE assignment_key = ? AND active = 0').bind(key).run();
+      return respond({ assignmentKey: key, added: Boolean(result.meta?.changes || activated?.meta?.changes), renewed: Boolean(renewed?.meta?.changes), workType: classwork ? 'classwork' : 'independent' }, 201);
     }
     if (path === '/v1/teacher/student-assignments' && request.method === 'POST') {
       const { username: rawUsername, itemId, level } = await jsonBody(request);
@@ -393,7 +411,11 @@ async function handle(request, env) {
         .bind(key, profile.cohort, itemId, level).run();
       const result = await env.DB.prepare('INSERT OR IGNORE INTO student_assignments (code, assignment_key) VALUES (?, ?)')
         .bind(profile.code, key).run();
-      return respond({ cohort: profile.cohort, assignmentKey: key, added: Boolean(result.meta?.changes), scope: 'individual' }, 201);
+      const classwork = isClasswork(key);
+      const renewed = !result.meta?.changes && classwork
+        ? await env.DB.prepare("UPDATE student_assignments SET active = 1, created_at = datetime('now') WHERE code = ? AND assignment_key = ? AND (active = 0 OR created_at < datetime('now', '-7 days'))").bind(profile.code, key).run()
+        : null;
+      return respond({ cohort: profile.cohort, assignmentKey: key, added: Boolean(result.meta?.changes), renewed: Boolean(renewed?.meta?.changes), workType: classwork ? 'classwork' : 'independent', scope: 'individual' }, 201);
     }
     if (path === '/v1/teacher/student-progress' && request.method === 'POST') {
       const { username: rawUsername } = await jsonBody(request);

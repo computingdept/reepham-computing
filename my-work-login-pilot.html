@@ -74,7 +74,7 @@
     }
 
     function showEntry(message = '') {
-      app.innerHTML = `<span class="eyebrow">Independent practice</span><h1>My Work</h1>
+      app.innerHTML = `<span class="eyebrow">Classwork &amp; independent practice</span><h1>My Work</h1>
         <p class="intro">Sign in to see your assigned Skills and Revision Practice.</p>
         <section class="panel entry"><h2>Student sign in</h2>
           <form id="signIn">
@@ -83,7 +83,7 @@
             <button class="btn" id="submit" type="submit">Sign in</button>
             <p class="error" id="error" role="alert" ${message ? '' : 'hidden'}>${escapeHtml(message)}</p>
           </form>
-          <div class="notice">Mon–Fri: 12:30–13:20 and 15:30–midnight. Sat–Sun: any time (UK time).</div>
+          <div class="notice"><strong>Classwork:</strong> open during lessons for seven days after your teacher assigns it.<br><strong>Independent practice:</strong> Mon–Fri 12:30–13:20 or after 15:30; weekends any time (UK time).</div>
         </section>`;
       document.getElementById('signIn').addEventListener('submit', async event => {
         event.preventDefault();
@@ -146,7 +146,7 @@
           ? (questions ? `${questions} MCQ answer${questions === 1 ? '' : 's'} recorded · ${correct} correct first time. The assigned quiz has ten questions; you can stop at any point.`
             : 'Five MCQs. Every checked answer saves to My Work; you can stop after one.')
         : `${count} recorded attempt${count === 1 ? '' : 's'}`;
-      return `<article class="card"><div class="card-top"><div><span class="meta">${escapeHtml(item?.workType === "classwork" ? "Classwork · " + kind : kind)}${item?.spec ? ' · ' + escapeHtml(item.spec) : ''}</span>
+      return `<article class="card"><div class="card-top"><div><span class="meta">${escapeHtml(row.workType === 'classwork' ? "Classwork · " + kind : kind)}${item?.spec ? ' · ' + escapeHtml(item.spec) : ''}</span>
         <h2>${escapeHtml(title)}</h2></div><span class="status">${escapeHtml(best)}</span></div>
         <p>${escapeHtml(practiceText)}</p>
         <div class="actions">${links.join('') || '<span class="note">Your teacher will provide this activity link.</span>'}</div></article>`;
@@ -168,7 +168,7 @@
         app.innerHTML = `<div class="heading"><div><span class="eyebrow">RHS Computing · Year ${escapeHtml(data.cohort.slice(1))}</span>
           <h1>My Work</h1><p>Your assigned activities</p></div><button class="btn secondary" id="signOut">Sign out</button></div>
           <div class="summary"><span class="count"><strong>${data.work.length}</strong> assigned</span><span class="count"><strong>${recorded}</strong> with recorded practice</span></div>
-          <section class="cards" aria-label="Assigned work">${data.work.length ? data.work.map(workCard).join('') : '<div class="panel empty"><h2>No work assigned yet</h2><p>Your login is ready. Your teacher will add your activities.</p></div>'}</section>
+          <section class="cards" aria-label="Assigned work">${data.work.length ? data.work.map(workCard).join('') : `<div class="panel empty"><h2>No available work</h2><p>${escapeHtml(data.notice || 'Your login is ready. Your teacher will add your activities.')}</p></div>`}</section>
           <div class="actions"><button class="btn secondary" id="refresh">Refresh My Work</button></div>
            <p class="note">Assigned Conversion Grid Easy and Medium and H446 1.4.1(a) MCQ save each first-checked answer. Other activities are still being connected.</p>`;
         document.getElementById('signOut').addEventListener('click', signOut);
