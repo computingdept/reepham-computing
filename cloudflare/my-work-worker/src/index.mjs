@@ -304,8 +304,11 @@ async function work(env, code, cohort) {
     WHERE s.code = ? AND s.active = 1 AND a.cohort = ?
     GROUP BY a.assignment_key ORDER BY s.created_at DESC
   `).bind(code, cohort).all();
-  return [...new Map([...groupWork.results, ...individualWork.results]
+  const older = [...new Map([...groupWork.results, ...individualWork.results]
     .map(item => [item.assignmentKey, item])).values()];
+  const grouped = await workSetRows(env, code, cohort);
+  const groupedKeys = new Set(grouped.map(row => row.assignmentKey));
+  return [...grouped, ...older.filter(row => !groupedKeys.has(row.assignmentKey))];
 }
 
 // Classwork can run during lessons for seven days after assignment. This
@@ -330,10 +333,107 @@ export async function liveClasswork(env, student, key) {
   return Boolean(individual);
 }
 
+// A work set is one teacher assignment containing several existing activities.
+// The legacy assignments/attempts tables are deliberately not rewritten, so
+// historic scores and individual allocations remain available.
+function ukToday(date = new Date()) {
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/London', year: 'numeric', month: '2-digit', day: '2-digit'
+  }).formatToParts(date);
+  const part = name => parts.find(value => value.type === name)?.value;
+  return `${part('year')}-${part('month')}-${part('day')}`;
+}
+
+export function workSetIsCurrent(set, date = new Date()) {
+  if (!set || Number(set.active) !== 1) return false;
+  if (set.kind === 'homework') return typeof set.dueDate === 'string' && ukToday(date) <= set.dueDate;
+  if (set.kind !== 'classwork' || typeof set.createdAt !== 'string') return false;
+  const issued = Date.parse(set.createdAt.replace(' ', 'T') + (set.createdAt.includes('Z') ? '' : 'Z'));
+  return Number.isFinite(issued) && date.getTime() >= issued && date.getTime() < issued + 7 * 86400000;
+}
+
+function missingWorkSets(error) {
+  return /no such table: (?:work_sets|work_set_items)/i.test(String(error?.message || ''));
+}
+
+async function ensureWorkSetTables(env) {
+  // Additive first-use migration, invoked only by an authenticated teacher
+  // creating a work set. No existing pupil/assignment/attempt row is modified.
+  await env.DB.prepare(`CREATE TABLE IF NOT EXISTS work_sets (
+    id TEXT PRIMARY KEY,
+    cohort TEXT NOT NULL CHECK (cohort IN ('Y10','Y11','Y12','Y13')),
+    title TEXT NOT NULL,
+    kind TEXT NOT NULL CHECK (kind IN ('classwork','homework')),
+    scope TEXT NOT NULL CHECK (scope IN ('cohort','individual')),
+    target_code TEXT REFERENCES practice_codes(code),
+    due_date TEXT,
+    active INTEGER NOT NULL DEFAULT 1,
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+  )`).run();
+  await env.DB.prepare(`CREATE TABLE IF NOT EXISTS work_set_items (
+    work_set_id TEXT NOT NULL REFERENCES work_sets(id),
+    assignment_key TEXT NOT NULL REFERENCES assignments(assignment_key),
+    position INTEGER NOT NULL,
+    PRIMARY KEY (work_set_id, assignment_key)
+  )`).run();
+  await env.DB.prepare('CREATE INDEX IF NOT EXISTS work_sets_by_year ON work_sets(cohort, active, target_code)').run();
+}
+
+async function workSetRows(env, code, cohort) {
+  try {
+    const data = await env.DB.prepare(`
+      SELECT s.id AS packageId, s.title AS packageTitle, s.kind, s.kind AS workType,
+        s.created_at AS createdAt, s.due_date AS dueDate, s.active,
+        a.assignment_key AS assignmentKey, a.item_id AS itemId, a.level,
+        COUNT(CASE WHEN t.level NOT LIKE 'q-%' THEN t.attempt_id END) AS attempts,
+        MAX(CASE WHEN t.level NOT LIKE 'q-%' THEN t.score END) AS bestScore,
+        COUNT(CASE WHEN t.level LIKE 'q-%' THEN t.attempt_id END) AS questionsAttempted,
+        COALESCE(SUM(CASE WHEN t.level LIKE 'q-%' AND t.score = 100 THEN 1 ELSE 0 END), 0) AS firstTryCorrect,
+        COUNT(CASE WHEN t.level = 'q-easy' THEN t.attempt_id END) AS easyQuestions,
+        COALESCE(SUM(CASE WHEN t.level = 'q-easy' AND t.score = 100 THEN 1 ELSE 0 END), 0) AS easyCorrect,
+        COUNT(CASE WHEN t.level = 'q-medium' THEN t.attempt_id END) AS mediumQuestions,
+        COALESCE(SUM(CASE WHEN t.level = 'q-medium' AND t.score = 100 THEN 1 ELSE 0 END), 0) AS mediumCorrect,
+        COUNT(CASE WHEN t.level = 'q-quiz' THEN t.attempt_id END) AS quizQuestions,
+        COALESCE(SUM(CASE WHEN t.level = 'q-quiz' AND t.score = 100 THEN 1 ELSE 0 END), 0) AS quizCorrect
+      FROM work_sets s JOIN work_set_items si ON si.work_set_id = s.id
+      JOIN assignments a ON a.assignment_key = si.assignment_key
+      LEFT JOIN attempts t ON t.assignment_key = a.assignment_key AND t.code = ?
+      WHERE s.cohort = ? AND s.active = 1 AND (s.scope = 'cohort' OR s.target_code = ?)
+      GROUP BY s.id, a.assignment_key ORDER BY s.created_at DESC, si.position
+    `).bind(code, cohort, code).all();
+    return data.results.filter(row => workSetIsCurrent(row));
+  } catch (error) {
+    if (missingWorkSets(error)) return [];
+    throw error;
+  }
+}
+
+async function assignmentAccess(env, student, key, teacherOverride) {
+  const group = await env.DB.prepare('SELECT assignment_key FROM assignments WHERE assignment_key = ? AND cohort = ? AND active = 1').bind(key, student.cohort).first();
+  const individual = group ? null : await env.DB.prepare('SELECT assignment_key FROM student_assignments WHERE assignment_key = ? AND code = ? AND active = 1').bind(key, student.code).first();
+  if (group || individual) {
+    if (isClasswork(key) && await liveClasswork(env, student, key)) return true;
+    if (!isClasswork(key) && (isIndependentWorkTime() || teacherOverride)) return true;
+  }
+  try {
+    const sets = await env.DB.prepare(`SELECT s.kind, s.active, s.created_at AS createdAt,
+      s.due_date AS dueDate FROM work_sets s
+      JOIN work_set_items si ON si.work_set_id = s.id
+      WHERE si.assignment_key = ? AND s.cohort = ? AND s.active = 1
+        AND (s.scope = 'cohort' OR s.target_code = ?)`)
+      .bind(key, student.cohort, student.code).all();
+    return sets.results.some(set => workSetIsCurrent(set) &&
+      (set.kind === 'classwork' || isIndependentWorkTime() || teacherOverride));
+  } catch (error) {
+    if (missingWorkSets(error)) return false;
+    throw error;
+  }
+}
+
 async function handle(request, env) {
   const url = new URL(request.url);
   const path = url.pathname;
-  if (path === '/v1/health' && request.method === 'GET') return respond({ ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', cohortCorrection: '11-to-12-v1', selectedClasswork: 'v1', cohortAudit: 'v1' });
+  if (path === '/v1/health' && request.method === 'GET') return respond({ ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', workSets: 'v1', cohortCorrection: '11-to-12-v1', selectedClasswork: 'v1', cohortAudit: 'v1' });
   if (!env.DB) return respond({ error: 'Database not configured' }, 503);
 
   if (path === '/v1/login' && request.method === 'POST') return signIn(request, env);
@@ -353,6 +453,10 @@ async function handle(request, env) {
     const visible = [];
     let expiredClasswork = false;
     for (const item of assigned) {
+      if (item.packageId) {
+        if (item.workType === 'classwork' || outsideLesson) visible.push(item);
+        continue;
+      }
       const classwork = isClasswork(item.assignmentKey);
       if (classwork) {
         if (await liveClasswork(env, student, item.assignmentKey)) visible.push({ ...item, workType: 'classwork' });
@@ -391,16 +495,8 @@ async function handle(request, env) {
     if (!key.startsWith(student.cohort.slice(1) + '|')) return code === undefined
       ? respond({ error: 'Activity does not match your year group' }, 403)
       : respond({ error: 'Practice code not recognised' }, 404);
-    let activity = await env.DB.prepare('SELECT assignment_key FROM assignments WHERE assignment_key = ? AND cohort = ? AND active = 1').bind(key, student.cohort).first();
-    if (!activity) activity = await env.DB.prepare('SELECT assignment_key FROM student_assignments WHERE assignment_key = ? AND code = ? AND active = 1').bind(key, student.code).first();
-    if (!activity) return respond({ error: 'This activity is not assigned' }, 403);
-    const classwork = isClasswork(key);
-    if (classwork && !(await liveClasswork(env, student, key))) {
-      return respond({ error: 'This Classwork assignment has expired' }, 403);
-    }
-    if (!isIndependentWorkTime() && !teacherIsValid(request, env) && !classwork) {
-      return respond({ error: INDEPENDENT_WORK_SCHEDULE }, 403);
-    }
+    if (!(await assignmentAccess(env, student, key, teacherIsValid(request, env))))
+      return respond({ error: 'This activity is not currently available. Check its classwork period or homework hours and deadline.' }, 403);
     const recent = await env.DB.prepare("SELECT COUNT(*) AS n FROM attempts WHERE code = ? AND created_at > datetime('now', '-1 minute')").bind(student.code).first();
     if (Number(recent?.n || 0) >= 8) return respond({ error: 'Please wait before submitting more attempts' }, 429);
     const result = await env.DB.prepare(`
@@ -425,16 +521,8 @@ async function handle(request, env) {
       return respond({ error: 'Invalid question attempt' }, 400);
     }
     if (!key.startsWith(student.cohort.slice(1) + '|')) return respond({ error: 'Activity does not match your year group' }, 403);
-    let activity = await env.DB.prepare('SELECT assignment_key FROM assignments WHERE assignment_key = ? AND cohort = ? AND active = 1')
-      .bind(key, student.cohort).first();
-    if (!activity) activity = await env.DB.prepare('SELECT assignment_key FROM student_assignments WHERE assignment_key = ? AND code = ? AND active = 1')
-      .bind(key, student.code).first();
-    if (!activity) return respond({ error: 'This activity is not assigned' }, 403);
-    const classwork = isClasswork(key);
-    if (classwork && !(await liveClasswork(env, student, key))) return respond({ error: 'This Classwork assignment has expired' }, 403);
-    if (!classwork && !isIndependentWorkTime() && !teacherIsValid(request, env)) {
-      return respond({ error: INDEPENDENT_WORK_SCHEDULE }, 403);
-    }
+    if (!(await assignmentAccess(env, student, key, teacherIsValid(request, env))))
+      return respond({ error: 'This activity is not currently available. Check its classwork period or homework hours and deadline.' }, 403);
     const previous = await env.DB.prepare('SELECT attempt_id FROM attempts WHERE attempt_id = ? AND code = ?')
       .bind(attemptId, student.code).first();
     if (previous) return respond({ saved: false, duplicate: true });
@@ -452,6 +540,94 @@ async function handle(request, env) {
     if (!teacherIsValid(request, env)) return respond({ error: 'Teacher access required' }, 401);
     if (path === '/v1/teacher/logins' && request.method === 'POST') return provisionLogins(request, env);
     if (path === '/v1/teacher/audit-cohorts' && request.method === 'POST') return auditLoginCohorts(request, env);
+    if (path === '/v1/teacher/assignment-inventory' && request.method === 'GET') {
+      const cohort = url.searchParams.get('cohort');
+      if (!cohortIsValid(cohort)) return respond({ error: 'Choose a valid year group' }, 400);
+      const whole = await env.DB.prepare('SELECT COUNT(*) AS count FROM assignments WHERE cohort = ? AND active = 1').bind(cohort).first();
+      const individual = await env.DB.prepare(`SELECT COUNT(*) AS count FROM student_assignments s
+        JOIN practice_codes p ON p.code = s.code WHERE p.cohort = ? AND s.active = 1`).bind(cohort).first();
+      let combined = 0;
+      try {
+        const row = await env.DB.prepare('SELECT COUNT(*) AS count FROM work_sets WHERE cohort = ? AND active = 1').bind(cohort).first();
+        combined = Number(row?.count || 0);
+      } catch (error) {
+        if (!missingWorkSets(error)) throw error;
+      }
+      return respond({ cohort, wholeYearActivityRecords: Number(whole?.count || 0),
+        individualActivityRecords: Number(individual?.count || 0), combinedAssignments: combined });
+    }
+    if (path === '/v1/teacher/work-sets' && request.method === 'GET') {
+      const cohort = url.searchParams.get('cohort');
+      if (!cohortIsValid(cohort)) return respond({ error: 'Choose a valid year group' }, 400);
+      try {
+        const sets = await env.DB.prepare(`SELECT s.id, s.title, s.kind, s.scope,
+          s.due_date AS dueDate, s.created_at AS createdAt, s.active,
+          a.item_id AS itemId, a.level
+          FROM work_sets s JOIN work_set_items si ON si.work_set_id = s.id
+          JOIN assignments a ON a.assignment_key = si.assignment_key
+          WHERE s.cohort = ? ORDER BY s.created_at DESC, si.position`).bind(cohort).all();
+        return respond({ cohort, sets: sets.results });
+      } catch (error) {
+        if (missingWorkSets(error)) return respond({ cohort, sets: [] });
+        throw error;
+      }
+    }
+    if (path === '/v1/teacher/work-sets' && request.method === 'POST') {
+      const { cohort, scope, username: rawUsername, kind, title, dueDate, items } = await jsonBody(request);
+      if (!cohortIsValid(cohort) || !['cohort', 'individual'].includes(scope) ||
+          !['classwork', 'homework'].includes(kind) || typeof title !== 'string' ||
+          title.trim().length < 3 || title.trim().length > 90 ||
+          !Array.isArray(items) || items.length < 1 || items.length > 25) {
+        return respond({ error: 'Choose a year, recipient, assignment type, title and 1–25 activities' }, 400);
+      }
+      const validDate = typeof dueDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(dueDate) &&
+        !Number.isNaN(Date.parse(dueDate)) && new Date(dueDate).toISOString().slice(0, 10) === dueDate;
+      if (kind === 'homework' && (!validDate || dueDate < ukToday()))
+        return respond({ error: 'Set a homework deadline of today or later' }, 400);
+      const keys = items.map(item => item && typeof item === 'object' &&
+        assignmentKey(cohort, item.itemId, item.level));
+      if (keys.some(key => !key) || new Set(keys).size !== keys.length)
+        return respond({ error: 'Choose distinct activities from the correct course and year' }, 400);
+      let targetCode = null;
+      if (scope === 'individual') {
+        const username = normalizeUsername(rawUsername);
+        if (!username) return respond({ error: 'Enter one valid anonymous username' }, 400);
+        const pupil = await env.DB.prepare(`SELECT p.code, p.cohort FROM login_profiles l
+          JOIN practice_codes p ON p.code = l.code
+          WHERE l.username_key = ? AND p.enabled = 1`).bind(await usernameKey(username)).first();
+        if (!pupil || pupil.cohort !== cohort)
+          return respond({ error: 'This anonymous username is not registered in the chosen year. No work assigned.' }, 409);
+        targetCode = pupil.code;
+      }
+      await ensureWorkSetTables(env);
+      // The legacy attempt key identifies an activity, not a work-set instance.
+      // Reject overlapping new sets for that activity so teachers do not get
+      // two differently timed assignments sharing one set of results.
+      for (const key of keys) {
+        const overlaps = await env.DB.prepare(`SELECT s.kind, s.active,
+          s.created_at AS createdAt, s.due_date AS dueDate
+          FROM work_sets s JOIN work_set_items si ON si.work_set_id = s.id
+          WHERE si.assignment_key = ? AND s.cohort = ? AND s.active = 1
+            AND (s.scope = 'cohort' OR ? = 'cohort' OR s.target_code = ?)`)
+          .bind(key, cohort, scope, targetCode).all();
+        if (overlaps.results.some(row => workSetIsCurrent(row)))
+          return respond({ error: 'An activity is already in a current combined assignment for these pupils. Choose different activities or wait until that assignment expires.' }, 409);
+      }
+      const id = crypto.randomUUID();
+      // D1 batches commit atomically. Old assignment definitions are left alone;
+      // new ones remain inactive outside their work set.
+      const statements = items.map((item, index) => env.DB.prepare(`INSERT OR IGNORE INTO assignments
+        (assignment_key, cohort, item_id, level, active) VALUES (?, ?, ?, ?, 0)`)
+        .bind(keys[index], cohort, item.itemId, item.level));
+      statements.push(env.DB.prepare(`INSERT INTO work_sets
+        (id, cohort, title, kind, scope, target_code, due_date) VALUES (?, ?, ?, ?, ?, ?, ?)`)
+        .bind(id, cohort, title.trim(), kind, scope, targetCode, kind === 'homework' ? dueDate : null));
+      for (const [index, key] of keys.entries()) statements.push(env.DB.prepare(`INSERT INTO work_set_items
+        (work_set_id, assignment_key, position) VALUES (?, ?, ?)`).bind(id, key, index));
+      await env.DB.batch(statements);
+      return respond({ id, cohort, scope, kind, title: title.trim(), activityCount: keys.length,
+        dueDate: kind === 'homework' ? dueDate : null, classworkDays: kind === 'classwork' ? 7 : null }, 201);
+    }
     if (path === '/v1/teacher/codes' && request.method === 'POST') {
       const { cohort, count } = await jsonBody(request);
       if (!cohortIsValid(cohort) || !Number.isInteger(count) || count < 1 || count > 100) return respond({ error: 'Choose a cohort and 1–100 codes' }, 400);

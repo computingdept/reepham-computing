@@ -94,6 +94,16 @@
     .results-table td:first-child{font-weight:750}
     .results-table small{display:block;color:var(--muted)}
     .results-table .wrong-year{color:var(--red)}
+    .bundle-choices{max-height:420px;overflow:auto;border:1px solid var(--line);border-radius:12px;padding:9px;margin-top:8px}
+    .bundle-group{font-size:14px;color:var(--green);font-weight:900;margin:10px 8px 5px}
+    .bundle-choice{display:flex;align-items:flex-start;gap:10px;border:1px solid transparent;padding:10px;border-radius:9px;margin:3px 0;cursor:pointer;font-size:14px;font-weight:750}
+    .bundle-choice:has(input:checked){background:var(--pale);border-color:var(--green)}
+    .bundle-choice input{height:19px;width:19px;min-height:0;flex:none;margin-top:2px;accent-color:var(--green)}
+    .bundle-choice small{display:block;color:var(--muted);font-size:12px;font-weight:500}
+    .bundle-summary{font-weight:850;color:var(--green);margin-top:12px}
+    .bundle-review-list{margin:7px 0 10px;padding-left:20px;font-size:14px}
+    .legacy-tools{margin-top:22px;border:1px solid var(--line);padding:14px;border-radius:12px}
+    .legacy-tools>summary{cursor:pointer;font-weight:800;color:var(--muted)}
     [hidden]{display:none!important}
     footer{max-width:1100px;margin:0 auto;padding:0 20px 28px;font-size:13px;color:var(--muted)}
     @media(max-width:760px){.work-grid{grid-template-columns:1fr}.fields,.scope-options{grid-template-columns:1fr}.panel{padding:19px}.bar{padding:11px 15px}main{padding:24px 15px 50px}}
@@ -129,6 +139,49 @@
         <button type="button" id="review-work-tab" class="teacher-tab" aria-selected="false">Review Work</button>
       </nav>
       <div id="set-work-view">
+      <div class="work-grid" id="bundle-workflow">
+        <section class="panel" aria-labelledby="bundle-choose-title">
+          <h2 id="bundle-choose-title">1 · Build an assignment</h2>
+          <p class="sub">Tick Skills and Revision Practice together. Pupils will see everything under one assignment.</p>
+          <p id="bundle-inventory" class="notice" aria-live="polite">Connect to check existing assignment records before publishing.</p>
+          <div class="fields">
+            <div class="field"><label for="bundle-year">Year group</label><select id="bundle-year"><option value="Y10">Year 10</option><option value="Y11">Year 11</option><option value="Y12" selected>Year 12</option><option value="Y13">Year 13</option></select></div>
+            <div class="field"><label for="bundle-type">Assignment type</label><select id="bundle-type"><option value="classwork">Classwork · Do in class</option><option value="homework">Homework</option></select></div>
+            <div class="field full"><label for="bundle-title">Assignment title</label><input id="bundle-title" maxlength="90" placeholder="e.g. Number systems and data types"></div>
+          </div>
+          <fieldset class="scope"><legend>Who receives it?</legend><div class="scope-options">
+            <label class="scope-option"><input type="radio" name="bundle-scope" value="cohort" checked> Whole year group</label>
+            <label class="scope-option"><input type="radio" name="bundle-scope" value="individual"> One anonymous pupil</label>
+          </div></fieldset>
+          <div class="field" id="bundle-pupil-field" hidden><label for="bundle-pupil">Anonymous username</label><input id="bundle-pupil" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Pupil's anonymous username"></div>
+          <div class="field" id="bundle-date-field" hidden><label for="bundle-date">Homework deadline</label><input type="date" id="bundle-date"><p class="target-note">Available only at independent-work times, until the end of the selected date (UK time).</p></div>
+          <p id="bundle-time-note" class="notice"><strong>Classwork:</strong> no time-of-day limits. Open immediately for seven days.</p>
+          <div class="fields" style="margin-top:19px">
+            <div class="field"><label for="bundle-paper">OCR paper</label><select id="bundle-paper"><option value="all">Both papers</option><option value="1">Paper 1</option><option value="2">Paper 2</option></select></div>
+            <div class="field"><label for="bundle-kind">Activities</label><select id="bundle-kind"><option value="all">Skills and Revision Practice</option><option value="skill">Skills</option><option value="practice">Revision Practice</option></select></div>
+            <div class="field full"><label for="bundle-search">Find an activity</label><input type="search" id="bundle-search" placeholder="Search titles or OCR specification points"></div>
+          </div>
+          <div id="bundle-choices" class="bundle-choices" role="group" aria-label="Select Skills and Revision Practice"></div>
+          <p class="bundle-summary" id="bundle-count" aria-live="polite">0 activities selected</p>
+        </section>
+        <section class="panel" aria-labelledby="bundle-review-title">
+          <h2 id="bundle-review-title">2 · Review and assign</h2>
+          <p class="sub">One assignment, containing all the activities you tick.</p>
+          <div class="preview" id="bundle-summary" aria-live="polite">Choose your activities from the list.</div>
+          <button type="button" class="button" id="bundle-review-button">Review assignment</button>
+          <div id="bundle-review" class="review" hidden>
+            <p class="mini">Check before publishing</p>
+            <strong id="bundle-review-text"></strong>
+            <ul id="bundle-review-items" class="bundle-review-list"></ul>
+            <small id="bundle-review-note"></small>
+            <label class="confirm-year"><input id="bundle-confirm" type="checkbox"> I have checked the recipients, activities and access rules.</label>
+            <div class="actions"><button type="button" class="button" id="bundle-publish" disabled>Confirm whole assignment</button><button type="button" class="button secondary" id="bundle-cancel">Cancel</button></div>
+          </div>
+          <p id="bundle-status" class="state" role="status" aria-live="polite"></p>
+          <p class="notice">Your existing assignments and scores are kept. Results are tracked for activities already connected to automatic marking.</p>
+        </section>
+      </div>
+      <details class="legacy-tools"><summary>Earlier pilot assignment tools · Advanced</summary>
       <div class="work-grid">
         <section class="panel" aria-labelledby="choose-title">
           <h2 id="choose-title">1 · Choose an activity</h2>
@@ -228,11 +281,13 @@
           <div class="actions"><button type="button" class="button" id="selected-submit" disabled>Confirm both Classwork assignments</button></div>
         </div>
       </section>
+      </details>
       </div>
 
       <section class="panel" id="review-work-view" aria-labelledby="class-progress-title" hidden>
         <h2 id="class-progress-title">Review class progress</h2>
         <p class="sub">Choose a class and refresh to see each pupil's first-checked answers. Results are not continuously polled, to keep the free-tier pilot light.</p>
+        <div class="preview" style="min-height:0" aria-live="polite"><h3>Combined assignments</h3><div id="bundle-existing">Choose a year and refresh to see combined assignments.</div></div>
         <div class="review-controls">
           <div class="field"><label for="review-cohort">Class</label><select id="review-cohort"><option value="Y10">Year 10</option><option value="Y11">Year 11</option><option value="Y12" selected>Year 12</option><option value="Y13">Year 13</option></select></div>
           <button type="button" class="button" id="refresh-class">Refresh class results</button>
@@ -308,6 +363,16 @@
     let cohortAudit = null;
     let selectedClasswork = null;
     let loading = false;
+    const bundleSelected = new Set();
+    let bundlePending = null;
+    const bundleUKDate = () => {
+      const parts = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Europe/London', year: 'numeric', month: '2-digit', day: '2-digit'
+      }).formatToParts(new Date());
+      const part = name => parts.find(value => value.type === name)?.value;
+      return `${part('year')}-${part('month')}-${part('day')}`;
+    };
+    const bundleScope = () => document.querySelector('input[name="bundle-scope"]:checked')?.value || 'cohort';
     const chosenScope = () => document.querySelector('input[name="scope"]:checked')?.value || 'individual';
     const anonymousUsername = () => $('username').value.trim().toLowerCase();
     const usernameIsValid = () => /^[a-z0-9][a-z0-9._-]{2,39}$/.test(anonymousUsername());
@@ -326,6 +391,156 @@
       node.className = 'state' + (kind ? ' ' + kind : '');
     }
 
+    function cancelBundleReview() {
+      bundlePending = null;
+      $('bundle-review').hidden = true;
+      $('bundle-confirm').checked = false;
+      $('bundle-publish').disabled = true;
+    }
+
+    function bundleActivities() { return catalog.filter(item => bundleSelected.has(item.id)); }
+
+    function updateBundleSummary() {
+      const items = bundleActivities();
+      $('bundle-count').textContent = items.length + ' activit' + (items.length === 1 ? 'y' : 'ies') + ' selected';
+      const summary = $('bundle-summary');
+      summary.replaceChildren();
+      const heading = document.createElement('strong');
+      heading.textContent = items.length ? `${items.length} selected in one assignment` : 'No activities selected yet';
+      summary.append(heading);
+      if (items.length) {
+        const list = document.createElement('ul');
+        list.className = 'bundle-review-list';
+        for (const item of items) {
+          const row = document.createElement('li');
+          row.textContent = `${item.type === 'skill' ? 'Skill' : 'Revision'} · ${item.title}`;
+          list.append(row);
+        }
+        summary.append(list);
+      }
+      cancelBundleReview();
+    }
+
+    function renderBundleChoices() {
+      const year = $('bundle-year').value;
+      const prefix = ['Y12','Y13'].includes(year) ? 'h446-' : 'j277-';
+      const search = $('bundle-search').value.trim().toLowerCase();
+      const paper = $('bundle-paper').value;
+      const kind = $('bundle-kind').value;
+      const candidates = catalog.filter(item => item.id.startsWith(prefix) &&
+        (paper === 'all' || item.paper === Number(paper)) && (kind === 'all' || item.type === kind) &&
+        (!search || [item.title, item.spec, item.group, item.subtitle].some(value =>
+          String(value || '').toLowerCase().includes(search))));
+      const list = $('bundle-choices');
+      list.replaceChildren();
+      for (const type of ['skill','practice']) {
+        const matching = candidates.filter(item => item.type === type);
+        if (!matching.length) continue;
+        const heading = document.createElement('h3');
+        heading.className = 'bundle-group';
+        heading.textContent = type === 'skill' ? 'Skills' : 'Revision Practice';
+        list.append(heading);
+        for (const item of matching) {
+          const label = document.createElement('label');
+          label.className = 'bundle-choice';
+          const input = document.createElement('input');
+          input.type = 'checkbox'; input.checked = bundleSelected.has(item.id);
+          input.setAttribute('aria-label', item.title + ' · ' + (item.spec || ''));
+          input.addEventListener('change', () => {
+            if (input.checked) bundleSelected.add(item.id);
+            else bundleSelected.delete(item.id);
+            updateBundleSummary();
+          });
+          const content = document.createElement('span');
+          content.append(document.createTextNode(item.title));
+          const meta = document.createElement('small');
+          meta.textContent = 'Paper ' + item.paper + (item.spec ? ' · ' + item.spec : '') + (item.group ? ' · ' + item.group : '');
+          content.append(meta);
+          label.append(input, content);
+          list.append(label);
+        }
+      }
+      if (!candidates.length) list.textContent = 'No activities match these filters.';
+      updateBundleSummary();
+    }
+
+    function renderBundleRules() {
+      $('bundle-pupil-field').hidden = bundleScope() !== 'individual';
+      const homework = $('bundle-type').value === 'homework';
+      $('bundle-date-field').hidden = !homework;
+      $('bundle-date').required = homework;
+      $('bundle-time-note').textContent = homework
+        ? 'Homework: weekdays 12:30–13:20 and after 15:30; weekends all day. Your chosen deadline also applies.'
+        : 'Classwork: no time-of-day limits. Pupils can open it immediately for seven days.';
+      cancelBundleReview();
+    }
+
+    function reviewBundle() {
+      if (!teacherToken) return status('bundle-status', 'Connect using your teacher token first.', 'error');
+      const title = $('bundle-title').value.trim();
+      const items = bundleActivities();
+      const scope = bundleScope();
+      const username = $('bundle-pupil').value.trim().toLowerCase();
+      const kind = $('bundle-type').value;
+      const dueDate = $('bundle-date').value;
+      if (title.length < 3 || title.length > 90) return status('bundle-status', 'Enter a short assignment title (3–90 characters).', 'error');
+      if (!items.length || items.length > 25) return status('bundle-status', 'Choose between 1 and 25 Skills or Revision Practice activities.', 'error');
+      if (scope === 'individual' && !validUsername(username)) return status('bundle-status', 'Enter one valid anonymous username.', 'error');
+      if (kind === 'homework' && (!/^\d{4}-\d{2}-\d{2}$/.test(dueDate) || dueDate < bundleUKDate()))
+        return status('bundle-status', 'Choose a homework deadline of today or later.', 'error');
+      bundlePending = { cohort: $('bundle-year').value, scope, username, title, kind,
+        ...(kind === 'homework' ? { dueDate } : {}),
+        items: items.map(item => ({ itemId: item.id, level: item.type === 'skill' ? 'both' : '' })) };
+      $('bundle-review-text').textContent = `${title} → ${scope === 'cohort' ? 'EVERY pupil in Year ' + bundlePending.cohort.slice(1) : 'ONLY ' + username}`;
+      $('bundle-review-note').textContent = kind === 'classwork'
+        ? 'Classwork: accessible at any time of day for seven days.'
+        : `Homework: restricted independent-work hours, deadline ${dueDate}.`;
+      const list = $('bundle-review-items'); list.replaceChildren();
+      for (const item of items) {
+        const row = document.createElement('li'); row.textContent = item.title; list.append(row);
+      }
+      $('bundle-confirm').checked = false;
+      $('bundle-publish').disabled = true;
+      $('bundle-review').hidden = false;
+      status('bundle-status', 'Review and confirm before assigning. Nothing has been published yet.');
+    }
+
+    async function publishBundle() {
+      if (!bundlePending || !$('bundle-confirm').checked || loading) return;
+      loading = true; $('bundle-publish').disabled = true;
+      status('bundle-status', 'Creating one assignment…');
+      try {
+        const result = await request('/v1/teacher/work-sets', { method: 'POST', body: bundlePending });
+        bundleSelected.clear(); cancelBundleReview(); renderBundleChoices();
+        $('bundle-title').value = '';
+        status('bundle-status', `Assigned "${result.title}" with ${result.activityCount} activities to ${result.scope === 'cohort' ? 'Year ' + result.cohort.slice(1) : 'the selected pupil'}. Previous results are kept.`, 'good');
+        try { await loadProgress(); } catch { /* Assignment saved; a refresh failure must not suggest otherwise. */ }
+      } catch (error) {
+        if (error.status === 401) disconnect('Teacher access expired. Connect again.');
+        else status('bundle-status', error.message, 'error');
+      } finally { loading = false; $('bundle-publish').disabled = !$('bundle-confirm').checked || !bundlePending; }
+    }
+
+    async function loadBundleHistory() {
+      const year = $('review-cohort').value;
+      const result = await request('/v1/teacher/work-sets?cohort=' + encodeURIComponent(year));
+      const area = $('bundle-existing'); area.replaceChildren();
+      const sets = new Map();
+      for (const row of result.sets || []) {
+        if (!sets.has(row.id)) sets.set(row.id, { ...row, items: [] });
+        sets.get(row.id).items.push(catalog.find(item => item.id === row.itemId)?.title || row.itemId);
+      }
+      if (!sets.size) { area.textContent = 'No combined assignments recorded for this year yet. Earlier individual activities may still exist.'; return; }
+      for (const set of sets.values()) {
+        const entry = document.createElement('article'); entry.className = 'assignment';
+        const content = document.createElement('div');
+        const heading = document.createElement('strong'); heading.textContent = set.title;
+        const desc = document.createElement('p'); desc.className = 'detail';
+        desc.textContent = `${set.kind === 'classwork' ? 'Classwork' : 'Homework'} · ${set.scope === 'cohort' ? 'Whole Year ' + year.slice(1) : 'Individual pupil'} · ${set.items.join(' + ')}${set.dueDate ? ' · Due ' + set.dueDate : ''}`;
+        content.append(heading, desc); entry.append(content); area.append(entry);
+      }
+    }
+
     function selectTeacherTab(tab) {
       const review = tab === 'review';
       $('set-work-view').hidden = review;
@@ -333,9 +548,13 @@
       $('set-work-tab').setAttribute('aria-selected', String(!review));
       $('review-work-tab').setAttribute('aria-selected', String(review));
       if (review) {
-        $('review-cohort').value = $('cohort').value;
+        $('review-cohort').value = $('bundle-year').value;
         showRosterCount();
-      } else if ($('cohort').value !== $('review-cohort').value) {
+        loadBundleHistory().catch(error => { $('bundle-existing').textContent = error.message; });
+      } else if ($('bundle-year').value !== $('review-cohort').value) {
+        $('bundle-year').value = $('review-cohort').value;
+        bundleSelected.clear();
+        renderBundleChoices();
         $('cohort').value = $('review-cohort').value;
         renderGroups();
         renderActivities();
@@ -869,6 +1088,12 @@
       $('counts').textContent = 'Checking…';
       const data = await request('/v1/teacher/progress?cohort=' + encodeURIComponent(year));
       if (!Array.isArray(data.assignments) || !Array.isArray(data.codes)) throw new Error('Unexpected assignment response.');
+      try {
+        const inventory = await request('/v1/teacher/assignment-inventory?cohort=' + encodeURIComponent(year));
+        $('bundle-inventory').textContent = `Existing records for Year ${year.slice(1)}: ${inventory.wholeYearActivityRecords} whole-year activities · ${inventory.individualActivityRecords} individual activity allocations · ${inventory.combinedAssignments} combined assignments. Nothing is cleared automatically.`;
+      } catch (error) {
+        $('bundle-inventory').textContent = 'Existing assignments could not be counted yet. No records have been cleared.';
+      }
       $('counts').textContent = data.assignments.length + ' assigned · ' + data.codes.length + ' active codes';
       const list = $('assignments');
       list.replaceChildren();
@@ -1003,6 +1228,7 @@
           [1,2].includes(item.paper) && ['skill','practice'].includes(item.type)
         ) : [];
         if (!catalog.length) throw new Error('No activities were found.');
+        renderBundleChoices();
         renderGroups();
         renderActivities();
       } catch (error) {
@@ -1019,7 +1245,23 @@
       showRosterCount();
       $('class-rows').replaceChildren();
       status('class-status', 'Click Refresh class results to check Year ' + $('review-cohort').value.slice(1) + '.');
+      loadBundleHistory().catch(error => { $('bundle-existing').textContent = error.message; });
     });
+    $('bundle-year').addEventListener('change', () => {
+      bundleSelected.clear();
+      $('cohort').value = $('bundle-year').value;
+      renderBundleChoices(); renderGroups(); renderActivities();
+      if (teacherToken) refresh();
+    });
+    $('bundle-type').addEventListener('change', renderBundleRules);
+    for (const radio of document.querySelectorAll('input[name="bundle-scope"]')) radio.addEventListener('change', renderBundleRules);
+    for (const field of ['bundle-title', 'bundle-pupil', 'bundle-date']) $(field).addEventListener('input', cancelBundleReview);
+    for (const filter of ['bundle-paper', 'bundle-kind']) $(filter).addEventListener('change', renderBundleChoices);
+    $('bundle-search').addEventListener('input', renderBundleChoices);
+    $('bundle-review-button').addEventListener('click', reviewBundle);
+    $('bundle-cancel').addEventListener('click', cancelBundleReview);
+    $('bundle-confirm').addEventListener('change', () => { $('bundle-publish').disabled = !$('bundle-confirm').checked || !bundlePending; });
+    $('bundle-publish').addEventListener('click', publishBundle);
     $('save-roster').addEventListener('click', saveRoster);
     $('audit-from-saved').addEventListener('click', useSavedAuditRoster);
     $('audit-input').addEventListener('input', () => resetCohortAudit('Roster changed. Run the full audit again before making any corrections.'));
@@ -1051,6 +1293,7 @@
     $('refresh').addEventListener('click', refresh);
     $('check-pupil-progress').addEventListener('click', checkPupilProgress);
     renderScope();
+    renderBundleRules();
     showRosterCount();
     initialise();
   })();

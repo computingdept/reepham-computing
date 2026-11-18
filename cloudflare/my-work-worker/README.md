@@ -41,6 +41,38 @@ existing teacher secret, never a token embedded in public website files.
 | `GET /v1/teacher/progress?cohort=Y10` | Teacher secret | Pseudonymous progress table (Y10–Y13) |
 | `POST /v1/teacher/logins` | Teacher secret | Provision anonymous username / PIN logins with a mandatory expected year |
 | `POST /v1/teacher/audit-cohorts` | Teacher secret | Preview all active logins against the complete private roster; separately confirm approved corrections |
+| `POST /v1/teacher/work-sets` | Teacher secret | Create one combined Classwork or Homework assignment with 1–25 Skills/Revision Practice activities |
+| `GET /v1/teacher/work-sets?cohort=Y12` | Teacher secret | Review combined assignments for a year without changing database records |
+| `GET /v1/teacher/assignment-inventory?cohort=Y12` | Teacher secret | Count active legacy and combined allocations before publishing; read-only |
+
+### Combined assignments (Classwork and Homework)
+
+The Set Work screen now provides a clickable activity checklist for Year 10–13.
+Each published work set has one title, recipient scope (one anonymous login or
+the whole year), and multiple task links. Student My Work groups those activities
+under the single work-set title. There is no automatic assignment on login;
+the teacher must explicitly review and publish a work set.
+
+- **Classwork** is accessible at any hour while assigned, for seven days after
+  publication. Expired work disappears but submitted attempts are preserved.
+- **Homework** uses the existing independent-work windows: Mon–Fri 12:30–13:20
+  and 15:30–midnight; all day weekends (Europe/London timezone). The teacher
+  must choose a due date; it remains available through that UK date.
+- School holidays and INSET days are **not yet represented** in the Worker's
+  schedule; they currently follow the normal weekday windows. Do not promise
+  all-day weekday-holiday access until a school calendar is configured.
+- Existing assignments and scores are never cleared or converted automatically.
+  Activity-level attempts are still keyed by the original activity; if the same
+  activity is assigned again in another work set, previous attempts are shared.
+  Only the current connected Conversion Grid and H446 1.4.1(a) MCQ activities
+  send first-checked-question scores. Other catalogue activities open through
+  their links but their automatic reporting is not yet integrated.
+
+`work_sets` and `work_set_items` are additive tables. A teacher's first successful
+combined-assignment submission creates them if absent (the authenticated endpoint
+uses `CREATE TABLE IF NOT EXISTS`); a fresh database can also use `schema.sql`.
+No migration deletes logins, historical allocations, or attempts. For a live
+rollout, check and back up the D1 assignment/attempt counts first.
 
 ### Auditing the original year-group roster
 

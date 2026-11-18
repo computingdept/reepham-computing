@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import worker, { assignmentKey, isIndependentWorkTime, newPracticeCode, liveClasswork } from '../src/index.mjs';
+import worker, { assignmentKey, isIndependentWorkTime, newPracticeCode, liveClasswork, workSetIsCurrent } from '../src/index.mjs';
 
 const TOKEN = 'fictional-teacher-secret-for-local-tests-only';
 const ORIGIN = 'https://rhsccs.org';
@@ -25,11 +25,17 @@ function attemptStats(scores) {
 }
 
 class FakeD1 {
-  constructor() { this.codes = new Map(); this.assignments = new Map(); this.individualAssignments = new Map(); this.attempts = new Map(); this.logins = new Map(); this.sessions = new Map(); }
+  constructor() { this.codes = new Map(); this.assignments = new Map(); this.individualAssignments = new Map(); this.attempts = new Map(); this.logins = new Map(); this.sessions = new Map(); this.workSets = new Map(); this.workSetItems = []; }
   async batch(statements) { const results = []; for (const statement of statements) results.push(await statement.run()); return results; }
   prepare(sql) {
-    return { bind: (...args) => {
+    return { run: () => this.prepare(sql).bind().run(), bind: (...args) => {
       const first = async () => {
+        if (sql.includes('COUNT(*) AS count FROM assignments'))
+          return { count: [...this.assignments.values()].filter(row => row.cohort === args[0] && row.active).length };
+        if (sql.includes('COUNT(*) AS count FROM student_assignments'))
+          return { count: [...this.individualAssignments.values()].filter(row => row.active && this.codes.get(row.code)?.cohort === args[0]).length };
+        if (sql.includes('COUNT(*) AS count FROM work_sets'))
+          return { count: [...this.workSets.values()].filter(row => row.cohort === args[0] && row.active).length };
         if (sql.includes('SELECT code, cohort FROM practice_codes')) {
           const code = this.codes.get(args[0]);
           return code?.enabled ? code : null;
@@ -78,6 +84,19 @@ class FakeD1 {
         throw Error('Unrecognised test SELECT one: ' + sql);
       };
       const run = async () => {
+        if (sql.startsWith('CREATE TABLE IF NOT EXISTS work_sets') ||
+            sql.startsWith('CREATE TABLE IF NOT EXISTS work_set_items') ||
+            sql.startsWith('CREATE INDEX IF NOT EXISTS work_sets_by_year')) return { meta: { changes: 0 } };
+        if (sql.includes('INSERT INTO work_sets')) {
+          const [id, cohort, title, kind, scope, target_code, due_date] = args;
+          this.workSets.set(id, { id, cohort, title, kind, scope, target_code, dueDate: due_date, active: 1, createdAt: new Date().toISOString() });
+          return { meta: { changes: 1 } };
+        }
+        if (sql.includes('INSERT INTO work_set_items')) {
+          const [work_set_id, assignment_key, position] = args;
+          this.workSetItems.push({ work_set_id, assignment_key, position });
+          return { meta: { changes: 1 } };
+        }
         if (sql.includes('WITH corrections(code, previous, target) AS MATERIALIZED')) {
           const expectedCount = args[args.length - 1];
           const corrections = [];
@@ -164,6 +183,28 @@ class FakeD1 {
         throw Error('Unrecognised test INSERT: ' + sql);
       };
       const all = async () => {
+        if (sql.includes('FROM work_sets s') && sql.includes('JOIN work_set_items si')) {
+          const permissionQuery = sql.includes('WHERE si.assignment_key = ?');
+          const teacherQuery = sql.includes('WHERE s.cohort = ? ORDER BY');
+          return { results: this.workSetItems.flatMap(item => {
+            const set = this.workSets.get(item.work_set_id);
+            const a = this.assignments.get(item.assignment_key);
+            if (!set || !a) return [];
+            if (permissionQuery) {
+              const overlap = sql.includes("OR ? = 'cohort'");
+              return item.assignment_key === args[0] && set.cohort === args[1] && set.active &&
+                (set.scope === 'cohort' || (overlap && args[2] === 'cohort') || set.target_code === (overlap ? args[3] : args[2])) ? [set] : [];
+            }
+            if (teacherQuery) return set.cohort === args[0]
+              ? [{ ...set, itemId: a.item_id, level: a.level }] : [];
+            const [code, cohort] = args;
+            if (set.cohort !== cohort || !set.active || (set.scope === 'individual' && set.target_code !== code)) return [];
+            const scores = [...this.attempts.values()].filter(t => t.code === code && t.assignment_key === item.assignment_key);
+            return [{ packageId: set.id, packageTitle: set.title, workType: set.kind, kind: set.kind,
+              createdAt: set.createdAt, dueDate: set.dueDate, active: set.active,
+              assignmentKey: a.assignment_key, itemId: a.item_id, level: a.level, ...attemptStats(scores) }];
+          }) };
+        }
         if (sql.includes('SELECT l.username_key, p.code, p.cohort')) {
           return { results: [...this.logins.values()].map(login => ({ ...this.codes.get(login.code), username_key: login.username_key }))
             .filter(row => row.enabled).map(({ username_key, code, cohort }) => ({ username_key, code, cohort })) };
@@ -248,6 +289,98 @@ test('J277 and H446 assignment keys cannot cross year groups', () => {
   assert.equal(assignmentKey('Y12', 'j277-skill-p1-convert', 'both'), null);
   assert.equal(assignmentKey('Y10', 'h446-practice-141-data-types', ''), null);
   assert.equal(assignmentKey('Y12', 'h446-practice-141-data-types', 'both'), null);
+});
+
+test('work-set availability separates seven-day classwork from the homework deadline', () => {
+  const set = { kind: 'classwork', active: 1, createdAt: '2026-11-18 09:00:00' };
+  assert.equal(workSetIsCurrent(set, new Date('2026-11-18T10:00:00Z')), true);
+  assert.equal(workSetIsCurrent(set, new Date('2026-11-25T08:59:59Z')), true);
+  assert.equal(workSetIsCurrent(set, new Date('2026-11-25T09:00:00Z')), false);
+  assert.equal(workSetIsCurrent({ kind: 'homework', active: 1, dueDate: '2026-11-20' }, new Date('2026-11-20T22:00:00Z')), true);
+  assert.equal(workSetIsCurrent({ kind: 'homework', active: 1, dueDate: '2026-11-20' }, new Date('2026-11-21T00:00:00Z')), false);
+  assert.equal(workSetIsCurrent({ ...set, active: 0 }, new Date('2026-11-18T10:00:00Z')), false);
+});
+
+test('one individual classwork set groups Skill and Revision Practice without widening access', async () => {
+  const OriginalDate = globalThis.Date;
+  let now = new OriginalDate('2026-11-18T10:00:00Z');
+  globalThis.Date = class extends OriginalDate {
+    constructor(...args) { super(...(args.length ? args : [now.valueOf()])); }
+    static now() { return now.valueOf(); }
+  };
+  try {
+    const db = new FakeD1();
+    const codes = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y12', count: 2 }, { teacher: true })).data.codes;
+    const login = await call(db, '/v1/teacher/logins', 'POST', { logins: [
+      { username: 'testwaffle', code: codes[0], password: '1234', expectedCohort: 'Y12' },
+      { username: 'testmuffin', code: codes[1], password: '5678', expectedCohort: 'Y12' }
+    ] }, { teacher: true });
+    assert.equal(login.status, 201);
+    const payload = { cohort: 'Y12', scope: 'individual', username: 'testwaffle',
+      title: 'Number systems and data types', kind: 'classwork', items: [
+        { itemId: 'h446-skill-p1-convert', level: 'both' },
+        { itemId: 'h446-practice-141-a', level: '' }
+      ] };
+    const noTeacher = await call(db, '/v1/teacher/work-sets', 'POST', payload);
+    assert.equal(noTeacher.status, 401);
+    const wrongYear = await call(db, '/v1/teacher/work-sets', 'POST', { ...payload, cohort: 'Y13' }, { teacher: true });
+    assert.equal(wrongYear.status, 409);
+    assert.equal(db.workSets.size, 0);
+    const created = await call(db, '/v1/teacher/work-sets', 'POST', payload, { teacher: true });
+    assert.equal(created.status, 201, JSON.stringify(created.data));
+    assert.equal(created.data.activityCount, 2);
+    assert.equal(db.workSets.size, 1);
+    const inventory = await call(db, '/v1/teacher/assignment-inventory?cohort=Y12', 'GET', undefined, { teacher: true });
+    assert.deepEqual(inventory.data, { cohort: 'Y12', wholeYearActivityRecords: 0, individualActivityRecords: 0, combinedAssignments: 1 });
+    assert.equal((await call(db, '/v1/teacher/work-sets', 'POST', payload, { teacher: true })).status, 409,
+      'Do not create overlapping sets that share activity-level scores');
+    assert.equal([...db.assignments.values()].filter(row => row.active).length, 0,
+      'New work-set definitions must not allocate activities to the entire cohort');
+    const first = await call(db, '/v1/work', 'POST', { code: codes[0] });
+    const secondSession = (await call(db, '/v1/login', 'POST', { username: 'testmuffin', password: '5678' })).data.session;
+    const second = await call(db, '/v1/work', 'POST', {}, { bearer: secondSession });
+    assert.equal(first.status, 200, JSON.stringify(first.data));
+    assert.equal(first.data.work.length, 2);
+    assert.ok(first.data.work.every(row => row.packageId === created.data.id && row.workType === 'classwork'));
+    assert.equal(second.data.work.length, 0);
+    const firstSaved = await call(db, '/v1/questions', 'POST', {
+      assignmentKey: '12|h446-practice-141-a|', attemptId: crypto.randomUUID(),
+      level: 'quiz', firstTryCorrect: true
+    }, { bearer: (await call(db, '/v1/login', 'POST', { username: 'testwaffle', password: '1234' })).data.session });
+    assert.equal(firstSaved.status, 200, JSON.stringify(firstSaved.data));
+    assert.equal(db.attempts.size, 1);
+    const grouped = await call(db, '/v1/teacher/work-sets?cohort=Y12', 'GET', undefined, { teacher: true });
+    assert.equal(grouped.data.sets.length, 2);
+    now = new OriginalDate('2026-11-26T10:00:00Z');
+    const firstSession = (await call(db, '/v1/login', 'POST', { username: 'testwaffle', password: '1234' })).data.session;
+    const expired = await call(db, '/v1/work', 'POST', {}, { bearer: firstSession });
+    assert.equal(expired.data.work.length, 0);
+    assert.equal(db.attempts.size, 1, 'Expiry does not delete marks');
+  } finally { globalThis.Date = OriginalDate; }
+});
+
+test('homework sets require a deadline and do not bypass independent study hours', async () => {
+  const OriginalDate = globalThis.Date;
+  let now = new OriginalDate('2026-11-18T10:00:00Z');
+  globalThis.Date = class extends OriginalDate {
+    constructor(...args) { super(...(args.length ? args : [now.valueOf()])); }
+    static now() { return now.valueOf(); }
+  };
+  try {
+    const db = new FakeD1();
+    const [code] = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y10', count: 1 }, { teacher: true })).data.codes;
+    const payload = { cohort: 'Y10', scope: 'cohort', title: 'Homework: number systems', kind: 'homework',
+      items: [{ itemId: 'j277-skill-p1-convert', level: 'both' }] };
+    assert.equal((await call(db, '/v1/teacher/work-sets', 'POST', payload, { teacher: true })).status, 400);
+    const created = await call(db, '/v1/teacher/work-sets', 'POST', { ...payload, dueDate: '2026-11-20' }, { teacher: true });
+    assert.equal(created.status, 201);
+    const closed = await call(db, '/v1/work', 'POST', { code });
+    assert.equal(closed.status, 403, JSON.stringify(closed.data));
+    now = new OriginalDate('2026-11-18T16:00:00Z');
+    assert.equal((await call(db, '/v1/work', 'POST', { code })).data.work.length, 1);
+    now = new OriginalDate('2026-11-21T10:00:00Z');
+    assert.equal((await call(db, '/v1/work', 'POST', { code })).data.work.length, 0);
+  } finally { globalThis.Date = OriginalDate; }
 });
 
 test('H446 conversion Classwork is limited to an assigned seven-day window', async () => {
@@ -477,7 +610,7 @@ test('renewing an individual Classwork assignment does not grant access to the w
 
 test('health, CORS and teacher-only write access', async () => {
   const db = new FakeD1();
-  assert.deepEqual((await call(db, '/v1/health')).data, { ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', cohortCorrection: '11-to-12-v1', selectedClasswork: 'v1', cohortAudit: 'v1' });
+  assert.deepEqual((await call(db, '/v1/health')).data, { ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', workSets: 'v1', cohortCorrection: '11-to-12-v1', selectedClasswork: 'v1', cohortAudit: 'v1' });
   const blocked = await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y12', count: 10 });
   assert.equal(blocked.status, 401);
   const wrongOrigin = await call(db, '/v1/health', 'GET', undefined, { origin: 'https://not-rhsccs.org' });

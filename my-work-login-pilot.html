@@ -27,6 +27,10 @@
     .cards{display:grid;gap:12px}.card{padding:19px}.card-top{display:flex;justify-content:space-between;align-items:start;gap:12px}.card h2{margin:3px 0}
     .meta{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:900;color:var(--muted)}.status{font-weight:800;font-size:13px;background:var(--pale);border-radius:15px;padding:6px 10px;white-space:nowrap}
     .card p{margin:7px 0;color:var(--muted);font-size:14px}.empty{text-align:center;padding:32px 18px}
+    .package{background:#fff;border:1.5px solid var(--line);padding:18px;border-radius:15px;margin:0 0 16px}
+    .package>h2{margin:5px 0 4px}.package>.note{margin:0 0 14px}
+    .package-items{display:grid;gap:10px}.package-items .card{background:var(--bg);border-color:var(--line)}
+    .earlier-work{margin:24px 0 12px;font-size:17px}
     footer{text-align:center;color:var(--muted);font-size:12px;padding:16px}.skip{position:absolute;left:-10000px}.skip:focus{left:12px;top:12px;z-index:10;background:white;padding:12px}
     @media(max-width:600px){.bar{padding:9px 12px}.back{font-size:12px}main{padding:20px 12px 45px}.panel{padding:18px}.entry{margin:10px auto}.card-top{flex-direction:column}.actions .btn{flex:1}}
   </style>
@@ -83,7 +87,7 @@
             <button class="btn" id="submit" type="submit">Sign in</button>
             <p class="error" id="error" role="alert" ${message ? '' : 'hidden'}>${escapeHtml(message)}</p>
           </form>
-          <div class="notice"><strong>Classwork:</strong> open during lessons for seven days after your teacher assigns it.<br><strong>Independent practice:</strong> Mon–Fri 12:30–13:20 or after 15:30; weekends any time (UK time).</div>
+          <div class="notice"><strong>Classwork:</strong> open at any time of day for seven days after your teacher assigns it.<br><strong>Homework:</strong> Mon–Fri 12:30–13:20 or after 15:30; weekends any time, until the teacher's deadline (UK time).</div>
         </section>`;
       document.getElementById('signIn').addEventListener('submit', async event => {
         event.preventDefault();
@@ -152,6 +156,27 @@
         <div class="actions">${links.join('') || '<span class="note">Your teacher will provide this activity link.</span>'}</div></article>`;
     }
 
+    function combinedAssignments(rows) {
+      const groups = new Map();
+      const older = [];
+      for (const row of rows) {
+        if (!row.packageId) { older.push(row); continue; }
+        if (!groups.has(row.packageId)) groups.set(row.packageId, { title: row.packageTitle,
+          kind: row.workType, dueDate: row.dueDate, activities: [] });
+        groups.get(row.packageId).activities.push(row);
+      }
+      let html = '';
+      for (const set of groups.values()) {
+        const rule = set.kind === 'classwork' ? 'Classwork · open at any hour during the seven-day assignment'
+          : 'Homework · independent study hours' + (set.dueDate ? ' · due ' + set.dueDate : '');
+        html += `<section class="package"><span class="meta">${escapeHtml(rule)}</span>
+          <h2>${escapeHtml(set.title)}</h2><p class="note">${set.activities.length} activities in this assignment</p>
+          <div class="package-items">${set.activities.map(workCard).join('')}</div></section>`;
+      }
+      if (older.length) html += `${groups.size ? '<h2 class="earlier-work">Earlier assigned activities</h2>' : ''}${older.map(workCard).join('')}`;
+      return { html, assignmentCount: groups.size + older.length };
+    }
+
     async function signOut() {
       const previous = session;
       session = ''; sessionStorage.removeItem(SESSION_KEY);
@@ -165,10 +190,11 @@
         const data = await request('/v1/work', { session });
         if (!Array.isArray(data.work) || !/^Y(10|11|12|13)$/.test(data.cohort)) throw Error('Unexpected response from My Work.');
         const recorded = data.work.filter(row => Number(row.attempts || 0) > 0 || Number(row.questionsAttempted || 0) > 0).length;
+        const combined = combinedAssignments(data.work);
         app.innerHTML = `<div class="heading"><div><span class="eyebrow">RHS Computing · Year ${escapeHtml(data.cohort.slice(1))}</span>
           <h1>My Work</h1><p>Your assigned activities</p></div><button class="btn secondary" id="signOut">Sign out</button></div>
-          <div class="summary"><span class="count"><strong>${data.work.length}</strong> assigned</span><span class="count"><strong>${recorded}</strong> with recorded practice</span></div>
-          <section class="cards" aria-label="Assigned work">${data.work.length ? data.work.map(workCard).join('') : `<div class="panel empty"><h2>No available work</h2><p>${escapeHtml(data.notice || 'Your login is ready. Your teacher will add your activities.')}</p></div>`}</section>
+          <div class="summary"><span class="count"><strong>${combined.assignmentCount}</strong> assignment${combined.assignmentCount === 1 ? '' : 's'}</span><span class="count"><strong>${data.work.length}</strong> activities</span><span class="count"><strong>${recorded}</strong> with recorded practice</span></div>
+          <section class="cards" aria-label="Assigned work">${data.work.length ? combined.html : `<div class="panel empty"><h2>No available work</h2><p>${escapeHtml(data.notice || 'Your login is ready. Your teacher will add your activities.')}</p></div>`}</section>
           <div class="actions"><button class="btn secondary" id="refresh">Refresh My Work</button></div>
            <p class="note">Assigned Conversion Grid Easy and Medium and H446 1.4.1(a) MCQ save each first-checked answer. Other activities are still being connected.</p>`;
         document.getElementById('signOut').addEventListener('click', signOut);
