@@ -370,7 +370,7 @@ test('a combined H446 work-set saves regular revision quiz scores through studen
     cohort:'Y13', scope:'cohort', title:'Two A Level revision topics and a Skill', kind:'classwork',
     items: [
       { itemId:'h446-practice-11-components', level:'' },
-      { itemId:'h446-practice-23-big-o', level:'' },
+      { itemId:'h446-practice-23-complexity', level:'' },
       { itemId:'h446-skill-p2-bigo', level:'both' }
     ]
   }, { teacher:true });
@@ -379,8 +379,8 @@ test('a combined H446 work-set saves regular revision quiz scores through studen
   const work = await call(db, '/v1/work', 'POST', {}, { bearer:session });
   assert.equal(work.status, 200);
   assert.deepEqual(work.data.work.map(row => row.itemId).sort(),
-    ['h446-practice-11-components','h446-practice-23-big-o','h446-skill-p2-bigo']);
-  for (const [itemId,score] of [['h446-practice-11-components',80],['h446-practice-23-big-o',60]]) {
+    ['h446-practice-11-components','h446-practice-23-complexity','h446-skill-p2-bigo']);
+  for (const [itemId,score] of [['h446-practice-11-components',80],['h446-practice-23-complexity',60]]) {
     const saved = await call(db, '/v1/attempts', 'POST', {
       assignmentKey:`13|${itemId}|`, attemptId:crypto.randomUUID(), score, level:'', source:'practice'
     }, { bearer:session });
@@ -389,7 +389,7 @@ test('a combined H446 work-set saves regular revision quiz scores through studen
   }
   const updated = await call(db, '/v1/work', 'POST', {}, { bearer:session });
   assert.equal(updated.data.work.find(row => row.itemId === 'h446-practice-11-components').bestScore, 80);
-  assert.equal(updated.data.work.find(row => row.itemId === 'h446-practice-23-big-o').bestScore, 60);
+  assert.equal(updated.data.work.find(row => row.itemId === 'h446-practice-23-complexity').bestScore, 60);
   assert.equal(updated.data.work.find(row => row.itemId === 'h446-skill-p2-bigo').attempts, 0,
     'Link-only Skill is assigned but never claims an automatic score');
 });
