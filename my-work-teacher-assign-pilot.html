@@ -228,6 +228,20 @@
           <textarea id="roster-input" rows="5" spellcheck="false" autocapitalize="none" autocomplete="off" placeholder="wackywaffle&#10;fidgetfrog&#10;..."></textarea>
           <div class="actions"><button type="button" class="button secondary" id="save-roster">Save anonymous class list</button></div>
         </details>
+        <details class="roster-entry" id="repair-entry">
+          <summary><strong>Correct a Year 12 login</strong> · one account at a time</summary>
+          <p class="sub">Use this only when a pupil's anonymous login says Year 11 but your private class list confirms Year 12. The PIN and previous scores will be kept.</p>
+          <div class="review-controls">
+            <div class="field"><label for="repair-username">Anonymous username</label><input id="repair-username" type="text" autocomplete="off" spellcheck="false" autocapitalize="none" maxlength="40" placeholder="e.g. broccobop"></div>
+            <button type="button" class="button secondary" id="repair-check">Check registered year</button>
+          </div>
+          <p class="state" id="repair-status" role="status" aria-live="polite">Check the registration before changing it.</p>
+          <div class="review" id="repair-review" hidden>
+            <p id="repair-description"></p>
+            <label class="confirm-year"><input id="repair-confirm" type="checkbox"> I have checked the private class list. Move only this login from Year 11 to Year 12.</label>
+            <div class="actions"><button type="button" class="button" id="repair-submit" disabled>Confirm year-group correction</button></div>
+          </div>
+        </details>
         <p class="state" id="class-status" role="status" aria-live="polite">Choose a class and refresh its results.</p>
         <div class="results-scroll">
           <table class="results-table">
@@ -252,6 +266,7 @@
     let catalog = [];
     let selected = null;
     let pending = null;
+    let cohortRepair = null;
     let loading = false;
     const chosenScope = () => document.querySelector('input[name="scope"]:checked')?.value || 'individual';
     const anonymousUsername = () => $('username').value.trim().toLowerCase();
@@ -428,12 +443,58 @@
       $('username').value = '';
       $('pupil-progress').textContent = 'Connect again to check pupil progress.';
       cancelReview();
+      resetCohortRepair();
       $('workspace').hidden = true;
       $('disconnect').hidden = true;
       $('connect').hidden = false;
       $('token').disabled = false;
       $('token').required = true;
       status('connection-status', message);
+    }
+
+    function resetCohortRepair(message = '') {
+      cohortRepair = null;
+      $('repair-review').hidden = true;
+      $('repair-confirm').checked = false;
+      $('repair-submit').disabled = true;
+      if (message) status('repair-status', message);
+    }
+
+    async function checkCohortRepair() {
+      resetCohortRepair();
+      const username = $('repair-username').value.trim().toLowerCase();
+      if (!validUsername(username)) return status('repair-status', 'Enter a valid anonymous username first.', 'error');
+      $('repair-check').disabled = true;
+      status('repair-status', 'Checking registered year group…');
+      try {
+        const data = await request('/v1/teacher/student-progress', { method: 'POST', body: { username } });
+        if (data.cohort === 'Y12') return status('repair-status', username + ' is already registered as Year 12. No change needed.', 'good');
+        if (data.cohort !== 'Y11') return status('repair-status', username + ' is registered as ' + data.cohort + '. This tool only corrects Year 11 to Year 12.', 'error');
+        cohortRepair = { username, expectedCohort: data.cohort };
+        $('repair-description').textContent = username + ' is registered as Year 11. Confirm moving only this account to Year 12. Its PIN, sessions and historical scores remain unchanged.';
+        $('repair-review').hidden = false;
+        status('repair-status', 'Year 11 registration confirmed. Review the correction below.');
+      } catch (error) {
+        if (error.status === 401) disconnect('Teacher access expired. Connect again.');
+        else status('repair-status', error.message, 'error');
+      } finally { $('repair-check').disabled = false; }
+    }
+
+    async function correctCohortRepair() {
+      if (!cohortRepair || !$('repair-confirm').checked ||
+          $('repair-username').value.trim().toLowerCase() !== cohortRepair.username) return;
+      $('repair-submit').disabled = true;
+      status('repair-status', 'Correcting the registered year group…');
+      try {
+        const result = await request('/v1/teacher/reclassify-y12-login', { method: 'POST', body: {
+          username: cohortRepair.username, expectedCohort: 'Y11', targetCohort: 'Y12', confirm: true
+        } });
+        resetCohortRepair();
+        status('repair-status', result.username + ' is now registered as Year 12. The original PIN and scores are preserved. The pupil can refresh My Work.', 'good');
+      } catch (error) {
+        if (error.status === 401) disconnect('Teacher access expired. Connect again.');
+        else { status('repair-status', error.message, 'error'); $('repair-submit').disabled = !$('repair-confirm').checked; }
+      }
     }
 
     function itemUrl(item) {
@@ -756,6 +817,10 @@
       status('class-status', 'Click Refresh class results to check Year ' + $('review-cohort').value.slice(1) + '.');
     });
     $('save-roster').addEventListener('click', saveRoster);
+    $('repair-username').addEventListener('input', () => resetCohortRepair('Check the registered year for this username.'));
+    $('repair-check').addEventListener('click', checkCohortRepair);
+    $('repair-confirm').addEventListener('change', () => { $('repair-submit').disabled = !$('repair-confirm').checked || !cohortRepair; });
+    $('repair-submit').addEventListener('click', correctCohortRepair);
     $('refresh-class').addEventListener('click', refreshClassResults);
     for (const radio of document.querySelectorAll('input[name="scope"]')) radio.addEventListener('change', renderScope);
     $('username').addEventListener('input', () => { cancelReview(); updateReviewAvailability(); $('pupil-progress').textContent = 'Refresh score for this anonymous pupil.'; });

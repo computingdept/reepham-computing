@@ -217,9 +217,9 @@ async function work(env, code, cohort) {
       COALESCE(SUM(CASE WHEN t.level = 'q-quiz' AND t.score = 100 THEN 1 ELSE 0 END), 0) AS quizCorrect
     FROM student_assignments s JOIN assignments a ON a.assignment_key = s.assignment_key
     LEFT JOIN attempts t ON t.assignment_key = a.assignment_key AND t.code = s.code
-    WHERE s.code = ? AND s.active = 1
+    WHERE s.code = ? AND s.active = 1 AND a.cohort = ?
     GROUP BY a.assignment_key ORDER BY s.created_at DESC
-  `).bind(code).all();
+  `).bind(code, cohort).all();
   return [...new Map([...groupWork.results, ...individualWork.results]
     .map(item => [item.assignmentKey, item])).values()];
 }
@@ -249,7 +249,7 @@ export async function liveClasswork(env, student, key) {
 async function handle(request, env) {
   const url = new URL(request.url);
   const path = url.pathname;
-  if (path === '/v1/health' && request.method === 'GET') return respond({ ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2' });
+  if (path === '/v1/health' && request.method === 'GET') return respond({ ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', cohortCorrection: '11-to-12-v1' });
   if (!env.DB) return respond({ error: 'Database not configured' }, 503);
 
   if (path === '/v1/login' && request.method === 'POST') return signIn(request, env);
@@ -428,6 +428,26 @@ async function handle(request, env) {
         WHERE l.username_key = ? AND p.enabled = 1`).bind(await usernameKey(username)).first();
       if (!profile) return respond({ error: 'Anonymous username not found among active logins' }, 404);
       return respond({ username, cohort: profile.cohort, work: await work(env, profile.code, profile.cohort) });
+    }
+    if (path === '/v1/teacher/reclassify-y12-login' && request.method === 'POST') {
+      const { username: rawUsername, expectedCohort, targetCohort, confirm } = await jsonBody(request);
+      const username = normalizeUsername(rawUsername);
+      // Deliberately narrow correction: this pilot only supports moving a
+      // verified Year 11 login to Year 12, never bulk or automatic moves.
+      if (!username || expectedCohort !== 'Y11' || targetCohort !== 'Y12' || confirm !== true) {
+        return respond({ error: 'Check the username and confirm Year 11 to Year 12' }, 400);
+      }
+      const profile = await env.DB.prepare(`SELECT p.code, p.cohort FROM login_profiles l
+        JOIN practice_codes p ON p.code = l.code
+        WHERE l.username_key = ? AND p.enabled = 1`).bind(await usernameKey(username)).first();
+      if (!profile) return respond({ error: 'Anonymous username not found among active logins' }, 404);
+      if (profile.cohort !== expectedCohort) return respond({ error: 'This login is registered as ' + profile.cohort + ', not Year 11. Nothing changed.' }, 409);
+      // Only the cohort changes; login hash, PIN, sessions, existing attempts,
+      // assignment definitions and learner records all keep their identities.
+      const changed = await env.DB.prepare("UPDATE practice_codes SET cohort = 'Y12' WHERE code = ? AND cohort = 'Y11' AND enabled = 1")
+        .bind(profile.code).run();
+      if (changed.meta?.changes !== 1) return respond({ error: 'Year-group allocation changed while checking. Nothing further changed.' }, 409);
+      return respond({ username, previousCohort: 'Y11', cohort: 'Y12', changed: true, progressPreserved: true });
     }
     if (path === '/v1/teacher/progress' && request.method === 'GET') {
       const cohort = url.searchParams.get('cohort');

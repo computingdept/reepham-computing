@@ -97,6 +97,12 @@ class FakeD1 {
           if (sql.includes("created_at = datetime('now')")) row.created_at = new Date().toISOString();
           return { meta: { changes: 1 } };
         }
+        if (sql.includes("UPDATE practice_codes SET cohort = 'Y12'")) {
+          const row = this.codes.get(args[0]);
+          if (!row || row.cohort !== 'Y11' || !row.enabled) return { meta: { changes: 0 } };
+          row.cohort = 'Y12';
+          return { meta: { changes: 1 } };
+        }
         if (sql.includes('INSERT OR IGNORE INTO student_assignments')) {
           const [code, assignment_key] = args;
           assert.ok(this.codes.has(code) && this.assignments.has(assignment_key), 'Individual assignment has valid FK targets');
@@ -148,8 +154,8 @@ class FakeD1 {
       };
       const all = async () => {
         if (sql.includes('FROM student_assignments s JOIN assignments a')) {
-          const code = args[0];
-          return { results: [...this.individualAssignments.values()].filter(x => x.code === code && x.active).map(x => {
+          const [code, cohort] = args;
+          return { results: [...this.individualAssignments.values()].filter(x => x.code === code && x.active && this.assignments.get(x.assignment_key)?.cohort === cohort).map(x => {
             const a = this.assignments.get(x.assignment_key);
             const scores = [...this.attempts.values()].filter(t => t.code === code && t.assignment_key === a.assignment_key);
             return { assignmentKey: a.assignment_key, itemId: a.item_id, level: a.level, ...attemptStats(scores) };
@@ -297,6 +303,50 @@ test('a wrongly allocated year-group login reveals its actual cohort without unl
   } finally { globalThis.Date = RealDate; }
 });
 
+test('teacher can correct one verified Year 11 login to Year 12 without altering PIN or progress', async () => {
+  const RealDate = globalThis.Date;
+  const duringLesson = new RealDate('2026-11-18T10:00:00Z');
+  globalThis.Date = class extends RealDate {
+    constructor(...args) { super(...(args.length ? args : [duringLesson.valueOf()])); }
+    static now() { return duringLesson.valueOf(); }
+  };
+  try {
+    const db = new FakeD1();
+    const [wrongCode, otherCode] = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y11', count: 2 }, { teacher: true })).data.codes;
+    await call(db, '/v1/teacher/logins', 'POST', { logins: [
+      { username: 'broccobop', code: wrongCode, password: '1234' },
+      { username: 'otheryear11', code: otherCode, password: '5678' }
+    ] }, { teacher: true });
+    const [year12Code] = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y12', count: 1 }, { teacher: true })).data.codes;
+    assert.ok(year12Code);
+    const oldTask = await call(db, '/v1/teacher/student-assignments', 'POST',
+      { username: 'broccobop', itemId: 'j277-skill-p1-convert', level: 'both' }, { teacher: true });
+    db.attempts.set('historic-score', { attempt_id: 'historic-score', code: wrongCode,
+      assignment_key: oldTask.data.assignmentKey, level: 'q-easy', score: 100, source: 'skill' });
+    await call(db, '/v1/teacher/assignments', 'POST',
+      { cohort: 'Y12', itemId: 'h446-skill-p1-convert', level: 'both' }, { teacher: true });
+    const session = (await call(db, '/v1/login', 'POST', { username: 'broccobop', password: '1234' })).data.session;
+    assert.equal((await call(db, '/v1/work', 'POST', {}, { bearer: session })).data.cohort, 'Y11');
+    const correction = { username: 'broccobop', expectedCohort: 'Y11', targetCohort: 'Y12', confirm: true };
+    assert.equal((await call(db, '/v1/teacher/reclassify-y12-login', 'POST', correction)).status, 401);
+    assert.equal((await call(db, '/v1/teacher/reclassify-y12-login', 'POST', { ...correction, confirm: false }, { teacher: true })).status, 400);
+    assert.equal((await call(db, '/v1/teacher/reclassify-y12-login', 'POST', { ...correction, username: 'unknownlogin' }, { teacher: true })).status, 404);
+    const fixed = await call(db, '/v1/teacher/reclassify-y12-login', 'POST', correction, { teacher: true });
+    assert.equal(fixed.status, 200);
+    assert.deepEqual(fixed.data, { username: 'broccobop', previousCohort: 'Y11', cohort: 'Y12', changed: true, progressPreserved: true });
+    assert.equal(db.codes.get(wrongCode).cohort, 'Y12');
+    assert.equal(db.codes.get(otherCode).cohort, 'Y11', 'Other Year 11 learner not changed');
+    assert.equal(db.attempts.get('historic-score').score, 100, 'Historical score is retained');
+    const visible = await call(db, '/v1/work', 'POST', {}, { bearer: session });
+    assert.equal(visible.data.cohort, 'Y12', 'Existing login session gets corrected cohort');
+    assert.deepEqual(visible.data.work.map(item => item.itemId), ['h446-skill-p1-convert'], 'Old individual Year 11 work is not shown under Year 12');
+    assert.equal(visible.data.work[0].workType, 'classwork');
+    assert.equal((await call(db, '/v1/login', 'POST', { username: 'broccobop', password: '1234' })).status, 200, 'PIN continues to work');
+    assert.equal((await call(db, '/v1/teacher/reclassify-y12-login', 'POST', correction, { teacher: true })).status, 409, 'Repeat correction does not silently reassign');
+    assert.equal((await call(db, '/v1/teacher/progress?cohort=Y12', 'GET', undefined, { teacher: true })).data.codes.length, 2);
+  } finally { globalThis.Date = RealDate; }
+});
+
 test('teacher can renew expired Year 12 Classwork without losing previous attempts', async () => {
   const RealDate = globalThis.Date;
   const duringLesson = new RealDate('2026-11-18T10:00:00Z');
@@ -347,7 +397,7 @@ test('renewing an individual Classwork assignment does not grant access to the w
 
 test('health, CORS and teacher-only write access', async () => {
   const db = new FakeD1();
-  assert.deepEqual((await call(db, '/v1/health')).data, { ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2' });
+  assert.deepEqual((await call(db, '/v1/health')).data, { ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', cohortCorrection: '11-to-12-v1' });
   const blocked = await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y12', count: 10 });
   assert.equal(blocked.status, 401);
   const wrongOrigin = await call(db, '/v1/health', 'GET', undefined, { origin: 'https://not-rhsccs.org' });
