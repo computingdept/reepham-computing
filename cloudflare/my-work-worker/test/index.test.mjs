@@ -314,26 +314,26 @@ test('teacher can correct one verified Year 11 login to Year 12 without altering
     const db = new FakeD1();
     const [wrongCode, otherCode] = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y11', count: 2 }, { teacher: true })).data.codes;
     await call(db, '/v1/teacher/logins', 'POST', { logins: [
-      { username: 'broccobop', code: wrongCode, password: '1234' },
+      { username: 'fictionalbird', code: wrongCode, password: '1234' },
       { username: 'otheryear11', code: otherCode, password: '5678' }
     ] }, { teacher: true });
     const [year12Code] = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y12', count: 1 }, { teacher: true })).data.codes;
     assert.ok(year12Code);
     const oldTask = await call(db, '/v1/teacher/student-assignments', 'POST',
-      { username: 'broccobop', itemId: 'j277-skill-p1-convert', level: 'both' }, { teacher: true });
+      { username: 'fictionalbird', itemId: 'j277-skill-p1-convert', level: 'both' }, { teacher: true });
     db.attempts.set('historic-score', { attempt_id: 'historic-score', code: wrongCode,
       assignment_key: oldTask.data.assignmentKey, level: 'q-easy', score: 100, source: 'skill' });
     await call(db, '/v1/teacher/assignments', 'POST',
       { cohort: 'Y12', itemId: 'h446-skill-p1-convert', level: 'both' }, { teacher: true });
-    const session = (await call(db, '/v1/login', 'POST', { username: 'broccobop', password: '1234' })).data.session;
+    const session = (await call(db, '/v1/login', 'POST', { username: 'fictionalbird', password: '1234' })).data.session;
     assert.equal((await call(db, '/v1/work', 'POST', {}, { bearer: session })).data.cohort, 'Y11');
-    const correction = { username: 'broccobop', expectedCohort: 'Y11', targetCohort: 'Y12', confirm: true };
+    const correction = { username: 'fictionalbird', expectedCohort: 'Y11', targetCohort: 'Y12', confirm: true };
     assert.equal((await call(db, '/v1/teacher/reclassify-y12-login', 'POST', correction)).status, 401);
     assert.equal((await call(db, '/v1/teacher/reclassify-y12-login', 'POST', { ...correction, confirm: false }, { teacher: true })).status, 400);
     assert.equal((await call(db, '/v1/teacher/reclassify-y12-login', 'POST', { ...correction, username: 'unknownlogin' }, { teacher: true })).status, 404);
     const fixed = await call(db, '/v1/teacher/reclassify-y12-login', 'POST', correction, { teacher: true });
     assert.equal(fixed.status, 200);
-    assert.deepEqual(fixed.data, { username: 'broccobop', previousCohort: 'Y11', cohort: 'Y12', changed: true, progressPreserved: true });
+    assert.deepEqual(fixed.data, { username: 'fictionalbird', previousCohort: 'Y11', cohort: 'Y12', changed: true, progressPreserved: true });
     assert.equal(db.codes.get(wrongCode).cohort, 'Y12');
     assert.equal(db.codes.get(otherCode).cohort, 'Y11', 'Other Year 11 learner not changed');
     assert.equal(db.attempts.get('historic-score').score, 100, 'Historical score is retained');
@@ -341,7 +341,7 @@ test('teacher can correct one verified Year 11 login to Year 12 without altering
     assert.equal(visible.data.cohort, 'Y12', 'Existing login session gets corrected cohort');
     assert.deepEqual(visible.data.work.map(item => item.itemId), ['h446-skill-p1-convert'], 'Old individual Year 11 work is not shown under Year 12');
     assert.equal(visible.data.work[0].workType, 'classwork');
-    assert.equal((await call(db, '/v1/login', 'POST', { username: 'broccobop', password: '1234' })).status, 200, 'PIN continues to work');
+    assert.equal((await call(db, '/v1/login', 'POST', { username: 'fictionalbird', password: '1234' })).status, 200, 'PIN continues to work');
     assert.equal((await call(db, '/v1/teacher/reclassify-y12-login', 'POST', correction, { teacher: true })).status, 409, 'Repeat correction does not silently reassign');
     assert.equal((await call(db, '/v1/teacher/progress?cohort=Y12', 'GET', undefined, { teacher: true })).data.codes.length, 2);
   } finally { globalThis.Date = RealDate; }
