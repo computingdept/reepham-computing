@@ -249,7 +249,7 @@ export async function liveClasswork(env, student, key) {
 async function handle(request, env) {
   const url = new URL(request.url);
   const path = url.pathname;
-  if (path === '/v1/health' && request.method === 'GET') return respond({ ok: true, pilot: true, classworkPolicy: '7-day-renewable-v1' });
+  if (path === '/v1/health' && request.method === 'GET') return respond({ ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2' });
   if (!env.DB) return respond({ error: 'Database not configured' }, 503);
 
   if (path === '/v1/login' && request.method === 'POST') return signIn(request, env);
@@ -275,12 +275,14 @@ async function handle(request, env) {
         else expiredClasswork = true;
       } else if (outsideLesson) visible.push({ ...item, workType: 'independent' });
     }
-    // A Year 12/13 pupil with no live Classwork should see the real reason,
-    // rather than a misleading "wrong time" error during their lesson.
-    if (!outsideLesson && !visible.length && ['Y12', 'Y13'].includes(student.cohort)) {
+    // Every signed-in pupil should see their recorded year group rather than a
+    // misleading time error. If an H446 pupil was provisioned under Y10/Y11,
+    // their teacher can now spot the mismatch without sharing any credentials.
+    // Keep the legacy practice-code API's original time restriction.
+    if (!outsideLesson && !visible.length && code === undefined) {
       return respond({ cohort: student.cohort, work: [], notice: expiredClasswork
         ? 'Your Classwork has expired. Ask your teacher to renew it for another seven days.'
-        : 'No Classwork is available yet. Your teacher can assign it for lessons.' });
+        : `No Classwork is available for Year ${student.cohort.slice(1)}. If this is not your year group, ask your teacher to check your anonymous login. Independent practice opens at 12:30–13:20 or after 15:30.` });
     }
     if (!outsideLesson && !visible.length) return respond({ error: INDEPENDENT_WORK_SCHEDULE }, 403);
     return respond({ cohort: student.cohort, work: visible });

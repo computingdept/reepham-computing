@@ -263,13 +263,37 @@ test('Year 12 has a clear message before classwork is assigned, not a wrong-time
   try {
     const db = new FakeD1();
     const [code] = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y12', count: 1 }, { teacher: true })).data.codes;
-    const view = await call(db, '/v1/work', 'POST', { code });
+    await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'year12bird', code, password: '1234' }] }, { teacher: true });
+    const session = (await call(db, '/v1/login', 'POST', { username: 'year12bird', password: '1234' })).data.session;
+    const view = await call(db, '/v1/work', 'POST', {}, { bearer: session });
     assert.equal(view.status, 200);
     assert.deepEqual(view.data.work, []);
-    assert.match(view.data.notice, /No Classwork is available yet/);
+    assert.match(view.data.notice, /No Classwork is available for Year 12/);
     const beforeClass = await call(db, '/v1/teacher/assignments', 'POST', { cohort: 'Y12', itemId: 'h446-practice-141-b', level: '' }, { teacher: true });
     assert.equal(beforeClass.data.workType, 'independent');
-    assert.deepEqual((await call(db, '/v1/work', 'POST', { code })).data.work, [], 'Independent practice stays restricted during lessons');
+    assert.deepEqual((await call(db, '/v1/work', 'POST', {}, { bearer: session })).data.work, [], 'Independent practice stays restricted during lessons');
+    assert.equal((await call(db, '/v1/work', 'POST', { code })).status, 403, 'Legacy code-only access remains time restricted');
+  } finally { globalThis.Date = RealDate; }
+});
+
+test('a wrongly allocated year-group login reveals its actual cohort without unlocking practice', async () => {
+  const RealDate = globalThis.Date;
+  const duringLesson = new RealDate('2026-11-18T10:00:00Z');
+  globalThis.Date = class extends RealDate {
+    constructor(...args) { super(...(args.length ? args : [duringLesson.valueOf()])); }
+    static now() { return duringLesson.valueOf(); }
+  };
+  try {
+    const db = new FakeD1();
+    const [code] = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y10', count: 1 }, { teacher: true })).data.codes;
+    await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'misplacedbird', code, password: '1234' }] }, { teacher: true });
+    const session = (await call(db, '/v1/login', 'POST', { username: 'misplacedbird', password: '1234' })).data.session;
+    const response = await call(db, '/v1/work', 'POST', {}, { bearer: session });
+    assert.equal(response.status, 200);
+    assert.equal(response.data.cohort, 'Y10');
+    assert.deepEqual(response.data.work, []);
+    assert.match(response.data.notice, /Year 10/);
+    assert.match(response.data.notice, /not your year group/);
   } finally { globalThis.Date = RealDate; }
 });
 
@@ -289,13 +313,15 @@ test('teacher can renew expired Year 12 Classwork without losing previous attemp
     assert.equal(first.data.workType, 'classwork');
     db.attempts.set('previous-attempt', { attempt_id: 'previous-attempt', code, assignment_key: key, level: 'q-easy', score: 100, source: 'skill' });
     db.assignments.get(key).created_at = '2020-01-01 00:00:00';
-    const expired = await call(db, '/v1/work', 'POST', { code });
+    await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'renewclassbird', code, password: '1234' }] }, { teacher: true });
+    const session = (await call(db, '/v1/login', 'POST', { username: 'renewclassbird', password: '1234' })).data.session;
+    const expired = await call(db, '/v1/work', 'POST', {}, { bearer: session });
     assert.deepEqual(expired.data.work, []);
     assert.match(expired.data.notice, /expired/);
     const renewal = await call(db, '/v1/teacher/assignments', 'POST', body, { teacher: true });
     assert.equal(renewal.data.renewed, true);
     assert.equal(renewal.data.added, false);
-    const visible = await call(db, '/v1/work', 'POST', { code });
+    const visible = await call(db, '/v1/work', 'POST', {}, { bearer: session });
     assert.equal(visible.data.work[0].workType, 'classwork');
     assert.equal(visible.data.work[0].firstTryCorrect, 1, 'Previous recorded answers remain intact');
     assert.equal(db.attempts.size, 1);
@@ -321,7 +347,7 @@ test('renewing an individual Classwork assignment does not grant access to the w
 
 test('health, CORS and teacher-only write access', async () => {
   const db = new FakeD1();
-  assert.deepEqual((await call(db, '/v1/health')).data, { ok: true, pilot: true, classworkPolicy: '7-day-renewable-v1' });
+  assert.deepEqual((await call(db, '/v1/health')).data, { ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2' });
   const blocked = await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y12', count: 10 });
   assert.equal(blocked.status, 401);
   const wrongOrigin = await call(db, '/v1/health', 'GET', undefined, { origin: 'https://not-rhsccs.org' });
