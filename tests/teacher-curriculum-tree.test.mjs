@@ -37,6 +37,9 @@ class Element {
     if (selector === 'input[type="checkbox"]:checked') {
       return nodes.filter(node => node.tagName === 'input' && node.type === 'checkbox' && node.checked);
     }
+    if (selector === 'input[type="checkbox"]') {
+      return nodes.filter(node => node.tagName === 'input' && node.type === 'checkbox');
+    }
     if (selector === 'summary .bundle-tree-count') {
       return nodes.filter(node => node.className === 'bundle-tree-count');
     }
@@ -123,4 +126,21 @@ test('later-term choices are removed if the teacher narrows the half-term', () =
   assert.equal(context.bundleSelected.size, 0);
   assert.match($('bundle-filter-note').textContent, /1 out-of-range selection was removed/);
   assert.ok(early.leaves.every(node => !node.checked));
+});
+
+test('selection panel allows removing a task without losing tree position', () => {
+  const { render, context, $ } = harness();
+  const { leaves, branches } = render('Y12', '2');
+  assert.equal($('bundle-review-button').disabled, true);
+  leaves[0].checked = true;
+  leaves[0].listeners.change();
+  assert.equal(context.bundleSelected.size, 1);
+  assert.equal($('bundle-review-button').disabled, false);
+  const remove = $('bundle-summary').descendants().find(node => node.className === 'bundle-remove');
+  assert.ok(remove, 'selected task has its own remove button');
+  remove.listeners.click();
+  assert.equal(context.bundleSelected.size, 0);
+  assert.equal(leaves[0].checked, false);
+  assert.equal($('bundle-review-button').disabled, true);
+  assert.ok(branches.some(node => node.open), 'the tree remains expanded after removing a task');
 });
