@@ -1,8 +1,8 @@
 # RHS Computing — My Work score API (Cloudflare Free pilot)
 
-This is the **separate backend only** for `rhsccs.org`, which stays on GitHub Pages.
-It has not been deployed or connected to the website yet. The existing fictional
-browser-local My Work demonstration is deliberately untouched.
+This is the **separate backend** for `rhsccs.org`, which stays on GitHub Pages.
+The My Work Worker is deployed on Cloudflare. Teacher operations must use the
+existing teacher secret, never a token embedded in public website files.
 
 ## Scope and safeguards
 
@@ -39,6 +39,32 @@ browser-local My Work demonstration is deliberately untouched.
 | `POST /v1/teacher/codes` | Teacher secret | Issue random class practice codes |
 | `POST /v1/teacher/assignments` | Teacher secret | Assign an existing J277 activity to a cohort |
 | `GET /v1/teacher/progress?cohort=Y10` | Teacher secret | Pseudonymous progress table (Y10–Y13) |
+| `POST /v1/teacher/logins` | Teacher secret | Provision anonymous username / PIN logins with a mandatory expected year |
+| `POST /v1/teacher/audit-cohorts` | Teacher secret | Preview all active logins against the complete private roster; separately confirm approved corrections |
+
+### Auditing the original year-group roster
+
+In [the teacher page](https://rhsccs.org/my-work-teacher-assign-pilot.html), open
+**Review Work → Audit all logins against the original year groups**. Paste only
+the anonymous username and year from the complete original roster (e.g.
+`imaginarybird<TAB>Y13`), with no PINs, pupil names or practice codes. You can
+also use the locally saved class lists if they contain every account.
+
+The preview compares **every active login** against the supplied list, including
+accounts with correct years and accounts whose years were incorrectly set. It
+blocks changes if any active login is omitted, any roster username is missing,
+or duplicate/invalid usernames are supplied. An explicit checkbox is required
+for the listed corrections. The confirmation includes a roster-and-database
+fingerprint so a changed registration requires a fresh preview; one guarded
+SQLite update makes the corrections together. Only `practice_codes.cohort`
+changes: usernames, PIN hashes, practice codes, sessions, individual assignments,
+and historical attempts are untouched.
+
+New batches sent to `/v1/teacher/logins` **must** include `expectedCohort` on
+every item, e.g. `{ "username": "imaginarybird", "code": "P-...", "password": "1234", "expectedCohort": "Y13" }`.
+The endpoint checks the code's **actual cohort** for every row before importing
+the batch, including retries, and rejects any mismatch. Do not try to fix a
+wrong-year roster by importing the login again; use the protected audit.
 
 Example result submission (all fictional):
 

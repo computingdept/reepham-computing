@@ -124,16 +124,24 @@ async function provisionLogins(request, env) {
     const username = normalizeUsername(entry?.username);
     const code = entry?.code;
     const password = entry?.password;
-    if (!username || !codeIsValid(code) || typeof password !== 'string' || !PASSWORD_PATTERN.test(password) || seen.has(username)) {
-      return respond({ error: 'Check the anonymous usernames, codes and passwords' }, 400);
+    const expectedCohort = entry?.expectedCohort;
+    if (!username || !codeIsValid(code) || typeof password !== 'string' || !PASSWORD_PATTERN.test(password) ||
+        !cohortIsValid(expectedCohort) || seen.has(username)) {
+      return respond({ error: 'Every login needs a valid anonymous username, practice code, four-digit PIN and expected year group (expectedCohort: Y10–Y13)' }, 400);
     }
     seen.add(username);
-    prepared.push({ username, code, password, key: await usernameKey(username) });
+    prepared.push({ username, code, password, expectedCohort, key: await usernameKey(username) });
+  }
+  // Preflight the entire batch before inserting any account. A practice code
+  // allocated to another year must never silently override the private roster.
+  for (const entry of prepared) {
+    const code = await learner(env, entry.code);
+    if (!code || code.cohort !== entry.expectedCohort) {
+      return respond({ error: 'Login import stopped: a practice code is inactive or does not match its expected year group. No rows in this batch were imported.' }, 409);
+    }
   }
   const result = [];
   for (const entry of prepared) {
-    const code = await learner(env, entry.code);
-    if (!code) return respond({ error: 'One or more practice codes are not active. No more rows were imported.' }, 409);
     const existing = await env.DB.prepare('SELECT code, password_salt, password_hash FROM login_profiles WHERE username_key = ?').bind(entry.key).first();
     if (existing) {
       if (existing.code !== entry.code || !(await checkPassword(entry.password, existing))) {
@@ -151,6 +159,82 @@ async function provisionLogins(request, env) {
     result.push({ username: entry.username, status: 'created' });
   }
   return respond({ results: result }, 201);
+}
+
+async function auditLoginCohorts(request, env) {
+  const { roster, confirm, previewToken } = await jsonBody(request);
+  if (!Array.isArray(roster) || roster.length < 1 || roster.length > 150 || typeof confirm !== 'boolean') {
+    return respond({ error: 'Provide 1–150 original roster rows and choose preview or confirm.' }, 400);
+  }
+  const expected = new Map();
+  for (const entry of roster) {
+    if (!entry || typeof entry !== 'object' || Array.isArray(entry) ||
+        Object.keys(entry).some(key => !['username', 'cohort'].includes(key))) {
+      return respond({ error: 'Use only anonymous username and cohort. Never submit PINs, codes or pupil names.' }, 400);
+    }
+    const username = normalizeUsername(entry.username);
+    if (!username || entry.username !== username || !cohortIsValid(entry.cohort)) {
+      return respond({ error: 'Check each anonymous username and year (Y10–Y13).' }, 400);
+    }
+    const key = await usernameKey(username);
+    if (expected.has(key)) return respond({ error: 'Duplicate username in original roster: ' + username }, 400);
+    expected.set(key, { username, cohort: entry.cohort });
+  }
+
+  // Only teacher-authenticated requests can compare registrations. Do not
+  // expose practice codes, username hashes, or PINs in API responses.
+  const active = await env.DB.prepare(`SELECT l.username_key, p.code, p.cohort
+    FROM login_profiles l JOIN practice_codes p ON p.code = l.code
+    WHERE p.enabled = ?`).bind(1).all();
+  const found = new Set();
+  const corrections = [];
+  const currentCounts = Object.fromEntries(['Y10', 'Y11', 'Y12', 'Y13'].map(year => [year, 0]));
+  const expectedCounts = Object.fromEntries(['Y10', 'Y11', 'Y12', 'Y13'].map(year => [year, 0]));
+  for (const { cohort } of expected.values()) expectedCounts[cohort]++;
+  for (const row of active.results) {
+    currentCounts[row.cohort] = (currentCounts[row.cohort] || 0) + 1;
+    const original = expected.get(row.username_key);
+    if (!original) continue;
+    found.add(row.username_key);
+    if (original.cohort !== row.cohort) corrections.push({ username: original.username, code: row.code, previousCohort: row.cohort, targetCohort: original.cohort });
+  }
+  const missing = [...expected.entries()].filter(([key]) => !found.has(key)).map(([, row]) => row.username).sort();
+  const unlistedActive = active.results.length - found.size;
+  corrections.sort((a, b) => a.username.localeCompare(b.username));
+  const ready = !missing.length && !unlistedActive && found.size === expected.size;
+  // Bind a confirmation to the same roster, exact registrations and their
+  // current years. If anything changes, the teacher must preview again.
+  const fingerprintRows = active.results.map(row => [row.username_key, row.code, row.cohort, expected.get(row.username_key)?.cohort || 'unlisted']);
+  fingerprintRows.sort((a, b) => a[0].localeCompare(b[0]));
+  const fingerprint = await digest('cohort-audit:v1:' + JSON.stringify(fingerprintRows));
+  const response = {
+    ready, rosterCount: expected.size, activeCount: active.results.length,
+    missing, unlistedActive, registeredCounts: currentCounts, expectedCounts,
+    matchedCount: found.size - corrections.length,
+    mismatches: corrections.map(({ username, previousCohort, targetCohort }) => ({ username, registeredCohort: previousCohort, expectedCohort: targetCohort }))
+  };
+  if (!confirm) return respond({ ...response, previewToken: ready ? fingerprint : null });
+  if (!ready) return respond({ error: 'The original roster does not cover every active login. Nothing was changed.', ...response }, 409);
+  if (typeof previewToken !== 'string' || !compareSecrets(previewToken, fingerprint)) {
+    return respond({ error: 'The roster or registrations have changed since preview. Audit again before confirming. Nothing was changed.' }, 409);
+  }
+  if (!corrections.length) return respond({ ...response, corrected: 0, progressPreserved: true });
+
+  // One SQLite UPDATE statement makes all approved corrections atomically.
+  // The MATERIALIZED guard is evaluated once from the pre-update years: if
+  // any affected account changed since preflight, zero rows are updated.
+  const values = corrections.map(() => '(?, ?, ?)').join(', ');
+  const binds = corrections.flatMap(row => [row.code, row.previousCohort, row.targetCohort]);
+  const update = await env.DB.prepare(`WITH corrections(code, previous, target) AS MATERIALIZED (VALUES ${values}),
+    checked AS MATERIALIZED (SELECT COUNT(*) AS n FROM corrections c
+      JOIN practice_codes p ON p.code = c.code WHERE p.cohort = c.previous AND p.enabled = 1)
+    UPDATE practice_codes SET cohort = (SELECT target FROM corrections c WHERE c.code = practice_codes.code)
+    WHERE code IN (SELECT code FROM corrections) AND (SELECT n FROM checked) = ?`)
+    .bind(...binds, corrections.length).run();
+  if (update.meta?.changes !== corrections.length) {
+    return respond({ error: 'Registrations changed during correction. Check the audit again before proceeding.', corrected: Number(update.meta?.changes || 0) }, 409);
+  }
+  return respond({ ...response, corrected: corrections.length, progressPreserved: true });
 }
 
 function respond(body, status = 200, extraHeaders = {}) {
@@ -249,7 +333,7 @@ export async function liveClasswork(env, student, key) {
 async function handle(request, env) {
   const url = new URL(request.url);
   const path = url.pathname;
-  if (path === '/v1/health' && request.method === 'GET') return respond({ ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', cohortCorrection: '11-to-12-v1', selectedClasswork: 'v1' });
+  if (path === '/v1/health' && request.method === 'GET') return respond({ ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', cohortCorrection: '11-to-12-v1', selectedClasswork: 'v1', cohortAudit: 'v1' });
   if (!env.DB) return respond({ error: 'Database not configured' }, 503);
 
   if (path === '/v1/login' && request.method === 'POST') return signIn(request, env);
@@ -367,6 +451,7 @@ async function handle(request, env) {
   if (path.startsWith('/v1/teacher/')) {
     if (!teacherIsValid(request, env)) return respond({ error: 'Teacher access required' }, 401);
     if (path === '/v1/teacher/logins' && request.method === 'POST') return provisionLogins(request, env);
+    if (path === '/v1/teacher/audit-cohorts' && request.method === 'POST') return auditLoginCohorts(request, env);
     if (path === '/v1/teacher/codes' && request.method === 'POST') {
       const { cohort, count } = await jsonBody(request);
       if (!cohortIsValid(cohort) || !Number.isInteger(count) || count < 1 || count > 100) return respond({ error: 'Choose a cohort and 1–100 codes' }, 400);

@@ -245,6 +245,27 @@
           <textarea id="roster-input" rows="5" spellcheck="false" autocapitalize="none" autocomplete="off" placeholder="wackywaffle&#10;fidgetfrog&#10;..."></textarea>
           <div class="actions"><button type="button" class="button secondary" id="save-roster">Save anonymous class list</button></div>
         </details>
+        <details class="roster-entry" id="audit-entry" open>
+          <summary><strong>Audit all logins against the original year groups</strong> · Year 10–13</summary>
+          <p class="sub">Paste the <strong>complete original 63-account roster</strong> from Excel, with just the anonymous username and year on each line. Either <strong>username [Tab] 12</strong> or <strong>12 [Tab] username</strong> works. Do not include PINs, practice codes or real names. Nothing changes until you inspect the results and confirm.</p>
+          <label for="audit-input">Original anonymous usernames and year groups</label>
+          <textarea id="audit-input" rows="7" autocomplete="off" spellcheck="false" autocapitalize="none" placeholder="anonymoususername&#9;12&#10;anotherusername&#9;13"></textarea>
+          <div class="actions">
+            <button type="button" class="button secondary" id="audit-from-saved">Use saved class lists</button>
+            <button type="button" class="button" id="audit-check">Audit all registrations</button>
+          </div>
+          <p id="audit-status" class="state" role="status" aria-live="polite">Every active login must be covered before any correction is allowed.</p>
+          <div id="audit-review" class="review" hidden>
+            <h3>Full roster comparison</h3>
+            <p id="audit-summary"></p>
+            <p id="audit-years" class="sub"></p>
+            <div class="results-scroll" id="audit-table-wrap" hidden>
+              <table class="results-table"><thead><tr><th scope="col">Anonymous username</th><th scope="col">Registered year</th><th scope="col">Original year</th></tr></thead><tbody id="audit-rows"></tbody></table>
+            </div>
+            <label class="confirm-year" id="audit-confirm-label" hidden><input type="checkbox" id="audit-confirm"> I have checked the complete original roster and approve exactly the year-group corrections listed above.</label>
+            <div class="actions"><button type="button" class="button" id="audit-submit" disabled hidden>Confirm listed corrections</button></div>
+          </div>
+        </details>
         <details class="roster-entry" id="repair-entry">
           <summary><strong>Correct a Year 12 login</strong> · one account at a time</summary>
           <p class="sub">Use this only when a pupil's anonymous login says Year 11 but your private class list confirms Year 12. The PIN and previous scores will be kept.</p>
@@ -284,6 +305,7 @@
     let selected = null;
     let pending = null;
     let cohortRepair = null;
+    let cohortAudit = null;
     let selectedClasswork = null;
     let loading = false;
     const chosenScope = () => document.querySelector('input[name="scope"]:checked')?.value || 'individual';
@@ -462,6 +484,8 @@
       $('pupil-progress').textContent = 'Connect again to check pupil progress.';
       cancelReview();
       resetCohortRepair();
+      resetCohortAudit();
+      $('audit-input').value = '';
       resetSelectedClasswork();
       $('workspace').hidden = true;
       $('disconnect').hidden = true;
@@ -538,6 +562,106 @@
       $('repair-confirm').checked = false;
       $('repair-submit').disabled = true;
       if (message) status('repair-status', message);
+    }
+
+    function resetCohortAudit(message = '') {
+      cohortAudit = null;
+      $('audit-review').hidden = true;
+      $('audit-confirm').checked = false;
+      $('audit-submit').disabled = true;
+      if (message) status('audit-status', message);
+    }
+
+    function useSavedAuditRoster() {
+      const entries = CLASSES.flatMap(cohort => rosters[cohort].map(username => ({ username, cohort })));
+      if (!entries.length) return status('audit-status', 'No saved class lists yet. Paste the original complete Excel roster instead.', 'error');
+      $('audit-input').value = entries.map(entry => entry.username + '\t' + entry.cohort.slice(1)).join('\n');
+      resetCohortAudit('Filled ' + entries.length + ' entries from your saved class lists. Check these against the original spreadsheet before auditing.');
+    }
+
+    function parseAuditRoster() {
+      const lines = $('audit-input').value.split(/\r?\n/);
+      const roster = [];
+      const seen = new Set();
+      for (let index = 0; index < lines.length; index++) {
+        const line = lines[index].trim();
+        if (!line) continue;
+        const fields = (/[|,\t]/.test(line) ? line.split(/\s*[|,\t]\s*/) : line.split(/\s+/)).map(value => value.trim()).filter(Boolean);
+        if (fields.length === 2 && fields.some(value => /^(?:username|anonymous username|year|cohort)$/i.test(value))) continue;
+        const firstYear = /^Y?(10|11|12|13)$/i.exec(fields[0] || '');
+        const secondYear = /^Y?(10|11|12|13)$/i.exec(fields[1] || '');
+        if (fields.length !== 2 || Boolean(firstYear) === Boolean(secondYear)) {
+          throw new Error('Line ' + (index + 1) + ': use only anonymous username and Year 10, 11, 12 or 13. No PINs or practice codes.');
+        }
+        const cohort = 'Y' + (firstYear || secondYear)[1];
+        const username = (firstYear ? fields[1] : fields[0]).toLowerCase();
+        if (!validUsername(username)) throw new Error('Line ' + (index + 1) + ': invalid anonymous username.');
+        if (seen.has(username)) throw new Error('Duplicate anonymous username: ' + username + '. Check your spreadsheet.');
+        seen.add(username);
+        roster.push({ username, cohort });
+      }
+      if (!roster.length || roster.length > 150) throw new Error('Paste the full original roster (up to 150 anonymous usernames and years).');
+      return roster;
+    }
+
+    async function checkCohortAudit() {
+      resetCohortAudit();
+      let roster;
+      try { roster = parseAuditRoster(); }
+      catch (error) { return status('audit-status', error.message, 'error'); }
+      $('audit-check').disabled = true;
+      status('audit-status', 'Comparing all ' + roster.length + ' original roster entries with registered logins…');
+      try {
+        const preview = await request('/v1/teacher/audit-cohorts', { method: 'POST', body: { roster, confirm: false } });
+        const mismatches = preview.mismatches || [];
+        const coverage = preview.ready ? 'Complete roster coverage confirmed.' :
+          'INCOMPLETE: ' + preview.missing.length + ' spreadsheet username(s) not registered; ' + preview.unlistedActive + ' registered login(s) missing from this roster. No corrections can be made.';
+        $('audit-summary').textContent = preview.rosterCount + ' entries from Excel · ' + preview.activeCount + ' active registered logins · ' +
+          preview.matchedCount + ' correct year groups · ' + mismatches.length + ' year-group mismatch(es). ' + coverage;
+        $('audit-years').textContent = CLASSES.map(year => 'Year ' + year.slice(1) + ': ' +
+          (preview.registeredCounts[year] || 0) + ' registered → ' + (preview.expectedCounts[year] || 0) + ' expected').join(' · ') +
+          (preview.missing.length ? ' · Not found: ' + preview.missing.join(', ') : '');
+        const body = $('audit-rows');
+        body.replaceChildren();
+        for (const row of mismatches) {
+          const tr = document.createElement('tr');
+          for (const value of [row.username, 'Year ' + row.registeredCohort.slice(1), 'Year ' + row.expectedCohort.slice(1)]) {
+            const cell = document.createElement('td');
+            cell.textContent = value;
+            tr.append(cell);
+          }
+          body.append(tr);
+        }
+        $('audit-table-wrap').hidden = !mismatches.length;
+        $('audit-review').hidden = false;
+        $('audit-confirm-label').hidden = !preview.ready || !mismatches.length;
+        $('audit-submit').hidden = !preview.ready || !mismatches.length;
+        if (preview.ready && mismatches.length) {
+          cohortAudit = { roster, source: $('audit-input').value, previewToken: preview.previewToken, count: mismatches.length };
+          status('audit-status', 'Review each of the ' + mismatches.length + ' corrections, then tick the confirmation box.', 'good');
+        } else status('audit-status', preview.ready ? 'All year groups already match. Nothing needs correcting.' : 'Complete the roster and audit again before changing anything.', preview.ready ? 'good' : 'error');
+      } catch (error) {
+        if (error.status === 401) disconnect('Teacher access expired. Connect again.');
+        else status('audit-status', error.message, 'error');
+      } finally { $('audit-check').disabled = false; }
+    }
+
+    async function confirmCohortAudit() {
+      if (!cohortAudit || !$('audit-confirm').checked || $('audit-input').value !== cohortAudit.source) return;
+      $('audit-submit').disabled = true;
+      status('audit-status', 'Applying only the reviewed year-group corrections…');
+      try {
+        const result = await request('/v1/teacher/audit-cohorts', { method: 'POST', body: {
+          roster: cohortAudit.roster, confirm: true, previewToken: cohortAudit.previewToken
+        } });
+        resetCohortAudit();
+        $('audit-input').value = '';
+        status('audit-status', 'Corrected ' + result.corrected + ' of ' + result.activeCount + ' active registrations. PINs, sessions and saved scores are unchanged. Pupils can refresh My Work.', 'good');
+      } catch (error) {
+        resetCohortAudit();
+        if (error.status === 401) disconnect('Teacher access expired. Connect again.');
+        else status('audit-status', error.message + ' Audit the original roster again.', 'error');
+      }
     }
 
     async function checkCohortRepair() {
@@ -897,6 +1021,11 @@
       status('class-status', 'Click Refresh class results to check Year ' + $('review-cohort').value.slice(1) + '.');
     });
     $('save-roster').addEventListener('click', saveRoster);
+    $('audit-from-saved').addEventListener('click', useSavedAuditRoster);
+    $('audit-input').addEventListener('input', () => resetCohortAudit('Roster changed. Run the full audit again before making any corrections.'));
+    $('audit-check').addEventListener('click', checkCohortAudit);
+    $('audit-confirm').addEventListener('change', () => { $('audit-submit').disabled = !$('audit-confirm').checked || !cohortAudit; });
+    $('audit-submit').addEventListener('click', confirmCohortAudit);
     $('selected-cohort').addEventListener('change', () => resetSelectedClasswork('Check the selected pupils for this year group.'));
     $('selected-usernames').addEventListener('input', () => resetSelectedClasswork('Selection changed. Check the pupils again before assigning.'));
     $('selected-from-roster').addEventListener('click', useSavedClassList);

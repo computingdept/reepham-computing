@@ -78,6 +78,16 @@ class FakeD1 {
         throw Error('Unrecognised test SELECT one: ' + sql);
       };
       const run = async () => {
+        if (sql.includes('WITH corrections(code, previous, target) AS MATERIALIZED')) {
+          const expectedCount = args[args.length - 1];
+          const corrections = [];
+          for (let i = 0; i < args.length - 1; i += 3) corrections.push({ code: args[i], from: args[i + 1], to: args[i + 2] });
+          if (corrections.length !== expectedCount || corrections.some(c => !this.codes.get(c.code)?.enabled || this.codes.get(c.code)?.cohort !== c.from)) {
+            return { meta: { changes: 0 } };
+          }
+          for (const correction of corrections) this.codes.get(correction.code).cohort = correction.to;
+          return { meta: { changes: corrections.length } };
+        }
         if (sql.includes('INSERT OR IGNORE INTO practice_codes')) {
           const [code, cohort] = args;
           if (this.codes.has(code)) return { meta: { changes: 0 } };
@@ -154,6 +164,10 @@ class FakeD1 {
         throw Error('Unrecognised test INSERT: ' + sql);
       };
       const all = async () => {
+        if (sql.includes('SELECT l.username_key, p.code, p.cohort')) {
+          return { results: [...this.logins.values()].map(login => ({ ...this.codes.get(login.code), username_key: login.username_key }))
+            .filter(row => row.enabled).map(({ username_key, code, cohort }) => ({ username_key, code, cohort })) };
+        }
         if (sql.includes('FROM student_assignments s JOIN assignments a')) {
           const [code, cohort] = args;
           return { results: [...this.individualAssignments.values()].filter(x => x.code === code && x.active && this.assignments.get(x.assignment_key)?.cohort === cohort).map(x => {
@@ -273,7 +287,7 @@ test('Year 12 has a clear message before classwork is assigned, not a wrong-time
   try {
     const db = new FakeD1();
     const [code] = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y12', count: 1 }, { teacher: true })).data.codes;
-    await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'year12bird', code, password: '1234' }] }, { teacher: true });
+    await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'year12bird', code, password: '1234', expectedCohort: 'Y12' }] }, { teacher: true });
     const session = (await call(db, '/v1/login', 'POST', { username: 'year12bird', password: '1234' })).data.session;
     const view = await call(db, '/v1/work', 'POST', {}, { bearer: session });
     assert.equal(view.status, 200);
@@ -296,7 +310,7 @@ test('a wrongly allocated year-group login reveals its actual cohort without unl
   try {
     const db = new FakeD1();
     const [code] = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y10', count: 1 }, { teacher: true })).data.codes;
-    await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'misplacedbird', code, password: '1234' }] }, { teacher: true });
+    await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'misplacedbird', code, password: '1234', expectedCohort: 'Y10' }] }, { teacher: true });
     const session = (await call(db, '/v1/login', 'POST', { username: 'misplacedbird', password: '1234' })).data.session;
     const response = await call(db, '/v1/work', 'POST', {}, { bearer: session });
     assert.equal(response.status, 200);
@@ -318,8 +332,8 @@ test('teacher can correct one verified Year 11 login to Year 12 without altering
     const db = new FakeD1();
     const [wrongCode, otherCode] = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y11', count: 2 }, { teacher: true })).data.codes;
     await call(db, '/v1/teacher/logins', 'POST', { logins: [
-      { username: 'fictionalbird', code: wrongCode, password: '1234' },
-      { username: 'otheryear11', code: otherCode, password: '5678' }
+      { username: 'fictionalbird', code: wrongCode, password: '1234', expectedCohort: 'Y11' },
+      { username: 'otheryear11', code: otherCode, password: '5678', expectedCohort: 'Y11' }
     ] }, { teacher: true });
     const [year12Code] = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y12', count: 1 }, { teacher: true })).data.codes;
     assert.ok(year12Code);
@@ -362,7 +376,7 @@ test('selected Year 13 Classwork assigns both activities only to validated login
     const db = new FakeD1();
     const codes = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y13', count: 5 }, { teacher: true })).data.codes;
     const names = ['fictionalswan', 'fictionalgoose', 'fictionaltoad', 'fictionalfudge'];
-    await call(db, '/v1/teacher/logins', 'POST', { logins: [...names, 'spareyear13'].map((username, i) => ({ username, code: codes[i], password: '1234' })) }, { teacher: true });
+    await call(db, '/v1/teacher/logins', 'POST', { logins: [...names, 'spareyear13'].map((username, i) => ({ username, code: codes[i], password: '1234', expectedCohort: 'Y13' })) }, { teacher: true });
     const body = { cohort: 'Y13', usernames: names, confirm: false };
     assert.equal((await call(db, '/v1/teacher/selected-classwork', 'POST', body)).status, 401);
     assert.equal((await call(db, '/v1/teacher/selected-classwork', 'POST', { ...body, usernames: [names[0], names[0]] }, { teacher: true })).status, 400);
@@ -397,8 +411,8 @@ test('selected Classwork rejects wrong-year accounts and existing whole-year wor
   const [right] = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y13', count: 1 }, { teacher: true })).data.codes;
   const [wrong] = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y11', count: 1 }, { teacher: true })).data.codes;
   await call(db, '/v1/teacher/logins', 'POST', { logins: [
-    { username: 'fictionalright', code: right, password: '1234' },
-    { username: 'fictionalwrong', code: wrong, password: '5678' }
+    { username: 'fictionalright', code: right, password: '1234', expectedCohort: 'Y13' },
+    { username: 'fictionalwrong', code: wrong, password: '5678', expectedCohort: 'Y11' }
   ] }, { teacher: true });
   const mismatch = await call(db, '/v1/teacher/selected-classwork', 'POST',
     { cohort: 'Y13', usernames: ['fictionalright','fictionalwrong'], confirm: true }, { teacher: true });
@@ -429,7 +443,7 @@ test('teacher can renew expired Year 12 Classwork without losing previous attemp
     assert.equal(first.data.workType, 'classwork');
     db.attempts.set('previous-attempt', { attempt_id: 'previous-attempt', code, assignment_key: key, level: 'q-easy', score: 100, source: 'skill' });
     db.assignments.get(key).created_at = '2020-01-01 00:00:00';
-    await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'renewclassbird', code, password: '1234' }] }, { teacher: true });
+    await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'renewclassbird', code, password: '1234', expectedCohort: 'Y12' }] }, { teacher: true });
     const session = (await call(db, '/v1/login', 'POST', { username: 'renewclassbird', password: '1234' })).data.session;
     const expired = await call(db, '/v1/work', 'POST', {}, { bearer: session });
     assert.deepEqual(expired.data.work, []);
@@ -449,8 +463,8 @@ test('renewing an individual Classwork assignment does not grant access to the w
   const db = new FakeD1();
   const [firstCode, otherCode] = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y12', count: 2 }, { teacher: true })).data.codes;
   await call(db, '/v1/teacher/logins', 'POST', { logins: [
-    { username: 'renewbird', code: firstCode, password: '1234' },
-    { username: 'renewfox', code: otherCode, password: '5678' }
+    { username: 'renewbird', code: firstCode, password: '1234', expectedCohort: 'Y12' },
+    { username: 'renewfox', code: otherCode, password: '5678', expectedCohort: 'Y12' }
   ] }, { teacher: true });
   const body = { username: 'renewbird', itemId: 'h446-practice-141-a', level: '' };
   const assigned = await call(db, '/v1/teacher/student-assignments', 'POST', body, { teacher: true });
@@ -463,12 +477,132 @@ test('renewing an individual Classwork assignment does not grant access to the w
 
 test('health, CORS and teacher-only write access', async () => {
   const db = new FakeD1();
-  assert.deepEqual((await call(db, '/v1/health')).data, { ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', cohortCorrection: '11-to-12-v1', selectedClasswork: 'v1' });
+  assert.deepEqual((await call(db, '/v1/health')).data, { ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', cohortCorrection: '11-to-12-v1', selectedClasswork: 'v1', cohortAudit: 'v1' });
   const blocked = await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y12', count: 10 });
   assert.equal(blocked.status, 401);
   const wrongOrigin = await call(db, '/v1/health', 'GET', undefined, { origin: 'https://not-rhsccs.org' });
   assert.equal(wrongOrigin.status, 403);
   assert.equal(wrongOrigin.cors, null);
+});
+
+test('new login imports require and check the original year before creating any accounts', async () => {
+  const db = new FakeD1();
+  const [y11] = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y11', count: 1 }, { teacher: true })).data.codes;
+  const [y13] = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y13', count: 1 }, { teacher: true })).data.codes;
+  const missingYear = await call(db, '/v1/teacher/logins', 'POST', { logins: [
+    { username: 'examplebird', code: y11, password: '1234' }
+  ] }, { teacher: true });
+  assert.equal(missingYear.status, 400);
+  const wrongYear = await call(db, '/v1/teacher/logins', 'POST', { logins: [
+    { username: 'examplebird', code: y11, password: '1234', expectedCohort: 'Y11' },
+    { username: 'examplefox', code: y13, password: '5678', expectedCohort: 'Y12' }
+  ] }, { teacher: true });
+  assert.equal(wrongYear.status, 409);
+  assert.match(wrongYear.data.error, /year group/);
+  assert.equal(db.logins.size, 0, 'No earlier row is silently added before the mismatch is noticed');
+  const okay = await call(db, '/v1/teacher/logins', 'POST', { logins: [
+    { username: 'examplebird', code: y11, password: '1234', expectedCohort: 'Y11' },
+    { username: 'examplefox', code: y13, password: '5678', expectedCohort: 'Y13' }
+  ] }, { teacher: true });
+  assert.equal(okay.status, 201);
+  assert.equal(db.logins.size, 2);
+  assert.equal((await call(db, '/v1/teacher/logins', 'POST', { logins: [
+    { username: 'examplebird', code: y11, password: '1234', expectedCohort: 'Y13' }
+  ] }, { teacher: true })).status, 409, 'Even repeated imports must agree with the year');
+});
+
+test('whole-roster audit protects all accounts and corrects only approved year mismatches without changing PINs or scores', async () => {
+  const db = new FakeD1();
+  const misplaced = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y11', count: 5 }, { teacher: true })).data.codes;
+  const [correct] = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y12', count: 1 }, { teacher: true })).data.codes;
+  const usernames = ['imaginaryswan', 'imaginarygoose', 'imaginarytoad', 'imaginaryfudge', 'imaginarybop', 'correctbird'];
+  const codes = [...misplaced, correct];
+  for (let index = 0; index < 6; index++) {
+    const cohort = index === 5 ? 'Y12' : 'Y11';
+    const result = await call(db, '/v1/teacher/logins', 'POST', { logins: [
+      { username: usernames[index], code: codes[index], password: '1234', expectedCohort: cohort }
+    ] }, { teacher: true });
+    assert.equal(result.status, 201);
+  }
+  const initialProfiles = structuredClone([...db.logins.values()]);
+  const session = (await call(db, '/v1/login', 'POST', { username: usernames[0], password: '1234' })).data.session;
+  const oldTask = (await call(db, '/v1/teacher/student-assignments', 'POST',
+    { username: usernames[0], itemId: 'j277-skill-p1-convert', level: 'both' }, { teacher: true })).data.assignmentKey;
+  db.attempts.set('old-score', { code: misplaced[0], assignment_key: oldTask, score: 100, level: 'q-easy' });
+  const roster = usernames.map((username, index) => ({ username, cohort: index < 4 ? 'Y13' : 'Y12' }));
+  const auditPath = '/v1/teacher/audit-cohorts';
+  assert.equal((await call(db, auditPath, 'POST', { roster, confirm: false })).status, 401);
+  assert.equal((await call(db, auditPath, 'POST', { roster: [{ ...roster[0], password: '1234' }], confirm: false }, { teacher: true })).status, 400);
+  assert.equal((await call(db, auditPath, 'POST', { roster: [roster[0], roster[0]], confirm: false }, { teacher: true })).status, 400);
+  const partial = await call(db, auditPath, 'POST', { roster: roster.slice(0, 5), confirm: false }, { teacher: true });
+  assert.equal(partial.data.ready, false);
+  assert.equal(partial.data.unlistedActive, 1);
+  const blocked = await call(db, auditPath, 'POST', { roster: roster.slice(0, 5), confirm: true, previewToken: partial.data.previewToken }, { teacher: true });
+  assert.equal(blocked.status, 409);
+  assert.equal(db.codes.get(misplaced[0]).cohort, 'Y11');
+  const preview = await call(db, auditPath, 'POST', { roster, confirm: false }, { teacher: true });
+  assert.equal(preview.status, 200);
+  assert.equal(preview.data.ready, true);
+  assert.equal(preview.data.activeCount, 6);
+  assert.equal(preview.data.rosterCount, 6);
+  assert.equal(preview.data.mismatches.length, 5);
+  assert.equal(preview.data.matchedCount, 1);
+  assert.equal(preview.data.registeredCounts.Y11, 5);
+  assert.equal(preview.data.expectedCounts.Y13, 4);
+  const wrongToken = await call(db, auditPath, 'POST', { roster, confirm: true, previewToken: 'old-preview' }, { teacher: true });
+  assert.equal(wrongToken.status, 409);
+  assert.equal(db.codes.get(misplaced[0]).cohort, 'Y11');
+  const applied = await call(db, auditPath, 'POST', { roster, confirm: true, previewToken: preview.data.previewToken }, { teacher: true });
+  assert.equal(applied.status, 200);
+  assert.equal(applied.data.corrected, 5);
+  assert.equal(applied.data.progressPreserved, true);
+  assert.deepEqual([...db.logins.values()], initialProfiles, 'All account IDs, PIN hashes and failed attempt counters unchanged');
+  assert.equal(db.attempts.get('old-score').score, 100);
+  assert.equal(db.attempts.get('old-score').assignment_key, oldTask);
+  assert.equal(db.sessions.size, 1, 'Current session is not removed');
+  assert.equal((await call(db, '/v1/work', 'POST', {}, { bearer: session })).data.cohort, 'Y13');
+  assert.equal((await call(db, '/v1/login', 'POST', { username: usernames[4], password: '1234' })).status, 200);
+  const again = await call(db, auditPath, 'POST', { roster, confirm: false }, { teacher: true });
+  assert.equal(again.data.mismatches.length, 0);
+  assert.equal(again.data.matchedCount, 6);
+});
+
+test('whole-roster audit detects a year changed after preview and refuses stale confirmation', async () => {
+  const db = new FakeD1();
+  const [code] = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y11', count: 1 }, { teacher: true })).data.codes;
+  await call(db, '/v1/teacher/logins', 'POST', { logins: [
+    { username: 'imaginaryjay', code, password: '1234', expectedCohort: 'Y11' }
+  ] }, { teacher: true });
+  const roster = [{ username: 'imaginaryjay', cohort: 'Y13' }];
+  const preview = await call(db, '/v1/teacher/audit-cohorts', 'POST', { roster, confirm: false }, { teacher: true });
+  db.codes.get(code).cohort = 'Y12';
+  const stale = await call(db, '/v1/teacher/audit-cohorts', 'POST', { roster, confirm: true, previewToken: preview.data.previewToken }, { teacher: true });
+  assert.equal(stale.status, 409);
+  assert.equal(db.codes.get(code).cohort, 'Y12');
+});
+
+test('audit accepts a complete 63-login original roster and does not require practice codes or PINs', async () => {
+  const db = new FakeD1();
+  const codes = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y11', count: 63 }, { teacher: true })).data.codes;
+  const roster = Array.from({ length: 63 }, (_, index) => ({
+    username: 'fakeaccount' + String(index + 1).padStart(2, '0'),
+    cohort: index < 4 ? 'Y13' : 'Y11'
+  }));
+  for (let index = 0; index < 63; index += 5) {
+    const rows = roster.slice(index, index + 5).map((entry, offset) => ({
+      username: entry.username, code: codes[index + offset], password: '1234', expectedCohort: 'Y11'
+    }));
+    const result = await call(db, '/v1/teacher/logins', 'POST', { logins: rows }, { teacher: true });
+    assert.equal(result.status, 201);
+  }
+  const audit = await call(db, '/v1/teacher/audit-cohorts', 'POST', { roster, confirm: false }, { teacher: true });
+  assert.equal(audit.status, 200);
+  assert.equal(audit.data.ready, true);
+  assert.equal(audit.data.activeCount, 63);
+  assert.equal(audit.data.matchedCount, 59);
+  assert.equal(audit.data.mismatches.length, 4);
+  assert.equal(audit.data.missing.length, 0);
+  assert.equal(audit.data.unlistedActive, 0);
 });
 
 test('10 Year 12 and 10 Year 13 codes, assignment, repeat score saving', async () => {
@@ -504,13 +638,13 @@ test('anonymous username and four-digit PIN sign-in can read work but not teache
   const issued = await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y12', count: 1 }, { teacher: true });
   const code = issued.data.codes[0];
   const privatePassword = '4821';
-  const notTeacher = await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'Y12-04', code, password: privatePassword }] });
+  const notTeacher = await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'Y12-04', code, password: privatePassword, expectedCohort: 'Y12' }] });
   assert.equal(notTeacher.status, 401);
-  const added = await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'Y12-04', code, password: privatePassword }] }, { teacher: true });
+  const added = await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'Y12-04', code, password: privatePassword, expectedCohort: 'Y12' }] }, { teacher: true });
   assert.equal(added.status, 201);
   assert.deepEqual(added.data.results, [{ username: 'y12-04', status: 'created' }]);
   assert.equal([...db.logins.values()][0].password_hash.includes(privatePassword), false);
-  const retry = await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'Y12-04', code, password: privatePassword }] }, { teacher: true });
+  const retry = await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'Y12-04', code, password: privatePassword, expectedCohort: 'Y12' }] }, { teacher: true });
   assert.equal(retry.data.results[0].status, 'already-imported');
   const bad = await call(db, '/v1/login', 'POST', { username: 'Y12-04', password: '9999' });
   assert.equal(bad.status, 401);
@@ -539,7 +673,7 @@ test('anonymous username and four-digit PIN sign-in can read work but not teache
 test('repeated wrong PINs lock one anonymous ID for 15 minutes', async () => {
   const db = new FakeD1();
   const code = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y11', count: 1 }, { teacher: true })).data.codes[0];
-  await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'Y11-01', code, password: '1436' }] }, { teacher: true });
+  await call(db, '/v1/teacher/logins', 'POST', { logins: [{ username: 'Y11-01', code, password: '1436', expectedCohort: 'Y11' }] }, { teacher: true });
   for (let i = 0; i < 5; i++) {
     const bad = await call(db, '/v1/login', 'POST', { username: 'Y11-01', password: '9999' });
     assert.equal(bad.status, 401);
@@ -551,8 +685,8 @@ test('individual assignment stays private, accepts scores and can later become y
   const db = new FakeD1();
   const codes = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y10', count: 2 }, { teacher: true })).data.codes;
   const addLogins = await call(db, '/v1/teacher/logins', 'POST', { logins: [
-    { username: 'pilotbird', code: codes[0], password: '1234' },
-    { username: 'pilotfox', code: codes[1], password: '5678' }
+    { username: 'pilotbird', code: codes[0], password: '1234', expectedCohort: 'Y10' },
+    { username: 'pilotfox', code: codes[1], password: '5678', expectedCohort: 'Y10' }
   ] }, { teacher: true });
   assert.equal(addLogins.status, 201);
 
@@ -613,8 +747,8 @@ test('Conversion Grid reports with the pupil session only to their own assignmen
     const db = new FakeD1();
     const codes = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y10', count: 2 }, { teacher: true })).data.codes;
     await call(db, '/v1/teacher/logins', 'POST', { logins: [
-      { username: 'testbird', code: codes[0], password: '1234' },
-      { username: 'testfox', code: codes[1], password: '5678' }
+      { username: 'testbird', code: codes[0], password: '1234', expectedCohort: 'Y10' },
+      { username: 'testfox', code: codes[1], password: '5678', expectedCohort: 'Y10' }
     ] }, { teacher: true });
     const assigned = await call(db, '/v1/teacher/student-assignments', 'POST',
       { username: 'testbird', itemId: 'j277-skill-p1-convert', level: 'both' }, { teacher: true });
@@ -657,8 +791,8 @@ test('one checked Conversion Grid answer immediately updates pupil and teacher p
     const db = new FakeD1();
     const codes = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y10', count: 2 }, { teacher: true })).data.codes;
     await call(db, '/v1/teacher/logins', 'POST', { logins: [
-      { username: 'testbird', code: codes[0], password: '1234' },
-      { username: 'testfox', code: codes[1], password: '5678' }
+      { username: 'testbird', code: codes[0], password: '1234', expectedCohort: 'Y10' },
+      { username: 'testfox', code: codes[1], password: '5678', expectedCohort: 'Y10' }
     ] }, { teacher: true });
     const assigned = await call(db, '/v1/teacher/student-assignments', 'POST',
       { username: 'testbird', itemId: 'j277-skill-p1-convert', level: 'both' }, { teacher: true });
@@ -707,8 +841,8 @@ test('Year 12 1.4.1(a) MCQ records each checked answer during lessons without ch
     const db = new FakeD1();
     const codes = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y12', count: 2 }, { teacher: true })).data.codes;
     await call(db, '/v1/teacher/logins', 'POST', { logins: [
-      { username: 'quizbird', code: codes[0], password: '1234' },
-      { username: 'quizfox', code: codes[1], password: '5678' }
+      { username: 'quizbird', code: codes[0], password: '1234', expectedCohort: 'Y12' },
+      { username: 'quizfox', code: codes[1], password: '5678', expectedCohort: 'Y12' }
     ] }, { teacher: true });
     const assigned = await call(db, '/v1/teacher/student-assignments', 'POST',
       { username: 'quizbird', itemId: 'h446-practice-141-a', level: '' }, { teacher: true });
