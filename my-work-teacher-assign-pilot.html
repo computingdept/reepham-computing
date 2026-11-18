@@ -211,6 +211,23 @@
         </div>
         <div id="assignments" class="list" aria-live="polite"><p class="empty">Loading assignments…</p></div>
       </section>
+      <section class="panel" id="selected-classwork-panel" aria-labelledby="selected-classwork-title">
+        <h2 id="selected-classwork-title">Selected Classwork · two activities together</h2>
+        <p class="sub">Assign Conversion Grid and Primitive Data Types MCQ to <strong>only the anonymous usernames you list</strong>. Other year-group accounts and spares are not selected.</p>
+        <div class="fields">
+          <div class="field"><label for="selected-cohort">Class</label><select id="selected-cohort"><option value="Y13" selected>Year 13</option><option value="Y12">Year 12</option></select></div>
+          <div class="field"><label>&nbsp;</label><button type="button" class="button secondary" id="selected-from-roster">Use saved class list</button></div>
+          <div class="field full"><label for="selected-usernames">Selected anonymous usernames · one per line</label><textarea id="selected-usernames" rows="4" autocomplete="off" spellcheck="false" autocapitalize="none" placeholder="Paste the usernames you want to assign, one per line"></textarea></div>
+        </div>
+        <div class="actions"><button type="button" class="button" id="selected-check">Check selected pupils</button></div>
+        <p id="selected-status" class="state" role="status" aria-live="polite">No assignments will be created until you confirm the checked selection.</p>
+        <div class="review" id="selected-review" hidden>
+          <p id="selected-summary"></p>
+          <p id="selected-names" class="sub"></p>
+          <label class="confirm-year"><input id="selected-confirm" type="checkbox"> I have checked these usernames and understand that both activities will be assigned to exactly this selection.</label>
+          <div class="actions"><button type="button" class="button" id="selected-submit" disabled>Confirm both Classwork assignments</button></div>
+        </div>
+      </section>
       </div>
 
       <section class="panel" id="review-work-view" aria-labelledby="class-progress-title" hidden>
@@ -267,6 +284,7 @@
     let selected = null;
     let pending = null;
     let cohortRepair = null;
+    let selectedClasswork = null;
     let loading = false;
     const chosenScope = () => document.querySelector('input[name="scope"]:checked')?.value || 'individual';
     const anonymousUsername = () => $('username').value.trim().toLowerCase();
@@ -444,12 +462,74 @@
       $('pupil-progress').textContent = 'Connect again to check pupil progress.';
       cancelReview();
       resetCohortRepair();
+      resetSelectedClasswork();
       $('workspace').hidden = true;
       $('disconnect').hidden = true;
       $('connect').hidden = false;
       $('token').disabled = false;
       $('token').required = true;
       status('connection-status', message);
+    }
+
+    function resetSelectedClasswork(message = '') {
+      selectedClasswork = null;
+      $('selected-review').hidden = true;
+      $('selected-confirm').checked = false;
+      $('selected-submit').disabled = true;
+      if (message) status('selected-status', message);
+    }
+
+    function selectedNames() {
+      const entries = $('selected-usernames').value.split(/\r?\n/).map(name => name.trim().toLowerCase()).filter(Boolean);
+      if (!entries.length || entries.length > 20 || entries.some(name => !validUsername(name)) || new Set(entries).size !== entries.length) return null;
+      return entries;
+    }
+
+    function useSavedClassList() {
+      const cohort = $('selected-cohort').value;
+      const names = rosters[cohort] || [];
+      if (!names.length) return status('selected-status', 'No saved list for Year ' + cohort.slice(1) + '. You can paste selected usernames directly, or save the class list in Review Work.', 'error');
+      $('selected-usernames').value = names.join('\n');
+      resetSelectedClasswork('Copied ' + names.length + ' saved usernames. Remove any spares before checking the selection.');
+    }
+
+    async function checkSelectedClasswork() {
+      resetSelectedClasswork();
+      const names = selectedNames();
+      if (!names) return status('selected-status', 'Enter 1–20 different anonymous usernames, one per line. Check for spaces, duplicates or PINs.', 'error');
+      const cohort = $('selected-cohort').value;
+      $('selected-check').disabled = true;
+      status('selected-status', 'Checking every registered year group…');
+      try {
+        const preview = await request('/v1/teacher/selected-classwork', { method: 'POST', body: { cohort, usernames: names, confirm: false } });
+        selectedClasswork = { cohort, names };
+        $('selected-summary').textContent = 'Assign both H446 activities to ' + preview.usernames.length + ' Year ' + cohort.slice(1) + ' pupils (' + preview.assignmentCount + ' individual activity allocations).';
+        $('selected-names').textContent = preview.usernames.join(' · ');
+        $('selected-review').hidden = false;
+        status('selected-status', 'All usernames are registered in the correct year. Review and confirm below.', 'good');
+      } catch (error) {
+        if (error.status === 401) disconnect('Teacher access expired. Connect again.');
+        else status('selected-status', error.message, 'error');
+      } finally { $('selected-check').disabled = false; }
+    }
+
+    async function assignSelectedClasswork() {
+      if (!selectedClasswork || !$('selected-confirm').checked ||
+          $('selected-cohort').value !== selectedClasswork.cohort ||
+          JSON.stringify(selectedNames()) !== JSON.stringify(selectedClasswork.names)) return;
+      $('selected-submit').disabled = true;
+      status('selected-status', 'Assigning both activities to the checked pupils…');
+      try {
+        const result = await request('/v1/teacher/selected-classwork', { method: 'POST', body: {
+          cohort: selectedClasswork.cohort, usernames: selectedClasswork.names, confirm: true
+        } });
+        resetSelectedClasswork();
+        status('selected-status', 'Done: ' + result.activityCount + ' Classwork activities for ' + result.pupilCount + ' selected pupils. ' +
+          result.newlyAssigned + ' new, ' + result.renewed + ' renewed, ' + result.alreadyActive + ' already active. Students can refresh My Work.', 'good');
+      } catch (error) {
+        if (error.status === 401) disconnect('Teacher access expired. Connect again.');
+        else { status('selected-status', error.message, 'error'); $('selected-submit').disabled = !$('selected-confirm').checked; }
+      }
     }
 
     function resetCohortRepair(message = '') {
@@ -817,6 +897,12 @@
       status('class-status', 'Click Refresh class results to check Year ' + $('review-cohort').value.slice(1) + '.');
     });
     $('save-roster').addEventListener('click', saveRoster);
+    $('selected-cohort').addEventListener('change', () => resetSelectedClasswork('Check the selected pupils for this year group.'));
+    $('selected-usernames').addEventListener('input', () => resetSelectedClasswork('Selection changed. Check the pupils again before assigning.'));
+    $('selected-from-roster').addEventListener('click', useSavedClassList);
+    $('selected-check').addEventListener('click', checkSelectedClasswork);
+    $('selected-confirm').addEventListener('change', () => { $('selected-submit').disabled = !$('selected-confirm').checked || !selectedClasswork; });
+    $('selected-submit').addEventListener('click', assignSelectedClasswork);
     $('repair-username').addEventListener('input', () => resetCohortRepair('Check the registered year for this username.'));
     $('repair-check').addEventListener('click', checkCohortRepair);
     $('repair-confirm').addEventListener('change', () => { $('repair-submit').disabled = !$('repair-confirm').checked || !cohortRepair; });

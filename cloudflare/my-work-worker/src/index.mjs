@@ -249,7 +249,7 @@ export async function liveClasswork(env, student, key) {
 async function handle(request, env) {
   const url = new URL(request.url);
   const path = url.pathname;
-  if (path === '/v1/health' && request.method === 'GET') return respond({ ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', cohortCorrection: '11-to-12-v1' });
+  if (path === '/v1/health' && request.method === 'GET') return respond({ ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', cohortCorrection: '11-to-12-v1', selectedClasswork: 'v1' });
   if (!env.DB) return respond({ error: 'Database not configured' }, 503);
 
   if (path === '/v1/login' && request.method === 'POST') return signIn(request, env);
@@ -418,6 +418,58 @@ async function handle(request, env) {
         ? await env.DB.prepare("UPDATE student_assignments SET active = 1, created_at = datetime('now') WHERE code = ? AND assignment_key = ? AND (active = 0 OR created_at < datetime('now', '-7 days'))").bind(profile.code, key).run()
         : null;
       return respond({ cohort: profile.cohort, assignmentKey: key, added: Boolean(result.meta?.changes), renewed: Boolean(renewed?.meta?.changes), workType: classwork ? 'classwork' : 'independent', scope: 'individual' }, 201);
+    }
+    if (path === '/v1/teacher/selected-classwork' && request.method === 'POST') {
+      const { cohort, usernames: rawUsernames, confirm } = await jsonBody(request);
+      if (!['Y12', 'Y13'].includes(cohort) || !Array.isArray(rawUsernames) ||
+          rawUsernames.length < 1 || rawUsernames.length > 20 || typeof confirm !== 'boolean') {
+        return respond({ error: 'Choose Year 12 or 13 and 1–20 anonymous usernames' }, 400);
+      }
+      const usernames = rawUsernames.map(normalizeUsername);
+      if (usernames.some(username => !username) || new Set(usernames).size !== usernames.length) {
+        return respond({ error: 'Use valid, different anonymous usernames, one per pupil' }, 400);
+      }
+      const activities = [
+        { itemId: 'h446-skill-p1-convert', level: 'both' },
+        { itemId: 'h446-practice-141-a', level: '' }
+      ].map(item => ({ ...item, key: assignmentKey(cohort, item.itemId, item.level) }));
+      // Check every registration before writing anything. A mismatched login
+      // cannot accidentally receive an assignment for a different year.
+      const profiles = [];
+      const issues = [];
+      for (const username of usernames) {
+        const row = await env.DB.prepare(`SELECT p.code, p.cohort FROM login_profiles l
+          JOIN practice_codes p ON p.code = l.code
+          WHERE l.username_key = ? AND p.enabled = 1`).bind(await usernameKey(username)).first();
+        if (!row || row.cohort !== cohort) issues.push(username + ': ' + (row ? 'registered as Year ' + row.cohort.slice(1) : 'login not found'));
+        else profiles.push({ code: row.code, username });
+      }
+      if (issues.length) return respond({ error: 'No work assigned. Check these accounts: ' + issues.join('; ') }, 409);
+      const group = await env.DB.prepare(`SELECT assignment_key FROM assignments
+        WHERE cohort = ? AND active = 1 AND assignment_key IN (?, ?)`).bind(cohort, activities[0].key, activities[1].key).all();
+      if (group.results.length) return respond({ error: 'One or both activities are already assigned to the entire year group. Selected assignments cannot restrict that existing access; no changes made.' }, 409);
+      if (!confirm) return respond({ ready: true, cohort, usernames, activities: activities.map(({ itemId }) => itemId), assignmentCount: usernames.length * activities.length });
+
+      // Definitions remain inactive at cohort level. D1 batch is one atomic
+      // transaction: either all selected pupil assignments commit, or none.
+      const statements = activities.map(item => env.DB.prepare(`INSERT OR IGNORE INTO assignments
+        (assignment_key, cohort, item_id, level, active) VALUES (?, ?, ?, ?, 0)`)
+        .bind(item.key, cohort, item.itemId, item.level));
+      for (const profile of profiles) for (const item of activities) {
+        statements.push(env.DB.prepare('INSERT OR IGNORE INTO student_assignments (code, assignment_key) VALUES (?, ?)')
+          .bind(profile.code, item.key));
+        statements.push(env.DB.prepare("UPDATE student_assignments SET active = 1, created_at = datetime('now') WHERE code = ? AND assignment_key = ? AND (active = 0 OR created_at < datetime('now', '-7 days'))")
+          .bind(profile.code, item.key));
+      }
+      const outcomes = await env.DB.batch(statements);
+      let newlyAssigned = 0;
+      let renewed = 0;
+      for (let index = activities.length; index < outcomes.length; index += 2) {
+        newlyAssigned += Number(outcomes[index]?.meta?.changes || 0);
+        renewed += Number(outcomes[index + 1]?.meta?.changes || 0);
+      }
+      return respond({ cohort, pupilCount: profiles.length, activityCount: activities.length,
+        newlyAssigned, renewed, alreadyActive: profiles.length * activities.length - newlyAssigned - renewed }, 201);
     }
     if (path === '/v1/teacher/student-progress' && request.method === 'POST') {
       const { username: rawUsername } = await jsonBody(request);
