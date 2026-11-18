@@ -446,7 +446,16 @@
         '2.1':'Algorithms', '2.2':'Programming Fundamentals', '2.3':'Producing Robust Programs',
         '2.4':'Boolean Logic', '2.5':'Programming Languages and IDEs'
       },
-      h446: { '1.4':'Data Types, Data Structures and Algorithms' }
+      h446: {
+        '1.1':'Processors, Input, Output and Storage',
+        '1.2':'Software and Software Development',
+        '1.3':'Exchanging Data',
+        '1.4':'Data Types, Data Structures and Boolean Algebra',
+        '1.5':'Legal, Moral, Cultural and Ethical Issues',
+        '2.1':'Computational Thinking',
+        '2.2':'Programming Techniques and Methods',
+        '2.3':'Algorithms'
+      }
     };
     const BUNDLE_SPEC_TITLES = {
       '1.1.1':'CPU architecture', '1.1.2':'CPU performance', '1.1.3':'Embedded systems',
@@ -461,6 +470,21 @@
       '2.2.2':'Data types', '2.2.3':'Additional programming techniques',
       '2.3.1':'Defensive design', '2.3.2':'Testing and debugging',
       '2.4.1':'Boolean logic', '2.5.1':'Languages and translators', '2.5.2':'IDEs'
+    };
+    const BUNDLE_H446_SPEC_TITLES = {
+      '1.1.1':'Structure and function of the processor', '1.1.2':'Types of processor',
+      '1.1.3':'Input, output and storage',
+      '1.2.1':'Systems software', '1.2.2':'Applications generation',
+      '1.2.3':'Software development', '1.2.4':'Types of programming language',
+      '1.3.1':'Compression, encryption and hashing', '1.3.2':'Databases',
+      '1.3.3':'Networks', '1.3.4':'Web technologies',
+      '1.4.1':'Data types and representation', '1.4.2':'Data structures',
+      '1.4.3':'Boolean algebra', '1.5.1':'Computing-related legislation',
+      '1.5.2':'Moral and ethical issues',
+      '2.1.1':'Thinking abstractly', '2.1.2':'Thinking ahead',
+      '2.1.3':'Thinking procedurally', '2.1.4':'Thinking logically',
+      '2.1.5':'Thinking concurrently', '2.2.1':'Programming techniques',
+      '2.2.2':'Computational methods', '2.3.1':'Algorithms'
     };
     // Approximate first teaching, based on the RHSC J277 2026–27 SoL (Y10 lessons 001–095).
     // H446 1.4.1 is provisional until the Year 12 SoL has been mapped here.
@@ -560,7 +584,8 @@
           const tag = document.createElement('span');
           tag.className = 'bundle-type-tag' + (item.type === 'practice' ? ' revision' : '');
           tag.textContent = item.type === 'skill' ? 'Skill' : 'MCQ';
-          const label = document.createElement('span'); label.textContent = item.title;
+          const label = document.createElement('span');
+          label.textContent = item.title + (item.tracking === 'link-only' ? ' · link only' : '');
           const remove = document.createElement('button');
           remove.type = 'button'; remove.className = 'bundle-remove';
           remove.textContent = '×'; remove.setAttribute('aria-label', `Remove ${item.title}`);
@@ -621,8 +646,9 @@
             .sort((a,b) => a.localeCompare(b, undefined, { numeric:true }));
           for (const [pointIndex, pointCode] of points.entries()) {
             const pointItems = topicItems.filter(item => bundleSpecCode(item) === pointCode);
-            const pointName = course === 'h446' && pointCode === '1.4.1'
-              ? 'Data types and representation' : (BUNDLE_SPEC_TITLES[pointCode] || 'Specification activities');
+            const pointName = course === 'h446'
+              ? (BUNDLE_H446_SPEC_TITLES[pointCode] || 'Specification activities')
+              : (BUNDLE_SPEC_TITLES[pointCode] || 'Specification activities');
             const pointNode = addBranch(topicNode, 'bundle-spec', `${pointCode} · ${pointName}`, pointItems.length, pointIndex === 0);
             for (const type of ['skill','practice']) {
               const matching = pointItems.filter(item => item.type === type);
@@ -646,7 +672,8 @@
                 const content = document.createElement('span');
                 content.append(document.createTextNode(item.title));
                 const meta = document.createElement('small');
-                meta.textContent = (item.spec || pointCode) + (item.subtitle ? ' · ' + item.subtitle : '');
+                meta.textContent = (item.spec || pointCode) + (item.subtitle ? ' · ' + item.subtitle : '') +
+                  (item.tracking === 'link-only' ? ' · Opens activity; no automatic score' : '');
                 content.append(meta); label.append(input, content); pointNode.append(label);
               }
             }
@@ -690,7 +717,9 @@
         : `Homework: restricted independent-work hours, deadline ${dueDate}.`;
       const list = $('bundle-review-items'); list.replaceChildren();
       for (const item of items) {
-        const row = document.createElement('li'); row.textContent = item.title; list.append(row);
+        const row = document.createElement('li');
+        row.textContent = item.title + (item.tracking === 'link-only' ? ' · Link only: completion is not tracked automatically' : '');
+        list.append(row);
       }
       $('bundle-confirm').checked = false;
       $('bundle-publish').disabled = true;

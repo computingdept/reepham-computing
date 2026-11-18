@@ -359,6 +359,41 @@ test('one individual classwork set groups Skill and Revision Practice without wi
   } finally { globalThis.Date = OriginalDate; }
 });
 
+test('a combined H446 work-set saves regular revision quiz scores through student login', async () => {
+  const db = new FakeD1();
+  const [code] = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y13', count: 1 }, { teacher: true })).data.codes;
+  const createdLogin = await call(db, '/v1/teacher/logins', 'POST', { logins: [
+    { username:'topicwaffle', code, password:'1234', expectedCohort:'Y13' }
+  ] }, { teacher:true });
+  assert.equal(createdLogin.status, 201);
+  const set = await call(db, '/v1/teacher/work-sets', 'POST', {
+    cohort:'Y13', scope:'cohort', title:'Two A Level revision topics and a Skill', kind:'classwork',
+    items: [
+      { itemId:'h446-practice-11-components', level:'' },
+      { itemId:'h446-practice-23-big-o', level:'' },
+      { itemId:'h446-skill-p2-bigo', level:'both' }
+    ]
+  }, { teacher:true });
+  assert.equal(set.status, 201, JSON.stringify(set.data));
+  const session = (await call(db, '/v1/login', 'POST', { username:'topicwaffle', password:'1234' })).data.session;
+  const work = await call(db, '/v1/work', 'POST', {}, { bearer:session });
+  assert.equal(work.status, 200);
+  assert.deepEqual(work.data.work.map(row => row.itemId).sort(),
+    ['h446-practice-11-components','h446-practice-23-big-o','h446-skill-p2-bigo']);
+  for (const [itemId,score] of [['h446-practice-11-components',80],['h446-practice-23-big-o',60]]) {
+    const saved = await call(db, '/v1/attempts', 'POST', {
+      assignmentKey:`13|${itemId}|`, attemptId:crypto.randomUUID(), score, level:'', source:'practice'
+    }, { bearer:session });
+    assert.equal(saved.status, 200, JSON.stringify(saved.data));
+    assert.equal(saved.data.saved, true);
+  }
+  const updated = await call(db, '/v1/work', 'POST', {}, { bearer:session });
+  assert.equal(updated.data.work.find(row => row.itemId === 'h446-practice-11-components').bestScore, 80);
+  assert.equal(updated.data.work.find(row => row.itemId === 'h446-practice-23-big-o').bestScore, 60);
+  assert.equal(updated.data.work.find(row => row.itemId === 'h446-skill-p2-bigo').attempts, 0,
+    'Link-only Skill is assigned but never claims an automatic score');
+});
+
 test('homework sets require a deadline and do not bypass independent study hours', async () => {
   const OriginalDate = globalThis.Date;
   let now = new OriginalDate('2026-11-18T10:00:00Z');

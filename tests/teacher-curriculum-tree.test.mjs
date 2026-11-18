@@ -106,11 +106,27 @@ test('tree groups every activity once under its paper, topic and specification p
   assert.ok(branches.filter(node => node.className === 'bundle-spec').length >= 25);
 });
 
-test('Year 11 and Year 13 can see the full available catalogue', () => {
+test('Year 11 and Year 13 can see the full available course catalogue', () => {
   const { render } = harness();
   assert.equal(render('Y11', 'all').leaves.length, 95);
-  assert.equal(render('Y13', 'all').leaves.length, 2);
-  assert.equal(render('Y12', '2').leaves.length, 2);
+  assert.equal(render('Y13', 'all').leaves.length, 173);
+  const autumn2 = render('Y12', '2');
+  assert.ok(autumn2.leaves.length > 2 && autumn2.leaves.length < 173);
+  assert.match(autumn2.text, /Conversion grid/);
+  assert.doesNotMatch(autumn2.text, /Shortest Paths Lab/);
+});
+
+test('H446 branches use A Level headings and show score-reporting limits', () => {
+  const { render } = harness();
+  const { leaves, branches, text } = render('Y13', 'all');
+  assert.equal(leaves.length, 173);
+  assert.equal(branches.filter(node => node.className === 'bundle-paper').length, 2);
+  assert.equal(branches.filter(node => node.className === 'bundle-topic').length, 8);
+  assert.match(text, /1\.3 · Exchanging Data/);
+  assert.match(text, /1\.4\.2 · Data structures/);
+  assert.doesNotMatch(text, /1\.4\.2 · Network security measures/);
+  assert.match(text, /no automatic score/);
+  assert.match(text, /score saved on completion/);
 });
 
 test('later-term choices are removed if the teacher narrows the half-term', () => {
