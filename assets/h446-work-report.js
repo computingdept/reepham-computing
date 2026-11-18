@@ -1,15 +1,18 @@
-// Optional bridge from existing H446 MCQ results to assigned My Work.
+// Optional bridge from existing J277/H446 MCQ results to assigned My Work.
 // Does nothing for ordinary (unassigned) revision practice.
 (() => {
   'use strict';
   const key = new URLSearchParams(location.search).get('workKey') || '';
-  const match = /^(12|13)\|(h446-practice-[a-z0-9-]+)\|$/.exec(key);
-  if (!match || !/^\/revision\/h446\/section-[0-9-]+\/index\.html$/.test(location.pathname)) return;
-  const topicId = match[2].slice('h446-practice-'.length);
+  const match = /^(10|11|12|13)\|((?:j277|h446)-practice-[a-z0-9-]+)\|$/.exec(key);
+  const course = Number(match?.[1]) <= 11 ? 'j277' : 'h446';
+  if (!match || !match[2].startsWith(course + '-practice-') ||
+      !new RegExp(`^/revision/${course}/section-[0-9-]+/index\\.html$`).test(location.pathname)) return;
+  const topicId = match[2].slice((course + '-practice-').length);
   let session = '';
   try { session = sessionStorage.getItem('rhs-my-work-learner-session-v1') || ''; } catch { /* Browser storage might be disabled. */ }
   const ready = /^[A-Za-z0-9_-]{43}$/.test(session) && !!globalThis.crypto?.randomUUID;
   const isQuestionPilot = topicId === '141-a';
+  const isAssigned = id => ready && id === topicId && location.hash.split('/').at(-1) === id;
 
   const note = document.querySelector('.save-info .save-note');
   if (note) note.textContent = ready
@@ -28,8 +31,7 @@
   document.getElementById('results')?.append(status);
 
   function reportCompletedQuiz(id, correct, total) {
-    if (isQuestionPilot || !ready || id !== topicId ||
-        location.hash.split('/').at(-1) !== id ||
+    if (isQuestionPilot || !isAssigned(id) ||
         !Number.isInteger(correct) || !Number.isInteger(total) || total < 1 || correct < 0 || correct > total) {
       if (!ready && status) status.textContent = 'Your result is on this browser only. Sign in through My Work to record it.';
       return false;
@@ -50,5 +52,5 @@
     return true;
   }
 
-  window.RHSCMyWorkH446 = Object.freeze({ reportCompletedQuiz });
+  window.RHSCMyWorkH446 = Object.freeze({ reportCompletedQuiz, isAssigned });
 })();

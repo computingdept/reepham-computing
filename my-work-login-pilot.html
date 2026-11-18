@@ -30,6 +30,16 @@
     .package{background:#fff;border:1.5px solid var(--line);padding:18px;border-radius:15px;margin:0 0 16px}
     .package>h2{margin:5px 0 4px}.package>.note{margin:0 0 14px}
     .package-items{display:grid;gap:10px}.package-items .card{background:var(--bg);border-color:var(--line)}
+    .pilot-package{padding:23px}.pilot-tabs{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:17px 0}
+    .pilot-tab{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1.5px solid var(--line);background:white;border-radius:12px;padding:12px 15px;color:var(--ink);font-weight:850}
+    .pilot-tab[aria-selected="true"]{border-color:var(--green);background:#eaf5ee;color:var(--green)}
+    .pilot-topic{border:1px solid var(--line);border-radius:12px;background:#fff;margin:9px 0;overflow:hidden}
+    .pilot-topic>summary{cursor:pointer;background:var(--pale);padding:12px 15px;font-weight:850;list-style:revert}
+    .pilot-task{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:11px 14px;border-top:1px solid #eaf0ec}
+    .pilot-task>div{flex:1;min-width:0}.pilot-task strong{display:block;font-size:14px}.pilot-task small{display:block;color:var(--muted);font-size:12px}
+    .pilot-open{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--green);color:var(--green);background:#fff;border-radius:9px;padding:6px 12px;min-height:37px;font-size:13px;font-weight:800;text-decoration:none}
+    .pilot-open:hover{background:var(--pale)}.pilot-note{background:#f3f8f4;border:1px solid #dce9df;border-radius:12px;padding:11px 13px;font-size:13px;color:#486758}
+    [hidden]{display:none!important}
     .earlier-work{margin:24px 0 12px;font-size:17px}
     footer{text-align:center;color:var(--muted);font-size:12px;padding:16px}.skip{position:absolute;left:-10000px}.skip:focus{left:12px;top:12px;z-index:10;background:white;padding:12px}
     @media(max-width:600px){.bar{padding:9px 12px}.back{font-size:12px}main{padding:20px 12px 45px}.panel{padding:18px}.entry{margin:10px auto}.card-top{flex-direction:column}.actions .btn{flex:1}}
@@ -87,7 +97,7 @@
             <button class="btn" id="submit" type="submit">Sign in</button>
             <p class="error" id="error" role="alert" ${message ? '' : 'hidden'}>${escapeHtml(message)}</p>
           </form>
-          <div class="notice"><strong>Classwork:</strong> open at any time of day for seven days after your teacher assigns it.<br><strong>Homework:</strong> Mon–Fri 12:30–13:20 or after 15:30; weekends any time, until the teacher's deadline (UK time).</div>
+          <div class="notice"><strong>Classwork:</strong> open at any time of day, normally for seven days. Special one-day pilots finish on the advertised date.<br><strong>Homework:</strong> Mon–Fri 12:30–13:20 or after 15:30; weekends any time, until the teacher's deadline (UK time).</div>
         </section>`;
       document.getElementById('signIn').addEventListener('submit', async event => {
         event.preventDefault();
@@ -114,6 +124,7 @@
       // An activity reference only. The Worker checks the real learner session
       // and assignment before accepting a recorded attempt.
       if ((['j277-skill-p1-convert','h446-skill-p1-convert'].includes(item.id) ||
+          item.id.startsWith('j277-practice-') ||
           (item.id.startsWith('h446-practice-') && ['completion','question'].includes(item.tracking))) && assignmentKey)
         link.searchParams.set('workKey', assignmentKey);
       return link.pathname + link.search + link.hash;
@@ -152,7 +163,7 @@
         ? 'You can open this Skill from My Work. Automatic score reporting has not yet been connected for this tool.'
         : completionTracked
           ? (count ? `${count} completed quiz${count === 1 ? '' : 'zes'} recorded · best ${Number(row.bestScore)}%. Each quiz is marked from first-checked answers.`
-            : 'Complete the five-question quiz to save your first-check score to My Work. You can retry afterwards.')
+          : 'Complete all ten questions to save your first-check score to My Work. You can retry afterwards.')
         : isConversionPilot
         ? (questions ? `${questions} question${questions === 1 ? '' : 's'} attempted · ${correct} correct on the first check. Easy: ${Number(row.easyCorrect || 0)}/${Number(row.easyQuestions || 0)} · Medium: ${Number(row.mediumCorrect || 0)}/${Number(row.mediumQuestions || 0)}.${count ? ` ${count} earlier completed round${count === 1 ? '' : 's'} also recorded.` : ''}`
           : count ? `${count} earlier completed 10-question round${count === 1 ? '' : 's'}. New questions will save individually.`
@@ -167,6 +178,46 @@
         <div class="actions">${links.join('') || '<span class="note">Your teacher will provide this activity link.</span>'}</div></article>`;
     }
 
+    function pilotLibrary(set) {
+      const panels = ['skill','practice'].map(type => {
+        const rows = set.activities.filter(row => row.itemId.includes('-' + type + '-'));
+        const byTopic = new Map();
+        for (const row of rows) {
+          const item = catalog.find(entry => entry.id === row.itemId);
+          const code = String(item?.spec || '').match(/^\d+\.\d+/)?.[0] || 'Other';
+          if (!byTopic.has(code)) byTopic.set(code, []);
+          byTopic.get(code).push({ row,item });
+        }
+        const topics = [...byTopic.entries()].sort((a,b)=>a[0].localeCompare(b[0],undefined,{numeric:true}));
+        return `<div class="pilot-panel" data-pilot-kind="${type}" ${type === 'practice' ? 'hidden' : ''}>
+          ${topics.map(([code,entries],index)=>`<details class="pilot-topic" ${index === 0 ? 'open' : ''}>
+            <summary>${escapeHtml(code)} · ${entries.length} ${type === 'skill' ? 'Skills' : 'revision topics'}</summary>
+            ${entries.map(({row,item})=>{
+              const href = itemLink(item, null, row.assignmentKey);
+              const attempts = Number(row.attempts || 0);
+              const questions = Number(row.questionsAttempted || 0);
+              const note = item?.tracking === 'link-only' ? 'Practice available · scoring not connected'
+                : questions ? `${questions} checked answer${questions === 1 ? '' : 's'} saved · ${Number(row.firstTryCorrect || 0)} correct first try`
+                : attempts ? `Recorded practice · ${Number(row.bestScore || 0)}% best quiz/round`
+                  : type === 'practice' ? '10 questions · not started' : 'Not started';
+              return `<div class="pilot-task"><div><strong>${escapeHtml(item?.title || row.itemId)}</strong>
+                <small>${escapeHtml(item?.spec || code)} · ${escapeHtml(note)}</small></div>
+                ${href ? `<a class="pilot-open" href="${escapeHtml(href)}">Open →</a>` : '<span class="note">Link unavailable</span>'}</div>`;
+            }).join('')}
+          </details>`).join('')}
+        </div>`;
+      }).join('');
+      const skills = set.activities.filter(row=>row.itemId.includes('-skill-')).length;
+      const revision = set.activities.length - skills;
+      return `<section class="package pilot-package"><span class="meta">One-day trial · Thursday 19 November 2026</span>
+        <h2>${escapeHtml(set.title)}</h2><p class="note">Try one practical Skill and one 10-question revision topic, then explore anything else you find useful.</p>
+        <div class="pilot-tabs" role="tablist" aria-label="Pilot activity lists">
+          <button type="button" class="pilot-tab" data-pilot-tab="skill" role="tab" aria-selected="true">Skills <span>${skills}</span></button>
+          <button type="button" class="pilot-tab" data-pilot-tab="practice" role="tab" aria-selected="false">Revision MCQs <span>${revision}</span></button>
+        </div><p class="pilot-note">You can switch lists at any time. Correct answers and scores appear in My Work where automatic scoring is connected.</p>
+        ${panels}</section>`;
+    }
+
     function combinedAssignments(rows) {
       const groups = new Map();
       const older = [];
@@ -178,6 +229,9 @@
       }
       let html = '';
       for (const set of groups.values()) {
+        if (/^Pilot Year (11|12|13)$/.test(set.title) && set.dueDate === '2026-11-19') {
+          html += pilotLibrary(set); continue;
+        }
         const rule = set.kind === 'classwork' ? 'Classwork · open at any hour during the seven-day assignment'
           : 'Homework · independent study hours' + (set.dueDate ? ' · due ' + set.dueDate : '');
         html += `<section class="package"><span class="meta">${escapeHtml(rule)}</span>
@@ -207,7 +261,7 @@
           <div class="summary"><span class="count"><strong>${combined.assignmentCount}</strong> assignment${combined.assignmentCount === 1 ? '' : 's'}</span><span class="count"><strong>${data.work.length}</strong> activities</span><span class="count"><strong>${recorded}</strong> with recorded practice</span></div>
           <section class="cards" aria-label="Assigned work">${data.work.length ? combined.html : `<div class="panel empty"><h2>No available work</h2><p>${escapeHtml(data.notice || 'Your login is ready. Your teacher will add your activities.')}</p></div>`}</section>
           <div class="actions"><button class="btn secondary" id="refresh">Refresh My Work</button></div>
-           <p class="note">H446 revision MCQs save scores on quiz completion; H446 1.4.1(a) and the Conversion Grid save each checked answer. Other Skills are available as practice links until their marking is connected.</p>`;
+           <p class="note">Assigned J277 and H446 revision MCQs contain ten questions and save scores on completion; H446 1.4.1(a) and the Conversion Grid save each checked answer. Other Skills are practice links until their marking is connected.</p>`;
         document.getElementById('signOut').addEventListener('click', signOut);
         document.getElementById('refresh').addEventListener('click', showAssigned);
       } catch (error) {
@@ -218,6 +272,17 @@
         document.getElementById('signOut').addEventListener('click', signOut);
       }
     }
+
+    app.addEventListener('click', event => {
+      const button = event.target.closest('[data-pilot-tab]');
+      if (!button) return;
+      const packageNode = button.closest('.pilot-package');
+      const type = button.dataset.pilotTab;
+      for (const tab of packageNode.querySelectorAll('[data-pilot-tab]'))
+        tab.setAttribute('aria-selected', String(tab === button));
+      for (const panel of packageNode.querySelectorAll('[data-pilot-kind]'))
+        panel.hidden = panel.dataset.pilotKind !== type;
+    });
 
     (async () => { await loadCatalog(); if (session) await showAssigned(); else showEntry(); })();
   })();

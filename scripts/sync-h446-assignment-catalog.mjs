@@ -62,7 +62,7 @@ for (const [section, group] of Object.entries(sections)) {
     const isPilot = id === 'h446-practice-141-a';
     revision.push({ id, type: 'practice', paper: section.startsWith('1-') ? 1 : 2,
       group, title: topic.title, spec: topic.spec,
-      subtitle: isPilot ? '10-question MCQ · saved as answers are checked' : '5-question MCQ · score saved on completion',
+      subtitle: isPilot ? '10-question MCQ · saved as answers are checked' : '10 questions when assigned · score saved on completion',
       url: `/revision/h446/section-${section}/index.html#${topic.section}/${topic.id}`,
       levels: [], tracking: isPilot ? 'question' : 'completion',
       ...(isPilot ? { workType: 'classwork' } : {})

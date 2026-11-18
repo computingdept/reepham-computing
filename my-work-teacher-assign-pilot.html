@@ -120,7 +120,22 @@
     .bundle-stage .target-note{margin:0;line-height:1.45}
     .bundle-browser-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
     .bundle-browser-heading strong{font-size:14px;letter-spacing:-.015em}
-    .bundle-choices{max-height:min(66vh,720px);overflow:auto;border:1px solid #e3ebe5;border-radius:17px;padding:10px;background:#f9fbf9;margin-top:9px;scrollbar-color:#c9d9ce transparent;scrollbar-width:thin}
+    .bundle-choices{border:1px solid #e3ebe5;border-radius:17px;padding:9px;background:#f9fbf9;margin-top:9px}
+    .bundle-kind-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-bottom:15px}
+    .bundle-kind-tab{display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;background:#fff;color:var(--dark);border:1.5px solid #dbe9df;border-radius:13px;padding:14px 15px;font-weight:850;min-height:62px}
+    .bundle-kind-tab[aria-selected="true"]{border-color:var(--green);background:#eaf5ee;box-shadow:0 0 0 2px #e7f4ea inset}
+    .bundle-kind-tab .number{background:#eef3f0;color:#526f5b;border-radius:999px;padding:3px 9px;font-size:12px}
+    .bundle-kind-tab[aria-selected="true"] .number{background:#d5eadc;color:#006347}
+    .bundle-paper-heading{display:flex;align-items:center;justify-content:space-between;gap:9px;color:var(--green);font-weight:850;padding:12px 11px 6px;font-size:14px}
+    .bundle-paper-heading span{color:#668474;font-size:12px}
+    .bundle-spec-group{padding:0 8px 7px;border-top:1px solid #e8efe9}
+    .bundle-spec-heading{font-size:13px;font-weight:850;color:#536b5b;margin:12px 9px 6px}
+    .bundle-activity-row{border:1px solid transparent;border-radius:12px;margin:4px 1px;background:#fff}
+    .bundle-activity-row:has(input:checked){border-color:#9ecbab;background:#f0f8f2}
+    .bundle-activity-row .bundle-choice{margin:0;border:0}
+    .bundle-add-related{display:block;margin:0 10px 10px 42px;padding:5px 9px;border:1px solid #b8d6c1;border-radius:8px;background:#f4faf5;color:var(--green);font-size:12px;font-weight:800}
+    .bundle-add-related:hover{background:#e4f3e8}
+    .bundle-kind-note{color:var(--muted);font-size:13px;margin:0 0 10px}
     .bundle-tree-actions{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
     .bundle-tree-actions button{border:1px solid #dbe7de;background:white;color:var(--green);font-weight:750;font-size:12px;padding:5px 10px;border-radius:9px;min-height:32px}
     .bundle-tree-actions button:hover{background:var(--pale)}
@@ -165,7 +180,7 @@
     .legacy-tools>summary{cursor:pointer;font-weight:800;color:var(--muted)}
     [hidden]{display:none!important}
     footer{max-width:1100px;margin:0 auto;padding:0 20px 28px;font-size:13px;color:var(--muted)}
-    @media(max-width:760px){.work-grid,#bundle-workflow{grid-template-columns:1fr}.fields,.scope-options{grid-template-columns:1fr}.panel,#bundle-workflow .bundle-builder,#bundle-workflow .bundle-review-panel{padding:19px}.bar{padding:11px 15px}main{padding:24px 15px 50px}#bundle-workflow .bundle-review-panel{position:static}.bundle-stage{grid-template-columns:1fr}.bundle-choices{max-height:none;overflow:visible}.bundle-browser-heading{align-items:flex-start;flex-wrap:wrap}}
+    @media(max-width:760px){.work-grid,#bundle-workflow{grid-template-columns:1fr}.fields,.scope-options{grid-template-columns:1fr}.panel,#bundle-workflow .bundle-builder,#bundle-workflow .bundle-review-panel{padding:19px}.bar{padding:11px 15px}main{padding:24px 15px 50px}#bundle-workflow .bundle-review-panel{position:static}.bundle-stage{grid-template-columns:1fr}.bundle-browser-heading{align-items:flex-start;flex-wrap:wrap}}
     @media(prefers-reduced-motion:reduce){.button,.bundle-choice,.bundle-paper>summary,.bundle-topic>summary,.bundle-spec>summary{transition:none}}
   </style>
 </head>
@@ -222,13 +237,18 @@
           <p id="bundle-time-note" class="notice"><strong>Classwork:</strong> no time-of-day limits. Open immediately for seven days.</p>
           </div>
           <div class="bundle-library">
-          <div class="bundle-library-heading"><div><p class="bundle-kicker">Your curriculum library</p><h3>Browse the specification</h3><p>From OCR paper to topic to skill. No searching needed.</p></div></div>
+          <div class="bundle-library-heading"><div><p class="bundle-kicker">Your curriculum library</p><h3>Choose Skills and Revision</h3><p>Two simple lists. Add either or both to the same assignment.</p></div></div>
           <div class="bundle-stage"><div class="field"><label for="bundle-half-term">Content taught through</label><select id="bundle-half-term">
             <option value="1">Autumn 1</option><option value="2" selected>Autumn 2</option>
             <option value="3">Spring 1</option><option value="4">Spring 2</option>
             <option value="5">Summer 1</option><option value="6">Summer 2</option>
             <option value="all">All course topics</option>
           </select></div><p id="bundle-filter-note" class="target-note" aria-live="polite"></p></div>
+          <div class="bundle-kind-tabs" role="tablist" aria-label="Choose activity type">
+            <button type="button" class="bundle-kind-tab" id="bundle-skills-tab" role="tab" aria-selected="true" aria-controls="bundle-choices">Skills <span class="number" id="bundle-skills-total">0</span></button>
+            <button type="button" class="bundle-kind-tab" id="bundle-revision-tab" role="tab" aria-selected="false" aria-controls="bundle-choices">Revision MCQs <span class="number" id="bundle-revision-total">0</span></button>
+          </div>
+          <p class="bundle-kind-note" id="bundle-kind-note">Choose a practical Skill. Related revision can be added with one click.</p>
           <div class="bundle-browser-heading"><strong>Activities by specification point</strong><p class="bundle-summary" id="bundle-count" aria-live="polite">0 activities selected</p></div>
           <div class="bundle-tree-actions"><button type="button" id="bundle-expand">Expand all</button><button type="button" id="bundle-collapse">Collapse all</button></div>
           <div id="bundle-choices" class="bundle-choices" role="group" aria-label="Select by paper and OCR specification point"></div>
@@ -439,6 +459,8 @@
     const bundleSelected = new Set();
     let bundlePending = null;
     const BUNDLE_HALF_TERMS = ['Autumn 1','Autumn 2','Spring 1','Spring 2','Summer 1','Summer 2'];
+    let bundleKind = 'skill';
+    let bundleRelationships = {};
     const BUNDLE_TOPICS = {
       j277: {
         '1.1':'Systems Architecture', '1.2':'Memory and Storage', '1.3':'Computer Networks',
@@ -610,6 +632,7 @@
       const stage = $('bundle-half-term').value;
       const courseActivities = catalog.filter(item => item.id.startsWith(course + '-'));
       const candidates = courseActivities.filter(item => stage === 'all' || bundleFirstTaught(item) <= Number(stage));
+      const visible = candidates.filter(item => item.type === bundleKind);
       const available = new Set(candidates.map(item => item.id));
       let removed = 0;
       for (const id of bundleSelected) if (!available.has(id)) { bundleSelected.delete(id); removed++; }
@@ -617,11 +640,18 @@
       $('bundle-filter-note').textContent = `${year} · ${course.toUpperCase()} · ${candidates.length} of ${courseActivities.length} activities through ${period}. ` +
         (course === 'h446' ? 'Provisional half-term guide; only published tasks are shown.' : 'Cumulative SoL guide — adjust for what you have actually taught.') +
         (removed ? ` ${removed} out-of-range selection${removed === 1 ? ' was' : 's were'} removed.` : '');
+      $('bundle-skills-total').textContent = candidates.filter(item => item.type === 'skill').length;
+      $('bundle-revision-total').textContent = candidates.filter(item => item.type === 'practice').length;
+      $('bundle-skills-tab').setAttribute('aria-selected', String(bundleKind === 'skill'));
+      $('bundle-revision-tab').setAttribute('aria-selected', String(bundleKind === 'practice'));
+      $('bundle-kind-note').textContent = bundleKind === 'skill'
+        ? 'Choose practical Skills. Use “Add related revision” to add matching MCQs to the same assignment.'
+        : 'Choose 10-question revision tasks. Switch back to Skills without losing your selection.';
       const list = $('bundle-choices');
       list.replaceChildren();
-      const addBranch = (parent, className, title, total, open) => {
+      const addBranch = (parent, title, total, open) => {
         const details = document.createElement('details');
-        details.className = className; details.open = open;
+        details.className = 'bundle-topic'; details.open = open;
         const summary = document.createElement('summary');
         summary.append(document.createTextNode(title));
         const count = document.createElement('span');
@@ -630,34 +660,33 @@
         return details;
       };
       for (const paper of [1,2]) {
-        const paperItems = candidates.filter(item => item.paper === paper);
+        const paperItems = visible.filter(item => item.paper === paper);
         if (!paperItems.length) continue;
         const paperName = course === 'j277'
           ? (paper === 1 ? 'Computer Systems' : 'Computational Thinking, Algorithms and Programming')
           : (paper === 1 ? 'Computer Systems' : 'Algorithms and Programming');
-        const paperNode = addBranch(list, 'bundle-paper', `Paper ${paper} · ${paperName}`, paperItems.length, true);
+        const paperHeading = document.createElement('div'); paperHeading.className = 'bundle-paper-heading';
+        const paperTitle = document.createElement('strong'); paperTitle.textContent = `Paper ${paper} · ${paperName}`;
+        const paperTotal = document.createElement('span'); paperTotal.textContent = `${paperItems.length} available`;
+        paperHeading.append(paperTitle,paperTotal); list.append(paperHeading);
         const topics = [...new Set(paperItems.map(item => bundleSpecCode(item).split('.').slice(0,2).join('.')))]
           .sort((a,b) => a.localeCompare(b, undefined, { numeric:true }));
         for (const [topicIndex, topicCode] of topics.entries()) {
           const topicItems = paperItems.filter(item => bundleSpecCode(item).startsWith(topicCode));
           const topicName = BUNDLE_TOPICS[course][topicCode] || 'Other specification points';
-          const topicNode = addBranch(paperNode, 'bundle-topic', `${topicCode} · ${topicName}`, topicItems.length, topicIndex === 0);
+          const topicNode = addBranch(list, `${topicCode} · ${topicName}`, topicItems.length, topicIndex === 0);
           const points = [...new Set(topicItems.map(bundleSpecCode))]
             .sort((a,b) => a.localeCompare(b, undefined, { numeric:true }));
-          for (const [pointIndex, pointCode] of points.entries()) {
+          for (const pointCode of points) {
             const pointItems = topicItems.filter(item => bundleSpecCode(item) === pointCode);
             const pointName = course === 'h446'
               ? (BUNDLE_H446_SPEC_TITLES[pointCode] || 'Specification activities')
               : (BUNDLE_SPEC_TITLES[pointCode] || 'Specification activities');
-            const pointNode = addBranch(topicNode, 'bundle-spec', `${pointCode} · ${pointName}`, pointItems.length, pointIndex === 0);
-            for (const type of ['skill','practice']) {
-              const matching = pointItems.filter(item => item.type === type);
-              if (!matching.length) continue;
-              const heading = document.createElement('h4');
-              heading.className = 'bundle-group';
-              heading.textContent = type === 'skill' ? 'Skills' : 'Revision Practice (MCQs)';
-              pointNode.append(heading);
-              for (const item of matching) {
+            const pointNode = document.createElement('div'); pointNode.className = 'bundle-spec-group';
+            const heading = document.createElement('h4'); heading.className = 'bundle-spec-heading';
+            heading.textContent = `${pointCode} · ${pointName}`; pointNode.append(heading); topicNode.append(pointNode);
+            for (const item of pointItems) {
+                const row = document.createElement('div'); row.className = 'bundle-activity-row';
                 const label = document.createElement('label');
                 label.className = 'bundle-choice';
                 const input = document.createElement('input');
@@ -674,13 +703,29 @@
                 const meta = document.createElement('small');
                 meta.textContent = (item.spec || pointCode) + (item.subtitle ? ' · ' + item.subtitle : '') +
                   (item.tracking === 'link-only' ? ' · Opens activity; no automatic score' : '');
-                content.append(meta); label.append(input, content); pointNode.append(label);
-              }
+                content.append(meta); label.append(input, content); row.append(label);
+                const related = (bundleRelationships[item.id] || []).filter(id => available.has(id) &&
+                  catalog.some(other => other.id === id && other.type === 'practice'));
+                if (bundleKind === 'skill' && related.length) {
+                  const add = document.createElement('button'); add.type = 'button';
+                  add.className = 'bundle-add-related';
+                  add.textContent = `+ Add ${related.length} related revision ${related.length === 1 ? 'task' : 'tasks'}`;
+                  add.setAttribute('aria-label', `Add related revision for ${item.title}`);
+                  add.addEventListener('click', () => {
+                    const extra = related.filter(id => !bundleSelected.has(id));
+                    if (bundleSelected.size + extra.length > 25)
+                      return status('bundle-status', 'Maximum 25 activities per assignment. Remove some before adding related revision.', 'error');
+                    for (const id of extra) bundleSelected.add(id);
+                    updateBundleSummary();
+                    status('bundle-status', `${extra.length} related revision ${extra.length === 1 ? 'task' : 'tasks'} added.`, 'good');
+                  }); row.append(add);
+                }
+                pointNode.append(row);
             }
           }
         }
       }
-      if (!candidates.length) list.textContent = 'No activities are listed for this half-term yet. Choose a later half-term or All course topics.';
+      if (!visible.length) list.textContent = `No ${bundleKind === 'skill' ? 'Skills' : 'revision tasks'} listed for this half-term. Choose a later half-term or All course topics.`;
       updateBundleSummary();
     }
 
@@ -1451,6 +1496,13 @@
           [1,2].includes(item.paper) && ['skill','practice'].includes(item.type)
         ) : [];
         if (!catalog.length) throw new Error('No activities were found.');
+        try {
+          const relationships = await fetch('/assets/assignment-relationships.json', { cache: 'no-cache' });
+          if (relationships.ok) {
+            const data = await relationships.json();
+            if (data && typeof data === 'object' && !Array.isArray(data)) bundleRelationships = data;
+          }
+        } catch (_) { /* Activities remain selectable if suggestions cannot load. */ }
         renderBundleChoices();
         renderGroups();
         renderActivities();
@@ -1481,6 +1533,8 @@
     for (const radio of document.querySelectorAll('input[name="bundle-scope"]')) radio.addEventListener('change', renderBundleRules);
     for (const field of ['bundle-title', 'bundle-pupil', 'bundle-date']) $(field).addEventListener('input', cancelBundleReview);
     $('bundle-half-term').addEventListener('change', renderBundleChoices);
+    $('bundle-skills-tab').addEventListener('click', () => { bundleKind = 'skill'; renderBundleChoices(); });
+    $('bundle-revision-tab').addEventListener('click', () => { bundleKind = 'practice'; renderBundleChoices(); });
     $('bundle-expand').addEventListener('click', () => {
       for (const node of $('bundle-choices').querySelectorAll('details')) node.open = true;
     });
