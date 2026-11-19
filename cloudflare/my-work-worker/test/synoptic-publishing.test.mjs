@@ -1,6 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { DatabaseSync } from 'node:sqlite';
+import { createHash } from 'node:crypto';
+import { mock } from 'node:test';
 import worker from '../src/index.mjs';
 import { buildSynopticCatalog, selectSynopticHomework, synopticBankPaths } from '../src/synoptic-selection.mjs';
 
@@ -116,4 +118,91 @@ test('rejects wrong year, mixed paper and duplicate IDs before writing', async (
   payload.papers.paper2[0] = payload.papers.paper1[0];
   assert.equal((await request(db, '/v1/teacher/synoptic/publish', payload)).status, 400);
   assert.equal(db.db.prepare("SELECT COUNT(*) AS n FROM sqlite_master WHERE type='table' AND name='synoptic_homework'").get().n, 0);
+});
+
+const STUDENT_SESSION = 'x'.repeat(43);
+function addStudent(db, cohort = 'Y13', code = 'P-ABCDEFGHJK') {
+  db.db.exec(`CREATE TABLE IF NOT EXISTS practice_codes (
+    code TEXT PRIMARY KEY, cohort TEXT NOT NULL, enabled INTEGER NOT NULL DEFAULT 1);
+    CREATE TABLE IF NOT EXISTS login_sessions (
+      token_hash TEXT PRIMARY KEY, code TEXT NOT NULL, expires_at INTEGER NOT NULL);`);
+  db.db.prepare('INSERT INTO practice_codes (code, cohort, enabled) VALUES (?, ?, 1)').run(code, cohort);
+  db.db.prepare('INSERT INTO login_sessions (token_hash,code,expires_at) VALUES (?,?,?)').run(
+    createHash('sha256').update(STUDENT_SESSION).digest('hex'), code, 2000000000);
+}
+
+test('student cannot see teacher reservations, even if the 20 questions are saved', async () => {
+  const db = new SqliteD1();
+  addStudent(db);
+  const saved = await request(db, '/v1/teacher/synoptic/publish', publishPayload('h446'));
+  const listing = await request(db, '/v1/learner/synoptic/assignments', {}, STUDENT_SESSION);
+  assert.equal(listing.status, 200);
+  assert.deepEqual(listing.body.assignments, []);
+  const details = await request(db, '/v1/learner/synoptic/homework', { id: saved.body.id }, STUDENT_SESSION);
+  assert.equal(details.status, 404);
+  assert.equal(db.db.prepare("SELECT COUNT(*) AS n FROM sqlite_master WHERE name='synoptic_releases'").get().n, 0);
+});
+
+test('release is explicit, and learners see exactly 10 questions per paper without unchecked answers', async () => {
+  const db = new SqliteD1();
+  addStudent(db);
+  const saved = await request(db, '/v1/teacher/synoptic/publish', publishPayload('h446'));
+  assert.equal((await request(db, '/v1/teacher/synoptic/release', { id: saved.body.id, confirm: false })).status, 400);
+  const released = await request(db, '/v1/teacher/synoptic/release', { id: saved.body.id, confirm: true });
+  assert.equal(released.status, 200);
+  assert.equal(released.body.newlyReleased, true);
+  assert.equal((await request(db, '/v1/teacher/synoptic/release', { id: saved.body.id, confirm: true })).body.newlyReleased, false);
+  const listing = await request(db, '/v1/learner/synoptic/assignments', {}, STUDENT_SESSION);
+  assert.equal(listing.body.assignments.length, 1);
+  assert.equal(listing.body.assignments[0].questionsChecked, 0);
+  // Weekend: new answers may be submitted at any hour, as per the existing policy.
+  mock.timers.enable({ apis: ['Date'], now: new Date('2026-11-21T12:00:00Z') });
+  try {
+    const details = await request(db, '/v1/learner/synoptic/homework', { id: saved.body.id }, STUDENT_SESSION);
+    assert.equal(details.status, 200);
+    assert.equal(details.body.available, true);
+    assert.equal(details.body.questions.length, 20);
+    assert.equal(details.body.questions.filter(q => q.paper === 'paper1').length, 10);
+    assert.equal(details.body.questions.filter(q => q.paper === 'paper2').length, 10);
+    assert.ok(details.body.questions.every(q => !Object.hasOwn(q, 'answer') && !Object.hasOwn(q, 'explanation')));
+    const first = details.body.questions[0];
+    const checked = await request(db, '/v1/learner/synoptic/check',
+      { id: saved.body.id, questionId: first.id, optionIndex: 0 }, STUDENT_SESSION);
+    assert.equal(checked.status, 200);
+    assert.equal(checked.body.firstTryCorrect, false);
+    assert.equal(checked.body.answer, 'B');
+    assert.equal(checked.body.saved, true);
+    const second = await request(db, '/v1/learner/synoptic/check',
+      { id: saved.body.id, questionId: first.id, optionIndex: 1 }, STUDENT_SESSION);
+    assert.equal(second.body.saved, false);
+    assert.equal(second.body.chosenIndex, 0);
+    assert.equal(second.body.firstTryCorrect, false);
+    const refreshed = await request(db, '/v1/learner/synoptic/homework', { id: saved.body.id }, STUDENT_SESSION);
+    assert.equal(refreshed.body.questions[0].checked, true);
+    assert.equal(refreshed.body.questions[0].chosenIndex, 0);
+    assert.equal(refreshed.body.questions[1].checked, false);
+    const score = await request(db, '/v1/learner/synoptic/assignments', {}, STUDENT_SESSION);
+    assert.equal(score.body.assignments[0].questionsChecked, 1);
+    assert.equal(score.body.assignments[0].firstTryCorrect, 0);
+  } finally { mock.timers.reset(); }
+});
+
+test('synoptic login, wrong cohort, time window and expired due date are enforced', async () => {
+  const db = new SqliteD1();
+  addStudent(db, 'Y11');
+  const saved = await request(db, '/v1/teacher/synoptic/publish', publishPayload('j277'));
+  assert.equal((await request(db, '/v1/learner/synoptic/assignments', {}, 'bad')).status, 401);
+  assert.equal((await request(db, '/v1/teacher/synoptic/release', { id: saved.body.id, confirm: true })).status, 200);
+  mock.timers.enable({ apis: ['Date'], now: new Date('2026-11-20T10:00:00Z') });
+  try {
+    const detail = await request(db, '/v1/learner/synoptic/homework', { id: saved.body.id }, STUDENT_SESSION);
+    assert.equal(detail.body.available, false);
+    assert.ok(detail.body.questions.every(q => q.locked === true));
+    const questionId = db.db.prepare('SELECT question_id FROM synoptic_questions WHERE homework_id = ? LIMIT 1').get(saved.body.id).question_id;
+    const check = await request(db, '/v1/learner/synoptic/check',
+      { id: saved.body.id, questionId, optionIndex: 1 }, STUDENT_SESSION);
+    assert.equal(check.status, 403);
+  } finally { mock.timers.reset(); }
+  db.db.prepare("UPDATE practice_codes SET cohort='Y13'").run();
+  assert.equal((await request(db, '/v1/learner/synoptic/homework', { id: saved.body.id }, STUDENT_SESSION)).status, 404);
 });

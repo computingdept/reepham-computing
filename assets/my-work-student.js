@@ -70,6 +70,18 @@
     return [...grouped.values()];
   }
 
+  function allSets(data) {
+    const sets = setsFromRows(data.work);
+    for (const row of data.synoptic || []) {
+      if (!row || !['Y11','Y13'].includes(data.cohort)) continue;
+      sets.push({id:row.id,title:row.title,kind:'homework',synoptic:true,
+        createdAt:row.createdAt,dueDate:row.dueDate,available:row.available,
+        questionsChecked:Number(row.questionsChecked || 0),firstTryCorrect:Number(row.firstTryCorrect || 0),
+        activities:[]});
+    }
+    return sets;
+  }
+
   function recorded(row) {
     const item = catalog.get(row.itemId);
     const rounds = Number(row.attempts || 0);
@@ -85,6 +97,10 @@
   }
 
   function progress(set) {
+    if (set.synoptic) {
+      const n = Math.min(20, Math.max(0,set.questionsChecked));
+      return {complete:n,started:n,total:20,untracked:0,percent:Math.round(n * 5)};
+    }
     const total = set.activities.length;
     let complete = 0, started = 0, untracked = 0;
     for (const row of set.activities) {
@@ -169,10 +185,12 @@
     const state = progress(set);
     const finished = state.total && state.complete === state.total;
     const label = !set.available ? 'Details' : finished ? 'Review' : state.started ? 'Continue' : 'Start';
-    const href = set.available ? nextActivity(set) : null;
-    const dest = href || '/my-work-progress.html?type=homework&assignment=' + encodeURIComponent(set.id);
+    const href = set.available && !set.synoptic ? nextActivity(set) : null;
+    const dest = set.synoptic ? '/synoptic-homework.html?id=' + encodeURIComponent(set.id) :
+      href || '/my-work-progress.html?type=homework&assignment=' + encodeURIComponent(set.id);
     const due = set.dueDate ? 'Due ' + displayDate(set.dueDate) : 'Homework';
-    const detail = state.percent === null ? 'No recorded work' :
+    const detail = set.synoptic ? `${state.percent}% of 20 questions checked · ${set.firstTryCorrect} correct first time` :
+      state.percent === null ? 'No recorded work' :
       state.untracked ? state.percent + '% recorded · some Skills untracked' :
         state.percent + '% complete';
     return `<a class="homework-row" href="${escapeHtml(dest)}">
@@ -188,7 +206,7 @@
   }
 
   function dashboard(data) {
-    const sets = setsFromRows(data.work);
+    const sets = allSets(data);
     const homework = sortedHomeworks(sets);
     const classwork = sets.filter(set => set.kind === 'classwork');
     app.innerHTML = `<div class="gauge-grid" aria-label="Your recorded assignment completion">
@@ -226,6 +244,9 @@
     const note = set.kind === 'homework' && set.dueDate ? 'Due ' + displayDate(set.dueDate) :
       'Classwork assignment';
     const completeText = state.total ? `${state.complete} of ${state.total} activities with recorded completion` : 'No activities';
+    if (set.synoptic) return `<div class="detail-card"><div class="activity-item" style="padding:16px 18px">
+      <div><strong>${escapeHtml(set.title)}</strong><small>Due ${escapeHtml(displayDate(set.dueDate))} · ${state.complete}/20 checked · ${set.firstTryCorrect} correct first time</small></div>
+      <a class="open-link" href="/synoptic-homework.html?id=${encodeURIComponent(set.id)}">Open →</a></div></div>`;
     return `<details class="detail-card" id="assignment-${escapeHtml(set.id)}" ${selected === set.id ? 'open' : ''}>
       <summary><span><h2>${escapeHtml(set.title)}</h2><small>${escapeHtml(note)} · ${completeText}</small></span>
         <span class="detail-chevron" aria-hidden="true">›</span></summary>
@@ -237,7 +258,7 @@
   }
 
   function detailPage(data) {
-    const sets = setsFromRows(data.work).filter(set => set.kind === type);
+    const sets = allSets(data).filter(set => set.kind === type);
     sets.sort((a,b) => String(b.createdAt || '').localeCompare(String(a.createdAt || '')));
     const label = type === 'homework' ? 'Homework' : 'Classwork';
     const stats = overall(sets);
@@ -294,6 +315,15 @@
     try {
       const data = await overview();
       if (!/^Y(10|11|12|13)$/.test(data.cohort) || !Array.isArray(data.work)) throw Error('Unexpected response from My Work.');
+      if (['Y11','Y13'].includes(data.cohort)) {
+        try {
+          const extra = await request('/v1/learner/synoptic/assignments');
+          data.synoptic = Array.isArray(extra.assignments) ? extra.assignments : [];
+        } catch (error) {
+          if (error.status !== 404) throw error;
+          data.synoptic = [];
+        }
+      }
       if (page === 'progress') detailPage(data); else dashboard(data);
     } catch (error) {
       if ([401,404].includes(error.status)) { await signOut(); return; }

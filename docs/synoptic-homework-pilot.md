@@ -1,6 +1,6 @@
 # Synoptic Homework pilot — agreed design and release contract
 
-**Status:** Design baseline v0.3 · 19 November 2026 · **Teacher-only builder preview, selection engine and D1 publishing backend built; NOT a live student assignment feature**
+**Status:** Design baseline v0.4 · 19 November 2026 · **Student homework page and first-check API built for Year 13 and Year 11; no synoptic assignment released to pupils. Classroom QA is pending.**
 
 **Purpose:** One predictable, independently completed homework assignment that
 combines selected Skills, synoptic Paper 1 and Paper 2 retrieval, and useful
@@ -108,7 +108,8 @@ publishing previews were prepared at the same time.
 | 2,270 MCQs, options, explanations, spec/Skill tags | **GitHub** original `revision/{course}/section-*/bank.js` files. These remain the authoritative question-bank sources. |
 | Assignment title, due date, selected Skills and bank commit SHA | **Cloudflare D1**, new `synoptic_homework` table. |
 | Each assignment's 20 selected question IDs and frozen marking/feedback snapshots | **Cloudflare D1**, new `synoptic_questions` table. A cohort/question ID pair is unique. |
-| Each learner's first-checked answers, progress and scores | **Cloudflare D1** in an additive student-attempt schema for the next build stage; do not reuse legacy global activity attempts. |
+| Explicit pupil release status | **Cloudflare D1**, additive `synoptic_releases` table. A teacher-only reservation is not visible to learners until a separate confirmed release. |
+| Each learner's first-checked answers, progress and scores | **Cloudflare D1**, additive `synoptic_responses` table keyed by homework, anonymous practice code and question ID. No old pilot score is overwritten. |
 
 There is **no Cloudflare copy of the full question bank**. Saving the 20
 published question snapshots avoids breaking old homework when GitHub content
@@ -123,12 +124,26 @@ cause temporary query failures rather than silent question reuse. References:
 [D1 pricing](https://developers.cloudflare.com/d1/platform/pricing/),
 [Workers limits](https://developers.cloudflare.com/workers/platform/limits/).
 
-The current backend exposes **teacher-token-protected, unpublished** endpoints:
+The backend exposes **teacher-token-protected** endpoints:
 
 - `GET /v1/teacher/synoptic/used?cohort=Y13|Y11` (read-only used IDs).
 - `GET /v1/teacher/synoptic/assignments?cohort=Y13|Y11` (teacher audit ledger).
 - `POST /v1/teacher/synoptic/publish` (explicit `confirm:true`, validated
   10+10 snapshots, atomic 20-ID reservation). Existing tables remain untouched.
+- `POST /v1/teacher/synoptic/release` (separate explicit `confirm:true`, validates
+  exactly 10+10 frozen questions and future due date, opens that reservation to
+  its intended year group). **Do not call before sign-off.** No release button
+  is enabled on the teacher builder during this stage.
+
+The signed-in learner API exposes:
+
+- `POST /v1/learner/synoptic/assignments` — only separately released homework
+  for the authenticated year group; counts checked and first-time correct.
+- `POST /v1/learner/synoptic/homework` — same immutable Paper 1/Paper 2 items,
+  but no correct answers or explanations until that learner checks an answer.
+- `POST /v1/learner/synoptic/check` — server marks using the frozen snapshot,
+  inserts the first answer once, returns the originally saved response on repeat
+  submissions and respects homework hours and deadlines.
 
 The teacher review page is `/synoptic-homework-builder.html`, linked from the
 existing teacher assignment screen. It uses the existing activity catalogue
@@ -139,11 +154,22 @@ before saving the 20 immutable question snapshots. The teacher token remains
 in this page's memory, not in browser storage. Saving is labelled as a
 **teacher-only reservation, not a live pupil assignment**.
 
-**Not yet implemented:** student assignment cards, synoptic quiz answering,
-first-response marking, support links and progress reporting. Published backend
-records are not learner-visible until those stages are tested. The backend
-accepts teacher-authenticated snapshots and a GitHub commit identifier; an
-additional source-verification step should be evaluated before wider rollout.
+The learner page `/synoptic-homework.html` provides Paper 1 and Paper 2 with
+**ten progress marks**, immediate check-and-save, separate paper results,
+missed-question explanations and links from the existing revision-guide/lesson
+mapping scripts. Assigned Skills open in a separate tab so the pupil can
+return to the same homework without losing their place. My Work includes
+synoptic cards and checked-question progress **only for released assignments**;
+the 173-activity pilot stays excluded. A fictional, unsaved visual preview can
+be viewed at `/synoptic-homework.html?demo=1`.
+
+**Still needed before a pupil release:** authenticated end-to-end browser QA,
+particularly guide-link coverage, mobile usability, paper results and Skills
+return navigation; teacher reporting for these new results; and checking
+whether Skill completion can be recorded. Skills currently link to practice
+but are **not** silently counted as completed. The backend accepts frozen
+teacher-authenticated question snapshots and a GitHub commit identifier;
+stronger source-verification should be evaluated before wider rollout.
 
 ## Question-bank source and audit
 
@@ -172,9 +198,11 @@ question quality.** Teacher content QA remains a release gate.
   separate review/replace UI and regression tests are implemented. Real-browser
   teacher acceptance QA and a safe authenticated publishing check are pending.
 - [ ] **C. Year 13 student proof of concept**:
-  one assignment, simple navigation, checked-answer persistence and feedback.
+  Page, resume, per-question marking and feedback implemented and unit tested;
+  authenticated browser QA with a real reserved sample is still pending.
 - [ ] **D. Year 11 on the same engine**:
-  no separate duplicated code path; GCSE content and support links.
+  Shared path and GCSE source/guide integration implemented; verify live links
+  and classroom behaviour with a released test assignment before checking off.
 - [ ] **E. Teacher builder and reporting**:
   assign, due date, recorded per-question answers, completion and reflection.
 - [ ] **F. End-to-end classroom QA and controlled learner pilot**:
@@ -192,6 +220,10 @@ until stage F passes. Do not treat the existence of a preview as deployment.
       distinct Skills where possible; fails clearly if unused supply is short.
 - [x] D1 publication rejects reused IDs for the same cohort atomically and
       retains a question snapshot; an unpublished preview does not consume IDs.
+- [x] Separately released assignments are the only ones exposed to pupils;
+      reservations never leak in learner listings or detail routes.
+- [x] First checked response is saved once on the server, cannot be changed
+      on refresh/recheck, and unchecked mark schemes are not returned.
 - [ ] The teacher can review and replace selected items before assignment.
 - [ ] All pupils on one assignment see the same frozen 20 question IDs.
 - [ ] Reload, back navigation and a second device never silently redraw or
@@ -223,6 +255,8 @@ until stage F passes. Do not treat the existence of a preview as deployment.
 | 2026-11-19 | Never repeat a question across published homeworks for the same year group; distribute ten per paper across specification groups and Skills wherever unused supply permits. |
 | 2026-11-19 | Use database uniqueness and atomic publication as safeguards against two teachers assigning the same question; no learner-visible rollout until the full assignment and marking flow passes QA. |
 | 2026-11-19 | Add a separate teacher-only preview page; do not alter the existing teacher assign/review flows beyond one optional link. The 20-question save is clearly a reservation until student QA is complete. |
+| 2026-11-19 | Add a separate confirmed D1 release record before any reserved homework is learner-visible; do not expose a teacher release button until QA. |
+| 2026-11-19 | Build one responsive learner page for Year 13 and Year 11, integrate only released cards into My Work, and record the first checked MCQ answer without counting link-only Skills as completed. |
 
 **Future changes:** Add a dated decision here and update the audit/acceptance
 checks before modifying the shared engine. Do not quietly expand scope to

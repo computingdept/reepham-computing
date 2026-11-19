@@ -72,3 +72,21 @@ test('empty student dashboard does not invent results or display a 0% score', as
   assert.match(html,/No assignments yet/);
   assert.doesNotMatch(html,/NaN|Pilot Year/);
 });
+
+test('released synoptic homework appears in Year 13 My Work without resurrecting the pilot', async () => {
+  const app = { innerHTML:'',addEventListener() {} };
+  const work = [assignment('pilot-20261119-Y13','Pilot Year 13','homework','h446-practice-141-a')];
+  const fetch = async url => ({ ok:true,json:async () => String(url).includes('assignment-catalog') ? {items} :
+    String(url).includes('synoptic/assignments') ? {assignments:[{
+      id:'00000000-0000-0000-0000-000000000001',title:'H446 synoptic · Homework 1',
+      dueDate:'2026-11-26',createdAt:'2026-11-19',questionsChecked:7,firstTryCorrect:5,available:true
+    }]} : {cohort:'Y13',independentOpen:true,work} });
+  runInNewContext(script, {document:{body:{dataset:{page:'dashboard'}},getElementById:() => app},
+    sessionStorage:{getItem:()=> 'fictional-session'},fetch,
+    location:{search:'',origin:'https://rhsccs.org'},URL,URLSearchParams,console});
+  await new Promise(resolve => setTimeout(resolve,10));
+  assert.match(app.innerHTML,/H446 synoptic · Homework 1/);
+  assert.match(app.innerHTML,/35% of 20 questions checked/);
+  assert.match(app.innerHTML,/synoptic-homework\.html\?id=/);
+  assert.doesNotMatch(app.innerHTML,/Pilot Year 13/);
+});

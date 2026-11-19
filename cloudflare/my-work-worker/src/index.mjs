@@ -361,7 +361,7 @@ function missingWorkSets(error) {
 }
 
 function missingSynoptic(error) {
-  return /no such table: synoptic_(?:homework|questions)/i.test(String(error?.message || ''));
+  return /no such table: synoptic_(?:homework|questions|releases|responses)/i.test(String(error?.message || ''));
 }
 
 async function ensureSynopticTables(env) {
@@ -386,6 +386,128 @@ async function ensureSynopticTables(env) {
     UNIQUE (cohort, question_id)
   )`).run();
   await env.DB.prepare('CREATE INDEX IF NOT EXISTS synoptic_homework_by_year ON synoptic_homework(cohort, created_at)').run();
+}
+
+async function ensureSynopticLearnerTables(env) {
+  await ensureSynopticTables(env);
+  // An assignment saved by a teacher remains invisible to pupils until a
+  // separate explicit release. Existing teacher-only reservations stay safe.
+  await env.DB.prepare(`CREATE TABLE IF NOT EXISTS synoptic_releases (
+    homework_id TEXT PRIMARY KEY REFERENCES synoptic_homework(id),
+    released_at TEXT NOT NULL DEFAULT (datetime('now'))
+  )`).run();
+  await env.DB.prepare(`CREATE TABLE IF NOT EXISTS synoptic_responses (
+    homework_id TEXT NOT NULL REFERENCES synoptic_homework(id),
+    code TEXT NOT NULL REFERENCES practice_codes(code),
+    question_id TEXT NOT NULL,
+    option_index INTEGER NOT NULL CHECK (option_index BETWEEN 0 AND 3),
+    is_correct INTEGER NOT NULL CHECK (is_correct IN (0,1)),
+    checked_at TEXT NOT NULL DEFAULT (datetime('now')),
+    PRIMARY KEY (homework_id, code, question_id)
+  )`).run();
+  await env.DB.prepare('CREATE INDEX IF NOT EXISTS synoptic_responses_by_learner ON synoptic_responses(code, homework_id)').run();
+}
+
+async function synopticAssignmentsForLearner(env, student) {
+  try {
+    const rows = await env.DB.prepare(`SELECT h.id, h.title, h.due_date AS dueDate,
+      h.created_at AS createdAt, h.skill_ids_json AS skillIdsJson,
+      (SELECT COUNT(*) FROM synoptic_responses a
+        WHERE a.homework_id = h.id AND a.code = ?) AS questionsChecked,
+      (SELECT COUNT(*) FROM synoptic_responses a
+        WHERE a.homework_id = h.id AND a.code = ? AND a.is_correct = 1) AS firstTryCorrect
+      FROM synoptic_homework h JOIN synoptic_releases rel ON rel.homework_id = h.id
+      WHERE h.cohort = ? ORDER BY rel.released_at DESC, h.id DESC LIMIT 60`)
+      .bind(student.code, student.code, student.cohort).all();
+    return rows.results.map(row => ({
+      id: row.id, title: row.title, dueDate: row.dueDate, createdAt: row.createdAt,
+      skillIds: JSON.parse(row.skillIdsJson),
+      questionsChecked: Number(row.questionsChecked || 0),
+      firstTryCorrect: Number(row.firstTryCorrect || 0), questionTotal: 20,
+      available: row.dueDate >= ukToday() && isIndependentWorkTime()
+    }));
+  } catch (error) {
+    if (missingSynoptic(error)) return [];
+    throw error;
+  }
+}
+
+async function synopticLearnerDetails(env, student, id) {
+  const homework = await env.DB.prepare(`SELECT h.id, h.title, h.cohort,
+    h.due_date AS dueDate, h.skill_ids_json AS skillIdsJson
+    FROM synoptic_homework h JOIN synoptic_releases r ON r.homework_id = h.id
+    WHERE h.id = ? AND h.cohort = ?`).bind(id, student.cohort).first();
+  if (!homework) return null;
+  const available = homework.dueDate >= ukToday() && isIndependentWorkTime();
+  const questions = await env.DB.prepare(`SELECT q.paper, q.position, q.question_id AS questionId,
+    q.question_json AS questionJson, a.option_index AS optionIndex,
+    a.is_correct AS isCorrect, a.checked_at AS checkedAt
+    FROM synoptic_questions q LEFT JOIN synoptic_responses a
+      ON a.homework_id = q.homework_id AND a.question_id = q.question_id AND a.code = ?
+    WHERE q.homework_id = ? ORDER BY q.paper, q.position`)
+    .bind(student.code, id).all();
+  const items = questions.results.map(row => {
+    const saved = row.optionIndex !== null && row.optionIndex !== undefined;
+    // After closing time, only previously checked questions may be reviewed.
+    if (!available && !saved) return { id: row.questionId, paper: row.paper, position: row.position, locked: true };
+    const source = JSON.parse(row.questionJson);
+    const { answer, explanation } = source;
+    // Explicit allowlist: future bank metadata must not accidentally disclose
+    // the mark scheme to a pupil who has not checked an answer.
+    const publicQuestion = Object.fromEntries(['id','group','spec','skillId','skillTitle','lessons',
+      'prompt','options','model','code','language','diagram','table','sourcePath','paper'].filter(key =>
+      Object.hasOwn(source, key)).map(key => [key, source[key]]));
+    return { ...publicQuestion, paper: row.paper, position: row.position,
+      checked: saved, chosenIndex: saved ? Number(row.optionIndex) : null,
+      firstTryCorrect: saved ? Boolean(row.isCorrect) : null,
+      ...(saved ? { answer, explanation, checkedAt: row.checkedAt } : {})
+    };
+  });
+  return { id: homework.id, title: homework.title, cohort: homework.cohort,
+    dueDate: homework.dueDate, skillIds: JSON.parse(homework.skillIdsJson),
+    available, questions: items, independentSchedule: INDEPENDENT_WORK_SCHEDULE };
+}
+
+const SYNOPTIC_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+async function checkSynopticAnswer(env, student, payload) {
+  const { id, questionId, optionIndex } = payload;
+  if (typeof id !== 'string' || !SYNOPTIC_ID_PATTERN.test(id) ||
+      typeof questionId !== 'string' || !/^[a-z0-9-]{1,90}$/.test(questionId) ||
+      !Number.isInteger(optionIndex) || optionIndex < 0 || optionIndex > 3)
+    return respond({ error: 'Choose one of the four answers to this question.' }, 400);
+  const assignment = await env.DB.prepare(`SELECT h.due_date AS dueDate
+    FROM synoptic_homework h JOIN synoptic_releases r ON r.homework_id = h.id
+    WHERE h.id = ? AND h.cohort = ?`).bind(id, student.cohort).first();
+  if (!assignment) return respond({ error: 'This homework is not available for your year group.' }, 404);
+  const question = await env.DB.prepare(`SELECT question_json AS questionJson
+    FROM synoptic_questions WHERE homework_id = ? AND question_id = ?`)
+    .bind(id, questionId).first();
+  if (!question) return respond({ error: 'Question not found in this homework.' }, 404);
+  const original = JSON.parse(question.questionJson);
+  const previous = await env.DB.prepare(`SELECT option_index AS chosenIndex, is_correct AS isCorrect,
+    checked_at AS checkedAt FROM synoptic_responses
+    WHERE homework_id = ? AND code = ? AND question_id = ?`)
+    .bind(id, student.code, questionId).first();
+  if (!previous && (assignment.dueDate < ukToday() || !isIndependentWorkTime()))
+    return respond({ error: `New checks are closed. ${INDEPENDENT_WORK_SCHEDULE}` }, 403);
+  let saved = false;
+  if (!previous) {
+    const isCorrect = original.options[optionIndex] === original.answer ? 1 : 0;
+    const result = await env.DB.prepare(`INSERT OR IGNORE INTO synoptic_responses
+      (homework_id, code, question_id, option_index, is_correct) VALUES (?, ?, ?, ?, ?)`)
+      .bind(id, student.code, questionId, optionIndex, isCorrect).run();
+    saved = Boolean(result.meta?.changes);
+  }
+  // A concurrent duplicate, page refresh or deliberate second check always
+  // returns the originally persisted attempt, never a replacement mark.
+  const row = await env.DB.prepare(`SELECT option_index AS chosenIndex, is_correct AS isCorrect,
+    checked_at AS checkedAt FROM synoptic_responses
+    WHERE homework_id = ? AND code = ? AND question_id = ?`)
+    .bind(id, student.code, questionId).first();
+  return respond({ id: questionId, saved, duplicate: !saved,
+    chosenIndex: Number(row.chosenIndex), firstTryCorrect: Boolean(row.isCorrect),
+    answer: original.answer, explanation: original.explanation, checkedAt: row.checkedAt });
 }
 
 function validateSynopticPublish(payload) {
@@ -617,7 +739,7 @@ async function assignmentAccess(env, student, key, teacherOverride) {
 async function handle(request, env) {
   const url = new URL(request.url);
   const path = url.pathname;
-  if (path === '/v1/health' && request.method === 'GET') return respond({ ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', workSets: 'v1', cohortCorrection: '11-to-12-v1', selectedClasswork: 'v1', cohortAudit: 'v1', mcqQuestionTracking: 'v1', learnerOverview: 'v1', synopticPublishing: 'teacher-only-v1' });
+  if (path === '/v1/health' && request.method === 'GET') return respond({ ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', workSets: 'v1', cohortCorrection: '11-to-12-v1', selectedClasswork: 'v1', cohortAudit: 'v1', mcqQuestionTracking: 'v1', learnerOverview: 'v1', synopticPublishing: 'teacher-only-v1', synopticLearner: 'unreleased-v1' });
   if (!env.DB) return respond({ error: 'Database not configured' }, 503);
 
   if (path === '/v1/login' && request.method === 'POST') return signIn(request, env);
@@ -631,6 +753,34 @@ async function handle(request, env) {
     const student = await sessionLearner(request, env);
     if (!student) return respond({ error: 'Please sign in to My Work.' }, 401);
     return respond(await learnerWorkOverview(env, student));
+  }
+
+  if (path === '/v1/learner/synoptic/assignments' && request.method === 'POST') {
+    const student = await sessionLearner(request, env);
+    if (!student) return respond({ error: 'Please sign in to My Work.' }, 401);
+    return respond({ cohort: student.cohort, assignments: await synopticAssignmentsForLearner(env, student) });
+  }
+  if (path === '/v1/learner/synoptic/homework' && request.method === 'POST') {
+    const student = await sessionLearner(request, env);
+    if (!student) return respond({ error: 'Please sign in to My Work.' }, 401);
+    const { id } = await jsonBody(request);
+    if (typeof id !== 'string' || !SYNOPTIC_ID_PATTERN.test(id)) return respond({ error: 'Homework not found.' }, 404);
+    try {
+      const assignment = await synopticLearnerDetails(env, student, id);
+      return assignment ? respond(assignment) : respond({ error: 'Homework not found for this year group.' }, 404);
+    } catch (error) {
+      if (missingSynoptic(error)) return respond({ error: 'Homework not found.' }, 404);
+      throw error;
+    }
+  }
+  if (path === '/v1/learner/synoptic/check' && request.method === 'POST') {
+    const student = await sessionLearner(request, env);
+    if (!student) return respond({ error: 'Please sign in to My Work.' }, 401);
+    try { return await checkSynopticAnswer(env, student, await jsonBody(request)); }
+    catch (error) {
+      if (missingSynoptic(error)) return respond({ error: 'Homework not found.' }, 404);
+      throw error;
+    }
   }
 
   if (path === '/v1/work' && request.method === 'POST') {
@@ -790,6 +940,26 @@ async function handle(request, env) {
       return respond({ id, cohort: prepared.cohort, title: prepared.title, dueDate: prepared.dueDate,
         skills: prepared.skills, questionCount: 20, coverage: prepared.coverage, bankRevision: prepared.bankRevision,
         learnerVisible: false, nextStep: 'Student assignment pages are not yet enabled.' }, 201);
+    }
+    if (path === '/v1/teacher/synoptic/release' && request.method === 'POST') {
+      const { id, confirm } = await jsonBody(request);
+      if (confirm !== true || typeof id !== 'string' || !SYNOPTIC_ID_PATTERN.test(id))
+        return respond({ error: 'A valid homework ID and explicit release confirmation are required.' }, 400);
+      const assignment = await env.DB.prepare(`SELECT h.id, h.cohort, h.title, h.due_date AS dueDate,
+        COUNT(q.question_id) AS total,
+        SUM(CASE WHEN q.paper = 'paper1' THEN 1 ELSE 0 END) AS p1,
+        SUM(CASE WHEN q.paper = 'paper2' THEN 1 ELSE 0 END) AS p2
+        FROM synoptic_homework h LEFT JOIN synoptic_questions q ON q.homework_id = h.id
+        WHERE h.id = ? GROUP BY h.id`).bind(id).first();
+      if (!assignment) return respond({ error: 'Saved homework not found.' }, 404);
+      if (assignment.dueDate < ukToday() || Number(assignment.total) !== 20 ||
+          Number(assignment.p1) !== 10 || Number(assignment.p2) !== 10)
+        return respond({ error: 'Cannot release an expired or incomplete homework.' }, 409);
+      await ensureSynopticLearnerTables(env);
+      const result = await env.DB.prepare('INSERT OR IGNORE INTO synoptic_releases (homework_id) VALUES (?)')
+        .bind(id).run();
+      return respond({ id, cohort: assignment.cohort, title: assignment.title,
+        learnerVisible: true, newlyReleased: Boolean(result.meta?.changes) });
     }
     if (path === '/v1/teacher/pilot-results' && request.method === 'POST') return pilotResults(request, env);
     if (path === '/v1/teacher/logins' && request.method === 'POST') return provisionLogins(request, env);
