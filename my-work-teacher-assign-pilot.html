@@ -378,14 +378,23 @@
       </div>
 
       <section class="panel" id="review-work-view" aria-labelledby="class-progress-title" hidden>
-        <h2 id="class-progress-title">Review class progress</h2>
-        <p class="sub">Choose a class and refresh to see each pupil's first-checked answers. Results are not continuously polled, to keep the free-tier pilot light.</p>
-        <div class="preview" style="min-height:0" aria-live="polite"><h3>Combined assignments</h3><div id="bundle-existing">Choose a year and refresh to see combined assignments.</div></div>
+        <h2 id="class-progress-title">All pilot results</h2>
+        <p class="sub">All four year groups together. One row per activity with a recorded score; pupils without saved results remain visible. This is a read-only view of the existing progress database.</p>
         <div class="review-controls">
-          <div class="field"><label for="review-cohort">Class</label><select id="review-cohort"><option value="Y10">Year 10</option><option value="Y11">Year 11</option><option value="Y12" selected>Year 12</option><option value="Y13">Year 13</option></select></div>
-          <button type="button" class="button" id="refresh-class">Refresh class results</button>
+          <button type="button" class="button" id="refresh-class">Refresh all results</button>
           <span class="pill" id="roster-count">No class list saved</span>
         </div>
+        <p class="state" id="class-status" role="status" aria-live="polite">Open Review Work to load the recorded scores.</p>
+        <div class="results-scroll">
+          <table class="results-table">
+            <thead><tr><th scope="col">Year</th><th scope="col">Anonymous username</th><th scope="col">Activity / test</th><th scope="col">Recorded score</th><th scope="col">Evidence</th></tr></thead>
+            <tbody id="class-rows"><tr><td colspan="5">Connect as teacher to see the results.</td></tr></tbody>
+          </table>
+        </div>
+        <details class="roster-entry" id="review-settings">
+          <summary><strong>Advanced · class lists and registration checks</strong></summary>
+          <p class="sub">The list is saved only in this browser. Registration checks never change a pupil's year group without separate confirmation.</p>
+          <div class="field"><label for="review-cohort">Class for single-year import or registration checks</label><select id="review-cohort"><option value="Y10">Year 10</option><option value="Y11">Year 11</option><option value="Y12" selected>Year 12</option><option value="Y13">Year 13</option></select></div>
         <details class="roster-entry" id="roster-entry">
           <summary><strong>Set up anonymous class list</strong> · one-time import on this browser</summary>
           <p class="sub">Paste anonymous usernames, one per line. You may also paste your full <strong>Year | Username</strong> table to fill all four classes at once. Do not paste PINs or real names. Only usernames are saved locally in this browser, never in public website files.</p>
@@ -428,13 +437,11 @@
             <div class="actions"><button type="button" class="button" id="repair-submit" disabled>Confirm year-group correction</button></div>
           </div>
         </details>
-        <p class="state" id="class-status" role="status" aria-live="polite">Choose a class and refresh its results.</p>
-        <div class="results-scroll">
-          <table class="results-table">
-            <thead><tr><th scope="col">Anonymous username</th><th scope="col">Conversion Grid</th><th scope="col">Primitive data types MCQ</th><th scope="col">First-attempt accuracy</th></tr></thead>
-            <tbody id="class-rows"><tr><td colspan="4">Save the anonymous class list, then refresh.</td></tr></tbody>
-          </table>
-        </div>
+        <details class="roster-entry">
+          <summary><strong>Combined assignment history</strong></summary>
+          <div id="bundle-existing">The existing assignments are unchanged.</div>
+        </details>
+        </details>
       </section>
     </div>
   </main>
@@ -815,25 +822,14 @@
       $('set-work-tab').setAttribute('aria-selected', String(!review));
       $('review-work-tab').setAttribute('aria-selected', String(review));
       if (review) {
-        $('review-cohort').value = $('bundle-year').value;
         showRosterCount();
-        loadBundleHistory().catch(error => { $('bundle-existing').textContent = error.message; });
-      } else if ($('bundle-year').value !== $('review-cohort').value) {
-        $('bundle-year').value = $('review-cohort').value;
-        bundleSelected.clear();
-        $('bundle-half-term').value = ['Y11','Y13'].includes($('bundle-year').value) ? 'all' : '2';
-        renderBundleChoices();
-        $('cohort').value = $('review-cohort').value;
-        renderGroups();
-        renderActivities();
-        refresh();
+        if (teacherToken) refreshClassResults();
       }
     }
 
     function showRosterCount() {
-      const year = $('review-cohort').value;
-      const n = rosters[year].length;
-      $('roster-count').textContent = n + ' anonymous username' + (n === 1 ? '' : 's') + ' in Year ' + year.slice(1);
+      const n = CLASSES.reduce((sum, year) => sum + rosters[year].length, 0);
+      $('roster-count').textContent = n + ' anonymous login' + (n === 1 ? '' : 's') + ' · Years 10–13';
     }
 
     // Never put the pupil username roster in the public website source or a URL.
@@ -865,83 +861,143 @@
       $('roster-entry').open = false;
       showRosterCount();
       $('class-rows').replaceChildren();
-      status('class-status', (persisted ? 'Saved ' : 'Stored for this session only: ') + [...seenYears].map(year => 'Year ' + year.slice(1) + ': ' + rosters[year].length).join(' · ') + '. Click Refresh class results.', persisted ? 'good' : 'error');
+      status('class-status', (persisted ? 'Saved ' : 'Stored for this session only: ') + [...seenYears].map(year => 'Year ' + year.slice(1) + ': ' + rosters[year].length).join(' · ') + '. Loading all results…', persisted ? 'good' : 'error');
+      if (teacherToken) refreshClassResults();
     }
 
-    function scoreFor(work, itemId) {
-      const task = work.find(entry => entry.itemId === itemId);
-      if (!task) return { summary: 'Not assigned', detail: '', answered: 0, correct: 0 };
-      const answered = Number(task.questionsAttempted || 0);
+    function recordedScore(task) {
+      const checked = Number(task.questionsAttempted || 0);
       const correct = Number(task.firstTryCorrect || 0);
-      return answered
-        ? { summary: answered + ' checked', detail: correct + ' correct first time', answered, correct }
-        : { summary: 'Not started', detail: 'Assigned', answered: 0, correct: 0 };
+      const attempts = Number(task.attempts || 0);
+      if (checked > 0) return {
+        score: Math.round(100 * correct / checked) + '%',
+        evidence: correct + '/' + checked + ' correct first time' + (attempts ? ' · ' + attempts + ' saved run(s)' : ''),
+        checked
+      };
+      if (attempts > 0 && task.bestScore !== null && task.bestScore !== undefined) return {
+        score: Number(task.bestScore) + '%',
+        evidence: attempts + ' saved attempt(s) · best score',
+        checked: 0
+      };
+      return null;
     }
 
+    let reviewLoading = false;
     async function refreshClassResults() {
-      const year = $('review-cohort').value;
-      const names = rosters[year];
+      if (reviewLoading || !teacherToken) return;
+      const names = CLASSES.flatMap(year => rosters[year].map(username => ({ username, expectedYear: year })));
       if (!names.length) {
+        $('review-settings').open = true;
         $('roster-entry').open = true;
-        return status('class-status', 'Save the anonymous usernames for Year ' + year.slice(1) + ' first.', 'error');
+        status('class-status', 'Import your anonymous roster once to display usernames. No PINs or real names.', 'error');
+        return;
       }
+      reviewLoading = true;
       const button = $('refresh-class');
       button.disabled = true;
       $('class-rows').replaceChildren();
-      status('class-status', 'Checking ' + names.length + ' anonymous learners…');
-      const results = [];
+      status('class-status', 'Loading the recorded scores for ' + names.length + ' anonymous accounts…');
+      let results = [];
+      let archivedReport = false;
       try {
-        for (let i = 0; i < names.length; i += 5) {
-          const chunk = await Promise.all(names.slice(i, i + 5).map(async username => {
-            try {
-              const data = await request('/v1/teacher/student-progress', { method: 'POST', body: { username } });
-              return { username, data };
-            } catch (error) { return { username, error }; }
+        // The archived report is stable after the one-day work set expires.
+        // Until the Worker deploys, use its existing live read-only endpoint.
+        try {
+          const report = await request('/v1/teacher/pilot-results', { method: 'POST', body: {
+            roster: names.map(entry => ({ username: entry.username, cohort: entry.expectedYear }))
+          } });
+          if (!Array.isArray(report.accounts)) throw new Error('Unexpected pilot report response.');
+          archivedReport = true;
+          results = report.accounts.map(entry => ({
+            username: entry.username, expectedYear: entry.expectedCohort,
+            missing: !entry.registeredCohort,
+            data: { cohort: entry.registeredCohort, work: entry.work }
           }));
-          results.push(...chunk);
+        } catch (error) {
+          if (error.status !== 404) throw error;
+          // Keep the free-tier load small; at most five pupils at a time.
+          for (let i = 0; i < names.length; i += 5) {
+            const chunk = await Promise.all(names.slice(i, i + 5).map(async entry => {
+              try {
+                const data = await request('/v1/teacher/student-progress', { method: 'POST', body: { username: entry.username } });
+                return { ...entry, data };
+              } catch (error) { return { ...entry, error }; }
+            }));
+            results.push(...chunk);
+            status('class-status', 'Loaded ' + results.length + ' of ' + names.length + ' anonymous accounts…');
+          }
         }
         if (results.some(result => result.error?.status === 401)) {
           disconnect('Teacher access expired. Connect again.');
           return;
         }
         const body = $('class-rows');
-        let checked = 0;
-        let errors = 0;
-        for (const result of results) {
-          const tr = document.createElement('tr');
-          const username = document.createElement('td');
-          username.textContent = result.username;
-          tr.append(username);
-          if (result.error || result.data.cohort !== year) {
-            const cell = document.createElement('td');
-            cell.colSpan = 3;
-            cell.className = 'wrong-year';
-            cell.textContent = result.error?.message || 'This username belongs to Year ' + result.data.cohort.slice(1) + ', not Year ' + year.slice(1);
-            tr.append(cell);
-            errors++;
-          } else {
-            const work = Array.isArray(result.data.work) ? result.data.work : [];
-            const h446 = year === 'Y12' || year === 'Y13';
-            const convert = scoreFor(work, h446 ? 'h446-skill-p1-convert' : 'j277-skill-p1-convert');
-            const quiz = h446 ? scoreFor(work, 'h446-practice-141-a') : { summary: 'Not connected yet', detail: '', answered: 0, correct: 0 };
-            const sum = convert.answered + quiz.answered;
-            const accuracy = sum ? Math.round(100 * (convert.correct + quiz.correct) / sum) + '%' : '—';
-            for (const entry of [convert, quiz]) {
-              const cell = document.createElement('td');
-              cell.textContent = entry.summary;
-              if (entry.detail) { const detail = document.createElement('small'); detail.textContent = entry.detail; cell.append(detail); }
-              tr.append(cell);
-            }
-            const cell = document.createElement('td');
-            cell.textContent = accuracy;
-            tr.append(cell);
-            checked += sum;
+        let activities = 0, checked = 0, unscored = 0, errors = 0, mismatches = 0;
+        let pupilsWithResults = 0;
+        const addCell = (row, value, detail = '') => {
+          const cell = document.createElement('td');
+          cell.textContent = value;
+          if (detail) {
+            const small = document.createElement('small');
+            small.textContent = detail;
+            cell.append(small);
           }
-          body.append(tr);
+          row.append(cell);
+          return cell;
+        };
+        for (const result of results) {
+          const actualYear = result.data?.cohort || result.expectedYear;
+          const mismatch = Boolean(result.data?.cohort && result.data.cohort !== result.expectedYear);
+          if (mismatch) mismatches++;
+          const appendRow = (activity, score, evidence) => {
+            const row = document.createElement('tr');
+            const year = addCell(row, result.expectedYear.slice(1), mismatch ? 'Registered: Year ' + actualYear.slice(1) : '');
+            if (mismatch) year.className = 'wrong-year';
+            addCell(row, result.username);
+            addCell(row, activity);
+            addCell(row, score);
+            addCell(row, evidence);
+            body.append(row);
+          };
+          if (result.error) {
+            errors++;
+            appendRow('Could not load results', '—', result.error.message);
+            continue;
+          }
+          if (result.missing) {
+            errors++;
+            appendRow('Account not found', '—', 'No active login matched this anonymous username');
+            continue;
+          }
+          const work = Array.isArray(result.data.work) ? result.data.work : [];
+          const saved = work.map(task => ({ task, record: recordedScore(task) })).filter(entry => entry.record);
+          if (!saved.length) {
+            unscored++;
+            appendRow('No activity with a saved score', 'Not recorded', work.length ? 'Assignments found, but no recorded attempts' : 'No recorded attempts for this pilot');
+            continue;
+          }
+          pupilsWithResults++;
+          for (const { task, record } of saved) {
+            const item = catalog.find(entry => entry.id === task.itemId);
+            appendRow(item?.title || task.itemId, record.score, record.evidence);
+            activities++;
+            checked += record.checked;
+          }
         }
-        status('class-status', names.length + ' anonymous learners · ' + checked + ' checked answers' + (errors ? ' · ' + errors + ' membership issue(s)' : '') + ' · Refreshed ' + new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }), errors ? 'error' : 'good');
-      } catch (error) { status('class-status', error.message, 'error'); }
-      finally { button.disabled = false; }
+        status('class-status', (archivedReport ? '19 Nov pilot archive' : 'Live assignments only — archived report not yet deployed') +
+          ' · ' + names.length + ' accounts · ' + pupilsWithResults + ' with recorded scores · ' +
+          activities + ' scored activities · ' + checked + ' checked answers' +
+          (unscored ? ' · ' + unscored + ' without a saved score' : '') +
+          (mismatches ? ' · ' + mismatches + ' year-group mismatches' : '') +
+          (errors ? ' · ' + errors + ' lookup errors' : '') +
+          ' · Refreshed ' + new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }),
+          errors || mismatches ? 'error' : 'good');
+      } catch (error) {
+        status('class-status', 'Could not load the pilot results: ' + error.message, 'error');
+      } finally {
+        reviewLoading = false;
+        button.disabled = false;
+      }
     }
 
     async function request(path, options = {}) {
@@ -1517,9 +1573,6 @@
     $('set-work-tab').addEventListener('click', () => selectTeacherTab('set'));
     $('review-work-tab').addEventListener('click', () => selectTeacherTab('review'));
     $('review-cohort').addEventListener('change', () => {
-      showRosterCount();
-      $('class-rows').replaceChildren();
-      status('class-status', 'Click Refresh class results to check Year ' + $('review-cohort').value.slice(1) + '.');
       loadBundleHistory().catch(error => { $('bundle-existing').textContent = error.message; });
     });
     $('bundle-year').addEventListener('change', () => {
@@ -1583,3 +1636,4 @@
   </script>
 </body>
 </html>
+

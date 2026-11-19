@@ -408,6 +408,72 @@ async function workSetRows(env, code, cohort) {
   }
 }
 
+// Teacher-only snapshot of the one-day pilot. Unlike student My Work, this
+// reads historic attempts even after the combined assignments have expired.
+// Usernames are SHA-256 hashes at rest: the teacher supplies the existing
+// anonymous roster privately, and no raw alias is persisted in D1.
+async function pilotResults(request, env) {
+  const { roster } = await jsonBody(request);
+  if (!Array.isArray(roster) || roster.length < 1 || roster.length > 150)
+    return respond({ error: 'Provide 1–150 anonymous usernames and their original year groups' }, 400);
+  const supplied = [];
+  const seen = new Set();
+  for (const item of roster) {
+    if (!item || typeof item !== 'object' || Array.isArray(item) ||
+        Object.keys(item).some(key => !['username', 'cohort'].includes(key)))
+      return respond({ error: 'Use anonymous username and year only; never include names, PINs or codes' }, 400);
+    const username = normalizeUsername(item.username);
+    if (!username || !cohortIsValid(item.cohort) || seen.has(username))
+      return respond({ error: 'Check the anonymous usernames and original year groups for duplicates or invalid entries' }, 400);
+    seen.add(username);
+    supplied.push({ username, expectedCohort: item.cohort, usernameKey: await usernameKey(username) });
+  }
+
+  // Each query stays below D1 parameter limits. EXISTS avoids duplicate
+  // attempts if an activity happens to belong to several combined work sets.
+  const found = new Map();
+  for (let i = 0; i < supplied.length; i += 50) {
+    const keys = supplied.slice(i, i + 50).map(entry => entry.usernameKey);
+    const slots = keys.map(() => '?').join(',');
+    const data = await env.DB.prepare(`SELECT l.username_key AS usernameKey, p.cohort AS registeredCohort,
+      a.item_id AS itemId,
+      COUNT(t.attempt_id) AS records,
+      COUNT(CASE WHEN t.level LIKE 'q-%' THEN 1 END) AS questionsAttempted,
+      COALESCE(SUM(CASE WHEN t.level LIKE 'q-%' AND t.score = 100 THEN 1 ELSE 0 END), 0) AS firstTryCorrect,
+      COUNT(CASE WHEN t.level NOT LIKE 'q-%' THEN 1 END) AS attempts,
+      MAX(CASE WHEN t.level NOT LIKE 'q-%' THEN t.score END) AS bestScore,
+      MAX(t.created_at) AS lastAttempt
+      FROM login_profiles l JOIN practice_codes p ON p.code = l.code
+      LEFT JOIN attempts t ON t.code = p.code
+        AND t.created_at >= '2026-11-19 00:00:00' AND t.created_at < '2026-11-20 00:00:00'
+        AND EXISTS (
+          SELECT 1 FROM work_set_items si WHERE si.assignment_key = t.assignment_key
+          AND si.work_set_id IN ('pilot-20261119-Y11','pilot-20261119-Y12','pilot-20261119-Y13')
+        )
+      LEFT JOIN assignments a ON a.assignment_key = t.assignment_key
+      WHERE l.username_key IN (${slots}) AND p.enabled = 1
+      GROUP BY l.username_key, p.cohort, a.item_id
+      ORDER BY l.username_key, a.item_id`).bind(...keys).all();
+    for (const row of data.results) {
+      if (!found.has(row.usernameKey))
+        found.set(row.usernameKey, { registeredCohort: row.registeredCohort, work: [] });
+      if (row.itemId && Number(row.records) > 0)
+        found.get(row.usernameKey).work.push({
+          itemId: row.itemId, attempts: Number(row.attempts || 0),
+          bestScore: row.bestScore === null ? null : Number(row.bestScore),
+          questionsAttempted: Number(row.questionsAttempted || 0),
+          firstTryCorrect: Number(row.firstTryCorrect || 0),
+          lastAttempt: row.lastAttempt
+        });
+    }
+  }
+  return respond({ pilotDate: '2026-11-19', accounts: supplied.map(entry => ({
+    username: entry.username, expectedCohort: entry.expectedCohort,
+    registeredCohort: found.get(entry.usernameKey)?.registeredCohort || null,
+    work: found.get(entry.usernameKey)?.work || []
+  })) });
+}
+
 async function assignmentAccess(env, student, key, teacherOverride) {
   const group = await env.DB.prepare('SELECT assignment_key FROM assignments WHERE assignment_key = ? AND cohort = ? AND active = 1').bind(key, student.cohort).first();
   const individual = group ? null : await env.DB.prepare('SELECT assignment_key FROM student_assignments WHERE assignment_key = ? AND code = ? AND active = 1').bind(key, student.code).first();
@@ -538,6 +604,7 @@ async function handle(request, env) {
 
   if (path.startsWith('/v1/teacher/')) {
     if (!teacherIsValid(request, env)) return respond({ error: 'Teacher access required' }, 401);
+      if (path === '/v1/teacher/pilot-results' && request.method === 'POST') return pilotResults(request, env);
     if (path === '/v1/teacher/logins' && request.method === 'POST') return provisionLogins(request, env);
     if (path === '/v1/teacher/audit-cohorts' && request.method === 'POST') return auditLoginCohorts(request, env);
     if (path === '/v1/teacher/assignment-inventory' && request.method === 'GET') {
@@ -796,4 +863,5 @@ export default {
     return new Response(reply.body, { status: reply.status, headers });
   }
 };
+
 

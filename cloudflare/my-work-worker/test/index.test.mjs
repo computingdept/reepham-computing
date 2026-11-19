@@ -183,6 +183,32 @@ class FakeD1 {
         throw Error('Unrecognised test INSERT: ' + sql);
       };
       const all = async () => {
+        if (sql.includes('LEFT JOIN attempts t ON t.code = p.code') &&
+            sql.includes('pilot-20261119-Y11')) {
+          const wanted = new Set(args);
+          return { results: [...this.logins.values()].filter(login => wanted.has(login.username_key)).flatMap(login => {
+            const pupil = this.codes.get(login.code);
+            if (!pupil?.enabled) return [];
+            const scores = [...this.attempts.values()].filter(attempt => attempt.code === pupil.code &&
+              attempt.created_at >= '2026-11-19 00:00:00' && attempt.created_at < '2026-11-20 00:00:00' &&
+              this.workSetItems.some(item => item.assignment_key === attempt.assignment_key &&
+                ['pilot-20261119-Y11', 'pilot-20261119-Y12', 'pilot-20261119-Y13'].includes(item.work_set_id)));
+            if (!scores.length) return [{ usernameKey: login.username_key, registeredCohort: pupil.cohort,
+              itemId: null, records: 0, questionsAttempted: 0, firstTryCorrect: 0, attempts: 0, bestScore: null, lastAttempt: null }];
+            const byItem = new Map();
+            for (const attempt of scores) {
+              const itemId = this.assignments.get(attempt.assignment_key)?.item_id;
+              if (!itemId) continue;
+              if (!byItem.has(itemId)) byItem.set(itemId, []);
+              byItem.get(itemId).push(attempt);
+            }
+            return [...byItem].map(([itemId, itemScores]) => ({
+              usernameKey: login.username_key, registeredCohort: pupil.cohort,
+              itemId, records: itemScores.length, lastAttempt: itemScores.at(-1).created_at,
+              ...attemptStats(itemScores)
+            }));
+          }) };
+        }
         if (sql.includes('FROM work_sets s') && sql.includes('JOIN work_set_items si')) {
           const permissionQuery = sql.includes('WHERE si.assignment_key = ?');
           const teacherQuery = sql.includes('WHERE s.cohort = ? ORDER BY');
@@ -1045,4 +1071,41 @@ test('Year 12 1.4.1(a) MCQ records each checked answer during lessons without ch
     globalThis.Date = RealDate;
   }
 });
+
+test('teacher-only pilot report retains checked scores after assignment expiry without altering data', async () => {
+  const db = new FakeD1();
+  const username = 'pilotbird';
+  const username_key = [...new Uint8Array(await crypto.subtle.digest(
+    'SHA-256', new TextEncoder().encode('rhs-my-work-login:v1:' + username)
+  ))].map(x => x.toString(16).padStart(2, '0')).join('');
+  const code = 'P-BCDFGHJKM2';
+  const key = '12|h446-practice-141-a|';
+  db.codes.set(code, { code, cohort: 'Y12', enabled: 1 });
+  db.logins.set(username_key, { username_key, code });
+  db.assignments.set(key, { assignment_key: key, cohort: 'Y12', item_id: 'h446-practice-141-a', active: 0 });
+  db.workSets.set('pilot-20261119-Y12', { id: 'pilot-20261119-Y12', cohort: 'Y12', active: 0 });
+  db.workSetItems.push({ work_set_id: 'pilot-20261119-Y12', assignment_key: key });
+  db.attempts.set('first', { attempt_id: 'first', code, assignment_key: key, level: 'q-quiz', score: 100, created_at: '2026-11-19 10:00:00' });
+  db.attempts.set('second', { attempt_id: 'second', code, assignment_key: key, level: 'q-quiz', score: 0, created_at: '2026-11-19 10:01:00' });
+  db.attempts.set('older', { attempt_id: 'older', code, assignment_key: key, level: 'q-quiz', score: 100, created_at: '2026-11-18 10:00:00' });
+  const roster = [{ username, cohort: 'Y12' }, { username: 'missingbird', cohort: 'Y13' }];
+  const blocked = await call(db, '/v1/teacher/pilot-results', 'POST', { roster });
+  assert.equal(blocked.status, 401, 'Teacher token is required');
+  const report = await call(db, '/v1/teacher/pilot-results', 'POST', { roster }, { teacher: true });
+  assert.equal(report.status, 200);
+  assert.equal(report.data.pilotDate, '2026-11-19');
+  assert.equal(report.data.accounts.length, 2);
+  assert.deepEqual(report.data.accounts[0].work.map(w => ({
+    item: w.itemId, attempted: w.questionsAttempted, correct: w.firstTryCorrect
+  })), [{ item: 'h446-practice-141-a', attempted: 2, correct: 1 }]);
+  assert.equal(report.data.accounts[1].registeredCohort, null, 'Unknown usernames remain visible but unscored');
+  assert.equal(JSON.stringify(report.data).includes(code), false, 'Practice codes never leave the Worker');
+  assert.equal(db.attempts.size, 3, 'Report did not change attempts');
+  assert.equal(db.workSets.get('pilot-20261119-Y12').active, 0, 'Report did not reactivate expired work');
+  const invalid = await call(db, '/v1/teacher/pilot-results', 'POST', {
+    roster: [{ username, cohort: 'Y12', password: '1234' }]
+  }, { teacher: true });
+  assert.equal(invalid.status, 400, 'Roster cannot carry credentials');
+});
+
 
