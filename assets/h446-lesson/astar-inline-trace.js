@@ -1,4 +1,4 @@
-/* Student A* trace: each tested edge expands its destination row in one table.
+/* Student A* exam trace: students complete cells in the OCR-style table.
    Classroom examples and Dijkstra use the original shared trace renderer. */
 (function(){
   'use strict';
@@ -6,8 +6,7 @@
   const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const fmt=n=>Number.isFinite(n)?String(n):'∞';
 
-  // The first five Easy questions teach one new decision at a time. Graph size
-  // alone is not difficulty: these also deliberately limit routes and edges.
+  // The first five Easy questions introduce different routes before larger graphs.
   const warmups=[
     {id:'warmup-robot',scene:'Warehouse robot · Two conveyor routes',
       premise:'A is the charging dock and G is the packing station. Compare both routes.',
@@ -85,7 +84,7 @@
     const g=Object.fromEntries(graph.v.map(([n])=>[n,Infinity]));g[graph.start]=0;
     const s={graph,level,g,from:{},edge:{},open:new Set([graph.start]),closed:new Set(),selected:[],
       phase:'pick',current:null,pending:[],focus:null,entry:{},feedback:'',error:false,mistakes:0,changes:{},
-      path:[],total:'',scored:false,hintFor:'',usedHint:false};
+      path:[],total:'',scored:false};
     // Starting at A is given in the question, so the first useful action is
     // completing a cost, not clicking the only available node.
     choose(s,graph.start);
@@ -96,7 +95,7 @@
       s.g[a]-s.g[b]||a.localeCompare(b))[0];
   }
   function nextEdge(s){
-    s.entry={};s.feedback='';s.error=false;s.hintFor='';
+    s.entry={};s.feedback='';s.error=false;
     while(s.pending.length){
       const edge=s.pending[0],trial=s.g[s.current]+edge.cost;
       if(s.closed.has(edge.to)&&trial>=s.g[edge.to]){s.pending.shift();continue;}
@@ -105,7 +104,9 @@
     if(s.pending.length){s.phase='edge';s.focus=s.pending[0].to;}
     else{
       s.phase='pick';s.focus=null;s.current=null;
-      if(s.level==='easy'&&s.open.size===1)choose(s,[...s.open][0]);
+      // This is an exam table exercise: follow the A* selection rule automatically,
+      // so each learner action is a table entry or a genuine route comparison.
+      if(s.open.size)choose(s,bestOpen(s));
     }
   }
   function choose(s,node){
@@ -117,12 +118,17 @@
   }
   function resolveEdge(s,decision){
     const edge=s.pending[0],candidate=s.g[s.current]+edge.cost,old=s.g[edge.to],inp=s.entry;
-    if(inp.g===''||Number(inp.g)!==candidate){s.feedback=s.level==='easy'?'For g, add only the distance so far and the edge cost. Try “Show worked step” if you are stuck.':'Calculate the distance from '+s.current+' plus the edge cost.';s.error=true;s.mistakes++;return;}
-    if(s.level!=='easy'&&(inp.f===''||Number(inp.f)!==candidate+s.graph.h[edge.to])){s.feedback='Calculate f = candidate g + h.';s.error=true;s.mistakes++;return;}
-    if(s.level==='hard'&&(inp.h===''||Number(inp.h)!==s.graph.h[edge.to])){s.feedback='Read h from the destination node.';s.error=true;s.mistakes++;return;}
     const update=candidate<old;
-    if((decision==='update')!==update){s.feedback=update?'The new cost is lower, so update '+edge.to+'.':'This route is not cheaper. Keep the previous value.';s.error=true;s.mistakes++;return;}
-    if(s.level==='hard'&&update&&inp.from!==s.current){s.feedback='Choose the node that this new route came from.';s.error=true;s.mistakes++;return;}
+    if(!update){
+      if(decision!=='keep'){s.feedback='The existing distance is lower. Keep the current row.';s.error=true;s.mistakes++;return;}
+      s.pending.shift();nextEdge(s);return;
+    }
+    if(decision!=='update'){s.feedback='This route is cheaper. Complete the highlighted row.';s.error=true;s.mistakes++;return;}
+    if(inp.g===''||Number(inp.g)!==candidate){s.feedback='Check Distance travelled: distance to '+s.current+' plus the edge cost.';s.error=true;s.mistakes++;return;}
+    const rowIndex=s.graph.v.findIndex(([n])=>n===edge.to);
+    if(!easyGivenF(s,rowIndex)&&(inp.f===''||Number(inp.f)!==candidate+s.graph.h[edge.to])){s.feedback='Check Distance + heuristic: add the new distance and h from the graph.';s.error=true;s.mistakes++;return;}
+    if(s.level==='hard'&&(inp.h===''||Number(inp.h)!==s.graph.h[edge.to])){s.feedback='Read the heuristic beneath '+edge.to+' on the graph.';s.error=true;s.mistakes++;return;}
+    if(s.level!=='easy'&&inp.from!==s.current){s.feedback='Previous node is the node this route came from.';s.error=true;s.mistakes++;return;}
     if(update){
       if(Number.isFinite(old))s.changes[edge.to]=old+' → '+candidate;
       s.g[edge.to]=candidate;s.from[edge.to]=s.current;s.edge[edge.to]=edge.cost;
@@ -137,7 +143,7 @@
   }
   function checkRoute(s,config){
     const correct=s.path.join('|')===finalRoute(s).join('|')&&s.total!==''&&Number(s.total)===s.g[s.graph.goal];
-    if(!s.scored){s.scored=true;config.onFirstAttempt(correct&&s.mistakes===0&&!s.usedHint);}
+    if(!s.scored){s.scored=true;config.onFirstAttempt(correct&&s.mistakes===0);}
     if(correct){s.phase='complete';s.feedback='Correct — shortest path and total cost.';s.error=false;}
     else{s.mistakes++;s.feedback='Follow the Previous column backwards from the goal, then add each edge cost.';s.error=true;}
   }
@@ -164,35 +170,31 @@
     }).join('');
     return `<svg class="a-trace-graph" viewBox="0 0 ${width} ${height}" style="aspect-ratio:${width}/${height}" role="img" aria-label="A* graph from ${s.graph.start} to ${s.graph.goal}. Yellow indicates the active edge.">${lines}${weights}${nodes}</svg>`;
   }
-  function field(id,label,value){
-    return `<label class="a-trace-field"><span>${esc(label)}</span><input id="${id}" type="number" inputmode="numeric" autocomplete="off" value="${esc(value||'')}" placeholder="?" /></label>`;
+  // Easy supplies the heuristic and previous node, plus some calculated f values.
+  // Medium asks for distance, f and predecessor. Hard asks for every value.
+  function easyGivenF(s,rowIndex){return s.level==='easy'&&rowIndex%2===0;}
+  function tableInput(id,node,label,value){
+    return `<input id="${id}" class="a-trace-cell-input" type="number" inputmode="numeric" autocomplete="off" aria-label="${esc(label)} for ${esc(node)}" value="${esc(value??'')}" placeholder="?" />`;
   }
-  function expandedRow(s){
-    const item=s.pending[0],previous=s.g[item.to],candidate=s.g[s.current]+item.cost;
-    const more=s.level==='easy'?'':field('a-f','New f = g + h',s.entry.f);
-    const hard=s.level==='hard'?field('a-h','h from graph',s.entry.h)+`<label class="a-trace-field"><span>Previous node</span><select id="a-from"><option value="">Choose</option>${s.graph.v.map(([n])=>`<option value="${esc(n)}"${s.entry.from===n?' selected':''}>${esc(n)}</option>`).join('')}</select></label>`:'';
-    const keep=Number.isFinite(previous)?`<button type="button" id="a-keep" class="a-trace-light">Keep ${fmt(previous)}</button>`:'';
-    const key=s.current+'>'+item.to,shown=s.hintFor===key;
-    const hint=s.level==='easy'?`<button type="button" id="a-worked-toggle" class="a-trace-light a-trace-hint-toggle" aria-expanded="${shown}" aria-controls="a-worked-explanation">${shown?'Hide worked step':'Show worked step'}</button>`:'';
-    const compare=!Number.isFinite(previous)?`${esc(item.to)} was not reached, so select Update.`:
-      candidate<previous?`${candidate} is smaller than ${previous}, so select Update.`:`${candidate} is not smaller than ${previous}, so select Keep.`;
-    const explanation=s.level==='easy'&&shown?`<div id="a-worked-explanation" class="a-trace-worked-hint" role="note"><strong>Distance travelled (g): ${fmt(s.g[s.current])} + ${item.cost} = ${candidate}.</strong><span>Heuristic (h) at ${esc(item.to)} = ${s.graph.h[item.to]}. Estimated total (f) = ${candidate} + ${s.graph.h[item.to]} = ${candidate+s.graph.h[item.to]}.</span><span>Enter <b>${candidate}</b> in the g box. ${compare}</span><small>Worked help makes this a guided attempt.</small></div>`:'';
-    return `<tr class="a-trace-expanded"><td colspan="6"><div class="a-trace-active"><div class="a-trace-active-heading"><strong>Checking ${esc(s.current)} → ${esc(item.to)}</strong><span>Current ${esc(item.to)}: <b>${fmt(previous)}</b>${s.from[item.to]?' via '+esc(s.from[item.to]):' (not reached)'}</span></div><div class="a-trace-calc"><span class="a-trace-equation">${fmt(s.g[s.current])} + ${item.cost} =</span>${field('a-g',s.level==='easy'?'Distance so far (g)':'New g',s.entry.g)}${more}${hard}${hint}</div>${explanation}<div class="a-trace-decision"><span>${Number.isFinite(previous)?'Is the alternative cheaper?':'This is the first route to the node.'}</span><div>${keep}<button type="button" id="a-update" class="a-trace-primary">Update ${esc(item.to)}</button></div></div></div></td></tr>`;
+  function tableFrom(s,node){
+    return `<select id="a-from" class="a-trace-cell-input" aria-label="Previous node for ${esc(node)}"><option value="">?</option>${s.graph.v.map(([n])=>`<option value="${esc(n)}"${s.entry.from===n?' selected':''}>${esc(n)}</option>`).join('')}</select>`;
   }
   function traceTable(s){
-    const rows=s.graph.v.map(([n])=>{
+    const rows=s.graph.v.map(([n],i)=>{
       const active=s.phase==='edge'&&s.focus===n;
       const g=fmt(s.g[n]),f=fmt(s.g[n]+s.graph.h[n]);
-      return `<tr class="${active?'a-trace-current':''}"><th scope="row">${esc(n)}${s.closed.has(n)?'<span class="a-trace-tick">✓</span>':''}</th><td><strong>${g}</strong>${s.changes[n]?`<small class="a-trace-change">${s.changes[n]}</small>`:''}</td><td>${s.graph.h[n]}</td><td>${f}</td><td>${s.edge[n]===undefined?'—':s.edge[n]}</td><td>${esc(s.from[n]||'—')}</td></tr>${active?expandedRow(s):''}`;
+      const improving=active&&s.g[s.current]+s.pending[0].cost<s.g[n];
+      const before=improving&&Number.isFinite(s.g[n])?`<small class="a-trace-prior">Current: ${g}</small>`:'';
+      const gCell=improving?`${before}${tableInput('a-g',n,'Distance travelled',s.entry.g)}`:`<strong>${g}</strong>${s.changes[n]?`<small class="a-trace-change"><s>${s.changes[n].split(' → ')[0]}</s> → ${g}</small>`:''}`;
+      const hCell=improving&&s.level==='hard'?tableInput('a-h',n,'Heuristic',s.entry.h):s.graph.h[n];
+      const fCell=improving&&!easyGivenF(s,i)?tableInput('a-f',n,'Distance plus heuristic',s.entry.f):improving?`<span class="a-trace-given">${s.g[s.current]+s.pending[0].cost+s.graph.h[n]}</span>`:f;
+      const fromCell=improving&&s.level!=='easy'?tableFrom(s,n):esc(improving?s.current:(s.from[n]||'—'));
+      return `<tr class="${active?'a-trace-current':''}${improving?' a-trace-editing':''}" data-node="${esc(n)}"><th scope="row">${esc(n)}${s.closed.has(n)?'<span class="a-trace-tick">✓</span>':''}</th><td>${gCell}</td><td>${hCell}</td><td>${fCell}</td><td>${fromCell}</td></tr>`;
     }).join('');
-    return `<div class="a-trace-table-wrap"><table class="a-trace-table"><thead><tr><th>Node</th><th>g</th><th>h</th><th>f</th><th>Edge</th><th>From</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    return `<div class="a-trace-table-wrap"><table class="a-trace-table"><thead><tr><th>Node</th><th>Distance<br>travelled <span>(g)</span></th><th>Heuristic<br><span>(h)</span></th><th>Distance +<br>heuristic <span>(f)</span></th><th>Previous<br>node</th></tr></thead><tbody>${rows}</tbody></table></div>`;
   }
 
 
-  function choosePanel(s){
-    const beginning=s.selected.length===0;
-    return `<div class="a-trace-choose"><strong>${beginning?'Start at '+esc(s.graph.start)+' (g = 0).':'Choose the open node with the smallest f = g + h.'}</strong><div class="a-trace-options">${[...s.open].sort().map(n=>`<button type="button" data-choose="${esc(n)}">${esc(n)} <span>f=${fmt(s.g[n]+s.graph.h[n])}</span></button>`).join('')}</div></div>`;
-  }
   function routePanel(s){
     const route=s.path.join(' → ')||'—';
     const chips=s.graph.v.map(([n])=>{
@@ -207,17 +209,14 @@
   }
   function draw(s,config){
     const graph=s.graph;
-    const firstCalculation=s.phase==='edge'&&s.selected.length===1&&s.current===graph.start;
-    const step=firstCalculation?'START HERE · CALCULATE g':s.phase==='pick'?'SELECT NEXT NODE':s.phase==='edge'?
-      (Number.isFinite(s.g[s.focus])?'COMPARE ROUTES':'CALCULATE NEW ROUTE'):'TRACE FINAL PATH';
-    const instruction=firstCalculation?`A starts with g = 0. Follow the yellow edge ${esc(s.current)} → ${esc(s.focus)} and enter the new cost.`:
-      s.phase==='edge'?`Yellow edge: ${esc(s.current)} → ${esc(s.focus)}. Complete the yellow row.`:
-      s.phase==='pick'?'Select the next node to expand.':'Use the completed table to identify the route.';
-    const actions=s.phase==='pick'?choosePanel(s):s.phase==='route'?routePanel(s):s.phase==='complete'?resultPanel(s):'';
-    config.workspace.innerHTML=`<div class="a-trace-root"><div class="a-trace-header"><div><span class="a-trace-kicker">${s.level.toUpperCase()} · QUESTION ${graph.questionNumber} OF ${graph.questionTotal}</span><h2>A* · Exam Trace</h2></div><span class="a-trace-goal">${graph.start} → ${graph.goal}</span></div><div class="a-trace-scenario"><strong>${esc(graph.scene||'A* graph')}</strong><span>${esc(graph.premise||'Find the shortest path.')}</span></div><div class="a-trace-columns"><section class="a-trace-visual"><p class="a-trace-caption">Edge costs in ${esc(graph.unit||'units')} · Values beneath nodes are h estimates</p>${graphSvg(s)}<details class="a-trace-help"><summary>How does A* work?</summary><p>Start with g = 0 at ${graph.start}. Choose the open node with lowest f = g + h. Calculate a new g for each neighbour. Update it if the new route is cheaper. Stop when you select ${graph.goal}.</p></details></section><section class="a-trace-work"><div class="a-trace-step"><span>${step}</span><strong>${instruction}</strong></div>${traceTable(s)}${s.feedback?`<p class="a-trace-feedback ${s.error?'error':'success'}" role="status">${esc(s.feedback)}</p>`:''}${actions}<div class="a-trace-footer"><button type="button" id="a-restart" class="a-trace-light">Start again</button><small>✓ Expanded node · Yellow = current edge</small></div></section></div></div>`;
-    config.workspace.querySelectorAll('[data-choose]').forEach(b=>b.addEventListener('click',()=>{
-      choose(s,b.dataset.choose);draw(s,config);
-    }));
+    const active=s.phase==='edge',item=active?s.pending[0]:null;
+    const improving=active&&s.g[s.current]+item.cost<s.g[item.to];
+    const step=active?'COMPLETE THE HIGHLIGHTED TABLE ROW':'FINAL SHORTEST PATH';
+    const instruction=active?`${esc(s.current)} → ${esc(item.to)} · Edge cost ${item.cost}. ${improving?'Enter the missing values in '+esc(item.to)+'’s row.':'Decide whether this gives a shorter route to '+esc(item.to)+'.'}`:
+      'Use the table to select the final route and calculate its total cost.';
+    const actions=active?`<div class="a-trace-row-actions">${improving?`<button type="button" id="a-update" class="a-trace-primary">Check ${esc(item.to)} row</button>`:`<span>Current distance to ${esc(item.to)}: <strong>${fmt(s.g[item.to])}</strong></span><button type="button" id="a-keep" class="a-trace-primary">Keep existing row</button>`}</div>`:
+      s.phase==='route'?routePanel(s):s.phase==='complete'?resultPanel(s):'';
+    config.workspace.innerHTML=`<div class="a-trace-root"><div class="a-trace-header"><div><span class="a-trace-kicker">${s.level.toUpperCase()} · QUESTION ${graph.questionNumber} OF ${graph.questionTotal}</span><h2>A* · Exam Trace</h2></div><span class="a-trace-goal">${graph.start} → ${graph.goal}</span></div><div class="a-trace-scenario"><strong>${esc(graph.scene||'A* graph')}</strong><span>${esc(graph.premise||'Find the shortest path.')}</span></div><div class="a-trace-columns"><section class="a-trace-visual"><p class="a-trace-caption">Edge costs in ${esc(graph.unit||'units')} · Values beneath nodes are h estimates</p>${graphSvg(s)}<details class="a-trace-help"><summary>How do I complete the table?</summary><p>Distance travelled (g) = distance to the previous node + edge cost. The heuristic (h) is shown under each node. Add them for f. Keep a row's earlier value if an alternative route costs more.</p></details></section><section class="a-trace-work"><div class="a-trace-step"><span>${step}</span><strong>${instruction}</strong></div>${traceTable(s)}${s.feedback?`<p class="a-trace-feedback ${s.error?'error':'success'}" role="status">${esc(s.feedback)}</p>`:''}${actions}<div class="a-trace-footer"><button type="button" id="a-restart" class="a-trace-light">Start again</button><small>✓ Expanded node · Yellow = row to complete</small></div></section></div></div>`;
     const submit=decision=>{
       for(const field of ['g','f','h'])s.entry[field]=config.workspace.querySelector('#a-'+field)?.value.trim()||'';
       s.entry.from=config.workspace.querySelector('#a-from')?.value||'';
@@ -225,13 +224,6 @@
     };
     config.workspace.querySelector('#a-keep')?.addEventListener('click',()=>submit('keep'));
     config.workspace.querySelector('#a-update')?.addEventListener('click',()=>submit('update'));
-    config.workspace.querySelector('#a-worked-toggle')?.addEventListener('click',()=>{
-      s.entry.g=config.workspace.querySelector('#a-g')?.value.trim()||'';
-      const key=s.current+'>'+s.pending[0].to;
-      if(s.hintFor===key)s.hintFor='';
-      else{s.hintFor=key;s.usedHint=true;}
-      draw(s,config);
-    });
     config.workspace.querySelectorAll('[data-route]').forEach(b=>b.addEventListener('click',()=>{
       s.total=config.workspace.querySelector('#a-total')?.value||s.total;
       const n=b.dataset.route,pos=s.path.indexOf(n);
