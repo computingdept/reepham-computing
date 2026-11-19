@@ -195,7 +195,8 @@
   }
   function draw(s,config){
     const graph=s.graph;
-    const step=s.phase==='pick'?'SELECT NEXT NODE':s.phase==='edge'?'CHECK ALTERNATIVE ROUTE':'TRACE FINAL PATH';
+    const step=s.phase==='pick'?'SELECT NEXT NODE':s.phase==='edge'?
+      (Number.isFinite(s.g[s.focus])?'COMPARE ROUTES':'CALCULATE NEW ROUTE'):'TRACE FINAL PATH';
     const instruction=s.phase==='edge'?`Yellow edge: ${esc(s.current)} → ${esc(s.focus)}. Complete the yellow row.`:
       s.phase==='pick'?'Select the next node to expand.':'Use the completed table to identify the route.';
     const actions=s.phase==='pick'?choosePanel(s):s.phase==='route'?routePanel(s):s.phase==='complete'?resultPanel(s):'';
