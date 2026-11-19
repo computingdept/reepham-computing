@@ -154,7 +154,7 @@
       const correct = Number(row.firstTryCorrect || 0);
       const accuracy = questions ? Math.round(100 * correct / questions) : 0;
       const best = linkOnly ? 'Practice link · untracked'
-        : completionTracked ? (count ? `Best quiz: ${Number(row.bestScore)}%` : 'Not started')
+        : completionTracked ? (questions ? `${accuracy}% correct first time` : count ? `Best quiz: ${Number(row.bestScore)}%` : 'Not started')
         : (isConversionPilot || isQuizPilot) && questions
         ? `${accuracy}% correct first time`
         : count ? (isConversionPilot ? `Best round: ${Number(row.bestScore)}%` : `Best recorded: ${Number(row.bestScore)}%`)
@@ -162,8 +162,9 @@
       const practiceText = linkOnly
         ? 'You can open this Skill from My Work. Automatic score reporting has not yet been connected for this tool.'
         : completionTracked
-          ? (count ? `${count} completed quiz${count === 1 ? '' : 'zes'} recorded · best ${Number(row.bestScore)}%. Each quiz is marked from first-checked answers.`
-          : 'Complete all ten questions to save your first-check score to My Work. You can retry afterwards.')
+          ? (questions ? `${questions} checked MCQ answer${questions === 1 ? '' : 's'} recorded · ${correct} correct first time.${count ? ` ${count} completed quiz${count === 1 ? '' : 'zes'} also recorded · best ${Number(row.bestScore)}%.` : ' You do not need to finish all ten for these answers to count.'}`
+          : count ? `${count} earlier completed quiz${count === 1 ? '' : 'zes'} recorded · best ${Number(row.bestScore)}%. New checked answers save individually.`
+            : 'Your first checked answer saves to My Work straight away; you can stop before question ten.')
         : isConversionPilot
         ? (questions ? `${questions} question${questions === 1 ? '' : 's'} attempted · ${correct} correct on the first check. Easy: ${Number(row.easyCorrect || 0)}/${Number(row.easyQuestions || 0)} · Medium: ${Number(row.mediumCorrect || 0)}/${Number(row.mediumQuestions || 0)}.${count ? ` ${count} earlier completed round${count === 1 ? '' : 's'} also recorded.` : ''}`
           : count ? `${count} earlier completed 10-question round${count === 1 ? '' : 's'}. New questions will save individually.`

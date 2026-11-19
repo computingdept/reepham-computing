@@ -64,7 +64,8 @@ class FakeD1 {
         }
         if (sql.includes('COUNT(*) AS n FROM attempts')) {
           return { n: [...this.attempts.values()].filter(x => x.code === args[0] &&
-            (!sql.includes("level LIKE 'q-%'") || x.level.startsWith('q-'))).length };
+            (!sql.includes("level LIKE 'q-%'") || x.level.startsWith('q-')) &&
+            (!sql.includes("level NOT LIKE 'q-%'") || !x.level.startsWith('q-'))).length };
         }
         if (sql.includes('FROM login_profiles l') && sql.includes('JOIN practice_codes p')) {
           const login = this.logins.get(args[0]);
@@ -671,7 +672,7 @@ test('renewing an individual Classwork assignment does not grant access to the w
 
 test('health, CORS and teacher-only write access', async () => {
   const db = new FakeD1();
-  assert.deepEqual((await call(db, '/v1/health')).data, { ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', workSets: 'v1', cohortCorrection: '11-to-12-v1', selectedClasswork: 'v1', cohortAudit: 'v1' });
+  assert.deepEqual((await call(db, '/v1/health')).data, { ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', workSets: 'v1', cohortCorrection: '11-to-12-v1', selectedClasswork: 'v1', cohortAudit: 'v1', mcqQuestionTracking: 'v1' });
   const blocked = await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y12', count: 10 });
   assert.equal(blocked.status, 401);
   const wrongOrigin = await call(db, '/v1/health', 'GET', undefined, { origin: 'https://not-rhsccs.org' });
@@ -1051,7 +1052,8 @@ test('Year 12 1.4.1(a) MCQ records each checked answer during lessons without ch
     assert.equal((await call(db, '/v1/questions', 'POST', question)).status, 401);
     assert.equal((await call(db, '/v1/questions', 'POST', question, { bearer: other })).status, 403);
     assert.equal((await call(db, '/v1/questions', 'POST', { ...question, level: 'easy' }, { bearer: session })).status, 400);
-    assert.equal((await call(db, '/v1/questions', 'POST', { ...question, assignmentKey: '12|h446-practice-141-b|' }, { bearer: session })).status, 400);
+    assert.equal((await call(db, '/v1/questions', 'POST', { ...question, assignmentKey: '12|h446-practice-141-b|' }, { bearer: session })).status, 403,
+      'Another valid topic is still forbidden unless it was assigned');
     const saved = await call(db, '/v1/questions', 'POST', question, { bearer: session });
     assert.equal(saved.status, 200);
     assert.equal(saved.data.saved, true);
@@ -1106,6 +1108,78 @@ test('teacher-only pilot report retains checked scores after assignment expiry w
     roster: [{ username, cohort: 'Y12', password: '1234' }]
   }, { teacher: true });
   assert.equal(invalid.status, 400, 'Roster cannot carry credentials');
+});
+
+test('every assigned J277 and H446 revision MCQ saves first-checked answers without requiring ten', async () => {
+  const RealDate = globalThis.Date;
+  const when = new RealDate('2026-11-19T10:00:00Z');
+  globalThis.Date = class extends RealDate {
+    constructor(...args) { super(...(args.length ? args : [when.valueOf()])); }
+    static now() { return when.valueOf(); }
+  };
+  try {
+    const health = await call(new FakeD1(), '/v1/health');
+    assert.equal(health.data.mcqQuestionTracking, 'v1', 'The frontend only enables reporting after this capability is advertised');
+    for (const { cohort, username, itemId, unassignedId } of [
+      { cohort: 'Y10', username: 'j277bird', itemId: 'j277-practice-11-components', unassignedId: 'j277-practice-11-registers' },
+      { cohort: 'Y12', username: 'h446bird', itemId: 'h446-practice-11-components', unassignedId: 'h446-practice-11-buses' }
+    ]) {
+      const db = new FakeD1();
+      const [code] = (await call(db, '/v1/teacher/codes', 'POST', { cohort, count: 1 }, { teacher: true })).data.codes;
+      assert.equal((await call(db, '/v1/teacher/logins', 'POST', { logins: [
+        { username, code, password: '1234', expectedCohort: cohort }
+      ] }, { teacher: true })).status, 201);
+      const set = await call(db, '/v1/teacher/work-sets', 'POST', {
+        cohort, scope: 'cohort', title: 'MCQ recording check', kind: 'classwork',
+        items: [{ itemId, level: '' }]
+      }, { teacher: true });
+      assert.equal(set.status, 201, JSON.stringify(set.data));
+      const session = (await call(db, '/v1/login', 'POST', { username, password: '1234' })).data.session;
+      const year = cohort.slice(1);
+      const key = `${year}|${itemId}|`;
+      const firstId = crypto.randomUUID();
+      const first = await call(db, '/v1/questions', 'POST', {
+        assignmentKey: key, attemptId: firstId, level: 'quiz', firstTryCorrect: true
+      }, { bearer: session });
+      assert.equal(first.status, 200, JSON.stringify(first.data));
+      assert.equal(first.data.saved, true);
+      const afterOne = (await call(db, '/v1/work', 'POST', {}, { bearer: session })).data.work[0];
+      assert.equal(afterOne.questionsAttempted, 1, 'A single first check must count');
+      assert.equal(afterOne.firstTryCorrect, 1);
+      assert.equal(afterOne.attempts, 0, 'One question is not a completed quiz');
+      const duplicate = await call(db, '/v1/questions', 'POST', {
+        assignmentKey: key, attemptId: firstId, level: 'quiz', firstTryCorrect: true
+      }, { bearer: session });
+      assert.equal(duplicate.data.duplicate, true);
+      const notAssigned = await call(db, '/v1/questions', 'POST', {
+        assignmentKey: `${year}|${unassignedId}|`, attemptId: crypto.randomUUID(),
+        level: 'quiz', firstTryCorrect: true
+      }, { bearer: session });
+      assert.equal(notAssigned.status, 403, 'Only assigned MCQ topics can send scores');
+      const wrongYear = await call(db, '/v1/questions', 'POST', {
+        assignmentKey: `13|${itemId}|`, attemptId: crypto.randomUUID(),
+        level: 'quiz', firstTryCorrect: true
+      }, { bearer: session });
+      assert.notEqual(wrongYear.status, 200, 'Year group mismatches remain blocked');
+      for (let i = 1; i < 10; i++) {
+        const next = await call(db, '/v1/questions', 'POST', {
+          assignmentKey: key, attemptId: crypto.randomUUID(),
+          level: 'quiz', firstTryCorrect: i % 2 === 0
+        }, { bearer: session });
+        assert.equal(next.status, 200, `Question ${i + 1}: ${JSON.stringify(next.data)}`);
+      }
+      const completed = await call(db, '/v1/attempts', 'POST', {
+        assignmentKey: key, attemptId: crypto.randomUUID(), score: 60, level: '', source: 'practice'
+      }, { bearer: session });
+      assert.equal(completed.status, 200, 'Ten question rows must not consume the completed-quiz rate limit');
+      const all = (await call(db, '/v1/work', 'POST', {}, { bearer: session })).data.work[0];
+      assert.equal(all.questionsAttempted, 10);
+      assert.equal(all.firstTryCorrect, 5);
+      assert.equal(all.attempts, 1);
+      assert.equal(all.bestScore, 60);
+      assert.equal(db.attempts.size, 11, 'Ten distinct first checks plus one completed round');
+    }
+  } finally { globalThis.Date = RealDate; }
 });
 
 

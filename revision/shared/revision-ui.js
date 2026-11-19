@@ -43,16 +43,24 @@
     steps.className='rhsc-question-steps';
     steps.setAttribute('aria-hidden','true');
     const dots=[];
-    const total=Number(progress.max)||5;
-    for(let i=0;i<total;i++){
-      const dot=document.createElement('span');
-      dot.className='rhsc-question-step';
-      steps.append(dot);
-      dots.push(dot);
-    }
+    let total=0;
     progress.after(steps);
     function updateSteps(){
       const match=counter.textContent.match(/Question\s+(\d+)\s+of\s+(\d+)/i);
+      // The app sets the actual question count after this shared UI loads.
+      // A normal practice set has five questions; assigned My Work has ten.
+      const required=Math.max(1,Math.min(50,Number(match?.[2])||Number(progress.max)||5));
+      if(required!==total){
+        total=required;
+        dots.length=0;
+        steps.replaceChildren();
+        for(let i=0;i<total;i++){
+          const dot=document.createElement('span');
+          dot.className='rhsc-question-step';
+          steps.append(dot);
+          dots.push(dot);
+        }
+      }
       if(!match)return;
       const current=Math.max(1,Math.min(total,Number(match[1])));
       for(let i=0;i<dots.length;i++){

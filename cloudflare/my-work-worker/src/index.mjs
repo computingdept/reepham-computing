@@ -499,7 +499,7 @@ async function assignmentAccess(env, student, key, teacherOverride) {
 async function handle(request, env) {
   const url = new URL(request.url);
   const path = url.pathname;
-  if (path === '/v1/health' && request.method === 'GET') return respond({ ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', workSets: 'v1', cohortCorrection: '11-to-12-v1', selectedClasswork: 'v1', cohortAudit: 'v1' });
+  if (path === '/v1/health' && request.method === 'GET') return respond({ ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', workSets: 'v1', cohortCorrection: '11-to-12-v1', selectedClasswork: 'v1', cohortAudit: 'v1', mcqQuestionTracking: 'v1' });
   if (!env.DB) return respond({ error: 'Database not configured' }, 503);
 
   if (path === '/v1/login' && request.method === 'POST') return signIn(request, env);
@@ -563,7 +563,7 @@ async function handle(request, env) {
       : respond({ error: 'Practice code not recognised' }, 404);
     if (!(await assignmentAccess(env, student, key, teacherIsValid(request, env))))
       return respond({ error: 'This activity is not currently available. Check its classwork period or homework hours and deadline.' }, 403);
-    const recent = await env.DB.prepare("SELECT COUNT(*) AS n FROM attempts WHERE code = ? AND created_at > datetime('now', '-1 minute')").bind(student.code).first();
+    const recent = await env.DB.prepare("SELECT COUNT(*) AS n FROM attempts WHERE code = ? AND level NOT LIKE 'q-%' AND created_at > datetime('now', '-1 minute')").bind(student.code).first();
     if (Number(recent?.n || 0) >= 8) return respond({ error: 'Please wait before submitting more attempts' }, 429);
     const result = await env.DB.prepare(`
       INSERT OR IGNORE INTO attempts (attempt_id, code, assignment_key, score, level, source)
@@ -581,8 +581,8 @@ async function handle(request, env) {
     if (!student) return respond({ error: 'Sign in to save your progress' }, 401);
     const conversion = /^(?:(?:10|11)\|j277-skill-p1-convert\|both|(?:12|13)\|h446-skill-p1-convert\|both)$/.test(key || '') &&
       ['easy', 'medium'].includes(level);
-    const dataTypesQuiz = /^(?:12|13)\|h446-practice-141-a\|$/.test(key || '') && level === 'quiz';
-    if (typeof key !== 'string' || (!conversion && !dataTypesQuiz) || typeof firstTryCorrect !== 'boolean' ||
+    const practiceQuiz = /^(?:(?:10|11)\|j277-practice-[a-z0-9-]+\||(?:12|13)\|h446-practice-[a-z0-9-]+\|)$/.test(key || '') && level === 'quiz';
+    if (typeof key !== 'string' || (!conversion && !practiceQuiz) || typeof firstTryCorrect !== 'boolean' ||
         typeof attemptId !== 'string' || !/^[0-9a-f-]{36}$/i.test(attemptId)) {
       return respond({ error: 'Invalid question attempt' }, 400);
     }
@@ -598,7 +598,7 @@ async function handle(request, env) {
     if (Number(recent?.n || 0) >= 40) return respond({ error: 'Please wait before saving more questions' }, 429);
     const result = await env.DB.prepare(`INSERT OR IGNORE INTO attempts
       (attempt_id, code, assignment_key, score, level, source) VALUES (?, ?, ?, ?, ?, ?)`)
-      .bind(attemptId, student.code, key, firstTryCorrect ? 100 : 0, 'q-' + level, dataTypesQuiz ? 'practice' : 'skill').run();
+      .bind(attemptId, student.code, key, firstTryCorrect ? 100 : 0, 'q-' + level, practiceQuiz ? 'practice' : 'skill').run();
     return respond({ saved: Boolean(result.meta?.changes), duplicate: !result.meta?.changes });
   }
 

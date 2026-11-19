@@ -11,15 +11,57 @@
   let session = '';
   try { session = sessionStorage.getItem('rhs-my-work-learner-session-v1') || ''; } catch { /* Browser storage might be disabled. */ }
   const ready = /^[A-Za-z0-9_-]{43}$/.test(session) && !!globalThis.crypto?.randomUUID;
-  const isQuestionPilot = topicId === '141-a';
+  // H446 1.4.1(a) already reports via RHSCSkills and must not be counted twice.
+  const isQuestionPilot = course === 'h446' && topicId === '141-a';
   const isAssigned = id => ready && id === topicId && location.hash.split('/').at(-1) === id;
 
   const note = document.querySelector('.save-info .save-note');
-  if (note) note.textContent = ready
-    ? (isQuestionPilot
-      ? 'Assigned work: each checked answer saves to My Work. A copy also stays on this browser.'
-      : 'Assigned work: your first-check score saves to My Work when you finish the quiz.')
-    : 'To save this assignment to My Work, open it from your signed-in My Work page.';
+  let questionTracking = null; // Wait for the deployed Worker to advertise this capability.
+  let questionQueue = [];
+  let savedAnswers = 0;
+  let failedAnswers = 0;
+  function updateNote() {
+    if (!note) return;
+    if (!ready) note.textContent = 'To save this assignment to My Work, open it from your signed-in My Work page.';
+    else if (isQuestionPilot) note.textContent = 'Assigned work: each checked answer saves to My Work. A copy also stays on this browser.';
+    else if (questionTracking === null) note.textContent = 'Assigned work: checking whether individual answers can save to My Work…';
+    else if (!questionTracking) note.textContent = 'Assigned work: your completed quiz saves to My Work. Individual-answer saving is temporarily unavailable.';
+    else if (failedAnswers) note.textContent = `${savedAnswers} checked answer(s) saved; ${failedAnswers} could not save. Your answers remain on this browser. Please tell your teacher.`;
+    else if (savedAnswers) note.textContent = `${savedAnswers} checked answer(s) saved to My Work. You may stop before question 10.`;
+    else note.textContent = 'Assigned work: every first-checked answer saves to My Work, even if you stop before question 10.';
+  }
+  updateNote();
+
+  function sendCheckedAnswer(attemptId, correct) {
+    fetch('https://rhsccs-my-work-api.jeromedthompson.workers.dev/v1/questions', {
+      method: 'POST', keepalive: true, cache: 'no-store',
+      headers: { 'content-type': 'application/json', authorization: 'Bearer ' + session },
+      body: JSON.stringify({ assignmentKey: key, attemptId, level: 'quiz', firstTryCorrect: correct })
+    }).then(response => {
+      if (!response.ok) throw Error('My Work rejected the answer.');
+      savedAnswers++;
+      updateNote();
+    }).catch(() => { failedAnswers++; updateNote(); });
+  }
+
+  if (ready && !isQuestionPilot) {
+    fetch('https://rhsccs-my-work-api.jeromedthompson.workers.dev/v1/health', { cache: 'no-store' })
+      .then(response => response.ok ? response.json() : null)
+      .then(data => {
+        questionTracking = data?.mcqQuestionTracking === 'v1';
+        if (questionTracking) questionQueue.forEach(({ attemptId, correct }) => sendCheckedAnswer(attemptId, correct));
+        questionQueue = [];
+        updateNote();
+      }).catch(() => { questionTracking = false; questionQueue = []; updateNote(); });
+  }
+
+  function reportCheckedAnswer(id, correct) {
+    if (isQuestionPilot || !isAssigned(id) || typeof correct !== 'boolean' || questionTracking === false) return false;
+    const attemptId = crypto.randomUUID();
+    if (questionTracking === null) questionQueue.push({ attemptId, correct });
+    else sendCheckedAnswer(attemptId, correct);
+    return true;
+  }
 
   const status = document.createElement('p');
   status.id = 'rhsc-work-result-status';
@@ -52,5 +94,5 @@
     return true;
   }
 
-  window.RHSCMyWorkH446 = Object.freeze({ reportCompletedQuiz, isAssigned });
+  window.RHSCMyWorkH446 = Object.freeze({ reportCompletedQuiz, reportCheckedAnswer, isAssigned });
 })();
