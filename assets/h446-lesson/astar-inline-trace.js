@@ -6,18 +6,77 @@
   const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const fmt=n=>Number.isFinite(n)?String(n):'∞';
 
-  function question(level,index,ocr){
-    const count=window.RHSCAStarQuestions.count,total=count+1;
-    let graph;
-    if(level==='easy'){
-      // A 5-node warm-up, then 6 nodes, then the authentic OCR 7-node problem.
-      const order=[4,1,'ocr',...Array.from({length:count},(_,i)=>i+1).filter(i=>i!==4&&i!==1)];
-      const selected=order[index%total];
-      graph=selected==='ocr'?ocr:window.RHSCAStarQuestions.get(selected);
-    }else{
-      graph=index%total===0?ocr:window.RHSCAStarQuestions.get(index%total);
+  // The first five Easy questions teach one new decision at a time. Graph size
+  // alone is not difficulty: these also deliberately limit routes and edges.
+  const warmups=[
+    {id:'warmup-robot',scene:'Warehouse robot · Straight corridor',
+      premise:'A is the charging dock. Follow the corridor to G, the packing station.',
+      unit:'seconds',height:200,v:[['A',52,97],['B',205,97],['G',358,97]],
+      e:[['A','B',3],['B','G',4]],h:{A:6,B:3,G:0}},
+    {id:'warmup-car',scene:'Car navigation · First junction',
+      premise:'A is home and G is school. Which turning should the driver try first?',
+      unit:'minutes',height:240,v:[['A',50,120],['B',185,50],['C',185,195],['G',355,50]],
+      e:[['A','B',4],['A','C',3],['B','G',5]],h:{A:8,B:4,C:9,G:0}},
+    {id:'warmup-game',scene:'Adventure game · Two routes',
+      premise:'A is the entrance and G is the exit. Compare the two possible routes.',
+      unit:'seconds',height:240,v:[['A',50,120],['B',185,50],['C',185,195],['G',355,120]],
+      e:[['A','B',3],['A','C',6],['B','G',9],['C','G',4]],h:{A:7,B:4,C:2,G:0}},
+    {id:'warmup-hospital',scene:'Hospital porter · Better corridor',
+      premise:'A is the supply room and G is the ward. Update D when you find a faster route.',
+      unit:'minutes',height:260,v:[['A',45,128],['B',150,50],['C',150,205],['D',275,128],['G',385,128]],
+      e:[['A','B',4],['A','C',6],['B','D',8],['C','D',3],['D','G',5]],
+      h:{A:9,B:3,C:2,D:4,G:0}},
+    {id:'warmup-network',scene:'Network routing · Short exam trace',
+      premise:'A sends a packet to G. Trace the routes and keep the lower cost.',
+      unit:'milliseconds',height:260,v:[['A',45,128],['B',150,50],['C',150,205],['D',275,128],['G',385,128]],
+      e:[['A','B',4],['A','C',7],['B','C',3],['B','D',4],['C','D',3],['D','G',4]],
+      h:{A:8,B:5,C:4,D:3,G:0}}
+  ].map(g=>({...g,start:'A',goal:'G'}));
+
+  // Two larger, clearly positioned challenges complement the seven-node bank.
+  const largeChallenges=[
+    {id:'hard-airport',scene:'Airport baggage routing · Terminal transfer',
+      premise:'Move baggage from A to G through the airport conveyors at minimum cost.',
+      unit:'seconds',v:[['A',35,140],['B',130,55],['C',130,225],['D',225,55],['E',225,225],['F',320,55],['H',320,225],['G',398,140]],
+      e:[['A','B',7],['A','C',8],['B','D',8],['C','E',7],['D','F',7],['E','H',6],
+        ['F','G',9],['H','G',8],['D','E',6],['B','C',5],['F','H',6]]},
+    {id:'hard-rescue',scene:'Rescue drone · Nine waypoints',
+      premise:'Find the fastest flight route from the launch pad A to the rescue point G.',
+      unit:'minutes',width:520,height:300,
+      v:[['A',32,150],['B',125,52],['C',125,248],['D',225,52],['E',225,248],['F',320,52],['H',320,248],['I',415,150],['G',495,150]],
+      e:[['A','B',8],['A','C',9],['B','D',6],['C','E',8],['B','C',7],['D','F',7],
+        ['E','H',6],['D','E',9],['F','I',8],['H','I',7],['I','G',5],['F','H',11],['E','F',13]]}
+  ].map(g=>{
+    const d=Object.fromEntries(g.v.map(([n])=>[n,Infinity]));d.G=0;
+    const visited=new Set();
+    while(visited.size<g.v.length){
+      const n=g.v.map(([name])=>name).filter(name=>!visited.has(name))
+        .sort((a,b)=>d[a]-d[b])[0];
+      visited.add(n);
+      for(const [a,b,w] of g.e){
+        if(a===n)d[b]=Math.min(d[b],d[n]+w);
+        if(b===n)d[a]=Math.min(d[a],d[n]+w);
+      }
     }
-    return {...structuredClone(graph),questionNumber:index%total+1,questionTotal:total};
+    return {...g,start:'A',goal:'G',h:Object.fromEntries(g.v.map(([n])=>[n,Math.floor(d[n]*0.65)]))};
+  });
+
+  function question(level,index,ocr){
+    const bank=window.RHSCAStarQuestions.all();
+    let order;
+    if(level==='easy'){
+      // 3, 4, 4, 5, 5 nodes; then varied five-, six- and seven-node practice.
+      order=[...warmups,...bank.sort((a,b)=>a.v.length-b.v.length||a.e.length-b.e.length)];
+    }else if(level==='medium'){
+      // Begin with six-node questions; the real OCR DancerGold trace comes fourth.
+      order=bank.filter(g=>g.v.length>=6);
+      order.splice(3,0,ocr);
+    }else{
+      order=[ocr,...bank.filter(g=>g.v.length>=7)];
+      order.splice(4,0,...largeChallenges);
+    }
+    const position=index%order.length;
+    return {...structuredClone(order[position]),questionNumber:position+1,questionTotal:order.length};
   }
   function neighbours(graph,node){
     return graph.e.filter(([a,b])=>a===node||b===node).map(([a,b,cost])=>({to:a===node?b:a,cost}));
@@ -79,6 +138,7 @@
 
   function graphSvg(s){
     const p=Object.fromEntries(s.graph.v.map(([n,x,y])=>[n,{x,y}]));
+    const width=s.graph.width||420,height=s.graph.height||280;
     const active=s.phase==='edge'?s.pending[0]:null;
     const lines=s.graph.e.map(([a,b])=>{
       const on=active&&((a===s.current&&b===active.to)||(b===s.current&&a===active.to));
@@ -95,7 +155,7 @@
       const fill=focused?'#e6b04a':chosen||route.includes(n)?'#167149':open?'#d6f0df':'#e7f1ea';
       return `<circle cx="${x}" cy="${y}" r="22" fill="${fill}" stroke="#fff" stroke-width="4"/><text x="${x}" y="${y+6}" text-anchor="middle" font-size="17" font-weight="900" fill="${chosen?'#fff':'#214d37'}">${esc(n)}</text><text x="${x}" y="${y+38}" text-anchor="middle" font-size="13" font-weight="800" fill="#365e4a">h=${s.graph.h[n]}</text>`;
     }).join('');
-    return `<svg class="a-trace-graph" viewBox="0 0 420 280" role="img" aria-label="A* graph from ${s.graph.start} to ${s.graph.goal}. Yellow indicates the active edge.">${lines}${weights}${nodes}</svg>`;
+    return `<svg class="a-trace-graph" viewBox="0 0 ${width} ${height}" style="aspect-ratio:${width}/${height}" role="img" aria-label="A* graph from ${s.graph.start} to ${s.graph.goal}. Yellow indicates the active edge.">${lines}${weights}${nodes}</svg>`;
   }
   function field(id,label,value){
     return `<label class="a-trace-field"><span>${esc(label)}</span><input id="${id}" type="number" inputmode="numeric" autocomplete="off" value="${esc(value||'')}" placeholder="?" /></label>`;
