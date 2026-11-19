@@ -408,6 +408,51 @@ async function workSetRows(env, code, cohort) {
   }
 }
 
+// Learner-facing assignment history for the compact Homework/Classwork dashboard.
+// Pilot stress-test sets are teacher-reporting data, never normal student work.
+// Marks are scoped to the work-set's creation time, so reassigning a topic
+// cannot make a fresh assignment look completed using an older attempt.
+async function learnerWorkOverview(env, student) {
+  let rows;
+  try {
+    const result = await env.DB.prepare(`
+      SELECT s.id AS packageId, s.title AS packageTitle, s.kind AS workType,
+        s.created_at AS createdAt, s.due_date AS dueDate, s.active,
+        a.assignment_key AS assignmentKey, a.item_id AS itemId, a.level,
+        COUNT(CASE WHEN t.level NOT LIKE 'q-%' THEN t.attempt_id END) AS attempts,
+        MAX(CASE WHEN t.level NOT LIKE 'q-%' THEN t.score END) AS bestScore,
+        COUNT(CASE WHEN t.level LIKE 'q-%' THEN t.attempt_id END) AS questionsAttempted,
+        COALESCE(SUM(CASE WHEN t.level LIKE 'q-%' AND t.score = 100 THEN 1 ELSE 0 END), 0) AS firstTryCorrect,
+        MAX(t.created_at) AS lastAttempt
+      FROM work_sets s JOIN work_set_items si ON si.work_set_id = s.id
+      JOIN assignments a ON a.assignment_key = si.assignment_key
+      LEFT JOIN attempts t ON t.assignment_key = a.assignment_key AND t.code = ?
+        AND t.created_at >= s.created_at
+      WHERE s.cohort = ? AND s.active = 1
+        AND (s.scope = 'cohort' OR s.target_code = ?)
+        AND s.id NOT LIKE 'pilot-20261119-%'
+      GROUP BY s.id, a.assignment_key
+      ORDER BY s.created_at DESC, si.position
+      LIMIT 600
+    `).bind(student.code, student.cohort, student.code).all();
+    rows = result.results;
+  } catch (error) {
+    if (!missingWorkSets(error)) throw error;
+    rows = [];
+  }
+  const independentOpen = isIndependentWorkTime();
+  return { cohort: student.cohort, independentOpen, work: rows.map(row => ({
+    packageId: row.packageId, packageTitle: row.packageTitle,
+    workType: row.workType, createdAt: row.createdAt, dueDate: row.dueDate,
+    assignmentKey: row.assignmentKey, itemId: row.itemId, level: row.level,
+    attempts: Number(row.attempts || 0), bestScore: row.bestScore,
+    questionsAttempted: Number(row.questionsAttempted || 0),
+    firstTryCorrect: Number(row.firstTryCorrect || 0), lastAttempt: row.lastAttempt,
+    available: workSetIsCurrent({ ...row, kind: row.workType }) &&
+      (row.workType === 'classwork' || independentOpen)
+  })) };
+}
+
 // Teacher-only snapshot of the one-day pilot. Unlike student My Work, this
 // reads historic attempts even after the combined assignments have expired.
 // Usernames are SHA-256 hashes at rest: the teacher supplies the existing
@@ -499,7 +544,7 @@ async function assignmentAccess(env, student, key, teacherOverride) {
 async function handle(request, env) {
   const url = new URL(request.url);
   const path = url.pathname;
-  if (path === '/v1/health' && request.method === 'GET') return respond({ ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', workSets: 'v1', cohortCorrection: '11-to-12-v1', selectedClasswork: 'v1', cohortAudit: 'v1', mcqQuestionTracking: 'v1' });
+  if (path === '/v1/health' && request.method === 'GET') return respond({ ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', workSets: 'v1', cohortCorrection: '11-to-12-v1', selectedClasswork: 'v1', cohortAudit: 'v1', mcqQuestionTracking: 'v1', learnerOverview: 'v1' });
   if (!env.DB) return respond({ error: 'Database not configured' }, 503);
 
   if (path === '/v1/login' && request.method === 'POST') return signIn(request, env);
@@ -507,6 +552,12 @@ async function handle(request, env) {
     const token = request.headers.get('authorization')?.replace(/^Bearer\s+/i, '') || '';
     if (SESSION_PATTERN.test(token)) await env.DB.prepare('DELETE FROM login_sessions WHERE token_hash = ?').bind(await digest(token)).run();
     return respond({ signedOut: true });
+  }
+
+  if (path === '/v1/learner/overview' && request.method === 'POST') {
+    const student = await sessionLearner(request, env);
+    if (!student) return respond({ error: 'Please sign in to My Work.' }, 401);
+    return respond(await learnerWorkOverview(env, student));
   }
 
   if (path === '/v1/work' && request.method === 'POST') {

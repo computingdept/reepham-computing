@@ -217,6 +217,7 @@ class FakeD1 {
             const set = this.workSets.get(item.work_set_id);
             const a = this.assignments.get(item.assignment_key);
             if (!set || !a) return [];
+            if (sql.includes("s.id NOT LIKE 'pilot-20261119-%'") && set.id.startsWith('pilot-20261119-')) return [];
             if (permissionQuery) {
               const overlap = sql.includes("OR ? = 'cohort'");
               return item.assignment_key === args[0] && set.cohort === args[1] && set.active &&
@@ -226,10 +227,12 @@ class FakeD1 {
               ? [{ ...set, itemId: a.item_id, level: a.level }] : [];
             const [code, cohort] = args;
             if (set.cohort !== cohort || !set.active || (set.scope === 'individual' && set.target_code !== code)) return [];
-            const scores = [...this.attempts.values()].filter(t => t.code === code && t.assignment_key === item.assignment_key);
+            const scores = [...this.attempts.values()].filter(t => t.code === code && t.assignment_key === item.assignment_key &&
+              (!sql.includes('t.created_at >= s.created_at') || Date.parse(t.created_at) >= Date.parse(set.createdAt)));
             return [{ packageId: set.id, packageTitle: set.title, workType: set.kind, kind: set.kind,
               createdAt: set.createdAt, dueDate: set.dueDate, active: set.active,
-              assignmentKey: a.assignment_key, itemId: a.item_id, level: a.level, ...attemptStats(scores) }];
+              assignmentKey: a.assignment_key, itemId: a.item_id, level: a.level,
+              lastAttempt: scores.at(-1)?.created_at || null, ...attemptStats(scores) }];
           }) };
         }
         if (sql.includes('SELECT l.username_key, p.code, p.cohort')) {
@@ -442,6 +445,61 @@ test('homework sets require a deadline and do not bypass independent study hours
     assert.equal((await call(db, '/v1/work', 'POST', { code })).data.work.length, 1);
     now = new OriginalDate('2026-11-21T10:00:00Z');
     assert.equal((await call(db, '/v1/work', 'POST', { code })).data.work.length, 0);
+  } finally { globalThis.Date = OriginalDate; }
+});
+
+test('learner overview preserves homework history, excludes the pilot and cannot open homework at lesson time', async () => {
+  const OriginalDate = globalThis.Date;
+  let now = new OriginalDate('2026-11-19T10:00:00Z');
+  globalThis.Date = class extends OriginalDate {
+    constructor(...args) { super(...(args.length ? args : [now.valueOf()])); }
+    static now() { return now.valueOf(); }
+  };
+  try {
+    const db = new FakeD1();
+    const codes = (await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y12', count: 2 }, { teacher: true })).data.codes;
+    assert.equal((await call(db, '/v1/teacher/logins', 'POST', { logins: [
+      { username:'studywaffle', code:codes[0], password:'1234', expectedCohort:'Y12' },
+      { username:'studytoast', code:codes[1], password:'5678', expectedCohort:'Y12' }
+    ] }, { teacher:true })).status, 201);
+    const homework = await call(db, '/v1/teacher/work-sets', 'POST', {
+      cohort:'Y12', scope:'individual', username:'studywaffle', kind:'homework', dueDate:'2026-11-20',
+      title:'Binary homework', items:[{ itemId:'h446-practice-141-a', level:'' }]
+    }, { teacher:true });
+    assert.equal(homework.status, 201, JSON.stringify(homework.data));
+    const key = '12|h446-practice-141-a|';
+    const pilotId = 'pilot-20261119-Y12';
+    db.workSets.set(pilotId, { id:pilotId, cohort:'Y12', scope:'cohort', title:'Pilot Year 12',
+      kind:'classwork', active:1, dueDate:null, createdAt:'2026-11-19T09:00:00Z' });
+    db.workSetItems.push({ work_set_id:pilotId, assignment_key:key, position:0 });
+    db.attempts.set('old', { attempt_id:'old', code:codes[0], assignment_key:key,
+      score:100, level:'q-quiz', created_at:'2026-11-18 11:00:00' });
+    const session = (await call(db, '/v1/login', 'POST', {
+      username:'studywaffle', password:'1234'
+    })).data.session;
+    const otherSession = (await call(db, '/v1/login', 'POST', {
+      username:'studytoast', password:'5678'
+    })).data.session;
+    assert.equal((await call(db, '/v1/learner/overview', 'POST', {})).status, 401);
+    assert.equal((await call(db, '/v1/learner/overview', 'POST', {}, { bearer:otherSession })).data.work.length, 0);
+    const duringLesson = await call(db, '/v1/learner/overview', 'POST', {}, { bearer:session });
+    assert.equal(duringLesson.status, 200, JSON.stringify(duringLesson.data));
+    assert.equal(duringLesson.data.work.length, 1, 'A pilot set must never appear on student dashboard');
+    assert.equal(duringLesson.data.work[0].questionsAttempted, 0, 'Old marks must not complete a newly issued homework');
+    assert.equal(duringLesson.data.work[0].available, false, 'Cannot launch homework during restricted hours');
+    db.attempts.set('new', { attempt_id:'new', code:codes[0], assignment_key:key,
+      score:100, level:'q-quiz', created_at:'2026-11-19 16:00:00' });
+    now = new OriginalDate('2026-11-19T16:05:00Z');
+    const open = await call(db, '/v1/learner/overview', 'POST', {}, { bearer:session });
+    assert.equal(open.data.work[0].questionsAttempted, 1);
+    assert.equal(open.data.work[0].available, true);
+    now = new OriginalDate('2026-11-21T16:05:00Z');
+    const freshSession = (await call(db, '/v1/login', 'POST', {
+      username:'studywaffle', password:'1234'
+    })).data.session;
+    const past = await call(db, '/v1/learner/overview', 'POST', {}, { bearer:freshSession });
+    assert.equal(past.data.work.length, 1, 'Expired homework remains in progress history');
+    assert.equal(past.data.work[0].available, false, 'Expired work is review-only');
   } finally { globalThis.Date = OriginalDate; }
 });
 
@@ -672,7 +730,7 @@ test('renewing an individual Classwork assignment does not grant access to the w
 
 test('health, CORS and teacher-only write access', async () => {
   const db = new FakeD1();
-  assert.deepEqual((await call(db, '/v1/health')).data, { ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', workSets: 'v1', cohortCorrection: '11-to-12-v1', selectedClasswork: 'v1', cohortAudit: 'v1', mcqQuestionTracking: 'v1' });
+  assert.deepEqual((await call(db, '/v1/health')).data, { ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', workSets: 'v1', cohortCorrection: '11-to-12-v1', selectedClasswork: 'v1', cohortAudit: 'v1', mcqQuestionTracking: 'v1', learnerOverview: 'v1' });
   const blocked = await call(db, '/v1/teacher/codes', 'POST', { cohort: 'Y12', count: 10 });
   assert.equal(blocked.status, 401);
   const wrongOrigin = await call(db, '/v1/health', 'GET', undefined, { origin: 'https://not-rhsccs.org' });
