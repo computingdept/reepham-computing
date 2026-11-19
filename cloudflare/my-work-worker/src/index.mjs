@@ -17,6 +17,10 @@ const LOGIN_ATTEMPT_LIMIT = 5;
 const LOGIN_LOCK_SECONDS = 15 * 60;
 const encoder = new TextEncoder();
 const INDEPENDENT_WORK_SCHEDULE = 'Independent work is available Mon–Fri 12:30–13:20 and 15:30–midnight, and all day Sat–Sun (UK time).';
+const SYNOPTIC_GROUPS = {
+  h446: { paper1: ['1.1', '1.2', '1.3', '1.4', '1.5'], paper2: ['2.1', '2.2', '2.3'] },
+  j277: { paper1: ['1.1', '1.2', '1.3', '1.4', '1.5', '1.6'], paper2: ['2.1', '2.2', '2.3', '2.4', '2.5'] }
+};
 
 export function isIndependentWorkTime(date = new Date()) {
   const parts = new Intl.DateTimeFormat('en-GB', {
@@ -243,10 +247,10 @@ function respond(body, status = 200, extraHeaders = {}) {
   });
 }
 
-async function jsonBody(request) {
+async function jsonBody(request, limit = MAX_BODY) {
   if (!request.headers.get('content-type')?.toLowerCase().includes('application/json')) throw Error('JSON request required');
   const source = await request.text();
-  if (source.length > MAX_BODY) throw Error('Request too large');
+  if (source.length > limit) throw Error('Request too large');
   let data;
   try { data = JSON.parse(source); } catch { throw Error('Invalid JSON'); }
   if (!data || typeof data !== 'object' || Array.isArray(data)) throw Error('Object expected');
@@ -354,6 +358,75 @@ export function workSetIsCurrent(set, date = new Date()) {
 
 function missingWorkSets(error) {
   return /no such table: (?:work_sets|work_set_items)/i.test(String(error?.message || ''));
+}
+
+function missingSynoptic(error) {
+  return /no such table: synoptic_(?:homework|questions)/i.test(String(error?.message || ''));
+}
+
+async function ensureSynopticTables(env) {
+  // Additive, teacher-only first-use migration. Legacy pilot tables stay intact.
+  await env.DB.prepare(`CREATE TABLE IF NOT EXISTS synoptic_homework (
+    id TEXT PRIMARY KEY,
+    cohort TEXT NOT NULL CHECK (cohort IN ('Y11','Y13')),
+    title TEXT NOT NULL,
+    due_date TEXT NOT NULL,
+    skill_ids_json TEXT NOT NULL,
+    bank_revision TEXT NOT NULL,
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+  )`).run();
+  await env.DB.prepare(`CREATE TABLE IF NOT EXISTS synoptic_questions (
+    homework_id TEXT NOT NULL REFERENCES synoptic_homework(id),
+    cohort TEXT NOT NULL CHECK (cohort IN ('Y11','Y13')),
+    paper TEXT NOT NULL CHECK (paper IN ('paper1','paper2')),
+    position INTEGER NOT NULL CHECK (position BETWEEN 0 AND 9),
+    question_id TEXT NOT NULL,
+    question_json TEXT NOT NULL,
+    PRIMARY KEY (homework_id, paper, position),
+    UNIQUE (cohort, question_id)
+  )`).run();
+  await env.DB.prepare('CREATE INDEX IF NOT EXISTS synoptic_homework_by_year ON synoptic_homework(cohort, created_at)').run();
+}
+
+function validateSynopticPublish(payload) {
+  const { cohort, title, dueDate, skills, bankRevision, papers } = payload;
+  const course = cohort === 'Y13' ? 'h446' : cohort === 'Y11' ? 'j277' : null;
+  if (!course || typeof title !== 'string' || title.trim().length < 3 || title.trim().length > 90 ||
+      typeof dueDate !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(dueDate) ||
+      Number.isNaN(Date.parse(dueDate)) || new Date(dueDate).toISOString().slice(0, 10) !== dueDate || dueDate < ukToday() ||
+      typeof bankRevision !== 'string' || !/^[a-f0-9]{40}$/i.test(bankRevision) ||
+      !Array.isArray(skills) || skills.length < 1 || skills.length > 2 ||
+      skills.some(id => typeof id !== 'string' || !new RegExp(`^${course}-skill-[a-z0-9-]{1,80}$`).test(id)) ||
+      new Set(skills).size !== skills.length || !papers || typeof papers !== 'object') return null;
+  const seen = new Set();
+  const selected = [];
+  const coverage = {};
+  for (const paper of ['paper1', 'paper2']) {
+    if (!Array.isArray(papers[paper]) || papers[paper].length !== 10) return null;
+    coverage[paper] = {};
+    for (const [position, question] of papers[paper].entries()) {
+      if (!question || typeof question !== 'object' || question.course !== course || question.paper !== paper ||
+          typeof question.id !== 'string' || !/^[a-z0-9-]{1,90}$/.test(question.id) || seen.has(question.id) ||
+          typeof question.group !== 'string' || !SYNOPTIC_GROUPS[course][paper].includes(question.group) ||
+          typeof question.spec !== 'string' || question.spec.length > 70 ||
+          typeof question.skillId !== 'string' || question.skillId.length > 100 ||
+          typeof question.prompt !== 'string' || !question.prompt.trim() || question.prompt.length > 2000 ||
+          !Array.isArray(question.options) || question.options.length !== 4 ||
+          !question.options.every(option => typeof option === 'string' && option.trim() && option.length <= 1000) ||
+          !question.options.includes(question.answer) ||
+          typeof question.explanation !== 'string' || !question.explanation.trim() || question.explanation.length > 4000 ||
+          typeof question.sourcePath !== 'string' ||
+          !new RegExp(`^revision/${course}/section-[12]-[0-9-]+/bank\\.js$`).test(question.sourcePath)) return null;
+      const sectionGroup = question.sourcePath.match(/section-((?:1|2)-\d+)/)?.[1].replace('-', '.');
+      if (sectionGroup !== question.group) return null;
+      seen.add(question.id);
+      coverage[paper][question.group] = (coverage[paper][question.group] || 0) + 1;
+      // Freeze question content at publication: future GitHub bank edits do
+      // not silently change the marking of an issued assignment.
+      selected.push({ paper, position, id: question.id, snapshot: JSON.stringify(question) });
+    }
+  }
+  return { cohort, title: title.trim(), dueDate, skills, bankRevision, selected, coverage };
 }
 
 async function ensureWorkSetTables(env) {
@@ -544,7 +617,7 @@ async function assignmentAccess(env, student, key, teacherOverride) {
 async function handle(request, env) {
   const url = new URL(request.url);
   const path = url.pathname;
-  if (path === '/v1/health' && request.method === 'GET') return respond({ ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', workSets: 'v1', cohortCorrection: '11-to-12-v1', selectedClasswork: 'v1', cohortAudit: 'v1', mcqQuestionTracking: 'v1', learnerOverview: 'v1' });
+  if (path === '/v1/health' && request.method === 'GET') return respond({ ok: true, pilot: true, classworkPolicy: '7-day-renewable-v2', workSets: 'v1', cohortCorrection: '11-to-12-v1', selectedClasswork: 'v1', cohortAudit: 'v1', mcqQuestionTracking: 'v1', learnerOverview: 'v1', synopticPublishing: 'teacher-only-v1' });
   if (!env.DB) return respond({ error: 'Database not configured' }, 503);
 
   if (path === '/v1/login' && request.method === 'POST') return signIn(request, env);
@@ -655,7 +728,70 @@ async function handle(request, env) {
 
   if (path.startsWith('/v1/teacher/')) {
     if (!teacherIsValid(request, env)) return respond({ error: 'Teacher access required' }, 401);
-      if (path === '/v1/teacher/pilot-results' && request.method === 'POST') return pilotResults(request, env);
+    if (path === '/v1/teacher/synoptic/used' && request.method === 'GET') {
+      const cohort = url.searchParams.get('cohort');
+      if (!['Y11', 'Y13'].includes(cohort)) return respond({ error: 'Choose Year 11 or Year 13' }, 400);
+      try {
+        const rows = await env.DB.prepare('SELECT question_id AS questionId FROM synoptic_questions WHERE cohort = ? ORDER BY question_id')
+          .bind(cohort).all();
+        return respond({ cohort, usedIds: rows.results.map(row => row.questionId) });
+      } catch (error) {
+        if (missingSynoptic(error)) return respond({ cohort, usedIds: [] });
+        throw error;
+      }
+    }
+    if (path === '/v1/teacher/synoptic/assignments' && request.method === 'GET') {
+      const cohort = url.searchParams.get('cohort');
+      if (!['Y11', 'Y13'].includes(cohort)) return respond({ error: 'Choose Year 11 or Year 13' }, 400);
+      try {
+        const rows = await env.DB.prepare(`SELECT h.id, h.title, h.due_date AS dueDate,
+          h.skill_ids_json AS skillsJson, h.bank_revision AS bankRevision,
+          h.created_at AS createdAt, q.paper, q.position, q.question_id AS questionId
+          FROM synoptic_homework h JOIN synoptic_questions q ON q.homework_id = h.id
+          WHERE h.cohort = ? ORDER BY h.created_at DESC, h.id, q.paper, q.position`)
+          .bind(cohort).all();
+        const assigned = new Map();
+        for (const row of rows.results) {
+          if (!assigned.has(row.id)) assigned.set(row.id, {
+            id: row.id, title: row.title, dueDate: row.dueDate,
+            bankRevision: row.bankRevision, createdAt: row.createdAt,
+            skills: JSON.parse(row.skillsJson), paper1: [], paper2: []
+          });
+          assigned.get(row.id)[row.paper].push(row.questionId);
+        }
+        return respond({ cohort, assignments: [...assigned.values()] });
+      } catch (error) {
+        if (missingSynoptic(error)) return respond({ cohort, assignments: [] });
+        throw error;
+      }
+    }
+    if (path === '/v1/teacher/synoptic/publish' && request.method === 'POST') {
+      const body = await jsonBody(request, 98_304);
+      if (body.confirm !== true) return respond({ error: 'Review all 20 questions before confirming publication.' }, 400);
+      const prepared = validateSynopticPublish(body);
+      if (!prepared) return respond({ error: 'Provide Year 11/13, 1–2 Skills, a due date, a bank commit and exactly 10 valid questions from each paper.' }, 400);
+      await ensureSynopticTables(env);
+      const id = crypto.randomUUID();
+      const statements = [env.DB.prepare(`INSERT INTO synoptic_homework
+        (id, cohort, title, due_date, skill_ids_json, bank_revision) VALUES (?, ?, ?, ?, ?, ?)`)
+        .bind(id, prepared.cohort, prepared.title, prepared.dueDate, JSON.stringify(prepared.skills), prepared.bankRevision)];
+      for (const item of prepared.selected) statements.push(env.DB.prepare(`INSERT INTO synoptic_questions
+        (homework_id, cohort, paper, position, question_id, question_json) VALUES (?, ?, ?, ?, ?, ?)`)
+        .bind(id, prepared.cohort, item.paper, item.position, item.id, item.snapshot));
+      try {
+        // D1.batch is transactional. UNIQUE(cohort,question_id) makes no-repeat
+        // reliable even if two teachers publish concurrently from stale previews.
+        await env.DB.batch(statements);
+      } catch (error) {
+        if (/UNIQUE constraint failed: synoptic_questions\.cohort, synoptic_questions\.question_id/i.test(String(error?.message || '')))
+          return respond({ error: 'One or more questions were published by another assignment. Refresh the used-question list and regenerate. Nothing was published.' }, 409);
+        throw error;
+      }
+      return respond({ id, cohort: prepared.cohort, title: prepared.title, dueDate: prepared.dueDate,
+        skills: prepared.skills, questionCount: 20, coverage: prepared.coverage, bankRevision: prepared.bankRevision,
+        learnerVisible: false, nextStep: 'Student assignment pages are not yet enabled.' }, 201);
+    }
+    if (path === '/v1/teacher/pilot-results' && request.method === 'POST') return pilotResults(request, env);
     if (path === '/v1/teacher/logins' && request.method === 'POST') return provisionLogins(request, env);
     if (path === '/v1/teacher/audit-cohorts' && request.method === 'POST') return auditLoginCohorts(request, env);
     if (path === '/v1/teacher/assignment-inventory' && request.method === 'GET') {

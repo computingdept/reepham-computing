@@ -1,6 +1,6 @@
 # Synoptic Homework pilot — agreed design and release contract
 
-**Status:** Design baseline v0.1 · 19 November 2026 · **NOT a live synoptic assignment feature**
+**Status:** Design baseline v0.2 · 19 November 2026 · **Selection engine and teacher-only D1 publishing backend built; NOT a live student assignment feature**
 
 **Purpose:** One predictable, independently completed homework assignment that
 combines selected Skills, synoptic Paper 1 and Paper 2 retrieval, and useful
@@ -20,7 +20,8 @@ existing Trust question-bank architecture remains in
 | Curriculum scope | Any question from the relevant Paper 1 or Paper 2 bank. These cohorts have been taught the course; no taught-topic gate is needed for the initial pilot. |
 | Assignment formula | 1–2 teacher-selected Skills + **10 Paper 1 MCQs** + **10 Paper 2 MCQs** + feedback/review |
 | Target working time | Approximately **30–40 minutes**. Estimate the Skills separately; do not promise 40 minutes for every possible Skill combination. |
-| Question selection | Automatically select from existing original RHSC practice banks, with breadth across specification topics. |
+| Question selection | Automatically select **previously unused questions** from existing original RHSC practice banks, balanced across specification groups and Skills. |
+| No-repeat rule | Each published homework retires its 20 question IDs **for that year group**. Never reuse one in a later homework unless a separate, explicit teacher-approved reset policy is introduced. Previewing does **not** consume questions. |
 | Fixed questions | Generate **one fixed set of 20 questions per assignment** at creation, reviewable by the teacher and the same for every learner assigned that homework. Refresh/resume never redraws questions. |
 | Marking | Save the first checked answer per question. Completion is separate from accuracy; a completed quiz requires all ten answers to be checked. |
 | Feedback | Show Paper 1 and Paper 2 first-attempt scores separately, explain incorrect answers, and link to relevant lesson/revision support. Feedback must appear even at a high overall score. |
@@ -56,6 +57,31 @@ The first pilot uses the **same items for the whole class** for comparable
 feedback. Later versions could introduce variants deliberately, but that is
 not part of this baseline.
 
+### Selection algorithm and failure rules
+
+1. Load the published GitHub banks for the chosen course: H446 for Y13 or J277
+   for Y11. Parse only the JSON `SKILLS` array; do not run the source scripts.
+2. Retrieve **used question IDs from D1 for this cohort**, including past
+   completed/expired synoptic homework. Exclude them before drawing anything.
+3. Draw ten questions per paper. First distribute one question across each
+   available specification group, then a second, etc. Rotate among distinct
+   Skills within each group where possible. Ties are random.
+4. Grouping means H446 Paper 1 **1.1–1.5**, H446 Paper 2 **2.1–2.3**
+   (combining 2.2.1 and 2.2.2), J277 Paper 1 **1.1–1.6**, and J277 Paper 2
+   **2.1–2.5**. A fully stocked paper yields approximately 2 per H446 P1
+   group, 3/3/4 for H446 P2, 1–2 per J277 P1 group and 2 per J277 P2 group.
+5. Teacher checks the questions and may regenerate the **unpublished** preview.
+   Once published, the set and answers are frozen; refresh never rerolls them.
+6. If fewer than ten unused valid questions remain in either paper, **stop and
+   explain the shortage**. Never silently reuse a question. If one group is
+   exhausted but the whole paper still has enough, use available groups.
+
+The no-repeat guarantee is scoped to the **year group** (Y11 or Y13) across its
+published homework, not the pupil's browser. It is enforced twice: the
+selection engine excludes prior IDs, and a D1 unique constraint rejects a
+second publication of the same ID for the same year group—even if two
+publishing previews were prepared at the same time.
+
 ## Data and marking contract
 
 - Stable assignment ID, version, cohort, due date and selected Skill IDs.
@@ -74,6 +100,42 @@ not part of this baseline.
   **not deleted** or altered by this work without separate approval.
 - Enforce existing learner authentication, homework access windows and due
   rules unless a separate policy change is explicitly agreed.
+
+### Hosting, cost and source-of-truth decision
+
+| Data | Location and rule |
+| --- | --- |
+| 2,270 MCQs, options, explanations, spec/Skill tags | **GitHub** original `revision/{course}/section-*/bank.js` files. These remain the authoritative question-bank sources. |
+| Assignment title, due date, selected Skills and bank commit SHA | **Cloudflare D1**, new `synoptic_homework` table. |
+| Each assignment's 20 selected question IDs and frozen marking/feedback snapshots | **Cloudflare D1**, new `synoptic_questions` table. A cohort/question ID pair is unique. |
+| Each learner's first-checked answers, progress and scores | **Cloudflare D1** in an additive student-attempt schema for the next build stage; do not reuse legacy global activity attempts. |
+
+There is **no Cloudflare copy of the full question bank**. Saving the 20
+published question snapshots avoids breaking old homework when GitHub content
+is corrected later. The assignment ledger doubles as the used-question history:
+no extra history table or GitHub commit on every learner answer is needed.
+
+Cloudflare's published Workers Free limits on 19 November 2026 include 5m D1
+rows read/day, 100k rows written/day and 5 GB D1 storage; Worker requests have
+a 100k/day allowance. A 63-learner pilot is expected to stay well below these
+limits, but the teacher must check the real usage metrics. Free-tier overages
+cause temporary query failures rather than silent question reuse. References:
+[D1 pricing](https://developers.cloudflare.com/d1/platform/pricing/),
+[Workers limits](https://developers.cloudflare.com/workers/platform/limits/).
+
+The current backend exposes **teacher-token-protected, unpublished** endpoints:
+
+- `GET /v1/teacher/synoptic/used?cohort=Y13|Y11` (read-only used IDs).
+- `GET /v1/teacher/synoptic/assignments?cohort=Y13|Y11` (teacher audit ledger).
+- `POST /v1/teacher/synoptic/publish` (explicit `confirm:true`, validated
+  10+10 snapshots, atomic 20-ID reservation). Existing tables remain untouched.
+
+**Not yet implemented:** teacher review screen, student assignment cards,
+synoptic quiz answering, first-response marking, support links and progress
+reporting. Published backend records are not learner-visible until those stages
+are tested. The backend accepts teacher-authenticated snapshots and a GitHub
+commit identifier; an additional source-verification step should be evaluated
+before a wider rollout.
 
 ## Question-bank source and audit
 
@@ -98,6 +160,8 @@ question quality.** Teacher content QA remains a release gate.
 - [ ] **B. Reusable synoptic selection engine**:
   course/paper separation, broad topic coverage, fixed 10+10 question IDs,
   teacher review and versioned assignment snapshots.
+  **Progress:** pure selector, no-repeat D1 ledger, atomic teacher-only publish
+  and regression tests are implemented. Teacher visual review is still pending.
 - [ ] **C. Year 13 student proof of concept**:
   one assignment, simple navigation, checked-answer persistence and feedback.
 - [ ] **D. Year 11 on the same engine**:
@@ -115,6 +179,10 @@ until stage F passes. Do not treat the existence of a preview as deployment.
 - [ ] Y13 Paper 1 and Paper 2 each contain exactly ten valid H446 questions.
 - [ ] Y11 Paper 1 and Paper 2 each contain exactly ten valid J277 questions.
 - [ ] Breadth across topics is checked; no duplicate question ID in a set.
+- [x] Selector distributes ten questions across specification groups and
+      distinct Skills where possible; fails clearly if unused supply is short.
+- [x] D1 publication rejects reused IDs for the same cohort atomically and
+      retains a question snapshot; an unpublished preview does not consume IDs.
 - [ ] The teacher can review and replace selected items before assignment.
 - [ ] All pupils on one assignment see the same frozen 20 question IDs.
 - [ ] Reload, back navigation and a second device never silently redraw or
@@ -142,6 +210,9 @@ until stage F passes. Do not treat the existence of a preview as deployment.
 | 2026-11-19 | Standard homework: 1–2 Skills, Paper 1 × 10 MCQs, Paper 2 × 10 MCQs and feedback. |
 | 2026-11-19 | Use the same fixed question selection for all pupils in a given assignment. |
 | 2026-11-19 | Audit and document existing banks before building; do not modify original quizzes to create the synoptic version. |
+| 2026-11-19 | Keep the complete question bank in GitHub, and only assignment records, frozen 20-question snapshots and learner answers in existing Cloudflare D1. |
+| 2026-11-19 | Never repeat a question across published homeworks for the same year group; distribute ten per paper across specification groups and Skills wherever unused supply permits. |
+| 2026-11-19 | Use database uniqueness and atomic publication as safeguards against two teachers assigning the same question; no learner-visible rollout until the full assignment and marking flow passes QA. |
 
 **Future changes:** Add a dated decision here and update the audit/acceptance
 checks before modifying the shared engine. Do not quietly expand scope to
