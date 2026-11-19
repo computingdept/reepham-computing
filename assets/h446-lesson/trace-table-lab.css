@@ -1,0 +1,65 @@
+/* Exam-style graph trace interface for H446 A* and Dijkstra, scoped to their skills pages. */
+#workspace .trace-root{box-sizing:border-box;width:100%;max-width:100%;background:#fff;border:1px solid #d7e3dc;border-radius:16px;padding:17px 19px;box-shadow:0 8px 24px rgba(30,71,51,.06)}
+#workspace .trace-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:10px}
+#workspace .trace-heading h2{font-size:clamp(23px,2vw,30px);line-height:1.16;margin:3px 0 0;color:#173c2f}
+#workspace .trace-kicker{font-size:12px;letter-spacing:.08em;font-weight:900;color:#266149}
+#workspace .trace-goal{white-space:nowrap;font-size:18px;font-weight:850;background:#eaf3ec;color:#1e573d;border-radius:9px;padding:8px 13px}
+#workspace .trace-columns{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:17px;align-items:start}
+#workspace .trace-graph-pane,#workspace .trace-working{min-width:0}
+#workspace .trace-caption{margin:3px 0 10px;font-size:clamp(14px,1.05vw,18px);font-weight:750;color:#4b6758}
+#workspace .trace-image,#workspace .trace-graph-pane>svg{display:block;width:100%;height:auto;max-height:min(53vh,490px);object-fit:contain;object-position:top left;border:1px solid #d4e3d9;border-radius:10px;background:#f9fcf9}
+#workspace .trace-graph-pane>svg{aspect-ratio:420/280}
+#workspace .trace-hint{margin-top:11px;background:#f4f8f5;border:1px solid #dce9e0;border-radius:9px;padding:8px 11px;color:#315741}
+#workspace .trace-hint summary{cursor:pointer;font-size:15px;font-weight:850}
+#workspace .trace-hint p{margin:7px 0 0;font-size:15px;line-height:1.4}
+#workspace .trace-table-scroll{width:100%;overflow-x:auto}
+#workspace .trace-table{width:100%;table-layout:fixed;border-collapse:separate;border-spacing:0;border:1px solid #c5dacc;border-radius:9px;overflow:hidden;font-size:clamp(13px,1.05vw,17px);line-height:1.25}
+#workspace .trace-table thead th{background:#e5f0e8;color:#244f37;font-size:clamp(12px,.93vw,15px);font-weight:900;padding:11px 5px;white-space:normal}
+#workspace .trace-table thead th:first-child{width:12%}
+#workspace .trace-table tbody th{background:#f2f8f3;color:#204b35;font-weight:900}
+#workspace .trace-table td,#workspace .trace-table tbody th{border-top:1px solid #d5e2d9;border-right:1px solid #e3ece6;padding:5px 4px;text-align:center;height:40px}
+#workspace .trace-table td:last-child,#workspace .trace-table th:last-child{border-right:0}
+#workspace .trace-given{color:#476454;background:#f9fbf9;font-weight:750;font-variant-numeric:tabular-nums}
+#workspace .trace-revealed{color:#126044!important;background:#dff3e7!important}
+#workspace .trace-empty{background:#fff;font-weight:650}
+#workspace .trace-entry{box-sizing:border-box;display:block;min-width:0;width:100%;height:31px;padding:4px 2px;margin:0;border:1px solid #bad2c1;border-radius:7px;background:#fff;color:#173e2b;text-align:center;font:750 clamp(13px,1.05vw,17px)/1.1 ui-sans-serif,system-ui,sans-serif}
+#workspace .trace-entry:focus{outline:2px solid #47916d;outline-offset:0}
+#workspace .trace-entry.trace-wrong{border-color:#ca5e4b;background:#fff2ee}
+#workspace .trace-feedback{min-height:29px;margin:10px 0 2px;font-size:clamp(14px,1vw,17px);line-height:1.3;font-weight:750;color:#42614d}
+#workspace .trace-feedback.good{color:#146043}#workspace .trace-feedback.bad{color:#aa3f28}
+#workspace .trace-actions,#workspace .trace-cost-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:9px}
+#workspace .trace-primary,#workspace .trace-light,#workspace .trace-chip{cursor:pointer;border-radius:9px;font-weight:850;transition:background .12s,border-color .12s}
+#workspace .trace-primary{background:#155b40;border:1px solid #155b40;color:#fff;padding:11px 17px;font-size:15px}
+#workspace .trace-primary:hover{background:#0e4631}
+#workspace .trace-light{background:#fff;border:1px solid #c1d5c7;color:#28533c;padding:10px 13px;font-size:14px}
+#workspace .trace-tip{font-size:13px;color:#6a8072;line-height:1.25}
+#workspace .trace-final{border-top:1px solid #dce8de;margin-top:9px;padding-top:8px}
+#workspace .trace-instruction{font-size:16px;line-height:1.3;color:#244b36;margin:7px 0}
+#workspace .trace-chips{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}
+#workspace .trace-chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid #bad0bf;color:#234735;padding:8px 10px;font-size:15px}
+#workspace .trace-chip span{display:inline-grid;place-items:center;min-width:18px;height:18px;border-radius:6px;background:#edf5ef;color:#4b7561;font-size:12px}
+#workspace .trace-chip.active{border-color:#249461;background:#e1f2e8;color:#0d5a36}
+#workspace .trace-chip.active span{background:#167347;color:#fff}
+#workspace .trace-cost-row{justify-content:space-between;font-size:15px;color:#2b4938}
+#workspace .trace-cost-row label{display:flex;align-items:center;gap:8px;font-weight:850}
+#workspace #trace-total-cost{box-sizing:border-box;width:104px;height:39px;padding:6px;border:1px solid #adccba;border-radius:8px;font-size:17px;font-weight:800}
+#workspace .trace-result{display:flex;flex-direction:column;gap:7px;margin-top:10px;padding:15px;background:#e4f5e9;border:1px solid #b7ddc5;border-radius:10px;color:#17523a;font-size:16px}
+#workspace .trace-result button{align-self:start;margin-top:6px}
+@media(max-width:900px){#workspace .trace-columns{grid-template-columns:minmax(0,1fr)}#workspace .trace-image,#workspace .trace-graph-pane>svg{max-height:none}#workspace .trace-root{padding:13px}#workspace .trace-caption{font-size:14px}#workspace .trace-table{font-size:13px}#workspace .trace-table thead th{padding:7px 3px;font-size:12px}#workspace .trace-entry{height:30px;font-size:14px}}
+body.classroom #workspace .trace-root{padding:7px 9px;border-radius:9px;box-shadow:none}
+body.classroom #workspace .trace-heading{margin-bottom:3px}
+body.classroom #workspace .trace-heading h2{font-size:17px;margin:0}
+body.classroom #workspace .trace-kicker{font-size:10px}
+body.classroom #workspace .trace-goal{font-size:13px;padding:3px 7px}
+body.classroom #workspace .trace-columns{display:flex;flex-direction:column;gap:5px}
+body.classroom #workspace .trace-graph-pane,body.classroom #workspace .trace-working{width:100%}
+body.classroom #workspace .trace-caption{font-size:11px;margin:2px 0}
+body.classroom #workspace .trace-image,body.classroom #workspace .trace-graph-pane>svg{max-height:158px;width:100%;object-position:center;aspect-ratio:auto}
+body.classroom #workspace .trace-hint{display:none}
+body.classroom #workspace .trace-table{font-size:11px}
+body.classroom #workspace .trace-table thead th{font-size:11px;padding:4px 2px}
+body.classroom #workspace .trace-table td,body.classroom #workspace .trace-table tbody th{height:27px;padding:1px 2px}
+body.classroom #workspace .trace-feedback{font-size:11px;min-height:16px;margin:4px 0 0}
+body.classroom #workspace .trace-actions{margin-top:3px}
+body.classroom #workspace .trace-primary,body.classroom #workspace .trace-light{font-size:12px;padding:5px 9px}
+body.classroom #workspace .trace-tip{display:none}

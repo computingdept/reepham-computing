@@ -45,14 +45,16 @@ pre .focus{color:#ffe39c;font-weight:850}.code-answer{width:100%;min-height:57px
 @media(max-width:850px){.layout,.classroom .layout,.code-layout{grid-template-columns:1fr}.controls .levels{margin-left:0}.top{align-items:center}.graph{max-height:255px}main{padding:14px}.classroom .graph{max-height:260px}}
 @media(max-width:520px){.score{font-size:.75rem}.top{flex-wrap:wrap}.intro{font-size:.87rem}.seg button{padding:8px 11px}.controls{margin-top:14px}.panel-pad{padding:14px}.update-table th,.update-table td{padding:6px 3px}.update-table input,.update-table select{font-size:.82rem}.work-row{grid-template-columns:1fr}}
 </style>
+<link rel="stylesheet" href="/assets/h446-lesson/trace-table-lab.css?v=20261119a">
 </head>
 <body>
 <header><a class="back" href="/exercise/h446/tools.html">← H446 Skills</a><span class="brand">RHS COMPUTING · H446</span></header>
 <main>
   <div class="top"><div><p class="eyebrow">OCR H446 · 2.3.1(f) · Skills</p><h1>Dijkstra's shortest path</h1><p class="intro">Understand the route. Practise the steps. Then read the code.</p></div><div class="score" id="score">First attempts: —</div></div>
-  <div class="controls"><div class="seg" role="group" aria-label="Choose activity"><button id="tab-graph" type="button" aria-pressed="true">Graph practice</button><button id="tab-code" type="button" aria-pressed="false">Code practice</button></div><div class="seg levels" role="group" aria-label="Choose challenge level"><button data-level="easy" aria-pressed="true">Guided</button><button data-level="medium" aria-pressed="false">Independent</button><button data-level="hard" aria-pressed="false">Challenge</button></div></div>
+  <div class="controls"><div class="seg" role="group" aria-label="Choose activity"><button id="tab-graph" type="button" aria-pressed="true">Trace table</button><button id="tab-code" type="button" aria-pressed="false">Code practice</button></div><div class="seg levels" role="group" aria-label="Choose challenge level"><button data-level="easy" aria-pressed="true">Easy</button><button data-level="medium" aria-pressed="false">Medium</button><button data-level="hard" aria-pressed="false">Hard</button></div></div>
   <div id="workspace" aria-live="off"></div>
 </main>
+<script src="/assets/h446-lesson/trace-table-lab.js?v=20261119a"></script>
 <script>
 (()=>{'use strict';
 const qs=new URLSearchParams(location.search),classroom=qs.get('classroom')==='1',classroomBoard=classroom&&qs.get('model')==='1';
@@ -188,7 +190,7 @@ function renderClassroomGraph(){
   workspace.querySelectorAll('[data-pick]').forEach(b=>b.addEventListener('click',()=>classroomChoose(b.dataset.pick)));
   workspace.querySelector('#reset-graph')?.addEventListener('click',()=>{sampleIndex[level]=Math.max(0,sampleIndex[level]-1);nextGraph()});
 }
-function renderGraph(){if(classroomBoard){renderClassroomGraph();return;}workspace.innerHTML=`<div class="layout"><div class="panel panel-pad"><div class="head-row"><span class="kicker">${classroom?'Classroom example':levelNames[level]+' · graph '+Math.max(1,sampleIndex[level])}</span><span class="mark">Start ${state.g.start} → Finish ${state.g.goal}</span></div><h2>Find the shortest route</h2><p class="explain">Numbers on the lines show each edge cost. Add them to find the route cost.</p>${drawGraph()}${graphPrompt()}<div class="feedback ${feedbackType}" role="status">${esc(feedback)}</div></div>${graphAside()}</div>`;
+function renderGraph(){if(window.RHSCExamTrace){window.RHSCExamTrace.render({workspace,graph:state.g,algorithm:'dijkstra',level,classroomBoard,graphSvg:drawGraph(),onFirstAttempt:firstAttempt,onNext:nextGraph});return;}if(classroomBoard){renderClassroomGraph();return;}workspace.innerHTML=`<div class="layout"><div class="panel panel-pad"><div class="head-row"><span class="kicker">${classroom?'Classroom example':levelNames[level]+' · graph '+Math.max(1,sampleIndex[level])}</span><span class="mark">Start ${state.g.start} → Finish ${state.g.goal}</span></div><h2>Find the shortest route</h2><p class="explain">Numbers on the lines show each edge cost. Add them to find the route cost.</p>${drawGraph()}${graphPrompt()}<div class="feedback ${feedbackType}" role="status">${esc(feedback)}</div></div>${graphAside()}</div>`;
 workspace.querySelectorAll('[data-pick]').forEach(b=>b.addEventListener('click',()=>choose(b.dataset.pick)));
 workspace.querySelector('#apply')?.addEventListener('click',applyUpdate);workspace.querySelector('#check-route')?.addEventListener('click',checkRoute);workspace.querySelector('#next-graph')?.addEventListener('click',nextGraph);workspace.querySelector('#reset-graph')?.addEventListener('click',()=>{sampleIndex[level]=Math.max(0,sampleIndex[level]-1);nextGraph()});
 workspace.querySelector('#model')?.addEventListener('toggle',e=>{if(e.target.open){const el=workspace.querySelector('#model-text');if(el)el.innerHTML=modelGraphStep()}});
