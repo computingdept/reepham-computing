@@ -9,18 +9,18 @@
   // The first five Easy questions teach one new decision at a time. Graph size
   // alone is not difficulty: these also deliberately limit routes and edges.
   const warmups=[
-    {id:'warmup-robot',scene:'Warehouse robot · Straight corridor',
-      premise:'A is the charging dock. Follow the corridor to G, the packing station.',
-      unit:'seconds',height:200,v:[['A',52,97],['B',205,97],['G',358,97]],
-      e:[['A','B',3],['B','G',4]],h:{A:6,B:3,G:0}},
-    {id:'warmup-car',scene:'Car navigation · First junction',
-      premise:'A is home and G is school. Which turning should the driver try first?',
-      unit:'minutes',height:240,v:[['A',50,120],['B',185,50],['C',185,195],['G',355,50]],
-      e:[['A','B',4],['A','C',3],['B','G',5]],h:{A:8,B:4,C:9,G:0}},
-    {id:'warmup-game',scene:'Adventure game · Two routes',
-      premise:'A is the entrance and G is the exit. Compare the two possible routes.',
+    {id:'warmup-robot',scene:'Warehouse robot · Two conveyor routes',
+      premise:'A is the charging dock and G is the packing station. Compare both routes.',
       unit:'seconds',height:240,v:[['A',50,120],['B',185,50],['C',185,195],['G',355,120]],
       e:[['A','B',3],['A','C',6],['B','G',9],['C','G',4]],h:{A:7,B:4,C:2,G:0}},
+    {id:'warmup-car',scene:'Car navigation · Two turnings',
+      premise:'A is home and G is school. Find the quicker of the two routes.',
+      unit:'minutes',height:240,v:[['A',50,120],['B',185,50],['C',185,195],['G',355,120]],
+      e:[['A','B',4],['A','C',3],['B','G',5],['C','G',8]],h:{A:6,B:4,C:6,G:0}},
+    {id:'warmup-game',scene:'Adventure game · Check a shortcut',
+      premise:'A is the entrance and G is the exit. Does the path through B help?',
+      unit:'seconds',height:240,v:[['A',50,120],['B',185,50],['C',185,195],['G',355,120]],
+      e:[['A','B',4],['A','C',5],['B','C',2],['C','G',4]],h:{A:7,B:3,C:3,G:0}},
     {id:'warmup-hospital',scene:'Hospital porter · Better corridor',
       premise:'A is the supply room and G is the ward. Update D when you find a faster route.',
       unit:'minutes',height:260,v:[['A',45,128],['B',150,50],['C',150,205],['D',275,128],['G',385,128]],
@@ -65,7 +65,7 @@
     const bank=window.RHSCAStarQuestions.all();
     let order;
     if(level==='easy'){
-      // 3, 4, 4, 5, 5 nodes; then varied five-, six- and seven-node practice.
+      // Each warm-up has at least two routes: 4, 4, 4, 5, 5 nodes.
       order=[...warmups,...bank.sort((a,b)=>a.v.length-b.v.length||a.e.length-b.e.length)];
     }else if(level==='medium'){
       // Begin with six-node questions; the real OCR DancerGold trace comes fourth.
@@ -83,9 +83,13 @@
   }
   function initialise(graph,level){
     const g=Object.fromEntries(graph.v.map(([n])=>[n,Infinity]));g[graph.start]=0;
-    return {graph,level,g,from:{},edge:{},open:new Set([graph.start]),closed:new Set(),selected:[],
+    const s={graph,level,g,from:{},edge:{},open:new Set([graph.start]),closed:new Set(),selected:[],
       phase:'pick',current:null,pending:[],focus:null,entry:{},feedback:'',error:false,mistakes:0,changes:{},
       path:[],total:'',scored:false};
+    // Starting at A is given in the question, so the first useful action is
+    // completing a cost, not clicking the only available node.
+    choose(s,graph.start);
+    return s;
   }
   function bestOpen(s){
     return [...s.open].sort((a,b)=>(s.g[a]+s.graph.h[a])-(s.g[b]+s.graph.h[b])||
@@ -99,7 +103,10 @@
       break;
     }
     if(s.pending.length){s.phase='edge';s.focus=s.pending[0].to;}
-    else{s.phase='pick';s.focus=null;s.current=null;}
+    else{
+      s.phase='pick';s.focus=null;s.current=null;
+      if(s.level==='easy'&&s.open.size===1)choose(s,[...s.open][0]);
+    }
   }
   function choose(s,node){
     const expected=bestOpen(s);
@@ -195,9 +202,11 @@
   }
   function draw(s,config){
     const graph=s.graph;
-    const step=s.phase==='pick'?'SELECT NEXT NODE':s.phase==='edge'?
+    const firstCalculation=s.phase==='edge'&&s.selected.length===1&&s.current===graph.start;
+    const step=firstCalculation?'START HERE · CALCULATE g':s.phase==='pick'?'SELECT NEXT NODE':s.phase==='edge'?
       (Number.isFinite(s.g[s.focus])?'COMPARE ROUTES':'CALCULATE NEW ROUTE'):'TRACE FINAL PATH';
-    const instruction=s.phase==='edge'?`Yellow edge: ${esc(s.current)} → ${esc(s.focus)}. Complete the yellow row.`:
+    const instruction=firstCalculation?`A starts with g = 0. Follow the yellow edge ${esc(s.current)} → ${esc(s.focus)} and enter the new cost.`:
+      s.phase==='edge'?`Yellow edge: ${esc(s.current)} → ${esc(s.focus)}. Complete the yellow row.`:
       s.phase==='pick'?'Select the next node to expand.':'Use the completed table to identify the route.';
     const actions=s.phase==='pick'?choosePanel(s):s.phase==='route'?routePanel(s):s.phase==='complete'?resultPanel(s):'';
     config.workspace.innerHTML=`<div class="a-trace-root"><div class="a-trace-header"><div><span class="a-trace-kicker">${s.level.toUpperCase()} · QUESTION ${graph.questionNumber} OF ${graph.questionTotal}</span><h2>A* · Exam Trace</h2></div><span class="a-trace-goal">${graph.start} → ${graph.goal}</span></div><div class="a-trace-scenario"><strong>${esc(graph.scene||'A* graph')}</strong><span>${esc(graph.premise||'Find the shortest path.')}</span></div><div class="a-trace-columns"><section class="a-trace-visual"><p class="a-trace-caption">Edge costs in ${esc(graph.unit||'units')} · Values beneath nodes are h estimates</p>${graphSvg(s)}<details class="a-trace-help"><summary>How does A* work?</summary><p>Start with g = 0 at ${graph.start}. Choose the open node with lowest f = g + h. Calculate a new g for each neighbour. Update it if the new route is cheaper. Stop when you select ${graph.goal}.</p></details></section><section class="a-trace-work"><div class="a-trace-step"><span>${step}</span><strong>${instruction}</strong></div>${traceTable(s)}${s.feedback?`<p class="a-trace-feedback ${s.error?'error':'success'}" role="status">${esc(s.feedback)}</p>`:''}${actions}<div class="a-trace-footer"><button type="button" id="a-restart" class="a-trace-light">Start again</button><small>✓ Expanded node · Yellow = current edge</small></div></section></div></div>`;
