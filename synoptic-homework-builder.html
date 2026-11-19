@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#006347">
+  <title>Synoptic Homework · RHS Computing</title>
+  <style>
+    :root{color-scheme:light;--green:#006347;--ink:#22302a;--muted:#52675b;--line:#d6e2da;--pale:#eef7f0;--paper:#fff;--bg:#f8faf8;--red:#a12b23}
+    *,*::before,*::after{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+    button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}
+    a{color:var(--green)}:focus-visible{outline:3px solid #e4ad30;outline-offset:3px}
+    header{background:white;border-bottom:1px solid var(--line)}
+    .bar{max-width:980px;margin:auto;min-height:62px;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:15px}
+    .bar a{text-decoration:none;font-weight:750;font-size:14px}
+    .hub{font-size:19px;font-weight:820;letter-spacing:-.04em;white-space:nowrap}
+    .staff{background:#eaf5ec;color:var(--green);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:850}
+    main{max-width:980px;margin:0 auto;padding:34px 20px 70px}
+    .eyebrow{font-size:12px;color:var(--green);text-transform:uppercase;letter-spacing:.1em;font-weight:820}
+    h1{font-size:clamp(29px,5vw,40px);line-height:1.15;letter-spacing:-.045em;margin:7px 0}
+    h2{font-size:21px;letter-spacing:-.025em;margin:0 0 5px}h3{font-size:17px;margin:0}
+    .intro{color:var(--muted);margin:0 0 23px;max-width:650px}
+    .card{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:24px;margin:17px 0}
+    .card-head{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+    .number{display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:var(--pale);color:var(--green);font-size:14px;font-weight:850;flex:none}
+    .hint{font-size:13px;color:var(--muted);margin:2px 0 0}
+    .fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .field{min-width:0}.field.wide{grid-column:1/-1}
+    label{display:block;font-weight:740;font-size:14px;margin-bottom:6px}
+    input,select{width:100%;min-height:46px;border:1.5px solid #a9bdb0;border-radius:11px;background:#fff;color:var(--ink);padding:10px 12px}
+    input[type=checkbox]{width:19px;min-height:0;height:19px;accent-color:var(--green);padding:0;margin:2px 0 0;flex:none}
+    .buttons{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:17px}
+    .button{border:1.5px solid var(--green);background:var(--green);color:white;border-radius:11px;font-weight:790;padding:10px 16px;min-height:46px}
+    .button.secondary{background:white;color:var(--green)}.button.small{padding:6px 12px;min-height:36px;font-size:13px}
+    .button:not(:disabled):hover{filter:brightness(.91)}
+    .status{color:var(--muted);font-size:14px;font-weight:660;min-height:24px;margin:12px 0 0}
+    .status.error{color:var(--red)}.status.good{color:var(--green)}
+    .notice{padding:12px 14px;border-radius:12px;background:#eef5ef;color:#375645;font-size:14px;margin:14px 0}
+    .notice.warn{background:#fff8e9;color:#6b4b1c;border:1px solid #f0d6a6}
+    .title-row{display:flex;gap:12px;align-items:baseline;justify-content:space-between;flex-wrap:wrap}
+    .title-row .hint{margin:0}
+    .skill-list{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+    .skill-choice{display:flex;align-items:flex-start;gap:10px;border:1.5px solid var(--line);border-radius:12px;padding:12px;min-width:0;font-size:14px;font-weight:680;cursor:pointer;margin:0}
+    .skill-choice:has(input:checked){background:var(--pale);border-color:#85b69b}
+    .skill-choice small{display:block;color:var(--muted);font-size:12px;font-weight:450}
+    .skill-choice span{min-width:0}
+    .paper-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:17px 0}
+    .paper-tab{border:1.5px solid var(--line);border-radius:11px;background:white;padding:11px 13px;font-weight:800;color:var(--ink);min-height:46px}
+    .paper-tab[aria-selected=true]{background:var(--pale);color:var(--green);border-color:#83b299}
+    .coverage{display:flex;gap:7px;flex-wrap:wrap;margin:9px 0 17px}
+    .coverage span{background:#eef3f0;border-radius:999px;font-size:12px;padding:5px 10px;color:#355644;font-weight:750}
+    .question{border:1px solid var(--line);border-radius:13px;margin:9px 0;background:white;overflow:hidden}
+    .qrow{display:flex;gap:10px;align-items:center;padding:13px 14px}
+    .qbody{min-width:0;flex:1}.qbody strong{font-size:14px;display:block;line-height:1.45}
+    .qmeta{display:block;color:var(--muted);font-size:12px;font-weight:700;margin-bottom:3px}
+    details summary{cursor:pointer;list-style:none}details summary::-webkit-details-marker{display:none}
+    details summary::after{content:'⌄';margin-left:auto;font-size:19px;color:var(--green)}details[open] summary::after{content:'⌃'}
+    .qcontent{border-top:1px solid var(--line);padding:15px 17px 17px;font-size:14px}
+    .qcontent p{margin:0 0 12px}.qcontent ol{padding-left:22px;margin:8px 0 14px}.qcontent li{padding:4px 0}
+    .qcontent li.correct{color:var(--green);font-weight:850}
+    .qcontent pre{background:#f2f5f3;border:1px solid var(--line);padding:13px;overflow-x:auto;white-space:pre-wrap;font-size:13px;border-radius:9px}
+    .qcontent img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:9px}
+    .qcontent table{border-collapse:collapse;width:100%;margin:11px 0}.qcontent th,.qcontent td{text-align:left;border:1px solid var(--line);padding:7px}
+    .qcontent .explain{background:var(--pale);padding:11px 13px;border-radius:10px;margin:8px 0 0}
+    .qcontent .button{margin-top:12px}
+    .approval{display:flex;align-items:flex-start;gap:10px;font-weight:660;font-size:14px;line-height:1.5;margin-top:12px}
+    .approval input{margin-top:3px}
+    .saved{border:1px solid #9bc7a9;background:var(--pale);padding:16px;border-radius:13px;margin-top:15px}
+    .saved strong{color:var(--green)}
+    [hidden]{display:none!important}
+    @media(max-width:680px){main{padding:23px 13px 60px}.bar{padding:9px 13px}.card{padding:16px;border-radius:16px}.fields,.skill-list{grid-template-columns:1fr}.hub{font-size:17px}.card-head{align-items:start}}
+  </style>
+</head>
+<body>
+  <header><div class="bar">
+    <a href="/" aria-label="Learning Hub home">⌂ Home</a>
+    <span class="hub">Learning Hub</span>
+    <a href="/my-work-teacher-assign-pilot.html" class="staff">Staff · My Work</a>
+  </div></header>
+  <main>
+    <span class="eyebrow">Staff preview · OCR H446 / J277</span>
+    <h1>Synoptic homework</h1>
+    <p class="intro">One assignment: your choice of Skills, ten Paper 1 questions and ten Paper 2 questions. Every pupil receives the same set.</p>
+
+    <section class="card" aria-labelledby="access-title" id="access-card">
+      <div class="card-head"><span class="number">✓</span><div><h2 id="access-title">Teacher access</h2><p class="hint">Your existing teacher token stays in this page's memory only.</p></div></div>
+      <form id="connect-form" class="fields">
+        <div class="field"><label for="teacher-token">Teacher token</label><input type="password" id="teacher-token" autocomplete="off" spellcheck="false" required></div>
+        <div class="field"><label>&nbsp;</label><button class="button" type="submit" id="connect-button">Connect</button></div>
+      </form>
+      <p id="access-status" class="status" role="status" aria-live="polite">Not connected.</p>
+      <button id="disconnect-button" class="button secondary small" hidden type="button">Disconnect</button>
+    </section>
+
+    <div id="workspace" hidden>
+      <section class="card" aria-labelledby="create-title">
+        <div class="card-head"><span class="number">01</span><div><h2 id="create-title">Set the homework</h2><p class="hint">Year 13 first, then Year 11. Choose one or two Skills.</p></div></div>
+        <div class="fields">
+          <div class="field"><label for="cohort">Class</label><select id="cohort"><option value="Y13">Year 13 · H446</option><option value="Y11">Year 11 · J277</option></select></div>
+          <div class="field"><label for="due-date">Due date</label><input id="due-date" type="date" required></div>
+          <div class="field wide"><label for="assignment-title">Homework title</label><input id="assignment-title" maxlength="90" value="Synoptic homework 1"></div>
+        </div>
+        <div class="title-row" style="margin-top:20px"><h3>Skills practice</h3><p class="hint"><span id="skill-count">0</span> of 2 selected</p></div>
+        <div class="field" style="margin-top:10px"><label for="skill-search">Find a Skill</label><input id="skill-search" type="search" placeholder="Search available activities" autocomplete="off"></div>
+        <div class="skill-list" id="skill-list" aria-label="Available Skills"></div>
+        <div class="buttons"><button type="button" class="button" id="generate-button">Generate 10 + 10 questions</button></div>
+        <p class="status" id="generate-status" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="card" id="review-card" hidden aria-labelledby="review-title">
+        <div class="card-head"><span class="number">02</span><div><h2 id="review-title">Review the questions</h2><p class="hint">Unpublished previews do not use up questions. Open any question to inspect its answer and explanation.</p></div></div>
+        <div class="paper-tabs" role="tablist" aria-label="Review by paper">
+          <button class="paper-tab" type="button" role="tab" id="paper1-tab" aria-selected="true" aria-controls="paper1-list">Paper 1 · 10</button>
+          <button class="paper-tab" type="button" role="tab" id="paper2-tab" aria-selected="false" aria-controls="paper2-list">Paper 2 · 10</button>
+        </div>
+        <div id="paper1-list" role="tabpanel" aria-labelledby="paper1-tab"><div class="coverage" id="paper1-coverage"></div><div id="paper1-questions"></div></div>
+        <div id="paper2-list" role="tabpanel" aria-labelledby="paper2-tab" hidden><div class="coverage" id="paper2-coverage"></div><div id="paper2-questions"></div></div>
+        <p id="review-status" class="status" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="card" id="save-card" hidden aria-labelledby="save-title">
+        <div class="card-head"><span class="number">03</span><div><h2 id="save-title">Save the assignment</h2><p class="hint">Save the fixed set to the Cloudflare database.</p></div></div>
+        <div class="notice warn"><strong>Teacher-only pilot:</strong> saving permanently reserves these 20 questions for this year group. The assignment will <strong>not</strong> appear to pupils until the student homework screens are released.</div>
+        <label class="approval"><input type="checkbox" id="approval"> <span>I have reviewed both papers and understand that these question IDs will be reserved, but the homework will not yet be visible to students.</span></label>
+        <div class="buttons"><button class="button" id="save-button" disabled type="button">Save teacher-only assignment</button><button class="button secondary" type="button" id="regenerate-button">Generate another preview</button></div>
+        <p class="status" id="save-status" role="status" aria-live="polite"></p>
+        <div class="saved" id="save-result" hidden></div>
+      </section>
+    </div>
+  </main>
+  <script type="module" src="/assets/synoptic-homework-builder.js"></script>
+</body>
+</html>

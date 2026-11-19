@@ -1,6 +1,6 @@
 # Synoptic Homework pilot — agreed design and release contract
 
-**Status:** Design baseline v0.2 · 19 November 2026 · **Selection engine and teacher-only D1 publishing backend built; NOT a live student assignment feature**
+**Status:** Design baseline v0.3 · 19 November 2026 · **Teacher-only builder preview, selection engine and D1 publishing backend built; NOT a live student assignment feature**
 
 **Purpose:** One predictable, independently completed homework assignment that
 combines selected Skills, synoptic Paper 1 and Paper 2 retrieval, and useful
@@ -130,12 +130,20 @@ The current backend exposes **teacher-token-protected, unpublished** endpoints:
 - `POST /v1/teacher/synoptic/publish` (explicit `confirm:true`, validated
   10+10 snapshots, atomic 20-ID reservation). Existing tables remain untouched.
 
-**Not yet implemented:** teacher review screen, student assignment cards,
-synoptic quiz answering, first-response marking, support links and progress
-reporting. Published backend records are not learner-visible until those stages
-are tested. The backend accepts teacher-authenticated snapshots and a GitHub
-commit identifier; an additional source-verification step should be evaluated
-before a wider rollout.
+The teacher review page is `/synoptic-homework-builder.html`, linked from the
+existing teacher assignment screen. It uses the existing activity catalogue
+for 1–2 Skills, draws from the original bank files, shows 10+10 questions with
+spec-group counts, correct answers and explanations, and permits replacements
+**within the same specification group**. It requires an explicit acknowledgement
+before saving the 20 immutable question snapshots. The teacher token remains
+in this page's memory, not in browser storage. Saving is labelled as a
+**teacher-only reservation, not a live pupil assignment**.
+
+**Not yet implemented:** student assignment cards, synoptic quiz answering,
+first-response marking, support links and progress reporting. Published backend
+records are not learner-visible until those stages are tested. The backend
+accepts teacher-authenticated snapshots and a GitHub commit identifier; an
+additional source-verification step should be evaluated before wider rollout.
 
 ## Question-bank source and audit
 
@@ -160,8 +168,9 @@ question quality.** Teacher content QA remains a release gate.
 - [ ] **B. Reusable synoptic selection engine**:
   course/paper separation, broad topic coverage, fixed 10+10 question IDs,
   teacher review and versioned assignment snapshots.
-  **Progress:** pure selector, no-repeat D1 ledger, atomic teacher-only publish
-  and regression tests are implemented. Teacher visual review is still pending.
+  **Progress:** pure selector, no-repeat D1 ledger, atomic teacher-only publish,
+  separate review/replace UI and regression tests are implemented. Real-browser
+  teacher acceptance QA and a safe authenticated publishing check are pending.
 - [ ] **C. Year 13 student proof of concept**:
   one assignment, simple navigation, checked-answer persistence and feedback.
 - [ ] **D. Year 11 on the same engine**:
@@ -213,6 +222,7 @@ until stage F passes. Do not treat the existence of a preview as deployment.
 | 2026-11-19 | Keep the complete question bank in GitHub, and only assignment records, frozen 20-question snapshots and learner answers in existing Cloudflare D1. |
 | 2026-11-19 | Never repeat a question across published homeworks for the same year group; distribute ten per paper across specification groups and Skills wherever unused supply permits. |
 | 2026-11-19 | Use database uniqueness and atomic publication as safeguards against two teachers assigning the same question; no learner-visible rollout until the full assignment and marking flow passes QA. |
+| 2026-11-19 | Add a separate teacher-only preview page; do not alter the existing teacher assign/review flows beyond one optional link. The 20-question save is clearly a reservation until student QA is complete. |
 
 **Future changes:** Add a dated decision here and update the audit/acceptance
 checks before modifying the shared engine. Do not quietly expand scope to

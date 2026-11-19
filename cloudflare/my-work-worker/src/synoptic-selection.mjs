@@ -80,7 +80,7 @@ export function buildSynopticCatalog(course, bankSources) {
           throw new Error(`Invalid question contents: ${question.id}`);
         ids.add(question.id);
         questions.push(Object.freeze({
-          ...question, course, paper, group, spec: skill.spec || skill.section,
+          ...question, course, paper, group, spec: question.spec || skill.spec || skill.section,
           skillId: skill.id, skillTitle: skill.title, lessons: skill.lessons || [],
           sourcePath: path
         }));
