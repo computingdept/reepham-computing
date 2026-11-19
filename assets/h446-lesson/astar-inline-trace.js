@@ -85,7 +85,7 @@
     const g=Object.fromEntries(graph.v.map(([n])=>[n,Infinity]));g[graph.start]=0;
     const s={graph,level,g,from:{},edge:{},open:new Set([graph.start]),closed:new Set(),selected:[],
       phase:'pick',current:null,pending:[],focus:null,entry:{},feedback:'',error:false,mistakes:0,changes:{},
-      path:[],total:'',scored:false};
+      path:[],total:'',scored:false,hintFor:'',usedHint:false};
     // Starting at A is given in the question, so the first useful action is
     // completing a cost, not clicking the only available node.
     choose(s,graph.start);
@@ -96,7 +96,7 @@
       s.g[a]-s.g[b]||a.localeCompare(b))[0];
   }
   function nextEdge(s){
-    s.entry={};s.feedback='';s.error=false;
+    s.entry={};s.feedback='';s.error=false;s.hintFor='';
     while(s.pending.length){
       const edge=s.pending[0],trial=s.g[s.current]+edge.cost;
       if(s.closed.has(edge.to)&&trial>=s.g[edge.to]){s.pending.shift();continue;}
@@ -117,7 +117,7 @@
   }
   function resolveEdge(s,decision){
     const edge=s.pending[0],candidate=s.g[s.current]+edge.cost,old=s.g[edge.to],inp=s.entry;
-    if(inp.g===''||Number(inp.g)!==candidate){s.feedback='Calculate the distance from '+s.current+' plus the edge cost.';s.error=true;s.mistakes++;return;}
+    if(inp.g===''||Number(inp.g)!==candidate){s.feedback=s.level==='easy'?'For g, add only the distance so far and the edge cost. Try “Show worked step” if you are stuck.':'Calculate the distance from '+s.current+' plus the edge cost.';s.error=true;s.mistakes++;return;}
     if(s.level!=='easy'&&(inp.f===''||Number(inp.f)!==candidate+s.graph.h[edge.to])){s.feedback='Calculate f = candidate g + h.';s.error=true;s.mistakes++;return;}
     if(s.level==='hard'&&(inp.h===''||Number(inp.h)!==s.graph.h[edge.to])){s.feedback='Read h from the destination node.';s.error=true;s.mistakes++;return;}
     const update=candidate<old;
@@ -137,7 +137,7 @@
   }
   function checkRoute(s,config){
     const correct=s.path.join('|')===finalRoute(s).join('|')&&s.total!==''&&Number(s.total)===s.g[s.graph.goal];
-    if(!s.scored){s.scored=true;config.onFirstAttempt(correct&&s.mistakes===0);}
+    if(!s.scored){s.scored=true;config.onFirstAttempt(correct&&s.mistakes===0&&!s.usedHint);}
     if(correct){s.phase='complete';s.feedback='Correct — shortest path and total cost.';s.error=false;}
     else{s.mistakes++;s.feedback='Follow the Previous column backwards from the goal, then add each edge cost.';s.error=true;}
   }
@@ -172,7 +172,12 @@
     const more=s.level==='easy'?'':field('a-f','New f = g + h',s.entry.f);
     const hard=s.level==='hard'?field('a-h','h from graph',s.entry.h)+`<label class="a-trace-field"><span>Previous node</span><select id="a-from"><option value="">Choose</option>${s.graph.v.map(([n])=>`<option value="${esc(n)}"${s.entry.from===n?' selected':''}>${esc(n)}</option>`).join('')}</select></label>`:'';
     const keep=Number.isFinite(previous)?`<button type="button" id="a-keep" class="a-trace-light">Keep ${fmt(previous)}</button>`:'';
-    return `<tr class="a-trace-expanded"><td colspan="6"><div class="a-trace-active"><div class="a-trace-active-heading"><strong>Checking ${esc(s.current)} → ${esc(item.to)}</strong><span>Current ${esc(item.to)}: <b>${fmt(previous)}</b>${s.from[item.to]?' via '+esc(s.from[item.to]):' (not reached)'}</span></div><div class="a-trace-calc"><span class="a-trace-equation">${fmt(s.g[s.current])} + ${item.cost} =</span>${field('a-g','New g',s.entry.g)}${more}${hard}</div><div class="a-trace-decision"><span>${Number.isFinite(previous)?'Is the alternative cheaper?':'This is the first route to the node.'}</span><div>${keep}<button type="button" id="a-update" class="a-trace-primary">Update ${esc(item.to)}</button></div></div></div></td></tr>`;
+    const key=s.current+'>'+item.to,shown=s.hintFor===key;
+    const hint=s.level==='easy'?`<button type="button" id="a-worked-toggle" class="a-trace-light a-trace-hint-toggle" aria-expanded="${shown}" aria-controls="a-worked-explanation">${shown?'Hide worked step':'Show worked step'}</button>`:'';
+    const compare=!Number.isFinite(previous)?`${esc(item.to)} was not reached, so select Update.`:
+      candidate<previous?`${candidate} is smaller than ${previous}, so select Update.`:`${candidate} is not smaller than ${previous}, so select Keep.`;
+    const explanation=s.level==='easy'&&shown?`<div id="a-worked-explanation" class="a-trace-worked-hint" role="note"><strong>Distance travelled (g): ${fmt(s.g[s.current])} + ${item.cost} = ${candidate}.</strong><span>Heuristic (h) at ${esc(item.to)} = ${s.graph.h[item.to]}. Estimated total (f) = ${candidate} + ${s.graph.h[item.to]} = ${candidate+s.graph.h[item.to]}.</span><span>Enter <b>${candidate}</b> in the g box. ${compare}</span><small>Worked help makes this a guided attempt.</small></div>`:'';
+    return `<tr class="a-trace-expanded"><td colspan="6"><div class="a-trace-active"><div class="a-trace-active-heading"><strong>Checking ${esc(s.current)} → ${esc(item.to)}</strong><span>Current ${esc(item.to)}: <b>${fmt(previous)}</b>${s.from[item.to]?' via '+esc(s.from[item.to]):' (not reached)'}</span></div><div class="a-trace-calc"><span class="a-trace-equation">${fmt(s.g[s.current])} + ${item.cost} =</span>${field('a-g',s.level==='easy'?'Distance so far (g)':'New g',s.entry.g)}${more}${hard}${hint}</div>${explanation}<div class="a-trace-decision"><span>${Number.isFinite(previous)?'Is the alternative cheaper?':'This is the first route to the node.'}</span><div>${keep}<button type="button" id="a-update" class="a-trace-primary">Update ${esc(item.to)}</button></div></div></div></td></tr>`;
   }
   function traceTable(s){
     const rows=s.graph.v.map(([n])=>{
@@ -220,6 +225,13 @@
     };
     config.workspace.querySelector('#a-keep')?.addEventListener('click',()=>submit('keep'));
     config.workspace.querySelector('#a-update')?.addEventListener('click',()=>submit('update'));
+    config.workspace.querySelector('#a-worked-toggle')?.addEventListener('click',()=>{
+      s.entry.g=config.workspace.querySelector('#a-g')?.value.trim()||'';
+      const key=s.current+'>'+s.pending[0].to;
+      if(s.hintFor===key)s.hintFor='';
+      else{s.hintFor=key;s.usedHint=true;}
+      draw(s,config);
+    });
     config.workspace.querySelectorAll('[data-route]').forEach(b=>b.addEventListener('click',()=>{
       s.total=config.workspace.querySelector('#a-total')?.value||s.total;
       const n=b.dataset.route,pos=s.path.indexOf(n);
