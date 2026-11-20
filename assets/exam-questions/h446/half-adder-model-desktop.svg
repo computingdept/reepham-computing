@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">Half adder: sum and carry, worked teaching example</title>
+<desc id="desc">An independent teaching illustration, not the OCR examination drawing. Two binary inputs A and B are fed to an XOR gate for the Sum and to an AND gate for Carry. The worked truth table is: 00 gives Sum 0 Carry 0; 01 gives Sum 1 Carry 0; 10 gives Sum 1 Carry 0; 11 gives Sum 0 Carry 1. Green glowing outlines are school decoration only.</desc>
+<!-- Monochrome master; #195B42 is the changeable school glow token and is used only on blurred shapes. -->
+<style>
+ text{font-family:Inter,Arial,Helvetica,sans-serif;fill:#171717}
+ .kicker{font-size:19px;font-weight:800;letter-spacing:2.7px;fill:#242424}
+ .title{font-size:59px;font-weight:800;letter-spacing:-1.5px}
+ .sub{font-size:23px;fill:#606060}
+ .panelhead{font-size:27px;font-weight:800}
+ .help{font-size:19px;fill:#606060}
+ .input{font-size:26px;font-weight:800;text-anchor:middle}
+ .gate-name{font-size:25px;font-weight:800;text-anchor:middle}
+ .output{font-size:23px;font-weight:800}
+ .wire{fill:none;stroke:#222;stroke-width:5;stroke-linejoin:round;stroke-linecap:round}
+ .shape{fill:white;stroke:#222;stroke-width:5;stroke-linejoin:round}
+ .tablehead{font-size:20px;font-weight:800}
+ .tablecell{font-size:25px;font-weight:700}
+</style>
+<defs><filter id="schoolGlow" x="-70%" y="-80%" width="240%" height="260%"><feGaussianBlur stdDeviation="8"/></filter></defs>
+<rect width="1600" height="900" fill="white"/>
+<text class="kicker" x="70" y="70">A LEVEL COMPUTER SCIENCE / BOOLEAN LOGIC</text>
+<text class="title" x="70" y="140">Half adder</text>
+<text class="sub" x="72" y="183">Add two single-bit inputs to produce a Sum and a Carry.</text>
+<rect x="1375" y="69" width="157" height="48" rx="24" fill="#FAFAFA" stroke="#DEDEDE" stroke-width="2"/>
+<text x="1453" y="100" text-anchor="middle" font-size="18" font-weight="800">H446 · 1.4.3</text>
+
+<!-- Main schematic -->
+<rect x="66" y="226" width="982" height="536" rx="24" fill="none" stroke="#195B42" stroke-width="15" opacity=".18" filter="url(#schoolGlow)"/>
+<rect x="66" y="226" width="982" height="536" rx="24" fill="white" stroke="#E2E2E2" stroke-width="2"/>
+<text class="panelhead" x="102" y="283">TWO OUTPUTS FROM THE SAME INPUTS</text>
+<text class="help" x="102" y="314">A and B appear at both gates because both receive the same input pair.</text>
+
+<!-- Gate tracks, black signal lines -->
+<g class="wire">
+ <path d="M245 382 H596 M245 466 H596 M827 422 H912"/>
+ <path d="M245 599 H580 M245 675 H580 M767 628 H911"/>
+</g>
+<!-- Form-fitting component glows -->
+<g stroke="#195B42" stroke-width="15" fill="none" opacity=".43" filter="url(#schoolGlow)">
+ <rect x="137" y="350" width="108" height="64" rx="12"/>
+ <rect x="137" y="434" width="108" height="64" rx="12"/>
+ <rect x="137" y="567" width="108" height="64" rx="12"/>
+ <rect x="137" y="643" width="108" height="64" rx="12"/>
+</g>
+<g fill="white" stroke="#222" stroke-width="3">
+ <rect x="137" y="350" width="108" height="64" rx="12"/><rect x="137" y="434" width="108" height="64" rx="12"/>
+ <rect x="137" y="567" width="108" height="64" rx="12"/><rect x="137" y="643" width="108" height="64" rx="12"/>
+</g>
+<g class="input"><text x="191" y="390">A</text><text x="191" y="474">B</text><text x="191" y="607">A</text><text x="191" y="683">B</text></g>
+
+<!-- XOR: front extra curve plus the OR body, two inputs, one Sum output -->
+<g aria-label="XOR gate: output is 1 if the two inputs differ">
+ <path d="M580 340 Q646 422 580 504 Q735 500 827 422 Q735 344 580 340 Z" fill="none" stroke="#195B42" stroke-width="17" opacity=".47" filter="url(#schoolGlow)"/>
+ <path d="M555 340 Q621 422 555 504" fill="none" stroke="#195B42" stroke-width="15" opacity=".47" filter="url(#schoolGlow)"/>
+ <path class="shape" d="M580 340 Q646 422 580 504 Q735 500 827 422 Q735 344 580 340 Z"/>
+ <path class="wire" d="M555 340 Q621 422 555 504"/>
+ <text class="gate-name" x="692" y="433">XOR</text>
+ <text class="output" x="927" y="429">Sum (S)</text>
+</g>
+<!-- AND: straight input edge and rounded output -->
+<g aria-label="AND gate: output is 1 only if both inputs are 1">
+ <path d="M580 550 H689 A78 78 0 0 1 689 706 H580 Z" fill="none" stroke="#195B42" stroke-width="17" opacity=".47" filter="url(#schoolGlow)"/>
+ <path class="shape" d="M580 550 H689 A78 78 0 0 1 689 706 H580 Z"/>
+ <text class="gate-name" x="679" y="637">AND</text>
+ <text class="output" x="927" y="636">Carry (C)</text>
+</g>
+<text class="help" x="103" y="731">The two gates are evaluated independently for each combination of A and B.</text>
+
+<!-- Worked table is a teaching reveal, never a student exam prompt -->
+<rect x="1080" y="226" width="454" height="536" rx="24" fill="none" stroke="#195B42" stroke-width="15" opacity=".18" filter="url(#schoolGlow)"/>
+<rect x="1080" y="226" width="454" height="536" rx="24" fill="white" stroke="#E2E2E2" stroke-width="2"/>
+<text class="panelhead" x="1111" y="283">WORKED TRUTH TABLE</text>
+<text class="help" x="1111" y="315">Teacher model / answer reveal</text>
+<rect x="1107" y="350" width="399" height="55" rx="9" fill="#F4F4F4"/>
+<g class="tablehead"><text x="1157" y="385">A</text><text x="1248" y="385">B</text><text x="1342" y="385">S</text><text x="1432" y="385">C</text></g>
+<g stroke="#E1E1E1" stroke-width="2"><path d="M1107 455H1506 M1107 520H1506 M1107 585H1506 M1107 650H1506"/></g>
+<g class="tablecell">
+ <text x="1157" y="443">0</text><text x="1248" y="443">0</text><text x="1342" y="443">0</text><text x="1432" y="443">0</text>
+ <text x="1157" y="508">0</text><text x="1248" y="508">1</text><text x="1342" y="508">1</text><text x="1432" y="508">0</text>
+ <text x="1157" y="573">1</text><text x="1248" y="573">0</text><text x="1342" y="573">1</text><text x="1432" y="573">0</text>
+ <text x="1157" y="638">1</text><text x="1248" y="638">1</text><text x="1342" y="638">0</text><text x="1432" y="638">1</text>
+</g>
+<text class="help" x="1113" y="703">S = A XOR B</text>
+<text class="help" x="1113" y="735">C = A AND B</text>
+<rect x="66" y="790" width="1468" height="63" rx="13" fill="#FAFAFA"/>
+<text x="94" y="828" font-size="20" fill="#4D4D4D">Concept diagram · not an OCR exam figure. The truth table is a worked teaching example, not an unrevealed question.</text>
+</svg>
