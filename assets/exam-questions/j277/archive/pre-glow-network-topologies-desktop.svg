@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Star and full mesh network topologies</title>
+  <desc id="desc">An original GCSE teaching diagram comparing a star network, where four end devices use a central switch, with a full mesh of four routers, where every router has a direct link to every other router. Includes the advantages and vulnerabilities of each. It is not a reproduction of an OCR exam diagram.</desc>
+  <!-- One master illustration with school colour tokens for deployment. -->
+  <style>
+    /* Theme palette: accent #195B42; dark #124632; tint #E8F4ED.
+       Trust deployments can generate school-specific copies by substituting these three palette colours. */
+    text { font-family:Inter,Arial,Helvetica,sans-serif; fill:#162B35; }
+    .eyebrow { font-size:19px; font-weight:800; letter-spacing:3px; fill:#195B42; }
+    .main-title { font-size:57px; font-weight:800; letter-spacing:-1.5px; }
+    .subtitle { font-size:23px; fill:#50636D; }
+    .panel-title { font-size:34px; font-weight:800; }
+    .panel-subtitle { font-size:20px; fill:#50636D; }
+    .node-name { font-size:20px; font-weight:800; text-anchor:middle; }
+    .node-type { font-size:15px; text-anchor:middle; fill:#50636D; }
+    .foot-head { font-size:19px; font-weight:800; fill:#124632; }
+    .foot-text { font-size:18px; fill:#50636D; }
+    .badge-text { font-size:19px; font-weight:800; fill:#124632; }
+    .wire { stroke:#387A8A; stroke-width:5; stroke-linecap:round; fill:none; }
+    .thin-wire { stroke:#387A8A; stroke-width:4.5; stroke-linecap:round; fill:none; }
+    .computer { fill:#FFF; stroke:#6B8792; stroke-width:3; }
+    .router { fill:#FFF; stroke:#387A8A; stroke-width:3; }
+  </style>
+  <rect width="1600" height="900" fill="#F5F8FA"/>
+  <rect x="0" y="0" width="1600" height="13" fill="#195B42"/>
+  <text class="eyebrow" x="70" y="69">GCSE COMPUTER SCIENCE   /   NETWORKS</text>
+  <text class="main-title" x="70" y="139">Two ways to connect devices</text>
+  <text class="subtitle" x="72" y="180">Topology describes how devices and communication links are arranged.</text>
+  <rect x="1348" y="62" width="185" height="50" rx="25" fill="#E8F4ED" stroke="#B9DCC7" stroke-width="2"/>
+  <text class="badge-text" x="1441" y="94" text-anchor="middle">J277 · 1.3.1</text>
+
+  <!-- LEFT: STAR -->
+  <rect x="62" y="224" width="720" height="527" rx="24" fill="#FFFFFF" stroke="#D7E2E6" stroke-width="2"/>
+  <rect x="62" y="224" width="720" height="10" rx="5" fill="#195B42"/>
+  <text class="panel-title" x="95" y="283">STAR topology</text>
+  <text class="panel-subtitle" x="95" y="317">Each end device has one link to the central switch.</text>
+  <g aria-label="Star network cables">
+    <path class="wire" d="M366 504 L245 389"/>
+    <path class="wire" d="M476 504 L597 389"/>
+    <path class="wire" d="M366 560 L245 652"/>
+    <path class="wire" d="M476 560 L594 654"/>
+  </g>
+  <g aria-label="Central switch">
+    <rect x="358" y="494" width="126" height="75" rx="13" fill="#E8F4ED" stroke="#195B42" stroke-width="4"/>
+    <rect x="377" y="510" width="88" height="22" rx="5" fill="#195B42"/>
+    <g fill="#FFFFFF"><circle cx="390" cy="521" r="3.8"/><circle cx="407" cy="521" r="3.8"/><circle cx="424" cy="521" r="3.8"/><circle cx="441" cy="521" r="3.8"/></g>
+    <text class="node-name" x="421" y="558">Switch</text>
+  </g>
+  <g aria-label="Four connected devices">
+    <g transform="translate(202 368)"><rect class="computer" x="-43" y="-28" width="86" height="59" rx="6"/><rect x="-34" y="-19" width="68" height="42" rx="2" fill="#DCECF1"/><path d="M-11 32 V43 H11 V32 M-27 45 H27" stroke="#6B8792" stroke-width="4" fill="none" stroke-linecap="round"/><text class="node-name" y="77">PC 1</text></g>
+    <g transform="translate(640 368)"><rect class="computer" x="-43" y="-28" width="86" height="59" rx="6"/><rect x="-34" y="-19" width="68" height="42" rx="2" fill="#DCECF1"/><path d="M-11 32 V43 H11 V32 M-27 45 H27" stroke="#6B8792" stroke-width="4" fill="none" stroke-linecap="round"/><text class="node-name" y="77">PC 2</text></g>
+    <g transform="translate(202 660)"><rect class="computer" x="-43" y="-28" width="86" height="59" rx="6"/><rect x="-34" y="-19" width="68" height="42" rx="2" fill="#DCECF1"/><path d="M-11 32 V43 H11 V32 M-27 45 H27" stroke="#6B8792" stroke-width="4" fill="none" stroke-linecap="round"/><text class="node-name" y="77">PC 3</text></g>
+    <g transform="translate(640 660)"><rect class="computer" x="-46" y="-33" width="92" height="63" rx="8"/><rect x="-33" y="-45" width="66" height="35" rx="4" fill="#DFEAF0" stroke="#6B8792" stroke-width="3"/><rect x="-30" y="7" width="60" height="18" rx="2" fill="#ECF2F4"/><circle cx="32" cy="-2" r="4" fill="#195B42"/><text class="node-name" y="77">Printer</text></g>
+  </g>
+
+  <!-- RIGHT: FOUR ROUTERS IN A FULL MESH. Intersecting links do not create a node. -->
+  <rect x="818" y="224" width="720" height="527" rx="24" fill="#FFFFFF" stroke="#D7E2E6" stroke-width="2"/>
+  <rect x="818" y="224" width="720" height="10" rx="5" fill="#195B42"/>
+  <text class="panel-title" x="851" y="283">FULL MESH topology</text>
+  <text class="panel-subtitle" x="851" y="317">Each router has a direct link to every other router.</text>
+  <g aria-label="Six independent communication links between four routers">
+    <path class="thin-wire" d="M1023 416 H1355"/>
+    <path class="thin-wire" d="M1023 610 H1355"/>
+    <path class="thin-wire" d="M1023 416 V610"/>
+    <path class="thin-wire" d="M1355 416 V610"/>
+    <path class="thin-wire" d="M1023 416 L1355 610"/>
+    <!-- The white bridge shows that crossed wires are not interconnected. -->
+    <path d="M1023 610 L1181 517" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round"/>
+    <path class="thin-wire" d="M1023 610 L1181 517 M1197 508 L1355 416"/>
+  </g>
+  <g aria-label="Routers A, B, C and D">
+    <g transform="translate(1023 416)"><rect class="router" x="-50" y="-35" width="100" height="70" rx="14"/><path d="M-30 -4 H30 M-30 8 H30" stroke="#387A8A" stroke-width="4" stroke-linecap="round"/><circle cx="-24" cy="-16" r="5" fill="#195B42"/><text class="node-name" y="-52">Router A</text></g>
+    <g transform="translate(1355 416)"><rect class="router" x="-50" y="-35" width="100" height="70" rx="14"/><path d="M-30 -4 H30 M-30 8 H30" stroke="#387A8A" stroke-width="4" stroke-linecap="round"/><circle cx="-24" cy="-16" r="5" fill="#195B42"/><text class="node-name" y="-52">Router B</text></g>
+    <g transform="translate(1023 610)"><rect class="router" x="-50" y="-35" width="100" height="70" rx="14"/><path d="M-30 -4 H30 M-30 8 H30" stroke="#387A8A" stroke-width="4" stroke-linecap="round"/><circle cx="-24" cy="-16" r="5" fill="#195B42"/><text class="node-name" y="67">Router C</text></g>
+    <g transform="translate(1355 610)"><rect class="router" x="-50" y="-35" width="100" height="70" rx="14"/><path d="M-30 -4 H30 M-30 8 H30" stroke="#387A8A" stroke-width="4" stroke-linecap="round"/><circle cx="-24" cy="-16" r="5" fill="#195B42"/><text class="node-name" y="67">Router D</text></g>
+  </g>
+  <text x="1178" y="712" font-size="17" text-anchor="middle" fill="#50636D">Crossed links are not extra devices</text>
+
+  <!-- The comparison is a teaching aid, separate from any authentic exam figure. -->
+  <rect x="62" y="775" width="720" height="79" rx="15" fill="#E8F4ED"/>
+  <text class="foot-head" x="86" y="808">Trade-off</text>
+  <text class="foot-text" x="86" y="833">Less cabling; the central switch is a single point of failure.</text>
+  <rect x="818" y="775" width="720" height="79" rx="15" fill="#E8F4ED"/>
+  <text class="foot-head" x="842" y="808">Trade-off</text>
+  <text class="foot-text" x="842" y="833">Alternative routes; more links to install and maintain.</text>
+  <text x="62" y="883" font-size="14" fill="#50636D">Original concept illustration for teaching · not an OCR examination figure</text>
+</svg>
