@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Boolean logic gates controlling workshop ventilation</title>
+  <desc id="desc">An original teaching circuit using an OR gate, NOT gate and AND gate. A ventilation fan runs if either temperature or humidity is high, and maintenance override is off. The logic is fan equals hot OR humid, AND NOT override. It includes two test cases and is not an OCR examination figure.</desc>
+  <!-- School theme affects green halos only. Technical shapes, wiring, and text are monochrome. -->
+  <style>
+    text { font-family:Inter,Arial,Helvetica,sans-serif; fill:#171717; }
+    .kicker { font-size:19px; font-weight:800; letter-spacing:3px; fill:#1F1F1F; }
+    .title-text { font-size:56px; font-weight:800; letter-spacing:-1.5px; }
+    .intro { font-size:23px; fill:#5C5C5C; }
+    .section { font-size:23px; font-weight:800; fill:#242424; }
+    .gate-label { font-size:27px; font-weight:800; text-anchor:middle; }
+    .input-label { font-size:25px; font-weight:800; }
+    .input-sub { font-size:18px; fill:#5C5C5C; }
+    .formula { font-size:29px; font-weight:800; fill:#242424; }
+    .explain { font-size:20px; fill:#5C5C5C; }
+    .table-head { font-size:18px; font-weight:800; fill:#242424; }
+    .table-cell { font-size:19px; font-weight:700; }
+    .wire { stroke:#292929; stroke-width:5; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+    .gate { fill:#FFFFFF; stroke:#1F1F1F; stroke-width:5; stroke-linejoin:round; }
+    .input-card { fill:#FFFFFF; stroke:#D6D6D6; stroke-width:2.5; }
+  </style>
+  <defs><filter id="schoolGlow" x="-65%" y="-80%" width="230%" height="260%"><feGaussianBlur stdDeviation="8"/></filter></defs>
+  <rect width="1600" height="900" fill="#FFFFFF"/>
+  <text class="kicker" x="67" y="69">GCSE COMPUTER SCIENCE   /   BOOLEAN LOGIC</text>
+  <text class="title-text" x="67" y="139">A circuit that makes a decision</text>
+  <text class="intro" x="69" y="180">Workshop ventilation: run the fan when a sensor is high, unless maintenance override is on.</text>
+  <rect x="1347" y="62" width="186" height="51" rx="25" fill="#FAFAFA" stroke="#D6D6D6" stroke-width="2"/>
+  <text x="1440" y="95" font-size="19" font-weight="800" text-anchor="middle" fill="#242424">J277 · 2.4.1</text>
+
+  <rect x="61" y="224" width="1478" height="428" rx="25" fill="none" stroke="#195B42" stroke-width="14" opacity=".18" filter="url(#schoolGlow)"/>
+  <rect x="61" y="224" width="1478" height="428" rx="25" fill="#FFFFFF" stroke="#E4E4E4" stroke-width="2"/>
+  <text class="section" x="91" y="277">CIRCUIT</text>
+
+  <!-- Input cards and wire paths are independent of the exam paper. -->
+  <g aria-label="School-colour halos around input components" fill="none" stroke="#195B42" stroke-width="13" opacity=".30" filter="url(#schoolGlow)">
+    <rect x="91" y="336" width="260" height="75" rx="13"/>
+    <rect x="91" y="438" width="260" height="75" rx="13"/>
+    <rect x="91" y="548" width="280" height="75" rx="13"/>
+  </g>
+  <g aria-label="Temperature input"><rect class="input-card" x="91" y="336" width="260" height="75" rx="13"/><circle cx="120" cy="373" r="10" fill="#292929"/><text class="input-label" x="143" y="369">Hot</text><text class="input-sub" x="144" y="392">Temperature high</text></g>
+  <g aria-label="Humidity input"><rect class="input-card" x="91" y="438" width="260" height="75" rx="13"/><circle cx="120" cy="475" r="10" fill="#292929"/><text class="input-label" x="143" y="472">Humid</text><text class="input-sub" x="144" y="495">Humidity high</text></g>
+  <g aria-label="Maintenance override input"><rect class="input-card" x="91" y="548" width="280" height="75" rx="13"/><circle cx="120" cy="585" r="10" fill="#666666"/><text class="input-label" x="143" y="581">Override</text><text class="input-sub" x="144" y="604">Maintenance switch on</text></g>
+
+  <!-- Wires: OR takes Hot and Humid; NOT inverts Override; AND combines both results. -->
+  <path class="wire" d="M351 373 H493 M351 475 H493"/>
+  <path class="wire" d="M681 424 H978 V400 H1090"/>
+  <path class="wire" d="M371 585 H600"/>
+  <path class="wire" d="M784 585 H963 V500 H1090"/>
+  <path class="wire" d="M1239 451 H1376"/>
+  <circle cx="978" cy="400" r="6" fill="#292929"/>
+
+  <!-- Conventional curved OR gate. -->
+  <g aria-label="OR gate">
+    <path d="M476 330 Q535 424 476 518 Q603 516 681 424 Q603 332 476 330 Z" fill="none" stroke="#195B42" stroke-width="16" opacity=".49" filter="url(#schoolGlow)"/>
+    <path class="gate" d="M476 330 Q535 424 476 518 Q603 516 681 424 Q603 332 476 330 Z"/>
+    <text class="gate-label" x="575" y="435">OR</text>
+  </g>
+
+  <!-- Conventional inverter triangle with inversion bubble. -->
+  <g aria-label="NOT gate">
+    <path d="M600 534 L751 585 L600 636 Z" fill="none" stroke="#195B42" stroke-width="16" opacity=".49" filter="url(#schoolGlow)"/>
+    <circle cx="767" cy="585" r="16" fill="none" stroke="#195B42" stroke-width="13" opacity=".49" filter="url(#schoolGlow)"/>
+    <path class="gate" d="M600 534 L751 585 L600 636 Z"/>
+    <circle class="gate" cx="767" cy="585" r="16"/>
+    <text class="gate-label" x="655" y="596">NOT</text>
+  </g>
+
+  <!-- Conventional AND gate with flat input and rounded output. -->
+  <g aria-label="AND gate">
+    <path d="M1090 373 H1161 A78 78 0 0 1 1161 529 H1090 Z" fill="none" stroke="#195B42" stroke-width="16" opacity=".49" filter="url(#schoolGlow)"/>
+    <path class="gate" d="M1090 373 H1161 A78 78 0 0 1 1161 529 H1090 Z"/>
+    <text class="gate-label" x="1152" y="463">AND</text>
+  </g>
+
+  <g aria-label="Ventilation fan output">
+    <circle cx="1424" cy="451" r="48" fill="none" stroke="#195B42" stroke-width="16" opacity=".49" filter="url(#schoolGlow)"/>
+    <circle cx="1424" cy="451" r="48" fill="#FAFAFA" stroke="#1F1F1F" stroke-width="4"/>
+    <circle cx="1424" cy="451" r="8" fill="#1F1F1F"/>
+    <path d="M1419 441 C1389 394 1447 396 1430 445 C1478 426 1477 475 1433 459 C1412 504 1385 474 1419 458 Z" fill="#1F1F1F" opacity=".78"/>
+    <circle cx="1424" cy="451" r="8" fill="#FFFFFF"/>
+    <text x="1424" y="526" text-anchor="middle" font-size="23" font-weight="800">Fan</text>
+    <text x="1424" y="551" text-anchor="middle" font-size="17" fill="#5C5C5C">Output</text>
+  </g>
+  <text x="485" y="310" font-size="18" fill="#5C5C5C">Either sensor</text>
+  <text x="1090" y="351" font-size="18" fill="#5C5C5C">Both conditions</text>
+
+  <!-- Formula and two independent functional checks. -->
+  <rect x="61" y="675" width="880" height="165" rx="18" fill="#FAFAFA"/>
+  <text class="section" x="91" y="719">BOOLEAN EXPRESSION</text>
+  <text class="formula" x="91" y="760">Fan = (Hot OR Humid) AND NOT Override</text>
+  <text class="explain" x="91" y="799">At least one sensor must be high, and override must be off.</text>
+
+  <rect x="963" y="675" width="576" height="165" rx="18" fill="#FFFFFF" stroke="#E4E4E4" stroke-width="2"/>
+  <text class="section" x="991" y="713">CHECK TWO INPUT CASES</text>
+  <g class="table-head"><text x="993" y="745">Hot</text><text x="1062" y="745">Humid</text><text x="1160" y="745">Override</text><text x="1347" y="745">Fan</text></g>
+  <path d="M991 756 H1508" stroke="#E4E4E4" stroke-width="2"/>
+  <g class="table-cell"><text x="1009" y="781">1</text><text x="1093" y="781">0</text><text x="1208" y="781">0</text><text x="1366" y="781" fill="#1F1F1F">1</text><text x="1009" y="815">0</text><text x="1093" y="815">1</text><text x="1208" y="815">1</text><text x="1366" y="815" fill="#292929">0</text></g>
+  <text x="61" y="882" font-size="14" fill="#5C5C5C">Original concept illustration for teaching · not an OCR examination figure · 1 = true, 0 = false</text>
+</svg>
