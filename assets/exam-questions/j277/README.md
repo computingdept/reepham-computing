@@ -46,3 +46,26 @@ The `data/exam-questions/j277-visual-assets.csv` file records the exact question
 5. Teacher has approved the content and chosen whether it is suitable for student prompt, I Do, We Do or answer reveal.
 
 **No changes to lessons, Skills Hub, CSS, JavaScript or Cloudflare during this asset audit.**
+
+
+## Full J277 SVG candidate set (November 2026)
+
+The J277 visual register contains **66 source visual references**, of which **10 were classified for SVG treatment**. All 10 now have an independently drawn or deliberately reusable **desktop/master** and **mobile** teaching SVG. The other 56 references remain under table/HTML review and must not be converted to decorative SVGs by default.
+
+| Lesson focus | Primary lesson | Asset pair |
+| --- | --- | --- |
+| AND, OR and NOT combination | 088, 090 | `boolean-ventilation-*.svg` (reused in two different past-paper concept mappings) |
+| Selection + price calculation flowchart | 048 | `ticket-discount-flowchart-model-*.svg` |
+| Merge sort stages | 086 | `merge-sort-model-*.svg` |
+| Image binary pixel decoding | 005 | `pixel-binary-grid-prompt-*.svg` and separate `pixel-binary-grid-reveal-*.svg` |
+| Three-gate logic: access system | 090 | `lab-door-access-logic-model-*.svg` |
+| Network topology | 134 | `network-topologies-*.svg` |
+| Selection flowchart | 048 | `selection-flowchart-model-*.svg` |
+| Combined logic: machine requests | 090 | `machine-enable-logic-model-*.svg` |
+| Iteration flowchart with trace | 059 | `countdown-loop-flowchart-model-*.svg` |
+
+**Exact lesson assignments and recommended lesson phases** are in [`data/exam-questions/j277-svg-lesson-map.csv`](../../../data/exam-questions/j277-svg-lesson-map.csv); mappings use lesson numbers and titles verified against `j277-hub.html` and do not alter lesson content.
+
+**Critical qualification boundary:** J277 1.2.4 covers data representation, **not half or full adders**. The only gates used in the J277 SVG set are AND, OR and NOT (official 2.4.1). Any future H446 adder content must stay in the H446 library.
+
+**QA status:** source SVG metadata and school-colour placement were inspected for the newly created files and the register's file paths were checked. **Rendered visual alignment, classroom projection, print contrast, accessibility with assistive technology, and teacher approval are still pending**. Do not claim the diagrams have been installed into lessons or are approved to replace OCR examination illustrations.
