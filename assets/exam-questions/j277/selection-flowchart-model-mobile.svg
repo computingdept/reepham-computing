@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1390" role="img" aria-labelledby="title desc">
+<title id="title">Mobile selection flowchart: pass or review a test score</title>
+<desc id="desc">Portrait, original worked teaching flowchart. Start, input mark and decide if mark is at least 50. True leads to output PASS; False leads to output REVIEW. Both arrows reconnect to End. White shapes with sharp dark outlines and shape-following decorative school-colour glow.</desc>
+<!-- School colour is reserved for blur strokes. All data and arrows remain black. -->
+<style>
+ text{font-family:Inter,Arial,Helvetica,sans-serif;fill:#171717}
+ .kicker{font-size:22px;font-weight:800;letter-spacing:1.8px}
+ .title{font-size:48px;font-weight:800}
+ .sub{font-size:25px;fill:#5C5C5C}
+ .small{font-size:23px;font-weight:800;fill:#555}
+ .label{font-size:27px;font-weight:800;text-anchor:middle}
+ .out{font-size:26px;font-weight:800;text-anchor:middle}
+ .route{font-size:24px;font-weight:800}
+ .wire{stroke:#242424;stroke-width:6;stroke-linejoin:round;stroke-linecap:round;fill:none}
+ .shape{stroke:#242424;stroke-width:5;fill:white}
+</style>
+<defs>
+ <filter id="schoolGlow" x="-70%" y="-80%" width="240%" height="260%"><feGaussianBlur stdDeviation="8"/></filter>
+ <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M2 2 L10 6 L2 10 Z" fill="#242424"/></marker>
+</defs>
+<rect width="900" height="1390" fill="white"/>
+<text class="kicker" x="44" y="65">J277 / ALGORITHMS</text>
+<text class="title" x="43" y="130">Selection flowchart</text>
+<text class="sub" x="44" y="175">One decision. Two possible outcomes.</text>
+
+<rect x="33" y="213" width="834" height="1119" rx="27" fill="none" stroke="#195B42" stroke-width="15" opacity=".16" filter="url(#schoolGlow)"/>
+<rect x="33" y="213" width="834" height="1119" rx="27" fill="white" stroke="#E2E2E2" stroke-width="3"/>
+<text class="small" x="72" y="268">WORKED TEACHING EXAMPLE</text>
+
+<!-- Connector lines and non-semantic branch labels -->
+<g class="wire">
+ <path d="M450 376 V431" marker-end="url(#arrow)"/>
+ <path d="M450 519 V594" marker-end="url(#arrow)"/>
+ <path d="M267 700 H226 V885" marker-end="url(#arrow)"/>
+ <path d="M633 700 H672 V885" marker-end="url(#arrow)"/>
+ <path d="M226 975 V1050 H450 M672 975 V1050 H450 M450 1050 V1147" marker-end="url(#arrow)"/>
+</g>
+<text class="route" x="99" y="683">False</text>
+<text class="route" x="709" y="683">True</text>
+
+<!-- Shape-following school glow -->
+<g stroke="#195B42" stroke-width="18" opacity=".46" fill="none" filter="url(#schoolGlow)">
+ <rect x="325" y="309" width="250" height="67" rx="33"/>
+ <path d="M317 431 H605 L578 519 H290 Z"/>
+ <path d="M450 594 L633 700 L450 806 L267 700 Z"/>
+ <path d="M108 885 H343 L314 975 H79 Z"/>
+ <path d="M557 885 H792 L763 975 H528 Z"/>
+ <rect x="325" y="1147" width="250" height="67" rx="33"/>
+</g>
+<!-- Clean black flowchart geometry -->
+<rect class="shape" x="325" y="309" width="250" height="67" rx="33"/>
+<text class="label" x="450" y="350">Start</text>
+<path class="shape" d="M317 431 H605 L578 519 H290 Z"/>
+<text class="label" x="448" y="485">INPUT mark</text>
+<path class="shape" d="M450 594 L633 700 L450 806 L267 700 Z"/>
+<text class="label" x="450" y="710">mark ≥ 50?</text>
+<path class="shape" d="M108 885 H343 L314 975 H79 Z"/>
+<text class="out" x="211" y="941">REVIEW</text>
+<path class="shape" d="M557 885 H792 L763 975 H528 Z"/>
+<text class="out" x="660" y="941">PASS</text>
+<rect class="shape" x="325" y="1147" width="250" height="67" rx="33"/>
+<text class="label" x="450" y="1189">End</text>
+<text x="67" y="1273" font-size="21" fill="#5C5C5C">Concept illustration — not the OCR examination figure</text>
+</svg>
