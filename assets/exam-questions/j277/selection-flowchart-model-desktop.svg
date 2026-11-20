@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">Selection flowchart: pass or review a test score</title>
+<desc id="desc">Original GCSE selection flowchart for teaching, not the OCR exam flowchart. Start, input mark, decision whether mark is at least 50, then output PASS on the True branch or REVIEW on the False branch; both branches join at End. The white shapes have black technical outlines, with a soft decorative school-colour halo around each shape.</desc>
+<!-- Independent teaching model. School theme token #195B42 is used solely on blurred component/panel strokes. -->
+<style>
+ text{font-family:Inter,Arial,Helvetica,sans-serif;fill:#171717}
+ .kicker{font-size:19px;font-weight:800;letter-spacing:2.8px;fill:#222}
+ .title{font-size:55px;font-weight:800;letter-spacing:-1.2px}
+ .subtitle{font-size:23px;fill:#5C5C5C}
+ .phase{font-size:18px;font-weight:800;fill:#555}
+ .step{font-size:24px;font-weight:800;text-anchor:middle}
+ .branch{font-size:21px;font-weight:800}
+ .wire{stroke:#242424;stroke-width:5;stroke-linejoin:round;stroke-linecap:round;fill:none}
+ .shape{stroke:#242424;stroke-width:4;fill:white;stroke-linejoin:round}
+</style>
+<defs>
+ <filter id="schoolGlow" x="-70%" y="-80%" width="240%" height="260%"><feGaussianBlur stdDeviation="8"/></filter>
+ <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M2 2 L10 6 L2 10 Z" fill="#242424"/></marker>
+</defs>
+<rect width="1600" height="900" fill="white"/>
+<text class="kicker" x="70" y="70">GCSE COMPUTER SCIENCE / ALGORITHMS</text>
+<text class="title" x="70" y="137">Selection: two possible outcomes</text>
+<text class="subtitle" x="72" y="177">Trace how one decision chooses an output, then both paths rejoin.</text>
+<rect x="1340" y="67" width="188" height="50" rx="25" fill="#FAFAFA" stroke="#DADADA" stroke-width="2"/>
+<text x="1434" y="99" font-size="19" text-anchor="middle" font-weight="800">J277 · 2.1</text>
+
+<!-- Overall panel and school-colour halo -->
+<rect x="70" y="214" width="1460" height="644" rx="25" fill="none" stroke="#195B42" stroke-width="14" opacity=".17" filter="url(#schoolGlow)"/>
+<rect x="70" y="214" width="1460" height="644" rx="25" fill="white" stroke="#E5E5E5" stroke-width="2"/>
+<text class="phase" x="110" y="256">MODELLED EXAMPLE · NOT THE OCR EXAM QUESTION</text>
+
+<!-- Draw wires behind shapes. The left path is False; the right path is True. -->
+<g class="wire">
+ <path d="M790 325 V350" marker-end="url(#arrow)"/>
+ <path d="M790 422 V466" marker-end="url(#arrow)"/>
+ <path d="M640 546 H430 V652" marker-end="url(#arrow)"/>
+ <path d="M940 546 H1150 V652" marker-end="url(#arrow)"/>
+ <path d="M430 722 V760 H790 M1150 722 V760 H790 M790 760 V800" marker-end="url(#arrow)"/>
+</g>
+<text class="branch" x="526" y="525">False</text>
+<text class="branch" x="1020" y="525">True</text>
+
+<!-- Individual shape-following glows -->
+<g stroke="#195B42" stroke-width="16" fill="none" opacity=".45" filter="url(#schoolGlow)">
+ <rect x="694" y="271" width="192" height="54" rx="27"/>
+ <path d="M657 350 H923 L892 422 H626 Z"/>
+ <path d="M790 466 L940 546 L790 626 L640 546 Z"/>
+ <path d="M352 652 H544 L510 722 H318 Z"/>
+ <path d="M1072 652 H1264 L1230 722 H1038 Z"/>
+ <rect x="694" y="800" width="192" height="54" rx="27"/>
+</g>
+<!-- Standards-compliant flowchart shapes -->
+<rect class="shape" x="694" y="271" width="192" height="54" rx="27"/>
+<text class="step" x="790" y="305">Start</text>
+<path class="shape" d="M657 350 H923 L892 422 H626 Z"/>
+<text class="step" x="775" y="395">INPUT mark</text>
+<path class="shape" d="M790 466 L940 546 L790 626 L640 546 Z"/>
+<text class="step" x="790" y="540">mark ≥ 50?</text>
+<path class="shape" d="M352 652 H544 L510 722 H318 Z"/>
+<text class="step" x="430" y="694">OUTPUT REVIEW</text>
+<path class="shape" d="M1072 652 H1264 L1230 722 H1038 Z"/>
+<text class="step" x="1150" y="694">OUTPUT PASS</text>
+<rect class="shape" x="694" y="800" width="192" height="54" rx="27"/>
+<text class="step" x="790" y="835">End</text>
+</svg>
