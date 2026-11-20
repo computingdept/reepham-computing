@@ -1,42 +1,47 @@
-# J277 original teaching visuals
+# J277 independently drawn teaching visuals
 
-This folder contains original diagrams illustrating technical concepts associated with J277 past-paper questions. These are **not copies of OCR diagrams** and must not be presented as the original exam figure. Teachers use the linked official OCR papers when they need the authentic question.
+This folder contains original GCSE Computer Science diagrams linked to the **J277 visual-assets register**, not copies of original OCR examination illustrations. For the authentic source question and mark allocation, use the OCR paper linked from the question bank.
 
-## Asset convention
+## Design now in use
 
-- One diagram design has **desktop** (`1600 × 900` viewBox) and **mobile** (portrait viewBox) SVGs. Both contain vector paths, accessible `<title>` and `<desc>` elements, and no linked raster images or external fonts.
-- Every asset is linked to at least one question ID through `data/exam-questions/j277-visual-assets.csv`. That register is the source for original paper references, delivery status, and QA.
-- Standard visual grammar: pale background, white panels, high-contrast charcoal text, labelled symbols, medium blue wiring, and restrained school-brand accents. The technical meaning must not rely only on colour.
-- A diagram showing the worked structure or answer belongs in **teaching / modelling**, not automatically on an unrevealed past-paper question screen.
+**[Computing Visual Standard v1.0](../VISUAL-STANDARD.md)** is the shared visual rule for **J277 and H446** across the trust:
 
-## Theme palette
+- Pure white background; black/grey **technical** symbols, wires, labels, values and headings.
+- One school-specific colour, restricted to **soft blurred halos around each individual component** and a weaker outer diagram halo.
+- Exact diagram geometry, technical facts and accessibility text stay the same for every school.
+- Reepham's current `#195B42` halo token is **provisional**, not a verified brand-manual colour.
+- Dedicated landscape/projector and mobile/portrait layouts. Neither is a compressed version of the other.
+- A black-and-white print must remain fully understandable; glow is decorative only.
 
-The initial visual theme uses a provisional Reepham-style green. The exact approved school hex values are not yet confirmed from a brand manual.
+The canonical files in this directory have adopted that monochrome-glow style. The previous coloured versions were preserved in `archive/pre-glow-*.svg`; the design-review versions remain in `reviews/`. Nothing in the live lessons has changed.
 
-| Semantic token | Initial hex | Purpose |
-| --- | --- | --- |
-| school accent | `#195B42` | headings, diagram strokes, header line |
-| school dark | `#124632` | emphasis on pale panels |
-| school tint | `#E8F4ED` | unobtrusive highlighted panels |
-| ink | `#162B35` | body text, independent of school branding |
-| cable | `#387A8A` or `#367A8B` | neutral links; not a school colour |
+## Initial approved visual direction
 
-For another school, create a variant from the **same master artwork**, replacing only the three school palette values (accent, dark, tint), then rerender and check contrast. Do not recolour semantic signals merely to match a school's badge. Keep original geometry, wording, accessible descriptions, and question links consistent across the trust.
+| Teaching concept | Main desktop SVG | Portrait SVG | Review |
+| --- | --- | --- | --- |
+| Star and full mesh networks | `network-topologies-desktop.svg` | `network-topologies-mobile.svg` | Design adopted, topic/teacher approval still needed |
+| Logic gates controlling ventilation | `boolean-ventilation-desktop.svg` | `boolean-ventilation-mobile.svg` | Design adopted, topic/teacher approval still needed |
 
-External `<img src="...svg">` references cannot reliably inherit a parent page's CSS variables. Therefore the committed SVGs use self-contained colours and school variants should be generated at asset build time. The production site is **not** modified during the question-bank audit.
+These explain **related concepts** and are not replacements for OCR's examination questions. The logic example contains worked outputs and should be used only in modelling or answer reveal, not in an unrevealed exam prompt.
 
-## Validation before use
+## Per-school builds
 
-1. Confirm that the illustration teaches the intended concept without accidentally recreating OCR artwork or wording.
-2. Check all wires, nodes, gate symbols, names, and annotations against the intended technical relationship.
-3. Render and inspect desktop at full projector size and mobile as a portrait asset; review every label, connection, and contrast boundary.
-4. Confirm the source question's original paper and mark scheme references separately.
-5. Only after QA and teacher approval, consider the lesson placement in a **separate implementation task**.
+Add the approved school colour to `data/exam-questions/school-svg-themes.json` and run:
 
-The visual register deliberately separates `status`, `projector_qa`, `mobile_qa`, and `source_visual_verified` so a correctly rendered teaching illustration is not mistaken for a verified copy of an examination figure.
+```bash
+node scripts/build-school-svg.mjs --school reepham --qualification j277
+```
 
-## Monochrome school-glow review variant (not yet approved)
+This writes school-specific SVGs under `dist/school-svg/reepham/j277/`. The builder changes only the filtered halo stroke, not the wires or content. Other schools reuse the same SVG masters rather than maintaining separate drawings.
 
-Four review SVGs live in `reviews/`, linked separately from the existing desktop/mobile paths in the visual asset register. They preserve white backgrounds, dark text, black/charcoal technical linework and exact gate/network geometry. Only soft halos around whole teaching panels and individual devices/gates use a school-colour token (`#195B42` for the current provisional Reepham example). No technical fact, connection, answer or symbol is communicated by glow colour; a black-and-white print remains understandable.
+## Quality and release gate
 
-The school theme is selected at the asset-build layer by replacing the halo colour in the same master SVG with each school's approved accessible brand colour. The green hex is illustrative until a Reepham brand specification is confirmed. Glow is decorative and should be visually checked on projectors and mobiles; a deployment may reduce or omit it for print and reduced-effects preferences. The original SVGs remain available until teachers approve the review design.
+The `data/exam-questions/j277-visual-assets.csv` file records the exact question IDs, original paper reference, desktop/mobile paths, visual QA and outstanding checks. Do not label an asset **approved for lesson use** until:
+
+1. Original paper/mark scheme has been compared for *topic fit*, with no claim that the independently drawn illustration matches OCR's original figure exactly.
+2. The logic or diagram behaviour has been technically checked.
+3. Desktop, mobile, black-and-white print and classroom projection have been inspected.
+4. The SVG has meaningful accessible text, with screen-reader checks.
+5. Teacher has approved the content and chosen whether it is suitable for student prompt, I Do, We Do or answer reveal.
+
+**No changes to lessons, Skills Hub, CSS, JavaScript or Cloudflare during this asset audit.**
