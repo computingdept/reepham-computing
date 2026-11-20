@@ -21,6 +21,7 @@ The canonical files in this directory have adopted that monochrome-glow style. T
 | --- | --- | --- | --- |
 | Star and full mesh networks | `network-topologies-desktop.svg` | `network-topologies-mobile.svg` | Design adopted, topic/teacher approval still needed |
 | Logic gates controlling ventilation | `boolean-ventilation-desktop.svg` | `boolean-ventilation-mobile.svg` | Design adopted, topic/teacher approval still needed |
+| Selection flowchart (independent worked model) | `selection-flowchart-model-desktop.svg` | `selection-flowchart-model-mobile.svg` | Source paper Q2 2024 inspected; diagram content/render approval still needed |
 
 These explain **related concepts** and are not replacements for OCR's examination questions. The logic example contains worked outputs and should be used only in modelling or answer reveal, not in an unrevealed exam prompt.
 
