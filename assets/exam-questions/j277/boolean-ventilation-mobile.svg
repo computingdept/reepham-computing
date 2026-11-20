@@ -1,39 +1,44 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1760" role="img" aria-labelledby="title desc">
   <title id="title">Mobile Boolean logic illustration of a workshop ventilation fan</title>
   <desc id="desc">Portrait, original teaching illustration. A high temperature OR high humidity signal, combined with NOT maintenance override through an AND gate, controls a ventilation fan. It includes the expression and two example evaluations. Not an original OCR exam diagram.</desc>
-  <!-- Themeable master palette: accent #195B42, dark #124632, tint #E8F4ED. -->
+  <!-- Black-and-white technical artwork; the school changes only the glow colour #195B42. -->
   <style>
-    text { font-family:Inter,Arial,Helvetica,sans-serif; fill:#162B35; }
-    .kicker { font-size:24px; font-weight:800; letter-spacing:2px; fill:#195B42; }
+    text { font-family:Inter,Arial,Helvetica,sans-serif; fill:#171717; }
+    .kicker { font-size:24px; font-weight:800; letter-spacing:2px; fill:#1F1F1F; }
     .head { font-size:48px; font-weight:800; letter-spacing:-1.2px; }
-    .intro { font-size:26px; fill:#50636D; }
-    .panel-head { font-size:27px; font-weight:800; fill:#124632; }
+    .intro { font-size:26px; fill:#5C5C5C; }
+    .panel-head { font-size:27px; font-weight:800; fill:#242424; }
     .input-title { font-size:29px; font-weight:800; }
-    .input-desc { font-size:20px; fill:#50636D; }
+    .input-desc { font-size:20px; fill:#5C5C5C; }
     .gate-name { font-size:29px; font-weight:800; text-anchor:middle; }
-    .wire { stroke:#367A8B; stroke-width:6; fill:none; stroke-linejoin:round; stroke-linecap:round; }
-    .gate { fill:#FFFFFF; stroke:#195B42; stroke-width:6; stroke-linejoin:round; }
-    .input { fill:#F5F9FA; stroke:#C9DBE0; stroke-width:3; }
-    .formula { font-size:33px; font-weight:800; fill:#124632; }
-    .help { font-size:24px; fill:#50636D; }
+    .wire { stroke:#292929; stroke-width:6; fill:none; stroke-linejoin:round; stroke-linecap:round; }
+    .gate { fill:#FFFFFF; stroke:#1F1F1F; stroke-width:6; stroke-linejoin:round; }
+    .input { fill:#FFFFFF; stroke:#D6D6D6; stroke-width:3; }
+    .formula { font-size:33px; font-weight:800; fill:#242424; }
+    .help { font-size:24px; fill:#5C5C5C; }
     .table-label { font-size:25px; font-weight:800; }
     .table-value { font-size:28px; font-weight:700; }
   </style>
-  <rect width="900" height="1760" fill="#F5F8FA"/>
-  <rect width="900" height="15" fill="#195B42"/>
+  <defs><filter id="schoolGlow" x="-65%" y="-80%" width="230%" height="260%"><feGaussianBlur stdDeviation="8"/></filter></defs>
+  <rect width="900" height="1760" fill="#FFFFFF"/>
   <text class="kicker" x="43" y="64">J277 / BOOLEAN LOGIC</text>
   <text class="head" x="43" y="126">A circuit makes a decision</text>
   <text class="intro" x="44" y="170">Workshop ventilation starts when a sensor is</text>
   <text class="intro" x="44" y="205">high, unless maintenance override is on.</text>
 
-  <rect x="33" y="238" width="834" height="942" rx="28" fill="#FFFFFF" stroke="#D7E2E6" stroke-width="3"/>
-  <rect x="33" y="238" width="834" height="12" rx="6" fill="#195B42"/>
+  <rect x="33" y="238" width="834" height="942" rx="28" fill="none" stroke="#195B42" stroke-width="14" opacity=".18" filter="url(#schoolGlow)"/>
+  <rect x="33" y="238" width="834" height="942" rx="28" fill="#FFFFFF" stroke="#E4E4E4" stroke-width="3"/>
   <text class="panel-head" x="70" y="291">LOGIC CIRCUIT</text>
 
   <!-- Inputs: the two sensors are combined by OR; the override is inverted. -->
-  <g><rect class="input" x="66" y="349" width="240" height="90" rx="15"/><circle cx="96" cy="393" r="12" fill="#B65A1B"/><text class="input-title" x="120" y="390">Hot</text><text class="input-desc" x="120" y="419">Temp. high</text></g>
-  <g><rect class="input" x="66" y="475" width="240" height="90" rx="15"/><circle cx="96" cy="518" r="12" fill="#B65A1B"/><text class="input-title" x="120" y="514">Humid</text><text class="input-desc" x="120" y="543">Humidity high</text></g>
-  <g><rect class="input" x="66" y="854" width="245" height="93" rx="15"/><circle cx="96" cy="900" r="12" fill="#47749A"/><text class="input-title" x="120" y="896">Override</text><text class="input-desc" x="120" y="925">Maintenance on</text></g>
+  <g aria-label="School-colour halos around the input components" fill="none" stroke="#195B42" stroke-width="15" opacity=".30" filter="url(#schoolGlow)">
+    <rect x="66" y="349" width="240" height="90" rx="15"/>
+    <rect x="66" y="475" width="240" height="90" rx="15"/>
+    <rect x="66" y="854" width="245" height="93" rx="15"/>
+  </g>
+  <g><rect class="input" x="66" y="349" width="240" height="90" rx="15"/><circle cx="96" cy="393" r="12" fill="#292929"/><text class="input-title" x="120" y="390">Hot</text><text class="input-desc" x="120" y="419">Temp. high</text></g>
+  <g><rect class="input" x="66" y="475" width="240" height="90" rx="15"/><circle cx="96" cy="518" r="12" fill="#292929"/><text class="input-title" x="120" y="514">Humid</text><text class="input-desc" x="120" y="543">Humidity high</text></g>
+  <g><rect class="input" x="66" y="854" width="245" height="93" rx="15"/><circle cx="96" cy="900" r="12" fill="#666666"/><text class="input-title" x="120" y="896">Override</text><text class="input-desc" x="120" y="925">Maintenance on</text></g>
 
   <path class="wire" d="M306 393 H365 M306 518 H365"/>
   <path class="wire" d="M563 456 H608 V677 H645"/>
@@ -42,23 +47,23 @@
   <path class="wire" d="M793 724 H828"/>
 
   <!-- Conventional OR gate, inverter bubble, and AND gate. -->
-  <g aria-label="OR"><path class="gate" d="M345 332 Q410 456 345 580 Q486 575 563 456 Q486 337 345 332 Z"/><text class="gate-name" x="456" y="467">OR</text></g>
-  <g aria-label="NOT"><path class="gate" d="M361 840 L493 900 L361 960 Z"/><circle class="gate" cx="509" cy="900" r="16"/><text class="gate-name" x="416" y="912">NOT</text></g>
-  <g aria-label="AND"><path class="gate" d="M645 641 H709 A83 83 0 0 1 709 807 H645 Z"/><text class="gate-name" x="714" y="736">AND</text></g>
-  <g aria-label="Fan output"><circle cx="825" cy="724" r="30" fill="#E8F4ED" stroke="#195B42" stroke-width="4"/><circle cx="825" cy="724" r="5" fill="#195B42"/><path d="M824 716 C804 691 838 689 829 721 C850 710 854 739 829 727 C821 750 800 732 822 728 Z" fill="#195B42"/><circle cx="825" cy="724" r="5" fill="#FFFFFF"/><text x="825" y="786" text-anchor="middle" font-size="25" font-weight="800">Fan</text></g>
+  <g aria-label="OR"><path d="M345 332 Q410 456 345 580 Q486 575 563 456 Q486 337 345 332 Z" fill="none" stroke="#195B42" stroke-width="18" opacity=".49" filter="url(#schoolGlow)"/><path class="gate" d="M345 332 Q410 456 345 580 Q486 575 563 456 Q486 337 345 332 Z"/><text class="gate-name" x="456" y="467">OR</text></g>
+  <g aria-label="NOT"><path d="M361 840 L493 900 L361 960 Z" fill="none" stroke="#195B42" stroke-width="18" opacity=".49" filter="url(#schoolGlow)"/><circle cx="509" cy="900" r="16" fill="none" stroke="#195B42" stroke-width="14" opacity=".49" filter="url(#schoolGlow)"/><path class="gate" d="M361 840 L493 900 L361 960 Z"/><circle class="gate" cx="509" cy="900" r="16"/><text class="gate-name" x="416" y="912">NOT</text></g>
+  <g aria-label="AND"><path d="M645 641 H709 A83 83 0 0 1 709 807 H645 Z" fill="none" stroke="#195B42" stroke-width="18" opacity=".49" filter="url(#schoolGlow)"/><path class="gate" d="M645 641 H709 A83 83 0 0 1 709 807 H645 Z"/><text class="gate-name" x="714" y="736">AND</text></g>
+  <g aria-label="Fan output"><circle cx="825" cy="724" r="30" fill="none" stroke="#195B42" stroke-width="17" opacity=".49" filter="url(#schoolGlow)"/><circle cx="825" cy="724" r="30" fill="#FAFAFA" stroke="#1F1F1F" stroke-width="4"/><circle cx="825" cy="724" r="5" fill="#1F1F1F"/><path d="M824 716 C804 691 838 689 829 721 C850 710 854 739 829 727 C821 750 800 732 822 728 Z" fill="#1F1F1F"/><circle cx="825" cy="724" r="5" fill="#FFFFFF"/><text x="825" y="786" text-anchor="middle" font-size="25" font-weight="800">Fan</text></g>
 
-  <g><rect x="80" y="1041" width="740" height="95" rx="16" fill="#F2F7F9" stroke="#D7E2E6" stroke-width="2"/><text x="110" y="1079" font-size="24" font-weight="800" fill="#195B42">Signal path</text><text class="help" x="110" y="1115">OR result and NOT result enter AND.</text></g>
+  <g><rect x="80" y="1041" width="740" height="95" rx="16" fill="#FAFAFA" stroke="#E4E4E4" stroke-width="2"/><text x="110" y="1079" font-size="24" font-weight="800" fill="#1F1F1F">Signal path</text><text class="help" x="110" y="1115">OR result and NOT result enter AND.</text></g>
 
-  <rect x="33" y="1210" width="834" height="205" rx="23" fill="#E8F4ED"/>
+  <rect x="33" y="1210" width="834" height="205" rx="23" fill="#FAFAFA"/>
   <text class="panel-head" x="68" y="1258">BOOLEAN EXPRESSION</text>
   <text class="formula" x="68" y="1310">Fan = (Hot OR Humid)</text>
   <text class="formula" x="180" y="1351">AND NOT Override</text>
   <text class="help" x="68" y="1390">At least one sensor high; override off.</text>
 
-  <rect x="33" y="1440" width="834" height="248" rx="23" fill="#FFFFFF" stroke="#D7E2E6" stroke-width="3"/>
+  <rect x="33" y="1440" width="834" height="248" rx="23" fill="#FFFFFF" stroke="#E4E4E4" stroke-width="3"/>
   <text class="panel-head" x="67" y="1490">CHECK TWO INPUT CASES</text>
   <g class="table-label"><text x="75" y="1538">Hot</text><text x="224" y="1538">Humid</text><text x="416" y="1538">Override</text><text x="721" y="1538">Fan</text></g>
-  <path d="M72 1554 H823" stroke="#D7E2E6" stroke-width="3"/>
-  <g class="table-value"><text x="92" y="1608">1</text><text x="261" y="1608">0</text><text x="470" y="1608">0</text><text x="751" y="1608" fill="#195B42">1</text><text x="92" y="1662">0</text><text x="261" y="1662">1</text><text x="470" y="1662">1</text><text x="751" y="1662" fill="#B65A1B">0</text></g>
-  <text x="34" y="1732" font-size="18" fill="#50636D">Independent teaching visual · not an OCR examination figure</text>
+  <path d="M72 1554 H823" stroke="#E4E4E4" stroke-width="3"/>
+  <g class="table-value"><text x="92" y="1608">1</text><text x="261" y="1608">0</text><text x="470" y="1608">0</text><text x="751" y="1608" fill="#1F1F1F">1</text><text x="92" y="1662">0</text><text x="261" y="1662">1</text><text x="470" y="1662">1</text><text x="751" y="1662" fill="#292929">0</text></g>
+  <text x="34" y="1732" font-size="18" fill="#5C5C5C">Independent teaching visual · not an OCR examination figure</text>
 </svg>
