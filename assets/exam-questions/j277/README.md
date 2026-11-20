@@ -34,3 +34,9 @@ External `<img src="...svg">` references cannot reliably inherit a parent page's
 5. Only after QA and teacher approval, consider the lesson placement in a **separate implementation task**.
 
 The visual register deliberately separates `status`, `projector_qa`, `mobile_qa`, and `source_visual_verified` so a correctly rendered teaching illustration is not mistaken for a verified copy of an examination figure.
+
+## Monochrome school-glow review variant (not yet approved)
+
+Four review SVGs live in `reviews/`, linked separately from the existing desktop/mobile paths in the visual asset register. They preserve white backgrounds, dark text, black/charcoal technical linework and exact gate/network geometry. Only soft halos around whole teaching panels and individual devices/gates use a school-colour token (`#195B42` for the current provisional Reepham example). No technical fact, connection, answer or symbol is communicated by glow colour; a black-and-white print remains understandable.
+
+The school theme is selected at the asset-build layer by replacing the halo colour in the same master SVG with each school's approved accessible brand colour. The green hex is illustrative until a Reepham brand specification is confirmed. Glow is decorative and should be visually checked on projectors and mobiles; a deployment may reduce or omit it for print and reduced-effects preferences. The original SVGs remain available until teachers approve the review design.
