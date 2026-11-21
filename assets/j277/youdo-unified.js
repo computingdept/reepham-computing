@@ -109,49 +109,16 @@
           '<span>MODEL ANSWER</span></div>'+
           '<div class="j277-u-batch-marking">'+copy.innerHTML+'</div></article>';
       });
-      const checked=stages[0].querySelector(".solution-card");
-      if(!checked)throw Error("Missing author-written Code First explanation");
-      // Keep every authored worked-answer paragraph, code sample and illustration,
-      // but arrange Predict / Change / Build alongside each other. The old
-      // unstructured right-hand panel forced scrolling on classroom projectors.
-      const compactCheck=(()=>{
-        // Adapter-rendered lessons can supply answer HTML without a real DOM node.
-        if(!checked.children)return null;
-        const groups=[[],[],[]];
-        let current=-1,illustration="",heading="";
-        for(const node of Array.from(checked.children)){
-          if(node.matches("h2")){heading=node.textContent.trim();continue;}
-          if(node.matches("svg,img")){illustration+=node.outerHTML;continue;}
-          if(node.matches("p")){
-            const m=node.textContent.trim().match(/^([1-3])\s*[·.)]\s*(Predict|Change|Build)\s*:/i);
-            if(m)current=Number(m[1])-1;
-          }
-          if(current>=0 && node.matches("p,pre,ul,ol,div"))
-            groups[current].push(node.outerHTML);
-        }
-        if(groups.some(g=>!g.length))return null; // keep original fallback
-        return {heading,illustration,groups};
-      })();
-      const modelPanel=
-        '<div class="j277-u-editor"><div class="j277-u-editor-label">MODEL OCR ERL</div>'+
-        '<pre>'+esc(code.model)+'</pre></div>'+
-        '<div class="j277-u-result"><span>EXPECTED OUTPUT</span><strong>'+
-        esc(code.expected)+'</strong></div>';
-      const checkContent=compactCheck
-        ?'<div class="j277-u-check-top">'+
-          '<div class="j277-u-check-model">'+modelPanel+'</div>'+
-          '<div class="j277-u-check-visual">'+
-          (compactCheck.heading?'<h2>'+esc(compactCheck.heading)+'</h2>':"")+
-          compactCheck.illustration+'</div></div>'+
-          '<div class="j277-u-check-steps">'+
-          compactCheck.groups.map((group,i)=>
-            '<div class="j277-u-check-step" data-step="'+(i+1)+'">'+
-            group.join("")+'</div>').join("")+
-          '</div>'
-        :'<div class="j277-u-code-check-grid"><div>'+modelPanel+'</div>'+
-          '<div class="j277-u-code-check-method">'+checked.innerHTML+'</div></div>';
+      // Code First answer screen: only the answer to the actual prompt.
+      // Predict = output value; Write = the required final instruction.
+      // Source worked explanations/SVGs remain in answers.html unchanged.
       const focus=["predict","write","test","iterate"].includes(code.focus_stage)
         ?code.focus_stage:"predict";
+      const answerMarkup=focus==="write"
+        ?'<pre class="j277-u-simple-code">'+
+          esc(code.model.split(/\r?\n/).filter(line=>line.trim()).slice(-1)[0])+
+          '</pre>'
+        :'<strong class="j277-u-simple-value">'+esc(code.expected)+'</strong>';
       const steps=[
         ["predict","01 Predict"],["write","02 Write"],
         ["test","03 Test"],["iterate","04 Improve"]
@@ -164,10 +131,9 @@
           '<div class="j277-u-editor"><div class="j277-u-editor-label">OCR ERL · TRACE THE OUTPUT</div>'+
           '<pre>'+esc(code.starter)+'</pre></div>'+
           '<div class="j277-u-steps">'+steps+'</div></div>'),
-        newCard("j277-u-code-check"+(compactCheck?" j277-u-code-check-compact":""),head("CODE FIRST","CHECK YOUR ANSWER")+
-          '<div class="j277-u-body j277-u-check-screen">'+
-          '<div class="j277-u-eyebrow">CHECK · EXPLAIN · IMPROVE</div>'+
-          checkContent+'</div>'),
+        newCard("j277-u-code-check j277-u-code-check-simple",
+          head("CODE FIRST","ANSWER")+
+          '<div class="j277-u-simple-answer">'+answerMarkup+'</div>'),
         newCard("j277-u-batch j277-u-batch-questions",
           head("INDEPENDENT EXAM PRACTICE",examCount+' QUESTIONS · ONE SCREEN')+
           '<div class="j277-u-batch-grid">'+questionPanels.join("")+'</div>'),
@@ -186,7 +152,7 @@
         j277ReviewStart:"3",codingFirst:"true",
         workMode:"independent",windowStart:"0"
       });
-      css.href="../../../assets/j277/youdo-unified.css?v=20261121-j277-readable-v1";
+      css.href="../../../assets/j277/youdo-unified.css?v=20261121-codefirst-answer-only-v1";
       document.head.appendChild(css);
       const labels=[
         "Check Code First →","Begin exam questions →",
