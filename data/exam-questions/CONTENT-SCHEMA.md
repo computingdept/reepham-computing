@@ -75,3 +75,11 @@ per question.
    explicitly marked as a **teacher teaching point**.
 6. Begin with Lesson 134; check a projector and phone, plus neighbouring
    lessons, before expanding opt-in to any other lesson.
+
+## Separate RHS J277 practice bank (21 November 2026)
+
+The **canonical** `j277-questions.csv` and `h446-questions.csv` remain unchanged; their original reviewed-answer counts (11 J277, 3 H446) describe the **original** historical enrichment stage only.
+
+A separate, independent `j277-rhs-practice-drafts.csv` stores **225 new RHS-written question drafts and 225 source-linked answer/marking verifications**. Its current fields are `rhs_verified_answer_points`, `rhs_verified_marking_rule`, `rhs_answer_verification_status`, `rhs_answer_source` and `rhs_answer_review_date`. Do **not** mistake the inherited `mark_scheme_review_status` in this separate table for the new RHS progress status.
+
+The teacher's independent marking review does **not** approve the RHS questions for student display or automated scoring. Outstanding work includes original SVGs, accessible diagrams/tables and any source-dependent code/trace layouts, copyright/originality review and projector/mobile QA. Details: [RHS J277 answer verification](RHS-J277-ANSWER-VERIFICATION.md).
