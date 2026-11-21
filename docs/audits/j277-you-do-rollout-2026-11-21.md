@@ -151,3 +151,20 @@ Lesson | Year | Topic/spec | Normal or assessment | Source type | Code First app
 - **No user-visible change at rhsccs.org** is expected at this point because only branch audit documentation has been committed.
 - **Next tangible milestone**: create and exercise an isolated You Do pilot on a staging branch, verify code first → questions → answers with unchanged other phases, share a user-viewable preview, obtain teacher sign-off, then deploy a small approved batch.
 - Do not report the pilot as tested until actual interaction testing has been completed and evidenced.
+
+## Isolated interactive pilot — 2026-11-21
+
+A **self-contained preview** was created outside the live site for teacher evaluation. It is currently distributed as a downloadable `j277-you-do-pilot.html` conversation artifact, **not** hosted at rhsccs.org or committed as an operational lesson. It reproduces selected question-and-answer content from the source lessons, but does not execute the existing production lesson renderer.
+
+| Lesson | Pilot scope | Steps in standalone preview | Result |
+| --- | --- | ---: | --- |
+| 002 | Code First, five exam tasks, six review cards | 12 | Navigation/reset passed |
+| 021 | Code First, previous-learning task, three exam questions, five review cards | 10 | Navigation/reset passed |
+| 134 | Code First, three exam questions, four review cards | 8 | Navigation/reset passed |
+| 035 | Unassessed warm-up, assessment-only instruction | 2 | No answers exposed |
+
+**Automated preview-only QA:** Chromium browser testing at desktop **1440×900** and mobile **390×844** across all four lesson selections. Each sequence advanced to the final step, reset to the first, and changed lesson without a script error; no horizontal viewport overflow detected. The assessment did not reveal worked answers.
+
+**The preview test does not count as production lesson QA.** The production JavaScript renderer, shared phase navigation, visual fidelity to original SVGs, answers-page integration, keyboard/screen-reader audit, and regression comparison for non-You Do phases remain untested. No lesson is promoted to the workflow status `Tested` or `Teacher approved` on the strength of this prototype.
+
+**Release gate:** Teacher review of the preview; then implement a tightly scoped production You Do pilot on a separate development branch, run actual browser regression against production rendering, verify all other phase nodes remain unchanged, and publish only with teacher approval.
