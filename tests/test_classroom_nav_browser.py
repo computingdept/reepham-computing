@@ -655,6 +655,12 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
                                     trial.locator("#you-do .rhs-y-visual svg").count(), 0,
                                     "Retain authored SVGs where question data provides them",
                                 )
+                                self.assertEqual(
+                                    cards.last.locator(".rhs-y-visual").count(), 0,
+                                    "The decorative Single site / ? / Separated sites "
+                                    "diagram must not appear on Q4's marking screen",
+                                )
+                                self.assertIn("retail company", cards.last.inner_text())
                             else:
                                 self.assertIn(
                                     "DancerGold", cards.nth(3).inner_text())
