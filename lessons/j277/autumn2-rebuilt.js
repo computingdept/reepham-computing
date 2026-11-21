@@ -2084,7 +2084,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   // J277-only default presentation: one independent question per screen,
   // with every authored marking scheme revealed only after all questions.
   // Assessment, timed-practice and existing opt-in pilots keep their own flow.
-  const unifiedJ277=!lesson.isAssessment && !useExamPilot && !rhsSharedYouDoTrial &&
+  const unifiedJ277=Number(number)>=19 && Number(number)<=25 &&
+    !lesson.isAssessment && !useExamPilot && !rhsSharedYouDoTrial &&
     !new URLSearchParams(location.search).has("youdo-trial") &&
     !["078","113","156","157"].includes(String(number));
   const unifiedData=unifiedJ277?{
