@@ -1,12 +1,12 @@
 /* RHS J277 You Do unified sequence, static lesson adapter.
- * Initial rollout: lessons 001–002; scope: #you-do only.
+ * J277-only shared presentation, static/adapter/renderer inputs. Scope: #you-do.
  * Uses the lesson's authored question SVGs and its answers.html mark schemes.
  * No H446 logic, Cloudflare, assessment changes, persistence or network writes.
  */
 (function(){
   "use strict";
   const found=location.pathname.match(/\/lessons\/j277\/lesson-(\d{3})\/(?:index\.html)?$/);
-  if(!found || !["001","002"].includes(found[1]))return;
+  if(!found)return;
   const number=found[1];
   const host=document.getElementById("you-do");
   const deck=host && host.querySelector(".youdo-rolling");
@@ -29,17 +29,36 @@
   css.rel="stylesheet";
   css.href="../../../assets/j277/youdo-unified.css?v=20261121-001-v1";
 
-  const answersPromise=fetch("answers.html",{cache:"no-store"}).then(r=>{
-    if(!r.ok)throw Error("answers unavailable");
-    return r.text();
-  });
+  const injected=window.RHSJ277YouDoData;
+  const hasInjected=!!injected && injected.lesson===number &&
+    Array.isArray(injected.answers);
+  if(!hasInjected && !["001","002"].includes(number))return;
+  const answersPromise=hasInjected
+    ?Promise.resolve({list:injected.answers})
+    :fetch("answers.html",{cache:"no-store"}).then(r=>{
+      if(!r.ok)throw Error("answers unavailable");
+      return r.text();
+    });
   const masterPromise=fetch("../code-first-master-20261021.json",{cache:"no-store"}).then(r=>{
     if(!r.ok)throw Error("Code First bank unavailable");
     return r.json();
   });
   Promise.all([answersPromise,masterPromise]).then(([markup,master])=>{
-    const doc=new DOMParser().parseFromString(markup,"text/html");
-    const stages=Array.from(doc.querySelectorAll("main .answer-stage"));
+    let stages;
+    if(hasInjected){
+      if(markup.list.length!==sourceCards.length ||
+         markup.list.some(a=>typeof a!=="string"||!a.trim()))
+        throw Error("Injected model answers do not align to source questions");
+      // Retain the exact author-written marking text; no model inference.
+      stages=markup.list.map(a=>({
+        querySelector:sel=>sel===".solution-card"
+          ?{innerHTML:'<div class="j277-u-original-marking"><pre>'+
+              esc(a)+'</pre></div>'}:null
+      }));
+    }else{
+      const doc=new DOMParser().parseFromString(markup,"text/html");
+      stages=Array.from(doc.querySelectorAll("main .answer-stage"));
+    }
     const code=master?.lessons?.[number];
     if(stages.length!==sourceCards.length||!code||!code.task||!code.starter||
       !code.model||!code.expected)throw Error("You Do question/answer alignment failed");
@@ -61,9 +80,13 @@
       const question=source.querySelector(".question-text");
       if(!question)throw Error("Missing source question "+(i+2));
       const copy=question.cloneNode(true);
-      const svg=copy.querySelector("svg");
-      const figure=svg?'<div class="j277-u-figure">'+svg.outerHTML+'</div>':"";
-      if(svg)svg.remove();
+      // A diagram may precede the question-text block in generated lessons.
+      // Pull all authored SVGs from the *cloned* question card; never edit source.
+      const visuals=Array.from(source.querySelectorAll("svg"));
+      copy.querySelectorAll("svg").forEach(svg=>svg.remove());
+      const figure=visuals.length
+        ?'<div class="j277-u-figure">'+visuals.map(v=>v.outerHTML).join("")+'</div>'
+        :"";
       const label=source.querySelector(".phase-tag")?.textContent?.trim()||"EXAM PRACTICE";
       const title=source.querySelector("h3")?.textContent?.trim()||"Question";
       output.push(newCard("j277-u-question",

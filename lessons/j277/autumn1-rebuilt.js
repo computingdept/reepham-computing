@@ -331,6 +331,16 @@
   const nav=["do-now","overview","new-learning","i-do","we-do","you-do","vocabulary","exit"];
   const names=["Do Now","Objectives","New Learning","I Do","We Do","You Do","Key Vocabulary","Exit Ticket"];
   const parts=[doNow(lesson),objectives(lesson),newLearning(lesson),iDo(lesson),weDo(lesson),youDo(lesson,number),vocabulary(lesson),exit(lesson)];
+  // You Do-only presentation: existing renderer data supplies authored answers.
+  // Assessment/review 018 stays in its established format.
+  const unifiedJ277=String(number)!=="018";
+  const unifiedPayload=unifiedJ277?{lesson:String(number),
+    answers:[lesson.k.a,...lesson.e.map(q=>q[1])]}:null;
+  const unifiedScripts=unifiedJ277
+    ?'<script>window.RHSJ277YouDoData='+
+       JSON.stringify(unifiedPayload).replace(/</g,"\\u003c")+
+       ';<\/script><script src="../../../assets/j277/youdo-unified.js?v=20261121-autumn1-v3"><\/script>'
+    :'${unifiedScripts}';
   const html=sharedHead(number,lesson.t)+`<body><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
    <a class="course-back" href="../../../j277-hub.html?year=10#lessons">← Year 10 lessons</a>
    <nav class="phase-nav" aria-label="Lesson phases">${arr(nav,(id,i)=>`<button type="button" data-page="${id}">${names[i]}</button>`)}</nav>
