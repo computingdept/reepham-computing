@@ -62,7 +62,7 @@ document.querySelectorAll('.item').forEach(function(card){
     var show=btn.getAttribute('aria-expanded')!=='true';
     btn.setAttribute('aria-expanded',String(show));btn.textContent=show?'Hide worked answer':'Reveal worked answer';
     question.hidden=show;answer.hidden=!show;marks.hidden=!show;
-    if(show){var img=answer.querySelector('img[data-answer-src]');if(img&&!img.src)img.src=img.getAttribute('data-answer-src');}
+    if(show){var img=answer.querySelector('img[data-answer-src]');if(img&&!img.hasAttribute('src'))img.setAttribute('src',img.getAttribute('data-answer-src'));}
     card.querySelector('.view-label').textContent=show?'ANSWER REVEAL':'QUESTION VIEW';
   });
 });
