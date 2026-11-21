@@ -631,6 +631,12 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
                                     cards.nth(2).inner_text(),
                                     "Total must come from the existing four questions",
                                 )
+                                # Geometry requires the challenge to be VISIBLE.
+                                # Measuring a hidden card produces zero rects.
+                                trial.locator("#advance").evaluate("(el) => el.click()")
+                                trial.locator("#advance").evaluate("(el) => el.click()")
+                                self.assertTrue(cards.nth(2).is_visible(),
+                                                "Independent challenge must open at step 3")
                                 positions = tiles.evaluate_all(
                                     "(nodes) => nodes.map(node => { "
                                     "const r=node.getBoundingClientRect(); "
@@ -645,6 +651,10 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
                                                    "Q2 must sit to the right of Q1")
                                 self.assertAlmostEqual(positions[0]["left"],positions[2]["left"],
                                                        delta=3, msg="Q1 and Q3 must align vertically")
+                                trial.locator("#previous").evaluate("(el) => el.click()")
+                                trial.locator("#previous").evaluate("(el) => el.click()")
+                                self.assertTrue(cards.first.is_visible(),
+                                                "Return to Code First before navigation tests")
                                 self.assertTrue(
                                     all("Source:" not in text for text in tiles.all_inner_texts()),
                                     "Source metadata must not crowd the questions",
