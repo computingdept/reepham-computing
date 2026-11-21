@@ -105,3 +105,13 @@ Checked all ten SVG source files for Q1(d)(i–iv) and Q5(c)(i–iii): each incl
 **Layout changes during this pass:** the cramped `many` label in the relational diagram was replaced with `N`, retaining a larger explanatory `One customer → many vehicles` caption; the three carry-chain arrows in the four-bit answer were enlarged from 22 to 26 SVG units. These are readability adjustments and do not change answers.
 
 **Important limitation:** this was an SVG **source/geometry review**, not a verified browser screenshot or projector test. A 900-unit SVG drawn at 450 CSS px yields half-size labels, so long code, fine cardinality marks, and small annotations must still be tested physically. These questions remain blocked until rendered, reviewed for screen-reader and print accessibility, compared with OCR source/marking alternatives, and teacher signed off. No lesson implementation.
+
+## November 2021 Paper 2 · first new QA batch (Q1d, Q2ai, Q2b)
+
+Three separate RHS question/answer SVG pairs have been drafted and linked on the isolated QA branch, plus a [three-question teacher preview](qa-2021-nov-paper2-q1d-q2-preview.html). **No live lessons or student assets were enabled.**
+
+- **Q1(d), breadth-first traversal** — original letter-labelled tree: K→(C,R); C→(A,F); R→(N,U); F→(E,H); U→(S,W). Expected visit order is **K,C,R,A,F,N,U,E,H,S,W**. The unrelated generic numeric BST illustration is not substituted.
+- **Q2(a)(i), iterative binary search** — six blanks correspond, in order, to `wanted`, `-1`, `2`, `middle + 1`, `middle - 1`, `middle`. Inclusive search bounds are explicitly retained.
+- **Q2(b), complexities** — the question explicitly covers *iterative* implementations with only scalar auxiliary state. Worst/best auxiliary space is `O(1)` for both searches, average running time `O(log n)` for binary and `O(n)` for linear.
+
+All three register rows remain `disabled_not_approved`. **Source/geometry checks are not actual projector renders**. Missing approval gates: complete original OCR question/marking comparison, direct SVG raster and half-screen/mobile/print review, accessibility reading-order check, and teacher approval. Q1(c) A* was already drafted in the preceding batch and remains separately blocked for its corresponding trace/answer view.
