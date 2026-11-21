@@ -7,7 +7,9 @@ This is a **separate, public, RHS-authored practice-question drafting table**, n
 - **Coverage:** 225 records, one for each J277 source question part.
 - **Written RHS drafts:** 225 question parts across June 2022, 2023, 2024 and 2025 (both J277 papers).
 - **This update:** 214 additional scenario drafts alongside the existing 11.
-- **Source-checked teacher answer summaries:** 11; the other **214** have no verified answer breakdown in the canonical catalogue and remain **unreviewed**. Do not claim their marking points are verified or auto-mark them.
+- **RHS answer-audit pass:** 225/225 records have RHS-authored answer points and specific mark allocation reviewed against the corresponding official June 2022–2025 OCR papers and mark schemes (8 schemes). New columns record the scheme URL and review status.
+- **Question wording corrected during the answer audit:** 43 records. These corrected texts are still awaiting final independent originality and classroom-layout checks.
+- **Visual and layout dependencies:** 65 records are flagged for source-figure/table/layout review; 1 record requires an original RHS SVG; the other 159 have no recorded source-figure flag.
 - **All 225** RHS question texts are **drafts**, not final classroom-ready questions.
 - **Live lesson deployment:** not enabled by this table. Changing this CSV alone does not replace existing classroom content or enable the exam-classroom pilot.
 
@@ -24,13 +26,16 @@ This is a **separate, public, RHS-authored practice-question drafting table**, n
 ## Statuses
 
 - `awaiting_original_question`: historical status; no records currently remain in this state.
-- `draft_requires_final_review`: the 11 earlier RHS scenarios, still awaiting final approval.
-- `draft_requires_full_source_and_mark_scheme_review`: the 214 new scenario drafts; some include the original numeric inputs found in OCR paper sources, but accepted answers, figure/code dependencies and originality have **not** been checked comprehensively.
+- `marking_verified_final_approval_pending`: question wording and RHS answer guidance have been checked against the intended OCR mark allocation; 183 records; still NOT approved for public student lesson display.
+- `marking_verified_visual_or_final_approval_pending`: question wording was corrected to recover the original mark demand, but presentation/visual and final classroom checks are still pending; 42 records.
+- `rhs_answer_verification_status`: records whether the RHS answer points and allocation were reviewed against the official OCR source, or the RHS question also required a revision. All 225 rows now contain this status.
+- `rhs_verified_answer_points` and `rhs_verified_marking_rule`: teacher-authored answer/marking paraphrases, **not OCR's verbatim mark schemes**.
+- `rhs_answer_source` and `rhs_answer_review_date`: exact official scheme URL and date of independent RHS review.
 - `numerical_and_context_review=check_against_full_source`: do not assume every source value or source-dependent detail was available in the catalogue.
 - `visual_status=svg_required`: a new RHS diagram must be created and checked (currently used for the star-network task).
 - `visual_status=requires_source_figure_review`: a table, figure, code visual, logic diagram or source-dependent structure needs a new RHS asset or layout review before student display.
 - Draft wording that refers to a **supplied/accompanying** table, flowchart, trace table or code sample is **not self-contained** until that independently authored companion material is supplied. Do not deploy such a draft with the context missing.
-- `mark_scheme_review_status`: inherited from the canonical catalogue; `teacher_paraphrase_verified_against_OCR` means marking points were previously reviewed, **not** that the RHS question itself has been fully validated.
+- `mark_scheme_review_status`: **legacy snapshot** inherited unchanged from the original OCR index; it still shows 11 previously reviewed and 214 not reviewed. **Do not use this field to infer the newer RHS audit status.** Use `rhs_answer_verification_status` instead.
 
 ## First classroom draft examples
 
@@ -54,6 +59,8 @@ OCR assessment reference links remain in the canonical source catalogue. This ta
 | June 2025 | 56 | 56 |
 | **Total** | **225** | **225** |
 
-The 214 new question texts deliberately preserve the original catalogue identifiers, source-year/paper/question references, specification points and mark totals. Numeric inputs were retained where we could read them from the official question papers. A small number of programming or tabular items still need a new self-contained code/table/diagram asset for a valid student activity. All source-dependent questions and assessment demand remain flagged for verification; **the mark schemes for these 214 are not yet independently reviewed**.
+The 214 new question texts preserve original OCR IDs, source-year/paper/question references, specification points and marks. **All 225 RHS answer breakdowns now have a source-linked independent verification pass**; the canonical OCR catalogue still holds its original review snapshot. Specific question contexts, diagrams, tables and original code remain subject to **separate student-presentation and originality checks**. Some require new independent SVG/HTML assets. Do not automatically self-mark subjective or levels-of-response tasks.
 
-**Next gate before any site display:** independently author the outstanding context visuals and code snippets, review full OCR marking guidance question by question, ensure that the scenarios produce equivalent creditworthy answers, and conduct an originality check. Then approve and load through the shared J277 lesson renderer; no per-lesson JavaScript/CSS clones.
+**Next gate before any site display:** independently author the outstanding context visuals, code-layout assets and clean examination tables; validate numerical examples and projector/mobile readability; check originality; then approve and load through the shared J277 lesson renderer. The 225 answer grids have been independently compared with OCR schemes, but this does **not** make the 225 rewritten practice questions officially OCR-approved or ready for automated marking; no per-lesson JavaScript/CSS clones.
+
+For the complete paper-by-paper answer audit, scheme links and unresolved presentation gates, see [`RHS-J277-ANSWER-VERIFICATION.md`](RHS-J277-ANSWER-VERIFICATION.md).
