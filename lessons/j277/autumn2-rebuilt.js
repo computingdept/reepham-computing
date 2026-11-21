@@ -2081,7 +2081,27 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   const rhsSharedYouDoHead=rhsSharedYouDoTrial?'<link rel="stylesheet" href="../../../assets/rhs-youdo/youdo-presentation.css?v=20261121-rhs-youdo-j277-022-trial5">':"";
   const rhsSharedYouDoData=rhsSharedYouDoTrial?{lesson:String(number),code:lesson.k,priorExam:lesson.priorExam,questions:lesson.e,visuals:(lesson.examVisuals||[]).map((v,i)=>v && !(String(number)==="021" && i===2 && v.title==="Two different network extents")?diagram(v):"")}:null;
   const rhsSharedYouDoSetup=rhsSharedYouDoTrial?'<script src="../../../assets/rhs-youdo/youdo-presentation.js?v=20261121-rhs-youdo-j277-022-trial5"></script><script>window.RHSYouDoTrial.installJ277('+JSON.stringify(rhsSharedYouDoData).replace(/</g,"\\u003c")+');</script>':"";
-  const defaultYouDo=useExamPilot?"":'<script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"></script>';
+  // J277-only default presentation: one independent question per screen,
+  // with every authored marking scheme revealed only after all questions.
+  // Assessment, timed-practice and existing opt-in pilots keep their own flow.
+  const unifiedJ277=!lesson.isAssessment && !useExamPilot && !rhsSharedYouDoTrial &&
+    !new URLSearchParams(location.search).has("youdo-trial") &&
+    !["078","113","156","157"].includes(String(number));
+  const unifiedData=unifiedJ277?{
+    lesson:String(number),
+    answers:[lesson.k.a,
+      ...(lesson.priorExam?[lesson.priorExam.a]:[]),
+      ...lesson.e.map(q=>q[1]),
+      ...(lesson.year11&&lesson.challenge
+        ?[lesson.challenge.stretch.answer,lesson.challenge.mastery.answer]:[])]
+  }:null;
+  const unifiedScripts=unifiedJ277
+    ?'<script>window.RHSJ277YouDoData='+
+       JSON.stringify(unifiedData).replace(/</g,"\\u003c")+
+       ';<\/script><script src="../../../assets/j277/youdo-unified.js?v=20261121-autumn2-v3"><\/script>'
+    :"";
+  const defaultYouDo=useExamPilot?"":unifiedJ277?unifiedScripts:
+    '<script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"></script>';
   const lessonControllerVersion=rhsExamPilot?"20261121-rhs-codefirst-isolated-v10":"20261115-codefirst-brush2";
   const html=pilotHead.replace("</head>",rhsSharedYouDoHead+"</head>")+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")+(lesson.visualAuditV3?" j277-visual-v3":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
    <a class="course-back" href="../../../j277-hub.html?year=${lesson.year11?11:10}#lessons">← Year ${lesson.year11?11:10} lessons</a>
