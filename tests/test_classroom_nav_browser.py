@@ -567,5 +567,107 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
                 browser.close()
 
 
+    def test_shared_youdo_trial_only_changes_youdo_j277_and_h446(self):
+        """Pilot isolates seven other phases and preserves the question/answer run."""
+        cases = (
+            ("/lessons/j277/lesson-021/index.html", 7, 4, 4),
+            ("/lessons/h446/lesson-220/index.html", 10, 5, 0),
+        )
+        untouched = ("do-now", "overview", "new-learning", "i-do",
+                     "we-do", "vocabulary", "exit")
+        for engine in ("chromium", "webkit"):
+            browser = getattr(self.playwright, engine).launch(headless=True)
+            try:
+                for path, count, review_count, code_lines in cases:
+                    with self.subTest(engine=engine, path=path):
+                        normal = browser.new_page(viewport={"width": 1280, "height": 720})
+                        trial = browser.new_page(viewport={"width": 1280, "height": 720})
+                        errors = []
+                        trial.on("pageerror", lambda exc: errors.append(str(exc)))
+                        try:
+                            for page, addition in ((normal, ""), (trial, "?youdo-trial=1")):
+                                page.goto(
+                                    f"http://127.0.0.1:{self.port}{path}{addition}#you-do",
+                                    wait_until="networkidle", timeout=45000,
+                                )
+                            trial.wait_for_function(
+                                "() => document.querySelector('#you-do')?."
+                                "dataset.rhsYoudoTrial === 'true'", timeout=20000
+                            )
+                            self.assertIsNone(normal.locator("#you-do").get_attribute(
+                                "data-rhs-youdo-trial"
+                            ))
+                            for phase in untouched:
+                                self.assertEqual(
+                                    normal.locator(f"#{phase}").inner_text(),
+                                    trial.locator(f"#{phase}").inner_text(),
+                                    f"{path}: {phase} content must never change",
+                                )
+                            self.assertEqual(
+                                normal.locator(".phase-nav").evaluate(
+                                    "(node) => [...node.querySelectorAll('button')]"
+                                    ".map(b => b.dataset.page)"),
+                                trial.locator(".phase-nav").evaluate(
+                                    "(node) => [...node.querySelectorAll('button')]"
+                                    ".map(b => b.dataset.page)"),
+                            )
+                            cards = trial.locator("#you-do .rhs-y-stage")
+                            self.assertEqual(cards.count(), count)
+                            self.assertEqual(
+                                trial.locator("#you-do .rhs-y-mark-stage").count(),
+                                review_count
+                            )
+                            self.assertEqual(
+                                trial.locator("#you-do .rhs-y-line-num").count(),
+                                code_lines * 2,
+                            )
+                            if code_lines:
+                                self.assertIn("48", cards.first.inner_text())
+                                self.assertIn("4 seconds", cards.nth(1).inner_text())
+                                self.assertGreater(
+                                    trial.locator("#you-do .rhs-y-visual svg").count(), 0,
+                                    "Retain authored SVGs where question data provides them",
+                                )
+                            else:
+                                self.assertIn(
+                                    "DancerGold", cards.nth(4).inner_text())
+                                self.assertGreater(
+                                    trial.locator("#you-do .dancer-graph").count(), 0)
+                                self.assertEqual(
+                                    cards.last.locator(".dancer-scheme tbody tr").count(), 7,
+                                    "H446 seven-row mark scheme table must be retained",
+                                )
+                            def visible():
+                                return cards.evaluate_all(
+                                    "(xs) => xs.map((x,i) => x.getClientRects().length "
+                                    "? i : -1).filter(i => i >= 0)"
+                                )
+                            self.assertEqual(visible(), [0],
+                                "Only first You Do card should be visible")
+                            for current in range(1, count):
+                                trial.locator("#advance").evaluate("(el) => el.click()")
+                                self.assertEqual(visible(), [current],
+                                    f"{path}: screen {current} must be visible alone")
+                                self.assertTrue(
+                                    trial.locator("#you-do").evaluate(
+                                        "(node) => node.classList.contains('active')"
+                                    ), "You Do must not exit before its final answer")
+                            trial.locator("#previous").evaluate("(el) => el.click()")
+                            self.assertEqual(visible(), [count-2])
+                            trial.locator("#advance").evaluate("(el) => el.click()")
+                            self.assertEqual(visible(), [count-1])
+                            trial.locator("#advance").evaluate("(el) => el.click()")
+                            self.assertTrue(
+                                trial.locator("#vocabulary.page.active").count(),
+                                "Next after last marking screen must reach Vocabulary",
+                            )
+                            self.assertFalse(errors, f"{path}: browser exceptions: {errors}")
+                        finally:
+                            normal.close()
+                            trial.close()
+            finally:
+                browser.close()
+
+
 if __name__ == "__main__":
     unittest.main()
