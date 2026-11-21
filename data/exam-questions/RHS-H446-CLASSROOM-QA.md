@@ -133,3 +133,11 @@ Seven question parts now have question-specific RHS diagrams and answer panels: 
 **Blocking QA issue:** The 20-line rowClue code SVG uses a compact code font, likely too small in a standard 50:50 projector split. It must not be approved on source checks alone. Assess source line fit, actual SVG raster, half-screen size, input/output distinctions, print and mobile presentation, accessible reading order, OCR marking alternatives and teacher sign-off before any student view. The Q8(b)(iv) 5×5 grid is context only; the question wording remains required beside it, and the model displayRows procedure must be concealed until reveal.
 
 All changes are confined to `data/exam-questions/` and `assets/exam-questions/h446/question-view/` in the isolated QA branch; do not merge or alter J277, live H446 lessons or Cloudflare scoring.
+
+## November 2021 Paper 2 · museum A* Q1(c)(i–ii)
+
+The pre-existing original RHS **L/M/N/P/Q/Z directed 9-edge graph** has been retained. Three new QA-only SVGs were created: a heuristic/admissibility answer, a blank g/h/f/predecessor grid, and a fully worked final trace grid. The [isolated two-part preview](qa-2021-nov-paper2-astar-preview.html) shows the graph beside each question. Q1(c)(ii) shows its blank grid until the reveal, then swaps to the completed grid; the graph stays visible. Both question records remain **`disabled_not_approved`**.
+
+Independent A* re-execution verified selected order `L, N, P, Q, Z` and final route `L→N→P→Q→Z` costing `5+1+2+2=10`. Relaxations: L→M g3, L→N g5; N→P g6, N→Q g9; P→Q improves g9→8 and P→Z proposes g12; Q→Z improves g12→10. M is placed on the frontier but **not expanded**. Final rows (node:g,h,f,prev): L:0,8,8,–; M:3,8,11,L; N:5,4,9,L; P:6,3,9,N; Q:8,1,9,P; Z:10,0,10,Q. Heuristic admissibility was independently checked using the true shortest remaining path costs: every given h is no greater than the actual minimum. There is **no spurious P g7→g6 update**.
+
+**Still blocked:** verify full original OCR source context and accepted alternative working, inspect overlapping arrow/weight labels and text at actual half-projector width, print/mobile/accessibility, and teacher sign-off. Dense A* graph and answer grid are especially at risk of shrinking; an SVG source check is **not** a classroom-size render. No student release and no lesson changes.
