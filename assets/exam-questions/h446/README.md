@@ -53,3 +53,11 @@ node scripts/build-school-svg.mjs --school reepham --qualification h446
 - Any worked model belongs in an **I Do / We Do / answer reveal**, not an unrevealed OCR question prompt.
 - Do not overwrite the original question artwork or assert that a model matches OCR's figure or solution.
 - No H446 lesson, J277 lesson, live website, CSS, Skills Hub or Cloudflare changes are made by this SVG catalogue.
+
+## Half-screen classroom Question View (21 November 2026)
+
+The [Question View collection](question-view/README.md) adds **19 near-square 900 × 900 SVGs** for a diagram-left, question-right display. It is distinct from the existing full-width desktop and portrait/mobile Teaching View masters. The [question-to-visual map](../../../data/exam-questions/h446-question-view-map.csv) links all 49 H446 SVG-candidate parts to these original examples.
+
+**H446 OOP correction:** OCR's assessment pseudocode uses explicit `public` and `private` visibility (not `protected`). The H446 inheritance teaching diagrams were corrected to use these words, avoiding the UML `#` symbol, which actually means protected.
+
+All new Question View models remain **drafts requiring render/projector checks, source fit review and teacher approval**. The original OCR paper is authoritative; diagrams are independent concept examples, not exam-question replacements.
