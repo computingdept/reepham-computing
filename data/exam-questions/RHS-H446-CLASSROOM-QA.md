@@ -79,3 +79,9 @@ The [isolated QA preview](qa-2021-nov-q3c-q5c-preview.html) shows one question a
 **Technical draft self-check:** JavaScript blanks: `2.99`, `nonUKprice`, `numtickets`, `return`. Half adder: `S = A XOR B` and `C = A AND B`; truth-table rows 00, 01, 10, 11 give (S,C) = (0,0), (1,0), (1,0), (0,1). Four-bit extension: connect carry-out to the following bit's carry-in. The circuit input connections were redrawn to avoid ambiguous crossing wires in the new half-adder illustration.
 
 **Release still blocked:** original OCR stem/mark-scheme matching and alternatives, actual raster rendering and 50%-width projector visual check, phone/print/accessibility review, and explicit teacher sign-off. No live lesson, J277 resource, assignment or Cloudflare scoring file has been modified.
+
+## November 2021 Paper 1 · Q6(b) / Q6(c) LMC resource drafts
+
+Four original SVG assets added on the QA branch: the complete 22-line repeated-subtraction LMC routine, a question-only output grid, the completed output grid, and an equivalent pseudocode solution panel. [Isolated teacher preview](qa-2021-nov-q6-preview.html) provides two questions with distinct single consolidated answer reveals. Q6(b) draft answer pairs for fresh runs: 6/2→3 remainder 0; 9/1→9 remainder 0; 4/7→0 remainder 4; 3/1→3 remainder 0. Q6(c) initializes quotient=0, remainder=dividend, subtracts positive divisor while remainder≥divisor, then outputs quotient followed by remainder.
+
+Q6(b)/Q6(c) map to their RHS-specific question diagrams, not generic LMC artwork. Both records remain `disabled_not_approved`: complete OCR question/source comparison, actual render/half-screen/mobile/print accessibility testing, source marking alternatives and teacher sign-off are pending. This batch only adds question-bank resources and QA metadata—no lessons or Cloudflare scoring changes.
