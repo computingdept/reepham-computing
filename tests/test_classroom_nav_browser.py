@@ -479,6 +479,15 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
                                 self.assertEqual(
                                     stage.first.locator(".rhs-erl-line-number").all_inner_texts(),
                                     ["1", "2", "3"],
+                                    "Missing ERL lines. First stage HTML: "
+                                    + stage.first.evaluate(
+                                        "(el) => el.outerHTML.slice(0, 2400)"
+                                    )
+                                    + "; all stage classes: "
+                                    + str(stage.evaluate_all(
+                                        "(els) => els.map(x => x.className)"
+                                    ))
+                                    + "; page exceptions: " + str(errors),
                                 )
                                 self.assertEqual(
                                     stage.nth(1).locator(".rhs-code-result-value").inner_text(),
