@@ -18,7 +18,7 @@ The JSON mapping has **one record for each of 164 lessons**, with each record co
 For each ordinary J277 lesson, the **You Do phase only** follows seven screens:
 
 1. Code First task.
-2. Code First answer immediately after pressing Next — **answer only**, displayed large and centrally. For a Predict task show the resulting output (e.g. `11`); for a Write task show the required code instruction (e.g. `print(value)`). Do **not** display an additional worked-explanation panel, repeated steps, or extra SVGs on this answer screen. The authored explanation remains preserved in source answer data.
+2. Code First answer immediately after pressing Next — **repeat the original question and starter code at the top, with the answer immediately below**. For a Predict task show the output (e.g. `11`); for a Write task show the required code instruction (e.g. `print(value)`). Do **not** display additional worked-example panels, repeated Predict/Change/Build steps or unrelated SVGs here. Preserve the full authored explanation in source answer data.
 3. Exactly four independent exam questions **on one screen**.
 4. The corresponding worked/marking answer to Q1 **on its own full screen** (with its original appropriate answer SVG, if available).
 5. The corresponding worked/marking answer to Q2 on its own full screen.
