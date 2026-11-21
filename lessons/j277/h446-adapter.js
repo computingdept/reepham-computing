@@ -307,6 +307,16 @@ next.addEventListener('click',goNext);previous.addEventListener('click',goPrevio
 
     const qs=[...youDo,examQ];
     const codeCard=`<article class="exam-card youdo-question j277-code-first"><h3 class="j277-code-first-title"><img class="j277-code-first-logo" src="../../../assets/j277/code-first.svg" width="440" height="92" alt="CODE FIRST"></h3><p class="j277-code-topic">${esc(codeFirst.topic)}</p><div class="question-text"><div class="j277-code-content"><div class="j277-code-tasks"><p class="j277-code-start">${n==="003"?"Start on your mini-whiteboard.":n==="004"?"Write on your mini-whiteboard first, then check in the OCR ERL editor.":"Start on your mini-whiteboard. Predict before checking in ERL."}</p><p><strong>${n==="003"?"YOUR TASK":"1 · Predict"}:</strong> ${esc(codeFirst.predict)}</p><pre class="arithmetic">${esc(codeFirst.code)}</pre>${n==="003"?"":`<p><strong>2 · Change:</strong> ${esc(codeFirst.change)}</p><p><strong>3 · Extend:</strong> ${esc(codeFirst.build)}</p>`}${n==="004"?'<p><a href="https://www.examreferencelanguage.co.uk/" target="_blank" rel="noopener">Open the OCR ERL editor →</a></p>':""}</div><aside class="j277-code-reference"><strong>Today's topic</strong><p>${esc(title)}</p><span>Use what you have just learned. You can explain the steps before writing the answer.</span></aside></div></div></article>`;
+    // Lesson 003 only: pass existing authored You Do answers to J277 renderer.
+    // No other phase data is modified. 004–018 are handled in autumn1-rebuilt.
+    const unified003=n==="003";
+    const unified003Payload=unified003?{lesson:n,
+      answers:[codeFirst.answer,...(answerMap[n]||[]),examA]}:null;
+    const unified003Scripts=unified003
+      ?'<script>window.RHSJ277YouDoData='+
+        JSON.stringify(unified003Payload).replace(/</g,"\\u003c")+
+        ';<\\/script><script src="../../../assets/j277/youdo-unified.js?v=20261121-003-v3"><\\/script>'
+      :'<script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"><\\/script>';
     const qCards=codeCard+qs.map((q,i)=>`<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION ${i+2} · ${i===3?'ASSESSMENT PRACTICE':'INDEPENDENT PRACTICE'}</span><h3>${esc(title)}</h3><div class="question-text">${q}</div></article>`).join("");
 
     const vocabStages=vocab.map((v,i)=>`<article class="vocab-stage"${i?' hidden':''}><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION ${i+1} OF ${vocab.length}</span><h2>What is the term?</h2><p class="vocab-question">${esc(v.definition)}</p><span class="vocab-stage-count">${i+1} of ${vocab.length}</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">${esc(v.term)}</div></div></article>`).join("");
@@ -352,7 +362,7 @@ next.addEventListener('click',goNext);previous.addEventListener('click',goPrevio
 <section id="vocabulary" class="page phase-vocab" data-phase-time="4 minutes" data-vocab-flow="retrieval"><div class="vocab-deck">${vocabStages}</div></section>
 <section id="exit" class="page phase-exit" data-phase-time="2 minutes" data-exit-correct="${n==='003'?'no':''}" data-exit-explanation="${n==='003'?'Hexadecimal is a shorter way to write binary; it does not change how bits are stored.':''}"><div class="exit-compact"><div class="exit-check-card"><div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div><p class="exit-check-question">${exitQ}</p><div class="exit-check-response"><span class="exit-key-item">👍 <span>Thumb up = True</span></span><span class="exit-key-item">👎 <span>Thumb down = False</span></span></div></div><div class="exit-reflection-strip"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><div><strong>👍 Thumb up</strong><span>I can apply this independently.</span></div></div><div class="exit-confidence-choice"><div><strong>↔ Thumb sideways</strong><span>I understand most of it but need more practice.</span></div></div><div class="exit-confidence-choice"><div><strong>👎 Thumb down</strong><span>I need help with this topic.</span></div></div></div></div></section>
 </main><div class="lesson-footer">Lesson ${n} · ${esc(title)} <span>Year 10 · OCR J277</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20261115-codefirst-brush2"><\/script><script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"><\/script><script src="../../../assets/classroom-visual-zoom.js?v=20261114-clickclose2"><\/script></body></html>`);
+<script src="../../../assets/h446-lesson/lesson.js?v=20261115-codefirst-brush2"><\/script>${unified003Scripts}<script src="../../../assets/classroom-visual-zoom.js?v=20261114-clickclose2"><\/script></body></html>`);
     document.close();
   }).catch(err => {
     document.body.innerHTML='<p style="font-family:sans-serif;padding:2rem">Lesson failed to load: '+esc(err.message)+'</p>';
