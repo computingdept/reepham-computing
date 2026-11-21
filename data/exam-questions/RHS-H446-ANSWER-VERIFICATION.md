@@ -9,12 +9,12 @@ The new **H446 RHS-authored practice table** is [h446-rhs-practice-drafts.csv](h
 
 | OCR series | Question parts | RHS question drafts written | RHS answer/marking text reviewed |
 | --- | ---: | ---: | ---: |
-| November 2021 | 75 | 0 | 0 |
+| November 2021 | 75 | 75 | 75* |
 | June 2022 | 92 | 92 | 92* |
 | June 2023 | 84 | 84 | 84* |
 | June 2024 | 81 | 81 | 81* |
 | June 2025 | 78 | 78 | 78* |
-| **Total** | **410** | **335** | **335*** |
+| **Total** | **410** | **410** | **410*** |
 
 All **78** June 2025 question parts have independent RHS drafts and source-linked marking notes: **41 from H446/01** and **37 from H446/02**. The **Paper 1** question and marking text were compared with the [official 2025 /01 question paper](https://www.ocr.org.uk/Images/752247-question-paper-computer-systems.pdf) and [official 2025 /01 mark scheme](https://www.ocr.org.uk/Images/752415-mark-scheme-computer-systems.pdf). For **Paper 2**, the [official 2025 /02 mark scheme](https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf) was checked but the question-paper PDF could not be fetched. **Thus Paper 2 source-question-context verification remains outstanding.**
 
@@ -35,7 +35,7 @@ These are **working drafts**, not approved OCR-context-verified questions or an 
 
 ## What is still not complete
 
-1. **75** original RHS question drafts and **75** question-specific source-linked answer checks (November 2021).
+1. **No question parts remain undrafted**. All 410 contain new RHS question wording and teacher-written answer/marking text; these are not yet complete independent correctness/classroom approvals.
 2. Independent full source-paper figure and mark-scheme-page checks for all 78 as relevant, **particularly all 37 H446/02 questions whose OCR source question PDF could not be retrieved**. Ten of Paper 1 Q4–Q8 also have original visual/table/code layout dependencies.
 3. Original tables, program listings, trace layouts and SVG assessment contexts as needed (not every source visual should become an SVG).
 4. Question-by-question OCR examiner-report inspection and independent examiner insight for unreviewed entries.
@@ -106,4 +106,14 @@ Original RHS questions have been drafted for all H446/02 topics. Notable checks 
 - **Q7–Q8 Paper 2:** independently coded recursion trace `sumTrail(5)=15` and call `sumTrail(10)=55`; original 100-slot `IntStack` with top-as-next-free convention and -1 empty sentinel. Pop/push, input loop and accumulation remain separate assessed tasks. OOP vs procedural nine-mark evaluation remains teacher-marked.
 - **29 2022 records** need original visual/code/table/trace presentation; source-context, originality, accessibility, projector/mobile and teacher sign-off are pending.
 
-**Current H446 RHS totals: 335 written/answer guidance populated, 75 not yet written (2021), 0 classroom-approved.** All 410 IDs, ten 140-mark paper totals and 1,400 combined marks remain unchanged.
+**June 2022 historical milestone: 335 written at that stage, 75 then pending, 0 classroom-approved.** All 410 IDs, ten 140-mark paper totals and 1,400 combined marks remain unchanged.
+
+## Final RHS drafting audit — November 2021 and all ten papers
+
+- **2021 Paper 1: 41/41** and **Paper 2: 34/34** original RHS draft questions and indicative teacher marking guidance. OCR question/mark-scheme texts and representative PDF images consulted. The full figure/alternative-response/student layout gate remains open.
+- **P1 numeric QA:** `231→11100111`; `6F→01101111`; signed floating point `0011010100→0110100011→6.5`; source floating point addition gives `0111010110` = 58. New LMC repeated-subtraction quotient/remainder outputs were checked for each authored input pair.
+- **P2 A*:** new six-node directed graph; selected order `L,N,P,Q,Z`; final route `L→N→P→Q→Z` cost **10**. The authored trace explicitly separates cumulative `g`, estimated remaining `h`, and `f=g+h`. It must be illustrated using **its own edges and heuristic labels**, never the OCR DancerGold figure.
+- **P2 Forest Pixels:** new 5×5 sample and five-completion row-clue code; produced example strings `2 1`, `3`, `0`, `1 1 1`, `3`. The three-error checker task explicitly corrects row bound, comparison operator and mismatch handling. Test code/presentation teacher sign-off is still required.
+- **31 2021 parts** flagged for student-facing original diagram/table/code/trace layout. Extended responses remain teacher-marked and historical UK law descriptions require current-law review.
+
+**Final catalogue consistency audit:** **410/410 drafted**, **410/410 populated with answer/marking text**, **410/410 original IDs and marks retained**, **ten papers with 140 source marks each**, **1,400 marks total**, **147 records with visual/layout review flags across 2021–2025**, and **0 approved for student display**. The asterisk in the progress table refers to consultation of OCR marking text and drafting of independent notes, **not final source answer, figure or examiner-comment verification**. No J277, live lesson or Cloudflare scoring changes were made.
