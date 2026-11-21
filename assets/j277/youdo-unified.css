@@ -333,6 +333,7 @@
 
 
 /* One exam answer per full classroom screen (four in sequence).
+   Answer diagram and worked explanation START AT THE TOP, immediately below the header.
    Original answer SVGs are retained and shown at usable size. */
 #you-do[data-j277-exam-answer-pages="true"] .j277-u-answer-page{
   overflow:hidden!important;
@@ -340,7 +341,7 @@
 #you-do[data-j277-exam-answer-pages="true"] .j277-u-answer-layout{
   width:100%;max-width:none;box-sizing:border-box;
   display:grid;grid-template-columns:minmax(0,1fr);
-  align-items:center;justify-items:center;
+  align-items:start;justify-items:stretch;
   flex:1 1 auto;min-height:0;gap:clamp(18px,2.5vw,34px);
   padding:clamp(18px,2.2vw,34px);
 }
@@ -349,7 +350,7 @@
 }
 #you-do[data-j277-exam-answer-pages="true"] .j277-u-answer-visual{
   width:100%;min-width:0;
-  display:flex;align-items:center;justify-content:center;
+  display:flex;align-items:flex-start;justify-content:center;
   padding:clamp(14px,1.6vw,22px);
   box-sizing:border-box;
   border-radius:18px;
@@ -366,7 +367,7 @@
 #you-do[data-j277-exam-answer-pages="true"] .j277-u-answer-content{
   width:100%;min-width:0;max-width:100%;
   display:flex;flex-direction:column;
-  align-items:flex-start;justify-content:center;
+  align-items:flex-start;justify-content:flex-start;
   font-size:clamp(27px,2.7vw,44px)!important;
   line-height:1.32!important;
   color:#1d1d1f!important;
