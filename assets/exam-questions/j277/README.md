@@ -69,3 +69,14 @@ The J277 visual register contains **66 source visual references**, of which **10
 **Critical qualification boundary:** J277 1.2.4 covers data representation, **not half or full adders**. The only gates used in the J277 SVG set are AND, OR and NOT (official 2.4.1). Any future H446 adder content must stay in the H446 library.
 
 **QA status:** source SVG metadata and school-colour placement were inspected for the newly created files and the register's file paths were checked. **Rendered visual alignment, classroom projection, print contrast, accessibility with assistive technology, and teacher approval are still pending**. Do not claim the diagrams have been installed into lessons or are approved to replace OCR examination illustrations.
+
+## Question View vs Teaching View — 21 November 2026
+
+The H446 projector-feedback principle is now implemented **for J277 only** as a separate set of nine square Question View SVGs and nine larger Teaching View SVGs. Every one of the 10 existing SVG candidate questions is linked to the relevant view pair in both:
+
+- `data/exam-questions/j277-visual-assets.csv` (columns `question_view_svg_path` and `teaching_view_svg_path`)
+- `data/exam-questions/j277-svg-lesson-map.csv` (same paths, tied to the verified lesson IDs)
+
+See **[`views/README.md`](views/README.md)** for canvas dimensions, per-lesson coverage, student-answer safeguards and approval requirements.
+
+The older desktop and portrait variants are intentionally preserved, and the new views are **not yet wired into live lessons**. Visual/browser/projector QA and teacher sign-off are required before implementation.
