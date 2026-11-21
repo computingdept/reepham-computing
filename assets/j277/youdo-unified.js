@@ -158,7 +158,7 @@
         j277ReviewStart:"3",codingFirst:"true",
         workMode:"independent",windowStart:"0"
       });
-      css.href="../../../assets/j277/youdo-unified.css?v=20261121-answer-pages-v1";
+      css.href="../../../assets/j277/youdo-unified.css?v=20261121-answer-pages-top-v2";
       document.head.appendChild(css);
       const labels=[
         "Check Code First →","Begin exam questions →","Show answer 1 →",
