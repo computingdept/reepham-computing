@@ -13,12 +13,14 @@ The new **H446 RHS-authored practice table** is [h446-rhs-practice-drafts.csv](h
 | June 2022 | 92 | 0 | 0 |
 | June 2023 | 84 | 0 | 0 |
 | June 2024 | 81 | 0 | 0 |
-| June 2025 | 78 | 41 | 41 |
-| **Total** | **410** | **41** | **41** |
+| June 2025 | 78 | 78 | 78* |
+| **Total** | **410** | **78** | **78*** |
 
-All **41** currently drafted items are **H446/01 June 2025 Q1(a)–Q8(d)**, including 20 newly authored question parts from Q4–Q8. Their original RHS wording and marking guidance were compared with the textual contents of the [official 2025 /01 question paper](https://www.ocr.org.uk/Images/752247-question-paper-computer-systems.pdf) and [official 2025 /01 mark scheme](https://www.ocr.org.uk/Images/752415-mark-scheme-computer-systems.pdf).
+All **78** June 2025 question parts have independent RHS drafts and source-linked marking notes: **41 from H446/01** and **37 from H446/02**. The **Paper 1** question and marking text were compared with the [official 2025 /01 question paper](https://www.ocr.org.uk/Images/752247-question-paper-computer-systems.pdf) and [official 2025 /01 mark scheme](https://www.ocr.org.uk/Images/752415-mark-scheme-computer-systems.pdf). For **Paper 2**, the [official 2025 /02 mark scheme](https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf) was checked but the question-paper PDF could not be fetched. **Thus Paper 2 source-question-context verification remains outstanding.**
 
-These are **source-text-linked working drafts**, not completed visual-page checks or an exhaustive OCR mark-scheme transcription. PDF page screenshots were attempted but unavailable; visual figure/context comparisons remain pending. Diagram, table and code questions require separate full-source visual/context verification. Levels-of-response items must be independently moderated and reviewed by a teacher.
+These are **working drafts**, not approved OCR-context-verified questions or an exhaustive OCR mark-scheme transcription. PDF page screenshots were attempted but unavailable; visual figure/context comparisons remain pending.
+
+*The asterisk in the progress table means **mark-scheme text consulted and draft RHS marking guidance authored**, not complete source-question or classroom approval. The H446/02 source question PDF could not be viewed.* Diagram, table and code questions require separate full-source visual/context verification. Levels-of-response items must be independently moderated and reviewed by a teacher.
 
 ### Noteworthy marking constraints already preserved
 
@@ -33,8 +35,8 @@ These are **source-text-linked working drafts**, not completed visual-page check
 
 ## What is still not complete
 
-1. **369** original RHS question drafts and **369** question-specific source-linked answer checks.
-2. Additional source-paper figure and mark-scheme-page review for all 41 where images/layout are relevant (10 of the second batch have original visual/table/code layout dependencies).
+1. **332** original RHS question drafts and **332** question-specific source-linked answer checks (2021–2024).
+2. Independent full source-paper figure and mark-scheme-page checks for all 78 as relevant, **particularly all 37 H446/02 questions whose OCR source question PDF could not be retrieved**. Ten of Paper 1 Q4–Q8 also have original visual/table/code layout dependencies.
 3. Original tables, program listings, trace layouts and SVG assessment contexts as needed (not every source visual should become an SVG).
 4. Question-by-question OCR examiner-report inspection and independent examiner insight for unreviewed entries.
 5. Final originality, marks, accessibility, mobile, projector, teacher approval and classroom integration checks.
@@ -51,3 +53,17 @@ These are **source-text-linked working drafts**, not completed visual-page check
 - Q8(b), Q8(d): original four-table ERD case and original JavaScript code blanks; diagram notation and monospaced code rendering still require final review.
 
 All 20 rows carry a review status distinguishing source **text** checks from source **page-image** and independent presentation checks. All remain unapproved.
+
+## Added review: June 2025 H446/02 (all 37 parts)
+
+Original RHS questions have been drafted for all H446/02 topics. Notable checks and safeguards:
+
+- **Q1:** original Quicksort pseudocode is provided with its own explicit line numbers. The two recursive call locations and changed descending comparison are internally consistent. Insertion-sort examples retain the source values **20, 8, 15, 36**; source numeric mark demand is not silently changed.
+- **Q2 and Q4:** nine-mark search and pipelining questions preserve teacher-assessed levels of response, including an independently constructed four-instruction three-stage pipeline example.
+- **Q3:** stack pseudocode uses **20 positions** and an empty-stack pointer of **-1**, with both push and pop paths set out. Code-layout QA is still required.
+- **Q5:** a **new six-node RHS graph** has been checked programmatically, shortest path `S → B → A → C → T`, total cost **11**. Its seven-mark rubric is an **independent adaptation** because OCR's source graph has different nodes, path and distance (**31**); it must never be presented as the OCR answer grid.
+- **Q6:** debugger, scope and by-value topics use the source's marks. The original RHS four-error frequency-counting task was run on its example dataset and yields distinct `[4,2,7]`, counts `[3,2,1]` after the intended repairs.
+- **Q7:** insertion of five new BST values retains the original **nonlinear 3-mark rule**. Independently computed post-order and breadth-first traversal sequences were validated with a tree implementation.
+- **Q8:** linked-list class and method tasks use explicit **private/public** visibility, avoiding non-specification `protected`. List deletion uses a public `setNextNode` mutator to preserve encapsulation. The final 12-mark comparison remains teacher-marked.
+
+**Status: 78 drafted, 78 source-linked marking drafts, 0 approved; 332 remaining to author.** Independent paper-image, originality, SVG/table/code and classroom review gates remain open. The underlying OCR mark allocations and all 1,400 marks are unchanged.
