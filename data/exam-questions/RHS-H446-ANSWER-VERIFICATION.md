@@ -13,12 +13,12 @@ The new **H446 RHS-authored practice table** is [h446-rhs-practice-drafts.csv](h
 | June 2022 | 92 | 0 | 0 |
 | June 2023 | 84 | 0 | 0 |
 | June 2024 | 81 | 0 | 0 |
-| June 2025 | 78 | 21 | 21 |
-| **Total** | **410** | **21** | **21** |
+| June 2025 | 78 | 41 | 41 |
+| **Total** | **410** | **41** | **41** |
 
-All **21** currently worked items are **H446/01 June 2025 Q1(a)–Q3(d)(ii)**. Their original RHS wording and marking guidance were compared with the textual contents of the [official 2025 /01 question paper](https://www.ocr.org.uk/Images/752247-question-paper-computer-systems.pdf) and [official 2025 /01 mark scheme](https://www.ocr.org.uk/Images/752415-mark-scheme-computer-systems.pdf).
+All **41** currently drafted items are **H446/01 June 2025 Q1(a)–Q8(d)**, including 20 newly authored question parts from Q4–Q8. Their original RHS wording and marking guidance were compared with the textual contents of the [official 2025 /01 question paper](https://www.ocr.org.uk/Images/752247-question-paper-computer-systems.pdf) and [official 2025 /01 mark scheme](https://www.ocr.org.uk/Images/752415-mark-scheme-computer-systems.pdf).
 
-These are **source-text-linked working drafts**, not completed visual-page checks or an exhaustive OCR mark-scheme transcription. Diagram, table and code questions require separate full-source visual/context verification. Levels-of-response items must be independently moderated and reviewed by a teacher.
+These are **source-text-linked working drafts**, not completed visual-page checks or an exhaustive OCR mark-scheme transcription. PDF page screenshots were attempted but unavailable; visual figure/context comparisons remain pending. Diagram, table and code questions require separate full-source visual/context verification. Levels-of-response items must be independently moderated and reviewed by a teacher.
 
 ### Noteworthy marking constraints already preserved
 
@@ -33,10 +33,21 @@ These are **source-text-linked working drafts**, not completed visual-page check
 
 ## What is still not complete
 
-1. **389** original RHS question drafts and **389** question-specific source-linked answer checks.
-2. Additional source-paper figure and mark-scheme-page review for the first 21 where images/layout are relevant.
+1. **369** original RHS question drafts and **369** question-specific source-linked answer checks.
+2. Additional source-paper figure and mark-scheme-page review for all 41 where images/layout are relevant (10 of the second batch have original visual/table/code layout dependencies).
 3. Original tables, program listings, trace layouts and SVG assessment contexts as needed (not every source visual should become an SVG).
 4. Question-by-question OCR examiner-report inspection and independent examiner insight for unreviewed entries.
 5. Final originality, marks, accessibility, mobile, projector, teacher approval and classroom integration checks.
 
 **None** of these 410 records is marked `approved_for_classroom`, and no live lesson is changed by this work. The canonical H446 catalogue and J277 materials are unchanged.
+
+## Added review: June 2025 H446/01 Q4–Q8
+
+- Q4(a): the five LMC mnemonics match a non-linear allocation (**five correct for three marks**, rather than one mark per row). Q4(b) includes a separate valid LMC program to select the greater of two different inputs.
+- Q4(c), Q7(a): **12-mark and nine-mark levels-of-response** respectively, kept for teacher marking; the RHS prose outlines themes rather than copying the official level descriptors.
+- Q5(a)–(d): half/full-adder logic and an independently transposed four-input Karnaugh grid. The map function was programmatically checked as `(A AND NOT D) OR (B AND NOT C)`; the **seven 1-cells** and the two implicant groups require visual-render checking before classroom use.
+- Q6(c): independent `TblSoftware` dataset with RHS product IDs, preserving the SQL complexity and numerical price values. Both INSERT and nested-SELECT answer examples were tested with SQLite; the threshold selection returned the two lower-priced existing products before the example INSERT.
+- Q7(b): four independently transcribed run-length rows were checked to decode to **nine cells each**; a fresh 9×4 response grid is still required.
+- Q8(b), Q8(d): original four-table ERD case and original JavaScript code blanks; diagram notation and monospaced code rendering still require final review.
+
+All 20 rows carry a review status distinguishing source **text** checks from source **page-image** and independent presentation checks. All remain unapproved.
