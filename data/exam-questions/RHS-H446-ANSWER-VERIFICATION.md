@@ -12,9 +12,9 @@ The new **H446 RHS-authored practice table** is [h446-rhs-practice-drafts.csv](h
 | November 2021 | 75 | 0 | 0 |
 | June 2022 | 92 | 0 | 0 |
 | June 2023 | 84 | 0 | 0 |
-| June 2024 | 81 | 0 | 0 |
+| June 2024 | 81 | 81 | 81* |
 | June 2025 | 78 | 78 | 78* |
-| **Total** | **410** | **78** | **78*** |
+| **Total** | **410** | **159** | **159*** |
 
 All **78** June 2025 question parts have independent RHS drafts and source-linked marking notes: **41 from H446/01** and **37 from H446/02**. The **Paper 1** question and marking text were compared with the [official 2025 /01 question paper](https://www.ocr.org.uk/Images/752247-question-paper-computer-systems.pdf) and [official 2025 /01 mark scheme](https://www.ocr.org.uk/Images/752415-mark-scheme-computer-systems.pdf). For **Paper 2**, the [official 2025 /02 mark scheme](https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf) was checked but the question-paper PDF could not be fetched. **Thus Paper 2 source-question-context verification remains outstanding.**
 
@@ -35,7 +35,7 @@ These are **working drafts**, not approved OCR-context-verified questions or an 
 
 ## What is still not complete
 
-1. **332** original RHS question drafts and **332** question-specific source-linked answer checks (2021–2024).
+1. **251** original RHS question drafts and **251** question-specific source-linked answer checks (2021–2023).
 2. Independent full source-paper figure and mark-scheme-page checks for all 78 as relevant, **particularly all 37 H446/02 questions whose OCR source question PDF could not be retrieved**. Ten of Paper 1 Q4–Q8 also have original visual/table/code layout dependencies.
 3. Original tables, program listings, trace layouts and SVG assessment contexts as needed (not every source visual should become an SVG).
 4. Question-by-question OCR examiner-report inspection and independent examiner insight for unreviewed entries.
@@ -67,3 +67,16 @@ Original RHS questions have been drafted for all H446/02 topics. Notable checks 
 - **Q8:** linked-list class and method tasks use explicit **private/public** visibility, avoiding non-specification `protected`. List deletion uses a public `setNextNode` mutator to preserve encapsulation. The final 12-mark comparison remains teacher-marked.
 
 **Status: 78 drafted, 78 source-linked marking drafts, 0 approved; 332 remaining to author.** Independent paper-image, originality, SVG/table/code and classroom review gates remain open. The underlying OCR mark allocations and all 1,400 marks are unchanged.
+
+## Added review: June 2024 H446/01 and H446/02 — both papers drafted
+
+- **Paper 1: 41/41**, **Paper 2: 40/40** independently authored RHS questions and teacher marking notes, with OCR question/mark scheme text consulted and representative image pages inspected.
+- **No question is classroom approved.** In particular, source figures, exact code windows, accessibility, copyright/originality and projector formats require separate checks. 26 of the 2024 parts are flagged as requiring original visual/table/code presentation or layout review.
+- **Paper 1 numerics checked:** `-124 → 10000100` (8-bit two's complement); `298 → 12A`; `10011101 0110 → -49.5`; normalising `00001011 0111 → 01011000 0100`; `00110111 + 10011001 = 11010000`.
+- **Paper 1 LMC:** independently arranged faulty program prints `0,1,2,4,8`; four replacement instructions produce the intended five Fibonacci numbers `0,1,1,2,3`. New eight-row BST array and additions have their own answer keys.
+- **Paper 2 original A*:** separate six-node RHS graph, admissible heuristics, cumulative `g`-values and shortest path `S → B → C → G`, cost **10**. This is **not** OCR's seven-room A* figure or its cost 90.
+- **Paper 2 queue:** explicit convention tail pointer = next free; `enqueue(20),dequeue(),dequeue()` leaves `3,2,20` and pointers head 2/tail 5. Original 100-slot stack convention, sorting and BST duplicate-to-right rules retained with new inputs.
+- **Source distinctions:** the 2024 nine-mark cultural UI question tests differences in cultural significance, writing direction and character sets; generic colour-blindness does not substitute for that content. Levels-of-response and OOP code need human marking.
+- **Law:** 2024 regulatory reference prompts are historical assessment contexts; current UK surveillance and data-protection law must be checked before any student-facing publication.
+
+**Current H446 RHS status: 159 drafted/marking notes filled; 251 remaining; 0 approved.** Historical mark-scheme review fields from the separate canonical catalogue must not be mistaken for this newer RHS drafting status.
