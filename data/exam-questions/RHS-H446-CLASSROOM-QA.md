@@ -59,3 +59,13 @@ This document records an initial QA pass and the explicit block, **not a claim t
 **Data-logic check from the RHS drafts (not teacher approval):** `names[0..5]` is empty at `top = -1`, full at `top = 5`; PUSH checks `top < 5`, increments then stores the new name. Tree insertions: Ava ← Cara; Nina ← Ruth; Zoe → Tara; Omar → Nina. Xena search: Morgan → Ruth → Tara → Zoe → missing left child (absent). `Q7BII` deliberately displays the post-insertion tree, because it is a separate follow-on question, while `Q7BI` does not disclose the inserted positions.
 
 **Remaining blocked gates:** independent comparison to the complete OCR stem/mark scheme; SVG XML validation and actual raster rendering; half-screen projector viewing (900-unit SVG scaled to approx. 450 CSS px); narrow mobile viewing; print/contrast/alt-text review; independent originality and marking-alternative checks; explicit teacher sign-off. The SVGs were authored and linked in GitHub, but **no actual visual render was verified in this session**. These four mappings remain draft-only in the QA register, with `classroom_release=disabled_not_approved`. No student-facing approval or release is implied.
+
+## November 2021 Q1(d) customer database · independent QA assets
+
+**Scope:** `H446-2021-NOV-01-Q1DI`, `Q1DII`, `Q1DIII` and `Q1DIV`. A new original four-row Customer table uses exactly the RHS draft rows (101 Miss Ross UV-21; 102 Mrs Chen PV-17; 103 Mr Adeyemi CV-42; 104 Dr Khan RV-63). Individual answer panels cover primary-key identification, a two-field SQL query filtered by title, the single-row-per-customer limitation, and a relational TblCustomer/TblVehicle redesign with one-to-many cardinality.
+
+The [isolated one-question/one-reveal preview](qa-2021-nov-q1d-preview.html) lives on branch `qa/2021-nov-stack-bst-views` only. **These four resources are not merged and are not student approved**. The illustration mappings and QA register identify the draft assets while retaining `classroom_release=disabled_not_approved`.
+
+**Draft data check:** `CustomerID` uniquely identifies each Customer row; `Title='Miss' OR Title='Mrs'` selects IDs 101 and 102; customer and vehicle records should be separated with Vehicle.CustomerID as foreign key referencing Customer.CustomerID. SQL punctuation/quotation alternatives and full OCR marking guidance still require teacher checking. The relational answer represents one-to-many, not a one-to-one association.
+
+**Still pending:** verify complete authoritative OCR context and mark alternatives, independently render all SVGs and check 50% width projector/mobile/print layout, accessible equivalents and correct reading order, then obtain teacher sign-off. No live H446 lesson, J277 or Cloudflare files changed.
