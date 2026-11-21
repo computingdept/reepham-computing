@@ -6,8 +6,8 @@
 
 - [RHS practice-draft CSV](h446-rhs-practice-drafts.csv): **410 records**, one per OCR H446 question part from **10 papers**, November 2021 and June 2022–2025, both H446/01 and H446/02.
 - Original source IDs, paper, series, official numbered specification topic, maximum marks and mark-scheme links are preserved.
-- **78/410** original RHS practice questions **written**, with teacher-written answer points and marking rules: **all of June 2025 H446/01 and H446/02**.
-- **332/410** are **awaiting original drafting and official source/answer checks**. Their RHS question and verified-answer fields are deliberately blank — **not** auto-generated from topic summaries.
+- **159/410** independent RHS practice questions **written**, with teacher-written answer points and marking guidance: **all of June 2024 and 2025 H446/01 and H446/02**.
+- **251/410** are **awaiting original drafting and official source/answer checks**. Their RHS question and verified-answer fields are deliberately blank — **not** auto-generated from topic summaries.
 - All 10 papers retain their **140-mark totals** (1,400 marks overall). Year totals: 2021 75 parts, 2022 92, 2023 84, 2024 81, 2025 78.
 - The existing [canonical H446 question catalogue](h446-questions.csv), [SVG visual register](h446-visual-assets.csv) and [half-screen visual map](h446-question-view-map.csv) remain separate. The original source PDF is authoritative.
 - **Nothing is released to students or deployed into lessons by this CSV.** Each record remains a draft until all checks are complete.
@@ -49,4 +49,17 @@ The next **20 question parts** have now been drafted, bringing June 2025 Paper 1
 
 **Accuracy and originality safeguards:** The actual OCR [2025 question paper](https://www.ocr.org.uk/Images/752248-question-paper-algorithms-and-programming.pdf) could not be fetched in this session, including attempted screenshot access. Therefore these 37 are **scheme-text reviewed, original-question-context unverified, and not approved**. New source-dependent illustrations, code/data and adapted marking criteria require final independent visual review. The own-data Dijkstra exercise intentionally uses a new six-node graph and shortest cost **11**, not the OCR eight-node diagram or its answer cost **31**. The BST five-insertion scoring rule (2 correct→1 mark; 4→2; 5→3) is explicitly preserved. The linked-list draft uses public accessors/mutators rather than treating private references as directly accessible.
 
-**Completion as a writing milestone:** **78/78** June 2025 RHS question parts across Papers 1 and 2 now drafted. **332** question parts from 2021–2024 remain to be authored and source-checked. **0/410** questions have student-facing classroom approval. All drafting and QA occur in the separate RHS CSV; no live lessons or site code changed.
+**Completion as a 2025 writing milestone:** **78/78** June 2025 RHS question parts across Papers 1 and 2 were drafted. Following the 2024 work, **251** parts from 2021–2023 remain to be authored and source-checked. **0/410** questions have student-facing classroom approval. All drafting and QA occur in the separate RHS CSV; no live lessons or site code changed.
+
+## June 2024 completed drafting batch — 41 Paper 1 + 40 Paper 2
+
+**Both June 2024 H446 papers are now represented by original RHS question drafts and teacher-authored marking notes (81/81 question parts).** The [OCR Paper 1 question paper](https://www.ocr.org.uk/Images/726571-question-paper-computer-systems.pdf), [Paper 1 scheme](https://www.ocr.org.uk/Images/726741-mark-scheme-computer-systems.pdf), [Paper 2 question paper](https://www.ocr.org.uk/Images/726572-question-paper-algorithms-and-programming.pdf) and [Paper 2 scheme](https://www.ocr.org.uk/Images/726742-mark-scheme-algorithms-and-programming.pdf) were accessible for source-text comparison. Representative PDF pages, including question and mark-scheme figures, were viewed as images. **Not every source figure and code layout has passed an independent pixel/teacher review.**
+
+2024 source questions with numbers keep those original numerical values where the mark calculation demands them: e.g. negative 124, denary 298, signed floating point `10011101 0110`, normalisation `00001011 0111`, binary addition `00110111 + 10011001`, a fifty-place game road and a one-hundred-slot stack. Newly authored dependent examples (A* graph, array tree, word list, OOP game) have their **own correct answers and their own teaching marking rules**, never presented as original OCR data or official solutions.
+
+- Paper 1: original RHS examples for CPU, LMC, embedded devices, OS scheduling, culturally-aware UI, compression, binary/float calculations, gates, search ranking, network systems, databases, BSTs, OOP and legislation.
+- Paper 2: original RHS examples for loops, data mining, A*, queues, stacks, insertion sort, complexity, ordered trees, abstraction/decomposition and the larger object-oriented game task.
+- **26 June 2024 question parts** are flagged for original diagram/table/code rendering or a source-dependent presentation review. These flags do not imply 26 missing SVG illustrations; some are HTML/monospaced code or trace-table tasks.
+- Student-facing approval remains **0/410**. All original OCR question references, paper/part IDs and 1,400 combined marks across ten papers are preserved.
+
+**Current overall draft status:** 159/410 written; 251/410 awaiting; current examiner-report-specific notes only where independently verified. Do not describe these new drafts as OCR-approved or released to lessons.
