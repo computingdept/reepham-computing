@@ -180,19 +180,29 @@
     if(!host||!container||!original||original.length!==5||
       original.some(function(q){return !q.querySelector(".youdo-question-prompt")||
                                      !q.querySelector(".youdo-solution");}))return false;
+    // The original first item is the separate Skills Lab invitation.
+    // Teacher models and students practise A* in the existing We Do phase.
+    // In this opt-in view, You Do contains only the four independent
+    // exam questions, followed by those same four original mark schemes.
+    // Nothing is moved into, or altered within, We Do.
+    var skillHeading=original[0].querySelector(".phase-tag")?.textContent||"";
+    if(!/PART 1\s*·\s*INDEPENDENT GRAPH SKILLS/i.test(skillHeading) ||
+       !/graph practice/i.test(original[0].textContent))return false;
+    var examQuestions=original.slice(1);
+    if(examQuestions.length!==4)return false;
     var stages=[];
-    original.forEach(function(q,i){
+    examQuestions.forEach(function(q,i){
       var prompt=q.querySelector(".youdo-question-prompt").cloneNode(true);
-      stages.push(makeStage(header("INDEPENDENT",i+1,original.length,
+      stages.push(makeStage(header("INDEPENDENT EXAM",i+1,examQuestions.length,
         q.querySelector(".phase-tag")?.textContent||"")+
         '<div class="rhs-y-original-prompt">'+prompt.innerHTML+'</div>',
         "rhs-y-h446-question"));
     });
-    original.forEach(function(q,i){
+    examQuestions.forEach(function(q,i){
       var prompt=q.querySelector(".youdo-question-prompt").cloneNode(true);
       var solution=q.querySelector(".youdo-solution").cloneNode(true);
       solution.hidden=false;
-      stages.push(makeStage(header("SELF-MARK",i+1,original.length,
+      stages.push(makeStage(header("SELF-MARK",i+1,examQuestions.length,
         q.querySelector(".phase-tag")?.textContent||"")+
         '<div class="rhs-y-review-body rhs-y-h446-answer">'+
         '<section class="rhs-y-original-prompt">'+prompt.innerHTML+'</section>'+
@@ -200,7 +210,7 @@
         solution.innerHTML+'</section></div>',
         "rhs-y-mark-stage rhs-y-h446-mark"));
     });
-    return prepareHost(host,container,stages,original.length);
+    return prepareHost(host,container,stages,examQuestions.length);
   }
   global.RHSYouDoTrial={
     installJ277:installJ277,

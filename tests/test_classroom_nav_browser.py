@@ -571,7 +571,7 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
         """Pilot isolates seven other phases and preserves the question/answer run."""
         cases = (
             ("/lessons/j277/lesson-021/index.html", 7, 4, 3),
-            ("/lessons/h446/lesson-220/index.html", 10, 5, 0),
+            ("/lessons/h446/lesson-220/index.html", 8, 4, 0),
         )
         untouched = ("do-now", "overview", "new-learning", "i-do",
                      "we-do", "vocabulary", "exit")
@@ -657,7 +657,13 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
                                 )
                             else:
                                 self.assertIn(
-                                    "DancerGold", cards.nth(4).inner_text())
+                                    "DancerGold", cards.nth(3).inner_text())
+                                self.assertNotIn(
+                                    "Graph practice: Guided", cards.first.inner_text(),
+                                    "No duplicate Skills Lab step in the trial's You Do")
+                                self.assertIn(
+                                    "graph", normal.locator("#we-do").inner_text().lower(),
+                                    "Existing guided A* practice stays in We Do")
                                 self.assertGreater(
                                     trial.locator("#you-do .dancer-graph").count(), 0)
                                 self.assertEqual(
