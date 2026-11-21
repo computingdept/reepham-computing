@@ -22,6 +22,7 @@
     }).join("")+'</div><strong>Total ___ / 10</strong></div>';
   }
   function install(payload){
+    if(payload&&payload.rhsPilot){installRhs(payload);return;}
     var conf=payload&&payload.config,code=payload&&payload.code;
     var host=document.getElementById("you-do"),w=document.getElementById("we-do");
     var deck=host&&host.querySelector(".youdo-rolling");
@@ -114,5 +115,124 @@
     var counter=host.querySelector(".youdo-window-progress");
     if(counter)counter.textContent="CODE FIRST → EXAM PRACTICE → SELF-MARK";
   }
+
+  // Separate opt-in RHS-written question preview, using the source-linked
+  // snapshot generated from the canonical J277 RHS CSV. The existing
+  // exam-pilot=1 source-link display remains untouched.
+  function installRhs(payload){
+    var book=window.J277RHSExamPilot134;
+    var conf=payload&&payload.config;
+    var host=document.getElementById("you-do"),guided=document.getElementById("we-do");
+    var deck=host&&host.querySelector(".youdo-rolling");
+    if(!book||book.lesson!=="134"||!conf||!payload.code||!deck||!guided){
+      console.error("J277 RHS pilot: missing bank or lesson context. Existing lesson retained.");return;
+    }
+    var questions=book.youDo;
+    var qs=conf.questions||[];
+    if(!Array.isArray(questions)||questions.length!==4||qs.length!==4||
+       book.weDo.marks!==2||
+       questions.reduce(function(s,q){return s+Number(q.marks);},0)!==10||
+       !deck.querySelector(".j277-code-first")||
+       questions.some(function(q,i){
+         return Number(q.marks)!==Number(qs[i].marks) ||
+                q.ocrReference.indexOf("June "+qs[i].year+" · Q"+qs[i].ref)<0 ||
+                !q.question||!q.answerPoints||!q.markRule;
+       })){
+      console.error("J277 RHS pilot: bank/questions do not match the 10-mark Lesson 134 sequence.");return;
+    }
+    // Retain the existing Code First and navigation stage semantics.
+    install({config:conf,code:payload.code});
+    if(host.dataset.examClassroom!=="true")return;
+    var codeStage=deck.children[0],codeAnswer=deck.children[1];
+    if(!codeStage||!codeAnswer)return;
+    function sourceCaption(q){
+      return '<p class="j277-ec-source">'+esc(q.ocrReference)+
+        ' · <span class="j277-rhs-author">RHS-written exam practice</span></p>';
+    }
+    function rubric(q){
+      return '<div class="j277-rhs-rubric">'+q.displayRubric.map(function(p){
+        return '<p>'+esc(p)+'</p>';
+      }).join("")+'</div>';
+    }
+    function svg(q){
+      var url=String(q.answerSvg||"");
+      if(!/^\/assets\/j277\/exam-figures\/[a-z0-9-]+\.svg$/.test(url))return "";
+      return '<figure class="j277-rhs-figure"><img loading="lazy" src="'+esc(url)+
+        '" alt="RHS Computing completed worked diagram for '+esc(q.topic)+'">'+
+        '<figcaption>Worked diagram — show only after pupils have attempted the question.</figcaption></figure>';
+    }
+    function heading(q,i,type){
+      return '<div class="j277-ec-intro"><div><span class="j277-ec-kicker">'+
+        esc(type)+'</span><h2>Question '+(i+1)+' of 4</h2></div>'+
+        '<div class="j277-ec-time">'+esc(q.marks)+' MARK'+(q.marks===1?'':'S')+'</div></div>'+
+        sourceCaption(q)+'<h3 class="j277-ec-topic">'+esc(q.topic)+'</h3>';
+    }
+    // The RHS question is displayed in full, while the two marking points
+    // appear only in the third We Do step.
+    var wd=book.weDo;
+    guided.innerHTML='<div class="wedo-focus-deck"><article class="wedo-example">'+
+      '<div class="wedo-reference"><span class="phase-tag">WE DO · RHS EXAM PRACTICE</span>'+
+      '<h2>'+esc(wd.topic)+'</h2>'+sourceCaption(wd)+
+      '<p class="j277-rhs-question-text">'+esc(wd.question)+'</p></div>'+
+      '<div class="wedo-practice">'+
+      '<div class="wedo-step"><span class="wedo-step-label">GUIDED · STEP 1 OF 3</span>'+
+      '<h2>Try</h2><p>Write one benefit and one drawback. Keep the two points distinct.</p></div>'+
+      '<div class="wedo-step" hidden><span class="wedo-step-label">GUIDED · STEP 2 OF 3</span>'+
+      '<h2>Discuss</h2><p>Which point describes easier expansion? What happens if the central switch fails?</p></div>'+
+      '<div class="wedo-step" hidden><span class="wedo-step-label">GUIDED · STEP 3 OF 3</span>'+
+      '<h2>Mark and improve</h2>'+rubric(wd)+
+      '<p class="j277-rhs-guidance">'+esc(wd.markRule)+'</p></div>'+
+      '</div></article></div>';
+    guided.dataset.guidedSteps="true";
+    var questionCards=questions.map(function(q,i){
+      return '<article class="j277-ec-question j277-rhs-question-card">'+
+        '<div class="j277-ec-q-top"><strong>QUESTION '+(i+1)+'</strong>'+
+        '<strong>'+esc(q.marks)+' MARK'+(q.marks===1?'':'S')+'</strong></div>'+
+        sourceCaption(q)+'<p class="j277-rhs-question-text">'+esc(q.question)+'</p>'+
+        '</article>';
+    }).join("");
+    var questionsStage=stage(
+      '<div class="j277-ec-intro"><div><span class="j277-ec-kicker">YOU DO · RHS EXAM PRACTICE</span>'+
+      '<h2>Independent exam challenge</h2></div>'+
+      '<div class="j277-ec-time">10 MINUTES <small>10 MARKS</small></div></div>'+
+      '<div class="j277-ec-grid">'+questionCards+'</div>'+
+      '<p class="j277-ec-disclaimer">All question wording is RHS-authored practice. Draw diagrams on paper or a mini-whiteboard; worked solutions will appear during marking.</p>',
+      "j277-ec-questions j277-rhs-question-stage");
+    var stages=[codeStage,codeAnswer,questionsStage];
+    questions.forEach(function(q,i){
+      var markContent='<div class="j277-ec-step">MARK &amp; IMPROVE · TEACHER GUIDE</div>'+
+        '<div class="j277-rhs-mark-layout">'+svg(q)+
+        '<div class="j277-rhs-mark-content">'+
+        rubric(q)+'<h4>Accepted answer summary</h4>'+
+        '<p class="j277-rhs-answer-summary">'+esc(q.answerPoints)+'</p>'+
+        '<h4>Mark allocation</h4>'+
+        '<p class="j277-rhs-guidance">'+esc(q.markRule)+'</p>'+
+        '</div></div>'+
+        '<p class="j277-ec-disclaimer">Teacher-authored marking guidance aligned to the cited OCR question. Not a verbatim OCR mark scheme.</p>'+
+        '<p class="j277-ec-links">'+sourceLink(q.source,'OCR source mark scheme')+'</p>'+scoreGrid(qs);
+      stages.push(stage(heading(q,i,'YOU DO · MARK')+markContent,'j277-ec-marking j277-rhs-mark-stage'));
+      if(q.examinerInsight){
+        stages.push(stage(heading(q,i,'YOU DO · EXAMINER INSIGHT')+
+          '<p class="j277-ec-step">EXAMINER INSIGHT · RHS SUMMARY</p>'+
+          '<div class="j277-ec-note">'+esc(q.examinerInsight)+'</div>'+
+          '<p class="j277-ec-disclaimer">Teacher-written summary; not a direct OCR examiner quotation.</p>'+scoreGrid(qs),
+          'j277-ec-marking j277-rhs-examiner-stage'));
+      }
+      stages.push(stage(heading(q,i,'YOU DO · IMPROVE')+
+        '<p class="j277-ec-step">REVISIT YOUR ORIGINAL ANSWER</p>'+
+        '<div class="j277-ec-note">Compare your work with the marking criteria. Add a missing distinct point, and explain what you changed.</div>'+
+        '<p class="j277-ec-improve">Keep your first-attempt score separate from corrections.</p>'+scoreGrid(qs),
+        'j277-ec-marking j277-rhs-improve-stage'));
+    });
+    deck.replaceChildren.apply(deck,stages);
+    stages.forEach(function(x,i){x.hidden=i!==0;});
+    host.dataset.rhsExamPilot="true";
+    host.dataset.j277ReviewStart="3";
+    host.dataset.j277SeparateReview="true";
+    host.dataset.windowSize="1";
+    host.dataset.workMode="independent";
+    host.dataset.examClassroom="true";
+  }
+
   window.J277ExamClassroom={install:install};
 })();
