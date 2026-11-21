@@ -2077,10 +2077,10 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   const pilotData=rhsExamPilot?'<script src="../../../assets/j277/exam-classroom-134-data.js?v=20261121-rhs2"></script>':"";
   const pilotJsVersion=rhsExamPilot?"20261121-unified-code-v8":"20261121-rhs2";
   const pilotSetup=useExamPilot?pilotData+'<script src="../../../assets/j277/exam-classroom.js?v='+pilotJsVersion+'"></script><script>window.J277ExamClassroom.install('+JSON.stringify({config:lesson.examClassroom,code:lesson.k,rhsPilot:rhsExamPilot})+');</script>':"";
-  const rhsSharedYouDoTrial=String(number)==="021" && new URLSearchParams(location.search).get("youdo-trial")==="1" && !useExamPilot;
-  const rhsSharedYouDoHead=rhsSharedYouDoTrial?'<link rel="stylesheet" href="../../../assets/rhs-youdo/youdo-presentation.css?v=20261121-rhs-youdo-visual-audit4">':"";
-  const rhsSharedYouDoData=rhsSharedYouDoTrial?{lesson:"021",code:lesson.k,priorExam:lesson.priorExam,questions:lesson.e,visuals:(lesson.examVisuals||[]).map((v,i)=>v && !(i===2 && v.title==="Two different network extents")?diagram(v):"")}:null;
-  const rhsSharedYouDoSetup=rhsSharedYouDoTrial?'<script src="../../../assets/rhs-youdo/youdo-presentation.js?v=20261121-rhs-youdo-visual-audit4"></script><script>window.RHSYouDoTrial.installJ277('+JSON.stringify(rhsSharedYouDoData).replace(/</g,"\\u003c")+');</script>':"";
+  const rhsSharedYouDoTrial=["021","022"].includes(String(number)) && new URLSearchParams(location.search).get("youdo-trial")==="1" && !useExamPilot;
+  const rhsSharedYouDoHead=rhsSharedYouDoTrial?'<link rel="stylesheet" href="../../../assets/rhs-youdo/youdo-presentation.css?v=20261121-rhs-youdo-j277-022-trial5">':"";
+  const rhsSharedYouDoData=rhsSharedYouDoTrial?{lesson:String(number),code:lesson.k,priorExam:lesson.priorExam,questions:lesson.e,visuals:(lesson.examVisuals||[]).map((v,i)=>v && !(String(number)==="021" && i===2 && v.title==="Two different network extents")?diagram(v):"")}:null;
+  const rhsSharedYouDoSetup=rhsSharedYouDoTrial?'<script src="../../../assets/rhs-youdo/youdo-presentation.js?v=20261121-rhs-youdo-j277-022-trial5"></script><script>window.RHSYouDoTrial.installJ277('+JSON.stringify(rhsSharedYouDoData).replace(/</g,"\\u003c")+');</script>':"";
   const defaultYouDo=useExamPilot?"":'<script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"></script>';
   const lessonControllerVersion=rhsExamPilot?"20261121-rhs-codefirst-isolated-v10":"20261115-codefirst-brush2";
   const html=pilotHead.replace("</head>",rhsSharedYouDoHead+"</head>")+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")+(lesson.visualAuditV3?" j277-visual-v3":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">

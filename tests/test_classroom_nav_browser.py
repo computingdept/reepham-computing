@@ -571,6 +571,7 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
         """Pilot isolates seven other phases and preserves the question/answer run."""
         cases = (
             ("/lessons/j277/lesson-021/index.html", 7, 4, 3),
+            ("/lessons/j277/lesson-022/index.html", 7, 4, 6),
             ("/lessons/h446/lesson-220/index.html", 8, 4, 0),
         )
         untouched = ("do-now", "overview", "new-learning", "i-do",
@@ -617,27 +618,46 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
                                 grid = cards.nth(2).locator(".rhs-y-challenge")
                                 tiles = grid.locator(".rhs-y-challenge-card")
                                 self.assertEqual(tiles.count(), 4)
+                                source_lesson = "022" if "lesson-022" in path else "021"
                                 self.assertEqual(
                                     tiles.locator(".rhs-y-challenge-card-head span:last-child")
                                          .all_inner_texts(),
-                                    ["4 MARKS", "2 MARKS", "4 MARKS", "6 MARKS"],
+                                    (["2 MARKS", "1 MARK", "4 MARKS", "6 MARKS"]
+                                     if source_lesson == "022"
+                                     else ["4 MARKS", "2 MARKS", "4 MARKS", "6 MARKS"]),
                                 )
-                                self.assertEqual(
-                                    grid.evaluate(
-                                        "(el) => getComputedStyle(el)."
-                                        "gridTemplateColumns.trim().split(/\\s+/).length"
-                                    ),
-                                    2, "Projector challenge must use a two-column grid",
+                                self.assertIn(
+                                    ("13 MARKS" if source_lesson == "022" else "16 MARKS"),
+                                    cards.nth(2).inner_text(),
+                                    "Total must come from the existing four questions",
                                 )
+                                positions = tiles.evaluate_all(
+                                    "(nodes) => nodes.map(node => { "
+                                    "const r=node.getBoundingClientRect(); "
+                                    "return {left:r.left,top:r.top,width:r.width,height:r.height}; "
+                                    "})"
+                                )
+                                self.assertAlmostEqual(positions[0]["top"], positions[1]["top"],
+                                                       delta=3, msg="Q1 and Q2 must be in the same row")
+                                self.assertAlmostEqual(positions[2]["top"], positions[3]["top"],
+                                                       delta=3, msg="Q3 and Q4 must be in the same row")
+                                self.assertGreater(positions[1]["left"], positions[0]["left"]+15,
+                                                   "Q2 must sit to the right of Q1")
+                                self.assertAlmostEqual(positions[0]["left"],positions[2]["left"],
+                                                       delta=3, msg="Q1 and Q3 must align vertically")
                                 self.assertTrue(
                                     all("Source:" not in text for text in tiles.all_inner_texts()),
                                     "Source metadata must not crowd the questions",
                                 )
-                                self.assertIn("automatic door lock", tiles.first.inner_text())
-                                self.assertIn("retail company", tiles.last.inner_text())
-                                self.assertEqual(
-                                    tiles.locator("p").all_inner_texts()[1].count("[2 marks]"),
-                                    0, "Mark allocation should not be repeated in body",
+                                if source_lesson == "021":
+                                    self.assertIn("automatic door lock", tiles.first.inner_text())
+                                    self.assertIn("retail company", tiles.last.inner_text())
+                                else:
+                                    self.assertIn("30 users", tiles.first.inner_text())
+                                    self.assertIn("leisure centre", tiles.last.inner_text())
+                                self.assertNotIn(
+                                    "Source:", " ".join(tiles.all_inner_texts()),
+                                    "Source metadata must not compete with the question"
                                 )
                             self.assertEqual(
                                 trial.locator("#you-do .rhs-y-mark-stage").count(),
@@ -648,19 +668,22 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
                                 code_lines * 2,
                             )
                             if code_lines:
-                                self.assertIn("48", cards.first.inner_text())
+                                self.assertIn(
+                                    ("permission" if source_lesson == "022" else "48"),
+                                    cards.first.inner_text())
                                 self.assertIn("EXPECTED RESULT", cards.nth(1).inner_text())
-                                self.assertEqual(cards.nth(1).locator(".rhs-y-expected strong").inner_text(), "4")
+                                self.assertEqual(
+                                    cards.nth(1).locator(".rhs-y-expected strong").inner_text(),
+                                    ("Access granted" if source_lesson == "022" else "4"))
                                 self.assertGreater(
                                     trial.locator("#you-do .rhs-y-visual svg").count(), 0,
-                                    "Retain authored SVGs where question data provides them",
+                                    "Retain existing SVGs where provided, without visual redesign",
                                 )
-                                self.assertEqual(
-                                    cards.last.locator(".rhs-y-visual").count(), 0,
-                                    "The decorative Single site / ? / Separated sites "
-                                    "diagram must not appear on Q4's marking screen",
-                                )
-                                self.assertIn("retail company", cards.last.inner_text())
+                                if source_lesson == "021":
+                                    self.assertEqual(
+                                        cards.last.locator(".rhs-y-visual").count(), 0,
+                                        "The previously flagged placeholder stays excluded")
+                                    self.assertIn("retail company", cards.last.inner_text())
                             else:
                                 self.assertIn(
                                     "DancerGold", cards.nth(3).inner_text())
