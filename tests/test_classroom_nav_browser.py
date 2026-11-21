@@ -635,6 +635,10 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
                                 )
                                 self.assertIn("automatic door lock", tiles.first.inner_text())
                                 self.assertIn("retail company", tiles.last.inner_text())
+                                self.assertEqual(
+                                    tiles.locator("p").all_inner_texts()[1].count("[2 marks]"),
+                                    0, "Mark allocation should not be repeated in body",
+                                )
                             self.assertEqual(
                                 trial.locator("#you-do .rhs-y-mark-stage").count(),
                                 review_count

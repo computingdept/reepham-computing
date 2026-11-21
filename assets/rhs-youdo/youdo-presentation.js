@@ -151,6 +151,8 @@
         var text=String(q.question||"").split(/\n\s*\nSource:\s*/i)[0].trim();
         var found=text.match(/\[(\d+)\s*marks?\]/i);
         var marks=found?Number(found[1]):0;
+        // Marks are already clear at the top right of each card.
+        text=text.replace(/\s*\[\d+\s*marks?\]\s*$/i,"").trim();
         return '<section class="rhs-y-challenge-card">'+
           '<div class="rhs-y-challenge-card-head"><span>Q'+(i+1)+'</span>'+
           '<span>'+marks+' MARK'+(marks===1?'':'S')+'</span></div>'+
