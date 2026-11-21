@@ -6,8 +6,8 @@
 
 - [RHS practice-draft CSV](h446-rhs-practice-drafts.csv): **410 records**, one per OCR H446 question part from **10 papers**, November 2021 and June 2022–2025, both H446/01 and H446/02.
 - Original source IDs, paper, series, official numbered specification topic, maximum marks and mark-scheme links are preserved.
-- **159/410** independent RHS practice questions **written**, with teacher-written answer points and marking guidance: **all of June 2024 and 2025 H446/01 and H446/02**.
-- **251/410** are **awaiting original drafting and official source/answer checks**. Their RHS question and verified-answer fields are deliberately blank — **not** auto-generated from topic summaries.
+- **243/410** independently written RHS practice questions with teacher-written answers and marking guidance: **all of June 2023, 2024 and 2025 H446/01 and H446/02**.
+- **167/410** are **awaiting original drafting and official source/answer checks**. Their RHS question and verified-answer fields are deliberately blank — **not** auto-generated from topic summaries.
 - All 10 papers retain their **140-mark totals** (1,400 marks overall). Year totals: 2021 75 parts, 2022 92, 2023 84, 2024 81, 2025 78.
 - The existing [canonical H446 question catalogue](h446-questions.csv), [SVG visual register](h446-visual-assets.csv) and [half-screen visual map](h446-question-view-map.csv) remain separate. The original source PDF is authoritative.
 - **Nothing is released to students or deployed into lessons by this CSV.** Each record remains a draft until all checks are complete.
@@ -62,4 +62,15 @@ The next **20 question parts** have now been drafted, bringing June 2025 Paper 1
 - **26 June 2024 question parts** are flagged for original diagram/table/code rendering or a source-dependent presentation review. These flags do not imply 26 missing SVG illustrations; some are HTML/monospaced code or trace-table tasks.
 - Student-facing approval remains **0/410**. All original OCR question references, paper/part IDs and 1,400 combined marks across ten papers are preserved.
 
-**Current overall draft status:** 159/410 written; 251/410 awaiting; current examiner-report-specific notes only where independently verified. Do not describe these new drafts as OCR-approved or released to lessons.
+**Status after June 2023 draft completion:** 243/410 written; 167/410 awaiting; current examiner-report-specific notes only where independently verified. Do not describe these new drafts as OCR-approved or released to lessons.
+
+## June 2023 completed original RHS drafting batch — 46 Paper 1 + 38 Paper 2
+
+All **84/84 June 2023 parts** now have an independently written RHS question, indicative answer and teacher-authored marking rule. The source [H446/01 question paper](https://www.ocr.org.uk/Images/703780-question-paper-computer-systems.pdf), [H446/01 mark scheme](https://www.ocr.org.uk/Images/703953-mark-scheme-computer-systems.pdf), [H446/02 question paper](https://www.ocr.org.uk/Images/703781-question-paper-algorithms-and-programming.pdf) and [H446/02 mark scheme](https://www.ocr.org.uk/Images/703954-mark-scheme-algorithms-and-programming.pdf) were available for text checks and representative PDF page-image inspection. **This is not complete figure-by-figure teacher/source equivalence approval.**
+
+- **Paper 1 (46 parts):** original scenarios for application software, operating systems, LAN/protocol layering, reverse-polish stack arithmetic, number representation, multicore/security, HTML/CSS, SQL, file writing, Boolean truth tables and K-maps, and a twelve-mark rights/surveillance discussion. The RHS digit-check example returns 9 for 3178. The eight-entry truth-table output was checked as `10010101` and the independent K-map has two four-cell implicants.
+- **Paper 2 (38 parts):** original BST examples, a new seven-node directed Dijkstra graph, an indexed linked-list/free-list example, an original identifier-validation function, a recursion trace, base-eight conversion, complexity and concurrency questions, merge sort, IDE debugging, login decomposition and a consistent 10 × 20 OOP museum Board/Artifact scenario.
+- **Technical checks:** RHS Dijkstra shortest route `P → S → V` has cost **14** with `V`'s tentative **19** improved to **14**; original recursion `recursiveScore(10)` returns **23**; tested octal examples include 120→170 and 255→377; original array-linked list follows cyan→lilac→red→green→amber.
+- **28 June 2023 parts** have a non-`not_required` presentation status and need question-specific table/code/SVG/trace layout checks; this does not mean 28 separate SVG illustrations are necessary. All students' answer views must remain concealed until reveal.
+
+**Overall status after this batch: 243/410 drafted and source-text-linked marking guidance; 167/410 (2021–2022) still undrafted; 0 classroom-approved.** Legal-context tasks require up-to-date UK-law review. No live lesson, J277, Cloudflare, or scoring changes were made.
