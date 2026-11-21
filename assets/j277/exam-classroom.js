@@ -173,6 +173,34 @@
     var checkCode=codeAnswer.querySelector("pre.j277-ec-code");
     if(firstCode)firstCode.outerHTML=erlEditor(payload.code.code);
     if(checkCode)checkCode.outerHTML=erlEditor(payload.code.code);
+    // The Code First question and its check view use the same projector
+    // composition. The existing content bank and four exam marking cards
+    // remain unchanged; students work on paper, not through UI controls.
+    var originalPrompt=String(payload.code.q||"").trim();
+    var masterResult=String(payload.code.a||"").match(/EXPECTED RESULT\s*\n+([^\n]+)/i);
+    var expected=masterResult?masterResult[1].trim():"";
+    var isMeshCalculation=/^\s*devices\s*=\s*5\s*$/m.test(payload.code.code||"") &&
+      /links\s*=\s*devices\s*\*\s*\(devices\s*-\s*1\)\s*DIV\s*2/i.test(payload.code.code||"") &&
+      /print\(links\)/i.test(payload.code.code||"");
+    // Avoid an ungrounded canned numerical answer if the bank changes.
+    var answerValue=(isMeshCalculation&&expected==="10")?"10 links":expected;
+    var explanation=isMeshCalculation&&expected==="10"?
+      "5 × 4 ÷ 2 = 10. Divide by 2 because each connection joins two computers and must only be counted once.":"Check your trace against the code above.";
+    var promptHeading='<header class="rhs-code-heading"><span>CODE FIRST</span>'+
+      '<span>OCR EXAM REFERENCE LANGUAGE</span></header>';
+    var codeHeader='<div class="rhs-code-question"><span class="rhs-code-label">PREDICT</span>'+
+      '<h2>'+esc(originalPrompt)+'</h2></div>';
+    // Both views deliberately use identical code and exactly three lines.
+    var editorMarkup=erlEditor(payload.code.code);
+    codeStage.innerHTML=promptHeading+codeHeader+editorMarkup+
+      '<p class="rhs-code-instruction">Predict the output on your mini-whiteboard. Then explain why the calculation uses DIV 2.</p>'+
+      '<p class="rhs-code-steps"><strong>PREDICT</strong> · Write · Test · Improve</p>';
+    codeAnswer.innerHTML=promptHeading+codeHeader+editorMarkup+
+      '<div class="rhs-code-result"><span class="rhs-code-label">MODEL ANSWER</span>'+
+      '<p class="rhs-code-result-value">'+esc(answerValue)+'</p>'+
+      '<p class="rhs-code-explanation">'+esc(explanation)+'</p></div>'+
+      '<p class="rhs-code-instruction">Correct your original prediction in a different colour.</p>';
+
     function sourceCaption(q){
       return '<p class="j277-ec-source">'+esc(q.ocrReference)+
         ' · <span class="j277-rhs-author">RHS-written exam practice</span></p>';
