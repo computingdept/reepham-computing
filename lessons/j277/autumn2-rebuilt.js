@@ -2070,9 +2070,12 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   const pageHead=String(number)==="057"
     ?baseHead.replace("</head>",'<link rel="stylesheet" href="../../../assets/j277/code-first-trace.css?v=20261025-loop-trace1"></head>')
     :baseHead;
-  const useExamPilot=!!lesson.examClassroom && new URLSearchParams(location.search).get("exam-pilot")==="1";
-  const pilotHead=useExamPilot?pageHead.replace("</head>",'<link rel="stylesheet" href="../../../assets/j277/exam-classroom.css?v=20261121-pilot1"></head>'):pageHead;
-  const pilotSetup=useExamPilot?'<script src="../../../assets/j277/exam-classroom.js?v=20261121-pilot1"></script><script>window.J277ExamClassroom.install('+JSON.stringify({config:lesson.examClassroom,code:lesson.k})+');</script>':"";
+  const requestedExamPilot=new URLSearchParams(location.search).get("exam-pilot");
+  const rhsExamPilot=!!lesson.examClassroom && String(number)==="134" && requestedExamPilot==="2";
+  const useExamPilot=!!lesson.examClassroom && (requestedExamPilot==="1" || rhsExamPilot);
+  const pilotHead=useExamPilot?pageHead.replace("</head>",'<link rel="stylesheet" href="../../../assets/j277/exam-classroom.css?v=20261121-rhs2"></head>'):pageHead;
+  const pilotData=rhsExamPilot?'<script src="../../../assets/j277/exam-classroom-134-data.js?v=20261121-rhs2"></script>':"";
+  const pilotSetup=useExamPilot?pilotData+'<script src="../../../assets/j277/exam-classroom.js?v=20261121-rhs2"></script><script>window.J277ExamClassroom.install('+JSON.stringify({config:lesson.examClassroom,code:lesson.k,rhsPilot:rhsExamPilot})+');</script>':"";
   const defaultYouDo=useExamPilot?"":'<script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"></script>';
   const html=pilotHead+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")+(lesson.visualAuditV3?" j277-visual-v3":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
    <a class="course-back" href="../../../j277-hub.html?year=${lesson.year11?11:10}#lessons">← Year ${lesson.year11?11:10} lessons</a>
