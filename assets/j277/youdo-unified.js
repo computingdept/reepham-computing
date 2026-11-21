@@ -1,12 +1,12 @@
 /* RHS J277 You Do unified sequence, static lesson adapter.
- * First rollout: lesson 001 only; scope: #you-do, not the other seven phases.
+ * Initial rollout: lessons 001–002; scope: #you-do only.
  * Uses the lesson's authored question SVGs and its answers.html mark schemes.
  * No H446 logic, Cloudflare, assessment changes, persistence or network writes.
  */
 (function(){
   "use strict";
   const found=location.pathname.match(/\/lessons\/j277\/lesson-(\d{3})\/(?:index\.html)?$/);
-  if(!found || found[1]!=="001")return;
+  if(!found || !["001","002"].includes(found[1]))return;
   const number=found[1];
   const host=document.getElementById("you-do");
   const deck=host && host.querySelector(".youdo-rolling");
@@ -15,7 +15,7 @@
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
   }[c]));
   const sourceCards=Array.from(deck.querySelectorAll(":scope > .youdo-question"));
-  if(sourceCards.length!==5 || !sourceCards[0].classList.contains("j277-code-first"))return;
+  if(sourceCards.length<3 || !sourceCards[0].classList.contains("j277-code-first"))return;
   const newCard=(kind,html)=>{
     const el=document.createElement("article");
     el.className="exam-card youdo-question j277-u-stage "+kind;
@@ -102,6 +102,6 @@
     const progress=host.querySelector(".youdo-window-progress");
     if(progress)progress.textContent="CODE FIRST · THEN EXAM PRACTICE";
   }).catch(error=>{
-    console.error("J277 Lesson 001 You Do: original content retained.",error);
+    console.error("J277 static You Do: original content retained.",error);
   });
 })();
