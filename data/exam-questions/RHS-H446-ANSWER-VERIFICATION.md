@@ -117,3 +117,7 @@ Original RHS questions have been drafted for all H446/02 topics. Notable checks 
 - **31 2021 parts** flagged for student-facing original diagram/table/code/trace layout. Extended responses remain teacher-marked and historical UK law descriptions require current-law review.
 
 **Final catalogue consistency audit:** **410/410 drafted**, **410/410 populated with answer/marking text**, **410/410 original IDs and marks retained**, **ten papers with 140 source marks each**, **1,400 marks total**, **147 records with visual/layout review flags across 2021–2025**, and **0 approved for student display**. The asterisk in the progress table refers to consultation of OCR marking text and drafting of independent notes, **not final source answer, figure or examiner-comment verification**. No J277, live lesson or Cloudflare scoring changes were made.
+
+## Post-drafting classroom QA (started 21 November 2026)
+
+The next controlled gate is tracked in the [H446 classroom QA plan](RHS-H446-CLASSROOM-QA.md) and [410-row classroom QA register](h446-rhs-classroom-qa.csv). **147 records** need a source-specific figure, HTML table, code or trace layout review. **Seven confirmed 2021 generic-image mappings** do not match the new RHS example data: five mismatched mappings are blocked and the two A* mappings now point to a new question-specific directed graph (still awaiting visual render, mobile/projector and teacher review). The new 2021 A* answer also had a false P 7→6 relaxation claim corrected after recomputing the expansion order. **No classroom approvals were granted.**
