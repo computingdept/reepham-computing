@@ -65,7 +65,7 @@
     if(stages.some(s=>!s.querySelector(".solution-card")))throw Error("Missing original mark scheme");
 
 
-    // Shared J277 four-screen classroom contract. Lessons 001-003 are the
+    // Shared J277 question-sheet plus individual-answer classroom contract. Lessons 001-003 are the
     // first enabled sources. Other lessons retain their previous renderer until
     // the same presentation has been checked with their authored data.
     if(["001","002","003"].includes(number)){
@@ -97,17 +97,22 @@
           (visuals.length?'<div class="j277-u-batch-visual">'+
             visuals.map(v=>v.outerHTML).join("")+'</div>':"")+'</article>';
       });
-      const answerPanels=selectedExamIndices.map((sourceIndex,i)=>{
-        const answer=stages[sourceIndex+1];
-        const source=answer.querySelector(".solution-card");
+      // Model answers are shown one at a time, each on a full page.
+      // Preserve the original mark scheme and answer SVG for every selected Q.
+      const answerPages=selectedExamIndices.map((sourceIndex,i)=>{
+        const source=stages[sourceIndex+1].querySelector(".solution-card");
         if(!source)throw Error("Missing model answer for Q"+(i+1));
         const copy=document.createElement("div");
         copy.innerHTML=source.innerHTML;
-        copy.querySelectorAll("svg,img,figure,.phase-tag").forEach(el=>el.remove());
-        return '<article class="j277-u-batch-card j277-u-batch-answer">'+
-          '<div class="j277-u-batch-card-header"><strong>Q'+(i+1)+'</strong>'+
-          '<span>MODEL ANSWER</span></div>'+
-          '<div class="j277-u-batch-marking">'+copy.innerHTML+'</div></article>';
+        const visuals=Array.from(copy.querySelectorAll("svg,img"));
+        const figure=visuals.length
+          ?'<div class="j277-u-answer-visual">'+
+            visuals.map(el=>el.outerHTML).join("")+'</div>':"";
+        visuals.forEach(el=>el.remove());
+        copy.querySelectorAll(".phase-tag").forEach(el=>el.remove());
+        return '<div class="j277-u-answer-layout'+(figure?' has-figure':'')+'">'+
+          figure+
+          '<div class="j277-u-answer-content">'+copy.innerHTML+'</div></div>';
       });
       // Code First answer screen: only the answer to the actual prompt.
       // Predict = output value; Write = the required final instruction.
@@ -137,31 +142,33 @@
         newCard("j277-u-batch j277-u-batch-questions",
           head("INDEPENDENT EXAM PRACTICE",examCount+' QUESTIONS · ONE SCREEN')+
           '<div class="j277-u-batch-grid">'+questionPanels.join("")+'</div>'),
-        newCard("j277-u-batch j277-u-batch-answers",
-          head("SELF-MARK · EXAM PRACTICE",examCount+' MODEL ANSWERS')+
-          '<div class="j277-u-batch-grid">'+answerPanels.join("")+'</div>')
+        ...answerPages.map((markup,i)=>
+          newCard("j277-u-answer-page",
+            head("SELF-MARK · EXAM QUESTION "+(i+1),"ANSWER "+(i+1)+" OF "+examCount)+
+            markup))
       ];
-      if(output.length!==4||questionPanels.length!==answerPanels.length)
-        throw Error("Four-screen sequence or marking count mismatch");
+      if(output.length!==3+examCount||questionPanels.length!==answerPages.length)
+        throw Error("Per-question answer sequence or marking count mismatch");
       output.forEach((card,i)=>card.hidden=i!==0);
       deck.replaceChildren(...output);
       Object.assign(host.dataset,{
-        j277Unified:"true",j277FourStage:"true",
+        j277Unified:"true",j277ExamAnswerPages:"true",
         j277ExamCount:String(examCount),j277CodeFocus:focus,
         windowSize:"1",j277SeparateReview:"true",
         j277ReviewStart:"3",codingFirst:"true",
         workMode:"independent",windowStart:"0"
       });
-      css.href="../../../assets/j277/youdo-unified.css?v=20261121-codefirst-answer-only-v1";
+      css.href="../../../assets/j277/youdo-unified.css?v=20261121-answer-pages-v1";
       document.head.appendChild(css);
       const labels=[
-        "Check Code First →","Begin exam questions →",
-        "Show "+examCount+" model answers →","Continue → Key Vocabulary"
+        "Check Code First →","Begin exam questions →","Show answer 1 →",
+        ...answerPages.map((_,i)=>i===answerPages.length-1
+          ?"Continue → Key Vocabulary":"Next model answer →")
       ];
       const progressLabels=[
-        "CODE FIRST · "+focus.toUpperCase(),"CODE FIRST · CHECK",
+        "CODE FIRST · "+focus.toUpperCase(),"CODE FIRST · ANSWER",
         "EXAM PRACTICE · "+examCount+" QUESTIONS",
-        "SELF-MARK · "+examCount+" ANSWERS"
+        ...answerPages.map((_,i)=>"SELF-MARK · ANSWER "+(i+1)+" OF "+examCount)
       ];
       function syncProgress(){
         if(!host.classList.contains("active"))return;
