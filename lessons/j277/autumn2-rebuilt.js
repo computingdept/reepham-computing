@@ -2078,7 +2078,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   const pilotJsVersion=rhsExamPilot?"20261121-unified-code-v8":"20261121-rhs2";
   const pilotSetup=useExamPilot?pilotData+'<script src="../../../assets/j277/exam-classroom.js?v='+pilotJsVersion+'"></script><script>window.J277ExamClassroom.install('+JSON.stringify({config:lesson.examClassroom,code:lesson.k,rhsPilot:rhsExamPilot})+');</script>':"";
   const defaultYouDo=useExamPilot?"":'<script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"></script>';
-  const lessonControllerVersion=rhsExamPilot?"20261121-rhs134-v2":"20261115-codefirst-brush2";
+  const lessonControllerVersion=rhsExamPilot?"20261121-rhs-codefirst-isolated-v10":"20261115-codefirst-brush2";
   const html=pilotHead+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")+(lesson.visualAuditV3?" j277-visual-v3":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
    <a class="course-back" href="../../../j277-hub.html?year=${lesson.year11?11:10}#lessons">← Year ${lesson.year11?11:10} lessons</a>
    <nav class="phase-nav" aria-label="Lesson phases">${arr(nav,(id,i)=>`<button type="button" data-page="${id}">${names[i]}</button>`)}</nav>

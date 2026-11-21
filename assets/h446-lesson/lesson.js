@@ -2548,7 +2548,10 @@ if(/^\/lessons\/h446\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname)){
 /* J277-only Code First visual rollout. H446 pages never load this module. */
 if(/^\/lessons\/j277\/lesson-\d{3}\//i.test(location.pathname)){
   const j277Cycle=document.createElement('script');
-  j277Cycle.src='../../../assets/j277/code-first-rollout.js?v=20261115-brush2';
+  const rhs134Trial=/\/lessons\/j277\/lesson-134\//i.test(location.pathname)
+    && new URLSearchParams(location.search).get('exam-pilot')==='2';
+  j277Cycle.src='../../../assets/j277/code-first-rollout.js?v='+
+    (rhs134Trial?'20261121-rhs-codefirst-isolated-v10':'20261115-brush2');
   j277Cycle.defer=true;
   document.body.appendChild(j277Cycle);
 }

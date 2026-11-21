@@ -5,6 +5,10 @@
  const match=location.pathname.match(/\/lessons\/j277\/lesson-(\d{3})\//);
  if(!match)return;
  const id=match[1];
+ // The RHS Lesson 134 exam-pilot=2 owns its numbered ERL Code First screen.
+ // Do not replace it with the central green Code First renderer. All normal
+ // lessons (including normal Lesson 134) keep their existing shared behaviour.
+ if(id==='134' && new URLSearchParams(location.search).get('exam-pilot')==='2')return;
  const excluded=new Set(['018','035','050','078','094','113','120','143','156','157']);
  if(excluded.has(id))return;
 
