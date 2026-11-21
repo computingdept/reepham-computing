@@ -468,6 +468,21 @@ function setYouDoWindow(page,start){
   questions.forEach((q,i)=>q.hidden=codingFirst&&safe===0 ? i!==0 : !(i>=safe&&i<safe+size));
   const progress=page.querySelector('.youdo-window-progress');
   if(progress){
+    // RHS J277 Lesson 134 is opt-in. Keep its stage labels distinct from
+    // the older source-link exam pilot and every normal lesson.
+    if(page.dataset.rhsExamPilot==='true'){
+      const stage=questions[safe];
+      if(safe===0)progress.textContent='CODE FIRST · PREDICT / WRITE';
+      else if(safe===1)progress.textContent='CODE FIRST · CHECK / IMPROVE';
+      else if(safe===2)progress.textContent='EXAM PRACTICE · 4 QUESTIONS · 10 MARKS';
+      else{
+        const match=stage?.querySelector('.j277-ec-intro h2')?.textContent||'';
+        const phase=stage?.classList.contains('j277-rhs-mark-stage')?'SELF-MARK':
+          stage?.classList.contains('j277-rhs-examiner-stage')?'EXAMINER INSIGHT':'IMPROVE';
+        progress.textContent=phase+(match?' · '+match.toUpperCase():'');
+      }
+      return;
+    }
     if(page.dataset.j277SeparateReview==='true'){
       const reviewStart=Number(page.dataset.j277ReviewStart||4);
       progress.textContent=safe===0?'':safe<reviewStart
@@ -975,6 +990,16 @@ function updateControl(){
         label=index===0?(mobile?'Next question →':'Continue → Q2–Q4'):
           mobile&&index<3?'Next question →':'Begin self-marking →';
       }
+    }else if(page.dataset.rhsExamPilot==='true'){
+      const i=Number(page.dataset.windowStart||0);
+      const stages=[...page.querySelectorAll('.youdo-question')];
+      if(i===0)label='Check Code First →';
+      else if(i===1)label='Start 10-mark challenge →';
+      else if(i===2)label='Begin self-marking →';
+      else if(i>=stages.length-1)label='Continue → Key Vocabulary';
+      else if(stages[i+1].classList.contains('j277-rhs-mark-stage'))label='Mark next question →';
+      else if(stages[i+1].classList.contains('j277-rhs-examiner-stage'))label='Examiner insight →';
+      else label='Improve answer →';
     }else if(page.dataset.j277SeparateReview==='true'){
       const i=Number(page.dataset.windowStart||0);
       const reviewStart=Number(page.dataset.j277ReviewStart||4);
