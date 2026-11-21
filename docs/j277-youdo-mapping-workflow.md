@@ -15,14 +15,17 @@ The JSON mapping has **one record for each of 164 lessons**, with each record co
 
 ### Approved presentation contract
 
-For each ordinary J277 lesson, the **You Do phase only** follows four screens:
+For each ordinary J277 lesson, the **You Do phase only** follows seven screens:
 
 1. Code First task.
 2. Code First answer immediately after pressing Next — **answer only**, displayed large and centrally. For a Predict task show the resulting output (e.g. `11`); for a Write task show the required code instruction (e.g. `print(value)`). Do **not** display an additional worked-explanation panel, repeated steps, or extra SVGs on this answer screen. The authored explanation remains preserved in source answer data.
 3. Exactly four independent exam questions **on one screen**.
-4. Their four corresponding worked/marking answers **on one screen**.
+4. The corresponding worked/marking answer to Q1 **on its own full screen** (with its original appropriate answer SVG, if available).
+5. The corresponding worked/marking answer to Q2 on its own full screen.
+6. The corresponding worked/marking answer to Q3 on its own full screen.
+7. The corresponding worked/marking answer to Q4 on its own full screen.
 
-Projector fit, readable text, an appropriate 2×2 layout, responsive mobile stacking and accessible question/answer SVG pairs are part of the acceptance test. The current common presentation files are `assets/j277/youdo-unified.js` and `assets/j277/youdo-unified.css`. Other live handlers still exist; inspect their actual precedence before any rollout.
+Projector fit, readable text, a 2×2 grid for the four questions, a separate projector-sized answer page for each question, mobile stacking and accessible question/answer SVG pairs are part of the acceptance test. Do not return to four answers on one screen. The current common presentation files are `assets/j277/youdo-unified.js` and `assets/j277/youdo-unified.css`. Other live handlers still exist; inspect their actual precedence before any rollout.
 
 ### Matching content to an illustration
 
@@ -44,7 +47,7 @@ Every visual needs source comparison, projector/mobile review and teacher approv
 - Existing assessment/timed-practice exceptions must remain protected and explicitly reviewed before modification.
 - Change **only `#you-do`** (and J277-specific adapters/loaders where unavoidable). No modifications to Do Now, Objectives, New Learning, I Do, We Do, Vocabulary, Exit Ticket, H446, the shared navigation engine or Cloudflare login/scoring.
 - Compare all seven other phase fragments before and after each change and test navigation in the deployed browser. A passing source/DOM simulation alone is **not** visual QA or permission to publish.
-- Four questions for each of 164 lessons would mean **656 lesson slots**, more than 225 unique bank parts. Do not assume a unique approved question for every slot, duplicate questions thoughtlessly, or invent extra RHS bank entries to fill the map. Reuse/rotation and any new authored items require deliberate editorial decisions.
+- Four exam questions (and four separate answer screens) for each of 164 lessons would mean **656 lesson slots**, more than 225 unique bank parts. Do not assume a unique approved question for every slot, duplicate questions thoughtlessly, or invent extra RHS bank entries to fill the map. Reuse/rotation and any new authored items require deliberate editorial decisions.
 
 ### For the next implementation turn
 
