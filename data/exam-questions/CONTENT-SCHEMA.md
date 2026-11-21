@@ -88,9 +88,11 @@ The teacher's independent marking review does **not** approve the RHS questions 
 
 The new [H446 RHS practice-draft table](h446-rhs-practice-drafts.csv) uses the **same 24 fields as the J277 RHS practice table**, covering **410** H446/01 and H446/02 question parts, **1,400 original marks** across November 2021 and June 2022–2025.
 
-- First source-text-linked drafting pass: **41** RHS-authored questions and their teacher-written answer/marking rules for all of June 2025 H446/01 Q1–Q8.
-- Remaining **369** parts are registered but **not drafted or answer-verified** in the new RHS table. Blank RHS prompt/answer cells must remain blank until the official source context and mark scheme have been checked.
+- First source-text-linked drafting pass: **78** RHS-authored question drafts and their teacher-written marking rules for both June 2025 H446 papers (41 Paper 1 + 37 Paper 2).
+- Remaining **332** parts are registered but **not drafted or answer-verified** in the new RHS table. Blank RHS prompt/answer cells must remain blank until the official source context and mark scheme have been checked.
 - Historical `mark_scheme_review_status` continues to describe the earlier **canonical catalogue** only (3 H446 entries); it is not the new RHS practice-bank progress field.
 - Student display, originality review, image/figure checks, level-of-response moderation and teacher sign-off remain outstanding. No classroom renderer is activated by the CSV.
 
 See [H446 draft workflow](RHS-H446-DRAFTS.md) and [H446 answer-check progress](RHS-H446-ANSWER-VERIFICATION.md). Never substitute the original OCR illustration with a visually similar but numerically different RHS concept model without reviewing the task's assessed meaning.
+
+**H446/02 source-access caution (21 November 2026):** the 37 Paper 2 original RHS question drafts were reviewed against the published OCR **mark scheme text**, but the 2025 OCR **question-paper PDF was not accessible**. Do not interpret a filled `rhs_answer_review_date` as a complete paper-image, exact numeric/context or classroom verification. New RHS teaching graphs and algorithms may have different data from the OCR source and therefore have an independently adapted marking rule. See [H446 answer review details](RHS-H446-ANSWER-VERIFICATION.md).
