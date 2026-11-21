@@ -115,6 +115,8 @@
       // but arrange Predict / Change / Build alongside each other. The old
       // unstructured right-hand panel forced scrolling on classroom projectors.
       const compactCheck=(()=>{
+        // Adapter-rendered lessons can supply answer HTML without a real DOM node.
+        if(!checked.children)return null;
         const groups=[[],[],[]];
         let current=-1,illustration="",heading="";
         for(const node of Array.from(checked.children)){
