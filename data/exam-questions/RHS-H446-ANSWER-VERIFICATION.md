@@ -10,11 +10,11 @@ The new **H446 RHS-authored practice table** is [h446-rhs-practice-drafts.csv](h
 | OCR series | Question parts | RHS question drafts written | RHS answer/marking text reviewed |
 | --- | ---: | ---: | ---: |
 | November 2021 | 75 | 0 | 0 |
-| June 2022 | 92 | 0 | 0 |
+| June 2022 | 92 | 92 | 92* |
 | June 2023 | 84 | 84 | 84* |
 | June 2024 | 81 | 81 | 81* |
 | June 2025 | 78 | 78 | 78* |
-| **Total** | **410** | **243** | **243*** |
+| **Total** | **410** | **335** | **335*** |
 
 All **78** June 2025 question parts have independent RHS drafts and source-linked marking notes: **41 from H446/01** and **37 from H446/02**. The **Paper 1** question and marking text were compared with the [official 2025 /01 question paper](https://www.ocr.org.uk/Images/752247-question-paper-computer-systems.pdf) and [official 2025 /01 mark scheme](https://www.ocr.org.uk/Images/752415-mark-scheme-computer-systems.pdf). For **Paper 2**, the [official 2025 /02 mark scheme](https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf) was checked but the question-paper PDF could not be fetched. **Thus Paper 2 source-question-context verification remains outstanding.**
 
@@ -35,7 +35,7 @@ These are **working drafts**, not approved OCR-context-verified questions or an 
 
 ## What is still not complete
 
-1. **167** original RHS question drafts and **167** question-specific source-linked answer checks (2021–2022).
+1. **75** original RHS question drafts and **75** question-specific source-linked answer checks (November 2021).
 2. Independent full source-paper figure and mark-scheme-page checks for all 78 as relevant, **particularly all 37 H446/02 questions whose OCR source question PDF could not be retrieved**. Ten of Paper 1 Q4–Q8 also have original visual/table/code layout dependencies.
 3. Original tables, program listings, trace layouts and SVG assessment contexts as needed (not every source visual should become an SVG).
 4. Question-by-question OCR examiner-report inspection and independent examiner insight for unreviewed entries.
@@ -92,4 +92,18 @@ Original RHS questions have been drafted for all H446/02 topics. Notable checks 
 - **Paper 2, Q7–Q9:** explicit Big O time/space comparisons and levels-of-response, concurrency, merge sort, login subroutines and Board/Artifact OOP. All OO fields use explicit `private` and access through `public` methods, never UML `#` as private.
 - **28 2023 records** are flagged for source-specific visual, original table, code or trace rendering; final teacher review and visual/marking mark-by-mark signoff are outstanding. Several nine- and twelve-mark questions require human moderation, not automated marking.
 
-**Updated overall: 243 drafted, 167 pending, 0 classroom-approved.** All 10 paper totals remain 140 marks each and all 410 canonical IDs/marks are unchanged.
+**2023 historical milestone: 243 drafted, 167 then pending; 0 classroom-approved.** All 10 paper totals remain 140 marks each and all 410 canonical IDs/marks are unchanged.
+
+## Added review: June 2022 H446/01 and H446/02 — both papers drafted
+
+- Both papers: **48 Paper 1 + 44 Paper 2 = 92/92** independent RHS question drafts with answer/marking text. OCR sources were consulted. Representative PDF page screenshots were checked for Paper 2; some Paper 1 screenshot requests failed, so **figure-by-figure image verification has not been completed**.
+- **Q1 Paper 1:** theatre ticket LMC reworks the cumulative bonus code: for three inputs `10,50,120` it displays `10,60,200`. Reset/HLT marking is retained, as is the source's exclusion of “individual instructions execute faster” as the general pipelining benefit.
+- **Q2 Paper 1:** independent `TblMember`/`TblPlan` schema. The five-mark SQL prompt demands correct selected fields, qualified joined keys and an advertisement-consent filter. Separate ACID transaction and streaming (not downloading) nuances are retained; LectureClip uses explicit private fields and public methods.
+- **Q3 Paper 1:** original numerical source values retained and checked: `B7E→101101111110`, sign-magnitude `110010101→-149`, `01101101−00110100=00111001`, floating `1010 1110→-0.1875`. Four normalisation classifications each have an independent mark.
+- **Q5–Q6 Paper 1:** original distinct trace algorithm yields `40,70,300` on original source inputs. Screenshot confirms the 2022 scheme puts symbol-table construction in lexical analysis for this question. FCFS, RR, HTTPS/application and MAC/link-layer descriptions remain distinct.
+- **Q1–Q4 Paper 2:** original WHILE rewriting, source numeric BST years with independently described hierarchy, 50-element bubble sort, eight-number merge sort trace, Big O evaluations and flight-simulator abstraction/caching.
+- **Q5 Paper 2:** independent eight-node graph with own edges but computed shortest path `A→B→E→F→G→H`, cost **19**, final distance/predecessor table. It must be rendered as a new diagram; it is **not OCR's original graph** even where numerical results coincide.
+- **Q7–Q8 Paper 2:** independently coded recursion trace `sumTrail(5)=15` and call `sumTrail(10)=55`; original 100-slot `IntStack` with top-as-next-free convention and -1 empty sentinel. Pop/push, input loop and accumulation remain separate assessed tasks. OOP vs procedural nine-mark evaluation remains teacher-marked.
+- **29 2022 records** need original visual/code/table/trace presentation; source-context, originality, accessibility, projector/mobile and teacher sign-off are pending.
+
+**Current H446 RHS totals: 335 written/answer guidance populated, 75 not yet written (2021), 0 classroom-approved.** All 410 IDs, ten 140-mark paper totals and 1,400 combined marks remain unchanged.
