@@ -107,3 +107,7 @@ All **75/75 November 2021 question parts** now have original RHS wording, answer
 | **Total** | **217** | **193** | **410** | **1,400** |
 
 The CSV was checked against the canonical catalogue: **410 unique source IDs**, identical per-part mark allocations, **140 marks for each paper**, and no empty authored question, answer or marking-rule fields. **147/410 records** carry a non-`not_required` visual/presentation flag, meaning a diagram, table, code panel or trace requires context and projection checking. **0/410 are approved for classroom display.** Other checks—originality, copied source exclusion, assessment equivalence, examiner-report specificity, full source figure inspection, accessible layout and teacher sign-off—remain mandatory. No live lessons, J277, Cloudflare or student scoring were changed.
+
+## Post-drafting classroom QA (started 21 November 2026)
+
+The next controlled gate is tracked in the [H446 classroom QA plan](RHS-H446-CLASSROOM-QA.md) and [410-row classroom QA register](h446-rhs-classroom-qa.csv). **147 records** need a source-specific figure, HTML table, code or trace layout review. **Seven confirmed 2021 generic-image mappings** do not match the new RHS example data: five mismatched mappings are blocked and the two A* mappings now point to a new question-specific directed graph (still awaiting visual render, mobile/projector and teacher review). The new 2021 A* answer also had a false P 7→6 relaxation claim corrected after recomputing the expansion order. **No classroom approvals were granted.**
