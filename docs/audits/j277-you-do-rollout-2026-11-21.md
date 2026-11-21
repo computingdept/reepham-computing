@@ -76,3 +76,35 @@ Lesson | Year | Topic/spec | Normal or assessment | Source type | Code First app
 3. Check grouped JS exclusion list, bespoke lesson 002, assessment pages and lesson 134 opt-in separately.
 4. Verify questions and answer count, scenario correctness, diagram relevance, projector readability and mobile progression.
 5. Save per-lesson evidence; only after teacher approval should a scoped You Do change be proposed for merge.
+
+## Data-level inventory — first 42 JSON records (2026-11-21)
+
+**Verified directly from repository JSON:** 004–018 (`autumn1-004-008.json`, `autumn1-009-013.json`, `autumn1-014-018.json`) and 019–045 (the individual `autumn2-NNN.json` files). This is **42 unique lesson data records**, distinct from the 36 entry HTML files previously inspected.
+
+| Records | Count | Question/answer structural findings | Attention |
+| --- | ---: | --- | --- |
+| 004–017 | 14 | Each has 3 exam entries and a string in answer position 2 | Needs question and marking accuracy review |
+| 018 | 1 | 3 exam entries / string answers; **isAssessment=false** | Despite an assessment/review title, this renders through normal lesson behavior. Excluded from grouped.js: classify deliberately |
+| 019–020 | 2 | Each has 3 exam entries / string answers | Programming/trace/debug question flow |
+| 021–034 | 14 | Each has 3 exam entries / string answers; prior retrieval data and 3 visual descriptors | Check diagram/question fit and extra retrieval stage |
+| 035 | 1 | 8 assessment questions / string answers; **isAssessment=true** | Assessment-mode You Do; exempt from normal sequence |
+| 036–045 | 10 | Each has 3 exam entries / string answers; prior retrieval and 3 visual descriptors | Confirm accuracy and question-to-visual mapping |
+| **Total** | **42** | **All 42 have a question list and string-valued answer entries** | **Structural source check only; no browser QA or teacher approval** |
+
+### Specific risks and exceptions
+- The shared renderer checks data arrays and minimum question counts, but source validity does **not** guarantee all questions are navigable or answer stages match at runtime.
+- `lesson-018` assessment/review title conflicts with its `isAssessment=false` value; preserve its current behavior pending teacher decision, do not automatically flip it.
+- `lesson-035` uses `isAssessment=true`, with eight assessment entries, and is excluded by `youdo-grouped.js`; this is an intentional-looking separate path, not evidence of a bug.
+- 021–034 and 036–045 include visual descriptor data. Their presence is not proof the SVG renders, is legible or is pedagogically correct.
+- Question answers were checked for **type and presence only**, not examiner correctness, marks or clarity.
+- For JSON records 046–164, no data-level claim has yet been made.
+
+### Progress terminology
+- **36 entry-page paths directly examined** (earlier sample).
+- **42 data records structurally examined** (this pass).
+- **0 lessons runtime tested**, **0 teacher approved**, **0 live files edited**.
+- These numbers are different dimensions and should not be added together.
+
+### Next data review
+- Continue JSON record checks beginning with 046, highlighting assessments, empty answers, missing question data, visual exceptions and prior-retrieval behavior.
+- Run representative browser QA where possible before elevating any record to Tested.
