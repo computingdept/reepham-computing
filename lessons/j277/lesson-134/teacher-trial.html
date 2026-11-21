@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>J277 Lesson 134 · Teacher Exam Pilot</title>
+</head>
+<body>
+<script src="../year11-diagrams.js?v=20261017-y11v1"></script>
+<script src="../year11-extended-diagrams.js?v=20261017-y11fix4"></script>
+<script src="../autumn2-rebuilt.js?v=20261121-unified-code-v8"></script>
+<script>
+/* Teacher-only explicit entry: persist the opt-in flag even on refresh.
+   Does not modify the normal lesson page or any student-facing scoring. */
+(function(){
+  const url = new URL(location.href);
+  url.searchParams.set("exam-pilot","2");
+  if (!url.hash) url.hash = "you-do";
+  history.replaceState(null,"",url.pathname + url.search + url.hash);
+  window.J277Autumn2.render("134","lesson");
+})();
+</script>
+</body>
+</html>

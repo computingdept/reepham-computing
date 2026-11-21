@@ -447,5 +447,70 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
             browser.close()
 
 
+    def test_j277_134_teacher_trial_does_not_fall_back_to_normal_code_first(self):
+        """Both opt-in routes must render dark, numbered ERL; normal lesson stays unchanged."""
+        cases = (
+            ("/lessons/j277/lesson-134/index.html", False),
+            ("/lessons/j277/lesson-134/index.html?exam-pilot=2", True),
+            ("/lessons/j277/lesson-134/teacher-trial.html", True),
+        )
+        for engine in ("chromium", "webkit"):
+            browser = getattr(self.playwright, engine).launch(headless=True)
+            try:
+                for path, opted_in in cases:
+                    with self.subTest(engine=engine, path=path):
+                        page = browser.new_page(viewport={"width": 1280, "height": 720})
+                        errors = []
+                        page.on("pageerror", lambda error: errors.append(str(error)))
+                        try:
+                            page.goto(
+                                f"http://127.0.0.1:{self.port}{path}#you-do",
+                                wait_until="networkidle", timeout=45000,
+                            )
+                            page.locator("#you-do .j277-code-first").wait_for(timeout=20000)
+                            stage = page.locator("#you-do .youdo-rolling > .youdo-question")
+                            if opted_in:
+                                self.assertEqual(
+                                    page.locator("#you-do").get_attribute("data-rhs-exam-pilot"),
+                                    "true", "The opt-in must not fall back to normal Code First",
+                                )
+                                self.assertEqual(stage.count(), 7,
+                                    "Expected Code First, Check, challenge and four answers")
+                                self.assertEqual(
+                                    stage.first.locator(".rhs-erl-line-number").all_inner_texts(),
+                                    ["1", "2", "3"],
+                                )
+                                self.assertEqual(
+                                    stage.nth(1).locator(".rhs-code-result-value").inner_text(),
+                                    "10 links",
+                                )
+                                self.assertEqual(
+                                    stage.nth(0).locator("pre.arithmetic").count(), 0,
+                                    "Old unnumbered green code block must be absent",
+                                )
+                                self.assertEqual(
+                                    page.locator("#you-do .rhs-proj-card").count(), 4)
+                                self.assertIn(
+                                    "star-network-answer.svg",
+                                    page.locator("#you-do .rhs-proj-card").nth(1)
+                                        .locator("img").get_attribute("src"),
+                                )
+                                self.assertEqual(
+                                    page.locator("#you-do input[data-rhs-one-mark]").count(), 0)
+                            else:
+                                self.assertIsNone(
+                                    page.locator("#you-do").get_attribute("data-rhs-exam-pilot"))
+                                self.assertGreater(
+                                    stage.first.locator("pre.arithmetic").count(), 0,
+                                    "Normal lesson should retain its original Code First card")
+                                self.assertEqual(
+                                    stage.first.locator(".rhs-erl-editor").count(), 0)
+                            self.assertFalse(errors, f"{path}: {errors}")
+                        finally:
+                            page.close()
+            finally:
+                browser.close()
+
+
 if __name__ == "__main__":
     unittest.main()
