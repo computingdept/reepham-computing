@@ -101,7 +101,7 @@
     overflow:visible!important;
     height:100%!important;
     min-height:0!important;
-    display:flex!important;
+    display:flex;
     flex-direction:column;
     padding:clamp(10px,1.2vw,21px)!important;
   }
@@ -302,4 +302,12 @@
  #you-do[data-rhs-exam-pilot="true"] .rhs-erl-source{
   font-size:clamp(22px,1.75vw,30px)!important;line-height:1.48!important
  }
+}
+
+
+/* v9 regression safeguard: hidden answer stages must NEVER be displayed.
+ * The opt-in deck's hidden attribute is the single source of visibility truth.
+ * A former display:flex!important rule overrode [hidden] on desktop. */
+#you-do[data-rhs-exam-pilot="true"] .youdo-rolling > .rhs-proj-card[hidden]{
+  display:none!important;
 }

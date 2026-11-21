@@ -497,6 +497,52 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
                                 )
                                 self.assertEqual(
                                     page.locator("#you-do input[data-rhs-one-mark]").count(), 0)
+                                # Browser-level regression: the [hidden] attribute must
+                                # affect computed layout, not merely the DOM property.
+                                # The old projector CSS made Q1-Q4 visible at once.
+                                def visible_indices():
+                                    return stage.evaluate_all(
+                                        "(nodes) => nodes.map((node,i) => "
+                                        "node.getClientRects().length ? i : -1)"
+                                        ".filter(i => i >= 0)"
+                                    )
+                                self.assertEqual(
+                                    visible_indices(), [0],
+                                    "Code First must be the only visible trial stage on entry",
+                                )
+                                self.assertEqual(
+                                    page.locator("#you-do").get_attribute("data-window-start"), "0"
+                                )
+                                expected_titles = (
+                                    "Code First", "10 links", "Independent exam challenge",
+                                    "Question 1", "Question 2", "Question 3", "Question 4",
+                                )
+                                for current in range(1, 7):
+                                    page.locator("#advance").evaluate("(node) => node.click()")
+                                    self.assertEqual(
+                                        visible_indices(), [current],
+                                        f"Advance from {expected_titles[current-1]} "
+                                        f"must show only {expected_titles[current]}",
+                                    )
+                                    self.assertEqual(
+                                        page.locator("#you-do").get_attribute("data-window-start"),
+                                        str(current),
+                                    )
+                                    self.assertTrue(
+                                        page.locator("#you-do").evaluate(
+                                            "(node) => node.classList.contains('active')"
+                                        ),
+                                        "All four marking questions must remain in You Do",
+                                    )
+                                page.locator("#previous").evaluate("(node) => node.click()")
+                                self.assertEqual(visible_indices(), [5],
+                                    "Previous from Q4 should return to Q3")
+                                page.locator("#advance").evaluate("(node) => node.click()")
+                                self.assertEqual(visible_indices(), [6],
+                                    "Forward from Q3 should return to Q4")
+                                page.locator("#advance").evaluate("(node) => node.click()")
+                                self.assertTrue(page.locator("#vocabulary.page.active").count(),
+                                    "Only after Q4 may Next advance to Key Vocabulary")
                             else:
                                 self.assertIsNone(
                                     page.locator("#you-do").get_attribute("data-rhs-exam-pilot"))
