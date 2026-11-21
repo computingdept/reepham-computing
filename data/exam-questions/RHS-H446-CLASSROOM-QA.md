@@ -51,3 +51,11 @@ Writing the question bank is **not the same as approving a question for classroo
 Audit **November 2021 Paper 1's 14 visual/layout-flagged parts** one by one, starting with the six-slot LIFO stack and volunteer-name BST. Author their independent question-only illustrations and separate answers using the exact draft data; finish the source-context and projection checks before making any approvals. Then tackle November 2021 Paper 2's other flagged parts and proceed chronologically through 2022–2025.
 
 This document records an initial QA pass and the explicit block, **not a claim that all figures and all answers have been independently checked**.
+
+## November 2021 Q7 stack and volunteer BST · asset drafting checkpoint
+
+**Scope:** H446-2021-NOV-01-Q7AI, Q7AII, Q7BI and Q7BII only. Seven original QA-only SVGs now exist on branch `qa/2021-nov-stack-bst-views` (shared initial stack question, stack identification reveal, bounded PUSH reveal, initial volunteer BST, four-insertion reveal, post-insertion BST lookup question and Xena lookup reveal). The [isolated teacher QA preview](qa-2021-nov-q7-preview.html) presents **one question at a time** and one consolidated reveal, with image left and prompt right. No student pages use this preview.
+
+**Data-logic check from the RHS drafts (not teacher approval):** `names[0..5]` is empty at `top = -1`, full at `top = 5`; PUSH checks `top < 5`, increments then stores the new name. Tree insertions: Ava ← Cara; Nina ← Ruth; Zoe → Tara; Omar → Nina. Xena search: Morgan → Ruth → Tara → Zoe → missing left child (absent). `Q7BII` deliberately displays the post-insertion tree, because it is a separate follow-on question, while `Q7BI` does not disclose the inserted positions.
+
+**Remaining blocked gates:** independent comparison to the complete OCR stem/mark scheme; SVG XML validation and actual raster rendering; half-screen projector viewing (900-unit SVG scaled to approx. 450 CSS px); narrow mobile viewing; print/contrast/alt-text review; independent originality and marking-alternative checks; explicit teacher sign-off. The SVGs were authored and linked in GitHub, but **no actual visual render was verified in this session**. These four mappings remain draft-only in the QA register, with `classroom_release=disabled_not_approved`. No student-facing approval or release is implied.
