@@ -88,11 +88,13 @@ The teacher's independent marking review does **not** approve the RHS questions 
 
 The new [H446 RHS practice-draft table](h446-rhs-practice-drafts.csv) uses the **same 24 fields as the J277 RHS practice table**, covering **410** H446/01 and H446/02 question parts, **1,400 original marks** across November 2021 and June 2022–2025.
 
-- First source-text-linked drafting pass: **78** RHS-authored question drafts and their teacher-written marking rules for both June 2025 H446 papers (41 Paper 1 + 37 Paper 2).
-- Remaining **332** parts are registered but **not drafted or answer-verified** in the new RHS table. Blank RHS prompt/answer cells must remain blank until the official source context and mark scheme have been checked.
+- First source-text-linked drafting pass: **159** RHS-authored question drafts and teacher-written marking rules for both June 2024 H446 papers (41 Paper 1 + 40 Paper 2) and both June 2025 papers (41 Paper 1 + 37 Paper 2).
+- Remaining **251** parts are registered but **not drafted or answer-verified** in the new RHS table. Blank RHS prompt/answer cells must remain blank until the official source context and mark scheme have been checked.
 - Historical `mark_scheme_review_status` continues to describe the earlier **canonical catalogue** only (3 H446 entries); it is not the new RHS practice-bank progress field.
 - Student display, originality review, image/figure checks, level-of-response moderation and teacher sign-off remain outstanding. No classroom renderer is activated by the CSV.
 
 See [H446 draft workflow](RHS-H446-DRAFTS.md) and [H446 answer-check progress](RHS-H446-ANSWER-VERIFICATION.md). Never substitute the original OCR illustration with a visually similar but numerically different RHS concept model without reviewing the task's assessed meaning.
 
 **H446/02 source-access caution (21 November 2026):** the 37 Paper 2 original RHS question drafts were reviewed against the published OCR **mark scheme text**, but the 2025 OCR **question-paper PDF was not accessible**. Do not interpret a filled `rhs_answer_review_date` as a complete paper-image, exact numeric/context or classroom verification. New RHS teaching graphs and algorithms may have different data from the OCR source and therefore have an independently adapted marking rule. See [H446 answer review details](RHS-H446-ANSWER-VERIFICATION.md).
+
+**June 2024 H446 addition (21 November 2026):** OCR's [2024 Paper 1](https://www.ocr.org.uk/Images/726571-question-paper-computer-systems.pdf), [Paper 2](https://www.ocr.org.uk/Images/726572-question-paper-algorithms-and-programming.pdf) and both official mark schemes were available for source-text checks; source PDF screenshots were inspected for representative figures. All 81 parts have independently authored RHS questions/answers and require final originality/diagram/table/code, accessibility, examiner comments and teacher approval before display. A `rhs_answer_review_date` is **not** a classroom approval flag. The [2024 sections of the answer audit](RHS-H446-ANSWER-VERIFICATION.md) describe the remaining gates.
