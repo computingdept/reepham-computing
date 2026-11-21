@@ -570,7 +570,7 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
     def test_shared_youdo_trial_only_changes_youdo_j277_and_h446(self):
         """Pilot isolates seven other phases and preserves the question/answer run."""
         cases = (
-            ("/lessons/j277/lesson-021/index.html", 7, 4, 4),
+            ("/lessons/j277/lesson-021/index.html", 7, 4, 3),
             ("/lessons/h446/lesson-220/index.html", 10, 5, 0),
         )
         untouched = ("do-now", "overview", "new-learning", "i-do",
@@ -623,7 +623,8 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
                             )
                             if code_lines:
                                 self.assertIn("48", cards.first.inner_text())
-                                self.assertIn("4 seconds", cards.nth(1).inner_text())
+                                self.assertIn("EXPECTED RESULT", cards.nth(1).inner_text())
+                                self.assertEqual(cards.nth(1).locator(".rhs-y-expected strong").inner_text(), "4")
                                 self.assertGreater(
                                     trial.locator("#you-do .rhs-y-visual svg").count(), 0,
                                     "Retain authored SVGs where question data provides them",
