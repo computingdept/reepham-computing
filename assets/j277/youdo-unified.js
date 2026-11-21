@@ -64,6 +64,94 @@
       !code.model||!code.expected)throw Error("You Do question/answer alignment failed");
     if(stages.some(s=>!s.querySelector(".solution-card")))throw Error("Missing original mark scheme");
 
+
+    // Lesson 001's approved classroom journey is FOUR screens:
+    // Code First -> immediate check -> all four exam prompts -> all four mark schemes.
+    // Every other J277 lesson retains its current implementation until explicitly reviewed.
+    if(number==="001"){
+      if(sourceCards.length!==5)throw Error("Lesson 001 must have Code First + four exam questions");
+      const questionPanels=sourceCards.slice(1).map((source,i)=>{
+        const prompt=source.querySelector(".question-text");
+        if(!prompt)throw Error("Missing exam question "+(i+1));
+        const question=prompt.cloneNode(true);
+        const visuals=Array.from(source.querySelectorAll("svg,img"));
+        question.querySelectorAll("svg,img").forEach(node=>node.remove());
+        const title=source.querySelector("h3")?.textContent?.trim()||"Exam question";
+        return '<article class="j277-u-batch-card">'+
+          '<div class="j277-u-batch-card-header"><strong>Q'+(i+1)+'</strong>'+
+          '<span>'+esc(title)+'</span></div>'+
+          '<div class="j277-u-batch-prompt">'+question.innerHTML+'</div>'+
+          (visuals.length?'<div class="j277-u-batch-visual">'+
+            visuals.map(v=>v.outerHTML).join("")+'</div>':"")+'</article>';
+      });
+      const answerPanels=stages.slice(1).map((answer,i)=>{
+        const source=answer.querySelector(".solution-card");
+        if(!source)throw Error("Missing model answer for Q"+(i+1));
+        const answerText=source.cloneNode(true);
+        answerText.querySelectorAll("svg,img,figure,.phase-tag").forEach(el=>el.remove());
+        return '<article class="j277-u-batch-card j277-u-batch-answer">'+
+          '<div class="j277-u-batch-card-header"><strong>Q'+(i+1)+'</strong>'+
+          '<span>MODEL ANSWER</span></div>'+
+          '<div class="j277-u-batch-marking">'+answerText.innerHTML+'</div></article>';
+      });
+      const output=[
+        newCard("j277-code-first",head("CODE FIRST","PREDICT · WRITE · TEST · IMPROVE")+
+          '<div class="j277-u-body"><div class="j277-u-eyebrow">START HERE · MINI-WHITEBOARD</div>'+
+          '<h2>'+esc(code.task)+'</h2>'+
+          '<div class="j277-u-editor"><div class="j277-u-editor-label">OCR ERL · TRACE THE OUTPUT</div>'+
+          '<pre>'+esc(code.starter)+'</pre></div>'+
+          '<div class="j277-u-steps"><span>01 Predict</span><span>02 Write</span>'+
+          '<span>03 Test</span><span>04 Improve</span></div></div>'),
+        newCard("j277-u-code-check",head("CODE FIRST","CHECK YOUR ANSWER")+
+          '<div class="j277-u-body"><div class="j277-u-eyebrow">CHECK · EXPLAIN · IMPROVE</div>'+
+          '<h2>'+esc(code.task)+'</h2>'+
+          '<div class="j277-u-editor"><div class="j277-u-editor-label">MODEL OCR ERL</div>'+
+          '<pre>'+esc(code.model)+'</pre></div>'+
+          '<div class="j277-u-result"><span>EXPECTED OUTPUT</span><strong>'+
+          esc(code.expected)+'</strong><p>8 + 2 + 1 = 11</p></div></div>'),
+        newCard("j277-u-batch j277-u-batch-questions",
+          head("INDEPENDENT EXAM PRACTICE","FOUR QUESTIONS · ONE SCREEN")+
+          '<div class="j277-u-batch-grid">'+questionPanels.join("")+'</div>'),
+        newCard("j277-u-batch j277-u-batch-answers",
+          head("SELF-MARK · EXAM PRACTICE","FOUR MODEL ANSWERS")+
+          '<div class="j277-u-batch-grid">'+answerPanels.join("")+'</div>')
+      ];
+      output.forEach((item,i)=>item.hidden=i!==0);
+      deck.replaceChildren(...output);
+      Object.assign(host.dataset,{
+        j277Unified:"true",j277FourStage:"true",
+        windowSize:"1",j277SeparateReview:"true",
+        j277ReviewStart:"3",codingFirst:"true",
+        workMode:"independent",windowStart:"0"
+      });
+      css.href="../../../assets/j277/youdo-unified.css?v=20261121-001-four-stage-v1";
+      document.head.appendChild(css);
+      // Keep the existing shared navigation, but give its four stages the
+      // correct labels. The observer runs after the shared controller updates.
+      const labels=[
+        "Check Code First →","Begin exam questions →",
+        "Show four model answers →","Continue → Key Vocabulary"
+      ];
+      const progressLabels=[
+        "CODE FIRST · PREDICT","CODE FIRST · CHECK",
+        "EXAM PRACTICE · 4 QUESTIONS","SELF-MARK · 4 ANSWERS"
+      ];
+      function syncProgress(){
+        if(!host.classList.contains("active"))return;
+        const i=output.findIndex(el=>!el.hidden);
+        if(i<0)return;
+        const advance=document.getElementById("advance");
+        if(advance)advance.textContent=labels[i];
+        const progress=host.querySelector(".youdo-window-progress");
+        if(progress)progress.textContent=progressLabels[i];
+      }
+      const observer=new MutationObserver(syncProgress);
+      output.forEach(stage=>observer.observe(stage,{attributes:true,attributeFilter:["hidden"]}));
+      observer.observe(host,{attributes:true,attributeFilter:["class"]});
+      syncProgress();
+      return;
+    }
+
     const output=[];
     const codeStage=newCard("j277-code-first",
       head("CODE FIRST","PREDICT · WRITE · TEST · IMPROVE")+
