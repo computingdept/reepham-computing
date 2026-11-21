@@ -82,8 +82,8 @@
       const copy=question.cloneNode(true);
       // A diagram may precede the question-text block in generated lessons.
       // Pull all authored SVGs from the *cloned* question card; never edit source.
-      const visuals=Array.from(source.querySelectorAll("svg"));
-      copy.querySelectorAll("svg").forEach(svg=>svg.remove());
+      const visuals=Array.from(source.querySelectorAll("svg,img"));
+      copy.querySelectorAll("svg,img").forEach(svg=>svg.remove());
       const figure=visuals.length
         ?'<div class="j277-u-figure">'+visuals.map(v=>v.outerHTML).join("")+'</div>'
         :"";
