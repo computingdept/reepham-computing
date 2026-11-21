@@ -11,10 +11,10 @@ The new **H446 RHS-authored practice table** is [h446-rhs-practice-drafts.csv](h
 | --- | ---: | ---: | ---: |
 | November 2021 | 75 | 0 | 0 |
 | June 2022 | 92 | 0 | 0 |
-| June 2023 | 84 | 0 | 0 |
+| June 2023 | 84 | 84 | 84* |
 | June 2024 | 81 | 81 | 81* |
 | June 2025 | 78 | 78 | 78* |
-| **Total** | **410** | **159** | **159*** |
+| **Total** | **410** | **243** | **243*** |
 
 All **78** June 2025 question parts have independent RHS drafts and source-linked marking notes: **41 from H446/01** and **37 from H446/02**. The **Paper 1** question and marking text were compared with the [official 2025 /01 question paper](https://www.ocr.org.uk/Images/752247-question-paper-computer-systems.pdf) and [official 2025 /01 mark scheme](https://www.ocr.org.uk/Images/752415-mark-scheme-computer-systems.pdf). For **Paper 2**, the [official 2025 /02 mark scheme](https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf) was checked but the question-paper PDF could not be fetched. **Thus Paper 2 source-question-context verification remains outstanding.**
 
@@ -35,7 +35,7 @@ These are **working drafts**, not approved OCR-context-verified questions or an 
 
 ## What is still not complete
 
-1. **251** original RHS question drafts and **251** question-specific source-linked answer checks (2021–2023).
+1. **167** original RHS question drafts and **167** question-specific source-linked answer checks (2021–2022).
 2. Independent full source-paper figure and mark-scheme-page checks for all 78 as relevant, **particularly all 37 H446/02 questions whose OCR source question PDF could not be retrieved**. Ten of Paper 1 Q4–Q8 also have original visual/table/code layout dependencies.
 3. Original tables, program listings, trace layouts and SVG assessment contexts as needed (not every source visual should become an SVG).
 4. Question-by-question OCR examiner-report inspection and independent examiner insight for unreviewed entries.
@@ -79,4 +79,17 @@ Original RHS questions have been drafted for all H446/02 topics. Notable checks 
 - **Source distinctions:** the 2024 nine-mark cultural UI question tests differences in cultural significance, writing direction and character sets; generic colour-blindness does not substitute for that content. Levels-of-response and OOP code need human marking.
 - **Law:** 2024 regulatory reference prompts are historical assessment contexts; current UK surveillance and data-protection law must be checked before any student-facing publication.
 
-**Current H446 RHS status: 159 drafted/marking notes filled; 251 remaining; 0 approved.** Historical mark-scheme review fields from the separate canonical catalogue must not be mistaken for this newer RHS drafting status.
+**Current H446 RHS status: 243 drafted/marking notes filled; 167 remaining; 0 approved.** Historical mark-scheme review fields from the separate canonical catalogue must not be mistaken for this newer RHS drafting status.
+
+## Added review: June 2023 H446/01 and H446/02 — both papers drafted
+
+- **H446/01 46/46** and **H446/02 38/38**, all with original RHS scenario/prompt, answer guidance and marking breakdown. OCR paper and mark-scheme text consulted and representative PDF images inspected; full source figure/context, originality and classroom review not yet signed off.
+- **Paper 1, Q2:** original reverse-polish stack expressions were checked: printed outputs **12, 7, 15**, and the deliberately invalid input sequence causes stack underflow. Three intermediate stack-state marks remain separate from output marks.
+- **Paper 1, Q3:** original OCR numerical source values retained for hex/signed/floating-point questions; `189→BD`, `1010101111→2AF`, `−107→11101011` sign/magnitude and `10010101` two's complement; `−15.75→10000010 0100`, and `0100 1110→0.125`.
+- **Paper 1, Q5–Q6:** RHS digit-check `3178→9`; RHS alarm expression `NOT(A OR B) XOR C`, truth-table output `10010101`, and independently generated four-input K-map `(NOT A AND NOT C) OR (A AND NOT D)`.
+- **Paper 2, Q1:** original BST examples and traversal, with a seven-node independently designed Dijkstra graph. RHS shortest route `P→S→V`, cost **14** (not OCR's source graph), with tentative cost 19 overwritten by 14.
+- **Paper 2, Q3–Q6:** distinct indexed linked-list/free-list example, original reusable validation code, independent recursion `recursiveScore(10)→23` and correct zero-aware decimal-to-octal algorithm.
+- **Paper 2, Q7–Q9:** explicit Big O time/space comparisons and levels-of-response, concurrency, merge sort, login subroutines and Board/Artifact OOP. All OO fields use explicit `private` and access through `public` methods, never UML `#` as private.
+- **28 2023 records** are flagged for source-specific visual, original table, code or trace rendering; final teacher review and visual/marking mark-by-mark signoff are outstanding. Several nine- and twelve-mark questions require human moderation, not automated marking.
+
+**Updated overall: 243 drafted, 167 pending, 0 classroom-approved.** All 10 paper totals remain 140 marks each and all 410 canonical IDs/marks are unchanged.
