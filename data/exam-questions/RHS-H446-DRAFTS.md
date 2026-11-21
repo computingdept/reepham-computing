@@ -6,8 +6,8 @@
 
 - [RHS practice-draft CSV](h446-rhs-practice-drafts.csv): **410 records**, one per OCR H446 question part from **10 papers**, November 2021 and June 2022–2025, both H446/01 and H446/02.
 - Original source IDs, paper, series, official numbered specification topic, maximum marks and mark-scheme links are preserved.
-- **335/410** independently authored RHS practice questions with teacher-written answers and marking rules: **all of June 2022, 2023, 2024 and 2025 H446/01 and H446/02**.
-- **75/410** are **awaiting original drafting and official source/answer checks** (November 2021 only). Their RHS question and verified-answer fields are deliberately blank — **not** auto-generated from topic summaries.
+- **410/410** independently authored RHS practice-question drafts with teacher-written answer points and marking guidance: **all ten H446/01 and H446/02 papers** (November 2021, June 2022–2025).
+- **0/410 remain undrafted.** Every question part has RHS question text, answer points and marking rules. This means **drafting completed**, not comprehensive source-figure verification, examiner-report review or student approval.
 - All 10 papers retain their **140-mark totals** (1,400 marks overall). Year totals: 2021 75 parts, 2022 92, 2023 84, 2024 81, 2025 78.
 - The existing [canonical H446 question catalogue](h446-questions.csv), [SVG visual register](h446-visual-assets.csv) and [half-screen visual map](h446-question-view-map.csv) remain separate. The original source PDF is authoritative.
 - **Nothing is released to students or deployed into lessons by this CSV.** Each record remains a draft until all checks are complete.
@@ -85,4 +85,25 @@ All **92/92 June 2022 parts** now contain independent RHS questions, answer poin
 - **Stack convention:** `nextFree` is the next free array index (empty=0, full=100); the original RHS sequence after two pops and three pushes is `10,5,6,3,6,7`, pointer 6. The sentinel is -1 and must not be added when popping for totals.
 - **29 June 2022 parts** are flagged for source-dependent original table, diagram, code panel or trace presentation checks. This is **not** a requirement for 29 new SVGs: tables/code may be HTML. Level-of-response questions remain human-assessed.
 
-**Current status 21 November 2026:** **335/410 drafted with answer guidance; 75/410 undrafted (November 2021); 0/410 classroom-approved.** No live RHS lessons, J277 resources, GitHub website code or Cloudflare data have been modified.
+**2022 milestone:** **335/410 drafted at that stage; 75/410 still undrafted then; 0/410 classroom-approved.** No live RHS lessons, J277 resources, GitHub website code or Cloudflare data have been modified.
+
+## November 2021 completed drafting batch — 41 Paper 1 + 34 Paper 2
+
+All **75/75 November 2021 question parts** now have original RHS wording, answer points and teacher-authored marking rules. Official [OCR /01 question paper](https://www.ocr.org.uk/Images/666846-question-paper-computer-systems.pdf), [/01 mark scheme](https://www.ocr.org.uk/Images/666849-mark-scheme-computer-systems.pdf), [/02 question paper](https://www.ocr.org.uk/Images/666847-question-paper-algorithms-and-programming.pdf) and [/02 mark scheme](https://www.ocr.org.uk/Images/666850-mark-scheme-algorithms-and-programming.pdf) were consulted, and representative figure/marking pages were inspected. The originals were administered in **October/Autumn 2021**, even though their OCR site PDF title metadata may be misleading.
+
+- **Paper 1 (41 parts):** independently created cooperative, laboratory, pool, recycling-hub and volunteer-tree contexts, with 2021 source mathematical values preserved where source answers depend on them. Checked unsigned binary `231→11100111`, `6F→01101111`; floating point `001101 0100→011010 0011→6.5`; and `011000 0110 + 010100 0100→011101 0110` (58). The separate new LMC quotient/remainder exercises use their own numbers and correct output pairs. Legal and extended-response prompts still require teacher/current-law review.
+- **Paper 2 (34 parts):** an original museum-world A* graph and `g+h` trace, breadth-first tree, iterative binary search, Big O, Quicksort, IDE choice, derived Venue/Gallery/Workshop classes, a pipeline-cycle trace, a circular queue and a new **Forest Pixels** 5×5 binary Nonogram. A* shortest route `L→N→P→Q→Z` costs **10**; its six frontier-node values and predecessors were checked independently. Nonogram sample row clues were checked as `2 1 | 3 | 0 | 1 1 1 | 3`.
+- **31 parts from November 2021** need original student-facing diagram, code listing, HTML table, trace grid or other figure-context rendering before use. This does not mean 31 new SVGs; a suitable mixture of diagrams, code and tables is required.
+
+## Completion audit — all five series
+
+| Series | Paper 1 | Paper 2 | Drafted parts | Source marks |
+| --- | ---: | ---: | ---: | ---: |
+| November 2021 | 41 | 34 | 75 | 280 |
+| June 2022 | 48 | 44 | 92 | 280 |
+| June 2023 | 46 | 38 | 84 | 280 |
+| June 2024 | 41 | 40 | 81 | 280 |
+| June 2025 | 41 | 37 | 78 | 280 |
+| **Total** | **217** | **193** | **410** | **1,400** |
+
+The CSV was checked against the canonical catalogue: **410 unique source IDs**, identical per-part mark allocations, **140 marks for each paper**, and no empty authored question, answer or marking-rule fields. **147/410 records** carry a non-`not_required` visual/presentation flag, meaning a diagram, table, code panel or trace requires context and projection checking. **0/410 are approved for classroom display.** Other checks—originality, copied source exclusion, assessment equivalence, examiner-report specificity, full source figure inspection, accessible layout and teacher sign-off—remain mandatory. No live lessons, J277, Cloudflare or student scoring were changed.
