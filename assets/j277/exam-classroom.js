@@ -219,7 +219,7 @@
         '<span>QUESTION '+(i+1)+' OF 4</span>'+
         '<span>'+q.marks+' MARK'+(q.marks===1?'':'S')+'</span></header>';
       var prompt='<div class="rhs-proj-question">'+
-        '<h2>'+esc(q.question)+'</h2></div>';
+        '<h2>'+esc(q.question.replace(/\s*\n+\s*/g," ").trim())+'</h2></div>';
       var answer;
       if(q.marks===1){
         answer='<div class="rhs-proj-solo">'+
@@ -261,6 +261,36 @@
     host.dataset.windowSize="1";
     host.dataset.workMode="independent";
     host.dataset.examClassroom="true";
+    // RHS Lesson 134 only: every projected question opens at the top.
+    // The normal lesson controller, other lessons and backend are untouched.
+    var lastVisible=0;
+    function resetProjectorPosition(){
+      if(!host.classList.contains("active"))return;
+      var current=[].indexOf.call(stages,stages.find(function(s){return !s.hidden;}));
+      if(current<0||current===lastVisible)return;
+      lastVisible=current;
+      host.scrollTop=0;
+      var holder=host.querySelector(".youdo-deck");
+      if(holder)holder.scrollTop=0;
+      deck.scrollTop=0;
+      stages.forEach(function(s){s.scrollTop=0;});
+    }
+    var stageObserver=new MutationObserver(function(){
+      resetProjectorPosition();
+    });
+    stages.forEach(function(s){
+      stageObserver.observe(s,{attributes:true,attributeFilter:["hidden"]});
+    });
+    // When arriving from another phase the controller may restore an old
+    // scroll position; reset on a fresh phase entry as well.
+    var phaseObserver=new MutationObserver(function(){
+      if(host.classList.contains("active")){
+        host.scrollTop=0;
+        var active=stages.find(function(s){return !s.hidden;});
+        if(active)active.scrollTop=0;
+      }
+    });
+    phaseObserver.observe(host,{attributes:true,attributeFilter:["class"]});
 
   }
 

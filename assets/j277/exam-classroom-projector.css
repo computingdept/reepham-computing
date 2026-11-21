@@ -87,3 +87,77 @@
   #you-do[data-rhs-exam-pilot="true"] .rhs-proj-figure img{max-height:45vh}
   #you-do[data-rhs-exam-pilot="true"] .rhs-proj-markpoint{padding:10px 0}
 }
+
+
+/* V6 · projector-height fit for the opt-in Lesson 134 answer cards only.
+ * Content remains visible if a nonstandard screen truly cannot fit it. */
+@media(min-width:901px){
+  body:not(.answer-page) #you-do[data-rhs-exam-pilot="true"]{
+    scroll-behavior:auto!important;
+    overflow-y:auto;
+  }
+  body:not(.answer-page) #you-do[data-rhs-exam-pilot="true"]
+    .youdo-rolling > .youdo-question.exam-card.rhs-proj-card{
+    overflow:visible!important;
+    height:100%!important;
+    min-height:0!important;
+    display:flex!important;
+    flex-direction:column;
+    padding:clamp(10px,1.2vw,21px)!important;
+  }
+  #you-do[data-rhs-exam-pilot="true"] .rhs-proj-header{
+    padding-bottom:clamp(5px,.7vh,10px);
+    font-size:clamp(14px,.98vw,18px);
+  }
+  #you-do[data-rhs-exam-pilot="true"] .rhs-proj-question{
+    padding:clamp(10px,1.45vh,19px) 0;
+  }
+  #you-do[data-rhs-exam-pilot="true"] .rhs-proj-question h2{
+    font-size:clamp(23px,1.8vw,34px)!important;
+    line-height:1.27;
+    letter-spacing:-.023em;
+    white-space:normal;
+  }
+  #you-do[data-rhs-exam-pilot="true"] .rhs-proj-response{
+    margin-top:clamp(11px,1.7vh,22px);
+  }
+  #you-do[data-rhs-exam-pilot="true"] .rhs-proj-with-figure{
+    grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+    gap:clamp(19px,2.1vw,36px);
+    align-items:start;
+  }
+  #you-do[data-rhs-exam-pilot="true"] .rhs-proj-figure img{
+    max-height:min(530px,max(270px,calc(100dvh - 310px)));
+    width:100%;
+    object-fit:contain;
+  }
+  #you-do[data-rhs-exam-pilot="true"] .rhs-proj-label{
+    margin-bottom:clamp(8px,1.15vh,15px);
+    font-size:clamp(14px,1vw,18px);
+  }
+  #you-do[data-rhs-exam-pilot="true"] .rhs-proj-markpoint{
+    gap:clamp(9px,1vw,16px);
+    padding:clamp(8px,1.1vh,15px) 0;
+  }
+  #you-do[data-rhs-exam-pilot="true"] .rhs-proj-markpoint p{
+    font-size:clamp(21px,1.5vw,28px);
+    line-height:1.27;
+  }
+  #you-do[data-rhs-exam-pilot="true"] .rhs-proj-number{
+    font-size:clamp(14px,1vw,18px);
+  }
+  /* The card already names the question. A duplicate bottom-right tracker
+     consumes the projector margin and can overlap the marking points. */
+  #you-do[data-rhs-exam-pilot="true"]:has(.rhs-proj-card:not([hidden]))
+    .youdo-window-progress{display:none!important}
+}
+@media(min-width:901px) and (max-height:740px){
+  #you-do[data-rhs-exam-pilot="true"] .rhs-proj-figure img{
+    max-height:min(440px,max(260px,calc(100dvh - 300px)));
+  }
+  #you-do[data-rhs-exam-pilot="true"] .rhs-proj-question{
+    padding:8px 0 12px;
+  }
+  #you-do[data-rhs-exam-pilot="true"] .rhs-proj-response{margin-top:10px}
+  #you-do[data-rhs-exam-pilot="true"] .rhs-proj-markpoint{padding:7px 0}
+}
