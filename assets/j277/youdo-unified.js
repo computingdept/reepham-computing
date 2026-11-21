@@ -114,16 +114,25 @@
           figure+
           '<div class="j277-u-answer-content">'+copy.innerHTML+'</div></div>';
       });
-      // Code First answer screen: only the answer to the actual prompt.
-      // Predict = output value; Write = the required final instruction.
+      // Code First answer: repeat the original prompt and starter code, then show
+      // only the required output or instruction beneath it.
       // Source worked explanations/SVGs remain in answers.html unchanged.
       const focus=["predict","write","test","iterate"].includes(code.focus_stage)
         ?code.focus_stage:"predict";
-      const answerMarkup=focus==="write"
-        ?'<pre class="j277-u-simple-code">'+
-          esc(code.model.split(/\r?\n/).filter(line=>line.trim()).slice(-1)[0])+
-          '</pre>'
-        :'<strong class="j277-u-simple-value">'+esc(code.expected)+'</strong>';
+      // Repeat the exact banked Code First prompt so pupils can self-mark in
+      // context. Give only the required answer; no extra modelling or steps.
+      const answerMarkup=
+        '<div class="j277-u-check-question">'+
+          '<h2>'+esc(code.task)+'</h2>'+
+          '<div class="j277-u-editor"><div class="j277-u-editor-label">ORIGINAL QUESTION · OCR ERL</div>'+
+          '<pre>'+esc(code.starter)+'</pre></div></div>'+
+        '<div class="j277-u-check-result"><span>ANSWER</span>'+
+          (focus==="write"
+            ?'<pre class="j277-u-simple-code">'+
+              esc(code.model.split(/\r?\n/).filter(line=>line.trim()).slice(-1)[0])+
+              '</pre>'
+            :'<strong class="j277-u-simple-value">'+esc(code.expected)+'</strong>')+
+        '</div>';
       const steps=[
         ["predict","01 Predict"],["write","02 Write"],
         ["test","03 Test"],["iterate","04 Improve"]
@@ -158,7 +167,7 @@
         j277ReviewStart:"3",codingFirst:"true",
         workMode:"independent",windowStart:"0"
       });
-      css.href="../../../assets/j277/youdo-unified.css?v=20261121-answer-pages-top-v2";
+      css.href="../../../assets/j277/youdo-unified.css?v=20261121-code-question-answer-v1";
       document.head.appendChild(css);
       const labels=[
         "Check Code First →","Begin exam questions →","Show answer 1 →",
