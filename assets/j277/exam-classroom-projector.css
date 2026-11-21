@@ -161,3 +161,67 @@
   #you-do[data-rhs-exam-pilot="true"] .rhs-proj-response{margin-top:10px}
   #you-do[data-rhs-exam-pilot="true"] .rhs-proj-markpoint{padding:7px 0}
 }
+
+
+/* Lesson 134 opt-in only · OCR ERL line-numbered classroom code editor.
+ * Applies to Code First and Check/Improve, not the paper-based mark schemes. */
+#you-do[data-rhs-exam-pilot="true"] .rhs-erl-editor{
+  width:100%;min-width:0;
+  margin:clamp(12px,1.6vh,22px) 0;
+  border:1px solid #343e50;border-radius:15px;
+  background:#252d3d;color:#eef3f9;
+  overflow:hidden;
+  box-shadow:0 6px 18px rgba(19,26,39,.10);
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-erl-editor-bar{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 18px;
+  background:#1d2533;border-bottom:1px solid #394454;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  color:#ccd7e3;font-size:clamp(13px,1vw,17px);
+  font-weight:700;letter-spacing:.04em;
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-erl-editor-dot{
+  display:inline-block;flex:none;width:9px;height:9px;border-radius:50%;
+  background:#99a9bd;
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-erl-editor-kind{
+  margin-left:auto;color:#8f9caf;font-size:.79em;letter-spacing:.06em;
+  white-space:nowrap
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-erl-source{
+  padding:13px 0 17px;
+  margin:0;
+  background:transparent!important;color:inherit!important;
+  border:0!important;border-radius:0!important;
+  box-shadow:none!important;
+  overflow-x:auto;
+  font:500 clamp(23px,1.9vw,32px)/1.58 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important;
+  tab-size:4;
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-erl-source code{display:block;font:inherit;color:inherit}
+#you-do[data-rhs-exam-pilot="true"] .rhs-erl-line{
+  display:grid;
+  grid-template-columns:clamp(50px,4.8vw,70px) max-content;
+  min-width:max-content;
+  align-items:baseline;
+  padding-right:17px;
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-erl-line-number{
+  display:block;text-align:right;padding-right:17px;
+  color:#9faec2;font-weight:450;user-select:none;
+  border-right:1px solid #394658;
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-erl-line-code{
+  padding-left:20px;white-space:pre;color:#f0f5fa;min-width:0
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-erl-source .erl-keyword{color:#71d9ef;font-weight:660}
+#you-do[data-rhs-exam-pilot="true"] .rhs-erl-source .erl-number{color:#fac36b}
+#you-do[data-rhs-exam-pilot="true"] .rhs-erl-source .erl-string{color:#a9e786}
+#you-do[data-rhs-exam-pilot="true"] .rhs-erl-source .erl-call{color:#c4a5fa;font-weight:640}
+@media(max-width:700px){
+ #you-do[data-rhs-exam-pilot="true"] .rhs-erl-editor-kind{display:none}
+ #you-do[data-rhs-exam-pilot="true"] .rhs-erl-source{
+   font-size:clamp(18px,4vw,25px)!important
+ }
+}

@@ -145,6 +145,34 @@
     if(host.dataset.examClassroom!=="true")return;
     var codeStage=deck.children[0],codeAnswer=deck.children[1];
     if(!codeStage||!codeAnswer)return;
+    // Present OCR ERL as actual source code, with stable line numbering and
+    // lightweight syntax highlighting. The underlying algorithm is unchanged.
+    function highlightErlLine(line){
+      var token=/"[^"\n]*"|'[^'\n]*'|\b(?:DIV|MOD|AND|OR|NOT|IF|THEN|ELSE|ENDIF|FOR|NEXT|WHILE|ENDWHILE|DO|UNTIL|FUNCTION|ENDFUNCTION|RETURN|TRUE|FALSE|REPEAT|ENDREPEAT)\b|\b(?:print|input)\b|\b\d+(?:\.\d+)?\b/gi;
+      var match,last=0,html="";
+      while((match=token.exec(line))!==null){
+        html+=esc(line.slice(last,match.index));
+        var value=match[0],klass=/^["']/.test(value)?"erl-string":
+          /^\d/.test(value)?"erl-number":/^(print|input)$/i.test(value)?"erl-call":"erl-keyword";
+        html+='<span class="'+klass+'">'+esc(value)+'</span>';
+        last=token.lastIndex;
+      }
+      return html+esc(line.slice(last));
+    }
+    function erlEditor(code){
+      var lines=String(code||"").replace(/\r\n?/g,"\n").replace(/\n+$/,"").split("\n");
+      return '<div class="rhs-erl-editor" role="group" aria-label="OCR Exam Reference Language code with line numbers">'+
+        '<div class="rhs-erl-editor-bar"><span class="rhs-erl-editor-dot" aria-hidden="true"></span>'+
+        '<span>OCR ERL</span><span class="rhs-erl-editor-kind">READ · TRACE · PREDICT</span></div>'+
+        '<pre class="rhs-erl-source"><code>'+lines.map(function(line,i){
+          return '<span class="rhs-erl-line"><span class="rhs-erl-line-number" aria-hidden="true">'+(i+1)+
+            '</span><span class="rhs-erl-line-code">'+(highlightErlLine(line)||'&#8203;')+'</span></span>';
+        }).join("")+'</code></pre></div>';
+    }
+    var firstCode=codeStage.querySelector(".j277-code-tasks pre.arithmetic");
+    var checkCode=codeAnswer.querySelector("pre.j277-ec-code");
+    if(firstCode)firstCode.outerHTML=erlEditor(payload.code.code);
+    if(checkCode)checkCode.outerHTML=erlEditor(payload.code.code);
     function sourceCaption(q){
       return '<p class="j277-ec-source">'+esc(q.ocrReference)+
         ' · <span class="j277-rhs-author">RHS-written exam practice</span></p>';
