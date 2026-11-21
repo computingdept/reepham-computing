@@ -69,3 +69,13 @@ The [isolated one-question/one-reveal preview](qa-2021-nov-q1d-preview.html) liv
 **Draft data check:** `CustomerID` uniquely identifies each Customer row; `Title='Miss' OR Title='Mrs'` selects IDs 101 and 102; customer and vehicle records should be separated with Vehicle.CustomerID as foreign key referencing Customer.CustomerID. SQL punctuation/quotation alternatives and full OCR marking guidance still require teacher checking. The relational answer represents one-to-many, not a one-to-one association.
 
 **Still pending:** verify complete authoritative OCR context and mark alternatives, independently render all SVGs and check 50% width projector/mobile/print layout, accessible equivalents and correct reading order, then obtain teacher sign-off. No live H446 lesson, J277 or Cloudflare files changed.
+
+## November 2021 Paper 1 · Q3(c) and Q5(c)(i–iii) QA drafting
+
+**Four RHS question parts:** JavaScript booking-fee completion, half-adder Boolean expressions, half-adder truth table, and four-bit full-adder explanation. Seven independent SVGs have been added to the QA branch: one original JavaScript question and answer pair, one original XOR/AND circuit question and answer pair, one truth-table question and answer pair, and a four-bit carry-chain answer diagram. A shared question-only half-adder is intentionally reused for Q5(c)(iii), where the student must explain the extension; the completed four-stage circuit is answer-only.
+
+The [isolated QA preview](qa-2021-nov-q3c-q5c-preview.html) shows one question and one consolidated answer reveal at a time. QA register and question-view map point to the correct RHS-specific assets; all four questions retain `classroom_release=disabled_not_approved`. Existing generic figures must not override these question-specific versions.
+
+**Technical draft self-check:** JavaScript blanks: `2.99`, `nonUKprice`, `numtickets`, `return`. Half adder: `S = A XOR B` and `C = A AND B`; truth-table rows 00, 01, 10, 11 give (S,C) = (0,0), (1,0), (1,0), (0,1). Four-bit extension: connect carry-out to the following bit's carry-in. The circuit input connections were redrawn to avoid ambiguous crossing wires in the new half-adder illustration.
+
+**Release still blocked:** original OCR stem/mark-scheme matching and alternatives, actual raster rendering and 50%-width projector visual check, phone/print/accessibility review, and explicit teacher sign-off. No live lesson, J277 resource, assignment or Cloudflare scoring file has been modified.
