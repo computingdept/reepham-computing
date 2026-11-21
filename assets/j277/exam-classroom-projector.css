@@ -1,0 +1,89 @@
+/* RHS Lesson 134, exam-pilot=2 ONLY. Paper-based marking, Apple-like projector view.
+ * No links, interactive controls or on-screen scores. All other lessons unchanged. */
+#you-do[data-rhs-exam-pilot="true"] .rhs-proj-card{
+  background:#fff!important;color:#1d1d1f!important;
+  box-sizing:border-box;width:100%;max-width:none;
+  padding:clamp(18px,2.1vw,32px)!important;
+  border:0!important;box-shadow:none!important;min-height:0!important
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-proj-header{
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+  border-bottom:1px solid #e5e5e7;padding-bottom:15px;
+  color:#67676b;font-weight:700;font-size:clamp(15px,1.06vw,19px);
+  letter-spacing:.065em
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-proj-header span:last-child{
+  color:#1d1d1f;letter-spacing:0;font-size:clamp(18px,1.25vw,22px)
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-proj-question{
+  padding:clamp(20px,2.3vw,38px) 0 clamp(22px,2.3vw,38px);
+  border-bottom:1px solid #e5e5e7
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-proj-question h2{
+  font-size:clamp(26px,2.25vw,40px)!important;
+  font-weight:630;line-height:1.36;letter-spacing:-.026em;
+  margin:0;color:#1d1d1f;white-space:pre-line;max-width:1180px
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-proj-response{
+  margin-top:clamp(22px,2.4vw,40px)
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-proj-label{
+  display:block;color:#76767c;font-size:clamp(15px,1.08vw,19px);
+  letter-spacing:.065em;font-weight:750;margin-bottom:18px
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-proj-answer-hero{
+  color:#1d1d1f;font-size:clamp(35px,3.3vw,59px);
+  letter-spacing:-.04em;line-height:1.17;font-weight:700;margin:0
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-proj-subtle{
+  color:#6b6b70;font-size:clamp(17px,1.15vw,21px);
+  line-height:1.4;margin:18px 0 0
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-proj-with-figure{
+  display:grid;grid-template-columns:minmax(0,1.03fr) minmax(0,.97fr);
+  align-items:start;gap:clamp(26px,3.1vw,54px)
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-proj-figure{
+  margin:0;width:100%;min-width:0;
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-proj-figure img{
+  width:100%;height:auto;max-height:min(54vh,520px);object-fit:contain;
+  display:block;border-radius:16px
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-proj-points{
+  display:grid;gap:0
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-proj-markpoint{
+  display:grid;grid-template-columns:36px minmax(0,1fr);gap:17px;
+  align-items:start;padding:clamp(13px,1.3vw,20px) 0;
+  border-top:1px solid #ececee;
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-proj-markpoint:first-child{border-top:0;padding-top:0}
+#you-do[data-rhs-exam-pilot="true"] .rhs-proj-number{
+  font-size:clamp(15px,1.12vw,19px);font-weight:650;color:#939399;
+  font-variant-numeric:tabular-nums;line-height:1.42
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-proj-markpoint p{
+  margin:0;font-size:clamp(23px,1.73vw,32px);font-weight:580;
+  color:#1d1d1f;letter-spacing:-.018em;line-height:1.34
+}
+#you-do[data-rhs-exam-pilot="true"] .rhs-proj-text-only .rhs-proj-marks{
+  max-width:1100px
+}
+@media(max-width:850px){
+  #you-do[data-rhs-exam-pilot="true"] .rhs-proj-with-figure{
+    grid-template-columns:1fr;gap:18px
+  }
+  #you-do[data-rhs-exam-pilot="true"] .rhs-proj-figure{
+    max-width:530px;margin:0 auto
+  }
+}
+@media(min-width:851px) and (max-height:800px){
+  #you-do[data-rhs-exam-pilot="true"] .rhs-proj-card{padding:14px 22px!important}
+  #you-do[data-rhs-exam-pilot="true"] .rhs-proj-header{padding-bottom:9px}
+  #you-do[data-rhs-exam-pilot="true"] .rhs-proj-question{padding:14px 0 17px}
+  #you-do[data-rhs-exam-pilot="true"] .rhs-proj-response{margin-top:15px}
+  #you-do[data-rhs-exam-pilot="true"] .rhs-proj-label{margin-bottom:10px}
+  #you-do[data-rhs-exam-pilot="true"] .rhs-proj-figure img{max-height:45vh}
+  #you-do[data-rhs-exam-pilot="true"] .rhs-proj-markpoint{padding:10px 0}
+}

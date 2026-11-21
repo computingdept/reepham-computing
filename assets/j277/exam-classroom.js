@@ -198,58 +198,58 @@
       '<div class="j277-ec-grid">'+questionCards+'</div>'+
       '<p class="j277-ec-disclaimer">All question wording is RHS-authored practice. Draw diagrams on paper or a mini-whiteboard; worked solutions will appear during marking.</p>',
       "j277-ec-questions j277-rhs-question-stage");
-    function parts(q){
+    // Projector-first RHS marking view. Exactly four static answer screens.
+    // Students write and self-mark on paper; no screen controls or scoring.
+    function markingPoints(q){
       return (q.displayRubric||[]).filter(function(p){
         return !/^Award up to \d+ marks/i.test(p)&&!/^Other valid independent/i.test(p);
       });
     }
-  function diagram(q){
-    var url=String(q.answerSvg||"");
-    if(!/^\/assets\/j277\/exam-figures\/[a-z0-9-]+\.svg$/.test(url))return "";
-    return '<figure class="j277-rhs-figure"><img src="'+esc(url)+'" loading="lazy"'+
-      ' alt="Worked network diagram for '+esc(q.topic)+'">'+
-      '<figcaption>Worked diagram — compare the labels and links with your answer.</figcaption></figure>';
-  }
-  function card(q,i){
-    var pic=diagram(q);
-    var criteria=parts(q).map(function(item,j){
-      var point=item.replace(/^1 mark\s*[—–-]\s*/i,"");
-      return '<label class="rhs-one-criterion"><input type="checkbox" data-rhs-one-mark="'+i+
-        '" aria-label="Question '+(i+1)+' mark '+(j+1)+'">'+
-        '<span><b>1 MARK</b> '+esc(point)+'</span></label>';
-    }).join("");
-    var other=q.displayRubric.filter(function(p){
-      return /^Other valid independent/i.test(p);
-    }).join(" ");
-    var tip=q.examinerInsight||"Award credit for distinct correct functions; do not award the same point twice.";
-    var head='<div class="j277-ec-intro rhs-one-head"><div>'+
-      '<span class="j277-ec-kicker">YOU DO · SELF-MARK</span>'+
-      '<h2>Question '+(i+1)+' of 4 · '+esc(q.topic)+'</h2></div>'+
-      '<div class="j277-ec-time">'+q.marks+' MARK'+(q.marks===1?'':'S')+'</div></div>';
-    var prompt='<div class="rhs-one-prompt"><b>RHS PRACTICE QUESTION</b>'+
-      '<p>'+esc(q.question)+'</p></div>';
-    var answer='<section class="rhs-one-answer"><h3>Tick one mark for each correct point</h3>'+
-      '<div class="rhs-one-criteria">'+criteria+'</div>'+
-      (other?'<p class="rhs-one-other">'+esc(other)+'</p>':"")+
-      '<p class="rhs-one-accepted"><strong>Accepted answers:</strong> '+esc(q.answerPoints)+'</p>'+
-      '<p class="rhs-one-tip"><b>'+(q.examinerInsight?'Examiner insight':'Marking reminder')+
-      ':</b> '+esc(tip)+'</p></section>';
-    var scoring='<div class="rhs-one-scoring"><span>Your original mark: '+
-      '<output data-rhs-one-score="'+i+'" aria-live="polite">0 / '+q.marks+'</output></span>'+
-      '<span>Total: <output data-rhs-one-total aria-live="polite">0 / 10</output></span>'+
-      '<span class="rhs-one-improve">Improve your answer in another colour; do not change your original mark.</span></div>';
-    var provenance='<p class="rhs-one-source">'+esc(q.ocrReference)+
-      ' · RHS-written practice · Teacher-authored mark guidance · '+
-      '<a href="'+esc(q.source)+'" target="_blank" rel="noopener noreferrer">OCR source mark scheme</a>'+
-      ' · Trial scores are not saved</p>';
-    var el=document.createElement("article");
-    el.className="exam-card youdo-question j277-exam-stage j277-ec-marking j277-rhs-mark-stage rhs-one-card";
-    el.hidden=true;
-    el.innerHTML=head+prompt+
-      '<div class="rhs-one-layout '+(pic?'has-diagram':'text-only')+'">'+pic+answer+'</div>'+
-      scoring+provenance;
-    return el;
-  }
+    function answerSvg(q){
+      var url=String(q.answerSvg||"");
+      if(!/^\/assets\/j277\/exam-figures\/[a-z0-9-]+\.svg$/.test(url))return "";
+      return '<figure class="rhs-proj-figure">'+
+        '<img src="'+esc(url)+'" loading="lazy" alt="Worked diagram for '+esc(q.topic)+'">'+
+        '</figure>';
+    }
+    function card(q,i){
+      var points=markingPoints(q);
+      var image=answerSvg(q);
+      var heading='<header class="rhs-proj-header">'+
+        '<span>QUESTION '+(i+1)+' OF 4</span>'+
+        '<span>'+q.marks+' MARK'+(q.marks===1?'':'S')+'</span></header>';
+      var prompt='<div class="rhs-proj-question">'+
+        '<h2>'+esc(q.question)+'</h2></div>';
+      var answer;
+      if(q.marks===1){
+        answer='<div class="rhs-proj-solo">'+
+          '<span class="rhs-proj-label">MODEL ANSWER</span>'+
+          '<p class="rhs-proj-answer-hero">'+
+          esc(points[0].replace(/^1 mark\s*[—–-]\s*/i,""))+'</p>'+
+          '<p class="rhs-proj-subtle">Award 1 mark for either answer.</p></div>';
+      }else{
+        var rows=points.map(function(p,j){
+          return '<div class="rhs-proj-markpoint">'+
+            '<span class="rhs-proj-number">'+String(j+1).padStart(2,"0")+'</span>'+
+            '<p>'+esc(p.replace(/^1 mark\s*[—–-]\s*/i,""))+'</p></div>';
+        }).join("");
+        var optional=(q.displayRubric||[]).filter(function(p){
+          return /^Other valid independent/i.test(p);
+        }).join(" ");
+        answer='<div class="rhs-proj-marks">'+
+          '<span class="rhs-proj-label">MARK SCHEME · 1 MARK PER POINT</span>'+
+          '<div class="rhs-proj-points">'+rows+'</div>'+
+          (optional?'<p class="rhs-proj-subtle">'+esc(optional)+'</p>':"")+
+          '</div>';
+      }
+      var body='<div class="rhs-proj-response '+(image?'rhs-proj-with-figure':'rhs-proj-text-only')+'">'+
+        image+answer+'</div>';
+      var el=document.createElement("article");
+      el.className="exam-card youdo-question j277-exam-stage j277-ec-marking j277-rhs-mark-stage rhs-proj-card";
+      el.hidden=true;
+      el.innerHTML=heading+prompt+body;
+      return el;
+    }
 
     // Four answer cards only; no separate Examiner / Improve screens.
     var stages=[codeStage,codeAnswer,questionsStage].concat(questions.map(card));
@@ -261,23 +261,7 @@
     host.dataset.windowSize="1";
     host.dataset.workMode="independent";
     host.dataset.examClassroom="true";
-    // Self-marking is transient screen state only. No Cloudflare or storage calls.
-    function updateRhsMarks(){
-      var total=0;
-      questions.forEach(function(q,i){
-        var awarded=deck.querySelectorAll('input[data-rhs-one-mark="'+i+'"]:checked').length;
-        total+=awarded;
-        var out=deck.querySelector('[data-rhs-one-score="'+i+'"]');
-        if(out)out.textContent=awarded+" / "+q.marks;
-      });
-      deck.querySelectorAll("[data-rhs-one-total]").forEach(function(out){
-        out.textContent=total+" / 10";
-      });
-    }
-    deck.addEventListener("change",function(event){
-      if(event.target.matches("input[data-rhs-one-mark]"))updateRhsMarks();
-    });
-    updateRhsMarks();
+
   }
 
   window.J277ExamClassroom={install:install};
