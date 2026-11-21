@@ -2073,7 +2073,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   const requestedExamPilot=new URLSearchParams(location.search).get("exam-pilot");
   const rhsExamPilot=!!lesson.examClassroom && String(number)==="134" && requestedExamPilot==="2";
   const useExamPilot=!!lesson.examClassroom && (requestedExamPilot==="1" || rhsExamPilot);
-  const pilotHead=useExamPilot?pageHead.replace("</head>",'<link rel="stylesheet" href="../../../assets/j277/exam-classroom.css?v=20261121-rhs2">'+(rhsExamPilot?'<link rel="stylesheet" href="../../../assets/j277/exam-classroom-projector.css?v=20261121-unified-code-v8">':"")+'</head>'):pageHead;
+  const pilotHead=useExamPilot?pageHead.replace("</head>",'<link rel="stylesheet" href="../../../assets/j277/exam-classroom.css?v=20261121-rhs2">'+(rhsExamPilot?'<link rel="stylesheet" href="../../../assets/j277/exam-classroom-projector.css?v=20261121-hidden-stage-fix-v9">':"")+'</head>'):pageHead;
   const pilotData=rhsExamPilot?'<script src="../../../assets/j277/exam-classroom-134-data.js?v=20261121-rhs2"></script>':"";
   const pilotJsVersion=rhsExamPilot?"20261121-unified-code-v8":"20261121-rhs2";
   const pilotSetup=useExamPilot?pilotData+'<script src="../../../assets/j277/exam-classroom.js?v='+pilotJsVersion+'"></script><script>window.J277ExamClassroom.install('+JSON.stringify({config:lesson.examClassroom,code:lesson.k,rhsPilot:rhsExamPilot})+');</script>':"";
