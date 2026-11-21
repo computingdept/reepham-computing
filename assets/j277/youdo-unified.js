@@ -162,7 +162,7 @@
           '<div class="j277-u-editor"><div class="j277-u-editor-label">OCR ERL · TRACE THE OUTPUT</div>'+
           '<pre>'+esc(code.starter)+'</pre></div>'+
           '<div class="j277-u-steps">'+steps+'</div></div>'),
-        newCard("j277-u-code-check",head("CODE FIRST","CHECK YOUR ANSWER")+
+        newCard("j277-u-code-check"+(compactCheck?" j277-u-code-check-compact":""),head("CODE FIRST","CHECK YOUR ANSWER")+
           '<div class="j277-u-body j277-u-check-screen">'+
           '<div class="j277-u-eyebrow">CHECK · EXPLAIN · IMPROVE</div>'+
           checkContent+'</div>'),
