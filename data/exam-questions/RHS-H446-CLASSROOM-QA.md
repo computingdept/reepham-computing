@@ -141,3 +141,15 @@ The pre-existing original RHS **L/M/N/P/Q/Z directed 9-edge graph** has been ret
 Independent A* re-execution verified selected order `L, N, P, Q, Z` and final route `L→N→P→Q→Z` costing `5+1+2+2=10`. Relaxations: L→M g3, L→N g5; N→P g6, N→Q g9; P→Q improves g9→8 and P→Z proposes g12; Q→Z improves g12→10. M is placed on the frontier but **not expanded**. Final rows (node:g,h,f,prev): L:0,8,8,–; M:3,8,11,L; N:5,4,9,L; P:6,3,9,N; Q:8,1,9,P; Z:10,0,10,Q. Heuristic admissibility was independently checked using the true shortest remaining path costs: every given h is no greater than the actual minimum. There is **no spurious P g7→g6 update**.
 
 **Still blocked:** verify full original OCR source context and accepted alternative working, inspect overlapping arrow/weight labels and text at actual half-projector width, print/mobile/accessibility, and teacher sign-off. Dense A* graph and answer grid are especially at risk of shrinking; an SVG source check is **not** a classroom-size render. No student release and no lesson changes.
+
+## November 2021 resource coverage checkpoint (21 November 2026)
+
+A branch-only QA-register scan found **75 question parts** across H446/01 (41) and H446/02 (34). **31 question parts** are flagged as requiring visual/layout content (14 in Paper 1, 17 in Paper 2); all 31 now have nonempty mapped question and answer asset paths. **All 75 remain classroom_release=disabled_not_approved**. These are mapping/coverage counts, not proof that every composite question is complete or that anything has passed classroom projection.
+
+**Next release gate, in this order:**
+1. Directly render every question and answer SVG from the QA branch, independently inspect for clipped text, wrong arrows, crowded labels and missing question data.
+2. Run the *composite* question+answer preview at true half-screen projector dimensions (and reduced-width layout for code-heavy questions). Confirm exactly one question per screen, one consolidated answer reveal, and answers not visible before reveal.
+3. Prioritise source-dependent and dense examples: Paper 2 A* Q1(c), Paper 1 LMC Q6(b–c), Paper 2 binary search Q2(a), Paper 2 Forest Pixels Q8(b), plus Paper 1 relational answer Q1(d). Record pass/fail evidence per question. The presence of a mapped SVG does not imply a passing grade.
+4. Compare with authoritative OCR exam context/marking alternatives, verify accessibility and print/mobile views, then obtain teacher sign-off per part. Only explicitly signed-off questions may later be considered for separate lesson implementation.
+
+**Current state: no question approved; do not merge PR #114 into main or expose these previews to students.** No lesson, J277, assignment, or Cloudflare modifications are authorised by this checkpoint.
