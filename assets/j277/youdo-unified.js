@@ -69,10 +69,21 @@
     // first enabled sources. Other lessons retain their previous renderer until
     // the same presentation has been checked with their authored data.
     if(["001","002","003"].includes(number)){
-      const examCount=sourceCards.length-1;
-      if(examCount<4||examCount>5)
+      // The lesson's full source remains untouched. Lesson 002 has five
+      // authored questions; use four distinct questions on the projector:
+      // original Q1 (addition), Q3 (addition + denary check),
+      // Q4 (overflow), Q5 (logical left shift).
+      // The near-duplicate original Q2 stays available in lesson resources.
+      const authoredExamCount=sourceCards.length-1;
+      if(authoredExamCount<4||authoredExamCount>5)
         throw Error("Expected four or five authored exam questions: "+number);
-      const questionPanels=sourceCards.slice(1).map((source,i)=>{
+      const selectedExamIndices=number==="002" ? [0,2,3,4]
+        :Array.from({length:authoredExamCount},(_,i)=>i);
+      if(selectedExamIndices.some(i=>i<0||i>=authoredExamCount))
+        throw Error("Exam selection does not match source: "+number);
+      const examCount=selectedExamIndices.length;
+      const questionPanels=selectedExamIndices.map((sourceIndex,i)=>{
+        const source=sourceCards[sourceIndex+1];
         const prompt=source.querySelector(".question-text");
         if(!prompt)throw Error("Missing exam question "+(i+1));
         const copy=prompt.cloneNode(true);
@@ -86,7 +97,8 @@
           (visuals.length?'<div class="j277-u-batch-visual">'+
             visuals.map(v=>v.outerHTML).join("")+'</div>':"")+'</article>';
       });
-      const answerPanels=stages.slice(1).map((answer,i)=>{
+      const answerPanels=selectedExamIndices.map((sourceIndex,i)=>{
+        const answer=stages[sourceIndex+1];
         const source=answer.querySelector(".solution-card");
         if(!source)throw Error("Missing model answer for Q"+(i+1));
         const copy=document.createElement("div");
