@@ -108,3 +108,13 @@ Lesson | Year | Topic/spec | Normal or assessment | Source type | Code First app
 ### Next data review
 - Continue JSON record checks beginning with 046, highlighting assessments, empty answers, missing question data, visual exceptions and prior-retrieval behavior.
 - Run representative browser QA where possible before elevating any record to Tested.
+
+## Extended JSON audit — 046–065 (2026-11-21)
+
+- Checked all twenty individual `autumn2-046.json` through `autumn2-065.json` files.
+- **019 of 020** are ordinary lessons with exactly three exam-question records; all 57 answer entries are non-empty strings.
+- **Lesson 050** is `isAssessment=true`, with nine questions and nine non-empty string answers. Treat it as assessment-mode, not normal Code First → exam-card flow.
+- Normal lessons 046–049 and 051–065 include `priorExam` and three visual descriptors; validate the actual rendered illustration and relevance later.
+- Lesson 057's shared renderer also has an explicit optional FOR-loop trace table inside Code First; preserve that lesson-specific behavior.
+- **Cumulative verified structured data records: 62 / 164 planned** (004–065). All 62 contain answer entries; correctness, progression, images and rendering remain untested.
+- **No changes to live lessons or other phases.**
