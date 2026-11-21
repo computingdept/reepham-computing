@@ -2070,13 +2070,17 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   const pageHead=String(number)==="057"
     ?baseHead.replace("</head>",'<link rel="stylesheet" href="../../../assets/j277/code-first-trace.css?v=20261025-loop-trace1"></head>')
     :baseHead;
-  const html=pageHead+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")+(lesson.visualAuditV3?" j277-visual-v3":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
+  const useExamPilot=!!lesson.examClassroom && new URLSearchParams(location.search).get("exam-pilot")==="1";
+  const pilotHead=useExamPilot?pageHead.replace("</head>",'<link rel="stylesheet" href="../../../assets/j277/exam-classroom.css?v=20261121-pilot1"></head>'):pageHead;
+  const pilotSetup=useExamPilot?'<script src="../../../assets/j277/exam-classroom.js?v=20261121-pilot1"></script><script>window.J277ExamClassroom.install('+JSON.stringify({config:lesson.examClassroom,code:lesson.k})+');</script>':"";
+  const defaultYouDo=useExamPilot?"":'<script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"></script>';
+  const html=pilotHead+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")+(lesson.visualAuditV3?" j277-visual-v3":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
    <a class="course-back" href="../../../j277-hub.html?year=${lesson.year11?11:10}#lessons">← Year ${lesson.year11?11:10} lessons</a>
    <nav class="phase-nav" aria-label="Lesson phases">${arr(nav,(id,i)=>`<button type="button" data-page="${id}">${names[i]}</button>`)}</nav>
    <div class="nav-tools"><button id="advance" class="control-btn">Continue →</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div></div>
    <div class="signal-wrap"><div class="signals" aria-label="Classroom routine"><span id="phase-logo" class="signal-tile signal-phase"></span><span id="behaviour-logo" class="signal-tile signal-routine"></span><span id="response-logo" class="signal-tile signal-response"></span></div><div class="signal-meta"><span id="phase-time" class="signal-phase-time"></span><span class="lesson-label">OCR J277 · Lesson ${number}<br>${escape(lesson.t)}</span></div></div>
    <main id="main">${parts.join("")}</main><div class="lesson-footer">Lesson ${number} · ${escape(lesson.t)} <span>Year ${lesson.year11?11:10} · OCR J277 · Original exam-style questions</span></div>
-   <script src="../../../assets/h446-lesson/lesson.js?v=20261115-codefirst-brush2"></script>${cpuSync}${idoSync}${y11Sync}<script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"></script><script src="../../../assets/classroom-visual-zoom.js?v=20261114-clickclose2"></script></body></html>`;
+   ${pilotSetup}<script src="../../../assets/h446-lesson/lesson.js?v=20261115-codefirst-brush2"></script>${cpuSync}${idoSync}${y11Sync}${defaultYouDo}<script src="../../../assets/classroom-visual-zoom.js?v=20261114-clickclose2"></script></body></html>`;
   document.open();document.write(html);document.close();
  }
  function renderAnswers(number,lesson){
