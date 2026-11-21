@@ -6,8 +6,8 @@
 
 - [RHS practice-draft CSV](h446-rhs-practice-drafts.csv): **410 records**, one per OCR H446 question part from **10 papers**, November 2021 and June 2022–2025, both H446/01 and H446/02.
 - Original source IDs, paper, series, official numbered specification topic, maximum marks and mark-scheme links are preserved.
-- **21/410** original RHS practice questions **written**, with source-text-linked answer points and marking rules: **June 2025 H446/01 Q1–Q3**.
-- **389/410** are **awaiting original drafting and official source/answer checks**. Their RHS question and verified-answer fields are deliberately blank — **not** auto-generated from topic summaries.
+- **41/410** original RHS practice questions **written**, with source-text-linked answer points and marking rules: **all of June 2025 H446/01 Q1–Q8**.
+- **369/410** are **awaiting original drafting and official source/answer checks**. Their RHS question and verified-answer fields are deliberately blank — **not** auto-generated from topic summaries.
 - All 10 papers retain their **140-mark totals** (1,400 marks overall). Year totals: 2021 75 parts, 2022 92, 2023 84, 2024 81, 2025 78.
 - The existing [canonical H446 question catalogue](h446-questions.csv), [SVG visual register](h446-visual-assets.csv) and [half-screen visual map](h446-question-view-map.csv) remain separate. The original source PDF is authoritative.
 - **Nothing is released to students or deployed into lessons by this CSV.** Each record remains a draft until all checks are complete.
@@ -26,7 +26,7 @@
 
 The H446 CSV intentionally uses the **same 24 headers** as `j277-rhs-practice-drafts.csv`, including `rhs_question_text`, `rhs_verified_answer_points`, `rhs_verified_marking_rule`, `rhs_examiner_insight`, `rhs_answer_verification_status`, `rhs_answer_source` and `rhs_answer_review_date`.
 
-`mark_scheme_review_status` is **legacy metadata from the canonical catalogue**, not the current RHS progress indicator. Use `rhs_answer_verification_status` and `rhs_answer_review_date` for the new work. For the 21 seeded records the **OCR PDF question and scheme text** was checked, but independent **page-image/render checking remains outstanding**, particularly for any figure/layout-dependent entry.
+`mark_scheme_review_status` is **legacy metadata from the canonical catalogue**, not the current RHS progress indicator. Use `rhs_answer_verification_status` and `rhs_answer_review_date` for the new work. For the 41 drafted records the **OCR PDF question and scheme text** was compared, but independent **page-image/render checking remains outstanding**. OCR PDF screenshots could not be retrieved in the latest pass, so visual/table layout checking is an explicit blocker.
 
 ## Protection and release gates
 
@@ -36,3 +36,9 @@ The H446 CSV intentionally uses the **same 24 headers** as `j277-rhs-practice-dr
 - Do not deploy H446 questions by mutating J277 lessons, shared site CSS/JS or Cloudflare. No lesson edits are part of this drafting stage.
 
 See [the H446 answer-progress audit](RHS-H446-ANSWER-VERIFICATION.md) for paper-by-paper counts and remaining requirements.
+
+## June 2025 H446/01 Q4–Q8: second authored batch
+
+The next **20 question parts** have now been drafted, bringing June 2025 Paper 1 to **41/41** RHS question drafts and source-text-linked teacher marking guidance. These include new LMC, K-map, SQL, AI training, RLE, ERD and JavaScript scenarios. The original assessment demands and mark allocations were retained; the new SQL labels and dataset are intentionally RHS-authored rather than reproducing the OCR company's records.
+
+**Source-layout gates:** 10 of these 20 new questions have original table, code, grid or SVG presentation dependencies; the source-paper PDF page screenshots were unavailable, so none can be marked as visual/context approved. Program accuracy, originality, classroom readability and teacher approval remain separate requirements. The original HTML/diagram/marking assets are not silently replaced by visually similar unrelated concept diagrams.
