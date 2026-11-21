@@ -118,3 +118,36 @@ Lesson | Year | Topic/spec | Normal or assessment | Source type | Code First app
 - Lesson 057's shared renderer also has an explicit optional FOR-loop trace table inside Code First; preserve that lesson-specific behavior.
 - **Cumulative verified structured data records: 62 / 164 planned** (004–065). All 62 contain answer entries; correctness, progression, images and rendering remain untested.
 - **No changes to live lessons or other phases.**
+
+## Source data inventory completed — 2026-11-21
+
+### Current status
+- **164 planned lessons** = 001–164.
+- **161 / 161 renderer-based lesson JSON records inspected**: 004–018 in the three `autumn1-*.json` groups, and 019–164 in individual `autumn2-NNN.json` files.
+- **001–002**: bespoke HTML You Do reviewed for layout structure, not exhaustively tested for interaction.
+- **003**: legacy adapter You Do reviewed for route structure, not exhaustively tested for interaction.
+- **All 161 JSON records** have an exam question array, a Code First prompt, and string-valued answer entries for their question arrays.
+- **0 runtime-tested**, **0 teacher-approved**, **0 changed in live lessons**, **0 published as part of this rollout**.
+
+### Results by source batch
+| Lesson range | JSON records inspected | Findings |
+| --- | ---: | --- |
+| 004–018 | 15 | 3 exam question entries per record; 018 assessment/review is not isAssessment mode |
+| 019–045 | 27 | Normal lessons 3 entries; 035 isAssessment with 8 questions |
+| 046–065 | 20 | Normal lessons 3 entries; 050 isAssessment with 9 questions |
+| 066–095 | 30 | Normal lessons 3 entries; 094 isAssessment with 1 entry |
+| 096–125 | 30 | Normal lessons 3 entries; 120 isAssessment with 3 entries |
+| 126–164 | 39 | Normal lessons 3 entries; 143 isAssessment with 3 entries |
+| **Total** | **161** | **All examined for question/answer field presence and type, not pedagogical accuracy** |
+
+### Explicit assessment mode exceptions (`isAssessment=true`)
+035 (8 exam entries), 050 (9), 094 (1), 120 (3), 143 (3).
+
+### Other special-flow exceptions
+018 (assessment/review title but `isAssessment=false`), 078 (practical project), 113 (algorithm consolidation), 156 (timed Paper 1 practice), 157 (timed Paper 2 practice). These numbers are also present in the J277 grouped-handler exclusion list. Their custom behavior needs separate review rather than converting them automatically.
+
+### Critical separation of progress
+- **Source audit complete for JSON records** does not imply that navigation, answer-screen alignment, question quality, projector layout, accessible controls, or visual accuracy has passed.
+- **No user-visible change at rhsccs.org** is expected at this point because only branch audit documentation has been committed.
+- **Next tangible milestone**: create and exercise an isolated You Do pilot on a staging branch, verify code first → questions → answers with unchanged other phases, share a user-viewable preview, obtain teacher sign-off, then deploy a small approved batch.
+- Do not report the pilot as tested until actual interaction testing has been completed and evidenced.
