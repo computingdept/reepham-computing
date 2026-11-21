@@ -142,10 +142,20 @@
       codeLines(code.code)+'<div class="rhs-y-model">'+shortLabel("MODEL ANSWER")+
       codeModelAnswer(code.a,code.code)+'</div>',
       "rhs-y-code-check"));
+    // The independent challenge is a 2×2 classroom-paper question grid;
+    // sources stay in the lesson data but do not crowd the projected prompts.
+    // The question wording and the mark allocation remain unmodified.
     var challenge='<div class="rhs-y-head"><span>INDEPENDENT EXAM CHALLENGE</span>'+
-      '<span>'+questions.length+' QUESTIONS</span></div><div class="rhs-y-challenge">'+
-      questions.map(function(q,i){return '<div><b>Q'+(i+1)+'</b><p>'+
-        escapeHtml(q.question)+'</p></div>';}).join("")+'</div>';
+      '<span>'+questions.length+' QUESTIONS · 16 MARKS</span></div><div class="rhs-y-challenge">'+
+      questions.map(function(q,i){
+        var text=String(q.question||"").split(/\n\s*\nSource:\s*/i)[0].trim();
+        var found=text.match(/\[(\d+)\s*marks?\]/i);
+        var marks=found?Number(found[1]):0;
+        return '<section class="rhs-y-challenge-card">'+
+          '<div class="rhs-y-challenge-card-head"><span>Q'+(i+1)+'</span>'+
+          '<span>'+marks+' MARK'+(marks===1?'':'S')+'</span></div>'+
+          '<p>'+escapeHtml(text)+'</p></section>';
+      }).join("")+'</div>';
     stages.push(makeStage(challenge,"rhs-y-challenge-stage"));
     questions.forEach(function(q,i){
       var marks=String(q.question).match(/\[(\d+)\s*marks?\]/i);

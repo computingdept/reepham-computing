@@ -613,6 +613,28 @@ class ClassroomNavigationBrowserTests(unittest.TestCase):
                             )
                             cards = trial.locator("#you-do .rhs-y-stage")
                             self.assertEqual(cards.count(), count)
+                            if code_lines:
+                                grid = cards.nth(2).locator(".rhs-y-challenge")
+                                tiles = grid.locator(".rhs-y-challenge-card")
+                                self.assertEqual(tiles.count(), 4)
+                                self.assertEqual(
+                                    tiles.locator(".rhs-y-challenge-card-head span:last-child")
+                                         .all_inner_texts(),
+                                    ["4 MARKS", "2 MARKS", "4 MARKS", "6 MARKS"],
+                                )
+                                self.assertEqual(
+                                    grid.evaluate(
+                                        "(el) => getComputedStyle(el)."
+                                        "gridTemplateColumns.trim().split(/\\s+/).length"
+                                    ),
+                                    2, "Projector challenge must use a two-column grid",
+                                )
+                                self.assertTrue(
+                                    all("Source:" not in text for text in tiles.all_inner_texts()),
+                                    "Source metadata must not crowd the questions",
+                                )
+                                self.assertIn("automatic door lock", tiles.first.inner_text())
+                                self.assertIn("retail company", tiles.last.inner_text())
                             self.assertEqual(
                                 trial.locator("#you-do .rhs-y-mark-stage").count(),
                                 review_count

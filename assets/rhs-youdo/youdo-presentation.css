@@ -95,16 +95,46 @@
 #you-do[data-rhs-youdo-trial="true"] .rhs-y-visual img{
   display:block;width:100%;height:auto;max-height:48vh;object-fit:contain
 }
-#you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge{display:grid;gap:12px;margin-top:18px}
-#you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge>div{
-  border-bottom:1px solid #ececee;padding-bottom:10px
+/* J277 independent challenge: four quiet, equally sized paper-question
+   cards. Keep full questions; source notes belong in lesson metadata. */
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge-stage{
+  display:flex!important;flex-direction:column
 }
-#you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge b{
-  color:#77777d;letter-spacing:.06em;font-size:clamp(14px,1vw,17px)
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-rows:repeat(2,minmax(0,1fr));
+  gap:clamp(10px,1.5vw,20px);margin-top:clamp(10px,1.5vh,18px);
+  flex:1 1 auto;min-height:0;
 }
-#you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge p{
-  white-space:pre-line;margin:5px 0;font-size:clamp(20px,1.55vw,28px);
-  line-height:1.34;color:#1d1d1f
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge-card{
+  min-width:0;min-height:0;overflow:auto;box-sizing:border-box;
+  border:1px solid #e1e1e5;border-radius:16px;
+  background:#fafafa;padding:clamp(13px,1.35vw,22px);
+  display:flex;flex-direction:column;
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge-card-head{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  border-bottom:1px solid #e6e6e9;padding-bottom:clamp(7px,1vh,11px);
+  color:#717178;letter-spacing:.055em;font-weight:750;
+  font-size:clamp(14px,.99vw,18px)
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge-card-head span:last-child{
+  color:#242428;letter-spacing:0;white-space:nowrap
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge-card p{
+  margin:clamp(10px,1.2vh,15px) 0 0;
+  color:#1d1d1f;white-space:pre-line;
+  font-size:clamp(19px,1.45vw,25px);
+  font-weight:565;line-height:1.31;letter-spacing:-.01em
+}
+@media(max-width:800px){
+ #you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge{
+  grid-template-columns:1fr;grid-template-rows:none;
+  overflow:auto;flex:0 1 auto
+ }
+ #you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge-card{
+  min-height:fit-content;overflow:visible
+ }
 }
 #you-do[data-rhs-youdo-trial="true"] .rhs-y-original-prompt{
   font-size:clamp(18px,1.3vw,24px);line-height:1.34;min-width:0
