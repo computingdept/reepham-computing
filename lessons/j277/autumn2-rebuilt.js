@@ -2075,7 +2075,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   const useExamPilot=!!lesson.examClassroom && (requestedExamPilot==="1" || rhsExamPilot);
   const pilotHead=useExamPilot?pageHead.replace("</head>",'<link rel="stylesheet" href="../../../assets/j277/exam-classroom.css?v=20261121-rhs2">'+(rhsExamPilot?'<link rel="stylesheet" href="../../../assets/j277/exam-classroom-onepage.css?v=20261121-onepage3">':"")+'</head>'):pageHead;
   const pilotData=rhsExamPilot?'<script src="../../../assets/j277/exam-classroom-134-data.js?v=20261121-rhs2"></script>':"";
-  const pilotSetup=useExamPilot?pilotData+'<script src="../../../assets/j277/exam-classroom.js?v=20261121-rhs2"></script><script>window.J277ExamClassroom.install('+JSON.stringify({config:lesson.examClassroom,code:lesson.k,rhsPilot:rhsExamPilot})+');</script>'+(rhsExamPilot?'<script src="../../../assets/j277/exam-classroom-onepage.js?v=20261121-onepage3"></script>':""):"";
+  const pilotJsVersion=rhsExamPilot?"20261121-four-answer-v4":"20261121-rhs2";
+  const pilotSetup=useExamPilot?pilotData+'<script src="../../../assets/j277/exam-classroom.js?v='+pilotJsVersion+'"></script><script>window.J277ExamClassroom.install('+JSON.stringify({config:lesson.examClassroom,code:lesson.k,rhsPilot:rhsExamPilot})+');</script>':"";
   const defaultYouDo=useExamPilot?"":'<script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"></script>';
   const lessonControllerVersion=rhsExamPilot?"20261121-rhs134-v2":"20261115-codefirst-brush2";
   const html=pilotHead+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")+(lesson.visualAuditV3?" j277-visual-v3":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
