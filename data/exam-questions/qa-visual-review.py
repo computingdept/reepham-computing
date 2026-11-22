@@ -37,6 +37,12 @@ def inspect(page):
       const sw = document.documentElement.scrollWidth, sh = document.documentElement.scrollHeight;
       const bad = images.filter(i => !i.complete || i.naturalWidth === 0);
       const clipped = [];
+      const internalOverflow = [];
+      if (section) for (const el of section.querySelectorAll('pre,code')) {
+        if (visible(el) && el.scrollWidth > el.clientWidth + 2) {
+          internalOverflow.push({tag:el.tagName, scrollWidth:el.scrollWidth, clientWidth:el.clientWidth});
+        }
+      }
       if (section) {
         for (const el of section.querySelectorAll('h1,h2,p,pre,code,img,svg')) {
           if (!visible(el)) continue;
@@ -53,6 +59,7 @@ def inspect(page):
         imageCount: images.length,
         brokenImages: bad.map(x=>x.getAttribute('src')),
         clippedElements: clipped,
+        internalCodeOverflow: internalOverflow,
         headings: section ? [...section.querySelectorAll('h1')].filter(visible).map(e=>e.textContent.trim()) : [],
         answerVisible: section ? [...section.querySelectorAll('.answer,.reveal,.answer-state')].some(visible) : false,
         pageHasCode: section ? !!section.querySelector('pre') : false
@@ -104,6 +111,7 @@ def run(root: Path, output: Path):
                         (["broken_image"] if before["brokenImages"] or after["brokenImages"] else []) +
                         (["horizontal_overflow"] if before["horizontalOverflowPx"]>1 or after["horizontalOverflowPx"]>1 else []) +
                         (["clipped_element"] if before["clippedElements"] or after["clippedElements"] else []) +
+                        (["code_horizontal_scroll"] if before["internalCodeOverflow"] or after["internalCodeOverflow"] else []) +
                         (["javascript_error"] if errors else [])
                     )
                     record["reviewWarnings"] = (
