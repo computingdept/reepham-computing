@@ -27,7 +27,7 @@
 - Verify no question-page SVG contains completed answers; any figure must match the scenario, labels and numbers exactly. For code/SQL, keep a clear monospaced layout and appropriate line breaks at half-screen projector size
 - Confirm the You Do presentation sequence: Code First question; Code First same question with answer; four question grid; then **one question/answer pair per answer page**, answers aligned at top. Do not edit I Do, We Do or any other phase during this review
 
-**Teacher end review:** check representative original questions and all 66 new drafts, inspect the 70? historical discrepancy only through corrected 66-slot baseline (the initial 70 'missing bank' count included four already occupied source fallbacks), then approve per lesson. No bulk activation or automatic publication.
+**Teacher end review:** check representative original questions and all 66 new drafts, use the corrected 66-slot baseline rather than the original 70-slot reporting figure (the initial 70 'missing bank' count included four already occupied source fallbacks), then approve per lesson. No bulk activation or automatic publication.
 
 ## Complete lesson register
 
