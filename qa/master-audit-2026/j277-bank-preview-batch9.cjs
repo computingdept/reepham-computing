@@ -113,13 +113,14 @@ const fixtures={
     console.log("PASS L"+lesson+" "+viewport.label+": Code First intact; "+fix.ids.length+" questions and answers; no teacher review flags");
    }
   }
-  // Lesson 141 belongs to the next batch and remains ordinary course content.
+  // Lesson 143 is a protected assessment and must stay outside bank preview.
   const page=await browser.newPage();
-  await page.goto(origin+"/lessons/j277/lesson-141/?exam-bank-preview=1#you-do",{waitUntil:"domcontentloaded"});
+  await page.goto(origin+"/lessons/j277/lesson-143/?exam-bank-preview=1#you-do",{waitUntil:"domcontentloaded"});
   assert.equal(await page.locator("#you-do .rhs-bank-card").count(),0,
-    "Later Lesson 141 must not be enabled by batch nine");
+    "Protected assessment Lesson 143 must not receive a bank override");
   await page.close();
-  const excluded=map.lessons.find(x=>x.lesson_id==="141");
+  const excluded=map.lessons.find(x=>x.lesson_id==="143");
+  assert.equal(excluded.mapping_status,"unmapped");
   assert.equal(excluded.published_bank_override_enabled,false);
  }finally{await browser.close();}
 })().catch(err=>{console.error(err);process.exitCode=1;});
