@@ -1,7 +1,7 @@
-/* J277 Year 11 bank preview: extra screens appended INSIDE #you-do only.
- * Existing seven You Do screens remain first and unchanged. No new phase,
- * tab or navigation button. Enabled only by ?exam-bank-preview=1 on L096.
- * Question text/answers are read by ID from canonical GitHub bank + map.
+/* J277 Lesson 096 teacher preview: replace the seven original You Do screens
+ * with five RHS exam-bank screens INSIDE #you-do only. No extra lesson phase/tab.
+ * Original Code First/exam content is preserved in the GitHub question archive.
+ * Enabled only by ?exam-bank-preview=1; normal lesson remains unmodified.
  */
 (function(){
   "use strict";
@@ -62,7 +62,7 @@
     return '<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage rhs-bank-question-stage" hidden>'+
       header("UNAPPROVED PREVIEW · ADDITIONAL EXAM PRACTICE",
         items.length+" QUESTIONS · "+total+" MARKS")+
-      '<p class="rhs-bank-instruction">Complete these additional OCR-based practice questions independently. Existing You Do questions are unchanged.</p>'+
+      '<p class="rhs-bank-instruction">Complete all four OCR-based exam questions independently. Check the separate marking answers afterwards.</p>'+
       '<div class="rhs-bank-grid">'+items.map(function(q,i){
         return '<section class="rhs-bank-card">'+
           '<div class="rhs-bank-card-head"><span>Q'+(i+1)+'</span><span>'+q.marks+' MARK'+(q.marks===1?'':'S')+'</span></div>'+
@@ -123,44 +123,37 @@
       };
     });
   }
-  function appendWithinYouDo(content,expectedCount){
-    // The shared You Do controller already handles these .youdo-question
-    // screens with its native Next/Previous buttons and touch navigation.
-    // Never create a ninth lesson phase or alter existing seven screens.
+  function replaceArchivedYouDo(content,expectedCount){
+    // Original Code First, prior learning and exam question data are archived.
+    // Replace only the rendered You Do slides, without touching any other phase.
     if(rolling.querySelectorAll(":scope > .rhs-y-stage").length!==7)
-      throw new Error("Existing You Do stage count changed; preview not added");
+      throw new Error("Original seven You Do screens changed; preview not applied");
     var source=document.createElement("div");
     source.innerHTML=content;
-    var added=Array.from(source.children);
-    if(added.length!==expectedCount ||
-       added.some(function(s){return !s.matches(".rhs-bank-stage.youdo-question");}))
-      throw new Error("Unexpected additional You Do screen structure");
-    added.forEach(function(s){s.hidden=true;rolling.appendChild(s);});
+    var slides=Array.from(source.children);
+    if(slides.length!==expectedCount ||
+       slides.some(function(s){return !s.matches(".rhs-bank-stage.youdo-question");}))
+      throw new Error("Unexpected exam-bank screen structure");
+    slides.forEach(function(slide,i){slide.hidden=i!==0;});
+    rolling.replaceChildren.apply(rolling,slides);
     host.dataset.rhsBankPreview="true";
-    host.dataset.rhsBankStart="7";
-    host.dataset.rhsBankCount=String(added.length-1);
-    // Teacher-only shortcut. The new screens STILL occur after existing
-    // stage 7; this just opens directly on their question overview.
-    if(new URLSearchParams(location.search).get("exam-bank-start")==="1"){
-      rolling.querySelectorAll(":scope > .rhs-y-stage").forEach(function(stage,i){
-        stage.hidden=i!==7;
-      });
-      host.dataset.windowStart="7";
-      const progress=host.querySelector(".youdo-window-progress");
-      if(progress)progress.textContent="ADDITIONAL EXAM QUESTIONS · "+host.dataset.rhsBankCount+" QUESTIONS";
-    }
+    host.dataset.rhsBankStart="0";
+    host.dataset.rhsBankCount=String(expectedCount-1);
+    host.dataset.j277ReviewStart="1";
+    host.dataset.windowStart="0";
+    host.dataset.windowSize="1";
+    host.dataset.workMode="independent";
+    delete host.dataset.codingFirst;
+    var progress=host.querySelector(".youdo-window-progress");
+    if(progress)progress.textContent="EXAM QUESTIONS · "+host.dataset.rhsBankCount+" QUESTIONS";
     window.H446OptionalBridge?.refresh?.();
   }
   load().then(function(questions){
-    appendWithinYouDo(intro(questions)+questions.map(markScreen).join(""),1+questions.length);
+    replaceArchivedYouDo(intro(questions)+questions.map(markScreen).join(""),
+      1+questions.length);
   }).catch(function(err){
-    console.error("J277 bank preview validation failed:",err);
-    // Do not expose any unverified draft if bank/map validation fails.
-    if(host.dataset.rhsBankPreview==="true")return;
-    try{
-      appendWithinYouDo('<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage" hidden>'+
-        header("YOU DO · BANK PREVIEW","SOURCE NOT VERIFIED")+
-        '<p class="rhs-bank-error">The mapped questions could not be verified. The existing You Do questions are unchanged.</p></article>',1);
-    }catch(error){console.error("J277 bank preview fallback unavailable:",error);}
+    // Fail closed: the old question screens stay available in this lesson if
+    // validation fails. Never display unverified bank wording or wrong answers.
+    console.error("J277 bank preview validation failed; original You Do retained:",err);
   });
 })();
