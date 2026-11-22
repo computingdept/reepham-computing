@@ -7,7 +7,7 @@
   "use strict";
   var match=location.pathname.match(/^\/lessons\/j277\/lesson-(\d{3})\/(?:index\.html)?$/);
   var lessonId=match&&match[1];
-  var allowlist=["096","098","099","100","101","102","103","104","105","106","107","108","109","110","111","112","114","115","116","117","118","119","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","145","146","147","148","149","150","151","152","153","154","155"]; // Archive-backed batches 1–12; timed lessons 156–157 protected.
+  var allowlist=["096","098","099","100","101","102","103","104","105","106","107","108","109","110","111","112","114","115","116","117","118","119","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","145","146","147","148","149","150","151","152","153","154","155","158","159","160"]; // Archive-backed batches 1–13; timed lessons 156–157 protected.
   if(!lessonId || allowlist.indexOf(lessonId)<0 ||
      new URLSearchParams(location.search).get("exam-bank-preview")!=="1")return;
 
@@ -63,7 +63,7 @@
   // Projector-fit pages retain complete questions and their mark counts.
   // Long text uses pairs; large code/table/figure prompts use a whole screen.
   // Lesson 114 stays two-first; older preview batches are left untouched.
-  var adaptiveLessons=["114","116","117","118","119","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","145","146","147","148","149","150","151","152","153","154","155"];
+  var adaptiveLessons=["114","116","117","118","119","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","145","146","147","148","149","150","151","152","153","154","155","158","159","160"];
   function singleScreenQuestion(q){
     var text=originalQuestion(q.question);
     // Extended-response, multi-scenario legal and gate-drawing questions need
@@ -150,8 +150,8 @@
   }
   async function load(){
     var urls=[
-      "/data/exam-questions/j277-youdo-lesson-map.json?v=20261122-y11-batch12-1",
-      "/data/exam-questions/j277-rhs-practice-drafts.csv?v=20261122-y11-batch12-1"
+      "/data/exam-questions/j277-youdo-lesson-map.json?v=20261122-y11-batch13-1",
+      "/data/exam-questions/j277-rhs-practice-drafts.csv?v=20261122-y11-batch13-1"
     ];
     var results=await Promise.all(urls.map(function(url){
       return fetch(url,{cache:"no-store"}).then(function(response){
