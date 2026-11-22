@@ -2139,10 +2139,10 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     !!lesson.year11 && !lesson.isAssessment && rhsSharedYouDoEnabled &&
     new URLSearchParams(location.search).get("exam-bank-preview")==="1";
   const rhsYear11BankPreviewHead=rhsYear11BankPreview
-    ?'<link rel="stylesheet" href="../../../assets/j277/year11-bank-preview.css?v=20261122-y11-batch14-v20">':"";
+    ?'<link rel="stylesheet" href="../../../assets/j277/year11-bank-preview.css?v=20261122-j277-svgs-v1">':"";
   const rhsYear11BankPreviewSetup=rhsYear11BankPreview
-    ?'<script src="../../../assets/j277/year11-bank-preview.js?v=20261122-y11-batch14-v20"></script>':"";
-  const lessonControllerVersion=rhsExamPilot?"20261121-rhs-codefirst-isolated-v10":rhsYear11BankPreview?"20261122-y11-batch14-controller-v20":"20261115-codefirst-brush2";
+    ?'<script src="../../../assets/j277/year11-bank-preview.js?v=20261122-j277-svgs-v1"></script>':"";
+  const lessonControllerVersion=rhsExamPilot?"20261121-rhs-codefirst-isolated-v10":rhsYear11BankPreview?"20261122-j277-svgs-controller-v1":"20261115-codefirst-brush2";
   const html=pilotHead.replace("</head>",rhsSharedYouDoHead+rhsYear11BankPreviewHead+"</head>")+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")+(lesson.visualAuditV3?" j277-visual-v3":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
    <a class="course-back" href="../../../j277-hub.html?year=${lesson.year11?11:10}#lessons">← Year ${lesson.year11?11:10} lessons</a>
    <nav class="phase-nav" aria-label="Lesson phases">${arr(nav,(id,i)=>`<button type="button" data-page="${id}">${names[i]}</button>`)}</nav>
