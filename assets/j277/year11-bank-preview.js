@@ -1,7 +1,8 @@
-/* J277 Lesson 096 teacher preview: replace the seven original You Do screens
- * with five RHS exam-bank screens INSIDE #you-do only. No extra lesson phase/tab.
- * Original Code First/exam content is preserved in the GitHub question archive.
- * Enabled only by ?exam-bank-preview=1; normal lesson remains unmodified.
+/* J277 Lesson 096 teacher preview: RETAIN both Code First screens and replace
+ * only the four older exam questions/answers with RHS exam-bank questions.
+ * Seven screens in #you-do: Code First, Check, Exam Q1-Q4, four answer screens.
+ * No extra phase/tab; old exam questions are preserved in the GitHub archive.
+ * Enabled only by ?exam-bank-preview=1; normal student lesson unmodified.
  */
 (function(){
   "use strict";
@@ -124,8 +125,8 @@
     });
   }
   function replaceArchivedYouDo(content,expectedCount){
-    // Original Code First, prior learning and exam question data are archived.
-    // Replace only the rendered You Do slides, without touching any other phase.
+    // Preserve both existing Code First stages verbatim, including worked answer.
+    // Replace ONLY the four old exam Q&A stages, backed up in GitHub archive.
     if(rolling.querySelectorAll(":scope > .rhs-y-stage").length!==7)
       throw new Error("Original seven You Do screens changed; preview not applied");
     var source=document.createElement("div");
@@ -134,18 +135,25 @@
     if(slides.length!==expectedCount ||
        slides.some(function(s){return !s.matches(".rhs-bank-stage.youdo-question");}))
       throw new Error("Unexpected exam-bank screen structure");
-    slides.forEach(function(slide,i){slide.hidden=i!==0;});
-    rolling.replaceChildren.apply(rolling,slides);
+    var oldScreens=Array.from(rolling.querySelectorAll(":scope > .rhs-y-stage"));
+    if(!oldScreens[0].classList.contains("rhs-y-code-first") ||
+       !oldScreens[1].classList.contains("rhs-y-code-check"))
+      throw new Error("Cannot verify original Code First/answer sequence");
+    var codeScreens=oldScreens.slice(0,2);
+    slides.forEach(function(slide){slide.hidden=true;});
+    rolling.replaceChildren.apply(rolling,codeScreens.concat(slides));
+    codeScreens[0].hidden=false;
+    codeScreens[1].hidden=true;
     host.dataset.rhsBankPreview="true";
-    host.dataset.rhsBankStart="0";
+    host.dataset.rhsBankStart="2";
     host.dataset.rhsBankCount=String(expectedCount-1);
-    host.dataset.j277ReviewStart="1";
+    host.dataset.j277ReviewStart="3";
     host.dataset.windowStart="0";
     host.dataset.windowSize="1";
     host.dataset.workMode="independent";
-    delete host.dataset.codingFirst;
+    host.dataset.codingFirst="true";
     var progress=host.querySelector(".youdo-window-progress");
-    if(progress)progress.textContent="EXAM QUESTIONS · "+host.dataset.rhsBankCount+" QUESTIONS";
+    if(progress)progress.textContent="CODE FIRST · PREDICT";
     window.H446OptionalBridge?.refresh?.();
   }
   load().then(function(questions){
