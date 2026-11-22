@@ -25,11 +25,13 @@ This batch intentionally **freezes November 2021** and uses a separate draft bra
 
 | Source-specific resource | Question parts | Parts | Presentation |
 | --- | --- | ---: | --- |
-| monospaced lmc panel | 1(c)(i), 1(c)(ii) | 2 | native monospaced code |
-| schema table | 2(a)(i), 2(a)(ii), 2(a)(iii), 2(a)(iv), 2(b) | 5 | native html table |
-| code panel | 2(g)(i), 2(g)(ii), 5(e)(i) | 3 | native monospaced code |
-| floating point classification grid | 3(c) | 1 | native html grid |
-| compiler table | 5(c) | 1 | native html table |
+| LMC original program and trace | 1(c)(i), 1(c)(ii) | 2 | Full-width monospaced code |
+| Museum membership and plan schema | 2(a)(i–iv), 2(b) | 5 | Native HTML schema/table |
+| LectureClip class and method | 2(g)(i), 2(g)(ii) | 2 | Full-width monospaced code |
+| Floating-point classification | 3(c) | 1 | Native HTML grid |
+| Compiler-stage classification | 5(c) | 1 | Native HTML table |
+| Uppercase ASCII string routine | 5(e)(i) | 1 | Full-width monospaced code |
+| **Total** | | **12** | |
 
 No new artwork is authorised or required at this mapping stage. Shared question context must stay consistent across multi-part items.
 
