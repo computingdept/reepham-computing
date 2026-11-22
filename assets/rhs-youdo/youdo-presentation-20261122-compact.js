@@ -135,11 +135,12 @@
   function installJ277(data){
     // One shared renderer for any ordinary J277 lesson with four available
     // existing preview questions. No approved-question status is implied.
-    // Normal lesson display is enabled explicitly for 040 and 062.
-    // Every other J277 lesson still requires the opt-in preview parameter.
+    // Shared presentation for eligible ordinary J277 lessons. Source
+    // question sets are assembled by the relevant autumn renderer. Neither
+    // question approval flags nor the draft RHS bank are changed here.
     if(active || !/^\/lessons\/j277\/lesson-\d{3}\//.test(location.pathname) ||
        (new URLSearchParams(location.search).get("youdo-trial")!=="1" &&
-        !(data && data.preview===false && ["040","062"].includes(data.lesson))))return false;
+        !(data && data.preview===false)))return false;
     var host=document.getElementById("you-do"),container=host&&host.querySelector(".youdo-rolling");
     if(!host||!container||host.dataset.assessmentMode==="true"||!data||!data.code||
        !Array.isArray(data.questions)||data.questions.length<3||
