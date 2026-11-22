@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 139 original You Do source snapshot",
+  "lesson": "139",
+  "title": "Operating Systems",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-139.json",
+  "original_source_blob_sha": "32a8254963adde3cc5eab5e555fa02b611c93172",
+  "purpose": "Preserve original Code First and its answer, original exam questions and answers, previous-learning prompt, old visuals and challenge; bank replacements are teacher-preview only inside You Do. Other phases and ordinary student URLs are untouched.",
+  "code_first": {
+    "q": "Predict the result.",
+    "code": "memoryFree = 600\nmemoryNeeded = 400\nif memoryFree >= memoryNeeded then\n    print(\"Run program\")\nendif",
+    "p": [
+      "Explain the first assignment or condition that determines the output.",
+      "Change memoryNeeded to 750.",
+      "Explain how this relates to memory management."
+    ],
+    "a": "Run program; no output; OS manages whether resources can be allocated."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "Name two operating-system functions. [2 marks]",
+      "Memory management, process scheduling, file management, user interface or peripherals (any two)."
+    ],
+    [
+      "Explain process scheduling in multitasking. [3 marks]",
+      "The OS allocates CPU time to processes so multiple programs can make progress."
+    ],
+    [
+      "Give one benefit of GUI over CLI. [2 marks]",
+      "Many users find labelled visual controls easier to learn/use."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 139,
+    "coreHint": "Memory needed must not exceed memory free for this simple check.",
+    "stretch": {
+      "task": "Add a calculation of how much RAM remains after admitting a program.",
+      "hint": "Only subtract when allocation succeeds.",
+      "answer": "600−400=200MB; if request750MB do not subtract."
+    },
+    "mastery": {
+      "task": "Design a resource allocator for several requested program sizes; admit one at a time and keep a running free-memory total without becoming negative.",
+      "hint": "Loop requests and use <= freeRAM.",
+      "answer": "With 600MB free and requests [200,450,150], accept200 (400 left), reject450, accept150 (250 left)."
+    }
+  }
+}
