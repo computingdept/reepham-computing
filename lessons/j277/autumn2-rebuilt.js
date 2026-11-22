@@ -2131,18 +2131,18 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   // the seven stages; this otherwise silently restores the grouped layout.
   const defaultYouDo=useExamPilot||rhsSharedYouDoEnabled?"":unifiedJ277?unifiedScripts:
     '<script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"></script>';
-  // J277 Year 11 archive-backed teacher-preview batches 1–6. Retain Code
+  // J277 Year 11 archive-backed teacher-preview batches 1–7. Retain Code
   // First and its check; replace only previous practice questions in You Do.
   // Keep source-figure review metadata in GitHub, never on lesson screens.
   // No extra phase/tab or change to ordinary student lessons.
-  const rhsYear11BankPreview=["096","098","099","100","101","102","103","104","105","106","107","108","109","110","111","112","114","115","116","117","118","119","122","123","124","125"].includes(String(number)) &&
+  const rhsYear11BankPreview=["096","098","099","100","101","102","103","104","105","106","107","108","109","110","111","112","114","115","116","117","118","119","122","123","124","125","126","127","128","129","130"].includes(String(number)) &&
     !!lesson.year11 && !lesson.isAssessment && rhsSharedYouDoEnabled &&
     new URLSearchParams(location.search).get("exam-bank-preview")==="1";
   const rhsYear11BankPreviewHead=rhsYear11BankPreview
-    ?'<link rel="stylesheet" href="../../../assets/j277/year11-bank-preview.css?v=20261122-y11-batch6-v12">':"";
+    ?'<link rel="stylesheet" href="../../../assets/j277/year11-bank-preview.css?v=20261122-y11-batch7-v13">':"";
   const rhsYear11BankPreviewSetup=rhsYear11BankPreview
-    ?'<script src="../../../assets/j277/year11-bank-preview.js?v=20261122-y11-batch6-v12"></script>':"";
-  const lessonControllerVersion=rhsExamPilot?"20261121-rhs-codefirst-isolated-v10":rhsYear11BankPreview?"20261122-y11-batch6-controller-v12":"20261115-codefirst-brush2";
+    ?'<script src="../../../assets/j277/year11-bank-preview.js?v=20261122-y11-batch7-v13"></script>':"";
+  const lessonControllerVersion=rhsExamPilot?"20261121-rhs-codefirst-isolated-v10":rhsYear11BankPreview?"20261122-y11-batch7-controller-v13":"20261115-codefirst-brush2";
   const html=pilotHead.replace("</head>",rhsSharedYouDoHead+rhsYear11BankPreviewHead+"</head>")+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")+(lesson.visualAuditV3?" j277-visual-v3":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
    <a class="course-back" href="../../../j277-hub.html?year=${lesson.year11?11:10}#lessons">← Year ${lesson.year11?11:10} lessons</a>
    <nav class="phase-nav" aria-label="Lesson phases">${arr(nav,(id,i)=>`<button type="button" data-page="${id}">${names[i]}</button>`)}</nav>
