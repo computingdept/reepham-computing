@@ -1,0 +1,7 @@
+# Archived H446 Y13 Lesson 191 You Do
+Original source SHA 104a92a15ba23bba9d9edff7f1465092a02a38dd; never loaded by the lesson.
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="17 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 1 OF 3</span><h2>A function Square(n) returns n*n. Find Square(5).</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>25.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 2 OF 3</span><h2>Write a C# function IsEven(int n) that returns true when n is even.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>static bool IsEven(int n) { return n % 2 == 0; }</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · 3 OF 3</span><h2>Explain why static int Show(int x) { Console.WriteLine(x); } is invalid. Correct it.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>The int return type requires an int result. Use static void Show(int x) { Console.WriteLine(x); } or return x and print at the call site.</p></div></article></div></div></section>
+
+```

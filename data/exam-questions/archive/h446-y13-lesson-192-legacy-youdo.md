@@ -1,0 +1,7 @@
+# Archived H446 Y13 Lesson 192 You Do
+Original source SHA 94940e6e980cdb7f17458f0f8604d775d8157729; never loaded by the lesson.
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="17 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 1 OF 3</span><h2>A method takes int number by value and adds 2. Caller x=5. What is x after the call?</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>5; only the parameter copy is updated.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 2 OF 3</span><h2>Write a C# procedure that doubles an integer passed by reference.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>static void Double(ref int n) { n *= 2; } Call with Double(ref x);</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · 3 OF 3</span><h2>Explain when returning a result is preferable to changing a ref parameter.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>When only one result is needed, a return makes the data flow explicit and avoids an unexpected side effect on a caller variable.</p></div></article></div></div></section>
+
+```

@@ -1,0 +1,6 @@
+# Archived H446 Y13 Lesson 194 You Do
+Original source SHA 23666a3b6ffcf564fc26fa2fa6073858f1cd00b8; never loaded by the lesson.
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="17 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 1 OF 3</span><h2>Identify mantissa and exponent in 0.1100₂ × 2³.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>Mantissa 0.1100₂; exponent 3.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 2 OF 3</span><h2>Normalise positive 0.0010₂ × 2⁵.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>0.0010 × 2⁵ → 0.0100 × 2⁴ → 0.1000 × 2³.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · 3 OF 3</span><h2>Why can normalisation improve precision without increasing the number of mantissa bits?</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>Redundant leading sign bits are removed so available mantissa positions hold more significant information. Exponent adjustment preserves the represented value.</p></div></article></div></div></section>
+```

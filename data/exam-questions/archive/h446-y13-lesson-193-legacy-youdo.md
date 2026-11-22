@@ -1,0 +1,7 @@
+# Archived H446 Y13 Lesson 193 You Do
+Original source SHA 5b247f67efec2f56042adcd4b1c164f78d6447b7; never loaded by the lesson.
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="17 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 1 OF 3</span><h2>Write −5 as 8-bit two's complement.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>+5=00000101; inverted=11111010; add 1=11111011.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 2 OF 3</span><h2>Unsigned 8-bit 00110100 is shifted logically right one place. Give the result and decimal value.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>00011010, which is 26 (52 / 2).</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · 3 OF 3</span><h2>11110100 represents −12 in two's complement. Arithmetically shift right one place and explain the new left bit.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>11111010, representing −6. The sign bit 1 is copied into the new leftmost position.</p></div></article></div></div></section>
+
+```
