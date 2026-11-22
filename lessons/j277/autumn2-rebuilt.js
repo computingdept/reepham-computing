@@ -2131,18 +2131,16 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   // the seven stages; this otherwise silently restores the grouped layout.
   const defaultYouDo=useExamPilot||rhsSharedYouDoEnabled?"":unifiedJ277?unifiedScripts:
     '<script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"></script>';
-  // Opt-in Year 11 bank preview lives AFTER the existing You Do, as the
-  // controller's supported optional Exam Practice phase. Nothing is replaced.
-  // Mapping and answers are fetched by question ID from canonical GitHub files.
+  // Lesson 096 only: opt-in teacher preview adds mapped questions at the END
+  // of existing #you-do, after its original seven screens. No new phase.
+  // The add-on fetches approved-source candidate text/marking rules by bank ID.
   const rhsYear11BankPreview=String(number)==="096" && !!lesson.year11 &&
     !lesson.isAssessment && rhsSharedYouDoEnabled &&
     new URLSearchParams(location.search).get("exam-bank-preview")==="1";
   const rhsYear11BankPreviewHead=rhsYear11BankPreview
-    ?'<link rel="stylesheet" href="../../../assets/j277/year11-bank-preview.css?v=20261122-y11-preview096-v1">':"";
-  const rhsYear11BankPreviewBeforeController=rhsYear11BankPreview
-    ?'<script>window.RHSYear11ExamBankDirect=location.hash==="#exam-practice";</script>':"";
+    ?'<link rel="stylesheet" href="../../../assets/j277/year11-bank-preview.css?v=20261122-y11-youdo-append-v2">':"";
   const rhsYear11BankPreviewSetup=rhsYear11BankPreview
-    ?'<script src="../../../assets/j277/year11-bank-preview.js?v=20261122-y11-preview096-v1"></script>':"";
+    ?'<script src="../../../assets/j277/year11-bank-preview.js?v=20261122-y11-youdo-append-v2"></script>':"";
   const lessonControllerVersion=rhsExamPilot?"20261121-rhs-codefirst-isolated-v10":"20261115-codefirst-brush2";
   const html=pilotHead.replace("</head>",rhsSharedYouDoHead+rhsYear11BankPreviewHead+"</head>")+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")+(lesson.visualAuditV3?" j277-visual-v3":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
    <a class="course-back" href="../../../j277-hub.html?year=${lesson.year11?11:10}#lessons">← Year ${lesson.year11?11:10} lessons</a>
@@ -2150,7 +2148,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    <div class="nav-tools"><button id="advance" class="control-btn">Continue →</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div></div>
    <div class="signal-wrap"><div class="signals" aria-label="Classroom routine"><span id="phase-logo" class="signal-tile signal-phase"></span><span id="behaviour-logo" class="signal-tile signal-routine"></span><span id="response-logo" class="signal-tile signal-response"></span></div><div class="signal-meta"><span id="phase-time" class="signal-phase-time"></span><span class="lesson-label">OCR J277 · Lesson ${number}<br>${escape(lesson.t)}</span></div></div>
    <main id="main">${parts.join("")}</main><div class="lesson-footer">Lesson ${number} · ${escape(lesson.t)} <span>Year ${lesson.year11?11:10} · OCR J277 · Original exam-style questions</span></div>
-   ${pilotSetup}${rhsSharedYouDoSetup}${rhsYear11BankPreviewBeforeController}<script src="../../../assets/h446-lesson/lesson.js?v=${lessonControllerVersion}"></script>${rhsYear11BankPreviewSetup}${cpuSync}${idoSync}${y11Sync}${defaultYouDo}<script src="../../../assets/classroom-visual-zoom.js?v=20261114-clickclose2"></script></body></html>`;
+   ${pilotSetup}${rhsSharedYouDoSetup}<script src="../../../assets/h446-lesson/lesson.js?v=${lessonControllerVersion}"></script>${rhsYear11BankPreviewSetup}${cpuSync}${idoSync}${y11Sync}${defaultYouDo}<script src="../../../assets/classroom-visual-zoom.js?v=20261114-clickclose2"></script></body></html>`;
   document.open();document.write(html);document.close();
  }
  function renderAnswers(number,lesson){
