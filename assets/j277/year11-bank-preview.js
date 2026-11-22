@@ -1,12 +1,13 @@
-/* J277 Lesson 096 teacher preview: RETAIN both Code First screens and replace
- * only the four older exam questions/answers with RHS exam-bank questions.
- * Seven screens in #you-do: Code First, Check, Exam Q1-Q4, four answer screens.
- * No extra phase/tab; old exam questions are preserved in the GitHub archive.
- * Enabled only by ?exam-bank-preview=1; normal student lesson unmodified.
+/* J277 Year 11 exam-bank teacher preview: retain original Code First/check;
+ * replace only the four archived older exam questions with mapped RHS bank Q&A.
+ * Seven screens inside #you-do; never a new phase. Default page untouched.
  */
 (function(){
   "use strict";
-  if(!/^\/lessons\/j277\/lesson-096\/(?:index\.html)?$/.test(location.pathname) ||
+  var match=location.pathname.match(/^\/lessons\/j277\/lesson-(\d{3})\/(?:index\.html)?$/);
+  var lessonId=match&&match[1];
+  var allowlist=["096","098","099"]; // Archive-backed, reviewable first batch.
+  if(!lessonId || allowlist.indexOf(lessonId)<0 ||
      new URLSearchParams(location.search).get("exam-bank-preview")!=="1")return;
 
   var host=document.getElementById("you-do");
@@ -88,8 +89,8 @@
   }
   async function load(){
     var urls=[
-      "/data/exam-questions/j277-youdo-lesson-map.json?v=20261122-y11-preview096-1",
-      "/data/exam-questions/j277-rhs-practice-drafts.csv?v=20261122-y11-preview096-1"
+      "/data/exam-questions/j277-youdo-lesson-map.json?v=20261122-y11-batch1-1",
+      "/data/exam-questions/j277-rhs-practice-drafts.csv?v=20261122-y11-batch1-1"
     ];
     var results=await Promise.all(urls.map(function(url){
       return fetch(url,{cache:"no-store"}).then(function(response){
@@ -98,11 +99,13 @@
       });
     }));
     var map=JSON.parse(results[0]);
-    var row=(map.lessons||[]).find(function(v){return v.lesson_id==="096";});
-    if(!row || row.teacher_approved!==false || row.published_bank_override_enabled!==false)
-      throw new Error("Expected unpublished Lesson 096 candidate mapping");
+    var row=(map.lessons||[]).find(function(v){return v.lesson_id===lessonId;});
+    if(!row || row.teacher_approved!==false || row.published_bank_override_enabled!==false ||
+       row.archive_source!=="data/exam-questions/archive/j277-lesson-"+lessonId+"-original-youdo-20261122.json" ||
+       row.year11_preview_delivery_mode!=="retain_code_first_and_check_replace_archived_old_exam_questions_teacher_preview_only")
+      throw new Error("Expected archive-backed, unpublished Lesson "+lessonId+" bank mapping");
     var assignment=row.additional_exam_practice||[];
-    if(assignment.length!==4)throw new Error("Expected four mapped preview questions");
+    if(assignment.length!==4)throw new Error("Expected four mapped exam questions for lesson "+lessonId);
     var records=parseCsv(results[1]);
     var bank=new Map(records.map(function(item){return [item.rhs_question_id,item];}));
     var ids=new Set();
