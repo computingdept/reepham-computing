@@ -62,6 +62,9 @@ on:
       - 'lessons/j277/lesson-153/index.html'
       - 'lessons/j277/lesson-154/index.html'
       - 'lessons/j277/lesson-155/index.html'
+      - 'lessons/j277/lesson-158/index.html'
+      - 'lessons/j277/lesson-159/index.html'
+      - 'lessons/j277/lesson-160/index.html'
       - 'data/exam-questions/archive/j277-lesson-*-original-youdo-20261122.json'
       - 'data/exam-questions/j277-youdo-lesson-map.json'
       - 'data/exam-questions/j277-rhs-practice-drafts.csv'
@@ -78,6 +81,7 @@ on:
       - 'qa/master-audit-2026/j277-bank-preview-batch10.cjs'
       - 'qa/master-audit-2026/j277-bank-preview-batch11.cjs'
       - 'qa/master-audit-2026/j277-bank-preview-batch12.cjs'
+      - 'qa/master-audit-2026/j277-bank-preview-batch13.cjs'
       - '.github/workflows/j277-year11-bank-preview-096.yml'
   workflow_dispatch:
 
@@ -97,7 +101,7 @@ jobs:
         run: |
           npm install --no-save --package-lock=false playwright@1.56.1
           npx playwright install --with-deps chromium
-      - name: Check Year 11 bank preview batches one to twelve
+      - name: Check Year 11 bank preview batches one to thirteen
         run: |
           python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/j277-bank-preview-server.log 2>&1 &
           SERVER_PID=$!
@@ -115,3 +119,4 @@ jobs:
           node qa/master-audit-2026/j277-bank-preview-batch10.cjs
           node qa/master-audit-2026/j277-bank-preview-batch11.cjs
           node qa/master-audit-2026/j277-bank-preview-batch12.cjs
+          node qa/master-audit-2026/j277-bank-preview-batch13.cjs
