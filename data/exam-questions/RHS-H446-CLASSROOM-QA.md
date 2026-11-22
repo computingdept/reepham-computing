@@ -220,3 +220,16 @@ Both have now been updated *on the isolated QA branch only* to hide question-pro
 | `qa-2021-nov-paper2-q6-q8-preview.html` | 7 | Native full-width rowClue with five blanks present; 19 lines at 27px line-height can still challenge 720p height. |
 
 **Structural coverage: 31 question screens across eight QA previews.** All previews contain question-navigation/answer-reset logic. This does not verify that page layouts fit within 1280×720, that every SVG renders without clipping, or that all marks and wording are correct. Existing **75/75 `disabled_not_approved`** release flags remain enforced. To complete the outstanding genuine visual gate: open the branch's QA previews in a browser able to load their linked assets, take before/after-reveal screenshots at 1280×720 and 1366×768, inspect zoom/overflow and then obtain teacher sign-off. Do not merge or deploy automatically.
+
+## Reproducible screenshot QA harness (22 November 2026)
+
+Created `data/exam-questions/qa-visual-review.py` as a **QA-only Python/Playwright script** to run from a local checkout of this branch with the eight HTML previews and their actual referenced SVG files. The script uses Chromium at **1280×720** and **1366×768**. For each of **31 question screens**, it saves viewport screenshots of the question and answer (expected **124 screenshots** total), verifies the answer was hidden before reveal, appears after reveal, hides again after toggling, and checks visible images, JavaScript errors, document overflow, clipped elements and internally scrollable code blocks. It produces `report.json` and `report.md` and exits nonzero on blocking failures. Vertical scroll is a separate review warning.
+
+To run from a checked-out repository:
+```bash
+python -m pip install playwright
+python -m playwright install chromium
+python data/exam-questions/qa-visual-review.py --output /tmp/h446-visual-review
+```
+
+**Critical state:** The script has been committed, but **was not executed against the GitHub branch in this environment** because the local browser cannot retrieve the branch and asset bytes. No claim of successful live screenshot QA or teacher approval is made. The screenshots when generated are local evidence only; inspecting them on the real classroom projector and reviewing exam mark schemes are separate gates. No live lessons, GitHub `main`, student release flags, J277 or Cloudflare have been modified.
