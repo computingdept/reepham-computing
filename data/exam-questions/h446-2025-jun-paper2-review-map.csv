@@ -1,0 +1,272 @@
+question_id,rhs_bank_id,ocr_reference,series_year,paper,question_part,marks,spec_point,topic,rhs_question_text,rhs_answer_points_draft,rhs_marking_rule_draft,rhs_marking_guidance_draft,ocr_answer_source,existing_answer_review_status,existing_paper_marking_review_status,original_visual_requirement,teacher_view_plan,question_layout,answer_layout,source_and_data_check,answer_and_alternatives_check,projector_and_accessibility_check,teacher_signoff,classroom_release
+H446-2025-JUN-02-Q1AI,RHS-H446-042,OCR H446/02 · June 2025 · Q1(a)(i),2025,H446/02,1(a)(i),5,2.3.1,Bubble sort,"A wildlife-rescue centre needs to order animal weights from smallest to largest using bubble sort. Describe a complete bubble-sort procedure that would work for an array of weights, including how comparisons, swaps and repeated passes are handled. [5]","Set a Boolean swap flag or similar. Compare each adjacent pair. If already ordered, leave the pair unchanged; if out of order, exchange them (a temporary variable is one option) and record that a swap happened. Repeat adjacent comparisons across the array and perform further passes until no swaps occur or the maximum number of passes has been reached.",Five marks for five distinct accurate stages from: flag/condition; adjacent comparison; no swap for ordered pair; swap disordered pair; exchange using temporary storage; update flag; finish full pass; repeat passes until ordered. The explanation of multiple passes must be clear.,,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_paper_image_unavailable,not_reviewed,not_required,text_only,one_question_text_screen,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q1AII,RHS-H446-043,OCR H446/02 · June 2025 · Q1(a)(ii),2025,H446/02,1(a)(ii),2,2.3.1,Bubble sort optimisation,"The same rescue centre improves its bubble sort by recording whether a swap happened in each pass. Explain how this can allow the algorithm to stop early, rather than always performing its maximum number of passes. [2]","Reset the Boolean swap flag at the start of each pass. Set it when any two items are exchanged; if the pass finishes with the flag still false, there were no swaps so all items are in order and further passes stop.","One mark for tracking whether swaps occurred, one for stopping when the most recent complete pass had no swaps. A reference to the flag or equivalent condition is required.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_paper_image_unavailable,not_reviewed,not_required,text_only,one_question_text_screen,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q1B,RHS-H446-044,OCR H446/02 · June 2025 · Q1(b),2025,H446/02,1(b),5,2.3.1,Insertion sort,"An ecology class records four sample masses in the following order: 20, 8, 15, 36. Describe how insertion sort builds an ascending sorted list from these four values, showing the sorted and unsorted portions after each insertion. [5]","Initially sorted [] and unsorted [20,8,15,36]. Insert 20: sorted [20], unsorted [8,15,36]. Insert 8 before 20: [8,20] and [15,36]. Insert 15 between 8 and 20: [8,15,20] and [36]. Insert 36 at the end: [8,15,20,36] and [].","Up to five marks: identify the sorted/unsorted partitions and show the four insertions correctly, using these exact four values. Generic statements alone cannot earn the application marks.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_paper_image_unavailable,not_reviewed,requires_original_table_layout_and_projector_review,native_html_insertion_trace,source_specific_visual_or_code_with_question,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q1CI,RHS-H446-045,OCR H446/02 · June 2025 · Q1(c)(i),2025,H446/02,1(c)(i),2,2.2.1,Recursion in quick sort,"A wildlife-rescue centre has an array of animal record identifiers and uses the following original pseudocode to sort them into ascending order:
+
+01 function split(values, low, high)
+02   pivot = values[high]
+03   boundary = low
+04   for index = low to high - 1
+05     if values[index] < pivot then
+06       temp = values[boundary]
+07       values[boundary] = values[index]
+08       values[index] = temp
+09       boundary = boundary + 1
+10     endif
+11   next index
+12   temp = values[boundary]
+13   values[boundary] = values[high]
+14   values[high] = temp
+15   return boundary
+16 endfunction
+17 procedure quickSort(values, low, high)
+18   if low < high then
+19     position = split(values, low, high)
+20     quickSort(values, low, position - 1)
+21     quickSort(values, position + 1, high)
+22   endif
+23 endprocedure
+
+Name the recursive routine, then identify the two numbered lines on which that routine calls itself. [2]",Recursive routine: quickSort. Recursive call lines: 20 and 21.,"One mark for naming quickSort; one for identifying both call locations, lines 20 AND 21. The new line numbers apply to RHS-authored code, not the OCR source listing.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_paper_image_unavailable,not_reviewed,requires_original_code_layout_and_projector_review,native_monospaced_code,source_specific_visual_or_code_with_question,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q1CII,RHS-H446-046,OCR H446/02 · June 2025 · Q1(c)(ii),2025,H446/02,1(c)(ii),1,2.2.1,Iteration,"A wildlife-rescue centre has an array of animal record identifiers and uses the following original pseudocode to sort them into ascending order:
+
+01 function split(values, low, high)
+02   pivot = values[high]
+03   boundary = low
+04   for index = low to high - 1
+05     if values[index] < pivot then
+06       temp = values[boundary]
+07       values[boundary] = values[index]
+08       values[index] = temp
+09       boundary = boundary + 1
+10     endif
+11   next index
+12   temp = values[boundary]
+13   values[boundary] = values[high]
+14   values[high] = temp
+15   return boundary
+16 endfunction
+17 procedure quickSort(values, low, high)
+18   if low < high then
+19     position = split(values, low, high)
+20     quickSort(values, low, position - 1)
+21     quickSort(values, position + 1, high)
+22   endif
+23 endprocedure
+
+Identify the kind of iteration used within the split routine. [1]",Count-controlled iteration using a for loop (line 04).,One mark for for-loop / count-controlled / definite iteration.,,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_paper_image_unavailable,not_reviewed,requires_original_code_layout_and_projector_review,native_monospaced_code,source_specific_visual_or_code_with_question,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q1CIII,RHS-H446-047,OCR H446/02 · June 2025 · Q1(c)(iii),2025,H446/02,1(c)(iii),3,2.3.1,Quick sort partition,A sorting routine chooses the final array element as a pivot and uses a partition procedure before making recursive quicksort calls. Describe what partitioning achieves and how individual array elements are arranged around the pivot for an ascending sort. [3],"Choose a pivot, compare the other elements against it, move smaller elements to its left and larger elements to its right; the pivot finishes at the boundary between the two partitions.",Up to three marks from valid selection of pivot; comparing values to pivot; placing lesser elements to the left; placing greater elements to the right. Correctly described equivalent partition strategies are acceptable.,,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_paper_image_unavailable,not_reviewed,not_required,text_only,one_question_text_screen,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q1CIV,RHS-H446-048,OCR H446/02 · June 2025 · Q1(c)(iv),2025,H446/02,1(c)(iv),2,2.3.1,Quick sort code modification,"A wildlife-rescue centre has an array of animal record identifiers and uses the following original pseudocode to sort them into ascending order:
+
+01 function split(values, low, high)
+02   pivot = values[high]
+03   boundary = low
+04   for index = low to high - 1
+05     if values[index] < pivot then
+06       temp = values[boundary]
+07       values[boundary] = values[index]
+08       values[index] = temp
+09       boundary = boundary + 1
+10     endif
+11   next index
+12   temp = values[boundary]
+13   values[boundary] = values[high]
+14   values[high] = temp
+15   return boundary
+16 endfunction
+17 procedure quickSort(values, low, high)
+18   if low < high then
+19     position = split(values, low, high)
+20     quickSort(values, low, position - 1)
+21     quickSort(values, position + 1, high)
+22   endif
+23 endprocedure
+
+The centre now wants the same quicksort code to sort into descending order. Identify the numbered line requiring a changed comparison and write the complete corrected line. [2]",Line 05. Replace with: if values[index] > pivot then,"One mark for line 05, one for the complete corrected comparison (greater-than rather than less-than). The partition algorithm is constructed so this one change reverses the order.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_paper_image_unavailable,not_reviewed,requires_original_code_layout_and_projector_review,native_monospaced_code,source_specific_visual_or_code_with_question,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q1CV,RHS-H446-049,OCR H446/02 · June 2025 · Q1(c)(v),2025,H446/02,1(c)(v),2,2.2.2,Divide and conquer,Quicksort uses the divide-and-conquer computational method. Explain two distinct parts of divide-and-conquer using the array-sorting problem as your example. [2],"Divide a large problem into smaller subproblems (partitions on either side of a pivot), solve the subproblems separately or recursively, and combine their ordered results with the pivot to obtain the completed order.","Any two different correctly explained divide/solve/combine points, maximum two.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_paper_image_unavailable,not_reviewed,not_required,text_only,one_question_text_screen,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q2A,RHS-H446-050,OCR H446/02 · June 2025 · Q2(a),2025,H446/02,2(a),9,2.3.1,Search algorithm efficiency,"A public library holds 500,000 book records, sorted by their numeric catalogue ID. Staff frequently need to find one record by ID. They are considering linear search and binary search.
+
+Use this comparison data:
+Method | Worst-case time | Average-case time | Auxiliary space
+Linear | O(n) | O(n) | O(1)
+Binary | O(log n) | O(log n) | O(1)
+
+Evaluate the two approaches for this particular library. Explain how each method works, interpret the complexity data for a large sorted collection, and justify your recommendation. [9]","Linear search checks records sequentially and can examine many entries; binary search compares the middle ID and discards half the remaining range after each comparison, requiring sorted data. With 500,000 already-sorted records, logarithmic searching is much more efficient in average and worst-case comparisons while both methods require constant auxiliary space in iterative form. Choose binary search for repeated exact-ID lookups; explain why linear may still be simpler or suitable for unsorted data or very small inputs.","Teacher-marked nine-mark response: 7–9 detailed, balanced explanation applied to 500,000 sorted records and justified choice; 4–6 sound but incomplete application; 1–3 basic knowledge with limited evaluation; 0 no credit. These bands paraphrase the source and are not a verbatim OCR scheme.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_paper_image_unavailable,not_reviewed,requires_original_table_layout_and_projector_review,native_html_complexity_table,source_specific_visual_or_code_with_question,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q2BI,RHS-H446-051,OCR H446/02 · June 2025 · Q2(b)(i),2025,H446/02,2(b)(i),3,2.2.2,Data mining,"A large cinema-booking website stores millions of visits, searches and ticket purchases. Describe what data mining means when analysing its records. [3]","Data mining analyses large volumes of data, derives useful information from them, and identifies patterns, trends, anomalies or relationships not immediately obvious.",Three separate marks for large-scale analysis; making data useful; identifying hidden patterns/trends/relationships/anomalies.,,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_paper_image_unavailable,not_reviewed,not_required,text_only,one_question_text_screen,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q2BII,RHS-H446-052,OCR H446/02 · June 2025 · Q2(b)(ii),2025,H446/02,2(b)(ii),2,2.2.2,Data mining applications,The cinema website notices patterns in customers' searches and purchases. Explain one way it could use a discovered pattern to improve the content or functionality it shows visitors. [2],"For example, find that families buying weekend tickets often search for a particular film genre; then show appropriate upcoming family films or tailored adverts to that visitor group.",One mark for identifying a relevant mined pattern; one for a linked and credible improvement/personalisation to the site.,,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_paper_image_unavailable,not_reviewed,not_required,text_only,one_question_text_screen,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q3A,RHS-H446-053,OCR H446/02 · June 2025 · Q3(a),2025,H446/02,3(a),2,1.4.2,Stack operations,"A school's coding competition uses an array-based stack called theStack with 20 positions numbered 0 to 19. The current stack has pointer = 2 and values:
+index 0: ""k""
+index 1: ""n""
+index 2: ""I""
+All higher positions are empty.
+
+Two operations run in order: push(""t""); push(""s""). State the contents of the occupied positions and the final pointer. [2]","Occupied positions after both pushes: 0 ""k"", 1 ""n"", 2 ""I"", 3 ""t"", 4 ""s"". Final pointer = 4.","One mark for all occupied stack values in correct index order, one mark for pointer = 4.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_paper_image_unavailable,not_reviewed,requires_original_table_layout_and_projector_review,native_html_stack_array,source_specific_visual_or_code_with_question,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q3B,RHS-H446-054,OCR H446/02 · June 2025 · Q3(b),2025,H446/02,3(b),4,2.3.1,Stack push implementation,"A 20-element stack theStack uses pointer = -1 for empty and index 19 for full. Complete the four blanks in the push function. Each correct blank is worth one mark. [4]
+
+function push(data)
+  if pointer == ______ then
+    return ______
+  else
+    pointer = ______
+    theStack[______] = data
+    return true
+  endif
+endfunction",In order: 19; false; pointer + 1; pointer.,"One mark for each correct blank. The capacity check must reject insertion beyond index 19, and the pointer must advance before storing the new item.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_paper_image_unavailable,not_reviewed,requires_original_code_layout_and_projector_review,native_monospaced_code,source_specific_visual_or_code_with_question,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q3C,RHS-H446-055,OCR H446/02 · June 2025 · Q3(c),2025,H446/02,3(c),6,2.3.1,Stack pop implementation,The same stack uses pointer = -1 when it is empty. Write a function pop() that safely returns false when the stack is empty; otherwise it returns the top item and updates the pointer so the item is no longer on the stack. [6],"function pop()
+  if pointer == -1 then
+    return false
+  else
+    item = theStack[pointer]
+    pointer = pointer - 1
+    return item
+  endif
+endfunction",Up to six marks: valid function header; correct empty test; false returned on empty; top element read from correct index; decrement pointer; return saved item. Equivalent valid code accepted. The false-return mark depends on a valid empty condition.,,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_paper_image_unavailable,not_reviewed,requires_original_code_layout_and_projector_review,native_monospaced_code,source_specific_visual_or_code_with_question,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q3D,RHS-H446-056,OCR H446/02 · June 2025 · Q3(d),2025,H446/02,3(d),5,2.3.1,Stack reversal program,"A stage production enters 10 individual letters into a stack in the order typed. Using the functions input(), push(item), pop() and print(item), write pseudocode that reads exactly ten letters and then prints them in reverse input order. You may assume the stack is initially empty and has space for ten items. [5]","for i = 0 to 9
+  push(input(""Letter?""))
+next i
+for i = 0 to 9
+  print(pop())
+next i",Five marks from two correct ten-iteration loops; reading user input; calling push for each input; calling pop for each value; printing all popped values in reverse order. Partial follow-through allowed for a consistently wrong loop count.,,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_paper_image_unavailable,not_reviewed,requires_original_code_layout_and_projector_review,native_monospaced_code,source_specific_visual_or_code_with_question,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q4,RHS-H446-057,OCR H446/02 · June 2025 · Q4*,2025,H446/02,4*,9,1.1.1,Processor pipelining,"An environmental-monitoring computer processes four instructions I1, I2, I3 and I4. Each instruction has three stages: Fetch (F), Decode (D) and Execute (E). A sequential processor completes F, D and E on I1 before beginning I2. A pipelined processor can carry out different stages of different instructions during the same clock cycle.
+
+Assume each stage takes exactly one cycle and there are no dependencies or stalls. Explain and evaluate pipelining for these four instructions using a labelled cycle-by-cycle example. Consider the difference between throughput and the time needed for an individual instruction, and one situation that reduces pipeline efficiency. [9]","Ideal pipeline by cycle:
+1: F1
+2: D1 and F2
+3: E1, D2 and F3
+4: E2, D3 and F4
+5: E3 and D4
+6: E4
+Sequential execution takes 12 stage-cycles for four instructions, while ideal three-stage pipelining completes the group in 6 cycles. Pipelining overlaps work to increase throughput; each instruction still needs to pass through three stages, so latency is not necessarily reduced. Branches/jumps, dependencies or pipeline flushes create stalls and reduce the theoretical gain.","Holistic 9 marks: 7–9 thorough, correct staged example with a balanced throughput/dependency evaluation; 4–6 sound but underdeveloped; 1–3 basic; 0 nothing creditworthy. Award teacher-marked levels of response rather than a 9-keyword count.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_source_context_unverified,not_reviewed,requires_original_table_layout_and_render_review,native_html_pipeline_table,source_specific_visual_or_code_with_question,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q5A,RHS-H446-058,OCR H446/02 · June 2025 · Q5(a),2025,H446/02,5(a),2,2.2.2,Graph visualisation,"A delivery company models one-way road segments between sites S, A, B, C, D and T. Each arrow is a permissible journey and its number is the travel cost:
+S → A (4), S → B (2), B → A (1), A → C (5), A → D (10), B → D (8), C → T (3), D → T (2).
+
+Costs are non-negative; there are no other roads. This independent RHS graph is also shown by the classroom SVG `assets/exam-questions/h446/question-view/dijkstra-question.svg`.
+
+Explain two different ways that a labelled, directed, weighted graph helps somebody understand and work with this delivery problem. [2]",Nodes show individual sites; arrows show which journeys are possible and in what direction; labels show how costly each journey is. The visual makes connected locations and possible routes easier to interpret.,"One mark per distinct, relevant explanation of how diagram components represent or simplify the travel problem (up to two). Avoid giving two marks for the same idea phrased twice.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_source_context_unverified,not_reviewed,requires_original_svg_layout_and_render_review,source_specific_dijkstra_graph,source_specific_visual_or_code_with_question,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q5B,RHS-H446-059,OCR H446/02 · June 2025 · Q5(b),2025,H446/02,5(b),7,2.3.1,Dijkstra shortest path,"A delivery company models one-way road segments between sites S, A, B, C, D and T. Each arrow is a permissible journey and its number is the travel cost:
+S → A (4), S → B (2), B → A (1), A → C (5), A → D (10), B → D (8), C → T (3), D → T (2).
+
+Costs are non-negative; there are no other roads. This independent RHS graph is also shown by the classroom SVG `assets/exam-questions/h446/question-view/dijkstra-question.svg`.
+
+Apply Dijkstra's shortest-path method starting at S. Record the best final distance and the previous node for each of S, B, A, C, D and T. Then state the shortest permitted path from S to T and its total travel cost. [7]
+
+Node | Final distance from S | Previous node
+S | ___ | ___
+B | ___ | ___
+A | ___ | ___
+C | ___ | ___
+D | ___ | ___
+T | ___ | ___
+
+Shortest path: __________
+Total cost: __________","Correct table (node: distance, previous): S: 0,-; B: 2,S; A: 3,B; C: 8,A; D: 10,B; T: 11,C. Shortest route S → B → A → C → T, total cost 11.","Seven marks on this NEW RHS graph: five intermediate/table groups—S initial zero and empty predecessor (1); B and A correct distances/predecessors (1); C correct distance/predecessor (1); D correct distance/predecessor (1); T correct distance/predecessor (1)—plus 1 for valid final route, 1 for total 11. This is an independently adapted rule: OCR's graph and intermediate rows differ and its exact original row allocation does not apply to new numbers.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_source_context_unverified,not_reviewed,requires_original_svg_and_table_layout_and_render_review,source_specific_dijkstra_graph_and_trace,source_specific_visual_or_code_with_question,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q5C,RHS-H446-060,OCR H446/02 · June 2025 · Q5(c),2025,H446/02,5(c),2,2.3.1,A* heuristic search,A route-planning program might use A* rather than Dijkstra. Explain how estimates of the remaining distance to a destination can help A* reduce the amount of searching. [2],An admissible heuristic estimates remaining distance from a node; A* combines this with cost travelled (f=g+h) to prioritise promising nodes and often avoids exploring less promising paths.,"One mark for heuristic as an estimate of remaining cost, one for using it to prioritise likely lower-total-cost routes / reduce nodes explored. Do not claim it always explores fewer nodes or never reopens a node.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_source_context_unverified,not_reviewed,not_required,text_only,one_question_text_screen,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q6A,RHS-H446-061,OCR H446/02 · June 2025 · Q6(a),2025,H446/02,6(a),6,2.2.1,IDE debugging,"A school is teaching students to debug their JavaScript programming projects in an integrated development environment (IDE). Identify three different IDE features that help find or diagnose faults. For each feature, describe how a developer would use it while debugging. [6]",Breakpoints pause execution at a chosen line for state inspection. Step-through executes one statement or step at a time to see control flow. Variable watch displays current variables/array values as execution progresses. Error diagnostics locate syntax or runtime errors and provide messages. Any three suitable distinct debug tools accepted.,"For each of three different debugging facilities, award 1 for identifying a genuine feature and 1 for a connected description of its debugging use (6 marks maximum). Do not credit code formatting or autocomplete as debugging features.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_source_context_unverified,not_reviewed,requires_original_table_layout_and_render_review,native_html_debugging_table,source_specific_visual_or_code_with_question,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q6BI,RHS-H446-062,OCR H446/02 · June 2025 · Q6(b)(i),2025,H446/02,6(b)(i),2,2.2.1,Variable scope,A student program has a score variable declared inside the markRound() function and a total variable declared at program level. Explain the difference between the scope of a local variable and a global variable. [2],A global variable is in scope throughout the program (subject to language/module rules); a local variable is accessible only within the function/procedure/block in which it was declared.,"One mark for a correctly characterised global scope, one for local scope. Do not confuse scope with the type or lifetime of the stored value.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_source_context_unverified,not_reviewed,not_required,text_only,one_question_text_screen,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q6BII,RHS-H446-063,OCR H446/02 · June 2025 · Q6(b)(ii),2025,H446/02,6(b)(ii),2,2.2.1,Global variables,"A large school timetable program relies heavily on a global variable named currentClass, which many routines can change. Describe one drawback of using a global variable here, including the consequence of that drawback. [2]","Because many routines can change currentClass, it is harder to trace which modification caused an incorrect timetable (poor maintainability/testing), or a change in one routine unexpectedly affects another (lower reliability/data integrity).","One mark for a concrete drawback of global state, one for its linked effect on debugging, memory, modularity or correctness.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_source_context_unverified,not_reviewed,not_required,text_only,one_question_text_screen,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q6BIII,RHS-H446-064,OCR H446/02 · June 2025 · Q6(b)(iii),2025,H446/02,6(b)(iii),2,2.2.1,Local variables,A student writes a function in which an important intermediate value is stored in a local variable. Describe one disadvantage of keeping the value local when other functions also need to use it. [2],"A local variable cannot be read directly outside its routine; the programmer must pass the information as an argument or return value, adding code, coupling/complexity or extra development effort.",One mark for limited visibility/access of the local variable; one for a consequence such as extra parameter passing or return handling.,,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_source_context_unverified,not_reviewed,not_required,text_only,one_question_text_screen,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q6C,RHS-H446-065,OCR H446/02 · June 2025 · Q6(c),2025,H446/02,6(c),2,2.2.1,Parameter passing,"A program calls calculateBonus(points) and passes the variable totalPoints by value. The procedure changes its parameter points several times before it returns. Describe what is meant by passing the argument by value, and why the caller's totalPoints need not change. [2]",The procedure receives a copy of the argument's current value; assignments to that parameter alter its local copy rather than the caller's original variable.,One mark for passing a copy of the value; one for explaining that changes to the copy do not overwrite the original.,,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_source_context_unverified,not_reviewed,not_required,text_only,one_question_text_screen,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q6D,RHS-H446-066,OCR H446/02 · June 2025 · Q6(d),2025,H446/02,6(d),4,2.2.1,Code error identification,"A wildlife centre has written an original algorithm to count occurrences of integers in a list. It uses two parallel output arrays: distinct contains each unique integer and counts stores its frequency. Four numbered lines contain a logical error. Identify each wrong line and give a corrected complete line. [4]
+
+01 function countOccurrences(numbers)
+02   distinct = []
+03   counts = []
+04   size = numbers.length
+05   for i = 0 to size
+06     target = numbers[i]
+07     match = -1
+08     for j = 0 to distinct.length - 1
+09       if distinct[j] != target then
+10         match = j
+11       endif
+12     next j
+13     if match == -1 then
+14       distinct.append(target)
+15       counts.append(0)
+16     else
+17       counts[match] = counts[match] - 1
+18     endif
+19   next i
+20   return distinct, counts
+21 endfunction
+
+For a test, numbers = [4, 2, 4, 4, 2, 7] should produce distinct = [4, 2, 7], counts = [3, 2, 1].","Line 05: for i = 0 to size - 1
+Line 09: if distinct[j] == target then
+Line 15: counts.append(1)
+Line 17: counts[match] = counts[match] + 1","Four marks: one for each correct combination of the original line number and corrected line (05, 09, 15, 17). Other logically equivalent changes can be considered only if they correctly repair the stated algorithm; four separate fixes are required. This is a newly written four-error challenge, not OCR's source code.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_scheme_text_reviewed_original_source_context_unverified,not_reviewed,requires_original_code_layout_and_render_review,native_monospaced_code,source_specific_visual_or_code_with_question,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q7A,RHS-H446-067,OCR H446/02 · June 2025 · Q7(a),2025,H446/02,7(a),3,1.4.2,Binary search tree insertion,"A nature reserve indexes wildlife-sighting IDs in a binary search tree. The starting tree has:
+- root 50; children 25 (left) and 75 (right).
+- 25 has children 10 (left) and 35 (right).
+- 75 has children 60 (left) and 90 (right).
+- 10, 35, 60 and 90 have no children initially.
+
+The tree stores no duplicate values. Use the ordinary rule: smaller goes left, larger goes right.
+
+Draw the updated BST after inserting these five new IDs in this order: 30, 72, 5, 80, 95. Show precisely which new value is the left or right child of its parent. [3]",New placements: 30 as left child of 35; 72 as right child of 60; 5 as left child of 10; 80 as left child of 90; 95 as right child of 90.,Keep the original three-mark group scoring: 2 correctly positioned insertions earn 1 mark; 4 correct earn 2 marks; all 5 correct earn 3 marks. A node's left/right attachment must be unmistakable.,,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_mark_scheme_text_reviewed_source_question_visual_unverified,not_reviewed,requires_original_svg_student_and_reveal_layout_review,source_specific_bst_diagram,source_specific_visual_or_code_with_question,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q7B,RHS-H446-068,OCR H446/02 · June 2025 · Q7(b),2025,H446/02,7(b),2,1.4.2,Balanced trees,"A pupil constructs a binary search tree by inserting increasing identifiers in order, causing a nearly straight chain of nodes. Explain two performance consequences of a badly unbalanced BST compared with a reasonably balanced one. [2]","An unbalanced tree can be taller, so a search may require many more successive comparisons and descend through many more levels. In the worst case its height/search cost can approach O(n), compared with O(log n) for a balanced tree.","One mark for more levels/comparisons and one for a clear efficiency consequence, such as O(n) worst case versus O(log n) for a balanced tree. Equivalent correct explanations accepted.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_mark_scheme_text_reviewed_source_question_visual_unverified,not_reviewed,not_required,text_only,one_question_text_screen,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q7C,RHS-H446-069,OCR H446/02 · June 2025 · Q7(c),2025,H446/02,7(c),4,2.3.1,Tree traversal,"A nature reserve indexes wildlife-sighting IDs in a binary search tree. The starting tree has:
+- root 50; children 25 (left) and 75 (right).
+- 25 has children 10 (left) and 35 (right).
+- 75 has children 60 (left) and 90 (right).
+- 10, 35, 60 and 90 have no children initially.
+
+The tree stores no duplicate values. Use the ordinary rule: smaller goes left, larger goes right.
+
+After inserting 30, 72, 5, 80 and 95 as described, write:
+(i) the post-order depth-first traversal (left, right, root); and
+(ii) the breadth-first traversal (level order, visiting left before right).
+
+Write every ID in each list. [4]","Post-order: 5, 10, 30, 35, 25, 72, 60, 80, 95, 90, 75, 50.
+Breadth-first: 50, 25, 75, 10, 35, 60, 90, 5, 30, 72, 80, 95.","For each of the two traversal outputs, one mark for starting with the correct node and one further mark for the full correct 12-value sequence. Four marks maximum.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_mark_scheme_text_reviewed_source_question_visual_unverified,not_reviewed,requires_original_svg_student_and_reveal_layout_review,source_specific_bst_answer_and_traversal,source_specific_visual_or_code_with_question,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q8A,RHS-H446-070,OCR H446/02 · June 2025 · Q8(a),2025,H446/02,8(a),3,1.4.2,Linked-list characteristics,A school wants to store a growing sequence of book-loan records without deciding in advance exactly how many records will exist. Describe three structural characteristics of a singly linked list that make it different from an ordinary fixed-index array. [3],"A singly linked list has a head reference to the first node. Each node contains its record and a reference to the next node. The final node points to null. Traversal follows links one node at a time, not random array indexing; new nodes may be allocated dynamically.","One mark for each different accurate linked-list characteristic, up to three. Other valid points such as insertion, deletion and dynamic storage are acceptable.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_mark_scheme_text_reviewed_source_question_visual_unverified,not_reviewed,not_required,text_only,one_question_text_screen,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q8BI,RHS-H446-071,OCR H446/02 · June 2025 · Q8(b)(i),2025,H446/02,8(b)(i),2,2.2.1,Object-oriented linked list,"A library kiosk uses an original object-oriented singly linked list. Each Node stores:
+  private value: integer
+  private nextNode: Node reference (possibly null)
+An existing public getValue() method returns value. The methods that get or set other fields are to be written below.
+
+Write a public accessor function getNextNode() with no parameters that returns the existing nextNode attribute. [2]","public function getNextNode()
+  return nextNode
+endfunction","One mark for the zero-parameter accessor header getNextNode; one for returning the correct class attribute nextNode, not a new local value.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_mark_scheme_text_reviewed_source_question_visual_unverified,not_reviewed,requires_original_code_student_and_reveal_layout_review,native_monospaced_code,source_specific_visual_or_code_with_question,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q8BII,RHS-H446-072,OCR H446/02 · June 2025 · Q8(b)(ii),2025,H446/02,8(b)(ii),3,2.2.1,Encapsulation and mutators,"A library kiosk uses an original object-oriented singly linked list. Each Node stores:
+  private value: integer
+  private nextNode: Node reference (possibly null)
+An existing public getValue() method returns value. The methods that get or set other fields are to be written below.
+
+Write a public mutator procedure setValue(newValue) that updates the Node object's existing private value attribute. [3]","public procedure setValue(newValue)
+  value = newValue
+endprocedure",One mark for correctly named procedure setValue; one for a single parameter; one for assigning that parameter to the instance attribute value. Equivalent correct OOP syntax acceptable.,,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_mark_scheme_text_reviewed_source_question_visual_unverified,not_reviewed,requires_original_code_student_and_reveal_layout_review,native_monospaced_code,source_specific_visual_or_code_with_question,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q8CI,RHS-H446-073,OCR H446/02 · June 2025 · Q8(c)(i),2025,H446/02,8(c)(i),2,2.2.1,Class constructors,"The library kiosk also has a linkedList class containing a private headNode reference. Its public insertNode(value) method is already implemented: it appends the new node to the end of the list. A new linkedList has no nodes until one is inserted. The Node class has public getValue() and getNextNode() accessors.
+
+Write a no-argument constructor for linkedList. It should initialise headNode appropriately for a newly created empty list. [2]","public procedure new()
+  headNode = null
+endprocedure","One mark for valid parameterless constructor, one for setting headNode to null/none (not an integer). Equivalent valid constructor syntax accepted.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_mark_scheme_text_reviewed_source_question_visual_unverified,not_reviewed,requires_original_code_student_and_reveal_layout_review,native_monospaced_code,source_specific_visual_or_code_with_question,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q8CII,RHS-H446-074,OCR H446/02 · June 2025 · Q8(c)(ii),2025,H446/02,8(c)(ii),5,1.4.2,Linked-list traversal,"The library kiosk also has a linkedList class containing a private headNode reference. Its public insertNode(value) method is already implemented: it appends the new node to the end of the list. A new linkedList has no nodes until one is inserted. The Node class has public getValue() and getNextNode() accessors.
+
+Complete the five blanks in this linkedList method. It must traverse from the first node to the end and return one string containing the node values in order, with spaces separating them. [5]
+
+function outputList()
+  result = """"
+  current = __________
+  while current != __________
+    result = result + current.__________() + "" ""
+    current = current.__________()
+  endwhile
+  return __________
+endfunction",Blanks in order: headNode; null; getValue; getNextNode; result.,"One mark for each correctly filled blank, maximum five. The loop must compare with a valid null marker, advance using the next-node accessor and return the built string. Do not accept malformed 'not equal' syntax such as =!.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_mark_scheme_text_reviewed_source_question_visual_unverified,not_reviewed,requires_original_code_student_and_reveal_layout_review,native_monospaced_code,source_specific_visual_or_code_with_question,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q8D,RHS-H446-075,OCR H446/02 · June 2025 · Q8(d),2025,H446/02,8(d),5,2.2.1,Object-oriented program,"The library kiosk also has a linkedList class containing a private headNode reference. Its public insertNode(value) method is already implemented: it appends the new node to the end of the list. A new linkedList has no nodes until one is inserted. The Node class has public getValue() and getNextNode() accessors.
+
+Using an already implemented linkedList class, write a main program that creates an empty list called myLoans, appends integer loan IDs 10, 25 and 39 in that order, and prints the result of outputList(). [5]","myLoans = new linkedList()
+myLoans.insertNode(10)
+myLoans.insertNode(25)
+myLoans.insertNode(39)
+print(myLoans.outputList())",Five linked marks: instantiate linkedList in a variable; use its insertNode method; correctly append all three given values in order; invoke outputList on that instance; display/print the method's returned value. Equivalent valid syntax accepted.,,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_mark_scheme_text_reviewed_source_question_visual_unverified,not_reviewed,requires_original_code_student_and_reveal_layout_review,native_monospaced_code,source_specific_visual_or_code_with_question,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q8E,RHS-H446-076,OCR H446/02 · June 2025 · Q8(e),2025,H446/02,8(e),5,1.4.2,Linked-list deletion,"The library kiosk also has a linkedList class containing a private headNode reference. Its public insertNode(value) method is already implemented: it appends the new node to the end of the list. A new linkedList has no nodes until one is inserted. The Node class has public getValue() and getNextNode() accessors, and a public setNextNode(newNext) mutator. The linkedList class can update its own private headNode attribute.
+
+A new removeNode(target) method must delete the first node holding a requested integer. Assume that target occurs at most once. Describe an algorithm that searches for the node and updates links safely. Your algorithm must also work if the target is in the head node or is not present. [5]","Begin at headNode and keep a previous reference (initially null). Compare the current node value against target, advancing to current.nextNode until a match or null. If not found, leave the list unchanged. If found at head, replace headNode with the node's next reference; otherwise call previous.setNextNode(current.getNextNode()). This bypasses the removed node without breaking the rest of the list.",Five distinct marks: start from head; compare each value with target; follow next pointers until found or end; relink the previous node to the deleted node's successor; correctly handle head deletion or missing target. Source mark scheme emphasises the linked-list traversal and re-linking.,,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_mark_scheme_text_reviewed_source_question_visual_unverified,not_reviewed,not_required,text_only,one_question_text_screen,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q8F,RHS-H446-077,OCR H446/02 · June 2025 · Q8(f),2025,H446/02,8(f),3,2.2.2,Computational methods,A computing class has used divide-and-conquer to build a sorting algorithm. State three other computational thinking or computational methods it could use when designing software. [3],"Any three appropriate methods, for example decomposition, abstraction, pattern recognition/matching, backtracking, heuristic reasoning, visualisation, algorithmic thinking, or thinking ahead.","One mark for each distinct valid named method, maximum three. Do not credit basic program control constructs such as sequence, selection or iteration as computational methods in this task.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_mark_scheme_text_reviewed_source_question_visual_unverified,not_reviewed,not_required,text_only,one_question_text_screen,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
+H446-2025-JUN-02-Q8G,RHS-H446-078,OCR H446/02 · June 2025 · Q8(g)*,2025,H446/02,8(g)*,12,1.4.2,Linked-list implementations,"A wildlife charity is designing a program for storing animal sighting IDs. The number of sightings changes substantially from day to day. Its programmers are choosing between:
+• an object-oriented linked list containing dynamically allocated Node objects and a linkedList class with insertion, removal and traversal methods; or
+• a fixed-size two-dimensional array whose rows store an ID and an index/pointer to the next occupied row, plus a free-slot tracking structure.
+
+Discuss the merits and disadvantages of both representations. Compare memory allocation, spare capacity, traversal speed, insertion/deletion, code reusability and implementation complexity, and recommend an approach for the charity. [12]","Object-based lists may grow or shrink dynamically and encapsulate behaviour in reusable classes, but node allocation and references add overhead and searching typically follows pointers sequentially. A fixed-capacity 2D array can be compact/predictable and indexable directly by physical slot but needs spare capacity, a free-list or occupancy scheme and careful pointer-index maintenance; it may waste unused slots or reach capacity. Neither representation permits constant-time search for an arbitrary value simply by being a linked structure. A strong answer applies these trade-offs to volatile sighting volumes and defends a choice, including circumstances where a bounded-size array could still be sensible.","Teacher-assessed 12-mark levels response: 9–12 thorough and balanced applied judgement; 5–8 sound but less developed comparison; 1–4 basic relevant points; 0 no credit. The RHS marking description is a paraphrase, not official OCR text; teachers review the 12-mark argument rather than assign twelve isolated ticks.",,https://www.ocr.org.uk/Images/752416-mark-scheme-algorithms-and-programming.pdf,ocr_2025_p2_mark_scheme_text_reviewed_source_question_visual_unverified,not_reviewed,not_required,text_only,one_question_text_screen,dedicated_full_size_consolidated_answer_screen,pending_teacher_context_review,pending_independent_marking_review,not_tested,pending,disabled_not_approved
