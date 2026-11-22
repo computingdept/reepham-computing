@@ -185,3 +185,11 @@ The original 900×900 question/answer SVG contains 15 lines of iterative binary 
 **Implemented only in the isolated QA preview** `qa-2021-nov-paper2-q1d-q2-preview.html`: its second question is now a full-width *native-text* 15-line code panel, using 22px monospaced font with 33px line spacing at desktop width. All six blanks appear in the question (parameter `wanted`; not-found `-1`; midpoint divisor `2`; `middle + 1`, `middle - 1`, and `middle`). On a single answer reveal, the incomplete listing is hidden and the complete 15-line program is shown in its place. Previous/next resets that answer state. The two other question pages and both original SVG files are unchanged.
 
 **Status:** structure checked but real browser sizing/physical projector, print/mobile, screen-reader order, accepted marking alternatives and teacher approval outstanding. Do not mark Q2(a)(i) approved; it remains `disabled_not_approved`. No changes to lessons, J277, scoring, or Cloudflare.
+
+## November 2021 Paper 2 · Q5 Campus OOP native-code preview correction
+
+The isolated `qa-2021-nov-paper2-q5-oop-preview.html` teacher page now uses full-width, selectable text for the dense Venue code-completion, Gallery inheritance, CampusMap.addVenue and instantiation answers. It no longer scales 900×900 code-answer SVGs into a half-width answer pane.
+
+The **five Q5 parts stay as five distinct single-question screens**. Every screen has a question state and a separate consolidated answer state. Reveal **replaces**, not stacks, the question state; Previous/Next resets it. Q5(a) retains its class diagram and constructor answer, Q5(c) retains all five blanks and its exact five replacements, Q5(d) contains the full 9-line Gallery model, Q5(e) the 8-line bounded insertion method, and Q5(f) the 4-line instantiation/program example. The existing original RHS SVGs remain on the branch, as do the recorded question-bank and answer mappings. This preview-layer change does not approve or publish them.
+
+**Verification still pending:** direct rendering of the actual HTML at 1280×720 and teacher projector; line wrapping and horizontal overflow for long constructors, responsive mobile/print output, OCR source/marking-alternative review, and sign-off. Nothing has been enabled for students and no live lessons, J277, assignments or Cloudflare scoring changed.
