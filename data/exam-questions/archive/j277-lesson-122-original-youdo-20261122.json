@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 122 original You Do source snapshot",
+  "lesson": "122",
+  "title": "Validation and Authentication",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-122.json",
+  "original_source_blob_sha": "5ca938c30976e7730bea67a282559e1d38ed6043",
+  "purpose": "Preserve original Code First and model answer, previous-learning content, original exam questions/answers/visuals and original challenge prior to replacing archived exam questions in teacher preview; ordinary student lesson source unchanged.",
+  "code_first": {
+    "q": "Predict the output.",
+    "code": "mark = 101\nif mark >= 0 AND mark <= 100 then\n    print(\"Valid\")\nelse\n    print(\"Invalid\")\nendif",
+    "p": [
+      "Explain your predicted result using the first assignment or test.",
+      "Change mark to 100.",
+      "Extend to request a new value after invalid input."
+    ],
+    "a": "Invalid; Valid; invalid path returns to input."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "Explain validation versus verification. [2 marks]",
+      "Validation checks a rule or format; verification checks data matches the original/source input."
+    ],
+    [
+      "Give a suitable boundary value when valid ages are 13–18. [2 marks]",
+      "13 or 18, plus an adjacent invalid such as 12 or 19 for a test set."
+    ],
+    [
+      "State one difference between authentication and validation. [2 marks]",
+      "Authentication confirms an asserted identity; validation checks input against constraints."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 122,
+    "coreHint": "Both lower and upper limits must be true at once.",
+    "stretch": {
+      "task": "Modify the program to accept ages 13–18 rather than marks 0–100. Check 12, 13, 18 and 19.",
+      "hint": "Use AND and inclusive >=, <= comparisons.",
+      "answer": "12 invalid, 13 valid, 18 valid, 19 invalid."
+    },
+    "mastery": {
+      "task": "Write a loop that continues asking for a score until an integer in 0–100 is provided. Specify expected results for text input and for both numeric boundaries.",
+      "hint": "Validation is not complete when ELSE only prints 'Invalid'—it must ask again.",
+      "answer": "Use a repeat-until-valid structure; reject wrong-type input safely before numerical comparison; accept 0 and 100; reject -1, 101 and 'cat'. This extends the starting range check rather than requiring a totally new concept."
+    }
+  }
+}
