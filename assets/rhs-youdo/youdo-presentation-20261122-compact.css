@@ -1,0 +1,240 @@
+/* One shared You Do presentation language — teacher opt-in ONLY.
+   Every selector is scoped to #you-do[data-rhs-youdo-trial="true"].
+   No styling of Do Now, Objectives, New Learning, I Do, We Do,
+   Key Vocabulary, Exit Ticket, general navigation or Cloudflare. */
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-rolling{display:block;height:100%;width:100%}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-stage[hidden]{display:none!important}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-stage{
+  display:block!important;box-sizing:border-box;width:100%;height:100%;
+  min-height:0;max-width:none;overflow:auto!important;
+  padding:clamp(16px,1.6vw,26px)!important;
+  border:0!important;border-radius:12px;background:#fff!important;
+  color:#1d1d1f!important;box-shadow:none!important;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-head{
+  display:flex;justify-content:space-between;align-items:center;gap:20px;
+  border-bottom:1px solid #e5e5e7;padding:0 0 12px;
+  color:#69696f;font-size:clamp(13px,.98vw,18px);
+  font-weight:700;letter-spacing:.045em
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-head span:last-child{color:#28282c;letter-spacing:0}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-question{
+  border-bottom:1px solid #e5e5e7;padding:clamp(12px,1.45vh,23px) 0;
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-question p{
+  margin:0;color:#1d1d1f;font-size:clamp(24px,2.05vw,35px);
+  line-height:1.3;letter-spacing:-.02em;font-weight:630
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-question small{
+  display:block;margin-top:10px;color:#69696e;font-size:clamp(13px,.89vw,16px);
+  font-weight:500;line-height:1.35
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-label{
+  display:block;color:#76767b;letter-spacing:.06em;font-weight:760;
+  font-size:clamp(13px,.95vw,17px);margin-bottom:10px
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-editor{
+  margin:clamp(14px,2vh,24px) 0 0;
+  background:#252d3d;border-radius:14px;color:#eef3f9;overflow:hidden;
+  border:1px solid #384459
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-editor-head{
+  display:flex;justify-content:space-between;align-items:center;gap:15px;
+  background:#1d2533;border-bottom:1px solid #3e495a;
+  padding:11px 18px;font:700 15px/1.2 ui-monospace,SFMono-Regular,Consolas,monospace;
+  letter-spacing:.05em
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-editor-head small{
+  font-size:12px;color:#9eafc3
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-code{
+  margin:0;padding:13px 0 17px;overflow:auto!important;
+  border:0;background:transparent!important;color:inherit!important;
+  font:500 clamp(21px,1.82vw,31px)/1.52 ui-monospace,SFMono-Regular,Consolas,monospace!important
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-code code{font:inherit}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-line{
+  display:grid;grid-template-columns:clamp(42px,4vw,64px) max-content;
+  min-width:max-content;padding-right:14px
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-line-num{
+  color:#a3b2c6;border-right:1px solid #465367;
+  text-align:right;padding-right:13px;font-variant-numeric:tabular-nums
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-line-text{
+  color:#eff4fb;white-space:pre;padding-left:18px
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-num{color:#fac36b}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-str{color:#a9e786}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-keyword{color:#71d9ef;font-weight:680}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-call{color:#c4a5fa}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-model{min-width:0;padding-top:clamp(13px,1.6vh,24px)}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-answer-text{
+  white-space:pre-wrap;overflow-wrap:anywhere;
+  font-size:clamp(20px,1.58vw,28px);line-height:1.35;
+  font-weight:550;color:#202024
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-mark{
+  display:grid;grid-template-columns:32px minmax(0,1fr);gap:13px;
+  border-bottom:1px solid #ececee;padding:12px 0;
+  color:#1d1d1f
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-mark span{
+  font-size:clamp(15px,1vw,18px);font-weight:700;color:#909097
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-mark p{
+  margin:0;font-size:clamp(19px,1.42vw,26px);font-weight:570;line-height:1.35
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-review-body.rhs-y-with-visual{
+  display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+  gap:clamp(18px,2vw,34px);align-items:start
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-visual{min-width:0;overflow:auto}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-visual svg,
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-visual img{
+  display:block;width:100%;height:auto;max-height:48vh;object-fit:contain
+}
+/* J277 independent challenge: four quiet, equally sized paper-question
+   cards. Keep full questions; source notes belong in lesson metadata. */
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge-stage:not([hidden]){
+  display:flex!important;flex-direction:column
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-rows:repeat(2,minmax(0,1fr));
+  gap:clamp(10px,1.5vw,20px);margin-top:clamp(10px,1.5vh,18px);
+  flex:1 1 auto;min-height:0;
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge-card{
+  min-width:0;min-height:0;overflow:auto;box-sizing:border-box;
+  border:1px solid #e1e1e5;border-radius:16px;
+  background:#fafafa;padding:clamp(13px,1.35vw,22px);
+  display:flex;flex-direction:column;
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge-card-head{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  border-bottom:1px solid #e6e6e9;padding-bottom:clamp(7px,1vh,11px);
+  color:#717178;letter-spacing:.055em;font-weight:750;
+  font-size:clamp(14px,.99vw,18px)
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge-card-head span:last-child{
+  color:#242428;letter-spacing:0;white-space:nowrap
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge-card p{
+  margin:clamp(10px,1.2vh,15px) 0 0;
+  color:#1d1d1f;white-space:pre-line;
+  font-size:clamp(19px,1.45vw,25px);
+  font-weight:565;line-height:1.31;letter-spacing:-.01em
+}
+@media(max-width:800px){
+ #you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge{
+  grid-template-columns:1fr;grid-template-rows:none;
+  overflow:auto;flex:0 1 auto
+ }
+ #you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge-card{
+  min-height:fit-content;overflow:visible
+ }
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-original-prompt{
+  font-size:clamp(18px,1.3vw,24px);line-height:1.34;min-width:0
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-original-prompt h2{
+  font-size:clamp(24px,2vw,35px);line-height:1.28;color:#1d1d1f!important
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-original-prompt .phase-tag{
+  color:#76767c!important;background:none!important;border:0!important
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-h446-answer{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(20px,2.3vw,40px);
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-h446-answer .rhs-y-original-prompt,
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-h446-answer .rhs-y-model{min-width:0}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-h446-answer .youdo-solution{
+  display:block!important;position:static!important;overflow:visible!important;
+  color:#1d1d1f!important;background:none!important;border:0!important;
+  padding:0!important;box-shadow:none!important
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-h446-answer .dancer-grid{
+  display:block!important;
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-h446-answer .dancer-graph{
+  max-height:30vh;object-fit:contain;
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-h446-answer .dancer-table{
+  font-size:clamp(13px,.86vw,16px)
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-h446-answer .rhs-y-model{
+  font-size:clamp(18px,1.18vw,23px);line-height:1.36
+}
+@media(max-width:900px){
+ #you-do[data-rhs-youdo-trial="true"] .rhs-y-review-body.rhs-y-with-visual,
+ #you-do[data-rhs-youdo-trial="true"] .rhs-y-h446-answer{
+  grid-template-columns:1fr
+ }
+ #you-do[data-rhs-youdo-trial="true"] .rhs-y-editor-head small{display:none}
+}
+
+
+/* Shared, Apple-style Code First check: do not repeat an identical model. */
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-expected{
+  border-top:1px solid #e5e5e7;padding-top:15px
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-expected strong{
+  display:block;font-size:clamp(38px,3.2vw,58px);
+  color:#1d1d1f;letter-spacing:-.035em;font-weight:700
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-alternative{
+  margin-top:16px
+}
+
+/* Code First answer: retain original question/code, but never repeat a full
+   second model editor. Changed instructions and result fit below the starter. */
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-code-check .rhs-y-question{
+  padding:clamp(8px,1vh,14px) 0;
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-code-check .rhs-y-question p{
+  font-size:clamp(21px,1.7vw,30px);
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-code-check .rhs-y-editor{
+  margin-top:clamp(8px,1vh,12px);
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-code-check .rhs-y-code{
+  font-size:clamp(18px,1.5vw,26px)!important;
+  line-height:1.35!important;
+  padding:8px 0 9px;
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-code-check .rhs-y-model{
+  padding-top:clamp(8px,1vh,12px);
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-change{
+  margin-bottom:clamp(8px,1vh,14px);
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-changed-lines{
+  margin:0;
+  padding:8px 12px;
+  border:1px solid #d9e4dd;
+  border-radius:10px;
+  background:#f5f8f5;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-change-line{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  font:650 clamp(18px,1.5vw,25px)/1.38 ui-monospace,SFMono-Regular,Consolas,monospace;
+  color:#20372d;
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-change-number{
+  font:700 12px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  color:#627568;
+  white-space:nowrap;
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-code-check .rhs-y-expected{
+  padding-top:clamp(8px,1vh,12px);
+}
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-code-check .rhs-y-expected strong{
+  font-size:clamp(28px,2.5vw,44px);
+}
