@@ -1,6 +1,6 @@
 # J277 You Do — source-of-truth and publishing workflow
 
-**Status: first 40 lessons processed for content review only (with identified coverage gaps and protected exceptions); no live exam-bank overrides enabled.** Updated 22 November 2026.
+**Status: Lessons 001–060 processed in successive content review batches; no live exam-bank overrides enabled.** Updated 22 November 2026.
 
 ## Read these files before changing J277 You Do
 
@@ -43,9 +43,11 @@ Every visual needs source comparison, projector/mobile review and teacher approv
 
 [Read the 021–040 question and marking review](j277-youdo-content-review-021-040.md). This second pass deliberately records bank shortfalls rather than assigning mismatched or duplicate questions. Lessons 035 and 036 are held as assessment/reteaching exceptions; neither has a four-question override proposal.
 
+[Read the 021–040 original lesson fallback audit](j277-youdo-original-fallback-review-021-040.md) and [041–060 question review](j277-youdo-content-review-041-060.md). The latest draft has 27 source-linked original fallback entries for 021–040, leaving three gaps; 041–060 has 29 further unique RHS bank candidate IDs, with remaining slots awaiting original-source audit. Lesson 050 is an assessment exception. These are review candidates only.
+
 ### Approval and publishing gates
 
-- **Mapping is not publication.** As of 22 November, Lessons 001–020 have the previously recorded first review, while Lessons 021–040 now have second-batch bank proposals or explicit coverage gaps/exceptions. Lessons 041–164 remain unmapped. Every lesson retains `published_bank_override_enabled: false` and `teacher_approved: false`. Do not flip these simply because code works.
+- **Mapping is not publication.** As of 22 November, Lessons 001–020 have the previously recorded first review, while Lessons 021–040 now have second-batch bank proposals or explicit coverage gaps/exceptions. Lessons 061–164 remain unmapped. Every lesson retains `published_bank_override_enabled: false` and `teacher_approved: false`. Do not flip these simply because code works.
 - The bank has **225 RHS-authored question parts with reviewed marking points**, but its own documentation says that **all question texts still require final originality/classroom checks**. Answer verification does not equal final publication approval.
 - Before enabling a bank override, verify exactly four question IDs, source eligibility, specification/lesson fit, accurate marks and accepted answers, visual correspondence, spacing and teacher sign-off.
 - **Never delete** the legacy embedded question, answer, or SVG when switching the presentation. Keep fallbacks until the replacement is inspected.
