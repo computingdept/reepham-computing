@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 146 original You Do source snapshot",
+  "lesson": "146",
+  "title": "Truth Tables and Combined Logic",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-146.json",
+  "original_source_blob_sha": "c4eddaf326f99173dfafa2e79e5b26aaf60a31de",
+  "purpose": "Preserve original Code First, marked answer, previous-learning exam item, old exam questions and answers, visuals and challenge before preview-only RHS bank substitution. Default student lesson and other phases untouched.",
+  "code_first": {
+    "q": "Trace combined Boolean logic in an illustrative network-security alert.",
+    "code": "// A: unknown device; B: repeated failures; C: reported malware\nA = true\nB = false\nC = true\nif (A AND B) OR C then\n    print(\"Investigate\")\nendif",
+    "p": [
+      "Predict the output for A=true, B=false and C=true.",
+      "Change C to false and predict.",
+      "Describe one security event represented by A, B or C, and explain why this is only a simplified alert rule."
+    ],
+    "a": "With A AND B=false but C=true, the full expression is true, so Investigate prints. Setting C=false produces no output. A represents an unknown device, B repeated failures and C a reported malware incident. Real security alerts need evidence and more sophisticated rules; this code does not identify malware."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "How many rows are needed for a 3-input truth table? [2 marks]",
+      "2³=8."
+    ],
+    [
+      "Evaluate (A AND B) OR C when A=1 B=0 C=1. [2 marks]",
+      "1."
+    ],
+    [
+      "Explain the benefit of an intermediate X column. [2 marks]",
+      "Allows accurate separate evaluation of one gate and helps trace errors in combined expressions."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 146,
+    "coreHint": "(A AND B) OR C is true whenever C is true.",
+    "stretch": {
+      "task": "Change C to false and test both values of B.",
+      "hint": "Compute intermediate A AND B first.",
+      "answer": "With A=true, B=false, C=false there is no output. With B=true, it prints Investigate."
+    },
+    "mastery": {
+      "task": "Write a small program or full truth table for (A AND B) OR C. Compare a case where C overrides the AND condition.",
+      "hint": "Eight input rows and an intermediate X column.",
+      "answer": "ABC=000 0,001 1,010 0,011 1,100 0,101 1,110 1,111 1; intermediate X=A AND B."
+    }
+  }
+}
