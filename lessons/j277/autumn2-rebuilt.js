@@ -2081,7 +2081,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   // The existing three lesson questions and a separately authored previous-
   // learning exam question form the four prompts; no unapproved RHS draft
   // questions are automatically published. Other seven phases stay intact.
-  const rhsProtectedYouDo=new Set(["018","035","036","050","078","079","094","095","120","121","143","144","156","157"]);
+  const rhsProtectedYouDo=new Set(["018","035","036","050","078","079","094","095","113","120","121","143","144","156","157"]);
   const rhsPreviewRequested=new URLSearchParams(location.search).get("youdo-trial")==="1";
   // The explicit Lesson 031 editorial Q4 is retained for opt-in preview only.
   const rhsLesson031Draft=["A concert website receives requests from hundreds of compromised computers at the same time. Genuine customers cannot load the booking page.\n\nIdentify the type of attack and explain how it affects the website. [3 marks]",
@@ -2813,7 +2813,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  // This is a retrieval question, NOT a newly authored RHS bank override.
  async function rhsPreviousExamSource(number,lesson){
    if(lesson.priorExam&&lesson.priorExam.q&&lesson.priorExam.a)return null;
-   const protectedIds=new Set(["018","035","036","050","078","079","094","095","120","121","143","144","156","157"]);
+   const protectedIds=new Set(["018","035","036","050","078","079","094","095","113","120","121","143","144","156","157"]);
    const current=Number(number);
    const own=new Set((lesson.e||[]).map(pair=>String(pair[0]||"").trim().toLowerCase()));
    const candidates=[];
