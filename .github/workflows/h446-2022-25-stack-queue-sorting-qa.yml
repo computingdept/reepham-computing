@@ -1,0 +1,84 @@
+name: H446 2022–25 stack queue sorting image QA
+
+on:
+  push:
+    branches:
+      - qa/h446-2022-25-stack-queue-sorting-images
+    paths:
+      - "assets/exam-questions/h446/question-view/2025-jun-02-insertion-sort-*.svg"
+      - "assets/exam-questions/h446/question-view/2025-jun-02-quicksort-partition-*.svg"
+      - "assets/exam-questions/h446/question-view/2024-jun-02-museum-fifo-queue-*.svg"
+      - "assets/exam-questions/h446/question-view/2022-jun-02-sound-studio-stack-*.svg"
+      - ".github/workflows/h446-2022-25-stack-queue-sorting-qa.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "assets/exam-questions/h446/question-view/2025-jun-02-insertion-sort-*.svg"
+      - "assets/exam-questions/h446/question-view/2025-jun-02-quicksort-partition-*.svg"
+      - "assets/exam-questions/h446/question-view/2024-jun-02-museum-fifo-queue-*.svg"
+      - "assets/exam-questions/h446/question-view/2022-jun-02-sound-studio-stack-*.svg"
+      - ".github/workflows/h446-2022-25-stack-queue-sorting-qa.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  render-qa-only:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install SVG renderer
+        run: python -m pip install --disable-pip-version-check --quiet cairosvg pillow
+      - name: XML/diagram/raster QA
+        shell: bash
+        run: |
+          python - <<'PY'
+          import io,json,xml.etree.ElementTree as ET
+          from pathlib import Path
+          import cairosvg
+          from PIL import Image,ImageDraw
+          base=Path("assets/exam-questions/h446/question-view")
+          names=[
+            "2025-jun-02-insertion-sort-rhs-question.svg",
+            "2025-jun-02-insertion-sort-rhs-answer.svg",
+            "2025-jun-02-quicksort-partition-rhs-question.svg",
+            "2025-jun-02-quicksort-partition-rhs-answer.svg",
+            "2024-jun-02-museum-fifo-queue-rhs-question.svg",
+            "2024-jun-02-museum-fifo-queue-rhs-answer.svg",
+            "2022-jun-02-sound-studio-stack-rhs-question.svg",
+            "2022-jun-02-sound-studio-stack-rhs-answer.svg",
+          ]
+          out=Path("h446-2022-25-queue-stack-sort-evidence")
+          out.mkdir(exist_ok=True)
+          report=[]
+          board=Image.new("RGB",(2*1120,4*734),"#eef0f1")
+          dr=ImageDraw.Draw(board)
+          for i,name in enumerate(names):
+            src=base/name
+            tree=ET.parse(src)
+            root=tree.getroot()
+            title=root.find("{http://www.w3.org/2000/svg}title")
+            desc=root.find("{http://www.w3.org/2000/svg}desc")
+            assert root.tag.endswith("svg") and title is not None and title.text and desc is not None and desc.text, name
+            img=Image.open(io.BytesIO(cairosvg.svg2png(url=str(src),output_width=1240))).convert("RGB")
+            assert img.size==(1240,740),name
+            img.save(out/name.replace(".svg",".png"))
+            tile=img.copy();tile.thumbnail((1100,660),Image.Resampling.LANCZOS)
+            x=(i%2)*1120+10
+            y=(i//2)*734+10
+            dr.text((x+6,y+4),name,fill="#252525")
+            board.paste(tile,(x+(1100-tile.width)//2,y+45+(660-tile.height)//2))
+            report.append({"name":name,"size":img.size,"svg_xml":True,"title":title.text,"description":desc.text})
+          board.save(out/"eight-svg-contact-sheet.png")
+          (out/"report.json").write_text(json.dumps(report,indent=2),encoding="utf-8")
+          print(json.dumps({"svgs":len(report),"passed":len(report),"contact":"eight-svg-contact-sheet.png"}))
+          PY
+      - name: Upload visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: h446-2022-25-queue-stack-sort
+          path: h446-2022-25-queue-stack-sort-evidence/
+          if-no-files-found: warn
