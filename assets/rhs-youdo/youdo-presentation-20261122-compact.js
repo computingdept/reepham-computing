@@ -135,11 +135,12 @@
   function installJ277(data){
     // One shared renderer for any ordinary J277 lesson with four available
     // existing preview questions. No approved-question status is implied.
-    // Normal lesson display is enabled explicitly for 040 and 062.
-    // Every other J277 lesson still requires the opt-in preview parameter.
+    // Shared presentation for eligible ordinary J277 lessons. Source
+    // question sets are assembled by the relevant autumn renderer. Neither
+    // question approval flags nor the draft RHS bank are changed here.
     if(active || !/^\/lessons\/j277\/lesson-\d{3}\//.test(location.pathname) ||
        (new URLSearchParams(location.search).get("youdo-trial")!=="1" &&
-        !(data && data.preview===false && ["040","062"].includes(data.lesson))))return false;
+        !(data && data.preview===false)))return false;
     var host=document.getElementById("you-do"),container=host&&host.querySelector(".youdo-rolling");
     if(!host||!container||host.dataset.assessmentMode==="true"||!data||!data.code||
        !Array.isArray(data.questions)||data.questions.length<3||
@@ -168,27 +169,35 @@
     // The independent challenge is a 2×2 classroom-paper question grid;
     // sources stay in the lesson data but do not crowd the projected prompts.
     // The question wording and the mark allocation remain unmodified.
+    // Source questions use both [4 marks] and [4]. Never turn an
+    // unmarked prompt into a fictional "0 MARKS" classroom label.
+    function questionMarks(value){
+      var text=String(value||"");
+      var explicit=text.match(/\[(\d+)\s*marks?\]/i);
+      var bare=text.match(/(?:^|[\s.!?])\[(\d+)\](?=\s|$)/);
+      var found=explicit||bare;
+      return found?Number(found[1]):null;
+    }
+    var fullyMarked=questions.every(function(q){return questionMarks(q.question)!==null;});
     var totalMarks=questions.reduce(function(total,q){
-      var found=String(q.question||"").match(/\[(\d+)\s*marks?\]/i);
-      return total+(found?Number(found[1]):0);
+      return total+(questionMarks(q.question)||0);
     },0);
     var challenge='<div class="rhs-y-head"><span>'+(data.preview?"UNAPPROVED LESSON PREVIEW · 4 EXAM QUESTIONS":"INDEPENDENT EXAM CHALLENGE")+'</span>'+
-      '<span>'+questions.length+' QUESTIONS · '+totalMarks+' MARKS</span></div><div class="rhs-y-challenge">'+
+      '<span>'+questions.length+' QUESTIONS'+(fullyMarked?' · '+totalMarks+' MARKS':'')+'</span></div><div class="rhs-y-challenge">'+
       questions.map(function(q,i){
         var text=String(q.question||"").split(/\n\s*\nSource:\s*/i)[0].trim();
-        var found=text.match(/\[(\d+)\s*marks?\]/i);
-        var marks=found?Number(found[1]):0;
-        // Marks are already clear at the top right of each card.
-        text=text.replace(/\s*\[\d+\s*marks?\]\s*$/i,"").trim();
+        var marks=questionMarks(text);
+        // Marks are shown once, at the top right, when present in the source.
+        text=text.replace(/\s*\[\d+(?:\s*marks?)?\]\s*$/i,"").trim();
         return '<section class="rhs-y-challenge-card">'+
           '<div class="rhs-y-challenge-card-head"><span>Q'+(i+1)+'</span>'+
-          '<span>'+marks+' MARK'+(marks===1?'':'S')+'</span></div>'+
+          '<span>'+(marks===null?'EXAM PRACTICE':marks+' MARK'+(marks===1?'':'S'))+'</span></div>'+
           '<p>'+escapeHtml(text)+'</p></section>';
       }).join("")+'</div>';
     stages.push(makeStage(challenge,"rhs-y-challenge-stage"));
     questions.forEach(function(q,i){
-      var marks=String(q.question).match(/\[(\d+)\s*marks?\]/i);
-      var label=marks?marks[1]+" MARKS":"";
+      var marks=questionMarks(q.question);
+      var label=marks===null?"":marks+" MARKS";
       stages.push(makeStage(header(data.preview?"PREVIEW · SELF-MARK":"SELF-MARK",i+1,questions.length,label)+
         questionText(q.question)+'<div class="rhs-y-review-body'+(q.visual?' rhs-y-with-visual':'')+'">'+
         (q.visual?'<div class="rhs-y-visual">'+q.visual+'</div>':"")+
