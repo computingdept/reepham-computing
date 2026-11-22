@@ -25,7 +25,7 @@ For each ordinary J277 lesson, the **You Do phase only** follows seven screens:
 6. The corresponding worked/marking answer to Q3 on its own full screen.
 7. The corresponding worked/marking answer to Q4 on its own full screen.
 
-Projector fit, readable text, a 2×2 grid for the four questions, a separate projector-sized answer page for each question, mobile stacking and accessible question/answer SVG pairs are part of the acceptance test. On every exam-answer screen, the answer SVG and explanation must START AT THE TOP directly beneath the header, not be vertically centred in the remaining page space. Do not return to four answers on one screen. The current common presentation files are `assets/j277/youdo-unified.js` and `assets/j277/youdo-unified.css`. Other live handlers still exist; inspect their actual precedence before any rollout.
+Projector fit, readable text, a 2×2 grid for the four questions, a separate projector-sized answer page for each question, mobile stacking and accessible question/answer SVG pairs are part of the acceptance test. **Question SVGs must fill enough of their 2×2 cards to make embedded values and labels readable from a classroom projector**; avoid tiny height caps and do not shrink figures merely to leave blank space. On every exam-answer screen, the answer SVG and explanation must START AT THE TOP directly beneath the header, not be vertically centred in the remaining page space. Do not return to four answers on one screen. The current common presentation files are `assets/j277/youdo-unified.js` and `assets/j277/youdo-unified.css`. Other live handlers still exist; inspect their actual precedence before any rollout.
 
 ### Matching content to an illustration
 
