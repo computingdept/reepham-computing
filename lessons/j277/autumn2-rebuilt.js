@@ -2077,10 +2077,13 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   const pilotData=rhsExamPilot?'<script src="../../../assets/j277/exam-classroom-134-data.js?v=20261121-rhs2"></script>':"";
   const pilotJsVersion=rhsExamPilot?"20261121-unified-code-v8":"20261121-rhs2";
   const pilotSetup=useExamPilot?pilotData+'<script src="../../../assets/j277/exam-classroom.js?v='+pilotJsVersion+'"></script><script>window.J277ExamClassroom.install('+JSON.stringify({config:lesson.examClassroom,code:lesson.k,rhsPilot:rhsExamPilot})+');</script>':"";
-  const rhsSharedYouDoTrial=["021","022"].includes(String(number)) && new URLSearchParams(location.search).get("youdo-trial")==="1" && !useExamPilot;
-  const rhsSharedYouDoHead=rhsSharedYouDoTrial?'<link rel="stylesheet" href="../../../assets/rhs-youdo/youdo-presentation.css?v=20261121-rhs-youdo-j277-022-trial5">':"";
-  const rhsSharedYouDoData=rhsSharedYouDoTrial?{lesson:String(number),code:lesson.k,priorExam:lesson.priorExam,questions:lesson.e,visuals:(lesson.examVisuals||[]).map((v,i)=>v && !(String(number)==="021" && i===2 && v.title==="Two different network extents")?diagram(v):"")}:null;
-  const rhsSharedYouDoSetup=rhsSharedYouDoTrial?'<script src="../../../assets/rhs-youdo/youdo-presentation.js?v=20261121-rhs-youdo-j277-022-trial5"></script><script>window.RHSYouDoTrial.installJ277('+JSON.stringify(rhsSharedYouDoData).replace(/</g,"\\u003c")+');</script>':"";
+  // Lesson 031: publicly accessible teacher-only query-parameter preview. The Q4 wording
+  // comes from docs/j277-youdo-proposed-original-questions-qa-031-045.md, is not approved,
+  // and is NEVER substituted into the default lesson or published question bank.
+  const rhsSharedYouDoTrial=["021","022","031"].includes(String(number)) && new URLSearchParams(location.search).get("youdo-trial")==="1" && !useExamPilot;
+  const rhsSharedYouDoHead=rhsSharedYouDoTrial?'<link rel="stylesheet" href="../../../assets/rhs-youdo/youdo-presentation.css?v=20261122-rhs-youdo-031-preview1">':"";
+  const rhsSharedYouDoData=rhsSharedYouDoTrial?{lesson:String(number),code:lesson.k,priorExam:lesson.priorExam,questions:(String(number)==="031"?[...lesson.e,["A concert website receives requests from hundreds of compromised computers at the same time. Genuine customers cannot load the booking page.\n\nIdentify the type of attack and explain how it affects the website. [3 marks]","Distributed denial-of-service (DDoS) attack [1]. Requests come from multiple computers/sources [1]. The volume overwhelms service capacity, preventing legitimate access [1]."]]:lesson.e),visuals:(lesson.examVisuals||[]).map((v,i)=>v && !(String(number)==="021" && i===2 && v.title==="Two different network extents")?diagram(v):"")}:null;
+  const rhsSharedYouDoSetup=rhsSharedYouDoTrial?'<script src="../../../assets/rhs-youdo/youdo-presentation.js?v=20261122-rhs-youdo-031-preview1"></script><script>window.RHSYouDoTrial.installJ277('+JSON.stringify(rhsSharedYouDoData).replace(/</g,"\\u003c")+');</script>':"";
   // J277-only default presentation: one independent question per screen,
   // with every authored marking scheme revealed only after all questions.
   // Assessment, timed-practice and existing opt-in pilots keep their own flow.

@@ -119,15 +119,16 @@
          codeLines(parsed[1])+'</div>');
   }
   function installJ277(data){
-    if(active || !/^\/lessons\/j277\/lesson-(021|022)\//.test(location.pathname) ||
+    if(active || !/^\/lessons\/j277\/lesson-(021|022|031)\//.test(location.pathname) ||
        new URLSearchParams(location.search).get("youdo-trial")!=="1")return false;
     var host=document.getElementById("you-do"),container=host&&host.querySelector(".youdo-rolling");
-    if(!host||!container||!data||!["021","022"].includes(data.lesson)||!data.code||
-       !Array.isArray(data.questions)||data.questions.length!==3||!data.priorExam)return false;
-    var questions=[{
+    if(!host||!container||!data||!["021","022","031"].includes(data.lesson)||!data.code||
+       !Array.isArray(data.questions)||data.questions.length!==(data.lesson==="031"?4:3)||
+       (data.lesson!=="031"&&!data.priorExam))return false;
+    var questions=(data.lesson==="031"?[]:[{
       question:data.priorExam.q,answer:data.priorExam.a,label:"Previous learning",
       visual:""
-    }].concat(data.questions.map(function(item,i){
+    }]).concat(data.questions.map(function(item,i){
       return {question:item[0],answer:item[1],visual:(data.visuals||[])[i]||"",
         label:"Exam practice"};
     }));
@@ -149,7 +150,7 @@
       var found=String(q.question||"").match(/\[(\d+)\s*marks?\]/i);
       return total+(found?Number(found[1]):0);
     },0);
-    var challenge='<div class="rhs-y-head"><span>INDEPENDENT EXAM CHALLENGE</span>'+
+    var challenge='<div class="rhs-y-head"><span>'+(data.lesson==="031"?"DRAFT LESSON PREVIEW · 4 EXAM QUESTIONS":"INDEPENDENT EXAM CHALLENGE")+'</span>'+
       '<span>'+questions.length+' QUESTIONS · '+totalMarks+' MARKS</span></div><div class="rhs-y-challenge">'+
       questions.map(function(q,i){
         var text=String(q.question||"").split(/\n\s*\nSource:\s*/i)[0].trim();
@@ -166,7 +167,7 @@
     questions.forEach(function(q,i){
       var marks=String(q.question).match(/\[(\d+)\s*marks?\]/i);
       var label=marks?marks[1]+" MARKS":"";
-      stages.push(makeStage(header("SELF-MARK",i+1,questions.length,label)+
+      stages.push(makeStage(header(data.lesson==="031"?"DRAFT PREVIEW · SELF-MARK":"SELF-MARK",i+1,questions.length,label)+
         questionText(q.question)+'<div class="rhs-y-review-body'+(q.visual?' rhs-y-with-visual':'')+'">'+
         (q.visual?'<div class="rhs-y-visual">'+q.visual+'</div>':"")+
         '<div class="rhs-y-model">'+shortLabel("MODEL ANSWER · MARKING POINTS")+
