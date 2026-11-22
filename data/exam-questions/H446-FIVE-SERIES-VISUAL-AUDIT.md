@@ -47,3 +47,9 @@ The companion [147-row CSV audit](h446-five-series-visual-assets-audit.csv) incl
 
 **Safety/integrity:** Do not merge or publish these mapping/audit files to the live site without teacher sign-off. This audit performs no mutation of H446/J277 lessons, website CSS/JS, assignments, Cloudflare D1, student scores or existing artwork.
 
+
+## Initial artwork batch created (draft only)
+
+The first gap-fixing batch is now in [Draft PR #160](https://github.com/computingdept/reepham-computing/pull/160): six new SVGs across the full-adder, four-table learning-centre ERD, and wildlife BST families, with separate question/answer roles. It includes an isolated XML/raster QA workflow. This **does not** change the 147 visual requirement count, approve any draft, or establish that the remaining source-specific diagram parts are image-ready.
+
+The June 2025 question mapping is in [Paper 1 PR #156](https://github.com/computingdept/reepham-computing/pull/156) and [Paper 2 PR #157](https://github.com/computingdept/reepham-computing/pull/157). All four PRs remain separate and draft-only.
