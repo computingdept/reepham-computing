@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 133 original You Do source snapshot",
+  "lesson": "133",
+  "title": "LANs, WANs and Network Models",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-133.json",
+  "original_source_blob_sha": "4288fd49c497267acef62d18a44378ccbb4afeec",
+  "purpose": "Preserve the original Code First, model answer, previous learning, previous exam questions and answers, original visuals and challenge before teacher-preview-only Year 11 bank replacement. The Lesson 134 exam-classroom pilot and all ordinary lesson phases remain unchanged.",
+  "code_first": {
+    "q": "Use selection to describe a connection between two geographically separate school LANs.",
+    "code": "separateSites = true\nif separateSites then\n    print(\"Use a WAN link between LANs\")\nelse\n    print(\"One site: local LAN\")\nendif",
+    "p": [
+      "Predict the output.",
+      "Change separateSites to false.",
+      "Explain why two sites may need a WAN and why distance alone cannot classify every network."
+    ],
+    "a": "With separateSites true, output is Use a WAN link between LANs. With false, output is One site: local LAN. A WAN can connect LANs across separate geographical sites; actual classification involves scale, infrastructure and network management, rather than an arbitrary distance threshold. This is an illustrative decision."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "Explain one difference between LAN and WAN. [2 marks]",
+      "LAN covers smaller/local area; WAN connects over wide geographical areas."
+    ],
+    [
+      "Give one advantage of client-server networking. [2 marks]",
+      "Centralised user account, access or resource management."
+    ],
+    [
+      "Explain one drawback of peer-to-peer for a large school. [3 marks]",
+      "Harder to centrally manage permissions, security or backups across many devices."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 133,
+    "coreHint": "Classify the explicitly supplied site arrangement rather than using a made-up kilometre threshold.",
+    "stretch": {
+      "task": "Extend the program to show both outcomes clearly for separateSites true and false.",
+      "hint": "Change the Boolean and trace the appropriate IF/ELSE branch.",
+      "answer": "true → Use a WAN link between LANs; false → One site: local LAN. No kilometre threshold is needed."
+    },
+    "mastery": {
+      "task": "Design a network recommendation algorithm with two inputs: are offices in different towns, and is central administration required? Suggest WAN vs LAN connections and client-server vs peer-to-peer.",
+      "hint": "Use independent tests; don't treat physical distance as the sole rule.",
+      "answer": "Across towns calls for connected LANs via WAN; central user administration favours client-server. Test same building with/without central management."
+    }
+  }
+}
