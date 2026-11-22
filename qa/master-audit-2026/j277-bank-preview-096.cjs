@@ -43,7 +43,7 @@ const bankIds=["RHS-J277-026","RHS-J277-027","RHS-J277-141","RHS-J277-142"];
       assert.equal(await page.locator("#you-do .rhs-bank-question-stage:not([hidden])").count(),1);
       assert.equal(await page.locator("#you-do .rhs-bank-review-stage:not([hidden])").count(),0);
       assert.match(await page.locator("#you-do .rhs-bank-card").first().innerText(),/airport.*RAM.*ROM/is);
-      assert.match(await page.locator("#you-do .rhs-bank-head").last().innerText(),/8 MARKS/i);
+      assert.match(await page.locator("#you-do .rhs-bank-question-stage .rhs-bank-head").innerText(),/8 MARKS/i);
       assert.equal(await page.locator("#you-do").getAttribute("data-window-start"),"7");
       const before=await page.locator("#do-now").innerText();
       const clickControl=async id=>{
