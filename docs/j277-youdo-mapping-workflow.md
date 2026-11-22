@@ -15,19 +15,22 @@ The JSON mapping has **one record for each of 164 lessons**, with each record co
 
 [Read the complete 001–020 candidate question and mark-scheme review](j277-youdo-content-review-001-020.md) before approving any first-batch content. If the RHS bank lacks enough appropriate questions for a lesson, use a named original lesson-question fallback (with its original source index) and flag the coverage gap instead of inventing or silently repeating questions. The map intentionally stores **IDs instead of duplicating question text or answers**, which must always come from the referenced bank at use time.
 
-### Approved presentation contract
+### Approved presentation contract: Code First + fit-to-screen questions
 
-For each ordinary J277 lesson, the **You Do phase only** follows seven screens:
+The shared **You Do phase only** keeps its original navigation tab and starts with:
 
-1. Code First task.
-2. Code First answer immediately after pressing Next — **repeat the original question and starter code at the top, with the answer immediately below**. For a Predict task show the output (e.g. `11`); for a Write task show the required code instruction (e.g. `print(value)`). Do **not** display additional worked-example panels, repeated Predict/Change/Build steps or unrelated SVGs here. Preserve the full authored explanation in source answer data.
-3. Exactly four independent exam questions **on one screen**.
-4. The corresponding worked/marking answer to Q1 **on its own full screen** (with its original appropriate answer SVG, if available).
-5. The corresponding worked/marking answer to Q2 on its own full screen.
-6. The corresponding worked/marking answer to Q3 on its own full screen.
-7. The corresponding worked/marking answer to Q4 on its own full screen.
+1. **Code First** task, completely unchanged.
+2. **Code First answer**, with the original question and starter code repeated at the top and its answer immediately below.
+3. **Exam question screens**, displaying every mapped bank question and its marks. Use **up to four questions** only if they remain fully readable from a projector with no scrolling. **Two per screen** is preferred for longer text, code or calculations. **One per screen** is required for a large question diagram, table or any question that otherwise needs internal scrolling.
+4. **Individual self-mark screens**, exactly one complete question and its marking answer per screen.
 
-Projector fit, readable text, a 2×2 grid for the four questions, a separate projector-sized answer page for each question, mobile stacking and accessible question/answer SVG pairs are part of the acceptance test. **Question SVGs must fill enough of their 2×2 cards to make embedded values and labels readable from a classroom projector**; avoid tiny height caps and do not shrink figures merely to leave blank space. On every exam-answer screen, the answer SVG and explanation must START AT THE TOP directly beneath the header, not be vertically centred in the remaining page space. Do not return to four answers on one screen. The current common presentation files are `assets/j277/youdo-unified.js` and `assets/j277/youdo-unified.css`. Other live handlers still exist; inspect their actual precedence before any rollout.
+**Do not invent or repeat questions to fill a grid.** Preserve the mapping order and existing mark allocations. A question and its marks always stay together; never split one question between two screens. Large figures need sufficient projection space and must not be reduced to unreadable thumbnails. Source SVGs must match the question and must not reveal the answer.
+
+**Lesson 114 is the first fit-to-screen rollout.** It initially groups four bank questions into **two pages of two**. If either page overflows at the current projector size, the layout can split that pair into one-question screens. On phones it uses one question per screen. Earlier preview batches retain their layout until individually checked, to avoid untested site-wide changes.
+
+**No question-stage scroll bars on the classroom projector.** Adjust the number of questions, not the font size, to solve overcrowding. For a single exceptionally long question, test the original content at compact-projector resolution and resolve its layout without reducing the underlying question's meaning or marks. The answer page must still show the question and answer from the top of the screen, not a vertically centred answer that requires scrolling to find its first line.
+
+The implementation for these Year 11 preview pages is `assets/j277/year11-bank-preview.js` and `assets/j277/year11-bank-preview.css`, with progression handled by the existing `assets/h446-lesson/lesson.js` You Do branch. **Do not create another phase, alter other phase content, expose teacher-review warnings, or switch on the unpublished bank for ordinary student URLs.**
 
 ### Matching content to an illustration
 
@@ -45,7 +48,7 @@ Every visual needs source comparison, projector/mobile review and teacher approv
 
 - **Mapping is not publication.** As of 22 November, Lessons 001–017 and 019–020 have a four-slot candidate layout; Lesson 018 remains an assessment exception. Across the first 20 lessons, **72 unique RHS bank candidates plus four existing-lesson fallback questions** are mapped. Lesson 011 needs three further RHS bank questions and Lesson 016 needs one. Lessons 021–164 remain unmapped. Every lesson retains `published_bank_override_enabled: false` and `teacher_approved: false`. Do not flip these simply because code works.
 - The bank has **225 RHS-authored question parts with reviewed marking points**, but its own documentation says that **all question texts still require final originality/classroom checks**. Answer verification does not equal final publication approval.
-- Before enabling a bank override, verify exactly four question IDs, source eligibility, specification/lesson fit, accurate marks and accepted answers, visual correspondence, spacing and teacher sign-off.
+- Before enabling a bank override, verify the mapped question count (two to four for the archive-backed Year 11 preview), source eligibility, specification/lesson fit, accurate marks and accepted answers, visual correspondence, projector fit, spacing and teacher sign-off.
 - **Never delete** the legacy embedded question, answer, or SVG when switching the presentation. Keep fallbacks until the replacement is inspected.
 - Existing assessment/timed-practice exceptions must remain protected and explicitly reviewed before modification.
 - Change **only `#you-do`** (and J277-specific adapters/loaders where unavoidable). No modifications to Do Now, Objectives, New Learning, I Do, We Do, Vocabulary, Exit Ticket, H446, the shared navigation engine or Cloudflare login/scoring.
