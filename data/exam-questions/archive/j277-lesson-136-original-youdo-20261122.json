@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 136 original You Do source snapshot",
+  "lesson": "136",
+  "title": "Network Performance",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-136.json",
+  "original_source_blob_sha": "debfa72273e5e3413a4a1bfb1bdbab375ce8552c",
+  "purpose": "Preserve original Code First and its answer, original exam questions and answers, previous-learning prompt, old visuals and challenge; bank replacements are teacher-preview only inside You Do. Other phases and ordinary student URLs are untouched.",
+  "code_first": {
+    "q": "Predict transfer time.",
+    "code": "sizeMb = 48\nrateMbps = 12\ntimeSeconds = sizeMb DIV rateMbps\nprint(timeSeconds)",
+    "p": [
+      "Explain the first assignment or condition that determines the output.",
+      "Change rateMbps to 8.",
+      "Explain why actual time might be longer."
+    ],
+    "a": "4 s; 6 s; protocol overhead, latency or congestion."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "Explain the difference between bandwidth and latency. [2 marks]",
+      "Bandwidth is data capacity per unit time; latency is delay before response/transfer."
+    ],
+    [
+      "Calculate time for a 40 Mb file over 10 Mb/s ideal link. [2 marks]",
+      "40 ÷ 10 = 4 seconds."
+    ],
+    [
+      "Give two factors reducing Wi-Fi performance. [2 marks]",
+      "Interference, weak signal/distance, number of users or obstacles."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 136,
+    "coreHint": "Transfer time uses file size divided by transfer rate, with compatible units.",
+    "stretch": {
+      "task": "Adapt the program to include 2 seconds of fixed latency in the predicted time.",
+      "hint": "Add latency to the transfer time, rather than changing the rate.",
+      "answer": "48Mb/12Mbps =4s; with 2s delay, estimated 6s."
+    },
+    "mastery": {
+      "task": "Write a transfer-time function that rejects zero/negative speed and compares two connection rates, including fixed latency.",
+      "hint": "IF rate <=0 reject before division.",
+      "answer": "For 48Mb at 12Mbps with 2s latency ->6s; at 8Mbps ->8s. Zero speed must not cause division by zero."
+    }
+  }
+}
