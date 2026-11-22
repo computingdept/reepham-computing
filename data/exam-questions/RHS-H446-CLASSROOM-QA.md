@@ -193,3 +193,13 @@ The isolated `qa-2021-nov-paper2-q5-oop-preview.html` teacher page now uses full
 The **five Q5 parts stay as five distinct single-question screens**. Every screen has a question state and a separate consolidated answer state. Reveal **replaces**, not stacks, the question state; Previous/Next resets it. Q5(a) retains its class diagram and constructor answer, Q5(c) retains all five blanks and its exact five replacements, Q5(d) contains the full 9-line Gallery model, Q5(e) the 8-line bounded insertion method, and Q5(f) the 4-line instantiation/program example. The existing original RHS SVGs remain on the branch, as do the recorded question-bank and answer mappings. This preview-layer change does not approve or publish them.
 
 **Verification still pending:** direct rendering of the actual HTML at 1280×720 and teacher projector; line wrapping and horizontal overflow for long constructors, responsive mobile/print output, OCR source/marking-alternative review, and sign-off. Nothing has been enabled for students and no live lessons, J277, assignments or Cloudflare scoring changed.
+
+## Remaining November 2021 isolated preview audit — Q7 and Q3c/Q5c
+
+A source-level scan of the remaining four-question preview pages found two which still stacked revealed answers beneath their question prompts:
+- `qa-2021-nov-q7-preview.html` — four separate stack/BST parts.
+- `qa-2021-nov-q3c-q5c-preview.html` — JavaScript fee completion, half-adder expressions, truth table, and four-bit extension.
+
+Both have now been updated *on the isolated QA branch only* to hide question-prompt text when the corresponding consolidated answer is revealed, with prompt restored by Hide answer / Previous / Next. This follows the same `is-answer` reversible state pattern as the five earlier HTML previews. Original question/answer SVGs and mappings have not been modified.
+
+**Important:** hiding duplicate prose reduces vertical stacking but is not proof the answer and original artwork fit together at classroom projection size. The JavaScript code and four-bit adder schematic may still have small text at 50:50 scale. Direct browser rendering, answer accuracy/source review, mobile/print/accessibility and teacher signoff are required before approval. No student content enabled, no live lessons changed.
