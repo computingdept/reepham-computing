@@ -112,11 +112,25 @@
     var text=String(answer||"");
     var parsed=text.match(/^MODEL\s+[^\n]+\n([\s\S]*?)\n\s*EXPECTED RESULT\s*\n([\s\S]*)$/i);
     if(!parsed)return '<div class="rhs-y-answer-text">'+escapeHtml(text)+'</div>';
-    var sameCode=parsed[1].trim()===String(originalCode||"").trim();
-    return '<div class="rhs-y-expected">'+shortLabel("EXPECTED RESULT")+
-      '<strong>'+escapeHtml(parsed[2].trim())+'</strong></div>'+
-      (sameCode?"":'<div class="rhs-y-alternative">'+shortLabel("MODEL OCR ERL")+
-         codeLines(parsed[1])+'</div>');
+    var original=String(originalCode||"").replace(/\r\n?/g,"\n").trim().split("\n");
+    var model=parsed[1].replace(/\r\n?/g,"\n").trim().split("\n");
+    // Display only the changed instruction(s). The complete original source
+    // is already visible above; repeating the full model requires scrolling.
+    var changed=[];
+    for(var i=0;i<Math.max(original.length,model.length);i++){
+      if((original[i]||"")!==(model[i]||"") && model[i]!==undefined)
+        changed.push({number:i+1,text:model[i]});
+    }
+    var changes=changed.length?
+      '<div class="rhs-y-change">'+shortLabel("COMPLETE / CHANGE THE CODE")+
+      '<pre class="rhs-y-changed-lines">'+changed.map(function(line){
+        return '<span class="rhs-y-change-line"><span class="rhs-y-change-number">LINE '+
+          line.number+'</span><code>'+escapeHtml(line.text.trim())+'</code></span>';
+      }).join("")+'</pre></div>':
+      '';
+    return changes+
+      '<div class="rhs-y-expected">'+shortLabel("EXPECTED RESULT")+
+      '<strong>'+escapeHtml(parsed[2].trim())+'</strong></div>';
   }
   function installJ277(data){
     // One shared renderer for any ordinary J277 lesson with four available
