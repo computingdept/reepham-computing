@@ -31,6 +31,10 @@
   gap:clamp(10px,1.5vw,20px);
   margin-top:clamp(12px,1.5vh,19px)
 }
+/* Three-question lessons: use the full bottom width rather than an empty fourth tile. */
+#you-do[data-rhs-bank-preview="true"] .rhs-bank-grid:has(> .rhs-bank-card:nth-child(3):last-child) > .rhs-bank-card:last-child{
+  grid-column:1 / -1;
+}
 #you-do[data-rhs-bank-preview="true"] .rhs-bank-card{
   display:flex;flex-direction:column;min-height:0;min-width:0;
   padding:clamp(14px,1.55vw,22px);
@@ -49,12 +53,6 @@
   color:var(--rhs-bank-ink);font-size:clamp(19px,1.65vw,26px);
   line-height:1.34;font-weight:570;letter-spacing:-.014em;
   margin:clamp(10px,1.2vh,16px) 0 10px
-}
-#you-do[data-rhs-bank-preview="true"] .rhs-bank-visual-qa{
-  margin:10px 0 0;padding:7px 11px;
-  border-left:3px solid #c0a264;border-radius:3px;
-  background:#faf7ef;color:#65582e;
-  font-size:clamp(13px,.98vw,17px);font-weight:600;line-height:1.3;
 }
 #you-do[data-rhs-bank-preview="true"] .rhs-bank-source{
   display:block;color:#6c6c74;font-size:clamp(13px,.97vw,17px);
