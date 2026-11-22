@@ -2,7 +2,7 @@
 
 **DRAFT ONLY. No live lessons or student-release flags are changed.**
 
-This batch fixes the three deliberate image gaps identified in [the consolidated visual audit](H446-FIVE-SERIES-VISUAL-AUDIT.md) (the audit itself is a separate draft PR #159). It does not start a fresh design cycle.
+This batch fixes the three deliberate image gaps identified in [the consolidated visual audit](https://github.com/computingdept/reepham-computing/pull/159) (the audit itself is a separate draft PR #159). It does not start a fresh design cycle.
 
 ## Six new SVGs / three original diagram families
 
