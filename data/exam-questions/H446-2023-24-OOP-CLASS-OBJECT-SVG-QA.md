@@ -28,3 +28,11 @@ This batch contributes **nine original SVG diagrams, four unrevealed question vi
 **Scope protection:** nine new SVG source files in `assets/exam-questions/h446/question-view/`, this documentation/CSV and an isolated GitHub Actions workflow. No live H446/J277 lessons, CSS, JS, Cloudflare scoring, assignments or published revision changes.
 
 The Artifact constructor and encapsulation screens are deliberately separated so the answer to Q9(b)(iii) is not revealed when Q9(b)(i) is marked. The full class declarations and methods remain native-code tasks.
+
+## Final actual rendering review — 22 November 2026
+
+[GitHub Actions run 45045102826](https://github.com/computingdept/reepham-computing/actions/runs/45045102826) passed: **nine SVG files**, each XML-validated, accessible-title/description checked and rasterised as 1240×740 PNG. [Artwork evidence artifact 14763455751](https://github.com/computingdept/reepham-computing/actions/runs/45045102826/artifacts/14763455751) contains all nine rendered previews, a 3×3 contact sheet and the JSON validation report.
+
+**Manual screenshot inspection:** original and answer states are distinct, the enlarged Board has all 200 visible cells and comprehensible row/column labels, Cache reference index 3 points at the correct source-defined object only in the answer, and Explorer constructor values are disclosed only after reveal. The dedicated Artifact **encapsulation** answer is separate from the earlier constructor answer, avoiding a premature giveaway of Q9(b)(iii).
+
+**Approval boundary:** passing XML/raster checks is **not a projected half-screen classroom trial, independent official OCR source or mark-scheme check, or teacher approval**. Every one of the ten usage records remains `disabled_not_approved`. Original exam practice questions and source marking texts remain unmodified; J277, live lessons, scoring and Cloudflare are untouched.
