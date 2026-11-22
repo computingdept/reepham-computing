@@ -1,0 +1,81 @@
+name: H446 2025 SVG draft visual QA
+
+on:
+  push:
+    branches:
+      - qa/h446-2025-priority-svg-batch
+    paths:
+      - "assets/exam-questions/h446/question-view/2025-jun-*.svg"
+      - ".github/workflows/h446-2025-priority-svg-qa.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "assets/exam-questions/h446/question-view/2025-jun-*.svg"
+      - ".github/workflows/h446-2025-priority-svg-qa.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  render-qa-only:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install rasteriser
+        run: python -m pip install --disable-pip-version-check --quiet cairosvg pillow
+      - name: Validate and render all six source-specific SVGs
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          import io, json
+          import cairosvg
+          from PIL import Image, ImageDraw, ImageFont
+          root=Path("assets/exam-questions/h446/question-view")
+          names=[
+              "2025-jun-01-full-adder-partial-rhs-question.svg",
+              "2025-jun-01-full-adder-complete-rhs-answer.svg",
+              "2025-jun-01-learning-centre-erd-rhs-question.svg",
+              "2025-jun-01-learning-centre-erd-rhs-answer.svg",
+              "2025-jun-02-wildlife-bst-post-insertion-rhs-question.svg",
+              "2025-jun-02-wildlife-bst-post-insertion-rhs-answer.svg",
+          ]
+          out=Path("h446-2025-visual-evidence")
+          out.mkdir(exist_ok=True)
+          tiles=[]
+          report=[]
+          for name in names:
+              p=root/name
+              svg=ET.parse(p)
+              assert svg.getroot().tag.endswith("svg"), name
+              title=svg.find("{http://www.w3.org/2000/svg}title")
+              desc=svg.find("{http://www.w3.org/2000/svg}desc")
+              assert title is not None and desc is not None and title.text and desc.text, name
+              b=cairosvg.svg2png(url=str(p),output_width=1200)
+              img=Image.open(io.BytesIO(b)).convert("RGB")
+              img.save(out/(name.replace(".svg",".png")))
+              tile=img.copy()
+              tile.thumbnail((980,565),Image.Resampling.LANCZOS)
+              tiles.append((name,tile))
+              report.append({"source":str(p),"raster_size":img.size,"xml_valid":True,"alt_title":title.text,"alt_desc":desc.text})
+          sheet=Image.new("RGB",(2040,3*625),"#f3f4f5")
+          dr=ImageDraw.Draw(sheet)
+          for i,(name,img) in enumerate(tiles):
+              x=20+(i%2)*1020
+              y=20+(i//2)*625
+              sheet.paste(img,(x+(980-img.width)//2,y+40+(565-img.height)//2))
+              dr.text((x+12,y+12),name,fill="#202124")
+          sheet.save(out/"six-svg-contact-sheet.png")
+          (out/"report.json").write_text(json.dumps(report,indent=2),encoding="utf-8")
+          print(json.dumps({"svg_count":len(report),"all_valid":True,"contact_sheet":"six-svg-contact-sheet.png"}))
+          PY
+      - name: Archive SVG screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: h446-2025-six-svg-render-evidence
+          path: h446-2025-visual-evidence/
+          if-no-files-found: warn
