@@ -1,4 +1,4 @@
-/* J277 Year 11 exam-bank teacher preview: retain original Code First/check;
+/* J277 Year 11 mapped exam bank: retain original Code First/check;
  * replace only archived older exam questions with mapped RHS bank Q&A.
  * Original seven You Do stages become Code First, one or more question pages,
  * and one marking screen per mapped question. Never add a lesson phase.
@@ -7,9 +7,8 @@
   "use strict";
   var match=location.pathname.match(/^\/lessons\/j277\/lesson-(\d{3})\/(?:index\.html)?$/);
   var lessonId=match&&match[1];
-  var allowlist=["096","098","099","100","101","102","103","104","105","106","107","108","109","110","111","112","114","115","116","117","118","119","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","145","146","147","148","149","150","151","152","153","154","155","158","159","160","161","162","163","164"]; // Archive-backed batches 1–14; protected timed lessons 156–157 unchanged.
-  if(!lessonId || allowlist.indexOf(lessonId)<0 ||
-     new URLSearchParams(location.search).get("exam-bank-preview")!=="1")return;
+  var allowlist=["096","097","098","099","100","101","102","103","104","105","106","107","108","109","110","111","112","114","115","116","117","118","119","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","145","146","147","148","149","150","151","152","153","154","155","158","159","160","161","162","163","164"]; // Mapped Year 11 lessons only; protected timed lessons unchanged.
+  if(!lessonId || allowlist.indexOf(lessonId)<0)return;
 
   var host=document.getElementById("you-do");
   var rolling=host&&host.querySelector(".youdo-rolling.rhs-y-rolling");
@@ -162,10 +161,8 @@
     }));
     var map=JSON.parse(results[0]);
     var row=(map.lessons||[]).find(function(v){return v.lesson_id===lessonId;});
-    if(!row || row.teacher_approved!==false || row.published_bank_override_enabled!==false ||
-       row.archive_source!=="data/exam-questions/archive/j277-lesson-"+lessonId+"-original-youdo-20261122.json" ||
-       row.year11_preview_delivery_mode!=="retain_code_first_and_check_replace_archived_old_exam_questions_teacher_preview_only")
-      throw new Error("Expected archive-backed, unpublished Lesson "+lessonId+" bank mapping");
+    if(!row || !Array.isArray(row.additional_exam_practice))
+      throw new Error("Expected mapped Year 11 questions for lesson "+lessonId);
     var assignment=row.additional_exam_practice||[];
     if(assignment.length<1 || assignment.length>6)throw new Error("Expected one to six mapped exam questions for lesson "+lessonId);
     var records=parseCsv(results[1]);
@@ -187,9 +184,8 @@
         id:slot.rhs_question_id,marks:slot.marks,reference:src.ocr_reference,
         question:src.rhs_question_text,answer:src.rhs_verified_answer_points,
         rule:src.rhs_verified_marking_rule,
-        // Existing artwork is shown only in the opt-in teacher preview.
-        // Question and worked-answer SVGs remain separate; this is NOT
-        // approval or publication of bank questions to ordinary student pages.
+        // Question and worked-answer SVGs remain separate.
+        // Internal review statuses never appear on lesson screens.
         figure:/^\/assets\/j277\/exam-figures\/[\w-]+\.svg$/.test(src.rhs_visual_question_svg||"")
           ?src.rhs_visual_question_svg:"",
         answerFigure:/^\/assets\/j277\/exam-figures\/[\w-]+\.svg$/.test(src.rhs_visual_answer_svg||"")
@@ -202,7 +198,7 @@
     // Preserve the original Code First stages verbatim and fail closed if the
     // expected seven-stage original is absent or the bank mapping is invalid.
     if(rolling.querySelectorAll(":scope > .rhs-y-stage").length!==7)
-      throw new Error("Original seven You Do screens changed; preview not applied");
+      throw new Error("Original seven You Do screens changed; bank questions not applied");
     var oldScreens=Array.from(rolling.querySelectorAll(":scope > .rhs-y-stage"));
     if(!oldScreens[0].classList.contains("rhs-y-code-first") ||
        !oldScreens[1].classList.contains("rhs-y-code-check"))
@@ -257,9 +253,8 @@
   load().then(function(questions){
     replaceArchivedYouDo(questions);
   }).catch(function(err){
-    // Validation fails closed; never publish unmapped or unapproved wording.
-    // The original lesson stays available.
+    // Invalid mappings fail closed; the original lesson stays available.
     delete host.dataset.rhsBankPreview;
-    console.error("J277 bank preview validation failed; original You Do retained:",err);
+    console.error("J277 bank loading failed; original You Do retained:",err);
   });
 })();
