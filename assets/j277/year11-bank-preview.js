@@ -1,12 +1,12 @@
 /* J277 Year 11 exam-bank teacher preview: retain original Code First/check;
- * replace only the four archived older exam questions with mapped RHS bank Q&A.
+ * replace only archived older exam questions with mapped RHS bank Q&A.
  * Seven screens inside #you-do; never a new phase. Default page untouched.
  */
 (function(){
   "use strict";
   var match=location.pathname.match(/^\/lessons\/j277\/lesson-(\d{3})\/(?:index\.html)?$/);
   var lessonId=match&&match[1];
-  var allowlist=["096","098","099","100","101","102","103","104"]; // Archive-backed batches 1–2.
+  var allowlist=["096","098","099","100","101","102","103","104","105","106","107","108","109"]; // Archive-backed batches 1–3.
   if(!lessonId || allowlist.indexOf(lessonId)<0 ||
      new URLSearchParams(location.search).get("exam-bank-preview")!=="1")return;
 
@@ -62,25 +62,25 @@
   function intro(items){
     var total=items.reduce(function(sum,q){return sum+q.marks;},0);
     return '<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage rhs-bank-question-stage" hidden>'+
-      header("UNAPPROVED PREVIEW · ADDITIONAL EXAM PRACTICE",
+      header("ADDITIONAL EXAM PRACTICE",
         items.length+" QUESTIONS · "+total+" MARKS")+
-      '<p class="rhs-bank-instruction">Complete all four OCR-based exam questions independently. Check the separate marking answers afterwards.</p>'+
+      '<p class="rhs-bank-instruction">Complete all '+items.length+' OCR-based exam questions independently. Check the separate marking answers afterwards.</p>'+
       '<div class="rhs-bank-grid">'+items.map(function(q,i){
         return '<section class="rhs-bank-card">'+
           '<div class="rhs-bank-card-head"><span>Q'+(i+1)+'</span><span>'+q.marks+' MARK'+(q.marks===1?'':'S')+'</span></div>'+
           '<p class="rhs-bank-prompt">'+lineBreaks(originalQuestion(q.question))+'</p>'+
-          (q.visualPending?'<p class="rhs-bank-visual-qa">Teacher QA: source figure/layout still needs review</p>':"")+
+
           '<span class="rhs-bank-source">'+esc(q.reference)+'</span></section>';
       }).join("")+'</div></article>';
   }
   function markScreen(q,index,total){
     return '<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage rhs-bank-review-stage" hidden>'+
-      header("PREVIEW · SELF-MARK · QUESTION "+(index+1)+" OF "+total,
+      header("SELF-MARK · QUESTION "+(index+1)+" OF "+total,
         q.marks+" MARK"+(q.marks===1?'':'S'))+
       '<div class="rhs-bank-review-question">'+
       '<span class="rhs-bank-label">QUESTION · '+esc(q.id)+'</span>'+
       '<p>'+lineBreaks(originalQuestion(q.question))+'</p>'+
-      (q.visualPending?'<p class="rhs-bank-visual-qa">Teacher QA: source figure/layout still needs review</p>':"")+
+
       '</div>'+
       '<div class="rhs-bank-answer-content">'+
       '<span class="rhs-bank-label">ACCEPTABLE ANSWER POINTS</span>'+
@@ -92,8 +92,8 @@
   }
   async function load(){
     var urls=[
-      "/data/exam-questions/j277-youdo-lesson-map.json?v=20261122-y11-batch2-1",
-      "/data/exam-questions/j277-rhs-practice-drafts.csv?v=20261122-y11-batch2-1"
+      "/data/exam-questions/j277-youdo-lesson-map.json?v=20261122-y11-batch3-1",
+      "/data/exam-questions/j277-rhs-practice-drafts.csv?v=20261122-y11-batch3-1"
     ];
     var results=await Promise.all(urls.map(function(url){
       return fetch(url,{cache:"no-store"}).then(function(response){
@@ -108,7 +108,7 @@
        row.year11_preview_delivery_mode!=="retain_code_first_and_check_replace_archived_old_exam_questions_teacher_preview_only")
       throw new Error("Expected archive-backed, unpublished Lesson "+lessonId+" bank mapping");
     var assignment=row.additional_exam_practice||[];
-    if(assignment.length!==4)throw new Error("Expected four mapped exam questions for lesson "+lessonId);
+    if(assignment.length<3 || assignment.length>4)throw new Error("Expected three or four mapped exam questions for lesson "+lessonId);
     var records=parseCsv(results[1]);
     var bank=new Map(records.map(function(item){return [item.rhs_question_id,item];}));
     var ids=new Set();
@@ -134,7 +134,7 @@
   }
   function replaceArchivedYouDo(content,expectedCount){
     // Preserve both existing Code First stages verbatim, including worked answer.
-    // Replace ONLY the four old exam Q&A stages, backed up in GitHub archive.
+    // Replace ONLY old exam Q&A stages, backed up in GitHub archive.
     if(rolling.querySelectorAll(":scope > .rhs-y-stage").length!==7)
       throw new Error("Original seven You Do screens changed; preview not applied");
     var source=document.createElement("div");
