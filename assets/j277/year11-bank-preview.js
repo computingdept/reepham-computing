@@ -151,8 +151,8 @@
   }
   async function load(){
     var urls=[
-      "/data/exam-questions/j277-youdo-lesson-map.json?v=20261122-y11-images-v1",
-      "/data/exam-questions/j277-rhs-practice-drafts.csv?v=20261122-y11-images-v1"
+      "/data/exam-questions/j277-youdo-lesson-map.json?v=20261122-y11-artwork-b2",
+      "/data/exam-questions/j277-rhs-practice-drafts.csv?v=20261122-y11-artwork-b2"
     ];
     var results=await Promise.all(urls.map(function(url){
       return fetch(url,{cache:"no-store"}).then(function(response){
