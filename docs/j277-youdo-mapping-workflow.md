@@ -32,6 +32,7 @@ Projector fit, readable text, a 2×2 grid for the four questions, a separate pro
 The **RHS-authored question and verified answer points** supply the proposed replacement question and marking guidance; the existing lesson's authored diagram is a **candidate visual source**, not automatically correct for a new scenario.
 
 - **Reuse** only when numbers, labels, conditions and student/answer separation genuinely match.
+- **Never include hidden worked-answer SVGs on the student question screen.** The shared lesson controller can append a `.youdo-solution` to an original question card before the You Do renderer runs. Select question artwork outside `.youdo-solution`, `.solution-card` and `.answer-card`; source answer SVGs remain for their separate answer pages.
 - **Adapt** and redraw values where the visual structure is useful but the question differs.
 - **New visual/table** when no original fits; do not create an answer-bearing student prompt.
 - **None** when the question needs no figure.
