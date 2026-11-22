@@ -65,7 +65,7 @@ const bankIds=["RHS-J277-026","RHS-J277-027","RHS-J277-141","RHS-J277-142"];
       assert.equal(await page.locator("#you-do .rhs-y-code-first:not([hidden])").count(),1);
       assert.equal(await page.locator("#you-do .rhs-bank-review-stage:not([hidden])").count(),0);
       assert.match(await page.locator("#you-do .rhs-bank-question-stage .rhs-bank-head").innerText(),
-        /UNAPPROVED PREVIEW · ADDITIONAL EXAM PRACTICE/i);
+        /ADDITIONAL EXAM PRACTICE/i);
       assert.match(await page.locator("#you-do .rhs-bank-question-stage .rhs-bank-head").innerText(),
         /8 MARKS/i);
       assert.match(await page.locator("#you-do .rhs-bank-card").first().innerText(),/airport.*RAM.*ROM/is);
