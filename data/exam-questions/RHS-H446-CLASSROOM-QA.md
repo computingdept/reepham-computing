@@ -233,3 +233,20 @@ python data/exam-questions/qa-visual-review.py --output /tmp/h446-visual-review
 ```
 
 **Critical state:** The script has been committed, but **was not executed against the GitHub branch in this environment** because the local browser cannot retrieve the branch and asset bytes. No claim of successful live screenshot QA or teacher approval is made. The screenshots when generated are local evidence only; inspecting them on the real classroom projector and reviewing exam mark schemes are separate gates. No live lessons, GitHub `main`, student release flags, J277 or Cloudflare have been modified.
+
+## First genuine GitHub Actions Chromium visual audit — 22 November 2026
+
+The original Ubuntu 26.04 runner could not install Playwright Chromium 1.56, so the draft-branch-only workflow was corrected to run in the official `mcr.microsoft.com/playwright/python:v1.56.0-noble` browser container. **Completed browser run:** [Actions run 45010947509](https://github.com/computingdept/reepham-computing/actions/runs/45010947509). It generated the expected **124 screenshots** (31 question screens × question/answer × 2 viewports) plus `report.json` and `report.md`; [artifact 14749772575](https://github.com/computingdept/reepham-computing/actions/runs/45010947509/artifacts/14749772575) was uploaded successfully.
+
+Results before stronger gating: **62 viewport/question test combinations, 0 script-defined hard failures, 61 combinations with vertical scroll warnings**. Thus the workflow technically succeeded but **the classroom no-scrolling requirement failed in almost every case**. In the 1280×720 screenshots, Q5(c)(iii) four-bit-adder answer was visibly cut off at the bottom, while A* Q1(c)(ii) had a very small working grid. Source-only fixes were not enough.
+
+Maximum observed scroll at 1280×720 from this run included:
+- Paper 1 Q5(c)(iii) answer: 313 px;
+- Paper 1 customer database Q1(d) answer: 253 px;
+- Paper 1 LMC Q6(c) answer: 252 px;
+- Paper 2 BFS Q1(d) answer: 250 px;
+- Paper 2 A* Q1(c)(ii) answer: 211 px.
+
+**Safeguard added following review:** `qa-visual-review.py` now counts vertical page scrolling in question **or** answer state as a *blocking visual QA failure*, not merely a warning. This stricter gate is expected to fail until those layouts are actually corrected; it does not publish or approve anything. Other checks (missing images, answer leakage, horizontal overflow, code-panel overflow, JS errors) found no blocking failures in the first run.
+
+**Status:** actual browser evidence has been obtained, but visual QA **FAILED the teaching requirement**. All 75 November 2021 question parts remain `disabled_not_approved`; do not merge this draft, release content, or change live lessons. Fix answer-screen height and text legibility, rerun evidence, and require teacher signoff.
