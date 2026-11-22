@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 114 original You Do source snapshot",
+  "lesson": "114",
+  "title": "String Manipulation",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-114.json",
+  "original_source_blob_sha": "b3dea2949865ced55ac37d0a10d04db333d2401f",
+  "purpose": "Preserve original Code First, previous-learning question, original exam questions, answers and source exam visuals for an archive-backed, preview-only Year 11 bank question replacement. No changes to lesson source or other phases.",
+  "code_first": {
+    "q": "On a mini-whiteboard, complete the missing assignment so the code prints MAT-27. Use uppercase conversion and concatenation; then test.",
+    "code": "student = \"Matilda\"\ngroup = \"27\"\nfirst = student.left(3)\ncode = ____________________\nprint(code)",
+    "p": [
+      "Identify the first three characters of Matilda.",
+      "Use .upper and join the hyphen and group as strings.",
+      "Check that the exact output is MAT-27."
+    ],
+    "a": "MODEL OCR ERL\nstudent = \"Matilda\"\ngroup = \"27\"\nfirst = student.left(3)\ncode = first.upper + \"-\" + group\nprint(code)\n\nEXPECTED OUTPUT\nMAT-27"
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "Trace the following OCR Exam Reference Language. Write the exact TWO lines printed. Show how the substring is selected. [4 marks]\n\nusername = \"TylerFox\"\nprefix = username.left(2)\nsuffix = username.substring(5, 3)\ncode = prefix.upper + \"-\" + suffix.lower\nprint(code)\nprint(code.length)",
+      "prefix = \"Ty\"; suffix = \"Fox\" (begin at index 5 and take 3 characters).\nFirst output: TY-fox.\nSecond output: 6 (two letters, hyphen, three letters).\nMarking: correct parts (1), correct case and concatenation (1), exact first output (1), correct length (1)."
+    ],
+    [
+      "A school generates a pupil identifier from the FIRST three letters of firstName and the LAST three letters of surname, both uppercase, separated by a hyphen.\n\nWith firstName = \"Georgia\" and surname = \"Mitchell\", the required output is GEO-ELL.\n\nWrite an OCR Exam Reference Language algorithm that prints \"Invalid\" if EITHER name has fewer than three characters; otherwise print the identifier. [6 marks]",
+      "MODEL OCR ERL\nfirstName = \"Georgia\"\nsurname = \"Mitchell\"\nif firstName.length >= 3 AND surname.length >= 3 then\n    firstPart = firstName.left(3)\n    lastPart = surname.right(3)\n    print(firstPart.upper + \"-\" + lastPart.upper)\nelse\n    print(\"Invalid\")\nendif\n\nExpected output: GEO-ELL.\nMarking: checks lengths of both inputs (2), correct left(3) (1), correct right(3) (1), uppercase and hyphen concatenation (1), correct valid/invalid output paths (1). Accept equivalent correct OCR ERL."
+    ],
+    [
+      "A programmer intends the following program to print MAT-27, but it produces the wrong result.\n\nstudent = \"Matilda\"\ngroup = \"27\"\ncode = student.substring(1, 3) + group\nprint(code)\n\n(a) State the output of the original program. [1]\n(b) Identify THREE changes needed to produce MAT-27. [3]\n(c) Rewrite the string-handling statements using OCR Exam Reference Language so the program prints MAT-27. [2]\n[6 marks total]",
+      "(a) ati27.\n(b) Select characters starting at index 0, not index 1; convert the letters to uppercase; insert a quoted hyphen between the letters and group.\n(c) One acceptable answer:\nfirst = student.left(3)\ncode = first.upper + \"-\" + group\nprint(code)\nAlternative: student.substring(0, 3) instead of left(3).\nMarking: exact original output (1), three distinct corrections (3), valid slicing and uppercase (1), correct concatenation and print (1)."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 114,
+    "coreHint": "Use OCR ERL .left, .right and .substring(start, count); a quoted hyphen is a single string character.",
+    "stretch": {
+      "task": "Adapt the worked example for student = \"Harrison\" and club = \"Robotics\": produce SON:ROB using right(3), left(3), .upper and a colon. Then print the length. Write OCR ERL.",
+      "hint": "The last three letters of Harrison are son; the first three of Robotics are Rob. A colon counts as one character.",
+      "answer": "MODEL OCR ERL\nstudent = \"Harrison\"\nclub = \"Robotics\"\na = student.right(3)\nb = club.left(3)\ncode = a.upper + \":\" + b.upper\nprint(code)\nprint(code.length)\n\nOutputs: SON:ROB and 7."
+    },
+    "mastery": {
+      "task": "Design an OCR ERL algorithm that accepts a surname and a two-character year code. If surname has fewer than three characters OR year code is not exactly two characters, print Invalid. Otherwise print the first three surname letters in uppercase, followed by a hyphen and the year code. Give one normal, one boundary and one invalid test.",
+      "hint": "Check both lengths before calling .left(3). Use .length for each condition and concatenate strings with +.",
+      "answer": "MODEL OCR ERL\nsurname = input(\"Surname\")\nyearCode = input(\"Two-character year code\")\nif surname.length >= 3 AND yearCode.length == 2 then\n    prefix = surname.left(3)\n    print(prefix.upper + \"-\" + yearCode)\nelse\n    print(\"Invalid\")\nendif\n\nTests: surname = \"Mason\", yearCode = \"27\" -> MAS-27 (normal); surname = \"Lee\", yearCode = \"27\" -> LEE-27 (boundary valid); surname = \"Li\", yearCode = \"27\" -> Invalid (invalid). Also test a one-character year code."
+    }
+  }
+}
