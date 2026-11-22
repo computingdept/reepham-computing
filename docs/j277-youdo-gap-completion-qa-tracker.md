@@ -40,3 +40,10 @@
 - These are independent RHS-style drafts, not OCR past-paper items and not part of the 225 verified bank records.
 - There are now 16 newly drafted gap fillers and **50 genuinely unfilled ordinary question slots** in the 164-lesson review inventory.
 - Code/array/trace snippets need explicit mono-spaced layout, source and answer separation, step-by-step mark audit, and half-screen projector check. Teacher approval and every student bank override remain disabled.
+
+## Third gap-completion batch: Lessons 102–119
+
+- Added **16 original, editorial-only** fourth-question drafts (102, 105–119), with individual proposed answer points and explicit marks. These are not OCR past-paper questions or verified RHS bank items.
+- **32** newly authored draft positions in total; **34** ordinary question positions remain empty.
+- First independent QA priority: numeric traces, binary/hex conversions, SQL syntax, pseudocode semantics and whether each question is meaningfully different from the existing three in its lesson.
+- Content exists only in the canonical review map and [the third draft review](j277-youdo-proposed-original-questions-qa-102-119.md). All teacher approval and publication flags remain off.
