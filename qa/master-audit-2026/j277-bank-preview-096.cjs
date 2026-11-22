@@ -42,7 +42,7 @@ const bankIds=["RHS-J277-026","RHS-J277-027","RHS-J277-141","RHS-J277-142"];
       await page.goto(prefix+"?exam-bank-preview=1#you-do",
         {waitUntil:"domcontentloaded"});
       await page.locator("#you-do[data-rhs-bank-preview=true] .rhs-bank-card")
-        .first().waitFor({timeout:30000});
+        .first().waitFor({state:"attached",timeout:30000});
 
       assert.equal(await page.locator("#exam-practice").count(),0,
         "Separate exam practice phase must not exist");
