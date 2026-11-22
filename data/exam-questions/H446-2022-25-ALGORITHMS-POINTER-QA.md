@@ -22,3 +22,11 @@ This small batch builds **nine SVG assets across four exam-question families**. 
 [The 14-role register](h446-2022-25-algorithms-pointer-map.csv) records source IDs, roles and approval gates for the nine SVG files. Each is `disabled_not_approved`. A GitHub Actions workflow performs XML parsing and 1240×740 raster rendering, storing a **nine-image contact sheet** and individual PNGs.
 
 **No H446/J277 lesson HTML, CSS, JS, Cloudflare scoring, assignments, or existing published resources are changed.** Release still requires original source checks, independent marking alternatives, projector/accessibility review and teacher sign-off.
+
+## Final screenshot and XML QA — 22 November 2026
+
+The **final nine-SVG GitHub Actions run** [45033098186](https://github.com/computingdept/reepham-computing/actions/runs/45033098186) passed XML validation and raster output for all nine 1240×740 SVGs. [Artifact 14758119328](https://github.com/computingdept/reepham-computing/actions/runs/45033098186/artifacts/14758119328) includes nine individual PNGs, one 3×3 contact sheet, and the JSON technical QA report.
+
+**Manual screenshot findings and fixes:** the first merged-stage labels were adjacent to/over initial tiles, the source array's rightmost card neared the diagram edge, and the linked-deletion explanation overlapped an example heading. Those items were corrected in the draft branch, the free-list append caption was shortened, and the entire batch rerendered successfully. Final visual inspection confirmed visible nine-image layouts with separate question and answer content and no detected cropped data or overlapping captions.
+
+**Still blocked:** original OCR source-context and alternative marking checks, real projector-distance readability, accessibility beyond SVG title/description inspection, and teacher sign-off. Every one of the fourteen role associations remains `disabled_not_approved`; no H446/J277 live lesson, CSS/JS, Cloudflare or assignment scoring was changed.
