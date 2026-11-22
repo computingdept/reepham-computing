@@ -63,6 +63,8 @@ Every visual needs source comparison, projector/mobile review and teacher approv
 
 [Third editorial question-completion batch](j277-youdo-proposed-original-questions-qa-102-119.md) adds 16 draft-only questions for lessons 102–119. **34 genuinely empty positions** remain; all 32 new drafts need separate marking and projector QA before the user's final review.
 
+**Draft candidate coverage completed:** all 150 ordinary lessons now have four source-backed or original-draft question positions, 14 protected exceptions remain untouched, and **no empty proposal slots remain**. There are 66 new, still-unverified editorial drafts. See the [consolidated 164-lesson final teacher review register](j277-youdo-consolidated-final-review-register.md), [drafts 122–140](j277-youdo-proposed-original-questions-qa-122-140.md) and [drafts 141–164](j277-youdo-proposed-original-questions-qa-141-164.md). Classroom visuals and marking QA are **not complete**; do not enable any student display overrides before explicit teacher review.
+
 ### Approval and publishing gates
 
 - **Mapping is not publication.** As of 22 November, Lessons 001–020 have the previously recorded first review, while Lessons 021–040 now have second-batch bank proposals or explicit coverage gaps/exceptions. All 164 lessons have now been processed for review. Unfilled proposal slots are intentional pending authoring, not evidence of publication readiness.. Every lesson retains `published_bank_override_enabled: false` and `teacher_approved: false`. Do not flip these simply because code works.
