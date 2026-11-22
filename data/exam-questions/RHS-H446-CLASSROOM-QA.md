@@ -203,3 +203,20 @@ A source-level scan of the remaining four-question preview pages found two which
 Both have now been updated *on the isolated QA branch only* to hide question-prompt text when the corresponding consolidated answer is revealed, with prompt restored by Hide answer / Previous / Next. This follows the same `is-answer` reversible state pattern as the five earlier HTML previews. Original question/answer SVGs and mappings have not been modified.
 
 **Important:** hiding duplicate prose reduces vertical stacking but is not proof the answer and original artwork fit together at classroom projection size. The JavaScript code and four-bit adder schematic may still have small text at 50:50 scale. Direct browser rendering, answer accuracy/source review, mobile/print/accessibility and teacher signoff are required before approval. No student content enabled, no live lessons changed.
+
+## November 2021 eight-preview viewport audit — 22 November 2026
+
+**Method and limitation:** This pass inspected the **actual HTML/CSS/JS source fetched from GitHub** for all eight QA preview pages and checked image references, per-question sections, answer navigation/reset code and potential viewport constraints. Local Chromium and Playwright are available, but network access to retrieve the private QA branch into that browser is unavailable. Therefore **no direct branch-derived browser screenshot or actual projector test was performed**, and this section must not be described as rendered visual approval.
+
+| Preview | Questions | Source-level finding / risk |
+| --- | ---: | --- |
+| `qa-2021-nov-q7-preview.html` | 4 | **Confirmed forced-height defect**: `min-height:660px` on split pane compounded header/footer dimensions at 720p; removed the fixed minimum and set image-height caps relative to viewport. **Requires browser verification**, especially the BST after reveal. |
+| `qa-2021-nov-q3c-q5c-preview.html` | 4 | Single answer reveal state now resets; 50:50 SVG diagrams still need direct legibility and clipping review. |
+| `qa-2021-nov-q1d-preview.html` | 4 | Question/answer states reset correctly in source; relational-card and SQL answer line fit untested. |
+| `qa-2021-nov-q6-preview.html` | 2 | Code-heavy 65:35 split and complete 22-line source/table combination confirmed in source; at 720p lines may still require zoom. |
+| `qa-2021-nov-paper2-astar-preview.html` | 2 | Directed graph, blank grid, completed trace and toggle present; arrow labels and scrolling remain untested. |
+| `qa-2021-nov-paper2-q1d-q2-preview.html` | 3 | Native full-width binary-search code replaces shrunk SVG for Q2(a), but viewport-height check outstanding. |
+| `qa-2021-nov-paper2-q5-oop-preview.html` | 5 | Full-width Venue/Gallery/CampusMap text and reversible single-answer state confirmed; long constructor horizontal fit outstanding. |
+| `qa-2021-nov-paper2-q6-q8-preview.html` | 7 | Native full-width rowClue with five blanks present; 19 lines at 27px line-height can still challenge 720p height. |
+
+**Structural coverage: 31 question screens across eight QA previews.** All previews contain question-navigation/answer-reset logic. This does not verify that page layouts fit within 1280×720, that every SVG renders without clipping, or that all marks and wording are correct. Existing **75/75 `disabled_not_approved`** release flags remain enforced. To complete the outstanding genuine visual gate: open the branch's QA previews in a browser able to load their linked assets, take before/after-reveal screenshots at 1280×720 and 1366×768, inspect zoom/overflow and then obtain teacher sign-off. Do not merge or deploy automatically.
