@@ -47,3 +47,11 @@
 - **32** newly authored draft positions in total; **34** ordinary question positions remain empty.
 - First independent QA priority: numeric traces, binary/hex conversions, SQL syntax, pseudocode semantics and whether each question is meaningfully different from the existing three in its lesson.
 - Content exists only in the canonical review map and [the third draft review](j277-youdo-proposed-original-questions-qa-102-119.md). All teacher approval and publication flags remain off.
+
+## Final gap-completion batch: Lessons 122–164
+
+- Added **34** newly authored, editorial-only Q4 drafts (16 for 122–140, 18 for 141–164) in [the fourth review](j277-youdo-proposed-original-questions-qa-122-140.md) and [fifth review](j277-youdo-proposed-original-questions-qa-141-164.md).
+- **66 original Q4 drafts total**, all with proposed mark points, but still awaiting independent marking verification and teacher sign-off.
+- **Zero genuinely empty ordinary question positions**: 150 ordinary lessons × 4 candidate slots = 600 positions; 14 protected exceptions.
+- A [single consolidated 164-lesson review register](j277-youdo-consolidated-final-review-register.md) identifies every lesson's source/proposal status, specific marking risks and the remaining artwork/projector QA requirements.
+- **IMPORTANT:** Completion of candidate slots is *not publication readiness*. No draft, source fallback or visual has been teacher-approved, and all bank override flags remain disabled.
