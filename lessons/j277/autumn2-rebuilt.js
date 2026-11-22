@@ -2104,7 +2104,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       v && !(String(number)==="021" && i===2 && v.title==="Two different network extents")?diagram(v):"")
   }:null;
   const rhsSharedYouDoHead=rhsSharedYouDoEnabled?
-    '<link rel="stylesheet" href="../../../assets/rhs-youdo/youdo-presentation-20261122-compact.css?v=20261122-all-j277-1">':"";
+    '<link rel="stylesheet" href="../../../assets/rhs-youdo/youdo-presentation-20261122-compact.css?v=20261122-projector-type-2">':"";
   const rhsSharedYouDoSetup=rhsSharedYouDoEnabled?
     '<script src="../../../assets/rhs-youdo/youdo-presentation-20261122-compact.js?v=20261122-all-j277-1"></script><script>window.RHSYouDoTrial.installJ277('+JSON.stringify(rhsSharedYouDoData).replace(/</g,"\\u003c")+');</script>':"";
   // J277-only default presentation: one independent question per screen,
