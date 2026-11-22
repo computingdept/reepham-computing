@@ -2131,25 +2131,23 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   // the seven stages; this otherwise silently restores the grouped layout.
   const defaultYouDo=useExamPilot||rhsSharedYouDoEnabled?"":unifiedJ277?unifiedScripts:
     '<script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"></script>';
-  // J277 Year 11 archive-backed teacher-preview batches 1–14. Retain Code
-  // First and its check; replace only previous practice questions in You Do.
-  // Keep source-figure review metadata in GitHub, never on lesson screens.
-  // No extra phase/tab or change to ordinary student lessons.
-  const rhsYear11BankPreview=["096","098","099","100","101","102","103","104","105","106","107","108","109","110","111","112","114","115","116","117","118","119","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","145","146","147","148","149","150","151","152","153","154","155","158","159","160","161","162","163","164"].includes(String(number)) &&
-    !!lesson.year11 && !lesson.isAssessment && rhsSharedYouDoEnabled &&
-    new URLSearchParams(location.search).get("exam-bank-preview")==="1";
-  const rhsYear11BankPreviewHead=rhsYear11BankPreview
-    ?'<link rel="stylesheet" href="../../../assets/j277/year11-bank-preview.css?v=20261122-j277-artwork-b2">':"";
-  const rhsYear11BankPreviewSetup=rhsYear11BankPreview
-    ?'<script src="../../../assets/j277/year11-bank-preview.js?v=20261122-j277-artwork-b2"></script>':"";
-  const lessonControllerVersion=rhsExamPilot?"20261121-rhs-codefirst-isolated-v10":rhsYear11BankPreview?"20261122-j277-artwork-controller-b2":"20261115-codefirst-brush2";
-  const html=pilotHead.replace("</head>",rhsSharedYouDoHead+rhsYear11BankPreviewHead+"</head>")+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")+(lesson.visualAuditV3?" j277-visual-v3":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
+  // J277 Year 11 mapped bank questions appear in the standard You Do phase.
+  // Keep both original Code First screens; replace only the older practice slides.
+  // Review metadata stays in GitHub, not on the student-facing lesson.
+  const rhsYear11BankActive=["096","097","098","099","100","101","102","103","104","105","106","107","108","109","110","111","112","114","115","116","117","118","119","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","145","146","147","148","149","150","151","152","153","154","155","158","159","160","161","162","163","164"].includes(String(number)) &&
+    !!lesson.year11 && !lesson.isAssessment && rhsSharedYouDoEnabled;
+  const rhsYear11BankActiveHead=rhsYear11BankActive
+    ?'<link rel="stylesheet" href="../../../assets/j277/year11-bank-preview.css?v=20261122-j277-live-b1">':"";
+  const rhsYear11BankActiveSetup=rhsYear11BankActive
+    ?'<script src="../../../assets/j277/year11-bank-preview.js?v=20261122-j277-live-b1"></script>':"";
+  const lessonControllerVersion=rhsExamPilot?"20261121-rhs-codefirst-isolated-v10":rhsYear11BankActive?"20261122-j277-live-controller-b1":"20261115-codefirst-brush2";
+  const html=pilotHead.replace("</head>",rhsSharedYouDoHead+rhsYear11BankActiveHead+"</head>")+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")+(lesson.visualAuditV3?" j277-visual-v3":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
    <a class="course-back" href="../../../j277-hub.html?year=${lesson.year11?11:10}#lessons">← Year ${lesson.year11?11:10} lessons</a>
    <nav class="phase-nav" aria-label="Lesson phases">${arr(nav,(id,i)=>`<button type="button" data-page="${id}">${names[i]}</button>`)}</nav>
    <div class="nav-tools"><button id="advance" class="control-btn">Continue →</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div></div>
    <div class="signal-wrap"><div class="signals" aria-label="Classroom routine"><span id="phase-logo" class="signal-tile signal-phase"></span><span id="behaviour-logo" class="signal-tile signal-routine"></span><span id="response-logo" class="signal-tile signal-response"></span></div><div class="signal-meta"><span id="phase-time" class="signal-phase-time"></span><span class="lesson-label">OCR J277 · Lesson ${number}<br>${escape(lesson.t)}</span></div></div>
    <main id="main">${parts.join("")}</main><div class="lesson-footer">Lesson ${number} · ${escape(lesson.t)} <span>Year ${lesson.year11?11:10} · OCR J277 · Original exam-style questions</span></div>
-   ${pilotSetup}${rhsSharedYouDoSetup}<script src="../../../assets/h446-lesson/lesson.js?v=${lessonControllerVersion}"></script>${rhsYear11BankPreviewSetup}${cpuSync}${idoSync}${y11Sync}${defaultYouDo}<script src="../../../assets/classroom-visual-zoom.js?v=20261114-clickclose2"></script></body></html>`;
+   ${pilotSetup}${rhsSharedYouDoSetup}<script src="../../../assets/h446-lesson/lesson.js?v=${lessonControllerVersion}"></script>${rhsYear11BankActiveSetup}${cpuSync}${idoSync}${y11Sync}${defaultYouDo}<script src="../../../assets/classroom-visual-zoom.js?v=20261114-clickclose2"></script></body></html>`;
   document.open();document.write(html);document.close();
  }
  function renderAnswers(number,lesson){
