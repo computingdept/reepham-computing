@@ -159,6 +159,35 @@ function welcomeReviewShow(page,index){
     phone?'SELF-MARK · Q'+(step+1)+' OF 4':'SELF-MARK · Q2–Q4';
   return true;
 }
+/* H446 standard You Do: question, then its own model answer.
+   Do not apply to J277, timed assessments, rich/grouped marking, or Code First. */
+function h446SequentialQuestions(page){
+  if(!page||!/^\/lessons\/h446\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname))return [];
+  if(page.dataset.assessmentMode==='true'||page.dataset.codingFirst==='true'||page.dataset.youDoMode==='coding'||
+    page.dataset.selfMarking==='rich'||page.dataset.selfMarking==='grouped'||page.dataset.j277SeparateReview==='true'||
+    page.querySelector('.youdo-stage'))return [];
+  const questions=[...page.querySelectorAll('.youdo-question')];
+  return questions.length&&questions.every(q=>q.querySelector('.youdo-solution'))?questions:[];
+}
+function isH446SequentialYouDo(page){return h446SequentialQuestions(page).length>0;}
+function showH446SequentialStage(page,n,answer){
+  const qs=h446SequentialQuestions(page);
+  if(!qs.length)return false;
+  const i=Math.max(0,Math.min(n,qs.length-1));
+  page.dataset.answerMode=answer?'true':'false';
+  page.dataset.answerIndex=String(i);
+  page.dataset.windowStart=String(i);
+  page.dataset.workMode='independent';
+  page.dataset.h446Sequential='true';
+  qs.forEach((q,k)=>{q.hidden=k!==i;q.querySelector('.youdo-solution').hidden=k!==i||!answer;});
+  const p=page.querySelector('.youdo-window-progress');
+  if(p)p.textContent=(answer?'ANSWER ':'QUESTION ')+(i+1)+' OF '+qs.length;
+  qs[i].scrollTop=0;
+  const prompt=qs[i].querySelector('.youdo-question-prompt');
+  if(prompt)prompt.scrollTop=0;
+  return true;
+}
+
 function showYouDoAnswer(page,index){
   const questions=[...page.querySelectorAll('.youdo-question')];
   if(!questions.length)return;
@@ -735,6 +764,7 @@ function resetPhaseState(id){
     const questions=[...page.querySelectorAll('.youdo-question')];
     if(questions.length){
       setYouDoWindow(page,0);
+      if(isH446SequentialYouDo(page))showH446SequentialStage(page,0,false);
     }else{
       const stages=[...page.querySelectorAll('.youdo-stage')];
       if(stages.length)showOnly(stages,0);
@@ -991,7 +1021,10 @@ function updateControl(){
       label='Reveal model response';
     }
   }else if(current==='you-do'){
-    if(page.dataset.welcomeGroupedReview==='true'){
+    if(isH446SequentialYouDo(page)){
+      const i=Number(page.dataset.answerIndex||0),count=h446SequentialQuestions(page).length;
+      label=page.dataset.answerMode==='true'?(i<count-1?'Next question →':'Continue → Key Vocabulary'):'Reveal answer →';
+    }else if(page.dataset.welcomeGroupedReview==='true'){
       if(page.dataset.answerMode==='true'){
         const index=Number(page.dataset.reviewIndex||0);
         const max=window.matchMedia('(max-width:700px)').matches?3:1;
@@ -1221,6 +1254,13 @@ function next(){
     }
   }
   if(current==='you-do'){
+    if(isH446SequentialYouDo(page)){
+      const i=Number(page.dataset.answerIndex||0),count=h446SequentialQuestions(page).length;
+      if(page.dataset.answerMode!=='true')showH446SequentialStage(page,i,true);
+      else if(i<count-1)showH446SequentialStage(page,i+1,false);
+      else{showPage('vocabulary');return;}
+      updateSignals('you-do');updateControl();return;
+    }
     if(page.dataset.welcomeGroupedReview==='true'&&page.dataset.answerMode==='true'){
       const index=Number(page.dataset.reviewIndex||0);
       const max=window.matchMedia('(max-width:700px)').matches?3:1;
@@ -1348,7 +1388,8 @@ function previousAction(){
         const qs=[...yp.querySelectorAll('.youdo-question')];
         yp.dataset.workMode='independent';
         if(qs.length){
-          if(isH446RichReview(yp)&&showH446RichReview(yp,true,
+          if(isH446SequentialYouDo(yp))showH446SequentialStage(yp,qs.length-1,true);
+          else if(isH446RichReview(yp)&&showH446RichReview(yp,true,
               yp.querySelectorAll('.h446-rich-stage').length-1)){
             // Restore the final model answer when returning from an optional phase.
           }else{
@@ -1434,6 +1475,8 @@ function previousAction(){
         // Back from vocabulary returns to the final rich model-answer screen.
       }else if(questions.length&&isH446GroupedMarking(youPage)&&showH446GroupedMarking(youPage,true,Math.max(0,questions.length-1),'answer')){
         // Back from vocabulary returns to the final teacher-led review screen.
+      }else if(questions.length&&isH446SequentialYouDo(youPage)){
+        showH446SequentialStage(youPage,questions.length-1,true);
       }else if(questions.length){
         const requestedSize=Math.max(1,Number(youPage.dataset.windowSize||3));
         const size=Math.min(requestedSize,questions.length);
@@ -1448,6 +1491,13 @@ function previousAction(){
     return;
   }
   if(current==='you-do'){
+    if(isH446SequentialYouDo(page)){
+      const i=Number(page.dataset.answerIndex||0);
+      if(page.dataset.answerMode==='true')showH446SequentialStage(page,i,false);
+      else if(i>0)showH446SequentialStage(page,i-1,true);
+      else{showPage('we-do');return;}
+      updateSignals('you-do');updateControl();return;
+    }
     if(page.dataset.welcomeGroupedReview==='true'&&page.dataset.answerMode==='true'){
       const i=Number(page.dataset.reviewIndex||0);
       if(i>0){welcomeReviewShow(page,i-1);updateControl();return;}
