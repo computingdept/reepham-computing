@@ -1,6 +1,6 @@
 # J277 You Do — source-of-truth and publishing workflow
 
-**Status: Lessons 001–100 processed in successive content review batches; no live exam-bank overrides enabled.** Updated 22 November 2026.
+**Status: Lessons 001–120 processed in successive content review batches; no live exam-bank overrides enabled.** Updated 22 November 2026.
 
 ## Read these files before changing J277 You Do
 
@@ -49,9 +49,11 @@ Every visual needs source comparison, projector/mobile review and teacher approv
 
 [Original question fallback review 061–070](j277-youdo-original-fallback-review-061-070.md), [fallback review 071–080](j277-youdo-original-fallback-review-071-080.md), and [RHS question review 081–100](j277-youdo-content-review-081-100.md) are the latest unpublished review records. 061–080 adds 36 source-linked fallbacks, with six slots still needing suitable content. 081–100 maps 34 additional unique RHS bank parts and leaves 38 ordinary slots awaiting fallback inspection. Lessons 094 and 095 are protected assessment/bridge exceptions. All question wording, answers, original visual suitability and originality checks remain subject to teacher approval.
 
+[Original question fallback audit 081–100](j277-youdo-original-fallback-review-081-100.md) and [bank candidate review 101–120](j277-youdo-content-review-101-120.md) are the latest unpublished review records. The 081–100 audit added 34 source-linked original exam question/answer pairs and leaves 4 ordinary slots without source-backed content. Lessons 101–120 have seven additional unique RHS bank candidates, leaving 69 ordinary question slots for original fallback inspection; Lesson 120 AP1 stays protected. Only eight unused bank records remain, so do not fill gaps by repeating source questions silently. All teacher approval and student display flags remain false.
+
 ### Approval and publishing gates
 
-- **Mapping is not publication.** As of 22 November, Lessons 001–020 have the previously recorded first review, while Lessons 021–040 now have second-batch bank proposals or explicit coverage gaps/exceptions. Lessons 101–164 remain unmapped. Every lesson retains `published_bank_override_enabled: false` and `teacher_approved: false`. Do not flip these simply because code works.
+- **Mapping is not publication.** As of 22 November, Lessons 001–020 have the previously recorded first review, while Lessons 021–040 now have second-batch bank proposals or explicit coverage gaps/exceptions. Lessons 121–164 remain unmapped. Every lesson retains `published_bank_override_enabled: false` and `teacher_approved: false`. Do not flip these simply because code works.
 - The bank has **225 RHS-authored question parts with reviewed marking points**, but its own documentation says that **all question texts still require final originality/classroom checks**. Answer verification does not equal final publication approval.
 - Before enabling a bank override, verify exactly four question IDs, source eligibility, specification/lesson fit, accurate marks and accepted answers, visual correspondence, spacing and teacher sign-off.
 - **Never delete** the legacy embedded question, answer, or SVG when switching the presentation. Keep fallbacks until the replacement is inspected.
