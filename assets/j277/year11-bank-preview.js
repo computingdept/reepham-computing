@@ -138,20 +138,21 @@
       '<div class="rhs-bank-review-question">'+
       '<span class="rhs-bank-label">QUESTION · '+esc(q.id)+'</span>'+
       '<p>'+lineBreaks(originalQuestion(q.question))+'</p>'+
-
       '</div>'+
+      '<div class="rhs-bank-answer-area'+(q.answerFigure?' rhs-bank-answer-area--with-figure':'')+'">'+
+      (q.answerFigure?'<figure class="rhs-bank-answer-figure"><img src="'+esc(q.answerFigure)+'" alt="Worked answer diagram" loading="eager"></figure>':"")+
       '<div class="rhs-bank-answer-content">'+
       '<span class="rhs-bank-label">ACCEPTABLE ANSWER POINTS</span>'+
       '<div class="rhs-bank-answer-list">'+answerParts(q.answer)+'</div>'+
       '<div class="rhs-bank-scoring"><span class="rhs-bank-label">HOW TO AWARD MARKS</span>'+
       '<p>'+lineBreaks(q.rule)+'</p></div>'+
       '<div class="rhs-bank-source">'+esc(q.reference)+'</div>'+
-      '</div></article>';
+      '</div></div></article>';
   }
   async function load(){
     var urls=[
-      "/data/exam-questions/j277-youdo-lesson-map.json?v=20261122-y11-batch14-1",
-      "/data/exam-questions/j277-rhs-practice-drafts.csv?v=20261122-y11-batch14-1"
+      "/data/exam-questions/j277-youdo-lesson-map.json?v=20261122-y11-images-v1",
+      "/data/exam-questions/j277-rhs-practice-drafts.csv?v=20261122-y11-images-v1"
     ];
     var results=await Promise.all(urls.map(function(url){
       return fetch(url,{cache:"no-store"}).then(function(response){
@@ -186,11 +187,13 @@
         id:slot.rhs_question_id,marks:slot.marks,reference:src.ocr_reference,
         question:src.rhs_question_text,answer:src.rhs_verified_answer_points,
         rule:src.rhs_verified_marking_rule,
-        // Only an explicitly approved visual is shown. Metadata flags never
-        // become lesson labels or blank image placeholders.
-        figure:src.rhs_visual_layout_status==="approved" &&
-          /^\/assets\/j277\/exam-figures\/[\w-]+\.svg$/.test(src.rhs_visual_question_svg||"")
-            ?src.rhs_visual_question_svg:"",
+        // Existing artwork is shown only in the opt-in teacher preview.
+        // Question and worked-answer SVGs remain separate; this is NOT
+        // approval or publication of bank questions to ordinary student pages.
+        figure:/^\/assets\/j277\/exam-figures\/[\w-]+\.svg$/.test(src.rhs_visual_question_svg||"")
+          ?src.rhs_visual_question_svg:"",
+        answerFigure:/^\/assets\/j277\/exam-figures\/[\w-]+\.svg$/.test(src.rhs_visual_answer_svg||"")
+          ?src.rhs_visual_answer_svg:"",
         visualPending:slot.visual_decision==="requires_source_figure_review"
       };
     });
