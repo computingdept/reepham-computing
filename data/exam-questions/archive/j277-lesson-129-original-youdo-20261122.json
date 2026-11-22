@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 129 original You Do source snapshot",
+  "lesson": "129",
+  "title": "Programming: Subprograms and Parameters",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-129.json",
+  "original_source_blob_sha": "a708aba6640c896ac6faa797564b301d041317f0",
+  "purpose": "Archive original Code First, model answer, previous learning, old exam practice with answer points, visuals and challenge. New bank practice is preview-only; ordinary source and all other lesson phases stay unchanged.",
+  "code_first": {
+    "q": "Trace a function calculating uncompressed image pixel data using two parameters.",
+    "code": "function imageBits(pixels,depth)\n    return pixels * depth\nendfunction\nprint(imageBits(50,8))",
+    "p": [
+      "Predict the returned number of bits.",
+      "Change depth from 8 to 16 in the call.",
+      "Explain what colour depth means and why a function returns the result."
+    ],
+    "a": "imageBits(50,8) returns 400 bits. Passing 16 bits per pixel returns 800 bits. Colour depth is the number of bits used to encode each image pixel; returning a result allows the caller to reuse it (e.g. convert bits to bytes). This excludes metadata and compression."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "Explain one difference between a function and a procedure. [2 marks]",
+      "A function returns a value; a procedure performs statements without necessarily returning a value."
+    ],
+    [
+      "State the role of parameters. [2 marks]",
+      "They pass input values into a subprogram."
+    ],
+    [
+      "Give one benefit of modular programming. [2 marks]",
+      "Reduces duplication, simplifies testing or maintenance."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 129,
+    "coreHint": "pixels × depth gives bits. The return value is used by the print call.",
+    "stretch": {
+      "task": "Call imageBits with two different colour depths, then convert each result into bytes.",
+      "hint": "Call imageBits(50,8) and imageBits(50,16); divide each returned bit count by 8.",
+      "answer": "50 pixels at 8 bits/pixel → 400 bits = 50 bytes. At 16 bits/pixel → 800 bits = 100 bytes, excluding metadata."
+    },
+    "mastery": {
+      "task": "Write a function countAbove(values,limit) that returns how many array items exceed a passed limit. Test equality and an empty list.",
+      "hint": "Parameter limit changes the comparison; count starts at zero.",
+      "answer": "For [2,5,8] with limit5, answer1 (only8); with limit1, answer3; empty list returns0. Iterate the array, increment only when item>limit, and return count."
+    }
+  }
+}
