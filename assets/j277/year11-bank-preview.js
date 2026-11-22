@@ -1,17 +1,17 @@
-/* J277 Year 11 exam bank — opt-in Lesson 096 add-on preview.
- * No changes to the existing You Do, other lesson phases, question bank or
- * approval flags. Data comes from the canonical GitHub mapping + CSV bank.
- * Enabled only by ?exam-bank-preview=1 on lesson-096.
+/* J277 Year 11 bank preview: extra screens appended INSIDE #you-do only.
+ * Existing seven You Do screens remain first and unchanged. No new phase,
+ * tab or navigation button. Enabled only by ?exam-bank-preview=1 on L096.
+ * Question text/answers are read by ID from canonical GitHub bank + map.
  */
 (function(){
   "use strict";
   if(!/^\/lessons\/j277\/lesson-096\/(?:index\.html)?$/.test(location.pathname) ||
      new URLSearchParams(location.search).get("exam-bank-preview")!=="1")return;
 
-  var BRIDGE=window.H446OptionalBridge;
-  if(!BRIDGE || !document.getElementById("you-do"))return;
-  var DIRECT=window.RHSYear11ExamBankDirect===true;
-  var phase=null,slides=[],slideIndex=0;
+  var host=document.getElementById("you-do");
+  var rolling=host&&host.querySelector(".youdo-rolling.rhs-y-rolling");
+  if(!host || host.dataset.rhsYoudoTrial!=="true" || !rolling ||
+     rolling.querySelectorAll(":scope > .rhs-y-stage").length!==7)return;
   function esc(s){
     return String(s==null?"":s).replace(/[&<>"']/g,function(c){
       return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
@@ -59,7 +59,7 @@
   }
   function intro(items){
     var total=items.reduce(function(sum,q){return sum+q.marks;},0);
-    return '<article class="rhs-bank-stage rhs-bank-question-stage">'+
+    return '<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage rhs-bank-question-stage" hidden>'+
       header("UNAPPROVED PREVIEW · ADDITIONAL EXAM PRACTICE",
         items.length+" QUESTIONS · "+total+" MARKS")+
       '<p class="rhs-bank-instruction">Complete these additional OCR-based practice questions independently. Existing You Do questions are unchanged.</p>'+
@@ -71,7 +71,7 @@
       }).join("")+'</div></article>';
   }
   function markScreen(q,index,total){
-    return '<article class="rhs-bank-stage rhs-bank-review-stage">'+
+    return '<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage rhs-bank-review-stage" hidden>'+
       header("PREVIEW · SELF-MARK · QUESTION "+(index+1)+" OF "+total,
         q.marks+" MARK"+(q.marks===1?'':'S'))+
       '<div class="rhs-bank-review-question">'+
@@ -84,12 +84,6 @@
       '<p>'+lineBreaks(q.rule)+'</p></div>'+
       '<div class="rhs-bank-source">'+esc(q.reference)+'</div>'+
       '</div></article>';
-  }
-  function show(index){
-    if(!slides.length)return;
-    slideIndex=Math.max(0,Math.min(slides.length-1,index));
-    slides.forEach(function(slide,i){slide.hidden=i!==slideIndex;slide.scrollTop=0;});
-    if(phase)phase.scrollTop=0;
   }
   async function load(){
     var urls=[
@@ -129,48 +123,42 @@
       };
     });
   }
-  function register(content){
-    phase=document.createElement("section");
-    phase.id="exam-practice";
-    phase.className="page rhs-bank-preview-page";
-    phase.dataset.rhsBankPreview="true";
-    phase.dataset.phaseTime="Draft exam questions · not yet approved";
-    phase.setAttribute("aria-label","Optional Year 11 exam practice preview");
-    phase.innerHTML='<div class="rhs-bank-shell">'+content+'</div>';
-    slides=Array.from(phase.querySelectorAll(".rhs-bank-stage"));
-    show(0);
-    var btn=document.createElement("button");
-    btn.type="button";btn.dataset.page="exam-practice";
-    btn.textContent="Exam Practice";
-    if(window.H446Optional)
-      throw new Error("An optional phase controller is already present; refusing to override it");
-    window.H446Optional={
-      reset:function(type){if(type==="exam-practice")show(0);},
-      step:function(type,dir){
-        if(type!=="exam-practice")return false;
-        var next=slideIndex+dir;
-        if(next<0||next>=slides.length)return false;
-        show(next);return true;
-      },
-      nextLabel:function(type){
-        if(type!=="exam-practice")return "";
-        if(slideIndex===0)return "Begin self-marking →";
-        return slideIndex===slides.length-1
-          ?"Continue → Key Vocabulary":"Next marking answer →";
-      },
-      showLast:function(type){if(type==="exam-practice")show(slides.length-1);}
-    };
-    if(!BRIDGE.register("exam-practice",phase,btn)){
-      throw new Error("Could not register optional exam practice");
+  function appendWithinYouDo(content,expectedCount){
+    // The shared You Do controller already handles these .youdo-question
+    // screens with its native Next/Previous buttons and touch navigation.
+    // Never create a ninth lesson phase or alter existing seven screens.
+    if(rolling.querySelectorAll(":scope > .rhs-y-stage").length!==7)
+      throw new Error("Existing You Do stage count changed; preview not added");
+    var source=document.createElement("div");
+    source.innerHTML=content;
+    var added=Array.from(source.children);
+    if(added.length!==expectedCount ||
+       added.some(function(s){return !s.matches(".rhs-bank-stage.youdo-question");}))
+      throw new Error("Unexpected additional You Do screen structure");
+    added.forEach(function(s){s.hidden=true;rolling.appendChild(s);});
+    host.dataset.rhsBankPreview="true";
+    host.dataset.rhsBankStart="7";
+    host.dataset.rhsBankCount=String(added.length-1);
+    // Teacher-only shortcut. The new screens STILL occur after existing
+    // stage 7; this just opens directly on their question overview.
+    if(new URLSearchParams(location.search).get("exam-bank-start")==="1"){
+      rolling.querySelectorAll(":scope > .rhs-y-stage").forEach(function(stage,i){
+        stage.hidden=i!==7;
+      });
+      host.dataset.windowStart="7";
     }
-    if(DIRECT)BRIDGE.go("exam-practice");
+    window.H446OptionalBridge?.refresh?.();
   }
   load().then(function(questions){
-    register(intro(questions)+questions.map(markScreen).join(""));
+    appendWithinYouDo(intro(questions)+questions.map(markScreen).join(""),1+questions.length);
   }).catch(function(err){
     console.error("J277 bank preview validation failed:",err);
-    register('<article class="rhs-bank-stage">'+
-      header("EXAM PRACTICE PREVIEW","UNAVAILABLE")+
-      '<p class="rhs-bank-error">The mapped question bank could not be verified. No draft questions have been shown. Check the GitHub mapping and bank sources.</p></article>');
+    // Do not expose any unverified draft if bank/map validation fails.
+    if(host.dataset.rhsBankPreview==="true")return;
+    try{
+      appendWithinYouDo('<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage" hidden>'+
+        header("YOU DO · BANK PREVIEW","SOURCE NOT VERIFIED")+
+        '<p class="rhs-bank-error">The mapped questions could not be verified. The existing You Do questions are unchanged.</p></article>',1);
+    }catch(error){console.error("J277 bank preview fallback unavailable:",error);}
   });
 })();
