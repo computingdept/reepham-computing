@@ -484,16 +484,17 @@ function setYouDoWindow(page,start){
       return;
     }
     if(page.dataset.j277SeparateReview==='true'){
-      // L096 bank preview retains original Code First (0–1), followed
-      // by the four new RHS bank questions (2) and answer screens (3–6).
-      // No additional lesson phases, and no changes for other lessons.
+      // RHS bank previews keep Code First first, followed by one or more
+      // question screens, then one marking answer per screen. No new phase.
       if(page.dataset.rhsBankPreview==='true'){
         const bankStart=Number(page.dataset.rhsBankStart||2);
+        const bankPages=Number(page.dataset.rhsBankQuestionPages||1);
         const bankCount=Number(page.dataset.rhsBankCount||4);
         progress.textContent=safe===0?'CODE FIRST · PREDICT':
           safe===1?'CODE FIRST · CHECK & IMPROVE':
-          safe===bankStart?'EXAM QUESTIONS · '+bankCount+' QUESTIONS':
-          'EXAM ANSWER '+(safe-bankStart)+' OF '+bankCount;
+          safe>=bankStart&&safe<bankStart+bankPages
+            ?'EXAM QUESTIONS · PAGE '+(safe-bankStart+1)+' OF '+bankPages:
+          'EXAM ANSWER '+(safe-bankStart-bankPages+1)+' OF '+bankCount;
         return;
       }
       const reviewStart=Number(page.dataset.j277ReviewStart||4);
@@ -1020,9 +1021,11 @@ function updateControl(){
       const count=page.querySelectorAll('.youdo-question').length;
       const bankStart=Number(page.dataset.rhsBankStart||2);
       if(page.dataset.rhsBankPreview==='true'){
+        const questionPages=Number(page.dataset.rhsBankQuestionPages||1);
         label=i===0?'Check Code First →':
           i===1?'Begin exam questions →':
-          i===bankStart?'Begin self-marking →':
+          i<bankStart+questionPages-1?'Next exam questions →':
+          i===bankStart+questionPages-1?'Begin self-marking →':
           i<count-1?'Next marking answer →':'Continue → Key Vocabulary';
       }else{
         label=i===0?'Continue → Q2':i<reviewStart-1?'Continue → Q'+(i+2):
