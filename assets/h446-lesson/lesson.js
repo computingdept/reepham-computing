@@ -495,9 +495,11 @@ function setYouDoWindow(page,start){
         return;
       }
       const reviewStart=Number(page.dataset.j277ReviewStart||4);
+      const originalAnswerCount=page.dataset.rhsBankPreview==='true'
+        ?bankStart-reviewStart:questions.length-reviewStart;
       progress.textContent=safe===0?'':safe<reviewStart
         ?'QUESTION '+safe+' OF '+(reviewStart-1)
-        :'ANSWER '+(safe-reviewStart+1)+' OF '+(questions.length-reviewStart);
+        :'ANSWER '+(safe-reviewStart+1)+' OF '+originalAnswerCount;
       return;
     }
     if(codingFirst&&safe===0){
