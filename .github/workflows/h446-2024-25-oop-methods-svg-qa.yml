@@ -1,0 +1,83 @@
+name: H446 2024–25 linked lists and OOP method image QA
+
+on:
+  push:
+    branches:
+      - qa/h446-2024-25-oop-methods-linked-list-svg
+    paths:
+      - "assets/exam-questions/h446/question-view/2024-jun-02-*-rhs-*.svg"
+      - "assets/exam-questions/h446/question-view/2025-jun-02-*-rhs-*.svg"
+      - ".github/workflows/h446-2024-25-oop-methods-svg-qa.yml"
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-raster:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install SVG raster QA dependencies
+        run: python -m pip install --disable-pip-version-check --quiet cairosvg pillow
+      - name: XML, size, question/answer source verification and PNG contact sheet
+        shell: bash
+        run: |
+          python - <<'PY'
+          import io,json,xml.etree.ElementTree as ET
+          from pathlib import Path
+          import cairosvg
+          from PIL import Image,ImageDraw
+          base=Path("assets/exam-questions/h446/question-view")
+          names=[
+            "2025-jun-02-node-accessor-rhs-question.svg",
+            "2025-jun-02-node-accessor-rhs-answer.svg",
+            "2025-jun-02-node-mutator-rhs-question.svg",
+            "2025-jun-02-node-mutator-rhs-answer.svg",
+            "2025-jun-02-list-empty-rhs-question.svg",
+            "2025-jun-02-list-empty-rhs-answer.svg",
+            "2025-jun-02-list-traversal-rhs-question.svg",
+            "2025-jun-02-list-traversal-rhs-answer.svg",
+            "2025-jun-02-list-main-rhs-question.svg",
+            "2025-jun-02-list-main-rhs-answer.svg",
+            "2024-jun-02-cache-getter-rhs-question.svg",
+            "2024-jun-02-cache-getter-rhs-answer.svg",
+            "2024-jun-02-explorer-update-rhs-question.svg",
+            "2024-jun-02-explorer-update-rhs-answer.svg",
+          ]
+          out=Path("h446-2024-25-oop-methods-evidence")
+          out.mkdir(exist_ok=True)
+          sheet=Image.new("RGB",(4*650,4*440),"#eef0f1")
+          d=ImageDraw.Draw(sheet)
+          report=[]
+          for i,name in enumerate(names):
+            src=base/name
+            root=ET.parse(src).getroot()
+            ns="{http://www.w3.org/2000/svg}"
+            title=root.find(ns+"title")
+            desc=root.find(ns+"desc")
+            assert title is not None and title.text and desc is not None and desc.text,name
+            assert root.attrib.get("viewBox")=="0 0 1240 740",name
+            img=Image.open(io.BytesIO(cairosvg.svg2png(url=str(src),output_width=1240))).convert("RGB")
+            assert img.size==(1240,740),name
+            img.save(out/name.replace(".svg",".png"))
+            thumb=img.resize((620,370),Image.Resampling.LANCZOS)
+            x=(i%4)*650+15; y=(i//4)*440+12
+            d.text((x,y),name,fill="#252525")
+            sheet.paste(thumb,(x,y+38))
+            report.append({"file":name,"xml":True,"render":True,"view":root.attrib["viewBox"],"title":title.text})
+          assert len(report)==14
+          sheet.save(out/"fourteen-svg-contact-sheet.png")
+          (out/"report.json").write_text(json.dumps(report,indent=2),encoding="utf-8")
+          print("Validated/rasterized",len(report),"draft H446 OOP SVGs")
+          PY
+      - name: Upload rendering evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: h446-2024-25-oop-methods-diagrams
+          path: h446-2024-25-oop-methods-evidence/
+          if-no-files-found: warn
