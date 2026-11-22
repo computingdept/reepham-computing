@@ -2088,22 +2088,27 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     Array.isArray(lesson.e) && lesson.e.length>=3 && lesson.e.length<=4 &&
     lesson.k && lesson.k.q && lesson.k.code && lesson.k.a &&
     (lesson.e.length===4 || !!lesson.priorExam || String(number)==="031");
+  // The teacher has requested the shared seven-screen display on the normal
+  // Lesson 040 and 062 pages. Their four inputs are EXISTING live lesson
+  // sources: the prior-exam pair plus the three authored exam pairs.
+  // Other J277 lessons keep opt-in mode until content and rendering QA.
+  const rhsDefaultYouDo=new Set(["040","062"]).has(String(number));
   const rhsSharedYouDoTrial=rhsYouDoEligible &&
-    new URLSearchParams(location.search).get("youdo-trial")==="1";
+    (rhsDefaultYouDo || new URLSearchParams(location.search).get("youdo-trial")==="1");
   const rhsLesson031Question=["A concert website receives requests from hundreds of compromised computers at the same time. Genuine customers cannot load the booking page.\\n\\nIdentify the type of attack and explain how it affects the website. [3 marks]","Distributed denial-of-service (DDoS) attack [1]. Requests come from multiple computers/sources [1]. The volume overwhelms service capacity, preventing legitimate access [1]."];
   const rhsSharedYouDoQuestions=String(number)==="031"?[...lesson.e,rhsLesson031Question]:lesson.e;
   const rhsSharedYouDoData=rhsSharedYouDoTrial?{
     lesson:String(number),code:lesson.k,
     priorExam:rhsSharedYouDoQuestions.length===4?null:lesson.priorExam,
     questions:rhsSharedYouDoQuestions,
-    preview:true,
+    preview:!rhsDefaultYouDo,
     visuals:(lesson.examVisuals||[]).map((v,i)=>
       v && !(String(number)==="021" && i===2 && v.title==="Two different network extents")?diagram(v):"")
   }:null;
   const rhsSharedYouDoHead=rhsSharedYouDoTrial?
-    '<link rel="stylesheet" href="../../../assets/rhs-youdo/youdo-presentation.css?v=20261122-universal-trial1">':"";
+    '<link rel="stylesheet" href="../../../assets/rhs-youdo/youdo-presentation.css?v=20261122-universal-fix2">':"";
   const rhsSharedYouDoSetup=rhsSharedYouDoTrial?
-    '<script src="../../../assets/rhs-youdo/youdo-presentation.js?v=20261122-universal-trial1"></script><script>window.RHSYouDoTrial.installJ277('+JSON.stringify(rhsSharedYouDoData).replace(/</g,"\\u003c")+');</script>':"";
+    '<script src="../../../assets/rhs-youdo/youdo-presentation.js?v=20261122-universal-fix2"></script><script>window.RHSYouDoTrial.installJ277('+JSON.stringify(rhsSharedYouDoData).replace(/</g,"\\u003c")+');</script>':"";
   // J277-only default presentation: one independent question per screen,
   // with every authored marking scheme revealed only after all questions.
   // Assessment, timed-practice and existing opt-in pilots keep their own flow.
@@ -2124,7 +2129,9 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
        JSON.stringify(unifiedData).replace(/</g,"\\u003c")+
        ';<\/script><script src="../../../assets/j277/youdo-unified.js?v=20261121-autumn2-v3"><\/script>'
     :"";
-  const defaultYouDo=useExamPilot?"":unifiedJ277?unifiedScripts:
+  // Never load a second You Do renderer when the shared presentation owns
+  // the seven stages; this otherwise silently restores the grouped layout.
+  const defaultYouDo=useExamPilot||rhsSharedYouDoTrial?"":unifiedJ277?unifiedScripts:
     '<script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"></script>';
   const lessonControllerVersion=rhsExamPilot?"20261121-rhs-codefirst-isolated-v10":"20261115-codefirst-brush2";
   const html=pilotHead.replace("</head>",rhsSharedYouDoHead+"</head>")+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")+(lesson.visualAuditV3?" j277-visual-v3":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">

@@ -121,8 +121,11 @@
   function installJ277(data){
     // One shared renderer for any ordinary J277 lesson with four available
     // existing preview questions. No approved-question status is implied.
-    if(active || !/^\\/lessons\\/j277\\/lesson-\\d{3}\\//.test(location.pathname) ||
-       new URLSearchParams(location.search).get("youdo-trial")!=="1")return false;
+    // Normal lesson display is enabled explicitly for 040 and 062.
+    // Every other J277 lesson still requires the opt-in preview parameter.
+    if(active || !/^\/lessons\/j277\/lesson-\d{3}\//.test(location.pathname) ||
+       (new URLSearchParams(location.search).get("youdo-trial")!=="1" &&
+        !(data && data.preview===false && ["040","062"].includes(data.lesson))))return false;
     var host=document.getElementById("you-do"),container=host&&host.querySelector(".youdo-rolling");
     if(!host||!container||host.dataset.assessmentMode==="true"||!data||!data.code||
        !Array.isArray(data.questions)||data.questions.length<3||
@@ -155,7 +158,7 @@
       var found=String(q.question||"").match(/\[(\d+)\s*marks?\]/i);
       return total+(found?Number(found[1]):0);
     },0);
-    var challenge='<div class="rhs-y-head"><span>'+"UNAPPROVED LESSON PREVIEW · 4 EXAM QUESTIONS"+'</span>'+
+    var challenge='<div class="rhs-y-head"><span>'+(data.preview?"UNAPPROVED LESSON PREVIEW · 4 EXAM QUESTIONS":"INDEPENDENT EXAM CHALLENGE")+'</span>'+
       '<span>'+questions.length+' QUESTIONS · '+totalMarks+' MARKS</span></div><div class="rhs-y-challenge">'+
       questions.map(function(q,i){
         var text=String(q.question||"").split(/\n\s*\nSource:\s*/i)[0].trim();
@@ -172,7 +175,7 @@
     questions.forEach(function(q,i){
       var marks=String(q.question).match(/\[(\d+)\s*marks?\]/i);
       var label=marks?marks[1]+" MARKS":"";
-      stages.push(makeStage(header("PREVIEW · SELF-MARK",i+1,questions.length,label)+
+      stages.push(makeStage(header(data.preview?"PREVIEW · SELF-MARK":"SELF-MARK",i+1,questions.length,label)+
         questionText(q.question)+'<div class="rhs-y-review-body'+(q.visual?' rhs-y-with-visual':'')+'">'+
         (q.visual?'<div class="rhs-y-visual">'+q.visual+'</div>':"")+
         '<div class="rhs-y-model">'+shortLabel("MODEL ANSWER · MARKING POINTS")+
