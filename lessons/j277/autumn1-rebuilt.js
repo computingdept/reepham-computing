@@ -327,27 +327,33 @@
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261014-j277retrievalrefs1">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
  <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261113-card-outlines1">${lessonStyles}<link rel="stylesheet" href="../../../assets/classroom-visual-zoom.css?v=20261114-projector-sizing2"></head>`;
- function renderLesson(number,lesson){
+ function renderLesson(number,lesson,rhsExistingPriorExam=null){
   const nav=["do-now","overview","new-learning","i-do","we-do","you-do","vocabulary","exit"];
   const names=["Do Now","Objectives","New Learning","I Do","We Do","You Do","Key Vocabulary","Exit Ticket"];
   const parts=[doNow(lesson),objectives(lesson),newLearning(lesson),iDo(lesson),weDo(lesson),youDo(lesson,number),vocabulary(lesson),exit(lesson)];
-  // You Do-only presentation: existing renderer data supplies authored answers.
-  // Assessment/review 018 stays in its established format.
-  const unifiedJ277=String(number)!=="018";
-  const unifiedPayload=unifiedJ277?{lesson:String(number),
-    answers:[lesson.k.a,...lesson.e.map(q=>q[1])]}:null;
-  const unifiedScripts=unifiedJ277
-    ?'<script>window.RHSJ277YouDoData='+
-       JSON.stringify(unifiedPayload).replace(/</g,"\\u003c")+
-       ';<\/script><script src="../../../assets/j277/youdo-unified.js?v=20261121-autumn1-v3"><\/script>'
-    :'${unifiedScripts}';
-  const html=sharedHead(number,lesson.t)+`<body><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
+  // Existing Year 10 lesson prompts only: three exam questions plus one
+  // authentic question from an earlier source lesson. No RHS draft override.
+  const rhsSharedYouDoEnabled=String(number)!=="018" && !lesson.isAssessment &&
+    Array.isArray(lesson.e)&&lesson.e.length===3 &&
+    lesson.k&&lesson.k.q&&lesson.k.code&&lesson.k.a&&
+    rhsExistingPriorExam&&rhsExistingPriorExam.q&&rhsExistingPriorExam.a;
+  const rhsPreviewRequested=new URLSearchParams(location.search).get("youdo-trial")==="1";
+  const rhsSharedYouDoData=rhsSharedYouDoEnabled?{
+    lesson:String(number),code:lesson.k,
+    priorExam:rhsExistingPriorExam,questions:lesson.e,preview:rhsPreviewRequested,
+    visuals:(lesson.examVisuals||[]).map(v=>v?diagram(v):"")
+  }:null;
+  const rhsSharedYouDoHead=rhsSharedYouDoEnabled?
+    '<link rel="stylesheet" href="../../../assets/rhs-youdo/youdo-presentation-20261122-compact.css?v=20261122-all-j277-1">':"";
+  const rhsSharedYouDoSetup=rhsSharedYouDoEnabled?
+    '<script src="../../../assets/rhs-youdo/youdo-presentation-20261122-compact.js?v=20261122-all-j277-1"></script><script>window.RHSYouDoTrial.installJ277('+JSON.stringify(rhsSharedYouDoData).replace(/</g,"\\u003c")+');</script>':"";
+  const html=sharedHead(number,lesson.t).replace("</head>",rhsSharedYouDoHead+"</head>")+`<body><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
    <a class="course-back" href="../../../j277-hub.html?year=10#lessons">← Year 10 lessons</a>
    <nav class="phase-nav" aria-label="Lesson phases">${arr(nav,(id,i)=>`<button type="button" data-page="${id}">${names[i]}</button>`)}</nav>
    <div class="nav-tools"><button id="advance" class="control-btn">Continue →</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div></div>
    <div class="signal-wrap"><div class="signals" aria-label="Classroom routine"><span id="phase-logo" class="signal-tile signal-phase"></span><span id="behaviour-logo" class="signal-tile signal-routine"></span><span id="response-logo" class="signal-tile signal-response"></span></div><div class="signal-meta"><span id="phase-time" class="signal-phase-time"></span><span class="lesson-label">OCR J277 · Lesson ${number}<br>${escape(lesson.t)}</span></div></div>
    <main id="main">${parts.join("")}</main><div class="lesson-footer">Lesson ${number} · ${escape(lesson.t)} <span>Year 10 · OCR J277 · Original exam-style questions</span></div>
-   <script src="../../../assets/h446-lesson/lesson.js?v=20261115-codefirst-brush2"></script><script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"></script><script src="../../../assets/classroom-visual-zoom.js?v=20261114-clickclose2"></script></body></html>`;
+   ${rhsSharedYouDoSetup}<script src="../../../assets/h446-lesson/lesson.js?v=20261115-codefirst-brush2"></script>${rhsSharedYouDoEnabled?"":'<script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"></script>'}<script src="../../../assets/classroom-visual-zoom.js?v=20261114-clickclose2"></script></body></html>`;
   document.open();document.write(html);document.close();
  }
  function renderAnswers(number,lesson){
@@ -377,6 +383,32 @@
      else{delete lesson.k.paper1Ref;delete lesson.k.paper1Topic;}
    }catch(error){console.error("J277 Code First: bank could not load; original task retained.",error);}
  }
+ // Reuse the exact exam question and answer from the preceding ordinary
+ // lesson as previous-learning practice. Lesson 004's predecessor 003 uses
+ // the old standalone format, so its existing exam prompt is sourced as-is.
+ async function rhsAutumn1Previous(number,lesson,all){
+   const n=Number(number);
+   if(n===4)return {
+     q:"Explain why technicians may prefer hexadecimal to enter a long binary security code.",
+     a:"It is shorter/easier to read and enter, reduces input errors, and converts directly to binary in 4-bit groups.",
+     from:"003"
+   };
+   const prev=String(n-1).padStart(3,"0");
+   let earlier=all[prev];
+   if(!earlier){
+     const group=n-1<=8?"004-008":n-1<=13?"009-013":"014-018";
+     try{
+       const response=await fetch("../autumn1-"+group+".json?v=20261122-original-retrieval1",{cache:"no-store"});
+       if(response.ok)earlier=(await response.json())[prev];
+     }catch(e){console.warn("J277 previous exam source unavailable",prev);}
+   }
+   if(!earlier||!Array.isArray(earlier.e))return null;
+   const originals=new Set(lesson.e.map(pair=>String(pair[0]||"").trim().toLowerCase()));
+   const match=earlier.e.slice().reverse().find(pair=>Array.isArray(pair)&&
+     typeof pair[0]==="string"&&typeof pair[1]==="string"&&pair[1].trim()&&
+     !originals.has(pair[0].trim().toLowerCase()));
+   return match?{q:match[0],a:match[1],from:prev}:null;
+ }
  function load(number,mode){
   const n=Number(number),from=n<=8?"004-008":n<=13?"009-013":"014-018";
   fetch("../autumn1-"+from+".json?v=20261014-donow1",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("Cannot load lesson data");return r.json()}).then(async all=>{
@@ -384,7 +416,8 @@
    await applyJ277Retrieval(data,number);
    await applyCodeFirstMaster(data,number);
    if(!Array.isArray(data.r)||data.r.length!==4||!Array.isArray(data.v)||data.v.length<3||!Array.isArray(data.e)||data.e.length<3)throw Error("Incomplete lesson "+number);
-   if(mode==="answers")renderAnswers(number,data);else renderLesson(number,data);
+   if(mode==="answers")renderAnswers(number,data);
+   else renderLesson(number,data,Number(number)===18?null:await rhsAutumn1Previous(number,data,all));
   }).catch(e=>{document.body.innerHTML='<p style="padding:24px;font:700 18px Arial,sans-serif">Lesson could not load: '+escape(e.message)+'</p>';});
  }
  window.J277Autumn1={render:load};
