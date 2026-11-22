@@ -17,3 +17,9 @@ All artwork is independently drafted from RHS data, black-and-white technical co
 **Technical checking:** separate GitHub Actions QA workflow parses each SVG as XML, rasterises all six images and uploads six PNGs plus a contact sheet. A passing render is not teacher or OCR/source approval. Verify marking, legibility and output logic before any classroom release.
 
 **Scope:** six SVG files in `assets/exam-questions/h446/question-view/`, two QA tracking files in `data/exam-questions/`, and one isolated QA workflow. No lesson phase/UI, Cloudflare D1, assignment, scoring or live student site changes. Entire batch remains `disabled_not_approved`.
+
+## Rendered QA evidence
+
+Final GitHub Actions [run 45024460292](https://github.com/computingdept/reepham-computing/actions/runs/45024460292) passed **six-of-six SVG XML validations and raster renders** (all at 1200px output width), with a six-image contact sheet and individual PNG evidence in [artifact 14755117311](https://github.com/computingdept/reepham-computing/actions/runs/45024460292/artifacts/14755117311).
+
+A manual inspection of the six-image contact sheet confirmed no obvious missing tree nodes or relationships, and the full-adder's gate-terminal lines were joined cleanly. **No actual classroom projector, independent algorithm/source or teacher mark-scheme approval has occurred.** All entries remain blocked for student use.
