@@ -60,19 +60,56 @@
   function header(name,detail){
     return '<div class="rhs-bank-head"><span>'+esc(name)+'</span><span>'+esc(detail)+'</span></div>';
   }
-  function intro(items){
-    var total=items.reduce(function(sum,q){return sum+q.marks;},0);
-    return '<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage rhs-bank-question-stage" hidden>'+
-      header("ADDITIONAL EXAM PRACTICE",
-        items.length+" QUESTIONS · "+total+" MARKS")+
-      '<p class="rhs-bank-instruction">Complete all '+items.length+' OCR-based exam questions independently. Check the separate marking answers afterwards.</p>'+
-      '<div class="rhs-bank-grid">'+items.map(function(q,i){
+  // Question overview pages may have four, two or one question(s). 114 begins
+  // with two per page; an actual overflow is split into single-question pages.
+  // Keep the complete bank question and its marks together at every size.
+  function questionGroups(items){
+    var limit=lessonId==="114"?2:items.length;
+    if(lessonId==="114" && matchMedia("(max-width:800px)").matches)limit=1;
+    var groups=[],current=[];
+    items.forEach(function(q){
+      if(q.figure && current.length){groups.push(current);current=[];}
+      if(q.figure){groups.push([q]);return;}
+      if(current.length>=limit){groups.push(current);current=[];}
+      current.push(q);
+    });
+    if(current.length)groups.push(current);
+    return groups;
+  }
+  function intro(items,start,totalCount,totalMarks,pageIndex,pageCount){
+    var last=start+items.length;
+    var range="Q"+(start+1)+(items.length>1?"–"+last:"")+" OF "+totalCount;
+    return '<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage rhs-bank-question-stage" data-rhs-question-page="'+(pageIndex+1)+'" hidden>'+
+      header("ADDITIONAL EXAM PRACTICE · "+range,
+        totalCount+" QUESTIONS · "+totalMarks+" MARKS")+
+      '<p class="rhs-bank-instruction">Complete the questions on this screen. '+(pageCount>1?"Continue for the remaining questions before self-marking.":"Mark your answers on the following screens.")+'</p>'+
+      '<div class="rhs-bank-grid" data-count="'+items.length+'">'+items.map(function(q,i){
         return '<section class="rhs-bank-card">'+
-          '<div class="rhs-bank-card-head"><span>Q'+(i+1)+'</span><span>'+q.marks+' MARK'+(q.marks===1?'':'S')+'</span></div>'+
+          '<div class="rhs-bank-card-head"><span>Q'+(start+i+1)+'</span><span>'+q.marks+' MARK'+(q.marks===1?'':'S')+'</span></div>'+
           '<p class="rhs-bank-prompt">'+lineBreaks(originalQuestion(q.question))+'</p>'+
-
+          (q.figure?'<img class="rhs-bank-question-figure" src="'+esc(q.figure)+'" alt="Question diagram">':"")+
           '<span class="rhs-bank-source">'+esc(q.reference)+'</span></section>';
       }).join("")+'</div></article>';
+  }
+  function questionPageMarkup(groups,questions){
+    var start=0,totalMarks=questions.reduce(function(sum,q){return sum+q.marks;},0);
+    return groups.map(function(group,i){
+      var page=intro(group,start,questions.length,totalMarks,i,groups.length);
+      start+=group.length;
+      return page;
+    }).join("");
+  }
+  function overflows(stage){
+    // Measure while invisible but laid out; never expose a temporary question.
+    stage.style.visibility="hidden";
+    stage.hidden=false;
+    var nodes=[stage].concat(Array.from(stage.querySelectorAll(".rhs-bank-grid,.rhs-bank-card")));
+    var result=nodes.some(function(node){
+      return node.clientHeight>0 && node.scrollHeight>node.clientHeight+3;
+    });
+    stage.hidden=true;
+    stage.style.visibility="";
+    return result;
   }
   function markScreen(q,index,total){
     return '<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage rhs-bank-review-stage" hidden>'+
@@ -129,34 +166,64 @@
         id:slot.rhs_question_id,marks:slot.marks,reference:src.ocr_reference,
         question:src.rhs_question_text,answer:src.rhs_verified_answer_points,
         rule:src.rhs_verified_marking_rule,
+        // Only an explicitly approved visual is shown. Metadata flags never
+        // become lesson labels or blank image placeholders.
+        figure:src.rhs_visual_layout_status==="approved" &&
+          /^\/assets\/j277\/exam-figures\/[\w-]+\.svg$/.test(src.rhs_visual_question_svg||"")
+            ?src.rhs_visual_question_svg:"",
         visualPending:slot.visual_decision==="requires_source_figure_review"
       };
     });
   }
-  function replaceArchivedYouDo(content,expectedCount){
-    // Preserve both existing Code First stages verbatim, including worked answer.
-    // Replace ONLY old exam Q&A stages, backed up in GitHub archive.
+  function replaceArchivedYouDo(questions){
+    // Preserve the original Code First stages verbatim and fail closed if the
+    // expected seven-stage original is absent or the bank mapping is invalid.
     if(rolling.querySelectorAll(":scope > .rhs-y-stage").length!==7)
       throw new Error("Original seven You Do screens changed; preview not applied");
-    var source=document.createElement("div");
-    source.innerHTML=content;
-    var slides=Array.from(source.children);
-    if(slides.length!==expectedCount ||
-       slides.some(function(s){return !s.matches(".rhs-bank-stage.youdo-question");}))
-      throw new Error("Unexpected exam-bank screen structure");
     var oldScreens=Array.from(rolling.querySelectorAll(":scope > .rhs-y-stage"));
     if(!oldScreens[0].classList.contains("rhs-y-code-first") ||
        !oldScreens[1].classList.contains("rhs-y-code-check"))
       throw new Error("Cannot verify original Code First/answer sequence");
     var codeScreens=oldScreens.slice(0,2);
-    slides.forEach(function(slide){slide.hidden=true;});
-    rolling.replaceChildren.apply(rolling,codeScreens.concat(slides));
+    var groups=questionGroups(questions);
+    host.dataset.rhsBankPreview="true";
+    function render(){
+      var source=document.createElement("div");
+      source.innerHTML=questionPageMarkup(groups,questions)+
+        questions.map(markScreen).join("");
+      var slides=Array.from(source.children);
+      if(slides.length!==groups.length+questions.length ||
+         slides.some(function(node){return !node.matches(".rhs-bank-stage.youdo-question");}))
+        throw new Error("Unexpected exam-bank screen structure");
+      slides.forEach(function(node){node.hidden=true;});
+      rolling.replaceChildren.apply(rolling,codeScreens.concat(slides));
+      return slides;
+    }
+    var slides=render();
+    // The adaptive mode is introduced on Lesson 114, without silently
+    // rearranging previously approved lesson previews. Reusable for the next
+    // batches once their screen layouts are checked.
+    if(lessonId==="114"){
+      for(var pass=0;pass<4;pass++){
+        var changed=false;
+        for(var i=0;i<groups.length;i++){
+          if(overflows(slides[i]) && groups[i].length>1){
+            var singlePages=groups[i].map(function(q){return [q];});
+            groups.splice.apply(groups,[i,1].concat(singlePages));
+            slides=render();
+            changed=true;
+            break;
+          }
+        }
+        if(!changed)break;
+      }
+    }
     codeScreens[0].hidden=false;
     codeScreens[1].hidden=true;
-    host.dataset.rhsBankPreview="true";
     host.dataset.rhsBankStart="2";
-    host.dataset.rhsBankCount=String(expectedCount-1);
-    host.dataset.j277ReviewStart="3";
+    host.dataset.rhsBankCount=String(questions.length);
+    host.dataset.rhsBankQuestionPages=String(groups.length);
+    host.dataset.j277ReviewStart=String(2+groups.length);
     host.dataset.windowStart="0";
     host.dataset.windowSize="1";
     host.dataset.workMode="independent";
@@ -166,11 +233,11 @@
     window.H446OptionalBridge?.refresh?.();
   }
   load().then(function(questions){
-    replaceArchivedYouDo(intro(questions)+questions.map(markScreen).join(""),
-      1+questions.length);
+    replaceArchivedYouDo(questions);
   }).catch(function(err){
-    // Fail closed: the old question screens stay available in this lesson if
-    // validation fails. Never display unverified bank wording or wrong answers.
+    // Validation fails closed; never publish unmapped or unapproved wording.
+    // The original lesson stays available.
+    delete host.dataset.rhsBankPreview;
     console.error("J277 bank preview validation failed; original You Do retained:",err);
   });
 })();
