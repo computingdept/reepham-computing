@@ -24,3 +24,11 @@ The [12-role register](h446-2022-25-stack-queue-sorting-map.csv) records actual 
 GitHub Actions separately parses each SVG as XML, rasterises at 1240×740 and archives PNGs plus a contact sheet. It does not prove projected-distance legibility or teacher approval.
 
 **Scope:** eight new SVGs in `assets/exam-questions/h446/question-view/`, one role CSV, this MD review and one isolated QA workflow. No live H446/J277 lessons, site CSS/JS, Cloudflare D1, assignments, marks or scoring changed.
+
+## Actual technical screenshot QA — 22 November 2026
+
+The isolated SVG validation/raster workflow [GitHub Actions run 45043036113](https://github.com/computingdept/reepham-computing/actions/runs/45043036113) passed **all eight images** in XML parsing and 1240×740 PNG generation. The [render evidence artifact 14762716353](https://github.com/computingdept/reepham-computing/actions/runs/45043036113/artifacts/14762716353) contains eight rendered PNGs, an eight-image contact sheet and JSON QA output.
+
+A manual visual inspection of the contact sheet confirmed that the original/answer views are distinct, the four insertion-sort stages and illustrated partition are readable, queue head/tail arrows point at the intended indices, and `nextFree` points to the first unused stack slot before and after the five operations. No obvious clipped captions or missing values were seen.
+
+**Teacher review still pending:** this technical result is not an actual classroom projector test, independent examiner-marking check, or approval to publish; all twelve asset-role records remain `disabled_not_approved`. The 2025 quicksort example is deliberately illustrative rather than a claimed original exam array. No live lessons, CSS/JS, J277, D1 or scoring changed.
