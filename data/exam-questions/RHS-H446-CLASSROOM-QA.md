@@ -272,3 +272,18 @@ The first browser audit of this dedicated-answer change ([run 45014286379](https
 A manual visual inspection of the initial revised 1280×720 images found the A* trace table, four-bit adder diagram and customer-database answer significantly larger and fully visible compared with the earlier split-screen screenshots. The initial four-bit adder answer required a minor height adjustment, which was retested automatically in the final passing run.
 
 **Status: TECHNICAL LAYOUT PASS; teacher classroom legibility and OCR marking checks remain outstanding.** The entire set of **75 November 2021 question parts remains `disabled_not_approved`**. The CSS is scoped to isolated QA preview documents; no live lessons, J277 resources, assignments or Cloudflare scoring changed.
+
+## Dedicated answer-screen rollout for remaining five preview groups — 22 November 2026
+
+Completed the dedicated answer-screen rollout in isolated November 2021 QA HTML:
+- Paper 1 stack/BST `qa-2021-nov-q7-preview.html`: full-width answer mode with question diagram hidden on reveal.
+- Paper 1 LMC `qa-2021-nov-q6-preview.html`: full-width answer reveal, with the 22-line LMC program retained on question view only.
+- Paper 2 BFS/binary search/complexity `qa-2021-nov-paper2-q1d-q2-preview.html`: image-based answer screens full width; native code remains native and has its own consolidated answer.
+- Paper 2 pipeline/Forest Pixels `qa-2021-nov-paper2-q6-q8-preview.html`: full-width diagram answers; native 19-line rowClue remains in its dedicated text display.
+- Paper 2 Gallery/CampusMap `qa-2021-nov-paper2-q5-oop-preview.html`: previously implemented question-state/answer-state full-width swap was verified and retained; no redundant changes.
+
+**Automated browser result:** [GitHub Actions 45014840221](https://github.com/computingdept/reepham-computing/actions/runs/45014840221), latest applied QA branch at test time, **62 viewport-question cases across 31 questions, 124 screenshots, zero blocking failures, zero scrolling warnings** at 1280×720 and 1366×768. Artifact [14750264855](https://github.com/computingdept/reepham-computing/actions/runs/45014840221/artifacts/14750264855).
+
+**Manual visual inspection:** screenshots show the new isolated answer views are complete and have reachable navigation. But some SVG illustrations remain *too small inside their own 900×900 viewBoxes* even when their img element is now full width: notably stack/BST question Q7(b)(i), LMC pseudocode, and Forest Pixels decomposition answer. Effective glyph size is controlled by whitespace within the artwork as well as the CSS. **Do not mark projector legibility passed** solely on automated layout results; cropping/optimising those SVG viewBoxes or using native text must be individually verified for completeness without clipping.
+
+**Status:** All eight November 2021 QA preview groups have one dedicated answer state and a source-verified no-scroll pass. Classroom legibility, mark scheme/source alternatives and teacher sign-off still pending. All 75 question parts remain `disabled_not_approved`. There have been no changes to live H446/J277 lessons, scoring, assignments or Cloudflare.
