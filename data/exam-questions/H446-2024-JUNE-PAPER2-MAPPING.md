@@ -22,7 +22,6 @@ This document indexes the **existing RHS question bank** for OCR H446/02 June 20
 | Q7 | 5 | 13 | 2 |
 | Q8 | 5 | 13 | 1 |
 | Q9 | 9 | 40 | 6 |
-| Q? | 1 | 0 | 1 |
 | **Total** | **40** | **140** | **17** |
 
 ## Visual/layout groups
