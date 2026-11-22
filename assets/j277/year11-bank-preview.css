@@ -37,6 +37,17 @@
   grid-template-columns:minmax(0,1fr);
   grid-template-rows:minmax(0,1fr);
 }
+/* Full-page code/SQL questions get vertical room without shrinking text.
+   Hide redundant instruction when only one question occupies the page. */
+#you-do[data-rhs-bank-preview="true"] .rhs-bank-question-stage:has(.rhs-bank-grid[data-count="1"]) .rhs-bank-instruction{
+  display:none;
+}
+#you-do[data-rhs-bank-preview="true"] .rhs-bank-grid[data-count="1"]{
+  margin-top:clamp(7px,1vh,12px);
+}
+#you-do[data-rhs-bank-preview="true"] .rhs-bank-grid[data-count="1"] > .rhs-bank-card{
+  padding:clamp(10px,1.1vw,17px);
+}
 #you-do[data-rhs-bank-preview="true"] .rhs-bank-question-figure{
   display:block;width:100%;max-height:min(32vh,250px);
   object-fit:contain;margin:6px auto 4px;
