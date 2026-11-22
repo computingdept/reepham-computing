@@ -2083,7 +2083,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   // If a lesson has only three embedded questions, its existing priorExam is
   // the fourth preview question. Lesson 031 retains its explicitly labelled
   // original Q4 editorial draft for continuity with the approved visual pilot.
-  const rhsYouDoEligible=!lesson.isAssessment && !useExamPilot &&
+  const rhsProtectedYouDo=new Set(["018","035","036","050","078","079","094","095","120","121","143","144","156","157"]);
+  const rhsYouDoEligible=!rhsProtectedYouDo.has(String(number)) && !lesson.isAssessment && !useExamPilot &&
     Array.isArray(lesson.e) && lesson.e.length>=3 && lesson.e.length<=4 &&
     lesson.k && lesson.k.q && lesson.k.code && lesson.k.a &&
     (lesson.e.length===4 || !!lesson.priorExam || String(number)==="031");
