@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 140 original You Do source snapshot",
+  "lesson": "140",
+  "title": "Utility Software",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-140.json",
+  "original_source_blob_sha": "04b358f68f47dd75dc2bff72986e7dd17d7799ca",
+  "purpose": "Preserve original Code First and its answer, original exam questions and answers, previous-learning prompt, old visuals and challenge; bank replacements are teacher-preview only inside You Do. Other phases and ordinary student URLs are untouched.",
+  "code_first": {
+    "q": "Predict space saved.",
+    "code": "originalKB = 500\ncompressedKB = 300\nsavedKB = originalKB - compressedKB\nprint(savedKB)",
+    "p": [
+      "Explain the first assignment or condition that determines the output.",
+      "Change compressedKB to 250.",
+      "Extend to calculate percentage saved."
+    ],
+    "a": "Initially 500−300=200 KB saved: (200/500)×100=40% of the original. Changing compressedKB to 250 means 500−250=250 KB saved, or (250/500)×100=50%. The code calculates savings; it does not compress data."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "State a purpose of encryption utility software. [2 marks]",
+      "Converts readable data into ciphertext to restrict unauthorised reading."
+    ],
+    [
+      "Explain why defragmentation can improve HDD access. [3 marks]",
+      "It places related fragments closer together, reducing mechanical seek time."
+    ],
+    [
+      "Explain why lossless compression matters for source code. [3 marks]",
+      "Original bytes must be recovered exactly; lossy removal could corrupt instructions."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 140,
+    "coreHint": "Saving = original size − compressed size.",
+    "stretch": {
+      "task": "Display both savedKB and percentage saved for 500→300 KB.",
+      "hint": "saved/original×100.",
+      "answer": "200 KB and 40%."
+    },
+    "mastery": {
+      "task": "Design a function computing percentage saving while safely handling original=0 and impossible compressed>original input.",
+      "hint": "Validate before dividing; return meaningful status.",
+      "answer": "500→300 gives 40%; 100→100 gives 0%; original0 rejected/handled; compressed600 for original500 flagged as invalid."
+    }
+  }
+}
