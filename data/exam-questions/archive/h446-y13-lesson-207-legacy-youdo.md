@@ -1,0 +1,7 @@
+# Archived H446 Y13 207 You Do
+Source SHA d2b8d18f52d96e8d15d27da1a24089c6c008177a
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="16 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 1 OF 3</span><h2>Give the Big O of a single full scan of n elements.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>O(n).</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 2 OF 3</span><h2>For n=100, give iterations of a linear n loop and nested n×n loop.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>100 and 10,000 respectively.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · 3 OF 3</span><h2>Why may linear search be preferable for a single search of a short unsorted array?</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>It does not need the sorting preparation required before binary search.</p></div></article></div></div></section>
+
+```

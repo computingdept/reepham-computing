@@ -1,0 +1,7 @@
+# Archived H446 Y13 206 You Do
+Source SHA a46bd5a7124a202531044addf07bba941bb9a534
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="16 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 1 OF 3</span><h2>Select a structure for processing jobs in arrival order.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>Queue (FIFO).</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 2 OF 3</span><h2>Choose stack or hash table to retrieve customer records by unique ID. Justify.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>Hash table: hashing IDs supports expected fast exact-key retrieval; stacks expose only the latest item.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · 3 OF 3</span><h2>Compare a balanced BST and hash table for lookup and sorted output.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>Balanced BST allows ordered traversal and O(log n) search; a hash table has expected O(1) lookup but does not inherently keep keys ordered.</p></div></article></div></div></section>
+
+```

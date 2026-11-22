@@ -1,0 +1,7 @@
+# Archived H446 Y13 208 You Do
+Source SHA eabb9a0cbf6fac223aca9aecd057157192b8977f
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="16 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 1 OF 3</span><h2>Find CountAtLeast([2,5,7],5).</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>2 because 5 and 7 qualify.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 2 OF 3</span><h2>Change the method so it counts values strictly greater than the threshold.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>Change score&gt;=t to score&gt;t.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · 3 OF 3</span><h2>Give normal, boundary and erroneous test cases if the threshold must be non-negative.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>Normal threshold 5 with [3,5,7] gives 2; boundary threshold 0 with [0] gives 1; erroneous threshold −1 must be rejected using an input guard.</p></div></article></div></div></section>
+
+```

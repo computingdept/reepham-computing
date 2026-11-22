@@ -1,0 +1,7 @@
+# Archived H446 Y13 210 You Do
+Source SHA 3133e50b22aa7f5e9b53ff9ea6ed301180b2b99f
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="16 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 1 OF 3</span><h2>Fix the loop condition i&lt;=a.Length when visiting every array item.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>Change to i&lt;a.Length.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 2 OF 3</span><h2>When a[mid]&gt;target, what should binary search do to high?</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>Set high=mid-1 to remove the checked midpoint.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · 3 OF 3</span><h2>Choose normal, boundary and erroneous indexes when a method accepts only indexes 0–4.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>Normal index 2; boundary indexes 0 or 4; erroneous indexes −1 or 5, which must be rejected or handled.</p></div></article></div></div></section>
+
+```
