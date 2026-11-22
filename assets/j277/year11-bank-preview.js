@@ -6,7 +6,7 @@
   "use strict";
   var match=location.pathname.match(/^\/lessons\/j277\/lesson-(\d{3})\/(?:index\.html)?$/);
   var lessonId=match&&match[1];
-  var allowlist=["096","098","099"]; // Archive-backed, reviewable first batch.
+  var allowlist=["096","098","099","100","101","102","103","104"]; // Archive-backed batches 1–2.
   if(!lessonId || allowlist.indexOf(lessonId)<0 ||
      new URLSearchParams(location.search).get("exam-bank-preview")!=="1")return;
 
@@ -69,6 +69,7 @@
         return '<section class="rhs-bank-card">'+
           '<div class="rhs-bank-card-head"><span>Q'+(i+1)+'</span><span>'+q.marks+' MARK'+(q.marks===1?'':'S')+'</span></div>'+
           '<p class="rhs-bank-prompt">'+lineBreaks(originalQuestion(q.question))+'</p>'+
+          (q.visualPending?'<p class="rhs-bank-visual-qa">Teacher QA: source figure/layout still needs review</p>':"")+
           '<span class="rhs-bank-source">'+esc(q.reference)+'</span></section>';
       }).join("")+'</div></article>';
   }
@@ -78,7 +79,9 @@
         q.marks+" MARK"+(q.marks===1?'':'S'))+
       '<div class="rhs-bank-review-question">'+
       '<span class="rhs-bank-label">QUESTION · '+esc(q.id)+'</span>'+
-      '<p>'+lineBreaks(originalQuestion(q.question))+'</p></div>'+
+      '<p>'+lineBreaks(originalQuestion(q.question))+'</p>'+
+      (q.visualPending?'<p class="rhs-bank-visual-qa">Teacher QA: source figure/layout still needs review</p>':"")+
+      '</div>'+
       '<div class="rhs-bank-answer-content">'+
       '<span class="rhs-bank-label">ACCEPTABLE ANSWER POINTS</span>'+
       '<div class="rhs-bank-answer-list">'+answerParts(q.answer)+'</div>'+
@@ -89,8 +92,8 @@
   }
   async function load(){
     var urls=[
-      "/data/exam-questions/j277-youdo-lesson-map.json?v=20261122-y11-batch1-1",
-      "/data/exam-questions/j277-rhs-practice-drafts.csv?v=20261122-y11-batch1-1"
+      "/data/exam-questions/j277-youdo-lesson-map.json?v=20261122-y11-batch2-1",
+      "/data/exam-questions/j277-rhs-practice-drafts.csv?v=20261122-y11-batch2-1"
     ];
     var results=await Promise.all(urls.map(function(url){
       return fetch(url,{cache:"no-store"}).then(function(response){
@@ -118,12 +121,14 @@
          !src.rhs_question_text || !src.rhs_verified_answer_points ||
          !src.rhs_verified_marking_rule ||
          slot.editorial_status!=="candidate_pending_final_approval" ||
-         slot.visual_decision!=="no_visual_needed")
+         !["no_visual_needed","requires_source_figure_review"].includes(slot.visual_decision) ||
+         ((src.visual_status==="not_required") !== (slot.visual_decision==="no_visual_needed")))
         throw new Error("Question metadata needs additional review: "+slot.rhs_question_id);
       return {
         id:slot.rhs_question_id,marks:slot.marks,reference:src.ocr_reference,
         question:src.rhs_question_text,answer:src.rhs_verified_answer_points,
-        rule:src.rhs_verified_marking_rule
+        rule:src.rhs_verified_marking_rule,
+        visualPending:slot.visual_decision==="requires_source_figure_review"
       };
     });
   }
