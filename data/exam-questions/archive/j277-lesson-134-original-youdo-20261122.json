@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 134 original You Do source snapshot",
+  "lesson": "134",
+  "title": "Network Hardware and Topologies",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-134.json",
+  "original_source_blob_sha": "3cad8a25b9eee8e0c44c71b54d37898129111f49",
+  "purpose": "Preserve the original Code First, model answer, previous learning, previous exam questions and answers, original visuals and challenge before teacher-preview-only Year 11 bank replacement. The Lesson 134 exam-classroom pilot and all ordinary lesson phases remain unchanged.",
+  "code_first": {
+    "q": "Predict full-mesh links.",
+    "code": "devices = 5\nconnections = devices * (devices - 1) DIV 2\nprint(connections)",
+    "p": [
+      "Explain the first assignment or condition that determines the output.",
+      "Change devices to 4.",
+      "Explain why a star usually needs fewer physical links."
+    ],
+    "a": "10; 6; five-node star normally has four peripheral links to central switch."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "State what a switch does in a LAN. [2 marks]",
+      "Forwards frames to the appropriate device/port using learned MAC address information."
+    ],
+    [
+      "Give the purpose of a router. [2 marks]",
+      "Connects separate networks and forwards packets between them using IP routing."
+    ],
+    [
+      "Calculate full-mesh connections for four nodes. [2 marks]",
+      "4×3÷2=6 connections."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 134,
+    "coreHint": "For n full-mesh nodes, use n×(n−1) DIV 2.",
+    "stretch": {
+      "task": "Calculate mesh links for six nodes and compare with a six-device star.",
+      "hint": "A star has one link from each device to a central switch.",
+      "answer": "Full mesh: 6×5÷2=15; six peripherals in a star use six links to the switch."
+    },
+    "mastery": {
+      "task": "Design a loop that tabulates full-mesh and star link counts for n=2 to 8 and identifies where the mesh needs at least twice as many.",
+      "hint": "Compute both values on each iteration and compare.",
+      "answer": "If n is number of peripheral/device nodes: mesh n(n−1)/2, star n; mesh≥2×star from n≥5. State star counting assumption."
+    }
+  }
+}
