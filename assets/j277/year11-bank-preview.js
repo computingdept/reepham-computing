@@ -7,7 +7,7 @@
   "use strict";
   var match=location.pathname.match(/^\/lessons\/j277\/lesson-(\d{3})\/(?:index\.html)?$/);
   var lessonId=match&&match[1];
-  var allowlist=["096","098","099","100","101","102","103","104","105","106","107","108","109","110","111","112","114","115","116","117","118","119","122","123","124","125","126","127","128","129","130"]; // Archive-backed batches 1–7; unmapped feedback/assessments protected.
+  var allowlist=["096","098","099","100","101","102","103","104","105","106","107","108","109","110","111","112","114","115","116","117","118","119","122","123","124","125","126","127","128","129","130","131","132","133","134","135"]; // Archive-backed batches 1–8; protected lessons and separate exam pilots unchanged.
   if(!lessonId || allowlist.indexOf(lessonId)<0 ||
      new URLSearchParams(location.search).get("exam-bank-preview")!=="1")return;
 
@@ -63,7 +63,7 @@
   // Projector-fit pages retain complete questions and their mark counts.
   // Long text uses pairs; large code/table/figure prompts use a whole screen.
   // Lesson 114 stays two-first; older preview batches are left untouched.
-  var adaptiveLessons=["114","116","117","118","119","122","123","124","125","126","127","128","129","130"];
+  var adaptiveLessons=["114","116","117","118","119","122","123","124","125","126","127","128","129","130","131","132","133","134","135"];
   function singleScreenQuestion(q){
     var text=originalQuestion(q.question);
     return !!q.figure || !!q.visualPending ||
@@ -147,8 +147,8 @@
   }
   async function load(){
     var urls=[
-      "/data/exam-questions/j277-youdo-lesson-map.json?v=20261122-y11-batch7-1",
-      "/data/exam-questions/j277-rhs-practice-drafts.csv?v=20261122-y11-batch7-1"
+      "/data/exam-questions/j277-youdo-lesson-map.json?v=20261122-y11-batch8-1",
+      "/data/exam-questions/j277-rhs-practice-drafts.csv?v=20261122-y11-batch8-1"
     ];
     var results=await Promise.all(urls.map(function(url){
       return fetch(url,{cache:"no-store"}).then(function(response){
@@ -163,7 +163,7 @@
        row.year11_preview_delivery_mode!=="retain_code_first_and_check_replace_archived_old_exam_questions_teacher_preview_only")
       throw new Error("Expected archive-backed, unpublished Lesson "+lessonId+" bank mapping");
     var assignment=row.additional_exam_practice||[];
-    if(assignment.length<1 || assignment.length>5)throw new Error("Expected one to five mapped exam questions for lesson "+lessonId);
+    if(assignment.length<1 || assignment.length>6)throw new Error("Expected one to six mapped exam questions for lesson "+lessonId);
     var records=parseCsv(results[1]);
     var bank=new Map(records.map(function(item){return [item.rhs_question_id,item];}));
     var ids=new Set();
