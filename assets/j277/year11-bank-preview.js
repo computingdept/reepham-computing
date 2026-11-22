@@ -68,7 +68,7 @@
     var text=originalQuestion(q.question);
     // Extended-response, multi-scenario legal and gate-drawing questions need
     // a full slide even where their literal word counts are modest.
-    if(["141","142","145","150"].includes(lessonId))return true;
+    if(["141","142","145","150","162"].includes(lessonId))return true;
     return !!q.figure || !!q.visualPending ||
       text.length>235 ||
       text.split(/\r?\n/).length>=6 ||
