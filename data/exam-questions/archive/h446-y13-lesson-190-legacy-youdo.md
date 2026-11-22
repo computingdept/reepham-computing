@@ -1,0 +1,7 @@
+# Archived H446 Y13 Lesson 190 You Do
+Original source SHA 153dafa5f1fdcc9de805396fd72684b426389bea; never loaded by the lesson.
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="17 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 1 OF 3</span><h2>Class field level = 9; method declares int level = 4 and prints level. What appears?</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>4, because the local level shadows the field.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 2 OF 3</span><h2>Class field attempts = 2; method executes attempts++; then prints attempts. What appears?</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>3, because no local attempts was declared, so the class field is incremented.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · 3 OF 3</span><h2>Describe one risk of unnecessary global/class-level mutable variables.</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>Different methods can alter shared state unexpectedly, making dependencies, debugging and testing harder; prefer a local value or parameter where appropriate.</p></div></article></div></div></section>
+
+```

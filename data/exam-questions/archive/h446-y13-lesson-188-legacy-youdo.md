@@ -1,0 +1,7 @@
+# Archived H446 Y13 Lesson 188 You Do
+Original source SHA 0554d574e07e57ca0ee3b2d51c8b17c2790ce7b9; never loaded by the lesson.
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="17 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 1 OF 3</span><h2>Search for 8 in [2,5,8,11,14]. List midpoint indexes.</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>mid=2, match at index 2 on the first comparison.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 2 OF 3</span><h2>Search for 13 in [2,4,6,8,10,12,14]. List indexes checked and final return.</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>mid 3=8, then mid 5=12, then mid 6=14; the window becomes empty, return -1.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · 3 OF 3</span><h2>Explain why setting low = mid instead of mid + 1 can cause failure.</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>With low=mid and only two candidates left, mid may equal low repeatedly; the interval does not shrink, potentially creating an infinite loop.</p></div></article></div></div></section>
+
+```

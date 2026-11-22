@@ -1,0 +1,7 @@
+# Archived H446 Y13 Lesson 186 You Do
+Original source SHA a973a35c567e96e89c5b925ddce6850c77035149; never loaded by the lesson.
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="17 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 1 OF 3</span><h2>Merge [2,6] with [1,5].</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>[1,2,5,6].</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 2 OF 3</span><h2>Recursively merge-sort [4,1,3,2]. Show both split levels, the base case and every merge on return.</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>[4,1]|[3,2] → [4],[1],[3],[2]. Length 0/1 is the base case. Return merges [1,4] and [2,3], then [1,2,3,4].</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · 3 OF 3</span><h2>Explain the O(n log n) time complexity of merge sort.</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>There are about log₂n merge levels, and each level processes n elements → O(n log n) time, with O(n) extra array storage for this implementation.</p></div></article></div></div></section>
+
+```

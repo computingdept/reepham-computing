@@ -1,0 +1,7 @@
+# Archived H446 Y13 Lesson 187 You Do
+Original source SHA e347ac579dcda8b901f44bd1e71c6cd12a4de83e; never loaded by the lesson.
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="17 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 1 OF 3</span><h2>Search for 7 in [4,7,9,12]. Give index and comparison count.</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>Index 1, after two comparisons.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 2 OF 3</span><h2>Search for 5 in [3,8,11,16]. Give return value and count.</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>Return -1 after all four comparisons.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · 3 OF 3</span><h2>Modify the function to count comparisons without returning early; explain the output for a 5-element array.</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>Track int comparisons=0 and increment each iteration; if searching all elements, comparisons=5. To report both location and count, return a tuple (index, comparisons) or use an out parameter.</p></div></article></div></div></section>
+
+```

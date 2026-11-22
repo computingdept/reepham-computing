@@ -1,0 +1,7 @@
+# Archived H446 Y13 Lesson 189 You Do
+Original source SHA 019178bfd5b01284aef1da01cd705c389a254fc6; never loaded by the lesson.
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="17 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 1 OF 3</span><h2>Name the complexity of a single loop visiting n values.</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>O(n).</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 2 OF 3</span><h2>An array has 128 ordered items. Compare linear and binary worst-case checks.</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>Linear up to 128 checks; binary up to 8 checks with a standard midpoint search.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · 3 OF 3</span><h2>Is binary search always better than linear search? Give one counterexample.</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>No. An unsorted tiny array can be searched linearly without sorting. Binary search first needs sorted data, and sorting/preparation may cost more than one scan.</p></div></article></div></div></section>
+
+```
