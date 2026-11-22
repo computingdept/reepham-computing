@@ -43,6 +43,7 @@ jobs:
           names=[
             "2023-jun-02-artifact-class-rhs-question.svg",
             "2023-jun-02-artifact-class-rhs-answer.svg",
+            "2023-jun-02-artifact-encapsulation-rhs-answer.svg",
             "2023-jun-02-board-grid-rhs-question.svg",
             "2023-jun-02-board-grid-rhs-answer.svg",
             "2024-jun-02-cache-object-rhs-question.svg",
@@ -53,7 +54,7 @@ jobs:
           out=Path("h446-2023-24-oop-evidence")
           out.mkdir(exist_ok=True)
           report=[]
-          board=Image.new("RGB",(2*1120,4*734),"#eef0f1")
+          board=Image.new("RGB",(3*920,3*626),"#eef0f1")
           dr=ImageDraw.Draw(board)
           for i,name in enumerate(names):
             src=base/name
@@ -65,13 +66,13 @@ jobs:
             img=Image.open(io.BytesIO(cairosvg.svg2png(url=str(src),output_width=1240))).convert("RGB")
             assert img.size==(1240,740),name
             img.save(out/name.replace(".svg",".png"))
-            tile=img.copy();tile.thumbnail((1100,660),Image.Resampling.LANCZOS)
-            x=(i%2)*1120+10
-            y=(i//2)*734+10
+            tile=img.copy();tile.thumbnail((892,557),Image.Resampling.LANCZOS)
+            x=(i%3)*920+10
+            y=(i//3)*626+10
             dr.text((x+6,y+4),name,fill="#252525")
-            board.paste(tile,(x+(1100-tile.width)//2,y+45+(660-tile.height)//2))
+            board.paste(tile,(x+(892-tile.width)//2,y+43+(557-tile.height)//2))
             report.append({"name":name,"size":img.size,"svg_xml":True,"title":title.text,"description":desc.text})
-          board.save(out/"eight-svg-contact-sheet.png")
+          board.save(out/"nine-svg-contact-sheet.png")
           (out/"report.json").write_text(json.dumps(report,indent=2),encoding="utf-8")
           print(json.dumps({"svgs":len(report),"passed":len(report),"contact":"eight-svg-contact-sheet.png"}))
           PY
