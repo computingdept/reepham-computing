@@ -1,0 +1,7 @@
+# Archived Year 13 Lesson 181 You Do
+Original GitHub SHA fd2c2c2f3712c59cfd07cae2652300556f1351fd. Not loaded by the live lesson.
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="17 minutes" data-window-size="2"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · QUESTION 1 OF 3</span><h2>Complete the calls and returns for Factorial(2).</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>Calls: 2 → 1 → 0. Return from 0 is 1, then 1 returns 1 and 2 returns 2.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · QUESTION 2 OF 3</span><h2>What happens if Factorial has no base case? Explain using the call stack.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>Calls continue without a stopping condition, adding stack frames until the runtime eventually fails (typically stack overflow).</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · QUESTION 3 OF 3</span><h2>Modify Factorial to reject negative input; write the C# guard and explain the reason.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>Before the base case: if (n &lt; 0) throw new ArgumentOutOfRangeException(nameof(n));. Negative values would otherwise keep decreasing and never reach 0.</p></div></article></div></div></section>
+
+```

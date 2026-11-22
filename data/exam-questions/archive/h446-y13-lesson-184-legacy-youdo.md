@@ -1,0 +1,7 @@
+# Archived Year 13 Lesson 184 You Do
+Original GitHub SHA bd23f340fb586d767df09da1f91818aa87444eed. Not loaded by the live lesson.
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="17 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 1 OF 3</span><h2>Show one left-to-right pass on [7,3,6,2].</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>[3,6,2,7]. Compare and swap 7 with 3, 6, then 2.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 2 OF 3</span><h2>Show two complete passes on [7,3,6,2].</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>Pass 1 [3,6,2,7]; pass 2 [3,2,6,7].</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · 3 OF 3</span><h2>Why can the early-exit optimisation finish immediately on [1,2,3,4]?</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>The first pass makes no swaps. swapped remains false, so the loop breaks because the sequence is already sorted.</p></div></article></div></div></section>
+
+```

@@ -1,0 +1,7 @@
+# Archived Year 13 Lesson 182 You Do
+Original GitHub SHA 64316b1cbe07a629d9ec32d3f80cccbf84e241ba. Not loaded by the live lesson.
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="17 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · QUESTION 1 OF 3</span><h2>List the call-stack frames from bottom to top for SumTo(4).</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>SumTo(4), SumTo(3), SumTo(2), SumTo(1). SumTo(1) is the top frame.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · QUESTION 2 OF 3</span><h2>Trace the returned values for SumTo(6).</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>1, 3, 6, 10, 15, 21 in the order calls return; the outer function returns 21.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · QUESTION 3 OF 3</span><h2>A pupil writes that SumTo(4) returns 4+3+2+1 before SumTo(1) has executed. Explain the order error.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>The expression describes the final arithmetic but not execution order. The deepest call SumTo(1) must return first; only then can waiting calls compute their sums.</p></div></article></div></div></section>
+
+```

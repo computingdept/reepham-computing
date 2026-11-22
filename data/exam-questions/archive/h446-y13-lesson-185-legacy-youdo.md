@@ -1,0 +1,7 @@
+# Archived Year 13 Lesson 185 You Do
+Original GitHub SHA d67ea6c9f727afa8be920ebf57359f14258e7564. Not loaded by the live lesson.
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="17 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 1 OF 3</span><h2>Insert key 3 into [2,6,3,8], assuming [2,6] is sorted.</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>Shift 6, then insert 3 → [2,3,6,8].</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 2 OF 3</span><h2>Trace insertion sort fully on [5,1,4].</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>After key 1 → [1,5,4]; after key 4 → [1,4,5].</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · 3 OF 3</span><h2>Explain why insertion sort is efficient on almost-sorted input.</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>Few values need shifting, so its best-case time is O(n), though worst case is O(n²).</p></div></article></div></div></section>
+
+```
