@@ -2131,17 +2131,18 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   // the seven stages; this otherwise silently restores the grouped layout.
   const defaultYouDo=useExamPilot||rhsSharedYouDoEnabled?"":unifiedJ277?unifiedScripts:
     '<script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"></script>';
-  // Lesson 096 only: teacher preview RETAINS Code First and its check screen,
-  // then replaces just the archived old exam questions with RHS bank Q&A.
-  // No new phase/tab; normal student page and other phases stay unchanged.
-  const rhsYear11BankPreview=String(number)==="096" && !!lesson.year11 &&
-    !lesson.isAssessment && rhsSharedYouDoEnabled &&
+  // J277 Year 11 teacher-preview rollout, batch 1: original Code First and
+  // worked answer retained; archive old exam questions before replacing them.
+  // Only source-figure-free, mapped, archive-backed lessons are enabled.
+  // No extra tab, no change to default student lessons or other phases.
+  const rhsYear11BankPreview=["096","098","099"].includes(String(number)) &&
+    !!lesson.year11 && !lesson.isAssessment && rhsSharedYouDoEnabled &&
     new URLSearchParams(location.search).get("exam-bank-preview")==="1";
   const rhsYear11BankPreviewHead=rhsYear11BankPreview
-    ?'<link rel="stylesheet" href="../../../assets/j277/year11-bank-preview.css?v=20261122-y11-bank-only-v4">':"";
+    ?'<link rel="stylesheet" href="../../../assets/j277/year11-bank-preview.css?v=20261122-y11-batch1-v6">':"";
   const rhsYear11BankPreviewSetup=rhsYear11BankPreview
-    ?'<script src="../../../assets/j277/year11-bank-preview.js?v=20261122-y11-codefirst-preserved-v5"></script>':"";
-  const lessonControllerVersion=rhsExamPilot?"20261121-rhs-codefirst-isolated-v10":rhsYear11BankPreview?"20261122-y11-codefirst-controller-v5":"20261115-codefirst-brush2";
+    ?'<script src="../../../assets/j277/year11-bank-preview.js?v=20261122-y11-batch1-v6"></script>':"";
+  const lessonControllerVersion=rhsExamPilot?"20261121-rhs-codefirst-isolated-v10":rhsYear11BankPreview?"20261122-y11-batch1-controller-v6":"20261115-codefirst-brush2";
   const html=pilotHead.replace("</head>",rhsSharedYouDoHead+rhsYear11BankPreviewHead+"</head>")+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")+(lesson.visualAuditV3?" j277-visual-v3":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
    <a class="course-back" href="../../../j277-hub.html?year=${lesson.year11?11:10}#lessons">← Year ${lesson.year11?11:10} lessons</a>
    <nav class="phase-nav" aria-label="Lesson phases">${arr(nav,(id,i)=>`<button type="button" data-page="${id}">${names[i]}</button>`)}</nav>
