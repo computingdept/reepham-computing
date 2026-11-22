@@ -6,6 +6,7 @@ on:
       - qa/h446-2023-24-oop-class-object-svg
     paths:
       - "assets/exam-questions/h446/question-view/2023-jun-02-artifact-class-*.svg"
+      - "assets/exam-questions/h446/question-view/2023-jun-02-artifact-encapsulation-*.svg"
       - "assets/exam-questions/h446/question-view/2023-jun-02-board-grid-*.svg"
       - "assets/exam-questions/h446/question-view/2024-jun-02-cache-object-*.svg"
       - "assets/exam-questions/h446/question-view/2024-jun-02-explorer-constructor-*.svg"
@@ -15,6 +16,7 @@ on:
       - main
     paths:
       - "assets/exam-questions/h446/question-view/2023-jun-02-artifact-class-*.svg"
+      - "assets/exam-questions/h446/question-view/2023-jun-02-artifact-encapsulation-*.svg"
       - "assets/exam-questions/h446/question-view/2023-jun-02-board-grid-*.svg"
       - "assets/exam-questions/h446/question-view/2024-jun-02-cache-object-*.svg"
       - "assets/exam-questions/h446/question-view/2024-jun-02-explorer-constructor-*.svg"
@@ -74,7 +76,7 @@ jobs:
             report.append({"name":name,"size":img.size,"svg_xml":True,"title":title.text,"description":desc.text})
           board.save(out/"nine-svg-contact-sheet.png")
           (out/"report.json").write_text(json.dumps(report,indent=2),encoding="utf-8")
-          print(json.dumps({"svgs":len(report),"passed":len(report),"contact":"eight-svg-contact-sheet.png"}))
+          print(json.dumps({"svgs":len(report),"passed":len(report),"contact":"nine-svg-contact-sheet.png"}))
           PY
       - name: Upload visual evidence
         if: always()
