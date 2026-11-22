@@ -1,0 +1,29 @@
+name: J277 Year 11 exam-bank coverage audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/exam-questions/j277-rhs-practice-drafts.csv'
+      - 'data/exam-questions/j277-youdo-lesson-map.json'
+      - 'qa/master-audit-2026/j277-year11-bank-map-audit.py'
+      - '.github/workflows/j277-year11-bank-map-audit.yml'
+  pull_request:
+    paths:
+      - 'data/exam-questions/j277-rhs-practice-drafts.csv'
+      - 'data/exam-questions/j277-youdo-lesson-map.json'
+      - 'qa/master-audit-2026/j277-year11-bank-map-audit.py'
+      - '.github/workflows/j277-year11-bank-map-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  map-integrity:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Year 11 exam-bank candidate mapping
+        run: python3 qa/master-audit-2026/j277-year11-bank-map-audit.py
