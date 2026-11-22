@@ -1,0 +1,7 @@
+# Archived H446 Y13 203 You Do
+Source SHA 7be49500fb9b813ea3c4dcd2dca3fb9295f0c546
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="16 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · QUESTION 1 OF 3</span><h2>Why do we group neighbouring 1s in a Karnaugh map?</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>To simplify the Boolean expression by removing variables that change inside a group.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · QUESTION 2 OF 3</span><h2>The whole A=1 row contains four 1s. Which simplified term remains?</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>A. Both B and C change within the row, while A remains 1.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · QUESTION 3 OF 3</span><h2>Columns BC=00 and BC=10 are joined by wraparound adjacency. Four 1s occupy both these columns. Simplify.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>¬C. A changes between the rows and B changes between 00 and 10; C stays 0.</p></div></article></div></div></section>
+
+```

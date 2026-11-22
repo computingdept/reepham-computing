@@ -1,0 +1,7 @@
+# Archived H446 Y13 205 You Do
+Source SHA 4e5eb184dc657854884991793525bda467ecfb19
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="16 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · QUESTION 1 OF 3</span><h2>Trace total=0; for values [2,3,4], add each value. Give total after each.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>2, 5, 9.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · QUESTION 2 OF 3</span><h2>For [4,7,2,6], count values greater than 5. What is returned?</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>2: the values 7 and 6 satisfy &gt;5.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · QUESTION 3 OF 3</span><h2>An algorithm intends to count even numbers but uses if n%2==1. Identify the error and correct it.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>The test counts odd numbers. Use n%2==0 to count even numbers.</p></div></article></div></div></section>
+
+```

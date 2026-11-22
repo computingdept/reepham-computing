@@ -1,0 +1,7 @@
+# Archived H446 Y13 201 You Do
+Source SHA ff176214bb283c1abeae873acf4631e9f4495f6a
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="16 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · QUESTION 1 OF 3</span><h2>Using h(k)=k MOD 7, find the starting index for 24.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>24 MOD 7 = 3.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · QUESTION 2 OF 3</span><h2>Insert 4, 9, 14 into five empty buckets using h(k)=k MOD 5 and linear probing. Give final indexes.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>All hash to 4. Insert 4 at index 4; 9 probes to 0; 14 probes past occupied 4 and 0 to index 1.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · QUESTION 3 OF 3</span><h2>Explain the effect of a high load factor on linear probing.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>More occupied buckets lead to longer probe sequences, clustering and slower expected lookup and insertion.</p></div></article></div></div></section>
+
+```

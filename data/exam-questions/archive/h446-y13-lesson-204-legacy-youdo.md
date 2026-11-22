@@ -1,0 +1,7 @@
+# Archived H446 Y13 204 You Do
+Source SHA 65e7a5ed476d8067c13b3684f195ceef1ba530c7
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="16 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · QUESTION 1 OF 3</span><h2>A half adder receives A=1, B=0. Give Sum and Carry.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>Sum=1; Carry=0.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · QUESTION 2 OF 3</span><h2>For a full adder A=1, B=1 and CarryIn=0, calculate Sum and CarryOut.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>1+1+0=2=10₂, so Sum=0, CarryOut=1.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · QUESTION 3 OF 3</span><h2>A rising-edge D flip-flop has Q=0 and D=1. D changes to 0 before the next rising clock edge. What value is stored after that edge, and why?</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>Q remains 0 because it samples the current D=0 at the rising edge. Changes between edges do not update Q.</p></div></article></div></div></section>
+
+```
