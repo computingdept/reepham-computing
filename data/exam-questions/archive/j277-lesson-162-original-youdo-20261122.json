@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 162 original You Do source snapshot",
+  "lesson": "162",
+  "title": "Paper 2: Unseen Code and Debugging",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-162.json",
+  "original_source_blob_sha": "083398b1cb5037619fe83aab70bc4a98d3820975",
+  "purpose": "Preserve Code First and marked answer, previous learning, original three exam questions/answers, old visuals and challenge. New bank practice is opt-in teacher preview only inside You Do. Other lesson phases, default student pages and protected lessons remain unchanged.",
+  "code_first": {
+    "q": "Predict output.",
+    "code": "attempts = 3\nif attempts > 3 then\n    print(\"Locked\")\nelse\n    print(\"Open\")\nendif",
+    "p": [
+      "Explain the first assignment or condition that determines the output.",
+      "Change > to >=.",
+      "Test attempts=2 and explain how limiting repeated failed logins differs from preventing phishing."
+    ],
+    "a": "With attempts=3, the original >3 test prints Open. Changing to >=3 correctly prints Locked. With attempts=2 it prints Open. Attempt limits reduce repeated guessing; phishing tricks users into revealing information and requires additional safeguards."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "A loop runs i=0 to 4 inclusive. How many iterations execute? [2 marks]",
+      "5."
+    ],
+    [
+      "Explain why total=1 is wrong for a plain sum accumulator. [2 marks]",
+      "Adds an unintended 1 to every computed total; initialise to zero."
+    ],
+    [
+      "Give a suitable test after fixing an upper boundary error. [3 marks]",
+      "Test exactly at upper boundary and one beyond, plus normal value."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 162,
+    "coreHint": "At attempts3, >3 is false, so Open prints.",
+    "stretch": {
+      "task": "Fix to >=3 and add a test at attempts2.",
+      "hint": "Use boundary tests at2 and3.",
+      "answer": "2 Open,3 Locked."
+    },
+    "mastery": {
+      "task": "Debug a login loop with a counter that sometimes resets inside the loop. Identify the fault by tracing three failures and correct it.",
+      "hint": "Reset after successful login, not each failed attempt.",
+      "answer": "Three wrong passwords must reach attempts3 and lock. A reset on every iteration prevents lock. Test correct login after two failures and subsequent new session."
+    }
+  }
+}
