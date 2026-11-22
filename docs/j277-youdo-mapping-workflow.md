@@ -1,6 +1,6 @@
 # J277 You Do — source-of-truth and publishing workflow
 
-**Status: mapping foundation only. Not a live lesson release.** Updated 21 November 2026.
+**Status: first 20 lessons mapped for content review only; no live exam-bank overrides enabled.** Updated 22 November 2026.
 
 ## Read these files before changing J277 You Do
 
@@ -11,7 +11,9 @@
 5. [Code First master](../lessons/j277/code-first-master-20261021.json).
 6. [Question and marking verification](../data/exam-questions/RHS-J277-ANSWER-VERIFICATION.md).
 
-The JSON mapping has **one record for each of 164 lessons**, with each record containing selected `rhs_question_id` references, candidate visual decisions, review status and an explicit publication flag. The map intentionally stores **IDs instead of duplicating question text or answers**, which must always come from the referenced bank at use time.
+The JSON mapping has **one record for each of 164 lessons**, with each record containing selected `rhs_question_id` references, candidate visual decisions, review status and an explicit publication flag.
+
+[Read the complete 001–020 candidate question and mark-scheme review](j277-youdo-content-review-001-020.md) before approving any first-batch content. If the RHS bank lacks enough appropriate questions for a lesson, use a named original lesson-question fallback (with its original source index) and flag the coverage gap instead of inventing or silently repeating questions. The map intentionally stores **IDs instead of duplicating question text or answers**, which must always come from the referenced bank at use time.
 
 ### Approved presentation contract
 
@@ -41,7 +43,7 @@ Every visual needs source comparison, projector/mobile review and teacher approv
 
 ### Approval and publishing gates
 
-- **Mapping is not publication.** As of 21 November, 001–003 have **candidate question selections only**; 004–164 are **unmapped**. Every lesson has `published_bank_override_enabled: false` and `teacher_approved: false`. Do not flip these simply because the code works.
+- **Mapping is not publication.** As of 22 November, Lessons 001–017 and 019–020 have a four-slot candidate layout; Lesson 018 remains an assessment exception. Across the first 20 lessons, **72 unique RHS bank candidates plus four existing-lesson fallback questions** are mapped. Lesson 011 needs three further RHS bank questions and Lesson 016 needs one. Lessons 021–164 remain unmapped. Every lesson retains `published_bank_override_enabled: false` and `teacher_approved: false`. Do not flip these simply because code works.
 - The bank has **225 RHS-authored question parts with reviewed marking points**, but its own documentation says that **all question texts still require final originality/classroom checks**. Answer verification does not equal final publication approval.
 - Before enabling a bank override, verify exactly four question IDs, source eligibility, specification/lesson fit, accurate marks and accepted answers, visual correspondence, spacing and teacher sign-off.
 - **Never delete** the legacy embedded question, answer, or SVG when switching the presentation. Keep fallbacks until the replacement is inspected.
