@@ -112,7 +112,9 @@ def run(root: Path, output: Path):
                         (["horizontal_overflow"] if before["horizontalOverflowPx"]>1 or after["horizontalOverflowPx"]>1 else []) +
                         (["clipped_element"] if before["clippedElements"] or after["clippedElements"] else []) +
                         (["code_horizontal_scroll"] if before["internalCodeOverflow"] or after["internalCodeOverflow"] else []) +
-                        (["javascript_error"] if errors else [])
+                        (["javascript_error"] if errors else []) +
+                        (["vertical_scroll_on_question"] if before["verticalOverflowPx"] > 1 else []) +
+                        (["vertical_scroll_on_answer"] if after["verticalOverflowPx"] > 1 else [])
                     )
                     record["reviewWarnings"] = (
                         (["vertical_scroll_question"] if before["verticalOverflowPx"]>1 else []) +
