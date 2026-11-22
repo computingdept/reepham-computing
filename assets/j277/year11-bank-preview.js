@@ -146,6 +146,8 @@
         stage.hidden=i!==7;
       });
       host.dataset.windowStart="7";
+      const progress=host.querySelector(".youdo-window-progress");
+      if(progress)progress.textContent="ADDITIONAL EXAM QUESTIONS · "+host.dataset.rhsBankCount+" QUESTIONS";
     }
     window.H446OptionalBridge?.refresh?.();
   }
