@@ -1,0 +1,53 @@
+{
+  "archive_type": "J277 Year 11 lesson 099 original You Do source snapshot",
+  "lesson": "099",
+  "title": "Storage Units and Conversions",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-099.json",
+  "original_source_blob_sha": "3dcf1b76c5bf9f25bef78053b8f156b1f8d5cdb1",
+  "purpose": "Preserve Code First plus the older exam questions and marking answers before an opt-in teacher preview replaces only the older exam questions; Code First remains active and unchanged; the normal student lesson source is not edited.",
+  "code_first": {
+    "q": "Predict the number of bytes in 40 bits.",
+    "code": "bits = 40\nbytes = bits DIV 8\nprint(bytes)",
+    "p": [
+      "Predict the output.",
+      "Change bits to 64.",
+      "Extend to print the remaining bits using MOD."
+    ],
+    "a": "Prints 5; with 64 bits prints 8; remainder is bits MOD 8."
+  },
+  "previous_learning_exam": {
+    "from": "098",
+    "q": "A school needs a high-capacity, low-cost backup drive for files accessed infrequently. Identify suitable storage and justify two characteristics. [3]",
+    "a": "Magnetic HDD [1]: typically lower cost per GB [1] and large available capacities [1], suitable where frequent fast access is not a priority."
+  },
+  "original_exam_questions": [
+    [
+      "Convert 2.5 MB into kB using decimal units. [2]\n\nSource: Original OCR J277-style practice question.",
+      "2.5 × 1000 [1] = 2500 kB [1]."
+    ],
+    [
+      "Calculate the number of bits in 12 bytes. [2]\n\nSource: Original OCR J277-style practice question.",
+      "12 × 8 [1] = 96 bits [1]."
+    ],
+    [
+      "A device has 6 GB free. Each file uses 750 MB. Calculate the maximum whole files it can store. [3]\n\nSource: Original OCR J277-style practice question.",
+      "6 GB = 6000 MB [1]; 6000 ÷ 750 [1] = 8 whole files [1], ignoring overhead."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 99,
+    "coreHint": "There are eight bits per byte. DIV gives the number of complete bytes.",
+    "stretch": {
+      "task": "Change bits to 41 and extend Code First to print the whole bytes and leftover bits using DIV and MOD.",
+      "hint": "Use bits DIV 8 and bits MOD 8 as separate calculations.",
+      "answer": "41 DIV 8 = 5 whole bytes; 41 MOD 8 = 1 remaining bit."
+    },
+    "mastery": {
+      "task": "Write code to calculate how many complete 250 MB files fit into a device with 2.6 GB available, using decimal conversion. Print both the whole-file count and unused MB.",
+      "hint": "First convert 2.6 GB to 2600 MB. Then use DIV and MOD with 250.",
+      "answer": "capacityMB = 2.6 * 1000; files = capacityMB DIV 250; spareMB = capacityMB MOD 250; print(files); print(spareMB). Result: 10 complete files and 100 MB spare, assuming no storage overhead."
+    }
+  }
+}
