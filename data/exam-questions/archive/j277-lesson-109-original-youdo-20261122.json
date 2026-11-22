@@ -1,0 +1,36 @@
+{
+  "archive_type": "J277 Year 11 lesson 109 original You Do source snapshot",
+  "lesson": "109",
+  "title": "Binary Search",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-109.json",
+  "original_source_blob_sha": "d114a16d823edfc7475009839687344cb3eb3bcf",
+  "purpose": "Preserve original Code First and all legacy exam questions/answers before archive-backed exam-bank lesson preview. Code First remains live. Original lesson content and other phases are unchanged.",
+  "code_first": {
+    "q": "Trace the first midpoint decision in binary search on sorted binary place values.",
+    "code": "array weights = [1,2,4,8,16,32,64,128]\ntarget = 32\nlow = 0\nhigh = 7\nmid = (low + high) DIV 2\nif weights[mid] < target then\n    print(\"Search right half\")\nelse\n    print(\"Check left half or match\")\nendif",
+    "p": [
+      "Predict the midpoint index and printed decision.",
+      "Change target to 4; predict the decision.",
+      "State why binary search requires sorted data and what the value 32 represents in unsigned binary."
+    ],
+    "a": "mid = (0+7) DIV 2 = 3 and weights[3] = 8; for target 32 the program prints Search right half. For target 4, it prints Check left half or match. The sorted order makes halving valid. The number 32 is the 2^5 binary place value. This models one decision; a complete search must update bounds and repeat."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "A sorted array is [1,5,9,13,17,21,25]. Trace the mid indexes when searching for 21 and give its final index. [4]\n\nSource: Original OCR J277-style practice question.",
+      "Start low0 high6 mid3 value13 [1]; low4 high6 mid5 value21 [1]; target found [1] at index5 [1]."
+    ],
+    [
+      "State the prerequisite for binary search and explain its importance. [3]\n\nSource: Original OCR J277-style practice question.",
+      "Sorted/ordered array [1]; comparisons with midpoint determine safe half to discard [1], without sorting the target could be excluded incorrectly [1]."
+    ],
+    [
+      "Give the condition that shows binary search failed to locate an absent value. [2]\n\nSource: Original OCR J277-style practice question.",
+      "low > high [1], meaning no active elements remain [1]."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": null
+}
