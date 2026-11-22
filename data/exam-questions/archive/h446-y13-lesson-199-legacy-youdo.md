@@ -1,0 +1,7 @@
+# Archived H446 Y13 199 You Do
+Source SHA d56c099f745e7539855c75a51501109a08cb85ba
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="17 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 1 OF 3</span><h2>BST root 50, left child 25, right child 75: where does 60 go?</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>Left child of 75 because 60&gt;50 and 60&lt;75.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 2 OF 3</span><h2>Insert 15, 10, 20, 18 into an empty BST. Identify the parent of 18.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>18 is the left child of 20, which is the right child of 15.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · 3 OF 3</span><h2>Explain why a BST can have O(n) worst-case search time despite O(log n) average search on a reasonably balanced tree.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>A sequence of sorted inserts can make it a chain of n nodes; each lookup may visit every node.</p></div></article></div></div></section>
+
+```

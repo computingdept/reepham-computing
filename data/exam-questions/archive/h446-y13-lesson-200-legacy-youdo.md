@@ -1,0 +1,7 @@
+# Archived H446 Y13 200 You Do
+Source SHA ed5b0a36a8b64b01814c25c4af95e8661a118e75
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="17 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 1 OF 3</span><h2>Name the vertices and number of edges in A–B, A–C, C–D.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>Vertices A,B,C,D; three edges.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 2 OF 3</span><h2>Give adjacency lists for an undirected graph with edges AB, BC, CD.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>A:B; B:A,C; C:B,D; D:C.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · 3 OF 3</span><h2>Compare adjacency matrix and adjacency list storage on a sparse graph with many vertices.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>An adjacency matrix uses O(V²) space irrespective of edge count; adjacency lists use O(V+E) space and usually save memory for sparse graphs.</p></div></article></div></div></section>
+
+```

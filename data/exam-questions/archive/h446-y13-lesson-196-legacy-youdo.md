@@ -1,0 +1,7 @@
+# Archived H446 Y13 196 You Do
+Source SHA 0cd8c1ea14cf19d0cfc6a136c14b68b8d51a4996
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="17 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 1 OF 3</span><h2>Give the final array after int[] a={8,4,2}; a[1]=a[0]-a[2];</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>[8,6,2].</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 2 OF 3</span><h2>When would you choose a record rather than a simple array for a pupil's name and mark?</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>A record groups related named fields with different types, such as string Name and int Mark; a homogeneous array alone does not describe those two fields clearly.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · 3 OF 3</span><h2>Explain a suitable use of a named tuple in C# and one limitation.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>A tuple such as (string name,int score) can return two related values quickly; a named record is usually clearer when the structure is a long-lived domain entity.</p></div></article></div></div></section>
+
+```

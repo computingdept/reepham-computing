@@ -1,0 +1,7 @@
+# Archived H446 Y13 198 You Do
+Source SHA fa0d41be23b3dd5f85777824022675c2fd3a022f
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="17 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 1 OF 3</span><h2>In linked list 5 → 10 → 15, what follows node 10?</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>Node 15.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 2 OF 3</span><h2>A node with value 12 must be inserted between 7 and 20. State the two link changes.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>Set new12.next to node20, then set node7.next to new12.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · 3 OF 3</span><h2>Why does inserting into a linked list avoid shifting array elements but may still take O(n) time?</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>Once the insertion node is found, links can be updated in O(1), but finding the position usually needs a traversal that takes O(n).</p></div></article></div></div></section>
+
+```

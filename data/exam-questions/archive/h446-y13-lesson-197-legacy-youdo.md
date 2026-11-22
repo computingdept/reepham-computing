@@ -1,0 +1,7 @@
+# Archived H446 Y13 197 You Do
+Source SHA 87195e035fae6f42fa220ea22bf0e55dc9af5fca
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="17 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 1 OF 3</span><h2>Push A, B, C onto a stack then Pop twice. What remains?</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>A remains. The pops remove C then B.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 2 OF 3</span><h2>A circular array queue has capacity 3. Starting empty, enqueue 10,20,30; dequeue once; enqueue 40. State physical slots, front/rear/count and logical order. Use rear as the next free slot.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>Physical slots [40,20,30]; front=1, rear=1, count=3. Logical order is 20,30,40. Reject enqueue when count==3 and dequeue when count==0; increment indexes modulo 3.</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · 3 OF 3</span><h2>Explain why an undo history usually uses a stack rather than a queue.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>The most recent change must be undone first, which follows LIFO; FIFO would undo oldest changes first.</p></div></article></div></div></section>
+
+```
