@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 150 original You Do source snapshot",
+  "lesson": "150",
+  "title": "Paper 2: Writing Code from a Scenario",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-150.json",
+  "original_source_blob_sha": "e37feee25a6b2bb98e6fab970439a9c3ab93a206",
+  "purpose": "Preserve original Code First, marked answer, previous-learning exam item, old exam questions and answers, visuals and challenge before preview-only RHS bank substitution. Default student lesson and other phases untouched.",
+  "code_first": {
+    "q": "Trace a running total of three equally sized image files.",
+    "code": "fileSizeMB = 2\ntotalMB = 0\nfor i = 1 to 3\n    totalMB = totalMB + fileSizeMB\nnext i\nprint(totalMB)",
+    "p": [
+      "Predict total storage in MB.",
+      "Change loop end to 5.",
+      "Extend the loop to accept the size of each file as input; give one reason the total may differ from actual disk usage."
+    ],
+    "a": "Three files of 2 MB total 6 MB; five files total 10 MB. To vary files, read fileSizeMB from input inside the loop and add it each time. Actual disk usage may differ because of filesystem overhead, block allocation, or metadata."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "Write OCR-style pseudocode to output the larger of two input values. [4 marks]",
+      "Input a,b; if a>b print(a), else print(b); equality may output either as both are largest."
+    ],
+    [
+      "Explain why an accumulator starts at zero when summing values. [2 marks]",
+      "Zero is the additive identity and avoids introducing an unwanted starting total."
+    ],
+    [
+      "State why a final output statement should be outside a loop when only one total is required. [2 marks]",
+      "Inside the loop would print intermediate totals repeatedly."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 150,
+    "coreHint": "Each pass adds a file size; keep totalMB outside the loop so it is not reset.",
+    "stretch": {
+      "task": "Modify the loop to input three file sizes in MB and add them. Test 3,5,4.",
+      "hint": "Put fileSizeMB=input('Size MB?') inside the loop; convert the input to a numeric value if required.",
+      "answer": "For 3,5,4 MB, totalMB=12. Validate that file sizes are numeric and non-negative before summing."
+    },
+    "mastery": {
+      "task": "Write a program that accepts marks until a sentinel -1, ignores invalid marks above100 and outputs count and average of valid marks only.",
+      "hint": "Guard division by zero if no valid marks.",
+      "answer": "For 50,150,70,-1: valid count2, total120, average60; 150 excluded; immediate -1 -> no average available."
+    }
+  }
+}
