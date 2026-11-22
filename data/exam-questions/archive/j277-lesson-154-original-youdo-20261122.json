@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 154 original You Do source snapshot",
+  "lesson": "154",
+  "title": "Paper 1: Networks and Security",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-154.json",
+  "original_source_blob_sha": "ecf16d3740cb6794ee299b332d9d87f46405f8e6",
+  "purpose": "Protect Code First and its answer, previous-learning question, original three exam questions and answers, original illustrations and challenge. New bank practice is opt-in teacher preview only, with no other lesson phase edited.",
+  "code_first": {
+    "q": "Predict result.",
+    "code": "failed = 2\nfailed = failed + 1\nif failed >= 3 then\n    print(\"Lock account\")\nendif",
+    "p": [
+      "Explain the first assignment or condition that determines the output.",
+      "Change initial failed to 1.",
+      "Explain why this alone is not complete network security."
+    ],
+    "a": "Lock account; then no output; layered controls are still needed."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "State one role of DNS. [2 marks]",
+      "Resolves domain names to IP addresses."
+    ],
+    [
+      "Name the device that connects networks. [1 mark]",
+      "Router."
+    ],
+    [
+      "Explain why encryption alone does not prevent phishing. [3 marks]",
+      "Encryption protects data in transit but cannot stop a user willingly entering credentials into a fraudulent site."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 154,
+    "coreHint": "Three failed attempts trigger the warning at >=3.",
+    "stretch": {
+      "task": "Add an earlier warning for exactly two failures.",
+      "hint": "Check lock threshold before warning.",
+      "answer": "3 locks; 2 warns."
+    },
+    "mastery": {
+      "task": "Design a small layered-security decision system with authentication status, MFA and account-lock state; test conflicting conditions.",
+      "hint": "Account locked should override other successful factors.",
+      "answer": "Locked+valid factors Deny; unlocked+password/MFA true Allow; either factor missing Deny. Explain why firewalls/encryption cover different risks."
+    }
+  }
+}
