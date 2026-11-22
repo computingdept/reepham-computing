@@ -169,3 +169,11 @@ Scope: isolated teacher QA previews only. Five representative classes of source-
 **Common correction:** five isolated preview HTML files now use a reversible `is-answer` state so their question prompt is hidden when answer is revealed, and restored when navigating between questions. This reduces answer-induced vertical growth and duplicate question+answer text; it does **not** guarantee no scrolling at a particular projector viewport. The SVG sizes, DOM and button semantics still need browser and classroom verification. No student release, teacher approval, merge or lesson implementation.
 
 Pass/fail state: **structure corrected; actual visual testing pending** for all five representatives. All `classroom_release` records remain `disabled_not_approved`.
+
+## November 2021 Paper 2 · Forest Pixels rowClue projector-layout correction
+
+**Blocking finding:** the original 900×900 SVG encodes 19 lines at `font-size=19`. At 450 CSS-pixel half-screen display, letters are rendered at about 9.5 CSS px and are unsuitable for reliable classroom projection. Enlarging only the split to 65:35 did not fully solve this.
+
+**QA-only correction implemented:** `qa-2021-nov-paper2-q6-q8-preview.html` now uses a **single full-width native HTML code panel** specifically for Q8(b)(i), rather than scaling its 19-line SVG. The question and all five blanks are visible together as 21px monospaced text with 27px line spacing; the *single consolidated answer reveal* replaces the question code with a full 19-line completed version. The code has a fixed sequence of line numbers 01–19; all five blanks agree with the RHS source: `1`, `count`, `0`, `count`, `"0"`. The other six questions in the preview are unchanged. This is an isolated exception for dense code, **not** a CSS or lesson-wide standard.
+
+A local reconstructed 1366×768 layout image was inspected, but it is **not a screenshot of GitHub-hosted preview**. Direct browser inspection of the actual branch, including 1280×720 and physical projected classroom display, is still pending; the horizontal source line may need further adjustment. Q8(b)(i) remains `disabled_not_approved`, with all source/marking, access and teacher-signoff gates intact. The existing SVG draft remains in the bank and is not treated as projection-safe.
