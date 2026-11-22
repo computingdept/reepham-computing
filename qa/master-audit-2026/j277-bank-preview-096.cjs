@@ -27,6 +27,9 @@ const bankIds=["RHS-J277-026","RHS-J277-027","RHS-J277-141","RHS-J277-142"];
     assert.equal(await regular.locator("#exam-practice").count(),0);
     assert.equal(await regular.locator("#you-do .rhs-bank-stage").count(),0);
     const donowDefault=await regular.locator("#do-now").innerText();
+    const originalCodeScreens=await regular.locator("#you-do .rhs-y-stage").evaluateAll(
+      elements=>elements.slice(0,2).map(element=>element.innerHTML));
+    assert.equal(originalCodeScreens.length,2);
     await regular.close();
 
     for(const viewport of [
@@ -48,12 +51,18 @@ const bankIds=["RHS-J277-026","RHS-J277-027","RHS-J277-141","RHS-J277-142"];
       assert.equal(await page.locator(".phase-nav button").count(),8,
         "Normal eight phases only");
       assert.equal(await page.locator("#you-do.active").count(),1);
-      assert.equal(await page.locator("#you-do .rhs-y-stage").count(),5,
-        "You Do must contain ONLY bank question overview and four marking screens");
-      assert.equal(await page.locator("#you-do .rhs-y-code-first").count(),0);
+      assert.equal(await page.locator("#you-do .rhs-y-stage").count(),7,
+        "You Do must contain original Code First+check, bank question overview and four marking screens");
+      assert.equal(await page.locator("#you-do .rhs-y-code-first").count(),1);
+      assert.equal(await page.locator("#you-do .rhs-y-code-check").count(),1);
+      const codeScreens=await page.locator("#you-do .rhs-y-stage").evaluateAll(
+        elements=>elements.slice(0,2).map(element=>element.innerHTML));
+      assert.deepEqual(codeScreens,originalCodeScreens,
+        "Code First task and answer must remain exactly unchanged");
       assert.equal(await page.locator("#you-do .rhs-y-challenge-stage").count(),0);
       assert.equal(await page.locator("#you-do .rhs-bank-card").count(),4);
-      assert.equal(await page.locator("#you-do .rhs-bank-question-stage:not([hidden])").count(),1);
+      assert.equal(await page.locator("#you-do .rhs-bank-question-stage:not([hidden])").count(),0);
+      assert.equal(await page.locator("#you-do .rhs-y-code-first:not([hidden])").count(),1);
       assert.equal(await page.locator("#you-do .rhs-bank-review-stage:not([hidden])").count(),0);
       assert.match(await page.locator("#you-do .rhs-bank-question-stage .rhs-bank-head").innerText(),
         /UNAPPROVED PREVIEW · ADDITIONAL EXAM PRACTICE/i);
@@ -61,7 +70,7 @@ const bankIds=["RHS-J277-026","RHS-J277-027","RHS-J277-141","RHS-J277-142"];
         /8 MARKS/i);
       assert.match(await page.locator("#you-do .rhs-bank-card").first().innerText(),/airport.*RAM.*ROM/is);
       assert.equal(await page.locator("#you-do").getAttribute("data-window-start"),"0",
-        "Exam question overview must be the first You Do screen");
+        "Code First must be the first You Do screen");
       const before=await page.locator("#do-now").innerText();
       assert.equal(before,donowDefault,"Do Now must match the ordinary lesson");
       const clickControl=async id=>{
@@ -71,6 +80,14 @@ const bankIds=["RHS-J277-026","RHS-J277-027","RHS-J277-141","RHS-J277-142"];
       };
       const font=await page.locator("#you-do .rhs-bank-prompt").first()
         .evaluate(el=>parseFloat(getComputedStyle(el).fontSize));
+      await clickControl("#advance");
+      assert.equal(await page.locator("#you-do .rhs-y-code-check:not([hidden])").count(),1,
+        "Code First marking answer must be second screen");
+      assert.equal(await page.locator("#you-do").getAttribute("data-window-start"),"1");
+      await clickControl("#advance");
+      assert.equal(await page.locator("#you-do .rhs-bank-question-stage:not([hidden])").count(),1,
+        "New exam questions must follow Code First answer");
+      assert.equal(await page.locator("#you-do").getAttribute("data-window-start"),"2");
       assert(font>=19,"Question text too small");
       for(let i=0;i<bankIds.length;i++){
         await clickControl("#advance");
@@ -80,7 +97,7 @@ const bankIds=["RHS-J277-026","RHS-J277-027","RHS-J277-141","RHS-J277-142"];
           new RegExp(bankIds[i]));
         assert((await stage.locator(".rhs-bank-answer-point").count())>=1);
         assert.match(await stage.locator(".rhs-bank-scoring").innerText(),/HOW TO AWARD MARKS/);
-        assert.equal(await page.locator("#you-do").getAttribute("data-window-start"),String(1+i));
+        assert.equal(await page.locator("#you-do").getAttribute("data-window-start"),String(3+i));
       }
       await clickControl("#advance");
       await page.locator("#vocabulary.active").waitFor();
@@ -94,7 +111,7 @@ const bankIds=["RHS-J277-026","RHS-J277-027","RHS-J277-141","RHS-J277-142"];
       assert.equal(await page.locator("#do-now").innerText(),before);
       assert.deepEqual(errors,[],"Unexpected browser JS errors: "+viewport.label);
       console.log("PASS "+viewport.label+
-        ": archived originals, 5 bank-only You Do screens, 8 phases, separate answers");
+        ": original Code First preserved, old exam questions replaced, 7 You Do screens, 8 phases");
       await page.close();
     }
   }finally{await browser.close();}
