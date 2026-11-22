@@ -76,7 +76,7 @@ const cases={
         assert.match(header,/UNAPPROVED PREVIEW.*ADDITIONAL EXAM PRACTICE/is);
         assert.match(header,new RegExp(fixture.marks+" MARKS"));
         const visual=await page.locator("#you-do .rhs-bank-question-stage .rhs-bank-visual-qa").count();
-        assert.equal(visual,fixture.visual,"Figure QA warnings missing in Lesson "+lesson);
+        assert.equal(visual,0,"Teacher-review warnings must not appear on lesson "+lesson);
         const firstFont=await page.locator("#you-do .rhs-bank-prompt").first()
           .evaluate(e=>parseFloat(getComputedStyle(e).fontSize));
         assert(firstFont>=19,"Question font too small in "+lesson+" "+size.label);
@@ -88,14 +88,13 @@ const cases={
             new RegExp(fixture.ids[i]));
           assert((await answer.locator(".rhs-bank-answer-point").count())>0);
           assert.match(await answer.locator(".rhs-bank-scoring").innerText(),/HOW TO AWARD MARKS/);
-          const flagged=row.additional_exam_practice[i].visual_decision==="requires_source_figure_review";
-          assert.equal(await answer.locator(".rhs-bank-visual-qa").count(),flagged?1:0,
-            "Pending figure QA warning missing from model answer "+fixture.ids[i]);
+          assert.equal(await answer.locator(".rhs-bank-visual-qa").count(),0,
+            "Teacher-review warning must not appear in model answer "+fixture.ids[i]);
         }
         await advance();
         await page.locator("#vocabulary.active").waitFor();
         assert.deepEqual(errors,[],"Browser errors "+lesson+" "+size.label);
-        console.log("PASS L"+lesson+" "+size.label+": Code First kept, four bank questions, four answers, visual QA "+fixture.visual);
+        console.log("PASS L"+lesson+" "+size.label+": Code First kept, four bank questions, four answers, visual metadata retained in GitHub");
         await page.close();
       }
     }
