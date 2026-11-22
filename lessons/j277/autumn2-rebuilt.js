@@ -2141,7 +2141,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     ?'<link rel="stylesheet" href="../../../assets/j277/year11-bank-preview.css?v=20261122-y11-youdo-append-v2">':"";
   const rhsYear11BankPreviewSetup=rhsYear11BankPreview
     ?'<script src="../../../assets/j277/year11-bank-preview.js?v=20261122-y11-youdo-append-v2"></script>':"";
-  const lessonControllerVersion=rhsExamPilot?"20261121-rhs-codefirst-isolated-v10":rhsYear11BankPreview?"20261122-y11-youdo-append-progress-v2":"20261115-codefirst-brush2";
+  const lessonControllerVersion=rhsExamPilot?"20261121-rhs-codefirst-isolated-v10":rhsYear11BankPreview?"20261122-y11-youdo-append-progress-v3":"20261115-codefirst-brush2";
   const html=pilotHead.replace("</head>",rhsSharedYouDoHead+rhsYear11BankPreviewHead+"</head>")+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")+(lesson.visualAuditV3?" j277-visual-v3":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
    <a class="course-back" href="../../../j277-hub.html?year=${lesson.year11?11:10}#lessons">← Year ${lesson.year11?11:10} lessons</a>
    <nav class="phase-nav" aria-label="Lesson phases">${arr(nav,(id,i)=>`<button type="button" data-page="${id}">${names[i]}</button>`)}</nav>
