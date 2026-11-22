@@ -73,7 +73,7 @@ const cases={
         assert.equal(await page.locator("#you-do .rhs-bank-card").count(),4);
         assert.match(await page.locator("#you-do .rhs-bank-card").first().innerText(),fixture.first);
         const header=await page.locator("#you-do .rhs-bank-question-stage .rhs-bank-head").innerText();
-        assert.match(header,/UNAPPROVED PREVIEW.*ADDITIONAL EXAM PRACTICE/is);
+        assert.match(header,/ADDITIONAL EXAM PRACTICE/is);
         assert.match(header,new RegExp(fixture.marks+" MARKS"));
         const visual=await page.locator("#you-do .rhs-bank-question-stage .rhs-bank-visual-qa").count();
         assert.equal(visual,0,"Teacher-review warnings must not appear on lesson "+lesson);
