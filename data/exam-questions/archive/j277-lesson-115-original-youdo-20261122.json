@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 115 original You Do source snapshot",
+  "lesson": "115",
+  "title": "Two-Dimensional Arrays and Records",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-115.json",
+  "original_source_blob_sha": "fe26c959a295cd49070fcb0cc437a1dc83870c6a",
+  "purpose": "Preserve original Code First, previous-learning question, original exam questions, answers and source exam visuals for an archive-backed, preview-only Year 11 bank question replacement. No changes to lesson source or other phases.",
+  "code_first": {
+    "q": "Predict the name printed. The array has three rows and three columns; only the Name column is initialised here.",
+    "code": "array pupils[3,3]\npupils[0,1] = \"Ada\"\npupils[1,1] = \"Ben\"\npupils[2,1] = \"Mia\"\nprint(pupils[1,1])",
+    "p": [
+      "Explain your predicted result using the first assignment or test.",
+      "Change the final indexes to [2,1]. Predict the new output.",
+      "Identify why pupils[3,1] is out of bounds; then assign '72' to pupils[0,2] and explain why the quotes matter."
+    ],
+    "a": "Ben; then Mia. Row 3 is outside indexes 0–2. '72' is stored as text in a string-based table; numeric comparisons require conversion or a numeric structure."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "In the Pupils table, state the Name stored at row index 1, column index 1. [2 marks]",
+      "Ben [1]; the first index selects row 1 and the second index selects Name/column 1 [1]."
+    ],
+    [
+      "Explain what a row (record) and a column (field) represent in the Pupils table. [4 marks]",
+      "A row stores the data for one pupil [1] across that pupil's related values [1]. A field/column stores the same property, such as Mark [1], for all pupil records [1]."
+    ],
+    [
+      "Describe one difference between a 2D array of text and a named pupil record. [3 marks]",
+      "The 2D array is accessed by row and column indexes [1] and uses one consistent element type [1]; a named record uses field names and may store different field types [1]."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 115,
+    "coreHint": "On the table, mark row 0 as Ada and column 1 as Name. Read the cell where they cross.",
+    "stretch": {
+      "task": "Using the pupil table, locate both pupils[2,1] and pupils[0,2]; then assign the text '72' to the Mark cell in the string-based array.",
+      "hint": "First index = row, second = column. Row 2 is Mia, and column 2 is Mark.",
+      "answer": "pupils[2,1] = 'Mia'; pupils[0,2] = '72' (text). Mark values in the all-string array must be cast/converted before numerical comparison."
+    },
+    "mastery": {
+      "task": "Represent the same Pupils data using named records with a text Name and integer Mark. Write an algorithm that outputs the names of pupils with a mark of at least 50.",
+      "hint": "A record may have differently typed fields. For each pupil, IF pupil.Mark >= 50 THEN print(pupil.Name).",
+      "answer": "Records: (101,'Ada',72), (102,'Ben',43), (103,'Mia',81). Iterate records; only Ada and Mia satisfy Mark >= 50. Explain that this is different from comparing text strings."
+    }
+  }
+}
