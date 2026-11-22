@@ -1,0 +1,78 @@
+name: H446 OOP gameplay final SVG render QA
+
+on:
+  push:
+    branches:
+      - qa/h446-2023-24-oop-gameplay-finish-svg
+    paths:
+      - "assets/exam-questions/h446/question-view/2023-jun-02-board-examine-cell-rhs-*.svg"
+      - "assets/exam-questions/h446/question-view/2024-jun-02-road-array-50-rhs-*.svg"
+      - "assets/exam-questions/h446/question-view/2024-jun-02-unique-prize-positions-rhs-*.svg"
+      - "assets/exam-questions/h446/question-view/2024-jun-02-explorer-game-loop-rhs-*.svg"
+      - ".github/workflows/h446-oop-gameplay-finish-svg-qa.yml"
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  raster-review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install SVG renderer
+        run: python -m pip install --disable-pip-version-check --quiet cairosvg pillow
+      - name: Check eight SVGs and export contact sheet
+        shell: bash
+        run: |
+          python - <<'PY'
+          import io,json,xml.etree.ElementTree as ET
+          from pathlib import Path
+          import cairosvg
+          from PIL import Image,ImageDraw
+          path=Path("assets/exam-questions/h446/question-view")
+          names=[
+            "2024-jun-02-road-array-50-rhs-question.svg",
+            "2024-jun-02-road-array-50-rhs-answer.svg",
+            "2024-jun-02-unique-prize-positions-rhs-question.svg",
+            "2024-jun-02-unique-prize-positions-rhs-answer.svg",
+            "2024-jun-02-explorer-game-loop-rhs-question.svg",
+            "2024-jun-02-explorer-game-loop-rhs-answer.svg",
+            "2023-jun-02-board-examine-cell-rhs-question.svg",
+            "2023-jun-02-board-examine-cell-rhs-answer.svg",
+          ]
+          out=Path("h446-2023-24-oop-gameplay-evidence")
+          out.mkdir(exist_ok=True)
+          sheet=Image.new("RGB",(4*665,2*480),"#edf0ee")
+          dr=ImageDraw.Draw(sheet)
+          result=[]
+          for i,name in enumerate(names):
+            root=ET.parse(path/name).getroot()
+            ns="{http://www.w3.org/2000/svg}"
+            title=root.find(ns+"title")
+            desc=root.find(ns+"desc")
+            assert root.attrib.get("viewBox")=="0 0 1240 740",name
+            assert title is not None and title.text and desc is not None and desc.text,name
+            im=Image.open(io.BytesIO(cairosvg.svg2png(url=str(path/name),output_width=1240))).convert("RGB")
+            assert im.size==(1240,740),name
+            im.save(out/name.replace(".svg",".png"))
+            im.thumbnail((635,393),Image.Resampling.LANCZOS)
+            x=(i%4)*665+15; y=(i//4)*480+12
+            dr.text((x,y),name,fill="#272e27")
+            sheet.paste(im,(x+(635-im.width)//2,y+42))
+            result.append({"name":name,"xml":True,"raster":True,"size":[1240,740],"title":title.text})
+          assert len(result)==8
+          sheet.save(out/"eight-svg-contact-sheet.png")
+          (out/"report.json").write_text(json.dumps(result,indent=2),encoding="utf-8")
+          print("Eight OOP diagrams XML validated and rasterised")
+          PY
+      - name: Upload QA evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: h446-oop-gameplay-qa-renders
+          path: h446-2023-24-oop-gameplay-evidence/
+          if-no-files-found: warn
