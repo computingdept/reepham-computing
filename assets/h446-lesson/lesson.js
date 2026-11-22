@@ -484,14 +484,16 @@ function setYouDoWindow(page,start){
       return;
     }
     if(page.dataset.j277SeparateReview==='true'){
-      // Only the explicit L096 bank preview gets extra screens after the
-      // original seven, without adding a separate navigation phase.
-      const bankStart=Number(page.dataset.rhsBankStart||7);
-      if(page.dataset.rhsBankPreview==='true' && safe>=bankStart){
+      // L096 bank preview retains original Code First (0–1), followed
+      // by the four new RHS bank questions (2) and answer screens (3–6).
+      // No additional lesson phases, and no changes for other lessons.
+      if(page.dataset.rhsBankPreview==='true'){
+        const bankStart=Number(page.dataset.rhsBankStart||2);
         const bankCount=Number(page.dataset.rhsBankCount||4);
-        progress.textContent=safe===bankStart
-          ?'ADDITIONAL EXAM QUESTIONS · '+bankCount+' QUESTIONS'
-          :'ADDITIONAL ANSWER '+(safe-bankStart)+' OF '+bankCount;
+        progress.textContent=safe===0?'CODE FIRST · PREDICT':
+          safe===1?'CODE FIRST · CHECK & IMPROVE':
+          safe===bankStart?'EXAM QUESTIONS · '+bankCount+' QUESTIONS':
+          'EXAM ANSWER '+(safe-bankStart)+' OF '+bankCount;
         return;
       }
       const reviewStart=Number(page.dataset.j277ReviewStart||4);
@@ -1016,11 +1018,12 @@ function updateControl(){
       const i=Number(page.dataset.windowStart||0);
       const reviewStart=Number(page.dataset.j277ReviewStart||4);
       const count=page.querySelectorAll('.youdo-question').length;
-      const bankStart=Number(page.dataset.rhsBankStart||7);
-      if(page.dataset.rhsBankPreview==='true' && i>=bankStart-1){
-        label=i===bankStart-1?'Additional exam questions →':
-          i===bankStart?'Begin additional self-marking →':
-          i<count-1?'Next additional marking answer →':'Continue → Key Vocabulary';
+      const bankStart=Number(page.dataset.rhsBankStart||2);
+      if(page.dataset.rhsBankPreview==='true'){
+        label=i===0?'Check Code First →':
+          i===1?'Begin exam questions →':
+          i===bankStart?'Begin self-marking →':
+          i<count-1?'Next marking answer →':'Continue → Key Vocabulary';
       }else{
         label=i===0?'Continue → Q2':i<reviewStart-1?'Continue → Q'+(i+2):
           i===reviewStart-1?'Begin self-marking →':
