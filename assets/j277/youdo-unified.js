@@ -87,7 +87,12 @@
         const prompt=source.querySelector(".question-text");
         if(!prompt)throw Error("Missing exam question "+(i+1));
         const copy=prompt.cloneNode(true);
-        const visuals=Array.from(source.querySelectorAll("svg,img"));
+        // The shared lesson controller may append hidden worked solutions to
+        // source cards before this presenter runs. Never include answer SVGs
+        // in the student question: only collect visuals outside solutions.
+        const visuals=Array.from(source.querySelectorAll("svg,img")).filter(
+          el=>!el.closest(".youdo-solution,.solution-card,.answer-card")
+        );
         copy.querySelectorAll("svg,img").forEach(el=>el.remove());
         const title=source.querySelector("h3")?.textContent?.trim()||"Exam question";
         return '<article class="j277-u-batch-card">'+
