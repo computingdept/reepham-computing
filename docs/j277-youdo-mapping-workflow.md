@@ -61,6 +61,8 @@ Every visual needs source comparison, projector/mobile review and teacher approv
 
 [Second original gap-completion review](j277-youdo-proposed-original-questions-qa-062-087.md) adds ten editorial-only Q4 drafts; **50 actual empty question positions** remain. No draft is marking-verified or approved for student display.
 
+[Third editorial question-completion batch](j277-youdo-proposed-original-questions-qa-102-119.md) adds 16 draft-only questions for lessons 102–119. **34 genuinely empty positions** remain; all 32 new drafts need separate marking and projector QA before the user's final review.
+
 ### Approval and publishing gates
 
 - **Mapping is not publication.** As of 22 November, Lessons 001–020 have the previously recorded first review, while Lessons 021–040 now have second-batch bank proposals or explicit coverage gaps/exceptions. All 164 lessons have now been processed for review. Unfilled proposal slots are intentional pending authoring, not evidence of publication readiness.. Every lesson retains `published_bank_override_enabled: false` and `teacher_approved: false`. Do not flip these simply because code works.
