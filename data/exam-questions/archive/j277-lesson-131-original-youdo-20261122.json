@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 131 original You Do source snapshot",
+  "lesson": "131",
+  "title": "Programming: Unseen Problems and Debugging",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-131.json",
+  "original_source_blob_sha": "c969586de3784a42b6da3cd728939de977ab7d1c",
+  "purpose": "Preserve the original Code First, model answer, previous learning, previous exam questions and answers, original visuals and challenge before teacher-preview-only Year 11 bank replacement. The Lesson 134 exam-classroom pilot and all ordinary lesson phases remain unchanged.",
+  "code_first": {
+    "q": "Debug a storage-device cost-per-GB calculation; the operator is wrong.",
+    "code": "pricePounds = 60\ncapacityGB = 1000\ncostPerGB = pricePounds * capacityGB\nprint(costPerGB)",
+    "p": [
+      "Predict the incorrect printed result.",
+      "Correct the expression to calculate cost per GB.",
+      "Change pricePounds to 80; calculate the new cost per GB and name one other storage characteristic to consider."
+    ],
+    "a": "The incorrect multiplication prints 60,000. Correct statement: costPerGB = pricePounds / capacityGB, which gives £0.06 (6p) per GB for £60 and 1,000 GB. At £80, it gives £0.08 (8p) per GB. Capacity, speed, durability, reliability and portability may also affect choice."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "Explain why a trace is useful for unfamiliar code. [3 marks]",
+      "It makes executed steps and changing variable values explicit, exposing incorrect assumptions or logic."
+    ],
+    [
+      "Correct an algorithm that checks 1<=x<=10 using OR between two comparisons. [2 marks]",
+      "Use x>=1 AND x<=10."
+    ],
+    [
+      "State two steps to take after correcting a logic error. [2 marks]",
+      "Run/test with expected normal and boundary cases, and compare outcomes."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 131,
+    "coreHint": "Cost per GB uses price divided by capacity, not multiplied. Compare the printout with a sensible unit.",
+    "stretch": {
+      "task": "Compare two illustrative drives: A costs £60 for 1,000 GB and B £80 for 2,000 GB. Debug the calculation and identify the lower price per GB.",
+      "hint": "Calculate price / capacity for each, in pounds per GB.",
+      "answer": "A = £0.06/GB; B = £0.04/GB. B has the lower cost per GB; it is not automatically the best drive for every purpose."
+    },
+    "mastery": {
+      "task": "Debug a program that calculates totals for three purchases but resets total to zero inside its loop. Fix it and add a boundary test for zero quantity.",
+      "hint": "Initialise total once before the loop, not each iteration.",
+      "answer": "For line costs [4,8,3], correct total15; zero-quantity item adds0; an incorrect reset would leave only the last line cost. Explain where to move the initialisation."
+    }
+  }
+}
