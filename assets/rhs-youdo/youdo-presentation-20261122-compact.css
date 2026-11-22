@@ -100,6 +100,11 @@
 #you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge-stage:not([hidden]){
   display:flex!important;flex-direction:column
 }
+/* The four-question overview uses projector-scale type while leaving the
+   other You Do screens and all other lesson phases unchanged. */
+#you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge-stage .rhs-y-head{
+  font-size:clamp(18px,1.9vw,20px)
+}
 #you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge{
   display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
   grid-template-rows:repeat(2,minmax(0,1fr));
@@ -109,14 +114,14 @@
 #you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge-card{
   min-width:0;min-height:0;overflow:auto;box-sizing:border-box;
   border:1px solid #e1e1e5;border-radius:16px;
-  background:#fafafa;padding:clamp(13px,1.35vw,22px);
+  background:#fafafa;padding:clamp(16px,1.7vw,22px);
   display:flex;flex-direction:column;
 }
 #you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge-card-head{
   display:flex;justify-content:space-between;align-items:center;gap:10px;
   border-bottom:1px solid #e6e6e9;padding-bottom:clamp(7px,1vh,11px);
   color:#717178;letter-spacing:.055em;font-weight:750;
-  font-size:clamp(14px,.99vw,18px)
+  font-size:clamp(16px,1.75vw,18px)
 }
 #you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge-card-head span:last-child{
   color:#242428;letter-spacing:0;white-space:nowrap
@@ -124,7 +129,7 @@
 #you-do[data-rhs-youdo-trial="true"] .rhs-y-challenge-card p{
   margin:clamp(10px,1.2vh,15px) 0 0;
   color:#1d1d1f;white-space:pre-line;
-  font-size:clamp(19px,1.45vw,25px);
+  font-size:clamp(19px,2.6vw,26px);
   font-weight:565;line-height:1.31;letter-spacing:-.01em
 }
 @media(max-width:800px){
