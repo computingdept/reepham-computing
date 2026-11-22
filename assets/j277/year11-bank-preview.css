@@ -31,6 +31,16 @@
   gap:clamp(10px,1.5vw,20px);
   margin-top:clamp(12px,1.5vh,19px)
 }
+/* One question gets the full classroom screen. A question with an approved
+   figure must not compete with a second question for the same projector area. */
+#you-do[data-rhs-bank-preview="true"] .rhs-bank-grid[data-count="1"]{
+  grid-template-columns:minmax(0,1fr);
+  grid-template-rows:minmax(0,1fr);
+}
+#you-do[data-rhs-bank-preview="true"] .rhs-bank-question-figure{
+  display:block;width:100%;max-height:min(32vh,250px);
+  object-fit:contain;margin:6px auto 4px;
+}
 /* Two-question lessons: one full-height row, no blank second row. */
 #you-do[data-rhs-bank-preview="true"] .rhs-bank-grid:has(> .rhs-bank-card:nth-child(2):last-child){
   grid-template-rows:minmax(0,1fr);
@@ -110,6 +120,10 @@
   #you-do[data-rhs-bank-preview="true"] .rhs-bank-grid{
     grid-template-columns:minmax(0,1fr);grid-template-rows:none;
     flex:0 1 auto;overflow:auto
+  }
+  #you-do[data-rhs-bank-preview="true"] .rhs-bank-grid[data-count="1"]{
+    flex:1 1 auto;overflow:visible;
+    grid-template-rows:minmax(0,1fr);
   }
   #you-do[data-rhs-bank-preview="true"] .rhs-bank-card{
     min-height:170px;overflow:visible
