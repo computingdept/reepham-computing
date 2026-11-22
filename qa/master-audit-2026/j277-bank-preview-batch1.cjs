@@ -77,7 +77,7 @@ const cases={
           fixture.first,"Incorrect question set for "+lesson);
         const questionHeading=await page.locator(
           "#you-do .rhs-bank-question-stage .rhs-bank-head").innerText();
-        assert.match(questionHeading,/UNAPPROVED PREVIEW.*EXAM PRACTICE/is);
+        assert.match(questionHeading,/ADDITIONAL EXAM PRACTICE/is);
         assert.match(questionHeading,new RegExp(fixture.marks+" MARKS"));
         const size=await page.locator("#you-do .rhs-bank-prompt").first().evaluate(
           el=>Number.parseFloat(getComputedStyle(el).fontSize));
