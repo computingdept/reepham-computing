@@ -29,3 +29,11 @@ The existing main-branch diagrams for BST, Dijkstra and A* contain different exa
 This batch changes only new original SVGs inside `assets/exam-questions/h446/question-view/`, its own CSV/Markdown QA notes, and an isolated GitHub Actions workflow. It does not change existing H446/J277 lessons, CSS/JS, assignments, D1, scoring, published revision or the prior draft artwork batches.
 
 After teacher visual review, further image batches should focus only on source-mismatched 2024 BST and 2023 logic work, not on text-only questions or HTML-native tables.
+
+## Actual image-render QA — 22 November 2026
+
+GitHub Actions [run 45029044111](https://github.com/computingdept/reepham-computing/actions/runs/45029044111) passed XML and 1240×740 rasterisation on all **eight new SVGs**. Its [render evidence artifact 14756682593](https://github.com/computingdept/reepham-computing/actions/runs/45029044111/artifacts/14756682593) contains the eight PNGs, contact sheet and JSON report.
+
+**Manual screenshot review:** all original/updated museum BST nodes, 13-node traversal orders, 2022 graph connections and 2024 A* graph were present. The first Dijkstra and A* answer screenshots had crowded distance working; these answer panels were redesigned as **eight separate final-distance/predecessor cards** and **six separate g/h/f/predecessor cards**, respectively, then rerendered successfully. Paths and node costs were independently recomputed from the RHS prompts.
+
+**Not yet checked:** classroom-distance projection, independent original OCR source and mark-scheme alternatives, accessibility beyond SVG title/desc, and teacher sign-off. All 11 role mappings remain `disabled_not_approved`. No live lessons were changed.
