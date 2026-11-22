@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 152 original You Do source snapshot",
+  "lesson": "152",
+  "title": "Paper 1: CPU, Memory and Storage",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-152.json",
+  "original_source_blob_sha": "87a8eadedebaaa03df2b613f32a82505f8a8c202",
+  "purpose": "Protect Code First and its answer, previous-learning question, original three exam questions and answers, original illustrations and challenge. New bank practice is opt-in teacher preview only, with no other lesson phase edited.",
+  "code_first": {
+    "q": "Predict output.",
+    "code": "requiredMB = 1200\navailableMB = 800\nif requiredMB > availableMB then\n    print(\"Storage backing needed\")\nendif",
+    "p": [
+      "Explain the first assignment or condition that determines the output.",
+      "Change availableMB to 1500.",
+      "Explain which OS technique could be involved when RAM is insufficient."
+    ],
+    "a": "Prints backing needed; then no output; virtual memory/page backing."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "What does MDR hold during a memory operation? [2 marks]",
+      "Data or instruction being transferred."
+    ],
+    [
+      "Give one difference between RAM and ROM. [2 marks]",
+      "RAM is volatile working memory; ROM is non-volatile and commonly stores firmware."
+    ],
+    [
+      "Explain one disadvantage of an HDD in a moving laptop. [3 marks]",
+      "Moving mechanical parts make it more vulnerable to physical shock."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 152,
+    "coreHint": "If required RAM exceeds free RAM, secondary backing might be used.",
+    "stretch": {
+      "task": "Output the shortage in MB for required1200 and available800.",
+      "hint": "shortage=required−available.",
+      "answer": "400 MB shortage."
+    },
+    "mastery": {
+      "task": "Design a memory monitor which processes changing available RAM and warns if a request would require virtual memory, without claiming it always allocates successfully.",
+      "hint": "Distinguish shortage from OS allocation policy.",
+      "answer": "For requests 800,1200 with freeRAM800: first fits, second shortage400; equal boundary fits; virtual-memory warning is an estimate."
+    }
+  }
+}
