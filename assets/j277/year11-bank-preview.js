@@ -1,12 +1,13 @@
 /* J277 Year 11 exam-bank teacher preview: retain original Code First/check;
  * replace only archived older exam questions with mapped RHS bank Q&A.
- * Seven screens inside #you-do; never a new phase. Default page untouched.
+ * Original seven You Do screens become Code First, question overview and one
+ * marking screen per mapped question; never a new phase. Default page untouched.
  */
 (function(){
   "use strict";
   var match=location.pathname.match(/^\/lessons\/j277\/lesson-(\d{3})\/(?:index\.html)?$/);
   var lessonId=match&&match[1];
-  var allowlist=["096","098","099","100","101","102","103","104","105","106","107","108","109"]; // Archive-backed batches 1–3.
+  var allowlist=["096","098","099","100","101","102","103","104","105","106","107","108","109","110","111","112","114","115"]; // Archive-backed batches 1–4; 113 deliberately excluded.
   if(!lessonId || allowlist.indexOf(lessonId)<0 ||
      new URLSearchParams(location.search).get("exam-bank-preview")!=="1")return;
 
@@ -92,8 +93,8 @@
   }
   async function load(){
     var urls=[
-      "/data/exam-questions/j277-youdo-lesson-map.json?v=20261122-y11-batch3-1",
-      "/data/exam-questions/j277-rhs-practice-drafts.csv?v=20261122-y11-batch3-1"
+      "/data/exam-questions/j277-youdo-lesson-map.json?v=20261122-y11-batch4-1",
+      "/data/exam-questions/j277-rhs-practice-drafts.csv?v=20261122-y11-batch4-1"
     ];
     var results=await Promise.all(urls.map(function(url){
       return fetch(url,{cache:"no-store"}).then(function(response){
@@ -108,7 +109,7 @@
        row.year11_preview_delivery_mode!=="retain_code_first_and_check_replace_archived_old_exam_questions_teacher_preview_only")
       throw new Error("Expected archive-backed, unpublished Lesson "+lessonId+" bank mapping");
     var assignment=row.additional_exam_practice||[];
-    if(assignment.length<3 || assignment.length>4)throw new Error("Expected three or four mapped exam questions for lesson "+lessonId);
+    if(assignment.length<2 || assignment.length>4)throw new Error("Expected two to four mapped exam questions for lesson "+lessonId);
     var records=parseCsv(results[1]);
     var bank=new Map(records.map(function(item){return [item.rhs_question_id,item];}));
     var ids=new Set();
