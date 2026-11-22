@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 127 original You Do source snapshot",
+  "lesson": "127",
+  "title": "CPU Performance and Embedded Systems",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-127.json",
+  "original_source_blob_sha": "75ce016165330c7a855ed5c4b508d88b93b8da28",
+  "purpose": "Archive original Code First, model answer, previous learning, old exam practice with answer points, visuals and challenge. New bank practice is preview-only; ordinary source and all other lesson phases stay unchanged.",
+  "code_first": {
+    "q": "Compare two different CPU clock-speed values using selection.",
+    "code": "clockA = 3\nclockB = 2\nif clockB > clockA then\n    print(\"B has higher clock speed\")\nendif",
+    "p": [
+      "Predict the output (if any).",
+      "Change clockB to 4 and predict again.",
+      "Add a separate equality test; explain why clock speed alone cannot establish the fastest CPU."
+    ],
+    "a": "Initially there is no output because 2 is not greater than 3. With clockB=4 it prints B has higher clock speed. An equality test clockB == clockA reports matching clock speeds; core count, cache and architecture can also affect task performance."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "State two CPU factors affecting performance. [2 marks]",
+      "Clock speed, cache size, number of cores (any two)."
+    ],
+    [
+      "Explain why a larger cache may improve performance. [3 marks]",
+      "Frequently needed instructions/data can be accessed faster, reducing waiting for RAM."
+    ],
+    [
+      "Give an example of an embedded system and explain why it qualifies. [3 marks]",
+      "For example a washing-machine controller: built into the device for a dedicated control task."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 127,
+    "coreHint": "Compare the given clock speeds only; do not assume a full performance benchmark.",
+    "stretch": {
+      "task": "Extend the selection to handle equal clock speeds. Test A=3 against B=2, B=4 and B=3.",
+      "hint": "Use separate greater-than, less-than and equality outcomes.",
+      "answer": "B=2 → A higher, B=4 → B higher, B=3 → equal clocks. No result alone proves an overall performance winner."
+    },
+    "mastery": {
+      "task": "Design a comparison tool that reads clock speed, core count and cache size for two CPUs, then explains why declaring a single 'winner' is not justified by clock speed alone.",
+      "hint": "A single IF tests only one factor; multiple factors can trade off.",
+      "answer": "Model: compare each specification separately, output differences, and state that workload and architecture affect actual performance. Tests: one CPU has higher clock but fewer cores; equal clock; same cores with different cache."
+    }
+  }
+}
