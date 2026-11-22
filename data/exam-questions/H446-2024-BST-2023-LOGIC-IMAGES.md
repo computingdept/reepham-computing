@@ -15,3 +15,11 @@ For **2024 H446/01 Q8(b)(i)**, the eight-row `LEFT / DATA / RIGHT` table will be
 All assets use one question and one dedicated answer presentation, with large node labels, black-and-white technical content, subtle edge glow, and SVG title/description accessibility fields. The [asset-role register](h446-2024-bst-2023-logic-map.csv) contains eight explicit mappings.
 
 A standalone GitHub workflow rasterises every file at 1240×740 and creates a six-image contact sheet. This confirms technical rendering, not actual projector-distance legibility or independent OCR examiner-source/teacher approval. **All roles remain `disabled_not_approved`.** No live H446/J277 lessons, Cloudflare D1, assignments, scoring, or shared website CSS/JS have been changed.
+
+## Actual rendered QA evidence
+
+[GitHub Actions run 45029680543](https://github.com/computingdept/reepham-computing/actions/runs/45029680543) passed: all six original SVGs successfully XML-parsed and rasterised at **1240×740**. The archived [image evidence artifact 14757361749](https://github.com/computingdept/reepham-computing/actions/runs/45029680543/artifacts/14757361749) contains six PNGs, the contact sheet and an accessibility-title/description report.
+
+The first screenshot review found two completed editing-job nodes Y(7) and Z(11) slightly overlapping and the wildlife insertion captions crowded. Both were corrected and the images re-rendered successfully. Final contact-sheet review confirmed distinct nodes, correct highlighted inserted positions, legible four-card placement notes, and the circuit question not disclosing the Boolean formula.
+
+This batch **does not** independently approve OCR marking alternatives, real projector readability or student release. All eight question/asset roles remain `disabled_not_approved`.
