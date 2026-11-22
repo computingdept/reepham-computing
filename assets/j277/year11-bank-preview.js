@@ -79,7 +79,7 @@
     var groups=[],current=[],pairedLength=0;
     function flush(){if(current.length){groups.push(current);current=[];pairedLength=0;}}
     items.forEach(function(q){
-      if((adaptive && singleScreenQuestion(q)) || q.figure){
+      if((adaptive && lessonId!=="114" && singleScreenQuestion(q)) || q.figure){
         flush();groups.push([q]);return;
       }
       var textLength=originalQuestion(q.question).length;
