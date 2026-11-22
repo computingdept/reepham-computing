@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 130 original You Do source snapshot",
+  "lesson": "130",
+  "title": "Programming: Files, SQL and Strings",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-130.json",
+  "original_source_blob_sha": "9f9a7403b1634501bc8b2392aff27bebaa288b50",
+  "purpose": "Archive original Code First, model answer, previous learning, old exam practice with answer points, visuals and challenge. New bank practice is preview-only; ordinary source and all other lesson phases stay unchanged.",
+  "code_first": {
+    "q": "Use a different class dataset to filter marks, then connect the result to SQL.",
+    "code": "array names = [\"Eli\",\"Jo\",\"Sam\"]\narray marks = [65,52,38]\nfor i = 0 to 2\n    if marks[i] >= 60 then\n        print(names[i])\n    endif\nnext i",
+    "p": [
+      "Predict which name prints when the threshold is 60.",
+      "Change the threshold to 50 and predict which names print.",
+      "Add a counter for qualifying pupils; explain why only necessary personal fields should be selected."
+    ],
+    "a": "At threshold 60, code prints Eli. At 50 it prints Eli then Jo. A counter initialised to 0 before the loop and incremented inside the IF gives 1 and 2 respectively. SQL can express the same filtering, e.g. SELECT Name FROM Scores WHERE Mark >= 60; data minimisation means processing only necessary personal data."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "Write SQL to display Name from Pupils for pupils whose Mark >= 70. [3 marks]",
+      "SELECT Name [1] FROM Pupils [1] WHERE Mark >= 70 [1]; Ada and Mia match."
+    ],
+    [
+      "Complete a code condition so that names[i] is printed only when marks[i] < 50. State the result using the shared data. [3 marks]",
+      "IF marks[i] < 50 THEN [2 for correct condition/control] print(names[i]) [1]; prints Ben."
+    ],
+    [
+      "Explain why comparing '72' directly with numeric 50 can be problematic when reading marks from a CSV text file. [3 marks]",
+      "readLine() supplies text [1]; '72' is a string, while 50 is numeric [1]; the field must be converted/validated before a numerical comparison [1]."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 130,
+    "coreHint": "This Code First dataset is different from the modelled Pupils table. Read the three marks before setting the threshold.",
+    "stretch": {
+      "task": "For the separate Scores table (Eli=65, Jo=52, Sam=38), change code and SQL to select names with Mark < 60.",
+      "hint": "Update condition to marks[i] < 60; query SELECT Name FROM Scores WHERE Mark < 60;",
+      "answer": "Code prints Jo and Sam in that order. SQL returns those same names; SQL row order is not guaranteed without an ORDER BY."
+    },
+    "mastery": {
+      "task": "Optional integration: read pupils.csv, skip the header, split each line, validate/cast Mark, build a table-like structure and return pupils with numeric Mark >= 50. Compare the result with SQL, and explain how erroneous data should be handled.",
+      "hint": "Use file open/read/close, split on comma in the chosen high-level language, convert numeric fields safely, then loop/filter. Only attempt after the core loop is secure.",
+      "answer": "Expected names Ada and Mia. Ben 43 is excluded. A correct outline opens file; discards ID,Name,Mark header; reads/splits each row; checks number fields; converts mark to integer; tests >=50; prints corresponding names; closes file; rejects or reports malformed/non-numeric data. The SQL result contains the same names, with no guaranteed order."
+    }
+  }
+}
