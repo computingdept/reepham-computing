@@ -1,0 +1,36 @@
+{
+  "archive_type": "J277 Year 11 lesson 108 original You Do source snapshot",
+  "lesson": "108",
+  "title": "Linear Search",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-108.json",
+  "original_source_blob_sha": "bb614feb01ba9ee79c5370e36855c11406605839",
+  "purpose": "Preserve original Code First and all legacy exam questions/answers before archive-backed exam-bank lesson preview. Code First remains live. Original lesson content and other phases are unchanged.",
+  "code_first": {
+    "q": "Trace linear search through an unsorted list of CPU register names.",
+    "code": "array registers = [\"ACC\",\"MDR\",\"PC\",\"MAR\"]\nfor i = 0 to 3\n    if registers[i] == \"PC\" then\n        print(i)\n    endif\nnext i",
+    "p": [
+      "Predict the zero-based index printed.",
+      "Change target \"PC\" to \"MAR\" and predict again.",
+      "Recall what PC and MAR store, and explain why linear search does not require a sorted list."
+    ],
+    "a": "PC is at index 2; MAR is at index 3. PC holds the next instruction's address; MAR holds the memory address being accessed. Linear search can examine unsorted values in order. This small snippet prints nothing if there is no match; a full algorithm should report not found."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "A linear search looks for 11 in [4,11,6,18,2]. State the index and number of comparisons. [3]\n\nSource: Original OCR J277-style practice question.",
+      "Index 1 [1], following checks of 4 then 11 [1], total 2 comparisons [1]."
+    ],
+    [
+      "Explain why linear search can find a target in an unsorted list. [2]\n\nSource: Original OCR J277-style practice question.",
+      "Checks elements in order [1] without requiring sorting [1]."
+    ],
+    [
+      "A linear search fails to find 5 in [1,4,8,9]. How many elements are checked and why? [3]\n\nSource: Original OCR J277-style practice question.",
+      "Four elements [1], because each item is compared [1] before concluding target absent [1]."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": null
+}
