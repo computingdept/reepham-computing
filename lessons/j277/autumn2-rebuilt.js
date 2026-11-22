@@ -2106,9 +2106,9 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       v && !(String(number)==="021" && i===2 && v.title==="Two different network extents")?diagram(v):"")
   }:null;
   const rhsSharedYouDoHead=rhsSharedYouDoTrial?
-    '<link rel="stylesheet" href="../../../assets/rhs-youdo/youdo-presentation.css?v=20261122-universal-fix2">':"";
+    '<link rel="stylesheet" href="../../../assets/rhs-youdo/youdo-presentation.css?v=20261122-codefirst-compact3">':"";
   const rhsSharedYouDoSetup=rhsSharedYouDoTrial?
-    '<script src="../../../assets/rhs-youdo/youdo-presentation.js?v=20261122-universal-fix2"></script><script>window.RHSYouDoTrial.installJ277('+JSON.stringify(rhsSharedYouDoData).replace(/</g,"\\u003c")+');</script>':"";
+    '<script src="../../../assets/rhs-youdo/youdo-presentation.js?v=20261122-codefirst-compact3"></script><script>window.RHSYouDoTrial.installJ277('+JSON.stringify(rhsSharedYouDoData).replace(/</g,"\\u003c")+');</script>':"";
   // J277-only default presentation: one independent question per screen,
   // with every authored marking scheme revealed only after all questions.
   // Assessment, timed-practice and existing opt-in pilots keep their own flow.
