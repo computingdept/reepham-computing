@@ -2048,7 +2048,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=cf45749fa0cf">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
  <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261113-card-outlines1">${lessonStyles}<link rel="stylesheet" href="../../../assets/classroom-visual-zoom.css?v=20261114-clickclose2"></head>`;
- function renderLesson(number,lesson){
+ function renderLesson(number,lesson,rhsExistingPriorExam=null){
   // Canonicalise the Year 11 diagram schema before generating any phase.
   // A silent fallback would hide the dedicated SVGs and disable I Do / We Do reveals.
   if(lesson.year11){
@@ -2077,43 +2077,41 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   const pilotData=rhsExamPilot?'<script src="../../../assets/j277/exam-classroom-134-data.js?v=20261121-rhs2"></script>':"";
   const pilotJsVersion=rhsExamPilot?"20261121-unified-code-v8":"20261121-rhs2";
   const pilotSetup=useExamPilot?pilotData+'<script src="../../../assets/j277/exam-classroom.js?v='+pilotJsVersion+'"></script><script>window.J277ExamClassroom.install('+JSON.stringify({config:lesson.examClassroom,code:lesson.k,rhsPilot:rhsExamPilot})+');</script>':"";
-  // One shared, opt-in J277 You Do renderer: all non-assessment lessons can
-  // use the same JS and CSS with their EXISTING source questions and answers.
-  // This is preview only: no bank override or teacher approval is inferred.
-  // If a lesson has only three embedded questions, its existing priorExam is
-  // the fourth preview question. Lesson 031 retains its explicitly labelled
-  // original Q4 editorial draft for continuity with the approved visual pilot.
+  // One shared J277 You Do presentation for ordinary source-backed lessons.
+  // The existing three lesson questions and a separately authored previous-
+  // learning exam question form the four prompts; no unapproved RHS draft
+  // questions are automatically published. Other seven phases stay intact.
   const rhsProtectedYouDo=new Set(["018","035","036","050","078","079","094","095","120","121","143","144","156","157"]);
-  const rhsYouDoEligible=!rhsProtectedYouDo.has(String(number)) && !lesson.isAssessment && !useExamPilot &&
-    Array.isArray(lesson.e) && lesson.e.length>=3 && lesson.e.length<=4 &&
+  const rhsPreviewRequested=new URLSearchParams(location.search).get("youdo-trial")==="1";
+  // The explicit Lesson 031 editorial Q4 is retained for opt-in preview only.
+  const rhsLesson031Draft=["A concert website receives requests from hundreds of compromised computers at the same time. Genuine customers cannot load the booking page.\n\nIdentify the type of attack and explain how it affects the website. [3 marks]",
+    "Distributed denial-of-service (DDoS) attack [1]. Requests come from multiple computers/sources [1]. The volume overwhelms service capacity, preventing legitimate access [1]."];
+  const rhsSourceQuestions=rhsPreviewRequested && String(number)==="031"
+    ?[...lesson.e,rhsLesson031Draft]:lesson.e;
+  const rhsPriorExam=rhsSourceQuestions.length===4?null:
+    ((lesson.priorExam&&lesson.priorExam.q&&lesson.priorExam.a)
+      ?lesson.priorExam:rhsExistingPriorExam);
+  const rhsSharedYouDoEnabled=!rhsProtectedYouDo.has(String(number)) &&
+    !lesson.isAssessment && !useExamPilot &&
     lesson.k && lesson.k.q && lesson.k.code && lesson.k.a &&
-    (lesson.e.length===4 || !!lesson.priorExam || String(number)==="031");
-  // The teacher has requested the shared seven-screen display on the normal
-  // Lesson 040 and 062 pages. Their four inputs are EXISTING live lesson
-  // sources: the prior-exam pair plus the three authored exam pairs.
-  // Other J277 lessons keep opt-in mode until content and rendering QA.
-  const rhsDefaultYouDo=new Set(["040","062"]).has(String(number));
-  const rhsSharedYouDoTrial=rhsYouDoEligible &&
-    (rhsDefaultYouDo || new URLSearchParams(location.search).get("youdo-trial")==="1");
-  const rhsLesson031Question=["A concert website receives requests from hundreds of compromised computers at the same time. Genuine customers cannot load the booking page.\\n\\nIdentify the type of attack and explain how it affects the website. [3 marks]","Distributed denial-of-service (DDoS) attack [1]. Requests come from multiple computers/sources [1]. The volume overwhelms service capacity, preventing legitimate access [1]."];
-  const rhsSharedYouDoQuestions=String(number)==="031"?[...lesson.e,rhsLesson031Question]:lesson.e;
-  const rhsSharedYouDoData=rhsSharedYouDoTrial?{
-    lesson:String(number),code:lesson.k,
-    priorExam:rhsSharedYouDoQuestions.length===4?null:lesson.priorExam,
-    questions:rhsSharedYouDoQuestions,
-    preview:!rhsDefaultYouDo,
+    Array.isArray(rhsSourceQuestions) &&
+    (rhsSourceQuestions.length===4 ||
+      (rhsSourceQuestions.length===3 && rhsPriorExam&&rhsPriorExam.q&&rhsPriorExam.a));
+  const rhsSharedYouDoData=rhsSharedYouDoEnabled?{
+    lesson:String(number),code:lesson.k,priorExam:rhsPriorExam,
+    questions:rhsSourceQuestions,preview:rhsPreviewRequested,
     visuals:(lesson.examVisuals||[]).map((v,i)=>
       v && !(String(number)==="021" && i===2 && v.title==="Two different network extents")?diagram(v):"")
   }:null;
-  const rhsSharedYouDoHead=rhsSharedYouDoTrial?
-    '<link rel="stylesheet" href="../../../assets/rhs-youdo/youdo-presentation-20261122-compact.css?v=1">':"";
-  const rhsSharedYouDoSetup=rhsSharedYouDoTrial?
-    '<script src="../../../assets/rhs-youdo/youdo-presentation-20261122-compact.js?v=1"></script><script>window.RHSYouDoTrial.installJ277('+JSON.stringify(rhsSharedYouDoData).replace(/</g,"\\u003c")+');</script>':"";
+  const rhsSharedYouDoHead=rhsSharedYouDoEnabled?
+    '<link rel="stylesheet" href="../../../assets/rhs-youdo/youdo-presentation-20261122-compact.css?v=20261122-all-j277-1">':"";
+  const rhsSharedYouDoSetup=rhsSharedYouDoEnabled?
+    '<script src="../../../assets/rhs-youdo/youdo-presentation-20261122-compact.js?v=20261122-all-j277-1"></script><script>window.RHSYouDoTrial.installJ277('+JSON.stringify(rhsSharedYouDoData).replace(/</g,"\\u003c")+');</script>':"";
   // J277-only default presentation: one independent question per screen,
   // with every authored marking scheme revealed only after all questions.
   // Assessment, timed-practice and existing opt-in pilots keep their own flow.
   const unifiedJ277=Number(number)>=19 && Number(number)<=25 &&
-    !lesson.isAssessment && !useExamPilot && !rhsSharedYouDoTrial &&
+    !lesson.isAssessment && !useExamPilot && !rhsSharedYouDoEnabled &&
     !new URLSearchParams(location.search).has("youdo-trial") &&
     !["078","113","156","157"].includes(String(number));
   const unifiedData=unifiedJ277?{
@@ -2131,7 +2129,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     :"";
   // Never load a second You Do renderer when the shared presentation owns
   // the seven stages; this otherwise silently restores the grouped layout.
-  const defaultYouDo=useExamPilot||rhsSharedYouDoTrial?"":unifiedJ277?unifiedScripts:
+  const defaultYouDo=useExamPilot||rhsSharedYouDoEnabled?"":unifiedJ277?unifiedScripts:
     '<script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"></script>';
   const lessonControllerVersion=rhsExamPilot?"20261121-rhs-codefirst-isolated-v10":"20261115-codefirst-brush2";
   const html=pilotHead.replace("</head>",rhsSharedYouDoHead+"</head>")+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")+(lesson.visualAuditV3?" j277-visual-v3":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
@@ -2810,6 +2808,37 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
      else{delete lesson.k.paper1Ref;delete lesson.k.paper1Topic;}
    }catch(error){console.error("J277 Code First: bank could not load; original task retained.",error);}
  }
+ // Read one already-live, independently authored exam question from an
+ // earlier non-assessment lesson when there is no stored priorExam.
+ // This is a retrieval question, NOT a newly authored RHS bank override.
+ async function rhsPreviousExamSource(number,lesson){
+   if(lesson.priorExam&&lesson.priorExam.q&&lesson.priorExam.a)return null;
+   const protectedIds=new Set(["018","035","036","050","078","079","094","095","120","121","143","144","156","157"]);
+   const current=Number(number);
+   const own=new Set((lesson.e||[]).map(pair=>String(pair[0]||"").trim().toLowerCase()));
+   const candidates=[];
+   for(let n=current-1;n>=19&&current-n<=5;n--){
+     const id=String(n).padStart(3,"0");
+     if(!protectedIds.has(id))candidates.push({id,path:"../autumn2-"+id+".json"});
+   }
+   if(current===19)candidates.push({id:"017",path:"../autumn1-014-018.json"});
+   for(const candidate of candidates){
+     try{
+       const response=await fetch(candidate.path+"?v=20261122-original-retrieval1",{cache:"no-store"});
+       if(!response.ok)continue;
+       const prev=(await response.json())[candidate.id];
+       if(!prev||prev.isAssessment||!Array.isArray(prev.e))continue;
+       for(const pair of prev.e.slice().reverse()){
+         if(Array.isArray(pair)&&pair.length===2&&typeof pair[0]==="string"&&
+            typeof pair[1]==="string"&&pair[0].trim()&&pair[1].trim()&&
+            !own.has(pair[0].trim().toLowerCase())){
+           return {q:pair[0],a:pair[1],from:candidate.id};
+         }
+       }
+     }catch(e){console.warn("RHS J277 prior-question lookup failed",candidate.id);}
+   }
+   return null;
+ }
  function load(number,mode){
   const n=Number(number),from=String(number);
   fetch("../autumn2-"+from+".json?v=20261025-exit-why-057",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("Cannot load lesson data");return r.json()}).then(async all=>{
@@ -2819,7 +2848,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    if(!Array.isArray(data.r)||data.r.length!==4||!Array.isArray(data.v)||data.v.length<3||!Array.isArray(data.e)||data.e.length<(data.isAssessment?1:3))throw Error("Incomplete lesson "+number);
    if(interleaveY10[String(number)] && !data.isAssessment) data.k={...data.k,...interleaveY10[String(number)]};
    await applyCodeFirstMaster(data,number);
-   if(mode==="answers")renderAnswers(number,data);else renderLesson(number,data);
+   if(mode==="answers")renderAnswers(number,data);
+   else renderLesson(number,data,await rhsPreviousExamSource(number,data));
   }).catch(e=>{document.body.innerHTML='<p style="padding:24px;font:700 18px Arial,sans-serif">Lesson could not load: '+escape(e.message)+'</p>';});
  }
  window.J277Autumn2={render:load};
