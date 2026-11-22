@@ -181,7 +181,14 @@ function showH446SequentialStage(page,n,answer){
   page.dataset.h446Sequential='true';
   qs.forEach((q,k)=>{q.hidden=k!==i;q.querySelector('.youdo-solution').hidden=k!==i||!answer;});
   const p=page.querySelector('.youdo-window-progress');
-  if(p)p.textContent=(answer?'ANSWER ':'QUESTION ')+(i+1)+' OF '+qs.length;
+  if(p){
+    const tag=qs[i].querySelector('.phase-tag')?.textContent||'';
+    const heading=qs[i].querySelector('h2,h3')?.textContent||'';
+    const markText=(tag+' '+heading).match(/\b(\d{1,2})\s*marks?\b|\[(\d{1,2})\]/i);
+    const minutes=markText?Number(markText[1]||markText[2]):0;
+    p.textContent=(answer?'ANSWER ':'QUESTION ')+(i+1)+' OF '+qs.length+
+      (minutes?' · '+minutes+' '+(minutes===1?'MINUTE':'MINUTES'):'');
+  }
   qs[i].scrollTop=0;
   const prompt=qs[i].querySelector('.youdo-question-prompt');
   if(prompt)prompt.scrollTop=0;
