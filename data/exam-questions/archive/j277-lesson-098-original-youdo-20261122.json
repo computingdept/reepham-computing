@@ -1,0 +1,53 @@
+{
+  "archive_type": "J277 Year 11 lesson 098 original You Do source snapshot",
+  "lesson": "098",
+  "title": "Secondary Storage",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-098.json",
+  "original_source_blob_sha": "a3510405e337f171cb5d0a7cf3d96169aa06b12a",
+  "purpose": "Preserve Code First plus the older exam questions and marking answers before an opt-in teacher preview replaces only the older exam questions; Code First remains active and unchanged; the normal student lesson source is not edited.",
+  "code_first": {
+    "q": "Predict the number of 500 MB files that fit in 2000 MB.",
+    "code": "capacityMB = 2000\nfileMB = 500\nfiles = capacityMB DIV fileMB\nprint(files)",
+    "p": [
+      "Predict the number.",
+      "Change capacityMB to 2500.",
+      "Extend to calculate remaining MB using MOD."
+    ],
+    "a": "Prints 4, then 5. Remaining MB = capacityMB MOD fileMB (0 in both cases)."
+  },
+  "previous_learning_exam": {
+    "from": "097",
+    "q": "Explain why virtual memory can allow programs to remain open yet reduce a computer's performance. [3]",
+    "a": "The operating system uses secondary storage for memory pages when RAM is insufficient [1]; moving/accessing those pages takes time [1] because secondary storage is slower than RAM [1]."
+  },
+  "original_exam_questions": [
+    [
+      "Name the storage technology used by (i) DVD, (ii) HDD and (iii) USB flash drive. [3]\n\nSource: Original OCR J277-style practice question.",
+      "(i) Optical [1]; (ii) magnetic [1]; (iii) solid-state/flash [1]."
+    ],
+    [
+      "Explain one advantage and one disadvantage of magnetic storage compared with solid-state storage. [4]\n\nSource: Original OCR J277-style practice question.",
+      "Magnetic HDD often costs less per GB [1], advantageous for large capacity [1]; it has moving parts [1], increasing vulnerability to physical shock [1]."
+    ],
+    [
+      "A school needs portable, reusable storage for transporting files. Justify choosing a USB flash drive. [3]\n\nSource: Original OCR J277-style practice question.",
+      "Solid-state [1], compact and portable [1], reusable with no moving parts [1]."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 98,
+    "coreHint": "Use DIV for the number of whole files; ignore partial files.",
+    "stretch": {
+      "task": "Change capacityMB to 2300. Predict how many whole 500 MB files fit and use MOD to print remaining space.",
+      "hint": "Compute both 2300 DIV 500 and 2300 MOD 500.",
+      "answer": "4 whole files fit, with 300 MB left: 2300 DIV 500 = 4; 2300 MOD 500 = 300."
+    },
+    "mastery": {
+      "task": "Extend the original program to calculate the number of whole files and unused storage for capacities of 2300 MB and 2500 MB. Explain why the same number of files may not imply the same unused space.",
+      "hint": "Use DIV for the count and MOD for remainder. Compare both outputs.",
+      "answer": "For 2300 MB, 4 files fit and 300 MB remains; for 2500 MB, 5 files fit and 0 MB remains. The capacity is not always an exact multiple of the file size. Real drives have filesystem overhead."
+    }
+  }
+}
