@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 149 original You Do source snapshot",
+  "lesson": "149",
+  "title": "Algorithms: Examination Techniques",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-149.json",
+  "original_source_blob_sha": "3d71d394c1e3080421b023e77ca80de8bcf9717f",
+  "purpose": "Preserve original Code First, marked answer, previous-learning exam item, old exam questions and answers, visuals and challenge before preview-only RHS bank substitution. Default student lesson and other phases untouched.",
+  "code_first": {
+    "q": "Predict the CPU register printed from a zero-indexed array.",
+    "code": "array registers = [\"MAR\",\"MDR\",\"PC\"]\nprint(registers[2])",
+    "p": [
+      "Predict the output.",
+      "Change index 2 to 0.",
+      "Explain what the PC and MAR actually store; name the search algorithm that works without sorting."
+    ],
+    "a": "Index 2 prints PC; index 0 prints MAR. PC holds the next instruction address; MAR holds the address being accessed. Linear search can inspect an unsorted array. This array-access example is not itself a complete search."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "A linear search seeks 7 in [3,5,7,9]. Give number of checks. [2 marks]",
+      "3."
+    ],
+    [
+      "State a requirement of binary search. [1 mark]",
+      "Sorted input."
+    ],
+    [
+      "Explain what one pass of bubble sort guarantees. [3 marks]",
+      "After a full ascending pass, the largest unsorted value has reached the right end of that section."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 149,
+    "coreHint": "Array indexes begin at 0: MAR is index 0, MDR index 1, PC index 2.",
+    "stretch": {
+      "task": "Add a linear-search loop that finds MAR in the register-name array and prints its zero-based index.",
+      "hint": "Loop through indexes 0 to 2; compare each register string to MAR.",
+      "answer": "MAR occurs at index 0. A complete search should also handle a target that is not found."
+    },
+    "mastery": {
+      "task": "Compare linear and binary search code on sorted [2,5,8,11,14,17,20] for target17; trace indexes and describe precondition.",
+      "hint": "Linear visits indexes0..5; binary uses midpoint and halves.",
+      "answer": "Linear six comparisons; binary mid3=11,low4; mid5=17 found in two comparisons."
+    }
+  }
+}
