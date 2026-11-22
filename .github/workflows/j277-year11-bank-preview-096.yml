@@ -1,0 +1,38 @@
+name: J277 Lesson 096 exam bank preview smoke test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'assets/j277/year11-bank-preview.js'
+      - 'assets/j277/year11-bank-preview.css'
+      - 'lessons/j277/autumn2-rebuilt.js'
+      - 'lessons/j277/lesson-096/index.html'
+      - 'data/exam-questions/j277-youdo-lesson-map.json'
+      - 'data/exam-questions/j277-rhs-practice-drafts.csv'
+      - 'qa/master-audit-2026/j277-bank-preview-096.cjs'
+      - '.github/workflows/j277-year11-bank-preview-096.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preview-browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium browser
+        run: |
+          npm install --no-save --package-lock=false playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Check opt-in Year 11 Lesson 096 preview
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/j277-bank-preview-server.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" || true' EXIT
+          node qa/master-audit-2026/j277-bank-preview-096.cjs
