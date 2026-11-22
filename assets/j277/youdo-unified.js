@@ -167,7 +167,7 @@
         j277ReviewStart:"3",codingFirst:"true",
         workMode:"independent",windowStart:"0"
       });
-      css.href="../../../assets/j277/youdo-unified.css?v=20261121-code-question-answer-v1";
+      css.href="../../../assets/j277/youdo-unified.css?v=20261122-exam-svg-large-v1";
       document.head.appendChild(css);
       const labels=[
         "Check Code First →","Begin exam questions →","Show answer 1 →",

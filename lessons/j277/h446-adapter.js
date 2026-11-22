@@ -315,7 +315,7 @@ next.addEventListener('click',goNext);previous.addEventListener('click',goPrevio
     const unified003Scripts=unified003
       ?'<script>window.RHSJ277YouDoData='+
         JSON.stringify(unified003Payload).replace(/</g,"\\u003c")+
-        ';<\/script><script src="../../../assets/j277/youdo-unified.js?v=20261121-code-question-answer-v1"><\/script>'
+        ';<\/script><script src="../../../assets/j277/youdo-unified.js?v=20261122-exam-svg-large-v1"><\/script>'
       :'<script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"><\/script>';
     const qCards=codeCard+qs.map((q,i)=>`<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION ${i+2} · ${i===3?'ASSESSMENT PRACTICE':'INDEPENDENT PRACTICE'}</span><h3>${esc(title)}</h3><div class="question-text">${q}</div></article>`).join("");
 
