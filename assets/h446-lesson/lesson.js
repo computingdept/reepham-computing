@@ -484,6 +484,16 @@ function setYouDoWindow(page,start){
       return;
     }
     if(page.dataset.j277SeparateReview==='true'){
+      // Only the explicit L096 bank preview gets extra screens after the
+      // original seven, without adding a separate navigation phase.
+      const bankStart=Number(page.dataset.rhsBankStart||7);
+      if(page.dataset.rhsBankPreview==='true' && safe>=bankStart){
+        const bankCount=Number(page.dataset.rhsBankCount||4);
+        progress.textContent=safe===bankStart
+          ?'ADDITIONAL EXAM QUESTIONS · '+bankCount+' QUESTIONS'
+          :'ADDITIONAL ANSWER '+(safe-bankStart)+' OF '+bankCount;
+        return;
+      }
       const reviewStart=Number(page.dataset.j277ReviewStart||4);
       progress.textContent=safe===0?'':safe<reviewStart
         ?'QUESTION '+safe+' OF '+(reviewStart-1)
@@ -1004,9 +1014,16 @@ function updateControl(){
       const i=Number(page.dataset.windowStart||0);
       const reviewStart=Number(page.dataset.j277ReviewStart||4);
       const count=page.querySelectorAll('.youdo-question').length;
-      label=i===0?'Continue → Q2':i<reviewStart-1?'Continue → Q'+(i+2):
-        i===reviewStart-1?'Begin self-marking →':
-        i<count-1?'Next marking scheme →':'Continue → Key Vocabulary';
+      const bankStart=Number(page.dataset.rhsBankStart||7);
+      if(page.dataset.rhsBankPreview==='true' && i>=bankStart-1){
+        label=i===bankStart-1?'Additional exam questions →':
+          i===bankStart?'Begin additional self-marking →':
+          i<count-1?'Next additional marking answer →':'Continue → Key Vocabulary';
+      }else{
+        label=i===0?'Continue → Q2':i<reviewStart-1?'Continue → Q'+(i+2):
+          i===reviewStart-1?'Begin self-marking →':
+          i<count-1?'Next marking scheme →':'Continue → Key Vocabulary';
+      }
     }else if(isH446RichReview(page)&&page.querySelector('.h446-rich-review')){
       const all=page.querySelectorAll('.h446-rich-stage');
       const index=Number(page.dataset.richStepIndex||0);
