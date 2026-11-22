@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 138 original You Do source snapshot",
+  "lesson": "138",
+  "title": "Preventing Network Attacks",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-138.json",
+  "original_source_blob_sha": "66183e13e6b1ee23dfc7296b206b2a02de59e456",
+  "purpose": "Preserve original Code First and its answer, original exam questions and answers, previous-learning prompt, old visuals and challenge; bank replacements are teacher-preview only inside You Do. Other phases and ordinary student URLs are untouched.",
+  "code_first": {
+    "q": "Predict the decision.",
+    "code": "authenticated = true\nsecondFactor = false\nif authenticated AND secondFactor then\n    print(\"Allow\")\nelse\n    print(\"Deny\")\nendif",
+    "p": [
+      "Explain the first assignment or condition that determines the output.",
+      "Change secondFactor to true.",
+      "Explain why both checks are combined by AND."
+    ],
+    "a": "Deny; Allow; both conditions must be true."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "Explain why encryption protects intercepted information. [3 marks]",
+      "The interceptor sees ciphertext; without the relevant key it is not readily readable."
+    ],
+    [
+      "State one role of a firewall. [2 marks]",
+      "Allow or block traffic according to filtering rules."
+    ],
+    [
+      "Explain why software updates can improve security. [2 marks]",
+      "Fix known vulnerabilities that might otherwise be exploited."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 138,
+    "coreHint": "Access is granted only if both factors are true.",
+    "stretch": {
+      "task": "Add a message to distinguish a missing password check from a missing second factor.",
+      "hint": "Test the first condition before the second.",
+      "answer": "If password is false -> password check failed; if password true but MFA false -> second factor needed."
+    },
+    "mastery": {
+      "task": "Write tests for all four combinations of passwordValid and secondFactorValid, then explain why MFA cannot stop all forms of phishing.",
+      "hint": "Build a four-row truth table.",
+      "answer": "False/False Deny, False/True Deny, True/False Deny, True/True Allow. MFA limits use of a stolen password but doesn't eliminate account attacks."
+    }
+  }
+}
