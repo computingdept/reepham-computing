@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 125 original You Do source snapshot",
+  "lesson": "125",
+  "title": "Debugging Syntax and Logic Errors",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-125.json",
+  "original_source_blob_sha": "503bdd0e547727037053fe280fcedf59a8ea1e63",
+  "purpose": "Preserve original Code First and model answer, previous-learning content, original exam questions/answers/visuals and original challenge prior to replacing archived exam questions in teacher preview; ordinary student lesson source unchanged.",
+  "code_first": {
+    "q": "Predict whether this prints Valid.",
+    "code": "score = 101\nif score >= 0 OR score <= 100 then\n    print(\"Valid\")\nendif",
+    "p": [
+      "Explain your predicted result using the first assignment or test.",
+      "Replace OR with AND.",
+      "Extend with an ELSE that prints Invalid."
+    ],
+    "a": "Original prints Valid; corrected condition does not; ELSE prints Invalid."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "Differentiate a syntax error from a logic error. [2 marks]",
+      "Syntax violates language rules; logic produces incorrect behaviour even if program runs."
+    ],
+    [
+      "Identify the fault in if age >= 13 OR age <= 18 for acceptance age 13–18. [2 marks]",
+      "Use AND, not OR; OR incorrectly accepts values outside the range."
+    ],
+    [
+      "Explain why testing after debugging is necessary. [2 marks]",
+      "To verify the correction and ensure no new faults were introduced."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 125,
+    "coreHint": "With OR, one side can be true even when the number is outside the range.",
+    "stretch": {
+      "task": "Correct the code with AND and add an ELSE. Test -1, 0, 100 and 101.",
+      "hint": "An acceptable mark must pass both comparisons.",
+      "answer": "-1 Invalid;0 Valid;100 Valid;101 Invalid."
+    },
+    "mastery": {
+      "task": "Find a second error in an age checker that says IF age >= 13 AND age < 18 even though 18 is valid. Repair both the logic and the upper boundary, then write four tests.",
+      "hint": "Pay attention to AND/OR and inclusive/exclusive symbols.",
+      "answer": "Correct condition age>=13 AND age<=18. Tests 12 invalid,13 valid,18 valid,19 invalid. Explain why <18 incorrectly rejects the upper boundary."
+    }
+  }
+}
