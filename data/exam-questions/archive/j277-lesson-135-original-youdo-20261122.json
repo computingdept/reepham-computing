@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 135 original You Do source snapshot",
+  "lesson": "135",
+  "title": "Network Protocols and Layers",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-135.json",
+  "original_source_blob_sha": "b36c6ca232b03d8585d2f2b459c62002022f1709",
+  "purpose": "Preserve the original Code First, model answer, previous learning, previous exam questions and answers, original visuals and challenge before teacher-preview-only Year 11 bank replacement. The Lesson 134 exam-classroom pilot and all ordinary lesson phases remain unchanged.",
+  "code_first": {
+    "q": "Predict output.",
+    "code": "protocol = \"HTTPS\"\nif protocol == \"HTTPS\" then\n    print(\"Encrypted web connection\")\nendif",
+    "p": [
+      "Explain the first assignment or condition that determines the output.",
+      "Change protocol to HTTP.",
+      "Extend with a comparison for SMTP."
+    ],
+    "a": "First displays message; HTTP prints nothing; SMTP branch could print 'Mail sending'."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "State the purpose of DNS. [2 marks]",
+      "Resolves domain names to IP addresses."
+    ],
+    [
+      "Distinguish IP and MAC addresses. [4 marks]",
+      "IP used for logical addressing/routing across networks; MAC identifies a network interface for local data-link forwarding."
+    ],
+    [
+      "Name a suitable protocol for sending email. [1 mark]",
+      "SMTP."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 135,
+    "coreHint": "The equality test checks the literal string HTTPS.",
+    "stretch": {
+      "task": "Add ELSE IF to recognise SMTP as mail sending; test HTTPS, HTTP and SMTP.",
+      "hint": "Use another conditional branch, not three separate unguarded IFs.",
+      "answer": "HTTPS -> encrypted web, SMTP -> mail sending, HTTP -> other/unrecognised."
+    },
+    "mastery": {
+      "task": "Make a simple protocol classifier for HTTP, HTTPS, SMTP, IMAP and unknown values; explain why a classifier is not a security guarantee.",
+      "hint": "Test each known string and include a default.",
+      "answer": "HTTP web, HTTPS encrypted web, SMTP sending mail, IMAP retrieving/synchronising mail, unknown remains unrecognised. Treat user input case appropriately."
+    }
+  }
+}
