@@ -153,3 +153,19 @@ A branch-only QA-register scan found **75 question parts** across H446/01 (41) a
 4. Compare with authoritative OCR exam context/marking alternatives, verify accessibility and print/mobile views, then obtain teacher sign-off per part. Only explicitly signed-off questions may later be considered for separate lesson implementation.
 
 **Current state: no question approved; do not merge PR #114 into main or expose these previews to students.** No lesson, J277, assignment, or Cloudflare modifications are authorised by this checkpoint.
+
+## Five-case teacher preview audit — 22 November 2026
+
+Scope: isolated teacher QA previews only. Five representative classes of source-heavy question reviewed for *markup, SVG text size and layout structure*. A live screenshot from GitHub and physical projector verification could **not** be obtained in this pass. Do not label any question as visually approved.
+
+| Representative | Source finding | QA-only correction | Remaining gate |
+| --- | --- | --- | --- |
+| H446/02 Q1(c), museum A* | Weighted six-node graph and blank g/h/f/Prev grid are necessary together; 50:50 width likely compresses graph and working | Preview retains graph throughout and replaces working question with single answer panel; question text is hidden on answer reveal | Inspect graph arrows/weights and grid at actual projector size; verify answer never leaks before reveal |
+| H446/01 Q6(b), LMC | 22-line listing plus four-run output grid required; 50:50 preview too dense | Existing code-heavy 65:35 exception kept; question text now hidden on reveal; full program stays left and blank grid swaps to completed grid | Verify real projected 65:35 render and that all 22 lines are readable |
+| H446/02 Q2(a)(i), binary search | Fourteen-line code SVG has approximately 19-unit monospaced text; at 50%-scale this is at most ~10 CSS px, unsuitable for projector | Isolated preview's *second* question now uses a ~65:35 code/question split, responsive stacking on narrow screens; answer replaces question text | Direct render, horizontal fit, 6 blanks and accessibility |
+| H446/02 Q8(b)(i), Forest Pixels rowClue | Twenty-line code panel also uses ~19-unit monospaced text; may remain too small even with extra width | Isolated preview's *fourth* question now uses a ~65:35 code/question split, responsive stacking; answer replaces question text | **High-risk: likely still too small**. Consider a text-native or staged question display only after projector inspection, keeping all source lines |
+| H446/01 Q1(d), Customer database | Four-row table is aligned with RHS draft, but answer cards previously appended below question | Isolated preview hides question text and shows one answer card in-place on reveal; source table remains visible | Inspect label/card fit and 1:N relational answer at true screen size |
+
+**Common correction:** five isolated preview HTML files now use a reversible `is-answer` state so their question prompt is hidden when answer is revealed, and restored when navigating between questions. This reduces answer-induced vertical growth and duplicate question+answer text; it does **not** guarantee no scrolling at a particular projector viewport. The SVG sizes, DOM and button semantics still need browser and classroom verification. No student release, teacher approval, merge or lesson implementation.
+
+Pass/fail state: **structure corrected; actual visual testing pending** for all five representatives. All `classroom_release` records remain `disabled_not_approved`.
