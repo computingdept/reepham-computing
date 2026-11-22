@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 126 original You Do source snapshot",
+  "lesson": "126",
+  "title": "CPU Architecture and the Fetch-Execute Cycle",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-126.json",
+  "original_source_blob_sha": "bc6539d6b00ee8b386bbb4bf465ae898c376add6",
+  "purpose": "Archive original Code First, model answer, previous learning, old exam practice with answer points, visuals and challenge. New bank practice is preview-only; ordinary source and all other lesson phases stay unchanged.",
+  "code_first": {
+    "q": "Predict the value held in acc.",
+    "code": "acc = 4\nacc = acc + 6\nprint(acc)",
+    "p": [
+      "Explain your predicted result using the first assignment or test.",
+      "Change the added value to 8.",
+      "Explain that the variable acc models a running result; state what the CPU's ACC register actually stores."
+    ],
+    "a": "The output is 10; changing +6 to +8 gives 12. The variable acc is not a physical CPU register. The accumulator (ACC) is a CPU register that can hold results of arithmetic or logical calculations."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "State the purpose of MAR and MDR. [4 marks]",
+      "MAR: address of memory location accessed; MDR: data/instruction being transferred."
+    ],
+    [
+      "What does the Program Counter hold? [1 mark]",
+      "Address of the next instruction to fetch."
+    ],
+    [
+      "Explain the role of the Control Unit. [2 marks]",
+      "Coordinates CPU operations and controls execution of instructions."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 126,
+    "coreHint": "acc begins with 4 and receives an additional 6.",
+    "stretch": {
+      "task": "Extend the accumulator calculation to add 6, then subtract 3. Predict the value at each instruction.",
+      "hint": "Treat each assignment as a separate state update.",
+      "answer": "ACC moves 4 →10→7."
+    },
+    "mastery": {
+      "task": "Given PC=42 and an instruction stored at address 42, create a simple fetch-stage register trace identifying when MAR and MDR change. Explain why ACC need not change during fetch.",
+      "hint": "PC supplies next address; MAR stores address; MDR receives fetched instruction.",
+      "answer": "PC initially42; MAR←42; MDR←memory[42]; PC updated according to instruction length/sequencing; no arithmetic result needed, so ACC need not change. Correct answers distinguish address from data."
+    }
+  }
+}
