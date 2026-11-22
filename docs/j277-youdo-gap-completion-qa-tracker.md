@@ -33,3 +33,10 @@
 5. Teacher approval required before any per-lesson `teacher_approved` and `published_bank_override_enabled` changes. Do not switch any flags as part of these content review branches.
 
 **No source lesson, JS, CSS, SVG, other phase, Cloudflare or H446 edits are included.**
+
+## Second gap-completion batch: Lessons 062–087
+
+- Ten newly authored, **unapproved** Q4 drafts (062, 065, 071, 074, 075, 080, 081, 082, 085, 087) are documented in [the 062–087 draft review](j277-youdo-proposed-original-questions-qa-062-087.md).
+- These are independent RHS-style drafts, not OCR past-paper items and not part of the 225 verified bank records.
+- There are now 16 newly drafted gap fillers and **50 genuinely unfilled ordinary question slots** in the 164-lesson review inventory.
+- Code/array/trace snippets need explicit mono-spaced layout, source and answer separation, step-by-step mark audit, and half-screen projector check. Teacher approval and every student bank override remain disabled.
