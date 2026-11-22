@@ -1,0 +1,36 @@
+{
+  "archive_type": "J277 Year 11 lesson 106 original You Do source snapshot",
+  "lesson": "106",
+  "title": "Algorithm Design and Flowcharts",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-106.json",
+  "original_source_blob_sha": "7637616121d08bc9a159c914b185d23ba89fbfa6",
+  "purpose": "Preserve original Code First and all legacy exam questions/answers before archive-backed exam-bank lesson preview. Code First remains live. Original lesson content and other phases are unchanged.",
+  "code_first": {
+    "q": "Trace a decision checking whether an IPv4 octet is in the valid numerical range.",
+    "code": "octet = 260\nif octet >= 0 AND octet <= 255 then\n    print(\"Valid range\")\nelse\n    print(\"Out of range\")\nendif",
+    "p": [
+      "Predict the message and identify the flowchart decision.",
+      "Change octet to 255 and predict again.",
+      "Explain why an IPv4 octet must be between 0 and 255; note that one valid octet does not validate a complete address."
+    ],
+    "a": "260 produces Out of range; 255 gives Valid range. The decision checks octet >= 0 AND octet <= 255. One IPv4 octet contains eight bits and represents 0–255; a whole IPv4 address contains four octets."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "A flowchart checks whether mark is from 0 to 100 inclusive. Explain what should happen if the input is -2. [2]\n\nSource: Original OCR J277-style practice question.",
+      "-2 fails the range decision, so the No branch is followed [1] and input is requested again [1]."
+    ],
+    [
+      "An algorithm must accept an integer from 1 to 10. Describe the paths for 0 followed by 6. [4]\n\nSource: Original OCR J277-style practice question.",
+      "0 fails validity [1] and loops to input [1]; 6 passes [1] and algorithm continues/exits [1]."
+    ],
+    [
+      "A flowchart incorrectly sends mark = 150 straight to End after failing validation for 0–100. Identify the mistake and its correction. [3]\n\nSource: Original OCR J277-style practice question.",
+      "150 is invalid [1]; No should loop back to input instead of End [1] so a replacement value can be checked [1]."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": null
+}
