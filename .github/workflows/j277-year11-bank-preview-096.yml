@@ -10,11 +10,17 @@ on:
       - 'lessons/j277/lesson-096/index.html'
       - 'lessons/j277/lesson-098/index.html'
       - 'lessons/j277/lesson-099/index.html'
+      - 'lessons/j277/lesson-100/index.html'
+      - 'lessons/j277/lesson-101/index.html'
+      - 'lessons/j277/lesson-102/index.html'
+      - 'lessons/j277/lesson-103/index.html'
+      - 'lessons/j277/lesson-104/index.html'
       - 'data/exam-questions/archive/j277-lesson-*-original-youdo-20261122.json'
       - 'data/exam-questions/j277-youdo-lesson-map.json'
       - 'data/exam-questions/j277-rhs-practice-drafts.csv'
       - 'qa/master-audit-2026/j277-bank-preview-096.cjs'
       - 'qa/master-audit-2026/j277-bank-preview-batch1.cjs'
+      - 'qa/master-audit-2026/j277-bank-preview-batch2.cjs'
       - '.github/workflows/j277-year11-bank-preview-096.yml'
   workflow_dispatch:
 
@@ -34,10 +40,11 @@ jobs:
         run: |
           npm install --no-save --package-lock=false playwright@1.56.1
           npx playwright install --with-deps chromium
-      - name: Check Year 11 exam bank previews for lessons 096 098 and 099
+      - name: Check Year 11 exam bank previews including batch two
         run: |
           python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/j277-bank-preview-server.log 2>&1 &
           SERVER_PID=$!
           trap 'kill "$SERVER_PID" || true' EXIT
           node qa/master-audit-2026/j277-bank-preview-096.cjs
           node qa/master-audit-2026/j277-bank-preview-batch1.cjs
+          node qa/master-audit-2026/j277-bank-preview-batch2.cjs
