@@ -113,14 +113,14 @@ const fixtures={
     console.log("PASS L"+lesson+" "+viewport.label+": Code First intact; "+fix.ids.length+" questions and answers; no teacher review flags");
    }
   }
-  // Keep the next lesson untouched until its mapping has been archived and enabled.
-  const excluded=map.lessons.find(x=>x.lesson_id==="131");
-  assert(excluded,"Lesson 131 must have its own separate mapping");
+  // Lesson 136 is in a later mapping batch and must remain unaffected here.
+  const excluded=map.lessons.find(x=>x.lesson_id==="136");
+  assert(excluded,"Lesson 136 must retain its own later mapping");
   assert.equal(excluded.published_bank_override_enabled,false);
   const page=await browser.newPage();
-  await page.goto(origin+"/lessons/j277/lesson-131/?exam-bank-preview=1#you-do",{waitUntil:"domcontentloaded"});
+  await page.goto(origin+"/lessons/j277/lesson-136/?exam-bank-preview=1#you-do",{waitUntil:"domcontentloaded"});
   assert.equal(await page.locator("#you-do .rhs-bank-card").count(),0,
-    "Next batch Lesson 131 was accidentally enabled");
+    "Later Lesson 136 was accidentally enabled");
   await page.close();
  }finally{await browser.close();}
 })().catch(err=>{console.error(err);process.exitCode=1;});
