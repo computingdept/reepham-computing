@@ -344,7 +344,7 @@
     visuals:(lesson.examVisuals||[]).map(v=>v?diagram(v):"")
   }:null;
   const rhsSharedYouDoHead=rhsSharedYouDoEnabled?
-    '<link rel="stylesheet" href="../../../assets/rhs-youdo/youdo-presentation-20261122-compact.css?v=20261122-all-j277-1">':"";
+    '<link rel="stylesheet" href="../../../assets/rhs-youdo/youdo-presentation-20261122-compact.css?v=20261122-projector-type-2">':"";
   const rhsSharedYouDoSetup=rhsSharedYouDoEnabled?
     '<script src="../../../assets/rhs-youdo/youdo-presentation-20261122-compact.js?v=20261122-all-j277-1"></script><script>window.RHSYouDoTrial.installJ277('+JSON.stringify(rhsSharedYouDoData).replace(/</g,"\\u003c")+');</script>':"";
   const html=sharedHead(number,lesson.t).replace("</head>",rhsSharedYouDoHead+"</head>")+`<body><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
