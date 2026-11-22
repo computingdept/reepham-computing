@@ -142,3 +142,55 @@
     min-height:170px;overflow:visible
   }
 }
+
+/* Existing authored J277 SVGs: question art stays on the question,
+   worked solutions appear ONLY on the corresponding marking screen. */
+#you-do[data-rhs-bank-preview="true"] .rhs-bank-grid[data-count="1"] > .rhs-bank-card:has(.rhs-bank-question-figure){
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);
+  grid-template-rows:auto minmax(0,1fr) auto;column-gap:clamp(12px,2vw,26px);
+  align-items:start
+}
+#you-do[data-rhs-bank-preview="true"] .rhs-bank-grid[data-count="1"] > .rhs-bank-card:has(.rhs-bank-question-figure) .rhs-bank-card-head{
+  grid-column:1 / -1
+}
+#you-do[data-rhs-bank-preview="true"] .rhs-bank-grid[data-count="1"] > .rhs-bank-card:has(.rhs-bank-question-figure) .rhs-bank-prompt{
+  grid-column:1;grid-row:2
+}
+#you-do[data-rhs-bank-preview="true"] .rhs-bank-grid[data-count="1"] > .rhs-bank-card .rhs-bank-question-figure{
+  grid-column:2;grid-row:2;
+  width:100%;max-height:min(52vh,340px);margin:8px auto;object-fit:contain
+}
+#you-do[data-rhs-bank-preview="true"] .rhs-bank-grid[data-count="1"] > .rhs-bank-card:has(.rhs-bank-question-figure) .rhs-bank-source{
+  grid-column:1 / -1;grid-row:3
+}
+#you-do[data-rhs-bank-preview="true"] .rhs-bank-answer-area--with-figure{
+  display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+  gap:clamp(12px,2vw,26px);align-items:start;min-height:0
+}
+#you-do[data-rhs-bank-preview="true"] .rhs-bank-answer-figure{
+  display:flex;align-items:flex-start;justify-content:center;
+  min-width:0;margin:clamp(8px,1vh,12px) 0 0;
+  padding:clamp(7px,.9vw,13px);border:1px solid #e4e4e7;
+  border-radius:16px;background:#fafafa
+}
+#you-do[data-rhs-bank-preview="true"] .rhs-bank-answer-figure img{
+  display:block;max-width:100%;width:100%;height:auto;
+  max-height:min(43vh,350px);object-fit:contain
+}
+#you-do[data-rhs-bank-preview="true"] .rhs-bank-answer-area--with-figure .rhs-bank-answer-content{
+  padding-top:clamp(8px,1vh,12px)
+}
+@media(max-width:800px){
+  #you-do[data-rhs-bank-preview="true"] .rhs-bank-grid[data-count="1"] > .rhs-bank-card:has(.rhs-bank-question-figure){
+    display:flex;flex-direction:column
+  }
+  #you-do[data-rhs-bank-preview="true"] .rhs-bank-grid[data-count="1"] > .rhs-bank-card .rhs-bank-question-figure{
+    width:100%;max-height:38vh
+  }
+  #you-do[data-rhs-bank-preview="true"] .rhs-bank-answer-area--with-figure{
+    grid-template-columns:minmax(0,1fr)
+  }
+  #you-do[data-rhs-bank-preview="true"] .rhs-bank-answer-figure img{
+    max-height:38vh
+  }
+}
