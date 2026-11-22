@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 147 original You Do source snapshot",
+  "lesson": "147",
+  "title": "Programming Languages and Translators",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-147.json",
+  "original_source_blob_sha": "5f053b84734918f09fb0ed5179c5fbe3f2dabd2d",
+  "purpose": "Preserve original Code First, marked answer, previous-learning exam item, old exam questions and answers, visuals and challenge before preview-only RHS bank substitution. Default student lesson and other phases untouched.",
+  "code_first": {
+    "q": "Spot the difference between adding character counts and calculating text storage.",
+    "code": "characters = 2\nbytesPerCharacter = 3\nsizeBytes = characters + bytesPerCharacter\nprint(sizeBytes)",
+    "p": [
+      "Predict the incorrect number of bytes.",
+      "Correct the operator and recalculate.",
+      "Explain why character encoding determines the bytes required, even though the CPU executes translated instructions."
+    ],
+    "a": "Addition incorrectly prints 5. The correct raw calculation for the explicitly stated three-byte encoding is characters * bytesPerCharacter = 6 bytes. Real encodings such as UTF-8 can use variable bytes per character; the example assumes three bytes for each of these two characters. High-level source still needs suitable translation/execution before CPU machine instructions run."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "Give one benefit of high-level languages. [2 marks]",
+      "More readable and often easier to develop/maintain, or portable with suitable runtimes."
+    ],
+    [
+      "Compare compiler and interpreter at a broad level. [4 marks]",
+      "Compiler translates a program to executable/intermediate output; interpreter executes through an interpreting environment."
+    ],
+    [
+      "Explain why machine code depends on processor architecture. [2 marks]",
+      "Instructions use a machine-specific instruction set understood by that CPU."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 147,
+    "coreHint": "The code currently adds 2 and 3; the given text storage needs multiplication.",
+    "stretch": {
+      "task": "Correct the operator to multiplication and predict storage for two characters at three bytes each.",
+      "hint": "Characters × bytes per character gives bytes, for the given fixed-width assumption.",
+      "answer": "2 × 3 = 6 bytes; addition would incorrectly give 5."
+    },
+    "mastery": {
+      "task": "Write a classification algorithm that describes the role of compiler, interpreter and CPU for a chosen code workflow, with an unknown-language input.",
+      "hint": "Keep factual distinctions rather than ranking all implementations by speed.",
+      "answer": "Compiler produces translated executable/intermediate output, interpreter executes through runtime, CPU runs machine instructions. Unknown input should be handled without false claims."
+    }
+  }
+}
