@@ -47,7 +47,13 @@ const fixtures={
     await page.locator("#you-do[data-rhs-bank-preview=true] .rhs-bank-stage").first().waitFor({state:"attached",timeout:30000});
     assert.equal(await page.locator(".phase-nav button").count(),8,"Must keep existing lesson phases");
     assert.equal(await page.locator("#exam-practice, .phase-nav [data-page=exam-practice]").count(),0,"Extra exam phase forbidden");
-    assert.equal(await page.locator("#you-do .rhs-y-stage").count(),3+fix.ids.length);
+    const questionPages=await page.locator("#you-do .rhs-bank-question-stage").count();
+    if(lesson==="114"){
+     assert(questionPages>=2&&questionPages<=4,
+       "Lesson 114 must use two questions per screen, or one on overflow");
+    }else assert.equal(questionPages,1,"Other lessons retain their existing overview");
+    assert.equal(await page.locator("#you-do .rhs-y-stage").count(),
+      2+questionPages+fix.ids.length);
     assert.equal(await page.locator("#you-do .rhs-y-code-first:not([hidden])").count(),1);
     assert.equal(await page.locator("#you-do .rhs-y-code-check").count(),1);
     assert.deepEqual(await page.locator("#you-do .rhs-y-stage").evaluateAll(stages=>stages.slice(0,2).map(s=>s.innerHTML)),originalCode,"Code First and answer must remain identical");
@@ -62,11 +68,29 @@ const fixtures={
     await advance();assert.equal(await page.locator("#you-do .rhs-bank-question-stage:not([hidden])").count(),1);
     assert.equal(await page.locator("#you-do .rhs-bank-card").count(),fix.ids.length);
     assert.match(await page.locator("#you-do .rhs-bank-card").first().innerText(),fix.first);
-    const heading=await page.locator("#you-do .rhs-bank-question-stage .rhs-bank-head").innerText();
+    const heading=await page.locator("#you-do .rhs-bank-question-stage").first().locator(".rhs-bank-head").innerText();
     assert.match(heading,/ADDITIONAL EXAM PRACTICE/i);
     assert.match(heading,new RegExp(fix.marks+" MARKS"));
     const font=await page.locator("#you-do .rhs-bank-prompt").first().evaluate(el=>parseFloat(getComputedStyle(el).fontSize));
     assert(font>=19,"Question too small on "+viewport.label);
+    for(let p=0;p<questionPages;p++){
+     const current=page.locator("#you-do .rhs-bank-question-stage:not([hidden])");
+     assert.equal(await current.count(),1,"Exactly one question screen visible");
+     if(lesson==="114"){
+      const cards=current.locator(".rhs-bank-card");
+      const count=await cards.count();
+      assert(count>=1&&count<=2,"Question count must be one or two per screen");
+      if(viewport.label==="mobile")assert.equal(count,1,"Mobile shows one complete question");
+      if(viewport.label!=="mobile"){
+       const overflow=await current.evaluate(root=>{
+        return [root,...root.querySelectorAll(".rhs-bank-grid,.rhs-bank-card")].some(el=>
+          el.clientHeight>0 && el.scrollHeight>el.clientHeight+3);
+       });
+       assert.equal(overflow,false,"Projected exam questions should not need scrolling");
+      }
+     }
+     if(p<questionPages-1)await advance();
+    }
     for(let i=0;i<fix.ids.length;i++){
      await advance();
      const answer=page.locator("#you-do .rhs-bank-review-stage:not([hidden])");
