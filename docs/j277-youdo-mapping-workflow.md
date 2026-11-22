@@ -65,6 +65,12 @@ Every visual needs source comparison, projector/mobile review and teacher approv
 
 **Draft candidate coverage completed:** all 150 ordinary lessons now have four source-backed or original-draft question positions, 14 protected exceptions remain untouched, and **no empty proposal slots remain**. There are 66 new, still-unverified editorial drafts. See the [consolidated 164-lesson final teacher review register](j277-youdo-consolidated-final-review-register.md), [drafts 122–140](j277-youdo-proposed-original-questions-qa-122-140.md) and [drafts 141–164](j277-youdo-proposed-original-questions-qa-141-164.md). Classroom visuals and marking QA are **not complete**; do not enable any student display overrides before explicit teacher review.
 
+### Ongoing approach: review at the point of teaching (agreed 22 November 2026)
+
+The teacher will **not** be asked to approve all lesson questions in one long review. Keep the entire question inventory as an unpublished draft working library, and review the relevant four questions and model answers **when preparing or teaching each individual lesson**. Feedback from pupils may drive another edit and recheck afterward. Do not interpret this as advance approval to publish any lesson.
+
+Follow [the rolling teach-and-refine workflow](j277-youdo-teach-and-refine-workflow.md) for per-lesson technical marking and visual QA, teacher decisions and tightly scoped You Do-only implementation. Lessons 042, 044 and 045 remain **not yet assessed**. No blanket enabling of `teacher_approved` or `published_bank_override_enabled`.
+
 ### Approval and publishing gates
 
 - **Mapping is not publication.** As of 22 November, Lessons 001–020 have the previously recorded first review, while Lessons 021–040 now have second-batch bank proposals or explicit coverage gaps/exceptions. All 164 lessons have now been processed for review. Unfilled proposal slots are intentional pending authoring, not evidence of publication readiness.. Every lesson retains `published_bank_override_enabled: false` and `teacher_approved: false`. Do not flip these simply because code works.
