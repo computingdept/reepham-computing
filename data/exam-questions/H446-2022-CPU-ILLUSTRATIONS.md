@@ -20,3 +20,11 @@ No other exam-question wording, RHS original answer/marking rules or existing 20
 **QA:** isolated GitHub Actions parses and rasterises each SVG at 1240×740 and generates an eight-image contact sheet. Such technical rendering is not teacher/projector sign-off.
 
 **Scope:** eight new SVGs in `assets/exam-questions/h446/question-view/`, this MD/CSV, and one isolated QA workflow. No changes to H446/J277 lesson phases or content, shared CSS/JS, Cloudflare, assignments, marks or published revision.
+
+## Final technical image QA (22 November 2026)
+
+[GitHub Actions run 45030500362](https://github.com/computingdept/reepham-computing/actions/runs/45030500362) completed successfully: all **eight original SVGs passed XML validation and raster rendering at 1240×740**. The [image-evidence artifact](https://github.com/computingdept/reepham-computing/actions/runs/45030500362/artifacts/14757462740) contains the eight PNG previews, eight-image contact sheet, and accessibility-title/description report.
+
+The first contact-sheet inspection caught a misleading ACC→PC arrow and an "ALU / MEMORY" label inside the CPU. Both register question/answer SVGs were revised to show **ALU / CONTROL**, remove the false arrows, and shorten crowded card headings. The entire batch was rerendered. A final manual contact-sheet inspection found the question/answer separations intact and the four teaching models readable.
+
+**Limitations:** This is an image rendering/layout check, not an independently moderated OCR marking review, actual half-screen projector trial, or teacher sign-off. The pipeline uses an intentionally simplified ideal three-stage example. All 12 question-view/answer-view role records remain `disabled_not_approved`. No live H446/J277 lessons or scoring were altered.
