@@ -16,3 +16,10 @@ The existing generic Dijkstra/BST/logic diagrams in the main repo are **not inte
 [The eight-row batch map](h446-2023-24-source-figures-map.csv) explicitly records each question/answer asset role. All eight remain `disabled_not_approved`. A GitHub Actions workflow independently XML-parses/rasterises the files and archives real PNG evidence. Rendering does **not** imply question-source, marking-scheme, projector-readability or teacher sign-off.
 
 **Next batch:** inspect 2022 museum BST and eight-node countryside graph and 2024 museum A*; the generic main SVGs have different node/value data and cannot be reused without a source-specific redraw.
+
+## Rendered QA evidence — 22 November 2026
+
+- Final [GitHub Actions run 45026336900](https://github.com/computingdept/reepham-computing/actions/runs/45026336900) completed successfully: all **eight SVGs parsed and rasterised at 1240×740** and a contact sheet was archived in [artifact 14755564640](https://github.com/computingdept/reepham-computing/actions/runs/45026336900/artifacts/14755564640).
+- The first contact sheet showed an oversized Dijkstra arrowhead and a highlighted P→S route partly obscured by the distance answer panel. Both **question and answer SVGs were corrected and rerendered**. A manual inspection of the final answer PNG confirmed the entire P→S→V route and both labelled edge costs are visible, with arrows reaching the intended destination nodes.
+- Forest BST question view contains only insertion inputs, not the worked tree; family-history post-order question shows the original tree without numbered traversal; alarm question contains no completed gates.
+- **Status remains QA-only and not teacher-approved.** The automated render does not demonstrate a real projector-distance check, independently signed marking scheme, or source-page moderation.
