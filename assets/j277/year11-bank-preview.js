@@ -1,13 +1,13 @@
 /* J277 Year 11 exam-bank teacher preview: retain original Code First/check;
  * replace only archived older exam questions with mapped RHS bank Q&A.
- * Original seven You Do screens become Code First, question overview and one
- * marking screen per mapped question; never a new phase. Default page untouched.
+ * Original seven You Do stages become Code First, one or more question pages,
+ * and one marking screen per mapped question. Never add a lesson phase.
  */
 (function(){
   "use strict";
   var match=location.pathname.match(/^\/lessons\/j277\/lesson-(\d{3})\/(?:index\.html)?$/);
   var lessonId=match&&match[1];
-  var allowlist=["096","098","099","100","101","102","103","104","105","106","107","108","109","110","111","112","114","115"]; // Archive-backed batches 1–4; 113 deliberately excluded.
+  var allowlist=["096","098","099","100","101","102","103","104","105","106","107","108","109","110","111","112","114","115","116","117","118","119"]; // Archive-backed batches 1–5; protected 113 and 120 excluded.
   if(!lessonId || allowlist.indexOf(lessonId)<0 ||
      new URLSearchParams(location.search).get("exam-bank-preview")!=="1")return;
 
@@ -60,20 +60,37 @@
   function header(name,detail){
     return '<div class="rhs-bank-head"><span>'+esc(name)+'</span><span>'+esc(detail)+'</span></div>';
   }
-  // Question overview pages may have four, two or one question(s). 114 begins
-  // with two per page; an actual overflow is split into single-question pages.
-  // Keep the complete bank question and its marks together at every size.
+  // Projector-fit pages retain complete questions and their mark counts.
+  // Long text uses pairs; large code/table/figure prompts use a whole screen.
+  // Lesson 114 stays two-first; older preview batches are left untouched.
+  var adaptiveLessons=["114","116","117","118","119"];
+  function singleScreenQuestion(q){
+    var text=originalQuestion(q.question);
+    return !!q.figure || !!q.visualPending ||
+      text.length>235 ||
+      text.split(/\r?\n/).length>=6 ||
+      /\n\s*(?:0[1-9]\s|SELECT\b|FROM\b|WHERE\b|while\b|for\b|if\b|endif\b|endwhile\b|myFile\s*=|____)/i.test(text);
+  }
   function questionGroups(items){
-    var limit=lessonId==="114"?2:items.length;
-    if(lessonId==="114" && matchMedia("(max-width:800px)").matches)limit=1;
-    var groups=[],current=[];
+    var adaptive=adaptiveLessons.includes(lessonId);
+    var mobile=adaptive && matchMedia("(max-width:800px)").matches;
+    var limit=lessonId==="114"?2:adaptive?4:items.length;
+    if(mobile)limit=1;
+    var groups=[],current=[],pairedLength=0;
+    function flush(){if(current.length){groups.push(current);current=[];pairedLength=0;}}
     items.forEach(function(q){
-      if(q.figure && current.length){groups.push(current);current=[];}
-      if(q.figure){groups.push([q]);return;}
-      if(current.length>=limit){groups.push(current);current=[];}
+      if((adaptive && singleScreenQuestion(q)) || q.figure){
+        flush();groups.push([q]);return;
+      }
+      var textLength=originalQuestion(q.question).length;
+      var longText=adaptive && (textLength>130 || pairedLength>130);
+      if(current.length && (current.length>=limit || (longText && current.length>=2)))
+        flush();
       current.push(q);
+      pairedLength+=textLength;
+      if(adaptive && current.length===2 && pairedLength>260)flush();
     });
-    if(current.length)groups.push(current);
+    flush();
     return groups;
   }
   function intro(items,start,totalCount,totalMarks,pageIndex,pageCount){
@@ -130,8 +147,8 @@
   }
   async function load(){
     var urls=[
-      "/data/exam-questions/j277-youdo-lesson-map.json?v=20261122-y11-batch4-1",
-      "/data/exam-questions/j277-rhs-practice-drafts.csv?v=20261122-y11-batch4-1"
+      "/data/exam-questions/j277-youdo-lesson-map.json?v=20261122-y11-batch5-1",
+      "/data/exam-questions/j277-rhs-practice-drafts.csv?v=20261122-y11-batch5-1"
     ];
     var results=await Promise.all(urls.map(function(url){
       return fetch(url,{cache:"no-store"}).then(function(response){
@@ -146,7 +163,7 @@
        row.year11_preview_delivery_mode!=="retain_code_first_and_check_replace_archived_old_exam_questions_teacher_preview_only")
       throw new Error("Expected archive-backed, unpublished Lesson "+lessonId+" bank mapping");
     var assignment=row.additional_exam_practice||[];
-    if(assignment.length<2 || assignment.length>4)throw new Error("Expected two to four mapped exam questions for lesson "+lessonId);
+    if(assignment.length<1 || assignment.length>5)throw new Error("Expected one to five mapped exam questions for lesson "+lessonId);
     var records=parseCsv(results[1]);
     var bank=new Map(records.map(function(item){return [item.rhs_question_id,item];}));
     var ids=new Set();
@@ -200,10 +217,9 @@
       return slides;
     }
     var slides=render();
-    // The adaptive mode is introduced on Lesson 114, without silently
-    // rearranging previously approved lesson previews. Reusable for the next
-    // batches once their screen layouts are checked.
-    if(lessonId==="114"){
+    // Apply overflow-driven splitting only to the newer adaptive batches.
+    // Preserve earlier preview screen counts until separately audited.
+    if(adaptiveLessons.includes(lessonId)){
       for(var pass=0;pass<4;pass++){
         var changed=false;
         for(var i=0;i<groups.length;i++){
