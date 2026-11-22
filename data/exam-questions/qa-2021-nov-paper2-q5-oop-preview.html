@@ -1,0 +1,71 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>H446 November 2021 Campus OOP · isolated teacher QA</title><style>*{box-sizing:border-box}body{font-family:system-ui,-apple-system,Arial,sans-serif;max-width:1500px;margin:auto;padding:18px;background:#f6f6f7;color:#202124}.page{background:#fff;border:1px solid #dedede;border-radius:18px;padding:16px 24px}.page[hidden],.question-state[hidden],.answer-state[hidden]{display:none}header{display:flex;justify-content:space-between;gap:15px;font-size:16px;margin-bottom:14px}.page h1{font-size:31px;margin:0 0 9px}.page p{font-size:23px;line-height:1.32;margin:0 0 13px}.illustration{max-width:650px;margin:auto}.illustration img{display:block;width:100%;max-height:570px;object-fit:contain}.answer-illustration{display:block;width:100%;max-height:570px;object-fit:contain}.code{background:repeating-linear-gradient(to bottom,#fff 0,#fff 30px,#f5f5f5 30px,#f5f5f5 60px);border:1px solid #dedede;border-radius:12px;padding:10px 18px;margin:8px 0 0;font:500 22px/30px ui-monospace,Consolas,Menlo,monospace;overflow:auto;max-width:100%;white-space:pre}.answer-state .code{font-size:24px;line-height:34px;background:#fafafa}footer{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px}button{font-size:18px;padding:12px 19px;border:1px solid #aaa;border-radius:11px;background:#fff;cursor:pointer}button:focus-visible{outline:3px solid #195b42}@media(max-width:800px){body{padding:9px}.page{padding:12px}.page h1{font-size:26px}.page p{font-size:19px}.code,.answer-state .code{font-size:15px;line-height:23px;background:#fafafa}header{font-size:12px;gap:8px}}@media print{footer{display:none}}/* Projector-size QA: retain the complete diagram and one answer, no down-page stacking. */
+@media (min-width:801px) and (max-height:800px){
+  body{padding:10px 14px}
+  header,.meta{margin-bottom:8px;font-size:14px}
+  .pane,.split,.grid{gap:12px}
+  .art,.words,.question,.text,.task,.visual,.image,.prompt{padding:12px}
+  .art img,.visual img,.image img,.diagram{max-height:calc(100vh - 185px)}
+  .answer img,.reveal img,.answer-art,.answer-illustration{max-height:calc(100vh - 425px)}
+  .question h1,.task h1,.text h1,.prompt h1,.words h1,h1{font-size:27px;margin:8px 0}
+  .question p,.task p,.text p,.prompt p,.words p,p{font-size:20px;line-height:1.28;margin:5px 0 10px}
+  .answer h2,.reveal h2,h2{font-size:22px;margin:7px 0}
+  .answer p,.reveal p{font-size:18px;line-height:1.24;margin:5px 0 9px}
+  .answer,.reveal{margin-top:8px;padding-top:7px}
+  footer,.controls{margin-top:8px}
+  footer button,.controls button,button{padding:9px 15px;font-size:16px}
+  .page.code-full .code-layout,.page .code-layout{padding:8px 14px}
+  .code-full h1,.code-full .code-layout h1{font-size:25px;margin:0 0 3px}
+  .code-full .code-layout p{font-size:18px;line-height:1.2;margin:3px 0 7px}
+  .code-full .code-source,.code-full .code-result{font-size:19px;line-height:24px;background:#fafafa;padding:4px 11px}
+  .page .code{font-size:19px;line-height:26px;padding:5px 10px;background:#fafafa}
+  .page .answer-state .code{font-size:21px;line-height:28px}
+  .page .illustration img{max-height:calc(100vh - 205px)}
+}
+@media (min-width:801px) and (max-height:800px){
+ .answer img,.reveal img,.answer-art,.answer-illustration{max-height:calc(100vh - 495px)}
+ .page .illustration img{max-height:calc(100vh - 265px)}
+}</style></head><body><main><section class="page" ><header><strong>H446/02 · November 2021 · Q5(a) · 1 mark</strong><span>QA DRAFT · NOT STUDENT APPROVED</span></header><div class="question-state"><h1>Constructor purpose</h1><p>When a Gallery is created, explain what the constructor does.</p><div class="illustration"><img src="../../assets/exam-questions/h446/question-view/2021-nov-02-campus-classes-rhs-question.svg" alt="RHS source-specific class structure relevant to Q5(a)"/></div></div><div class="answer-state" hidden><h1>Q5(a) · Worked answer</h1><p>It initialises the attributes of the new object as it is instantiated.</p><img class="answer-illustration" src="../../assets/exam-questions/h446/question-view/2021-nov-02-campus-constructor-rhs-answer.svg" alt="Constructor explanation model answer"/></div></section><section class="page" hidden><header><strong>H446/02 · November 2021 · Q5(c) · 5 marks</strong><span>QA DRAFT · NOT STUDENT APPROVED</span></header><div class="question-state"><h1>Complete the Venue class</h1><p>Fill five blanks. The two attributes remain private; public methods expose their values.</p><pre class="code" aria-label="Venue code task with five gaps"><code>01  class ______
+02    private label
+03    private floors
+04    public procedure new(newLabel,newFloors)
+05      label = ______
+06      floors = ______
+07    endprocedure
+08    public function ______()
+09      return label
+10    endfunction
+11    public function getFloors()
+12      return ______
+13    endfunction
+14  endclass</code></pre></div><div class="answer-state" hidden><h1>Q5(c) · Worked answer</h1><p>Venue; newLabel; newFloors; getLabel; floors.</p><pre class="code" aria-label="Complete model pseudocode for Q5(c)"><code>01  class Venue
+02    private label
+03    private floors
+04    public procedure new(newLabel,newFloors)
+05      label = newLabel
+06      floors = newFloors
+07    endprocedure
+08    public function getLabel()
+09      return label
+10    endfunction
+11    public function getFloors()
+12      return floors
+13    endfunction
+14  endclass</code></pre></div></section><section class="page" hidden><header><strong>H446/02 · November 2021 · Q5(d) · 6 marks</strong><span>QA DRAFT · NOT STUDENT APPROVED</span></header><div class="question-state"><h1>Write the Gallery subclass</h1><p>Write Gallery inheriting Venue. Include private entranceFee and opensAt, a four-parameter constructor, a call to the Venue constructor, and assignments to both additional attributes.</p><div class="illustration"><img src="../../assets/exam-questions/h446/question-view/2021-nov-02-campus-classes-rhs-question.svg" alt="RHS source-specific class structure relevant to Q5(d)"/></div></div><div class="answer-state" hidden><h1>Q5(d) · Worked answer</h1><p>Inheritance, private fields, correct constructor and base call, plus attribute assignments.</p><pre class="code" aria-label="Complete model pseudocode for Q5(d)"><code>01  class Gallery extends Venue
+02    private entranceFee
+03    private opensAt
+04    public procedure new(labelIn,floorsIn,feeIn,timeIn)
+05      super.new(labelIn,floorsIn)
+06      entranceFee = feeIn
+07      opensAt = timeIn
+08    endprocedure
+09  endclass</code></pre></div></section><section class="page" hidden><header><strong>H446/02 · November 2021 · Q5(e) · 4 marks</strong><span>QA DRAFT · NOT STUDENT APPROVED</span></header><div class="question-state"><h1>Write CampusMap.addVenue()</h1><p>Write addVenue(place): add a reference to the next available array slot, update nextFree and return true or false.</p><div class="illustration"><img src="../../assets/exam-questions/h446/question-view/2021-nov-02-campus-map-rhs-question.svg" alt="RHS source-specific class structure relevant to Q5(e)"/></div></div><div class="answer-state" hidden><h1>Q5(e) · Worked answer</h1><p>Capacity check, indexed assignment, nextFree increment and appropriate return values.</p><pre class="code" aria-label="Complete model pseudocode for Q5(e)"><code>01  public function addVenue(place)
+02    if nextFree &gt;= 20 then
+03      return false
+04    endif
+05    venues[nextFree] = place
+06    nextFree = nextFree + 1
+07    return true
+08  endfunction</code></pre></div></section><section class="page" hidden><header><strong>H446/02 · November 2021 · Q5(f) · 4 marks</strong><span>QA DRAFT · NOT STUDENT APPROVED</span></header><div class="question-state"><h1>Instantiate and add the Gallery</h1><p>Create Gallery('Science Hall', 2, 5.00, '09:00'), create a CampusMap, then add the Gallery to it.</p><div class="illustration"><img src="../../assets/exam-questions/h446/question-view/2021-nov-02-campus-map-rhs-question.svg" alt="RHS source-specific class structure relevant to Q5(f)"/></div></div><div class="answer-state" hidden><h1>Q5(f) · Worked answer</h1><p>Gallery object and four exact constructor values; CampusMap instance; addVenue using that object.</p><pre class="code" aria-label="Complete model pseudocode for Q5(f)"><code>01  newGallery = new Gallery(
+02    'Science Hall', 2, 5.00, '09:00')
+03  map = new CampusMap()
+04  added = map.addVenue(newGallery)</code></pre></div></section></main><footer><button id="prev">Previous</button><span id="status">1 / 5 · Unrevealed</span><button id="toggle" aria-pressed="false">Reveal answer</button><button id="next">Next</button></footer><script>const pages=[...document.querySelectorAll(".page")];let current=0;const status=document.getElementById("status"),toggle=document.getElementById("toggle");function show(i){current=(i+pages.length)%pages.length;pages.forEach((p,j)=>{p.hidden=j!==current;p.querySelector(".question-state").hidden=false;p.querySelector(".answer-state").hidden=true});toggle.textContent="Reveal answer";toggle.setAttribute("aria-pressed","false");status.textContent=(current+1)+" / 5 · Unrevealed"}document.getElementById("prev").onclick=()=>show(current-1);document.getElementById("next").onclick=()=>show(current+1);toggle.onclick=()=>{let p=pages[current],answer=p.querySelector(".answer-state"),question=p.querySelector(".question-state"),open=answer.hidden;answer.hidden=!open;question.hidden=open;toggle.textContent=open?"Hide answer":"Reveal answer";toggle.setAttribute("aria-pressed",String(open));status.textContent=(current+1)+" / 5 · "+(open?"Answer visible":"Unrevealed")};</script></body></html>

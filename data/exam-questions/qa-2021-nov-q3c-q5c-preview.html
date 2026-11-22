@@ -1,0 +1,65 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>H446 Nov 2021 Q3c/Q5c QA review only</title><style>*{box-sizing:border-box}body{font-family:system-ui,-apple-system,Arial,sans-serif;background:#f5f5f6;color:#202124;max-width:1500px;margin:0 auto;padding:24px}.meta{display:flex;justify-content:space-between;gap:12px;font-size:16px;font-weight:650;margin-bottom:16px}.split{display:grid;grid-template-columns:1fr 1fr;gap:22px}.art,.text{background:#fff;border:1px solid #ddd;border-radius:20px;padding:20px}.art img{width:100%;max-height:670px;object-fit:contain}.text small{font-size:15px;letter-spacing:.1em;font-weight:700}.text h1{font-size:35px}.text p{font-size:26px;line-height:1.46}.reveal{margin-top:24px;padding-top:20px;border-top:2px solid #ddd}.reveal h2{font-size:26px}.reveal p{font-size:22px}.reveal img{max-height:340px;width:100%;object-fit:contain}footer{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-top:18px}button{padding:15px 22px;border:1px solid #aaa;border-radius:12px;background:#fff;font-size:18px;cursor:pointer}button:focus-visible{outline:3px solid #195b42}@media(max-width:800px){body{padding:10px}.split{grid-template-columns:1fr}.art img{max-height:480px}.text p{font-size:22px}.text h1{font-size:27px}.meta{font-size:12px}}@media print{footer{display:none}}.page.is-answer .qa-prompt{display:none}.page.is-answer .reveal{margin-top:0;border-top:0;padding-top:0}.page.is-answer .reveal img{max-height:460px}.page .qa-prompt{margin-bottom:16px}/* Projector-size QA: retain the complete diagram and one answer, no down-page stacking. */
+@media (min-width:801px) and (max-height:800px){
+  body{padding:10px 14px}
+  header,.meta{margin-bottom:8px;font-size:14px}
+  .pane,.split,.grid{gap:12px}
+  .art,.words,.question,.text,.task,.visual,.image,.prompt{padding:12px}
+  .art img,.visual img,.image img,.diagram{max-height:calc(100vh - 185px)}
+  .answer img,.reveal img,.answer-art,.answer-illustration{max-height:calc(100vh - 425px)}
+  .question h1,.task h1,.text h1,.prompt h1,.words h1,h1{font-size:27px;margin:8px 0}
+  .question p,.task p,.text p,.prompt p,.words p,p{font-size:20px;line-height:1.28;margin:5px 0 10px}
+  .answer h2,.reveal h2,h2{font-size:22px;margin:7px 0}
+  .answer p,.reveal p{font-size:18px;line-height:1.24;margin:5px 0 9px}
+  .answer,.reveal{margin-top:8px;padding-top:7px}
+  footer,.controls{margin-top:8px}
+  footer button,.controls button,button{padding:9px 15px;font-size:16px}
+  .page.code-full .code-layout,.page .code-layout{padding:8px 14px}
+  .code-full h1,.code-full .code-layout h1{font-size:25px;margin:0 0 3px}
+  .code-full .code-layout p{font-size:18px;line-height:1.2;margin:3px 0 7px}
+  .code-full .code-source,.code-full .code-result{font-size:19px;line-height:24px;background:#fafafa;padding:4px 11px}
+  .page .code{font-size:19px;line-height:26px;padding:5px 10px;background:#fafafa}
+  .page .answer-state .code{font-size:21px;line-height:28px}
+  .page .illustration img{max-height:calc(100vh - 205px)}
+}
+@media (min-width:801px) and (max-height:800px){
+ .answer img,.reveal img,.answer-art,.answer-illustration{max-height:calc(100vh - 495px)}
+ .page .illustration img{max-height:calc(100vh - 265px)}
+}@media (min-width:801px) and (max-height:800px){
+ .page.is-answer .answer img,.page.is-answer .reveal img,.page.is-answer .answer-art{max-height:calc(100vh - 500px)}
+ .page.is-answer .answer p,.page.is-answer .reveal p{margin:4px 0 7px}
+}/* Approved concept, not approved content: dedicated full-width answer screen.
+   The source SVG remains unchanged; question artwork appears only before reveal. */
+.page.is-answer .art{display:none}
+.page.is-answer .split{display:block}
+.page.is-answer .task,.page.is-answer .text,.page.is-answer .question{
+  width:100%;max-width:none;min-width:0;
+}
+.page.is-answer .task>h1,.page.is-answer .task>small,
+.page.is-answer .text>h1,.page.is-answer .text>small,
+.page.is-answer .question>h1,.page.is-answer .question>small{display:none}
+.page.is-answer .answer,.page.is-answer .reveal{
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  padding:0;margin:0;border:0;
+}
+.page.is-answer .answer h2,.page.is-answer .reveal h2{
+  align-self:flex-start;margin:2px 0;font-size:25px;
+}
+.page.is-answer .answer p,.page.is-answer .reveal p{
+  align-self:flex-start;font-size:20px;line-height:1.25;margin:0 0 5px;
+}
+.page.is-answer .answer img,.page.is-answer .reveal img{
+  display:block;width:auto;max-width:100%;height:auto;
+  max-height:min(540px,calc(100vh - 175px));object-fit:contain;
+}
+@media(min-width:801px) and (max-height:800px){
+  .page.is-answer .art{display:none}
+  .page.is-answer .split{display:block}
+  .page.is-answer .answer img,.page.is-answer .reveal img{
+    width:auto;max-width:100%;max-height:calc(100vh - 196px);
+  }
+  .page.is-answer .answer h2,.page.is-answer .reveal h2{font-size:22px;margin:0}
+  .page.is-answer .answer p,.page.is-answer .reveal p{font-size:18px;margin:0}
+}
+@media(min-width:801px) and (max-height:800px){
+  .page:nth-child(4).is-answer .reveal img{max-height:calc(100vh - 212px)}
+}</style></head><body><main><section class="page" ><div class="meta"><span>H446/01 · November 2021 · Q3(c) · JavaScript · 4 marks</span><span>QA DRAFT · NOT APPROVED</span></div><div class="split"><div class="art"><img src="../../assets/exam-questions/h446/question-view/2021-nov-01-javascript-fee-rhs-question.svg" alt="RHS original question diagram or code panel"/></div><div class="text"><small>QUESTION 1 / 4</small><h1>Q3(c) · JavaScript · 4 marks</h1><p class="qa-prompt">A swimming pool charges 2.99 per ticket, plus a 4.99 surcharge per ticket for customers outside the UK. Complete the four blanks in calculateFee(numtickets, country).</p><div class="reveal" hidden><h2>ANSWER · MODEL</h2><p>2.99; nonUKprice; numtickets; return. One mark per blank.</p><img src="../../assets/exam-questions/h446/question-view/2021-nov-01-javascript-fee-rhs-answer.svg" alt="Consolidated RHS draft worked answer"/></div></div></div></section><section class="page" hidden><div class="meta"><span>H446/01 · November 2021 · Q5(c)(i) · Logic expressions · 2 marks</span><span>QA DRAFT · NOT APPROVED</span></div><div class="split"><div class="art"><img src="../../assets/exam-questions/h446/question-view/2021-nov-01-half-adder-rhs-question.svg" alt="RHS original question diagram or code panel"/></div><div class="text"><small>QUESTION 2 / 4</small><h1>Q5(c)(i) · Logic expressions · 2 marks</h1><p class="qa-prompt">The irrigation circuit uses inputs A and B. Write the Boolean expression for output S from XOR and output C from AND.</p><div class="reveal" hidden><h2>ANSWER · MODEL</h2><p>S = A XOR B; C = A AND B. One mark each.</p><img src="../../assets/exam-questions/h446/question-view/2021-nov-01-half-adder-rhs-answer.svg" alt="Consolidated RHS draft worked answer"/></div></div></div></section><section class="page" hidden><div class="meta"><span>H446/01 · November 2021 · Q5(c)(ii) · Truth table · 2 marks</span><span>QA DRAFT · NOT APPROVED</span></div><div class="split"><div class="art"><img src="../../assets/exam-questions/h446/question-view/2021-nov-01-half-adder-truth-rhs-question.svg" alt="RHS original question diagram or code panel"/></div><div class="text"><small>QUESTION 3 / 4</small><h1>Q5(c)(ii) · Truth table · 2 marks</h1><p class="qa-prompt">Complete the S and C outputs for inputs 00, 01, 10 and 11.</p><div class="reveal" hidden><h2>ANSWER · MODEL</h2><p>S: 0,1,1,0. C: 0,0,0,1. One mark per fully correct output column.</p><img src="../../assets/exam-questions/h446/question-view/2021-nov-01-half-adder-truth-rhs-answer.svg" alt="Consolidated RHS draft worked answer"/></div></div></div></section><section class="page" hidden><div class="meta"><span>H446/01 · November 2021 · Q5(c)(iii) · Four-bit extension · 4 marks</span><span>QA DRAFT · NOT APPROVED</span></div><div class="split"><div class="art"><img src="../../assets/exam-questions/h446/question-view/2021-nov-01-half-adder-rhs-question.svg" alt="RHS original question diagram or code panel"/></div><div class="text"><small>QUESTION 4 / 4</small><h1>Q5(c)(iii) · Four-bit extension · 4 marks</h1><p class="qa-prompt">Explain how the half-adder could be extended to add two four-bit binary numbers, including the role of carry between positions.</p><div class="reveal" hidden><h2>ANSWER · MODEL</h2><p>Half adder gives sum and carry; two half adders plus an OR gate build a full adder; chain stages so each carry-out feeds the next carry-in. Check mark allocation with teacher.</p><img src="../../assets/exam-questions/h446/question-view/2021-nov-01-four-bit-adder-rhs-answer.svg" alt="Consolidated RHS draft worked answer"/></div></div></div></section></main><footer><button id="prev">Previous</button><span id="status">1 / 4 · Unrevealed</span><button id="toggle">Reveal answer</button><button id="next">Next</button></footer><script>const pages=[...document.querySelectorAll(".page")];let index=0;const status=document.getElementById("status"),toggle=document.getElementById("toggle");function show(i){index=(i+pages.length)%pages.length;pages.forEach((p,j)=>{p.hidden=j!==index;p.classList.remove("is-answer");p.querySelector(".reveal").hidden=true});toggle.textContent="Reveal answer";status.textContent=(index+1)+" / 4 · Unrevealed"}document.getElementById("prev").onclick=()=>show(index-1);document.getElementById("next").onclick=()=>show(index+1);toggle.onclick=()=>{const panel=pages[index].querySelector(".reveal");panel.hidden=!panel.hidden;pages[index].classList.toggle("is-answer",!panel.hidden);toggle.textContent=panel.hidden?"Reveal answer":"Hide answer";status.textContent=(index+1)+" / 4 · "+(panel.hidden?"Unrevealed":"Answer visible")};</script></body></html>
