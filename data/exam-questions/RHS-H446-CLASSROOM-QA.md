@@ -250,3 +250,15 @@ Maximum observed scroll at 1280×720 from this run included:
 **Safeguard added following review:** `qa-visual-review.py` now counts vertical page scrolling in question **or** answer state as a *blocking visual QA failure*, not merely a warning. This stricter gate is expected to fail until those layouts are actually corrected; it does not publish or approve anything. Other checks (missing images, answer leakage, horizontal overflow, code-panel overflow, JS errors) found no blocking failures in the first run.
 
 **Status:** actual browser evidence has been obtained, but visual QA **FAILED the teaching requirement**. All 75 November 2021 question parts remain `disabled_not_approved`; do not merge this draft, release content, or change live lessons. Fix answer-screen height and text legibility, rerun evidence, and require teacher signoff.
+
+## 22 November 2026: actual Chrome 720p/768p visual QA — layout pass, legibility HOLD
+
+The GitHub Actions screenshot checker ran against the QA branch after successive sizing corrections. Browser evidence:
+- Initial Chromium run 45010947509: 62 viewport/question cases, 61 vertical-scroll warnings (warning-only gate at that point).
+- Strict no-scrolling run 45013091470: 31 blocking scrolling cases.
+- Revised height run 45013293896: 23 blocking scrolling cases.
+- **Latest run [45013484109](https://github.com/computingdept/reepham-computing/actions/runs/45013484109): 62 cases, 0 blocking failures, 0 vertical-scrolling warnings; 124 before/after screenshots captured.** Artifact: [14751231422](https://github.com/computingdept/reepham-computing/actions/runs/45013484109/artifacts/14751231422). The checker has the strict no-scrolling gate enabled, not the original warning-only policy.
+
+However, actual 1280×720 screenshot review **shows answer illustrations have shrunk too far**. Examples: Paper 1 Q5(c)(iii) four-bit adder answer, Paper 2 Q1(c)(ii) A* final trace, and Paper 1 Q1(d)(iii) customer-table limitation answer. Although the whole answer is onscreen and all navigation controls are reachable, the answer artwork is substantially smaller than desirable at a teaching distance. An answer-diagram source image may retain a lot of internal whitespace: CSS height caps then shrink the important content inside that source image.
+
+**Release judgement: AUTOMATED VIEWPORT CHECK PASS; CLASSROOM LEGIBILITY HOLD.** Passing document overflow checks does not prove the text and markings readable. Next design pass should test *dedicated answer-only screen states* that give a complete answer image most of the projector height while keeping the question and any essential context available. Then rerun the 124 screenshots and inspect legibility, rather than simply squeezing answers further. Keep the same one-question/one-reveal interaction and all `disabled_not_approved` flags. No source exam wording, live lesson phases or student delivery should change without teacher approval.
