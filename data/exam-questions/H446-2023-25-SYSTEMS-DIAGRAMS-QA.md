@@ -27,3 +27,11 @@ SVG size is **1240×740** with muted, black-and-white Apple-like technical layou
 The [8-row asset register](h446-2023-25-systems-diagrams-map.csv) records exact question IDs, question-vs-answer role, original file paths, and review gates. A branch-local GitHub Actions workflow validates SVG XML and rasterises every illustration at 1240×740, storing PNG evidence and an eight-image contact sheet. Technical rendering does not establish actual projector-distance legibility, OCR mark-scheme approval or teacher sign-off.
 
 **File-scope protection:** only eight original files inside `assets/exam-questions/h446/question-view/`, this CSV/Markdown and an isolated QA workflow. No H446/J277 live lesson/phase or site CSS/JS changes, Cloudflare D1, assignments or scoring.
+
+## Final rendered technical QA — 22 November 2026
+
+Final [GitHub Actions run 45031463908](https://github.com/computingdept/reepham-computing/actions/runs/45031463908) **passed** XML and full 1240×740 PNG rendering for all eight SVGs. [Artifact 14757623855](https://github.com/computingdept/reepham-computing/actions/runs/45031463908/artifacts/14757623855) contains the final eight individual PNGs, an eight-image contact sheet and JSON report with SVG titles/descriptions.
+
+**Manual screenshot review:** source-matched concepts and labels are visible on all four question/answer pairs. The initial RAM illustration's final memory block crossed its outer boundary; both memory SVGs were corrected and rerendered. The network question leaves A/B/C unidentified, the interrupt question does not show the ISR stages, and thin/thick question panels do not reveal pros/cons. Answer views contain the intended conceptual support, but the two nine-mark examples still require a complete independently moderated written response.
+
+**Remaining approvals:** no physical projector check, OCR mark-scheme alternative review or teacher sign-off. Keep all eight assets and mappings `disabled_not_approved`. No live H446/J277 lessons, shared CSS/JS, assignments, Cloudflare or scoring have changed.
