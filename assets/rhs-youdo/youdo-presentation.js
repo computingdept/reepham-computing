@@ -110,10 +110,10 @@
   }
   function codeModelAnswer(answer,originalCode){
     var text=String(answer||"");
-    var parsed=text.match(/^MODEL\\s+[^\\n]+\\n([\\s\\S]*?)\\n\\s*EXPECTED RESULT\\s*\\n([\\s\\S]*)$/i);
+    var parsed=text.match(/^MODEL\s+[^\n]+\n([\s\S]*?)\n\s*EXPECTED RESULT\s*\n([\s\S]*)$/i);
     if(!parsed)return '<div class="rhs-y-answer-text">'+escapeHtml(text)+'</div>';
-    var original=String(originalCode||"").replace(/\\r\\n?/g,"\\n").trim().split("\\n");
-    var model=parsed[1].replace(/\\r\\n?/g,"\\n").trim().split("\\n");
+    var original=String(originalCode||"").replace(/\r\n?/g,"\n").trim().split("\n");
+    var model=parsed[1].replace(/\r\n?/g,"\n").trim().split("\n");
     // Display only the changed instruction(s). The complete original source
     // is already visible above; repeating the full model requires scrolling.
     var changed=[];
