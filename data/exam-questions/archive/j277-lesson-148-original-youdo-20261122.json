@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 148 original You Do source snapshot",
+  "lesson": "148",
+  "title": "Integrated Development Environments",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-148.json",
+  "original_source_blob_sha": "44e401bb38d2db4b4823186a4f10fb8b47492122",
+  "purpose": "Preserve original Code First, marked answer, previous-learning exam item, old exam questions and answers, visuals and challenge before preview-only RHS bank substitution. Default student lesson and other phases untouched.",
+  "code_first": {
+    "q": "Use a debugging breakpoint to find an incorrect bits-to-bytes conversion.",
+    "code": "bits = 40\nbytes = bits * 8\nprint(bytes)",
+    "p": [
+      "Predict the incorrect output.",
+      "Correct the conversion to bytes.",
+      "State what you would inspect at a breakpoint just before print, and why a byte contains eight bits."
+    ],
+    "a": "The incorrect multiplication prints 320. Converting bits to bytes requires division by 8, so 40 bits = 5 bytes. Pause before print to compare the current bits (40) and bytes (5) with expected values and locate the faulty operator."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "Name two IDE features. [2 marks]",
+      "Code editor, syntax highlighting, autocomplete, debugging, breakpoints, error diagnostics or run console."
+    ],
+    [
+      "Explain why a breakpoint helps a developer. [3 marks]",
+      "Pauses execution at a selected point, allowing variables/program state to be inspected."
+    ],
+    [
+      "State why a program should be tested after fixing an IDE-reported syntax error. [2 marks]",
+      "Syntax correction only ensures code can be parsed; logical behaviour still needs checking."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 148,
+    "coreHint": "To convert bits into bytes, divide by 8. Inspect the stored value before output.",
+    "stretch": {
+      "task": "Add a second conversion test using 64 bits; check it with a breakpoint and explain the expected bytes.",
+      "hint": "The correct formula is bytes = bits / 8. For 64 bits the result is 8 bytes.",
+      "answer": "With 40 bits output 5 bytes; with 64 bits output 8 bytes. A breakpoint before print reveals whether bytes matches the expected value."
+    },
+    "mastery": {
+      "task": "Given a five-line faulty running total, choose two breakpoint positions, list expected variable values and identify the first faulty assignment.",
+      "hint": "Compare expected with actual at each step.",
+      "answer": "Example total starts0, after +3 =3, after accidental -2 =1 instead of5. Pause before/after faulty statement; fix to +2 and retest."
+    }
+  }
+}
