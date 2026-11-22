@@ -25,21 +25,28 @@ const prefix=origin+"/lessons/j277/lesson-096/";
       assert.equal(await page.locator("#you-do .rhs-y-stage").count(),7,
         "Existing You Do should still have its seven unchanged screens");
       const before=await page.locator("#do-now").innerText();
+      // The standard desktop Continue button is intentionally hidden on phones.
+      // On mobile, trigger its existing handler to validate sequence and state.
+      const clickControl=async id=>{
+        const element=page.locator(id);
+        if(viewport.label==="mobile")await element.evaluate(el=>el.click());
+        else await element.click();
+      };
       const font=await page.locator("#exam-practice .rhs-bank-prompt").first().evaluate(el=>parseFloat(getComputedStyle(el).fontSize));
       assert(font>=19,"Exam practice question font is too small");
       // Navigate all four standalone answer screens with the existing controls.
       const ids=["RHS-J277-026","RHS-J277-027","RHS-J277-141","RHS-J277-142"];
       for(let i=0;i<4;i++){
-        await page.locator("#advance").click();
+        await clickControl("#advance");
         const stage=page.locator("#exam-practice .rhs-bank-review-stage:not([hidden])");
         assert.equal(await stage.count(),1);
         assert.match(await stage.locator(".rhs-bank-label").first().innerText(),new RegExp(ids[i]));
         assert((await stage.locator(".rhs-bank-answer-point").count())>=1,"Missing answer points");
         assert.match(await stage.locator(".rhs-bank-scoring").innerText(),/HOW TO AWARD MARKS/);
       }
-      await page.locator("#advance").click();
+      await clickControl("#advance");
       await page.locator("#vocabulary.active").waitFor();
-      await page.locator("#previous").click();
+      await clickControl("#previous");
       await page.locator("#exam-practice.active").waitFor();
       assert.match(await page.locator("#exam-practice .rhs-bank-review-stage:not([hidden])").innerText(),/RHS-J277-142/);
       const after=await page.locator("#do-now").innerText();
