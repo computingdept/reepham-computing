@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 145 original You Do source snapshot",
+  "lesson": "145",
+  "title": "Boolean Logic: AND, OR and NOT",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-145.json",
+  "original_source_blob_sha": "5a48f57d520cb0994a591511309abcf553451654",
+  "purpose": "Back up authored original Code First, marking answer, previous-learning exercise, legacy exam Q&A, visuals and challenge. Archive-backed exam practice is preview-only, leaving original lesson source and other phases unchanged.",
+  "code_first": {
+    "q": "Apply AND logic to a simplified authentication and file-permission check.",
+    "code": "signedIn = true\nallowedToRead = false\nif signedIn AND allowedToRead then\n    print(\"Access permitted\")\nelse\n    print(\"Access denied\")\nendif",
+    "p": [
+      "Predict the output.",
+      "Change allowedToRead to true and predict again.",
+      "Explain the difference between authentication and authorisation. Why does AND require both?"
+    ],
+    "a": "Initially Access denied. With both signedIn and allowedToRead true it prints Access permitted. Authentication establishes who a user is; authorisation checks what that user may access. AND requires both conditions. This is a simple access-rule model, not real authentication."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "State AND output when A=1, B=0. [1 mark]",
+      "0."
+    ],
+    [
+      "Write OR outputs for inputs 00,01,10,11. [4 marks]",
+      "0,1,1,1."
+    ],
+    [
+      "Explain NOT output for input 0. [2 marks]",
+      "NOT inverts the bit; output 1."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 145,
+    "coreHint": "For AND, both conditions must be true. Being signed in is not the same as having permission.",
+    "stretch": {
+      "task": "Add an OR output to the same simplified access test and compare its result when signedIn=true but allowedToRead=false.",
+      "hint": "Test signedIn AND allowedToRead, then signedIn OR allowedToRead. Discuss why the latter is unsafe for access control.",
+      "answer": "AND is false and OR is true. Using OR for this rule could allow access when only one of the two required conditions holds."
+    },
+    "mastery": {
+      "task": "Generate the complete two-input truth tables for AND, OR and NOT A in a loop, stating four input combinations.",
+      "hint": "Use nested loops for A and B; compute each output.",
+      "answer": "00→AND0 OR0 NOT A1; 01→0,1,1; 10→0,1,0; 11→1,1,0."
+    }
+  }
+}
