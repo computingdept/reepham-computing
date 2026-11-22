@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 118 original You Do source snapshot",
+  "lesson": "118",
+  "title": "SQL Queries",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-118.json",
+  "original_source_blob_sha": "bad5deb73c2e64ec6c217f552fa8584656b665b2",
+  "purpose": "Preserve the original lesson Code First, model answer, previous learning, legacy exam question/answers, original visuals and extension before the preview-only exam-bank replacement. No other phases modified.",
+  "code_first": {
+    "q": "Predict the output, then connect the condition to SQL WHERE Mark >= 50.",
+    "code": "mark = 43\nif mark >= 50 then\n    print(\"Include\")\nelse\n    print(\"Exclude\")\nendif",
+    "p": [
+      "Explain your predicted result using the first assignment or test.",
+      "Change mark to 72 and predict the output.",
+      "Change the program so it displays 'Ada' when mark is 72 and 'Ben' when mark is 43; explain that SQL SELECT chooses what field is returned."
+    ],
+    "a": "Initially Exclude; mark=72 prints Include. A simple additional selection can print Ada/Ben for this small known dataset; SQL SELECT Name returns the corresponding name field without hard-coding individual marks."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "Write SQL to return Name from Pupils where Mark > 70. [3 marks]",
+      "SELECT Name [1] FROM Pupils [1] WHERE Mark > 70 [1]; result Ada and Mia."
+    ],
+    [
+      "For the shared table, what value is returned by SELECT Name FROM Pupils WHERE ID = 103;? [2 marks]",
+      "Mia [1]; because the row with ID 103 matches the WHERE condition [1]."
+    ],
+    [
+      "Explain how SELECT and WHERE perform different jobs in SELECT Name FROM Pupils WHERE Mark < 50; [3 marks]",
+      "SELECT Name chooses the field to output [1]; WHERE Mark < 50 filters qualifying rows [1]; in this dataset only Ben matches [1]."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 118,
+    "coreHint": "SELECT = which column to show; FROM = which named table; WHERE = which rows pass the condition.",
+    "stretch": {
+      "task": "Use Pupils(ID,Name,Mark). Write a query for the names with marks below 60. State the exact result and explain why Ada is excluded.",
+      "hint": "SELECT Name FROM Pupils WHERE Mark < 60;",
+      "answer": "Ben is returned because 43 < 60. Ada's 72 and Mia's 81 do not pass. SQL: SELECT Name FROM Pupils WHERE Mark < 60;"
+    },
+    "mastery": {
+      "task": "Explain how a loop and IF could reproduce SELECT Name FROM Pupils WHERE Mark >= 50. Using parallel numeric marks and names arrays, write the code and compare its output to SQL.",
+      "hint": "for i=0 to 2: IF marks[i]>=50 THEN print(names[i]). A SQL result is not guaranteed to be ordered without ORDER BY.",
+      "answer": "For names=[Ada,Ben,Mia] and marks=[72,43,81], code prints Ada then Mia. The SQL result contains Ada and Mia; row ordering is not guaranteed unless explicitly requested."
+    }
+  }
+}
