@@ -1,0 +1,53 @@
+{
+  "archive_type": "J277 Year 11 lesson 096 original You Do source snapshot",
+  "lesson": "096",
+  "title": "Primary Storage: RAM, ROM and Cache",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-096.json",
+  "original_source_blob_sha": "9f3a593c1d7d2c1e9eb51812d3421add88e36564",
+  "purpose": "Preserve the former Code First plus original exam questions and answers before replacing the opt-in You Do preview with RHS 2022/2024 sourced bank questions. Live source file is not edited.",
+  "code_first": {
+    "q": "Predict which message appears if free RAM is 900 MB.",
+    "code": "freeMB = 900\nneededMB = 700\nif freeMB >= neededMB then\n    print(\"Load\")\nelse\n    print(\"Wait\")\nendif",
+    "p": [
+      "Predict the printed message.",
+      "Change neededMB to 950 and predict again.",
+      "Change the comparison to > and test the equality case."
+    ],
+    "a": "Load; after changing neededMB to 950 it prints Wait. With > and equal values, it prints Wait."
+  },
+  "previous_learning_exam": {
+    "from": "095",
+    "q": "A student names a correct feature in a four-mark 'explain' answer but does not explain its effect. Identify one improvement and why it could earn further marks. [2]",
+    "a": "Link the named technical feature to an accurate consequence in the question context [1]; this supplies the explanation rather than an unsupported statement [1]."
+  },
+  "original_exam_questions": [
+    [
+      "State whether RAM is volatile and describe what happens to its contents when power is lost. [2]\n\nSource: Original OCR J277-style practice question.",
+      "Volatile [1]; contents are lost when power is removed [1]."
+    ],
+    [
+      "Explain why a CPU benefits from cache memory. [3]\n\nSource: Original OCR J277-style practice question.",
+      "Frequently used data/instructions stored in cache [1]; CPU can access them faster than RAM [1], improving speed/reducing waits [1]."
+    ],
+    [
+      "Compare RAM and ROM using purpose and volatility. [4]\n\nSource: Original OCR J277-style practice question.",
+      "RAM stores currently running programs/data [1] and is volatile [1]; ROM typically stores firmware/startup instructions [1] and is non-volatile [1]."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 96,
+    "coreHint": "Compare the two amounts before deciding which branch executes.",
+    "stretch": {
+      "task": "Modify the Code First program so that when there is insufficient RAM it also prints the shortage in MB. Test freeMB = 900 and neededMB = 950.",
+      "hint": "Only subtract when neededMB > freeMB. The shortage is neededMB - freeMB.",
+      "answer": "With freeMB=900 and neededMB=950, the program prints Wait and shortage 50 MB. Add inside else: print(neededMB - freeMB)."
+    },
+    "mastery": {
+      "task": "Adapt the code for two applications. Use appA = 400 MB, appB = 550 MB and freeMB = 900 MB; compare the combined requirement with free RAM. Test again when both applications total exactly 900 MB.",
+      "hint": "Set neededMB = appA + appB, then use >= so the equality case is accepted.",
+      "answer": "400 + 550 = 950 MB, so the output is Wait with a 50 MB shortage. When total required is 900 MB the output is Load because freeMB >= neededMB. This models the decision; actual memory allocation has further overheads."
+    }
+  }
+}
