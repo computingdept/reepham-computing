@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 151 original You Do source snapshot",
+  "lesson": "151",
+  "title": "Paper 2: Validation, Testing and Debugging",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-151.json",
+  "original_source_blob_sha": "cd806fc2ee591ccf19fc403a7c2aba2d18f72455",
+  "purpose": "Protect Code First and its answer, previous-learning question, original three exam questions and answers, original illustrations and challenge. New bank practice is opt-in teacher preview only, with no other lesson phase edited.",
+  "code_first": {
+    "q": "Debug a faulty IPv4-octet range check using selection.",
+    "code": "octet = 256\nif octet >= 0 OR octet <= 255 then\n    print(\"Accepted\")\nelse\n    print(\"Rejected\")\nendif",
+    "p": [
+      "Predict the incorrect printed result.",
+      "Correct OR to AND, and test octet = 255.",
+      "Test octet = -1 and explain why one valid octet is not enough to validate a whole IPv4 address."
+    ],
+    "a": "The faulty OR condition accepts 256 because 256>=0. The correct condition is octet >= 0 AND octet <= 255. With that correction, 255 is accepted and -1 is rejected. A complete IPv4 address requires four valid octets and appropriate formatting."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "Give one invalid and one erroneous input for age 5–16. [2 marks]",
+      "Invalid 20 (integer out of range); erroneous 'cat' (non-numeric text)."
+    ],
+    [
+      "Explain the difference between validation and authentication. [2 marks]",
+      "Validation checks input constraints; authentication checks claimed identity."
+    ],
+    [
+      "Describe how a trace table helps locate a logic error. [3 marks]",
+      "It records successive states and shows the first variable/branch differing from expected behaviour."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 151,
+    "coreHint": "For an octet to be valid, both the minimum and maximum rules must hold.",
+    "stretch": {
+      "task": "Correct the range check and test the exact valid boundaries 0 and 255, plus invalid values -1 and 256.",
+      "hint": "Both conditions must hold: octet>=0 AND octet<=255.",
+      "answer": "0 and 255 are accepted. -1 and 256 are rejected. The original OR incorrectly accepts invalid numerical values."
+    },
+    "mastery": {
+      "task": "Build a repeat-until-valid integer input routine with explicit erroneous-input handling and tests for text, fractional and boundary inputs.",
+      "hint": "Validate integer type before numeric range check.",
+      "answer": "Normal 10, boundary1/20 accepted; 0/21 invalid; 'abc' and2.5 rejected for integer-only rule."
+    }
+  }
+}
