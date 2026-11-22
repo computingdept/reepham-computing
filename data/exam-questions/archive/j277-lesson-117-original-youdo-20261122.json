@@ -1,0 +1,49 @@
+{
+  "archive_type": "J277 Year 11 lesson 117 original You Do source snapshot",
+  "lesson": "117",
+  "title": "File Handling",
+  "archived_on": "2026-11-22",
+  "original_source": "lessons/j277/autumn2-117.json",
+  "original_source_blob_sha": "62f68863168958a688d9f4fc2d06e6ebb5707bc8",
+  "purpose": "Preserve the original lesson Code First, model answer, previous learning, legacy exam question/answers, original visuals and extension before the preview-only exam-bank replacement. No other phases modified.",
+  "code_first": {
+    "q": "Predict exactly what is printed, including commas. The first line is the header.",
+    "code": "file = open(\"pupils.csv\")\nheader = file.readLine()\nfirstPupil = file.readLine()\nprint(firstPupil)\nfile.close()",
+    "p": [
+      "Explain your predicted result using the first assignment or test.",
+      "Change print(firstPupil) to print(header). What is printed?",
+      "Add one more readLine() before close(), store it in secondPupil, and print it."
+    ],
+    "a": "Initially 101,Ada,72; when printing header, ID,Name,Mark. The next pupil line is 102,Ben,43. The returned lines are strings, not parsed records."
+  },
+  "previous_learning_exam": null,
+  "original_exam_questions": [
+    [
+      "Name the four basic file-handling operations required by OCR J277. [4 marks]",
+      "Open [1], Read [1], Write [1], Close [1]."
+    ],
+    [
+      "Given pupils.csv with a header followed by 101,Ada,72 and 102,Ben,43, state what the second call to readLine() returns after opening the file. [2 marks]",
+      "101,Ada,72 [1]; because the first readLine() already returned the header [1]."
+    ],
+    [
+      "Explain why the file should be closed after reading its final line. [2 marks]",
+      "Releases the opened file resource/handle [1] and properly completes the file access [1]."
+    ]
+  ],
+  "original_exam_visuals": [],
+  "optional_original_challenge": {
+    "n": 117,
+    "coreHint": "Use the file diagram: the first line is ID,Name,Mark, not Ada's record. Each readLine() moves to the next line.",
+    "stretch": {
+      "task": "Add a second readLine() call after the header and first pupil have been read. Predict the result. Then outline how to write 'Mia,81' to a separate results.txt and close it.",
+      "hint": "The next data line is 102,Ben,43. For output, open an output file, call writeLine(), then close().",
+      "answer": "The next readLine() returns 102,Ben,43. Typical OCR steps: outputFile = open('results.txt'); outputFile.writeLine('Mia,81'); outputFile.close()."
+    },
+    "mastery": {
+      "task": "Optional: read every line of pupils.csv, skip the header, split comma-separated text into fields, validate the marks and store the three rows for later filtering. Explain what must happen to '72' before comparing it with numeric 50.",
+      "hint": "A CSV read returns text. Skip header; split each row; convert the third item to integer if valid; don't assume the input is numeric.",
+      "answer": "Expected rows (101,Ada,72),(102,Ben,43),(103,Mia,81). Marks become numeric after validation/casting; test missing file, blank row, non-numeric mark. CSV parsing is a higher-level application, not a separate compulsory OCR J277 objective."
+    }
+  }
+}
