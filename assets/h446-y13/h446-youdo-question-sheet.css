@@ -1,0 +1,127 @@
+
+/* H446 Y13 exam question sheets: up to four readable independent questions
+   together, followed by one question + marking answer per reveal. Only applies
+   to the source-linked You Do decks; J277 and other phases are untouched. */
+#you-do[data-h446-question-sheet="true"] .youdo-deck{
+  min-height:0; height:calc(100% - var(--phase-bar-h));
+}
+#you-do[data-h446-question-sheet="true"] .youdo-questions{
+  display:grid;min-height:0;height:100%;width:100%;
+  gap:clamp(9px,1.15vw,16px);
+  align-items:stretch;
+}
+#you-do[data-h446-question-sheet="true"][data-answer-mode="false"] .youdo-questions{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-rows:repeat(2,minmax(0,1fr));
+}
+#you-do[data-h446-question-sheet="true"][data-answer-mode="false"][data-h446-group-count="1"] .youdo-questions{
+  grid-template-columns:minmax(0,1fr);
+  grid-template-rows:minmax(0,1fr);
+}
+#you-do[data-h446-question-sheet="true"][data-answer-mode="false"][data-h446-group-count="2"] .youdo-questions{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-rows:minmax(0,1fr);
+}
+#you-do[data-h446-question-sheet="true"] .youdo-question[hidden]{display:none!important}
+#you-do[data-h446-question-sheet="true"][data-answer-mode="false"] .youdo-question:not([hidden]){
+  box-sizing:border-box;min-height:0;height:100%;width:100%;margin:0;
+  padding:clamp(12px,1.25vw,19px)!important;
+  border:1px solid #d9e3dc;border-radius:13px;box-shadow:none;
+  background:#fff;overflow:auto;align-self:stretch;
+}
+#you-do[data-h446-question-sheet="true"][data-answer-mode="false"] .youdo-question-prompt{
+  display:block!important;box-sizing:border-box;
+}
+#you-do[data-h446-question-sheet="true"][data-answer-mode="false"] .youdo-question .phase-tag{
+  font-size:clamp(11px,.84vw,14px)!important;
+  margin-bottom:6px;
+  padding:3px 6px;
+}
+#you-do[data-h446-question-sheet="true"][data-answer-mode="false"] .youdo-question h2{
+  font-size:clamp(22px,1.75vw,29px)!important;
+  line-height:1.23;
+  margin:6px 0 10px;
+  letter-spacing:-.01em;
+}
+#you-do[data-h446-question-sheet="true"][data-answer-mode="false"] .rhs-y13-context,
+#you-do[data-h446-question-sheet="true"][data-answer-mode="false"] .y13-rhs-brief{
+  font-size:clamp(15px,1.08vw,19px);
+  line-height:1.35;
+}
+#you-do[data-h446-question-sheet="true"][data-answer-mode="false"] .rhs-y13-context-title{
+  font-size:13px;margin:4px 0;
+}
+#you-do[data-h446-question-sheet="true"][data-answer-mode="false"] pre.rhs-y13-code{
+  font-size:clamp(14px,1vw,18px);line-height:1.25;padding:9px 11px;
+}
+#you-do[data-h446-question-sheet="true"][data-answer-mode="false"] .rhs-y13-source,
+#you-do[data-h446-question-sheet="true"][data-answer-mode="false"] .y13-rhs-source-reference{
+  font-size:11px;margin-top:8px;
+}
+#you-do[data-h446-question-sheet="true"][data-answer-mode="false"][data-h446-group-count="1"] .youdo-question h2{
+  font-size:clamp(26px,2.3vw,39px)!important;
+}
+/* On an answer slide, repeat its question and essential given information,
+   then show just that one model answer, with relevant SVG on the answer side. */
+#you-do[data-h446-question-sheet="true"][data-answer-mode="true"] .youdo-questions{
+  display:block;height:100%;min-height:0;
+}
+#you-do[data-h446-question-sheet="true"][data-answer-mode="true"] .youdo-question:not([hidden]){
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1.07fr);
+  align-items:stretch;gap:clamp(11px,1.1vw,19px);
+  box-sizing:border-box;height:100%;min-height:0;width:100%;
+  overflow:hidden;padding:clamp(12px,1.2vw,20px)!important;margin:0;
+}
+#you-do[data-h446-question-sheet="true"][data-answer-mode="true"] .youdo-question-prompt{
+  display:block!important;min-width:0;min-height:0;max-height:100%;
+  box-sizing:border-box;overflow:auto!important;padding:12px 14px!important;
+  background:#f8faf9!important;border:1px solid #d8e6dd!important;
+  border-radius:10px;
+}
+#you-do[data-h446-question-sheet="true"][data-answer-mode="true"] .youdo-question h2{
+  font-size:clamp(21px,1.7vw,28px)!important;
+  line-height:1.3;margin:8px 0;
+}
+#you-do[data-h446-question-sheet="true"][data-answer-mode="true"] .rhs-y13-context,
+#you-do[data-h446-question-sheet="true"][data-answer-mode="true"] .rhs-y13-context-title,
+#you-do[data-h446-question-sheet="true"][data-answer-mode="true"] pre.rhs-y13-code,
+#you-do[data-h446-question-sheet="true"][data-answer-mode="true"] .y13-rhs-brief{
+  display:block!important;font-size:clamp(15px,1.04vw,19px);
+  line-height:1.33;
+}
+#you-do[data-h446-question-sheet="true"][data-answer-mode="true"] .rhs-y13-code{
+  white-space:pre-wrap;font-size:clamp(13px,.94vw,17px)!important;
+}
+#you-do[data-h446-question-sheet="true"][data-answer-mode="true"] .youdo-solution{
+  display:block;min-height:0;max-height:100%;height:100%;box-sizing:border-box;
+  overflow:auto!important;margin:0!important;padding:14px 17px!important;
+  background:#f4faf6;border:1px solid #c7dccd;border-radius:10px;
+}
+#you-do[data-h446-question-sheet="true"][data-answer-mode="true"] .rhs-y13-answer{
+  font-size:clamp(18px,1.32vw,23px);line-height:1.4;
+}
+#you-do[data-h446-question-sheet="true"][data-answer-mode="true"] .rhs-y13-marking{
+  font-size:clamp(16px,1.12vw,19px);line-height:1.37;
+}
+#you-do[data-h446-question-sheet="true"][data-answer-mode="true"] .rhs-y13-answer-diagram,
+#you-do[data-h446-question-sheet="true"][data-answer-mode="true"] .y13-rhs-illustration-answer{
+  display:block;width:100%;max-height:34vh;object-fit:contain;
+  object-position:top center;margin:12px 0 0;border:0;
+}
+@media(max-width:900px){
+  #you-do[data-h446-question-sheet="true"] .youdo-deck{height:auto}
+  #you-do[data-h446-question-sheet="true"][data-answer-mode="false"] .youdo-questions{
+    grid-template-columns:1fr!important;grid-template-rows:none!important;
+    height:auto;
+  }
+  #you-do[data-h446-question-sheet="true"][data-answer-mode="false"] .youdo-question:not([hidden]){
+    height:auto;overflow:visible;
+  }
+  #you-do[data-h446-question-sheet="true"][data-answer-mode="true"] .youdo-question:not([hidden]){
+    display:flex!important;flex-direction:column;height:auto;overflow:visible;
+  }
+  #you-do[data-h446-question-sheet="true"][data-answer-mode="true"] .youdo-solution{
+    height:auto;max-height:none;overflow:visible!important;
+  }
+}

@@ -203,6 +203,132 @@ function showH446SequentialStage(page,n,answer){
   return true;
 }
 
+
+/* Year 13 H446 exam practice: one question sheet (up to four), followed
+ * by one model answer at a time. Specialist labs and assessments use their
+ * existing controllers. Group sizes are limited by reading complexity. */
+function isH446BankQuestionSheet(page){
+  return !!page && (page.dataset.h446Y13Bank==='true'||page.dataset.y13ExamPractice==='true')
+    && isH446SequentialYouDo(page);
+}
+function h446QuestionSheetGroups(page){
+  const questions=h446SequentialQuestions(page);
+  const groups=[];
+  if(!questions.length)return groups;
+  let start=0,weight=0;
+  questions.forEach((q,i)=>{
+    const prompt=q.querySelector('.youdo-question-prompt')||q;
+    const title=prompt.querySelector('h2,h3')?.textContent||'';
+    const extra=[...prompt.querySelectorAll('.rhs-y13-context,.rhs-y13-code,.y13-rhs-brief,.y13-rhs-context,pre,table')];
+    const additional=extra.reduce((n,el)=>n+(el.textContent||'').length,0);
+    const total=title.length+additional;
+    const hasDiagram=!!prompt.querySelector('svg,img,table');
+    const hasCode=!!prompt.querySelector('pre');
+    const marksText=prompt.querySelector('.phase-tag')?.textContent||title;
+    const markMatch=marksText.match(/\b(\d{1,2})\s*marks?\b|\[(\d{1,2})\]/i);
+    const marks=markMatch?Number(markMatch[1]||markMatch[2]):0;
+    const itemWeight=hasDiagram||total>510||(hasCode&&additional>150)?4:
+      (hasCode||total>205||marks>=5)?2:1;
+    if(i>start && (weight+itemWeight>4 || i-start>=4)){
+      groups.push({start,end:i});
+      start=i;weight=0;
+    }
+    weight+=itemWeight;
+  });
+  groups.push({start,end:questions.length});
+  return groups;
+}
+function h446QuestionSheetGroupFor(page,n){
+  const groups=h446QuestionSheetGroups(page);
+  return groups.find(g=>n>=g.start&&n<g.end)||groups[0]||null;
+}
+function h446AppendSourceAnswerSvg(question){
+  const id=question.dataset.rhsBankId;
+  const diagrams={
+    'RHS-H446-025':{
+      file:'half-adder-model-desktop.svg',
+      alt:'Worked half-adder circuit and complete four-row truth table for Sum and Carry.'
+    },
+    'RHS-H446-027':{
+      file:'full-adder-two-half-adders-model-desktop.svg',
+      alt:'Worked full-adder wiring: two half-adders and an OR gate producing Sum and Carry-out.'
+    }
+  };
+  const artwork=diagrams[id];
+  if(!artwork)return;
+  const solution=question.querySelector('.youdo-solution');
+  if(!solution||solution.querySelector('img,svg'))return;
+  const img=document.createElement('img');
+  img.className='rhs-y13-answer-diagram';
+  img.src='../../../assets/exam-questions/h446/'+artwork.file;
+  img.alt=artwork.alt;
+  img.loading='lazy';
+  img.decoding='async';
+  solution.appendChild(img);
+}
+function h446ShowQuestionSheet(page,requestedStart){
+  const questions=h446SequentialQuestions(page);
+  const group=h446QuestionSheetGroupFor(page,requestedStart);
+  if(!group)return false;
+  page.dataset.h446QuestionSheet='true';
+  page.dataset.h446GroupStart=String(group.start);
+  page.dataset.h446GroupCount=String(group.end-group.start);
+  page.dataset.windowStart=String(group.start);
+  page.dataset.answerIndex=String(group.start);
+  page.dataset.answerMode='false';
+  page.dataset.workMode='independent';
+  questions.forEach((q,i)=>{
+    q.hidden=i<group.start||i>=group.end;
+    const answer=q.querySelector('.youdo-solution');
+    if(answer)answer.hidden=true;
+    if(!q.hidden)q.querySelectorAll('details.y13-rhs-context').forEach(d=>{d.open=true});
+  });
+  const progress=page.querySelector('.youdo-window-progress');
+  if(progress){
+    const text=questions.reduce((list,q,i)=>{
+      if(i<group.start||i>=group.end)return list;
+      const tag=q.querySelector('.phase-tag')?.textContent||'';
+      const m=tag.match(/\b(\d{1,2})\s*marks?\b/i);
+      return list+(m?Number(m[1]):0);
+    },0);
+    const label=group.end-group.start===1?'QUESTION '+(group.start+1):
+      'QUESTIONS '+(group.start+1)+'–'+group.end;
+    progress.textContent=label+' OF '+questions.length+(text?' · '+text+' MARKS / MINUTES':'');
+  }
+  return true;
+}
+function h446ShowSingleAnswer(page,index){
+  const questions=h446SequentialQuestions(page);
+  const group=h446QuestionSheetGroupFor(page,index);
+  if(!group)return false;
+  const i=Math.max(group.start,Math.min(index,group.end-1));
+  page.dataset.h446QuestionSheet='true';
+  page.dataset.h446GroupStart=String(group.start);
+  page.dataset.h446GroupCount='1';
+  page.dataset.windowStart=String(group.start);
+  page.dataset.answerIndex=String(i);
+  page.dataset.answerMode='true';
+  page.dataset.workMode='independent';
+  questions.forEach((q,k)=>{
+    q.hidden=k!==i;
+    const answer=q.querySelector('.youdo-solution');
+    if(answer)answer.hidden=k!==i;
+  });
+  h446AppendSourceAnswerSvg(questions[i]);
+  const progress=page.querySelector('.youdo-window-progress');
+  if(progress){
+    const heading=questions[i].querySelector('.phase-tag')?.textContent||'';
+    const m=heading.match(/\b(\d{1,2})\s*marks?\b/i);
+    progress.textContent='ANSWER '+(i+1)+' OF '+questions.length+(m?' · '+m[1]+' MARKS':'');
+  }
+  const q=questions[i];q.scrollTop=0;
+  const prompt=q.querySelector('.youdo-question-prompt');
+  const solution=q.querySelector('.youdo-solution');
+  if(prompt)prompt.scrollTop=0;
+  if(solution)solution.scrollTop=0;
+  return true;
+}
+
 function showYouDoAnswer(page,index){
   const questions=[...page.querySelectorAll('.youdo-question')];
   if(!questions.length)return;
@@ -779,7 +905,8 @@ function resetPhaseState(id){
     const questions=[...page.querySelectorAll('.youdo-question')];
     if(questions.length){
       setYouDoWindow(page,0);
-      if(isH446SequentialYouDo(page))showH446SequentialStage(page,0,false);
+      if(isH446BankQuestionSheet(page))h446ShowQuestionSheet(page,0);
+      else if(isH446SequentialYouDo(page))showH446SequentialStage(page,0,false);
     }else{
       const stages=[...page.querySelectorAll('.youdo-stage')];
       if(stages.length)showOnly(stages,0);
@@ -1036,7 +1163,15 @@ function updateControl(){
       label='Reveal model response';
     }
   }else if(current==='you-do'){
-    if(isH446SequentialYouDo(page)){
+    if(isH446BankQuestionSheet(page)){
+      const count=h446SequentialQuestions(page).length;
+      const start=Number(page.dataset.h446GroupStart||0);
+      const group=h446QuestionSheetGroupFor(page,start);
+      const i=Number(page.dataset.answerIndex||start);
+      label=page.dataset.answerMode!=='true'?'Begin self-marking →':
+        i<group.end-1?'Next answer →':
+        group.end<count?'Next questions →':'Continue → Key Vocabulary';
+    }else if(isH446SequentialYouDo(page)){
       const i=Number(page.dataset.answerIndex||0),count=h446SequentialQuestions(page).length;
       label=page.dataset.answerMode==='true'?(i<count-1?'Next question →':'Continue → Key Vocabulary'):'Reveal answer →';
     }else if(page.dataset.welcomeGroupedReview==='true'){
@@ -1269,6 +1404,17 @@ function next(){
     }
   }
   if(current==='you-do'){
+    if(isH446BankQuestionSheet(page)){
+      const count=h446SequentialQuestions(page).length;
+      const start=Number(page.dataset.h446GroupStart||0);
+      const group=h446QuestionSheetGroupFor(page,start);
+      const index=Number(page.dataset.answerIndex||start);
+      if(page.dataset.answerMode!=='true')h446ShowSingleAnswer(page,group.start);
+      else if(index<group.end-1)h446ShowSingleAnswer(page,index+1);
+      else if(group.end<count)h446ShowQuestionSheet(page,group.end);
+      else{showPage('vocabulary');return;}
+      updateSignals('you-do');updateControl();return;
+    }
     if(isH446SequentialYouDo(page)){
       const i=Number(page.dataset.answerIndex||0),count=h446SequentialQuestions(page).length;
       if(page.dataset.answerMode!=='true')showH446SequentialStage(page,i,true);
@@ -1403,7 +1549,8 @@ function previousAction(){
         const qs=[...yp.querySelectorAll('.youdo-question')];
         yp.dataset.workMode='independent';
         if(qs.length){
-          if(isH446SequentialYouDo(yp))showH446SequentialStage(yp,qs.length-1,true);
+          if(isH446BankQuestionSheet(yp))h446ShowSingleAnswer(yp,qs.length-1);
+          else if(isH446SequentialYouDo(yp))showH446SequentialStage(yp,qs.length-1,true);
           else if(isH446RichReview(yp)&&showH446RichReview(yp,true,
               yp.querySelectorAll('.h446-rich-stage').length-1)){
             // Restore the final model answer when returning from an optional phase.
@@ -1490,6 +1637,8 @@ function previousAction(){
         // Back from vocabulary returns to the final rich model-answer screen.
       }else if(questions.length&&isH446GroupedMarking(youPage)&&showH446GroupedMarking(youPage,true,Math.max(0,questions.length-1),'answer')){
         // Back from vocabulary returns to the final teacher-led review screen.
+      }else if(questions.length&&isH446BankQuestionSheet(youPage)){
+        h446ShowSingleAnswer(youPage,questions.length-1);
       }else if(questions.length&&isH446SequentialYouDo(youPage)){
         showH446SequentialStage(youPage,questions.length-1,true);
       }else if(questions.length){
@@ -1506,6 +1655,17 @@ function previousAction(){
     return;
   }
   if(current==='you-do'){
+    if(isH446BankQuestionSheet(page)){
+      const start=Number(page.dataset.h446GroupStart||0);
+      const group=h446QuestionSheetGroupFor(page,start);
+      const index=Number(page.dataset.answerIndex||start);
+      if(page.dataset.answerMode==='true'){
+        if(index>group.start)h446ShowSingleAnswer(page,index-1);
+        else h446ShowQuestionSheet(page,group.start);
+      }else if(group.start>0)h446ShowSingleAnswer(page,group.start-1);
+      else{showPage('we-do');return;}
+      updateSignals('you-do');updateControl();return;
+    }
     if(isH446SequentialYouDo(page)){
       const i=Number(page.dataset.answerIndex||0);
       if(page.dataset.answerMode==='true')showH446SequentialStage(page,i,false);
