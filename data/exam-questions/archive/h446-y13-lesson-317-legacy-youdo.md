@@ -1,0 +1,17 @@
+# H446 Year 13 lesson 317 — original You Do archived
+Original SHA: f338005ce53963a7199864f160e63d79d680e904
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="18 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">QUESTION 1/3</span><h2>Write pseudocode to count distinct values in a sorted array, including empty input. [8]</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>Mark scheme [8]: test for an empty array [1] and return 0 [1]; initialise count to 1 [1]; loop from index 1 to the last valid index [1]; compare adjacent values with != [2]; increment on change [1]; return count [1]. An equivalent clear pseudocode solution earns the same marks.</p><pre class="h13-code"><code>function countDistinct(values)
+    if values.length == 0 then
+        return 0
+    endif
+    count = 1
+    for i = 1 to values.length - 1
+        if values[i] != values[i-1] then
+            count = count + 1
+        endif
+    next i
+    return count
+endfunction</code></pre></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">QUESTION 2/3</span><h2>Trace [2,2,5,5,6,9,9] and give time/space complexities. [9]</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>Start1 [1]; change to5→2 [2]; to6→3 [2]; to9→4 [2]; O(n) time [1] and O(1) additional space [1].</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">QUESTION 3/3</span><h2>Evaluate adjacent counting versus a hash set when the data is unsorted and contains a million elements. [9]</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>Indicative content: adjacent counting requires sorted input; after sorting, counting is O(n) time with O(1) extra counting state; comparison sorting often costs O(n log n), whereas a hash set can count distinct values in expected O(n) time with O(n) extra space and possible collision overhead. Practice marking (authored guidance, not an OCR mark scheme): 7–9 = accurate, sustained evaluation of both options, applied to this scenario with a supported judgement; 4–6 = relevant comparison with some development and a partly justified decision; 1–3 = basic statements, limited context or unsupported decision; 0 = no creditworthy response. Use best-fit and credit equivalent valid arguments.</p><p>Model evaluation: The adjacent-comparison algorithm is excellent when the million values are already sorted: each value is inspected once, so time is O(n) and only a counter is needed. On unsorted data, identical values may be separated and it produces the wrong count unless the values are first sorted. Comparison sorting typically adds O(n log n) time, with space depending on the sorting method. A hash set processes an unsorted stream in expected O(n) time by recording each distinct value, but requires up to O(n) additional memory and performance depends on hashing and collisions. With sufficient memory and a one-off unsorted input, I would choose a hash set; for an already sorted array or strict memory constraints, adjacent counting is preferable.</p></div></article></div></div></section>
+```
