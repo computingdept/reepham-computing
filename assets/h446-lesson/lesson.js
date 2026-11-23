@@ -214,28 +214,12 @@ function isH446BankQuestionSheet(page){
 function h446QuestionSheetGroups(page){
   const questions=h446SequentialQuestions(page);
   const groups=[];
-  if(!questions.length)return groups;
-  let start=0,weight=0;
-  questions.forEach((q,i)=>{
-    const prompt=q.querySelector('.youdo-question-prompt')||q;
-    const title=prompt.querySelector('h2,h3')?.textContent||'';
-    const extra=[...prompt.querySelectorAll('.rhs-y13-context,.rhs-y13-code,.y13-rhs-brief,.y13-rhs-context,pre,table')];
-    const additional=extra.reduce((n,el)=>n+(el.textContent||'').length,0);
-    const total=title.length+additional;
-    const hasDiagram=!!prompt.querySelector('svg,img,table');
-    const hasCode=!!prompt.querySelector('pre');
-    const marksText=prompt.querySelector('.phase-tag')?.textContent||title;
-    const markMatch=marksText.match(/\b(\d{1,2})\s*marks?\b|\[(\d{1,2})\]/i);
-    const marks=markMatch?Number(markMatch[1]||markMatch[2]):0;
-    const itemWeight=hasDiagram||total>510||(hasCode&&additional>150)?4:
-      (hasCode||total>205||marks>=5)?2:1;
-    if(i>start && (weight+itemWeight>4 || i-start>=4)){
-      groups.push({start,end:i});
-      start=i;weight=0;
-    }
-    weight+=itemWeight;
-  });
-  groups.push({start,end:questions.length});
+  // Four questions per sheet is the normal Year 13 classroom pattern.
+  // A lesson with fewer authored questions displays all of those together,
+  // rather than turning each question into a separate screen.
+  for(let start=0;start<questions.length;start+=4){
+    groups.push({start,end:Math.min(start+4,questions.length)});
+  }
   return groups;
 }
 function h446QuestionSheetGroupFor(page,n){
