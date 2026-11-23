@@ -16,7 +16,7 @@ function make(level,i){
  return p;
 }
 const facts=[
- ['DATA PROTECTION ACT 2018','Personal data · UK GDPR','Protects information about identifiable people. Organisations need a lawful basis and must act fairly, transparently and securely, using only necessary data.','Consent is not always required; other lawful bases exist.'],
+ ['DATA PROTECTION ACT 2018','Personal data · UK GDPR','Protects identifiable people’s data under the UK GDPR and DPA 2018. Key principles: lawfulness/fairness/transparency, purpose limitation, data minimisation, accuracy, storage limitation, security and accountability.','Consent is not always required; other lawful bases exist.'],
  ['COMPUTER MISUSE ACT 1990','Access · interference','Addresses unauthorised computer access and unauthorised acts that impair operation. Permission matters even without theft.','Permission to test one network does not authorise another.'],
  ['COPYRIGHT, DESIGNS AND PATENTS ACT 1988','Original creative work','Protects original expression such as artwork, music, writing and source code. Copying or distribution can require permission or a lawful exception.','Finding work online, or crediting the author, does not automatically grant reuse rights.'],
  ['SOFTWARE LICENCES','Open source · proprietary','A licence sets permitted use, copying, modification and sharing. Open source normally permits source access and changes; proprietary software typically restricts them.','Open source can impose licence conditions and require support costs; proprietary products may include vendor support.']
@@ -34,7 +34,7 @@ function isCorrect(p,s){return isComplete(p,s)&&s.a===p.a&&(!p.second||s.b===p.s
 function render(p,host,isLocked,setReady){
  host.classList.add('law-answer-host');
  const board=el('div','law-board'),s={a:'',b:-1};
- const k=knowledge();k.open=p.level==='easy'&&p.index===0;board.append(k);
+ const k=knowledge();k.open=false;board.append(k);
  board.append(el('p','law-step-label','STEP 1 · Identify the most relevant law or licence'));
  const options=el('div','law-options'),aButtons=[];
  const ids=Object.keys(label);
