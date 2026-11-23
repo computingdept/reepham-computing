@@ -1095,7 +1095,7 @@ const PIXEL_PALETTE=[
  {hex:'#46BFCB',name:'Cyan'}
 ];
 
-function paintInput(){const d=$('answer-area');d.replaceChildren();const p=question;d.dataset.type=p.type;switch(p.type){
+function paintInput(){const d=$('answer-area');d.replaceChildren();const p=question;d.classList.toggle('law-answer-host',p.type==='legislationbuilder');d.dataset.type=p.type;switch(p.type){
 case 'bits':case 'add':{
   const vals=skill==='shift'&&level==='easy'?binary(p.start).split('').map(Number):Array(8).fill(0);
   answer={bits:vals,overflow:p.type==='add'?null:false,carries:p.type==='add'?Array(8).fill(0):null};
