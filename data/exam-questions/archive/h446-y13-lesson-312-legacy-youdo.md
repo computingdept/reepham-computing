@@ -1,0 +1,6 @@
+# Archived H446 Year 13 Lesson 312 original You Do
+Original GitHub blob SHA 2dbf310a71acd186838ff28b613dddb8f15f40d1
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="18 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">FOUNDATION · QUESTION 1 OF 3</span><h2>Normalise 0.00101₂×2⁵ and express its decimal value. [6]</h2></div><div class="youdo-solution" hidden><strong>MARK SCHEME / WORKED ANSWER</strong><p>Mantissa0.10100 [2]; exponent3 [2]; value .625×8=5 [2].</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">CORE · QUESTION 2 OF 3</span><h2>Convert −23 to 8-bit two's complement, showing every step. [6]</h2></div><div class="youdo-solution" hidden><strong>MARK SCHEME / WORKED ANSWER</strong><p>+23=00010111 [2]; invert11101000 [2]; add1→11101001 [2].</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">CHALLENGE · QUESTION 3 OF 3</span><h2>Simplify A∨(¬A∧B) using identities; verify for A0,B1. [6]</h2></div><div class="youdo-solution" hidden><strong>MARK SCHEME / WORKED ANSWER</strong><p>(A∨¬A)∧(A∨B) [2]; 1∧(A∨B) [1]; A∨B [1]; substitution gives1 [2].</p></div></article></div></div></section>
+```
