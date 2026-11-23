@@ -2773,6 +2773,18 @@ function prepareResponsivePlaceValues(){
 }
 prepareResponsivePlaceValues();
 prepareYouDoSolutionsLink();
+/* H446-only question sheet styling. Loaded centrally rather than adding
+   another stylesheet link manually to every existing lesson. */
+(function(){
+  const p=document.getElementById('you-do');
+  if(!p||!isH446BankQuestionSheet(p)||
+     document.querySelector('link[data-h446-question-sheet-css]'))return;
+  const link=document.createElement('link');
+  link.rel='stylesheet';
+  link.href='/assets/h446-y13/h446-youdo-question-sheet.css?v=20261123-group4-v1';
+  link.dataset.h446QuestionSheetCss='true';
+  document.head.appendChild(link);
+})();
 showPage(location.hash.slice(1)||'do-now');
 /* Identity is non-essential presentation. A badge/label problem must never
    interrupt lesson content, classroom signals, or phase navigation. */
