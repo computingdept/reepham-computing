@@ -281,7 +281,8 @@ function h446ShowQuestionSheet(page,requestedStart){
     q.hidden=i<group.start||i>=group.end;
     const answer=q.querySelector('.youdo-solution');
     if(answer)answer.hidden=true;
-    if(!q.hidden)q.querySelectorAll('details.y13-rhs-context').forEach(d=>{d.open=true});
+    // Context remains optional on the question sheet: do not expand a long scenario automatically.
+    // Students may open it when needed without crowding out the exam task.
   });
   const progress=page.querySelector('.youdo-window-progress');
   if(progress){
