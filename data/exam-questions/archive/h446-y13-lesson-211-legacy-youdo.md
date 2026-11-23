@@ -1,0 +1,8 @@
+# Archived H446 Year 13 Lesson 211 You Do
+
+Source before replacement: 246b5b1a8a7bbd5485918000a26eb543196d1c98.
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="17 minutes" data-window-size="3" ><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 3 marks · QUESTION 1 OF 3</span><h2>A stack contains [4,9] bottom-to-top. Push 2, Pop, Pop. State both removed values and remaining stack.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>[3] First Pop removes 2 [1]; second Pop removes 9 [1]; remaining bottom-to-top [4] [1].</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 4 marks · QUESTION 2 OF 3</span><h2>A queue receives 5,8,3. It dequeues once then enqueues 2. Give the queue and explain why its next dequeue removes 8.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>[4] Initial front-to-back [5,8,3] [1]; dequeue 5 [1]; enqueue 2 gives [8,3,2] [1]; next removal is 8 because FIFO [1].</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Challenge · 6 marks · QUESTION 3 OF 3</span><h2>Insert 40,20,60,10,30,25 into a BST. Give the parent of 25, state whether it is a left/right child, and explain what happens to worst-case height when inputs arrive sorted.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>[6] Root 40 [1]; 20 left of 40 [1]; 60 right of 40 [1]; 25 is the left child of 30 [1]. Increasingly sorted input can produce a chain [1], with search up to O(n) [1].</p></div></article></div></div></section>
+
+```

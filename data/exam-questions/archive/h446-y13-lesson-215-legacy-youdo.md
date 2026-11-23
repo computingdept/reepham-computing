@@ -1,0 +1,8 @@
+# Archived H446 Year 13 Lesson 215 You Do
+
+Source before replacement: e3644cdff926a4799676a1f69df2c1f2c0ce4baa.
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="18 minutes" data-window-size="3" ><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">RETEACH Q1 · 6 MARKS · QUESTION 1 OF 3</span><h2>Insert 30,15,45,22 into an empty BST. Identify the root, parent of 22 and whether 22 is a left/right child. Explain your comparison path.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>[6] Root 30 [1]; 15 is left of 30 [1]; 45 is right of 30 [1]; 22 is greater than 15 [1] but less than 30 [1], so right child of 15 [1].</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">RETEACH Q2 · 6 MARKS · QUESTION 2 OF 3</span><h2>Give two complete ascending bubble-sort passes on [7,4,6,2] and explain why the largest element is fixed after pass one.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>[6] Pass1 [4,6,2,7] [2]; pass2 [4,2,6,7] [2]; adjacent swaps push larger values right [1], so the maximum 7 reaches the final position after pass one [1].</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">RETEACH Q3 · 6 MARKS · QUESTION 3 OF 3</span><h2>Normalise positive 0.0101₂ × 2⁴ and simplify ¬(A ∨ ¬B), showing the rule at each stage.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>[6] 0.0101→0.1010 [1]; exponent 4→3 [1]; 0.1010₂ × 2³ = decimal 5 [1]. De Morgan: ¬A ∧ ¬¬B [2], then ¬A ∧ B [1].</p></div></article></div></div></section>
+
+```

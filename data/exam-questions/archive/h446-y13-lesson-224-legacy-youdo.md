@@ -1,0 +1,8 @@
+# Archived H446 Year 13 Lesson 224 You Do
+
+Source before replacement: 15ff333d792b666f9c62622768986f7b341c3300.
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="18 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 4 marks · QUESTION 1 OF 3</span><h2>Insert 12 into BST root 15, left 9 and right 20. Identify its parent and position.</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>[4] 12&lt;15 [1], moves left to 9 [1], 12&gt;9 [1], so it is right child of 9 [1].</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 6 marks · QUESTION 2 OF 3</span><h2>Insert 50,30,70,20,40,35 into an empty BST. State parent and side of 35, and the in-order visit sequence.</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>[6] Parent of 35 is 40 [1], it is left child [1]; in-order sequence 20,30,35,40,50,70 [4].</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · 6 marks · QUESTION 3 OF 3</span><h2>In BST 40 with children 20 and 60, and 20 with children 10 and 30, delete leaf 10. Explain a second case in which deletion is more involved.</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>[6] Find node 10 by moving left twice [2]; it is a leaf [1], so set parent 20.Left=null [1]. For a node with two children, replace it using an in-order successor/predecessor and remove the replacement from its old location [2].</p></div></article></div></div></section>
+
+```

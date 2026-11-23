@@ -1,0 +1,8 @@
+# Archived H446 Year 13 Lesson 226 You Do
+
+Source before replacement: 837b68627690c6d1f5614c82d61ecaaf5ee99bdf.
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="18 minutes" data-window-size="3"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 3 marks · QUESTION 1 OF 3</span><h2>A preorder routine prints node.Key, then traverses Left and Right (with a null guard). Move one statement to make it post-order. Give the result for root6 with children3 and9.</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>[3] Move the print after both recursive calls [1]; output 3,9,6 [1]; the parent is visited only after both child subtrees [1].</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 5 marks · QUESTION 2 OF 3</span><h2>Tree root 12, left 5 with children 2 and 8, right 17. Give breadth-first and post-order traversals.</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>[5] Breadth-first 12,5,17,2,8 [2]; post-order 2,8,5,17,12 [3].</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · 6 marks · QUESTION 3 OF 3</span><h2>Write pseudocode to traverse a binary tree breadth-first. Explain why a queue rather than a stack is used.</h2></div><div class="youdo-solution" hidden><strong>WORKED ANSWER</strong><p>[6] If root is not null, enqueue(root) [1]; while queue nonempty [1], dequeue and visit [1], enqueue non-null left then right children [2]; queue maintains FIFO order across levels [1].</p></div></article></div></div></section>
+
+```

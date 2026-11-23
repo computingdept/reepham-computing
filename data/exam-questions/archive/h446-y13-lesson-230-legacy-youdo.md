@@ -1,0 +1,8 @@
+# Archived H446 Year 13 Lesson 230 You Do
+
+Source before replacement: 16220918d748f3c8623553e384671a145c73627b.
+
+```html
+<section id="you-do" class="page phase-youdo" data-phase-time="18 minutes" data-window-size="3" data-self-marking="grouped"><div class="youdo-deck"><div class="youdo-questions"><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Foundation · 3 marks · QUESTION 1 OF 3</span><h2>Procedural AddFive(x) returns x+5. If caller x=2 discards the result, what is x?</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>[3] Function returns 7 [1]; caller does not assign it [1]; x remains 2 [1].</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Core · 6 marks · QUESTION 2 OF 3</span><h2>Two objects have balances A=10, B=30. A.Deposit(7) and B.Deposit(2) run. Find both balances and describe why they differ.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>[6] A=17 [1], B=32 [1]; each is a separate instance [2], each method changes only its own state [2].</p></div></article><article class="youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">Stretch · 6 marks · QUESTION 3 OF 3</span><h2>Compare one maintenance advantage and one risk of procedural and OOP implementations for a library system.</h2></div><div class="youdo-solution" hidden><strong>MODEL ANSWER</strong><p>[6] Procedures can be individually reused/tested [1] but shared mutable data can create coupling [2]; OOP encapsulates per-book state [1] and validation in methods [1], but excessive class complexity can make a small solution harder to follow [1].</p></div></article></div></div></section>
+
+```
