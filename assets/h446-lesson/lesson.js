@@ -162,7 +162,15 @@ function welcomeReviewShow(page,index){
 /* H446 standard You Do: question, then its own model answer.
    Do not apply to J277, timed assessments, rich/grouped marking, or Code First. */
 function h446SequentialQuestions(page){
-  if(!page||!/^\/lessons\/h446\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname))return [];
+  const match=location.pathname.match(/^\/lessons\/h446\/lesson-(\d{3})(?:\/|\.html|$)/i);
+  if(!page||!match)return [];
+  // Timed papers must NEVER expose their mark schemes between independent questions.
+  // Several historical assessment lessons have no data-assessment-mode flag, so
+  // protect them by the established lesson ID and the printed phase-time label.
+  const timedPapers=new Set([212,213,214,222,243,247,250,280,305,306,308]);
+  const phaseTime=String(page.dataset.phaseTime||'').toLowerCase();
+  if(timedPapers.has(Number(match[1]))||
+     /closed.?book|original timed|timed assessment|mock|45 minutes|35 minutes/.test(phaseTime))return [];
   if(page.dataset.assessmentMode==='true'||page.dataset.codingFirst==='true'||page.dataset.youDoMode==='coding'||
     page.dataset.selfMarking==='rich'||page.dataset.selfMarking==='grouped'||page.dataset.j277SeparateReview==='true'||
     page.querySelector('.youdo-stage'))return [];
