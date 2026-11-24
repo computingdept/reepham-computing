@@ -80,3 +80,43 @@
     max-height:none!important;
   }
 }
+
+/* Lesson 276 readability trial: essential context is classroom text, not fine print.
+   Use the same scale on the question and answer screens; no global type changes. */
+#you-do[data-h446-readability-pilot="true"][data-answer-mode] .youdo-question-prompt .rhs-y13-context-title{
+  font-size:16px!important;line-height:1.25;margin:12px 0 8px;
+}
+#you-do[data-h446-readability-pilot="true"][data-answer-mode] .youdo-question-prompt :is(p.rhs-y13-context,p.y13-rhs-brief){
+  font-size:clamp(24px,1.72vw,26px)!important;
+  font-weight:500;line-height:1.32!important;
+  background:#f5f5f7!important;color:#29292e!important;
+  border:0;border-radius:10px;padding:12px 14px!important;
+  margin:0 0 14px!important;overflow-wrap:anywhere;
+}
+#you-do[data-h446-readability-pilot="true"][data-answer-mode] .youdo-question-prompt :is(h2.rhs-y13-task,h2.y13-rhs-task){
+  font-size:clamp(30px,2.2vw,34px)!important;
+  line-height:1.28!important;margin:12px 0 14px;
+}
+#you-do[data-h446-readability-pilot="true"][data-answer-mode="true"] .youdo-question:not([hidden]){
+  grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);
+}
+#you-do[data-h446-readability-pilot="true"][data-answer-mode="true"] .rhs-y13-answer{
+  font-size:clamp(28px,2vw,32px)!important;line-height:1.32;
+}
+#you-do[data-h446-readability-pilot="true"][data-answer-mode="true"] .rhs-y13-marking{
+  font-size:22px!important;line-height:1.35;
+}
+@media(max-width:900px){
+  #you-do[data-h446-readability-pilot="true"][data-answer-mode] .youdo-question-prompt :is(p.rhs-y13-context,p.y13-rhs-brief){
+    font-size:clamp(19px,3vw,24px)!important;
+  }
+  #you-do[data-h446-readability-pilot="true"][data-answer-mode] .youdo-question-prompt :is(h2.rhs-y13-task,h2.y13-rhs-task){
+    font-size:clamp(24px,4vw,30px)!important;
+  }
+  #you-do[data-h446-readability-pilot="true"][data-answer-mode="true"] .rhs-y13-answer{
+    font-size:clamp(23px,3.5vw,28px)!important;
+  }
+  #you-do[data-h446-readability-pilot="true"][data-answer-mode="true"] .rhs-y13-marking{
+    font-size:19px!important;
+  }
+}
