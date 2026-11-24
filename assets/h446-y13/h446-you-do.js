@@ -5,6 +5,7 @@
   const root=document.querySelector('#you-do[data-h446-two-page-pilot="true"]');
   if(!root)return;
   const year12=root.dataset.h446Y12Shared==='true';
+  const legacy=year12&&root.dataset.h446Y12Legacy==='true';
   // Authored command metadata is authoritative. No guessing from ordinary verbs.
   function markQuestion(heading){
     const explicit=heading.dataset.h446Commands;
@@ -49,8 +50,14 @@
     }
   }
   root.querySelectorAll('.youdo-question-prompt').forEach(prompt=>{
-    const heading=prompt.querySelector('.rhs-y13-task,.y13-rhs-task')||(year12?prompt.querySelector('h2'):null);
+    const heading=prompt.querySelector('.rhs-y13-task,.y13-rhs-task')||(year12?prompt.querySelector(legacy?'h2,h3':'h2'):null);
     if(year12&&heading)heading.classList.add('rhs-y13-task');
+    if(legacy){
+      prompt.querySelectorAll('.question-text').forEach(block=>{
+        const parts=block.matches('p')?[block]:[...block.querySelectorAll('p,li')];
+        parts.forEach(part=>{if(!part.closest('pre,figure,table,svg')&&!part.querySelector('mark')){part.classList.add('h446-legacy-task');markQuestion(part);}});
+      });
+    }
     if(!heading)return;
     for(const child of [...prompt.children]){
       if(child.matches('.rhs-y13-context-title,.rhs-y13-context,.rhs-y13-code,.y13-rhs-brief,.y13-rhs-context,.y13-rhs-illustration-question')){
@@ -77,10 +84,10 @@
   function profileQuestion(q){
     const prompt=q.querySelector('.youdo-question-prompt');
     if(!prompt)return {short:false,complex:true};
-    const heading=prompt.querySelector('.rhs-y13-task,.y13-rhs-task,h2');
+    const heading=prompt.querySelector('.rhs-y13-task,.y13-rhs-task,h2,h3');
     const tag=prompt.querySelector('.phase-tag');
-    const marks=Number((tag?.textContent||'').match(/\\b(\\d{1,2})\\s*marks?\\b/i)?.[1]||0);
-    const normalize=s=>(s||'').replace(/\\s+/g,' ').trim();
+    const marks=year12?Number((tag?.textContent||'').match(/\b(\d{1,2})\s*marks?\b/i)?.[1]||0):Number((tag?.textContent||'').match(/\\b(\\d{1,2})\\s*marks?\\b/i)?.[1]||0);
+    const normalize=s=>year12?(s||'').replace(/\s+/g,' ').trim():(s||'').replace(/\\s+/g,' ').trim();
     const task=normalize(heading?.textContent);
     const source=normalize(prompt.querySelector('.rhs-y13-source,.y13-rhs-source-reference')?.textContent);
     const length=Math.max(0,normalize(prompt.textContent).length-normalize(tag?.textContent).length-source.length);
@@ -120,7 +127,7 @@
   }
   function installGroups(){
     if(typeof h446QuestionSheetGroups!=='function'||typeof h446SequentialQuestions!=='function'||typeof isH446BankQuestionSheet!=='function'||!isH446BankQuestionSheet(root))return;
-    const id=Number(location.pathname.match(/lesson-(\\d{3})/)?.[1]);
+    const id=Number(location.pathname.match(/lesson-(\d{3})/)?.[1]);
     if(year12?(id<1||id>160):(id<181||id>320))return;
     const authored=root.dataset.h446SingleQuestion==='true'||!!root.dataset.h446PageGroups;
     // The approved original two-question ERD pilot remains exactly as authored.
@@ -134,9 +141,9 @@
       questions.forEach(q=>{
         const p=q.querySelector('.youdo-question-prompt');
         const tag=p?.querySelector('.phase-tag');
-        const heading=p?.querySelector('h2');
-        const total=(heading?.textContent||'').match(/\\[(\\d{1,2})\\]\\s*$/)?.[1];
-        if(tag&&total&&!/\\b\\d{1,2}\\s*marks?\\b/i.test(tag.textContent))tag.append(' · '+total+' MARKS');
+        const heading=p?.querySelector('h2,h3');
+        const total=(heading?.textContent||'').match(/\[(\d{1,2})\]\s*$/)?.[1]||(legacy?((tag?.textContent||'').match(/\[(\d{1,2})\]\s*$/)?.[1]||(p?.querySelector('.classroom-marks')?.textContent||'').match(/(?:marks?)\s*:\s*(\d{1,2})/i)?.[1]):null);
+        if(tag&&total&&!/\b\d{1,2}\s*marks?\b/i.test(tag.textContent))tag.append(' · '+total+' MARKS');
         q.querySelectorAll('.youdo-solution>p').forEach(p=>p.classList.add('rhs-y13-answer'));
       });
     }
