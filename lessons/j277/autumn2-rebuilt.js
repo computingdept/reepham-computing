@@ -2141,13 +2141,21 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   const rhsYear11BankActiveSetup=rhsYear11BankActive
     ?'<script src="../../../assets/j277/year11-bank-preview.js?v=20261122-j277-live-b1"></script>':"";
   const lessonControllerVersion=rhsExamPilot?"20261121-rhs-codefirst-isolated-v10":rhsYear11BankActive?"20261122-j277-live-controller-b1":"20261115-codefirst-brush2";
-  const html=pilotHead.replace("</head>",rhsSharedYouDoHead+rhsYear11BankActiveHead+"</head>")+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")+(lesson.visualAuditV3?" j277-visual-v3":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
+  // We Do Skills pilot: only 022 and 057, no changes to any other phase or lesson.
+  const weDoSkillPilots={"022":{"id":"p1:netmodels","title":"Network Models","url":"/exercise/paper1/?skill=netmodels"},"057":{"id":"p2:for-loops","title":"FOR Loops","url":"/exercise/paper2/for-loops/"}};
+  const weDoSkillPilot=!lesson.year11&&!lesson.isAssessment&&new URLSearchParams(location.search).get("we-do")!=="original"?weDoSkillPilots[String(number)]:null;
+  const weDoSkillHead=weDoSkillPilot?'<link rel="stylesheet" href="/assets/j277/we-do-skills.css?v=20261124-pilot1">':"";
+  const weDoSkillSetup=weDoSkillPilot?(weDoSkillPilot.id.startsWith("p1:")
+    ?'<script src="/assets/j277-paper1-guided-demo.js?v=20261124-network6"></script>'
+    :'<script src="/assets/j277-skills-guided-examples.js?v=20261115-loop-return1"></script>')+
+    '<script src="/assets/j277/we-do-skills.js?v=20261124-pilot1"></script><script>window.J277WeDoSkills&&window.J277WeDoSkills.install('+JSON.stringify(weDoSkillPilot)+');</script>':"";
+  const html=pilotHead.replace("</head>",rhsSharedYouDoHead+rhsYear11BankActiveHead+weDoSkillHead+"</head>")+`<body class="${(["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?"j277-visual-lesson":"")+(lesson.isAssessment?" j277-assessment-lesson":"")+(lesson.visualAuditV2?" j277-dense-visual":"")+(lesson.visualAuditV3?" j277-visual-v3":"")}"><a class="skip" href="#main">Skip to lesson</a><div class="navwrap">
    <a class="course-back" href="../../../j277-hub.html?year=${lesson.year11?11:10}#lessons">← Year ${lesson.year11?11:10} lessons</a>
    <nav class="phase-nav" aria-label="Lesson phases">${arr(nav,(id,i)=>`<button type="button" data-page="${id}">${names[i]}</button>`)}</nav>
    <div class="nav-tools"><button id="advance" class="control-btn">Continue →</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div></div>
    <div class="signal-wrap"><div class="signals" aria-label="Classroom routine"><span id="phase-logo" class="signal-tile signal-phase"></span><span id="behaviour-logo" class="signal-tile signal-routine"></span><span id="response-logo" class="signal-tile signal-response"></span></div><div class="signal-meta"><span id="phase-time" class="signal-phase-time"></span><span class="lesson-label">OCR J277 · Lesson ${number}<br>${escape(lesson.t)}</span></div></div>
    <main id="main">${parts.join("")}</main><div class="lesson-footer">Lesson ${number} · ${escape(lesson.t)} <span>Year ${lesson.year11?11:10} · OCR J277 · Original exam-style questions</span></div>
-   ${pilotSetup}${rhsSharedYouDoSetup}<script src="../../../assets/h446-lesson/lesson.js?v=${lessonControllerVersion}"></script>${rhsYear11BankActiveSetup}${cpuSync}${idoSync}${y11Sync}${defaultYouDo}<script src="../../../assets/classroom-visual-zoom.js?v=20261114-clickclose2"></script></body></html>`;
+   ${pilotSetup}${rhsSharedYouDoSetup}${weDoSkillSetup}<script src="../../../assets/h446-lesson/lesson.js?v=${lessonControllerVersion}"></script>${rhsYear11BankActiveSetup}${cpuSync}${idoSync}${y11Sync}${defaultYouDo}<script src="../../../assets/classroom-visual-zoom.js?v=20261114-clickclose2"></script></body></html>`;
   document.open();document.write(html);document.close();
  }
  function renderAnswers(number,lesson){
