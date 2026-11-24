@@ -4,6 +4,7 @@
   if(!/^\/lessons\/h446\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname))return;
   const root=document.querySelector('#you-do[data-h446-two-page-pilot="true"]');
   if(!root)return;
+  const year12=root.dataset.h446Y12Shared==='true';
   // Authored command metadata is authoritative. No guessing from ordinary verbs.
   function markQuestion(heading){
     const explicit=heading.dataset.h446Commands;
@@ -48,7 +49,8 @@
     }
   }
   root.querySelectorAll('.youdo-question-prompt').forEach(prompt=>{
-    const heading=prompt.querySelector('.rhs-y13-task,.y13-rhs-task');
+    const heading=prompt.querySelector('.rhs-y13-task,.y13-rhs-task')||(year12?prompt.querySelector('h2'):null);
+    if(year12&&heading)heading.classList.add('rhs-y13-task');
     if(!heading)return;
     for(const child of [...prompt.children]){
       if(child.matches('.rhs-y13-context-title,.rhs-y13-context,.rhs-y13-code,.y13-rhs-brief,.y13-rhs-context,.y13-rhs-illustration-question')){
@@ -83,7 +85,7 @@
     const source=normalize(prompt.querySelector('.rhs-y13-source,.y13-rhs-source-reference')?.textContent);
     const length=Math.max(0,normalize(prompt.textContent).length-normalize(tag?.textContent).length-source.length);
     const complex=!!prompt.querySelector('pre,svg,img,table,canvas,details,figure,iframe,math')
-      ||length>420||marks>=6||!task;
+      ||length>420||(!year12&&marks>=6)||(year12&&marks>=6&&length>180)||!task;
     return {complex,short:!complex&&!!marks&&marks<=3&&length<=180
       &&!prompt.querySelector('.rhs-y13-context,.y13-rhs-brief,.rhs-y13-context-title')};
   }
@@ -119,13 +121,25 @@
   function installGroups(){
     if(typeof h446QuestionSheetGroups!=='function'||typeof h446SequentialQuestions!=='function'||typeof isH446BankQuestionSheet!=='function'||!isH446BankQuestionSheet(root))return;
     const id=Number(location.pathname.match(/lesson-(\\d{3})/)?.[1]);
-    if(id<181||id>320)return;
+    if(year12?(id<1||id>160):(id<181||id>320))return;
     const authored=root.dataset.h446SingleQuestion==='true'||!!root.dataset.h446PageGroups;
     // The approved original two-question ERD pilot remains exactly as authored.
     if(!authored&&(id===276||root.dataset.h446ReadabilityPilot==='true'))return;
     const defaultGroups=h446QuestionSheetGroups;
     const questions=h446SequentialQuestions(root);
     if(!questions.length)return;
+    if(year12){
+      // Match the existing controller's mark parser using the original task total.
+      // Preserve the authored tag text, and never infer missing totals.
+      questions.forEach(q=>{
+        const p=q.querySelector('.youdo-question-prompt');
+        const tag=p?.querySelector('.phase-tag');
+        const heading=p?.querySelector('h2');
+        const total=(heading?.textContent||'').match(/\\[(\\d{1,2})\\]\\s*$/)?.[1];
+        if(tag&&total&&!/\\b\\d{1,2}\\s*marks?\\b/i.test(tag.textContent))tag.append(' · '+total+' MARKS');
+        q.querySelectorAll('.youdo-solution>p').forEach(p=>p.classList.add('rhs-y13-answer'));
+      });
+    }
     let groups=null;
     if(authored){
       const sizes=root.dataset.h446SingleQuestion==='true'?questions.map(()=>1):root.dataset.h446PageGroups.split(',').map(Number);
