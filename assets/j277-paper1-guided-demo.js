@@ -83,6 +83,18 @@
       ['Number of cores','2 cores → 4 cores','Independent tasks can run on more cores when the software supports parallel processing.'],
       ['Cache size','Small cache → larger cache','More frequently used data may fit in cache, reducing slower accesses to main memory.'],
       ['Make a judgement','Match the feature to the workload','A higher specification in one area does not guarantee a faster computer for every workload.']]},
+    netperformance:{title:'Network Performance',task:'A school compares connections and estimates the time to transfer a 12 MB file at 16 Mb/s.',steps:[
+      ['Bandwidth','Maximum data rate in bits per second','A higher capacity can allow more data to be transferred each second, if other conditions permit.'],
+      ['Shared use','More active users share available capacity','Simultaneous traffic can reduce the transfer rate experienced by individual users.'],
+      ['Choose the link','Wired stability or wireless mobility','Interference, distance and obstacles can affect wireless performance; wired devices need cabling.'],
+      ['Match the units','12 MB × 8 = 96 Mb','Convert megabytes to megabits before dividing by a transfer rate in megabits per second.'],
+      ['Calculate ideal time','96 Mb ÷ 16 Mb/s = 6 seconds','Actual transfers may take longer because of shared traffic, protocol overhead and other limitations.']]},
+    netmodels:{title:'Network Models',task:'Compare a local school network, links between school sites and resource sharing for two different groups.',steps:[
+      ['Local coverage','LAN → one school site','A local area network connects devices across a limited geographical area.'],
+      ['Wide coverage','WAN → links between distant sites','A wide area network connects networks over large distances, often using provider infrastructure.'],
+      ['Centralised resources','Client-server → central file service','Clients request services from servers; central accounts and backups can be easier to manage.'],
+      ['Direct resource sharing','Peer-to-peer → devices share directly','Peers can provide and request resources without a dedicated central server; availability depends on the relevant peer.'],
+      ['Choose and justify','Coverage is separate from sharing model','A LAN can use either sharing model. Recommend a model based on management, cost and resource needs.']]},
     os:{title:'Operating Systems',task:'Follow the OS while a teacher signs in, opens two applications, saves a document and prints it.',steps:[
       ['Sign in and interact','User management → user interface','Accounts and permissions control access; a graphical or command-line interface lets the user interact with the system.'],
       ['Open applications','Memory management','The OS allocates RAM to running programs and releases it when no longer required.'],

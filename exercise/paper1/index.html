@@ -185,7 +185,7 @@ body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-wi
       <details class="group">
         <summary class="group-summary">
           <h2 class="group-title" id="skills-network-heading">Networks<small>Addresses · Devices &amp; firewalls · Topologies · DNS · Protocols</small></h2>
-          <span class="group-meta">5 skills <span class="group-chevron" aria-hidden="true"></span></span>
+          <span class="group-meta">7 skills <span class="group-chevron" aria-hidden="true"></span></span>
         </summary>
         <div class="group-content"><div class="tiles theory" id="network-tiles"></div></div>
       </details>
@@ -237,7 +237,7 @@ body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-wi
 <script src="/assets/j277-protocol-paths.js?v=20261111-paths1"></script>
 <script src="/assets/j277-impact-answer-builder.js?v=20261111-impact1"></script>
 <script src="/assets/j277-legislation-skill.js?v=20261123-law2"></script>
-<script src="/assets/j277-systems-skill.js?v=20261124-systems4"></script>
+<script src="/assets/j277-systems-skill.js?v=20261124-systems5"></script>
 <script src="/assets/skills-system.js?v=20261117-per-question1"></script>
 <script>
 (()=>{'use strict';
@@ -259,6 +259,8 @@ const specs={
  hardware:{name:'Network Hardware',sub:'Switch · Router · Firewall · NIC · WAP',glyph:'▣',cat:'network',ref:'1.3.1 / 1.4.2',tint:'#e8f5ec',ink:'#285348',kind:'networkskill'},
  topology:{name:'Build a Network',sub:'Star · Mesh · Failures',glyph:'⬡',cat:'network',ref:'1.3.1',tint:'#e8f5ec',ink:'#285348',kind:'networkskill'},
  dns:{name:'DNS & Web Request Journey',sub:'Watch · Build · Fix',glyph:'⌘',cat:'network',ref:'1.3.1–1.3.2',tint:'#e8f5ec',ink:'#285348',kind:'dns'},
+ netperformance:{name:'Network Performance',sub:'Bandwidth · Users · Wired/Wireless · Transfer times',glyph:'▣',cat:'network',ref:'1.3.1–1.3.2',tint:'#e8f5ec',ink:'#285348',kind:'systemsbuilder'},
+ netmodels:{name:'Network Models',sub:'LAN · WAN · Client-server · Peer-to-peer',glyph:'▣',cat:'network',ref:'1.3.1',tint:'#e8f5ec',ink:'#285348',kind:'systemsbuilder'},
  protocol:{name:'Protocol Paths',sub:'Send · Receive · Repair',glyph:'⇢',cat:'network',ref:'1.3.2',tint:'#edf7ee',ink:'#285348',kind:'protocol'},
  memory:{name:'Memory Explorer',sub:'RAM · ROM · Cache · Virtual memory',glyph:'▣',cat:'systems',ref:'1.2.1',tint:'#eef5fb',ink:'#285348',kind:'systemsbuilder'},
  cpu:{name:'CPU Performance',sub:'Clock speed · Cores · Cache',glyph:'▣',cat:'systems',ref:'1.1.2',tint:'#eef5fb',ink:'#285348',kind:'systemsbuilder'},
@@ -479,7 +481,7 @@ function qs(id,l,i){const r=rngFor(id,l,i),dif=levelnames.indexOf(l),v=()=>rint(
   return window.J277ProtocolPaths.make(l,i);
  case 'impact':
   return window.J277ImpactBuilder.make(l,i);
- case 'memory': case 'storage': case 'cpu': case 'os': case 'utility':
+ case 'memory': case 'storage': case 'cpu': case 'os': case 'utility': case 'netperformance': case 'netmodels':
   return window.J277SystemsSkill.make(id,l,i);
  case 'legislation':
   return window.J277LegislationSkill.make(l,i);
@@ -1573,7 +1575,7 @@ const directSkill=new URLSearchParams(window.location.search).get('skill');
 if(Object.prototype.hasOwnProperty.call(specs,directSkill)){openSkill(directSkill);const requestedLevel=new URLSearchParams(window.location.search).get('level');if(['easy','medium','hard'].includes(requestedLevel))chooseLevel(requestedLevel);}
 })();
 </script>
-<script src="/assets/j277-paper1-guided-demo.js?v=20261124-systems4"></script>
+<script src="/assets/j277-paper1-guided-demo.js?v=20261124-systems5"></script>
 <script src="/assets/site-nav.js?v=20261107-quickbar1" defer></script>
 </body>
 </html>

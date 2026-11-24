@@ -431,6 +431,291 @@ const utilityBank=[
   "Compression physically removes the read/write head from the drive."
  ]
 ];
+// Network curriculum candidates: Y10 021, 022, 026; Y11 133, 136, 154. OCR 1.3.1–1.3.2.
+const performanceBank=[
+ [
+  [
+   "Bandwidth",
+   "Number of users",
+   "Signal interference",
+   "Network topology"
+  ],
+  "What is the maximum amount of data a connection can transfer per second called?",
+  "A connection is upgraded from 20 Mb/s to 100 Mb/s. Which factor has increased?",
+  "Two otherwise similar networks differ only in link capacity. One can transfer more bits each second. Which factor could improve large file transfers?",
+  "Bandwidth is the maximum data transfer rate of a connection. More bandwidth can allow more data to be transferred per second.",
+  "Bandwidth counts how many devices are connected.",
+  "Bandwidth is the distance a wireless signal travels."
+ ],
+ [
+  [
+   "Number of users",
+   "Bandwidth of the link",
+   "Cable material",
+   "Signal range"
+  ],
+  "Which factor changes when more people use the same network at once?",
+  "Thirty pupils download files over a shared connection instead of five. Which factor has changed?",
+  "A school's internet link has unchanged capacity, but more pupils stream video simultaneously. Which factor can explain lower speeds for each pupil?",
+  "More active users may compete for the same available bandwidth, reducing the data transfer rate each receives.",
+  "Adding users automatically increases the capacity of the shared connection.",
+  "All users receive the full link capacity regardless of simultaneous traffic."
+ ],
+ [
+  [
+   "Wireless interference",
+   "Number of users",
+   "Network model",
+   "File format"
+  ],
+  "What can disrupt a Wi-Fi signal when other nearby devices use similar frequencies?",
+  "A laptop's Wi-Fi becomes unreliable near equipment using the same frequency range. Identify the likely cause.",
+  "A classroom has a strong Wi-Fi signal but neighbouring access points use overlapping channels. Wired devices work normally. Identify the likely wireless performance issue.",
+  "Interference can disrupt wireless transmissions and cause retries, reducing effective throughput.",
+  "Changing from client-server to peer-to-peer removes all radio interference.",
+  "Interference increases the maximum data rate of the wired connection."
+ ],
+ [
+  [
+   "Weak wireless signal",
+   "Higher bandwidth",
+   "More server storage",
+   "More CPU cores"
+  ],
+  "What may happen to Wi-Fi strength farther from an access point?",
+  "A tablet moves behind thick walls and its wireless connection slows. Identify a likely cause.",
+  "A laptop downloads quickly near the access point but slowly in a distant room with several walls. The number of users is unchanged. Identify the likely cause.",
+  "Distance and obstacles can weaken wireless signals, causing lower effective data rates and more transmission errors.",
+  "A distant wireless connection always has greater bandwidth.",
+  "Thick walls improve wireless reception by increasing signal strength."
+ ],
+ [
+  [
+   "Wired connection",
+   "Wireless connection",
+   "Peer-to-peer model",
+   "Cloud storage"
+  ],
+  "Which connection uses a physical cable?",
+  "A fixed desktop needs a stable link and cabling is available. Choose the suitable connection type.",
+  "A stationary workstation transfers large files. A suitable Ethernet connection offers higher reliable throughput than the congested Wi-Fi available. Recommend the connection.",
+  "A wired Ethernet connection can offer stable throughput and avoids radio interference, although it restricts movement and requires cabling.",
+  "Ethernet allows unrestricted movement away from the cable.",
+  "Using a cable guarantees unlimited internet bandwidth."
+ ],
+ [
+  [
+   "Wireless connection",
+   "Wired connection",
+   "Client-server model",
+   "Optical storage"
+  ],
+  "Which connection lets a device move without a network cable?",
+  "Pupils carry tablets around a classroom. Choose a connection type that supports movement.",
+  "A visitor area needs network access for mobile devices that do not have wired network ports. Choose a suitable connection, considering its limitations.",
+  "Wi-Fi allows mobile devices to connect without cables. Its performance can depend on distance, obstacles and interference.",
+  "Wireless connections always transfer data faster than every wired connection.",
+  "Every wireless device must remain plugged into a network cable."
+ ],
+ [
+  [
+   "5 seconds",
+   "10 seconds",
+   "20 seconds",
+   "60 seconds"
+  ],
+  "A 10 Mb file travels at 2 Mb/s. Calculate the ideal transfer time.",
+  "A 60 Mb file travels at 12 Mb/s. Calculate the ideal transfer time.",
+  "A 25 MB file travels at 40 Mb/s. Use 8 bits per byte. Calculate the ideal transfer time.",
+  "Ideal time = file size in megabits ÷ rate in megabits per second. Convert MB to Mb first if needed. Real transfers may take longer.",
+  "Multiply the file size by the transfer rate to find seconds.",
+  "Treat megabytes and megabits as identical units."
+ ],
+ [
+  [
+   "8 seconds",
+   "4 seconds",
+   "16 seconds",
+   "80 seconds"
+  ],
+  "A 16 Mb file travels at 2 Mb/s. Calculate the ideal transfer time.",
+  "An 80 Mb file travels at 10 Mb/s. Calculate the ideal transfer time.",
+  "A 10 MB file travels at 10 Mb/s. Use 8 bits per byte. Calculate the ideal transfer time.",
+  "Divide the size in Mb by the rate in Mb/s. If size is given in MB, multiply by 8 to obtain Mb first.",
+  "Divide the data rate by the file size.",
+  "A byte contains only one bit."
+ ],
+ [
+  [
+   "12 seconds",
+   "6 seconds",
+   "24 seconds",
+   "120 seconds"
+  ],
+  "A 24 Mb file travels at 2 Mb/s. Calculate the ideal transfer time.",
+  "A 144 Mb file travels at 12 Mb/s. Calculate the ideal transfer time.",
+  "A 30 MB file travels at 20 Mb/s. Use 8 bits per byte. Calculate the ideal transfer time.",
+  "Convert bytes to bits when necessary, then divide file size in Mb by transfer rate in Mb/s.",
+  "Multiply the rate in Mb/s by the number of MB.",
+  "Divide MB directly by Mb/s without converting units."
+ ],
+ [
+  [
+   "4 Mb/s",
+   "2 Mb/s",
+   "8 Mb/s",
+   "20 Mb/s"
+  ],
+  "A 20 Mb file transfers in 5 seconds. Calculate its average transfer rate.",
+  "An 80 Mb file transfers in 20 seconds. Calculate its average transfer rate.",
+  "A 15 MB file transfers in 30 seconds. Use 8 bits per byte. Calculate the average transfer rate in Mb/s.",
+  "Average rate = transferred data in Mb ÷ elapsed time in seconds. Convert MB to Mb where necessary.",
+  "Multiply transferred data by the elapsed time.",
+  "Divide time by file size to obtain Mb/s."
+ ]
+];
+const modelsBank=[
+ [
+  [
+   "LAN",
+   "WAN",
+   "Client-server",
+   "Peer-to-peer"
+  ],
+  "Which type of network covers a small geographical area?",
+  "A library connects computers and printers within one building. Identify the network type.",
+  "A school connects its classrooms within a single site using its own local networking equipment. Identify the network type and justify the choice.",
+  "A LAN covers a limited geographical area such as a school site and usually uses locally managed networking infrastructure.",
+  "A LAN must connect sites in several countries.",
+  "A LAN is defined by having a dedicated file server."
+ ],
+ [
+  [
+   "WAN",
+   "LAN",
+   "Peer-to-peer",
+   "Client-server"
+  ],
+  "Which type of network connects devices or networks over a large geographical area?",
+  "A business connects offices in Norwich and London. Identify the network type.",
+  "A retailer connects its branches across the country to share business data. Identify the network type and justify the choice.",
+  "A WAN connects devices or networks across a wide geographical area and often uses telecommunications infrastructure from service providers.",
+  "A WAN must be contained in a single room.",
+  "A WAN is defined by having no server."
+ ],
+ [
+  [
+   "Client-server",
+   "Peer-to-peer",
+   "LAN",
+   "WAN"
+  ],
+  "Which network model uses a server to provide services to clients?",
+  "A school stores pupils' files on a central server that their computers access. Identify the model.",
+  "A business wants centrally managed user accounts, shared files and backups for many workstations. Recommend the network model.",
+  "In a client-server model, servers provide services to clients. Central management can simplify account control, shared storage and backups.",
+  "In client-server networks every device must store and manage all shared resources independently.",
+  "Client-server is defined by the distance between devices."
+ ],
+ [
+  [
+   "Peer-to-peer",
+   "Client-server",
+   "WAN",
+   "LAN"
+  ],
+  "Which network model allows devices to share resources directly without a dedicated central server?",
+  "Four laptops share files directly in a small group. Identify the network model.",
+  "A small club has four devices and a limited budget. It needs occasional direct file sharing without maintaining a dedicated server. Recommend the model.",
+  "In a peer-to-peer network devices can both request and provide resources directly. It can be inexpensive to set up but central administration and backups are harder.",
+  "Every peer-to-peer network must use a dedicated file server.",
+  "A peer-to-peer network guarantees that all shared files are available when every peer is switched off."
+ ],
+ [
+  [
+   "Client-server",
+   "Peer-to-peer",
+   "LAN",
+   "WAN"
+  ],
+  "Which model can centralise management of accounts?",
+  "A school technician wants to apply permissions from a central server. Choose the model.",
+  "A large organisation needs consistent permissions and centralised backups across many computers. Recommend the model and explain one trade-off.",
+  "Client-server supports central management and backups, but the server requires resources and maintenance and can be a point of failure without redundancy.",
+  "A central server makes all failures impossible.",
+  "Client-server has no hardware or administration costs."
+ ],
+ [
+  [
+   "Peer-to-peer",
+   "Client-server",
+   "LAN",
+   "WAN"
+  ],
+  "Which model normally has no dedicated server for direct file sharing?",
+  "Two friends want to share folders directly between their laptops. Choose the model.",
+  "A group with few users wants to avoid purchasing and maintaining a dedicated server. It accepts that shared files may be unavailable when a peer is offline. Recommend the model.",
+  "Peer-to-peer allows direct resource sharing with less dedicated infrastructure, but resource availability depends on the relevant peer being online.",
+  "A peer-to-peer model automatically creates a central backup of every file.",
+  "Every peer-to-peer device can share files only through a dedicated server."
+ ],
+ [
+  [
+   "WAN",
+   "LAN",
+   "Client-server",
+   "Peer-to-peer"
+  ],
+  "Which network type can connect LANs in different towns?",
+  "A charity links its three offices in different cities. Identify the network type.",
+  "A company operates a local network at each branch and connects them using a telecom provider across the UK. Identify the overall network type.",
+  "A WAN connects networks over long distances, often using telecommunications links; each branch can still have its own LAN.",
+  "A WAN cannot include local networks.",
+  "A WAN is determined only by the number of computers connected."
+ ],
+ [
+  [
+   "LAN",
+   "WAN",
+   "Peer-to-peer",
+   "Client-server"
+  ],
+  "Which network type can cover an office building?",
+  "A home connects computers and a printer using a router and Wi-Fi. Identify its local network type.",
+  "A local office uses its own switch and wireless access point to connect staff devices within one building. Identify its local network type.",
+  "A LAN connects devices over a limited area. It may use wired or wireless links and either resource-sharing model.",
+  "A LAN must use only cables and never Wi-Fi.",
+  "Connecting a router to the internet means no local network exists."
+ ],
+ [
+  [
+   "Client-server",
+   "Peer-to-peer",
+   "LAN",
+   "WAN"
+  ],
+  "Which model uses a central service that clients request resources from?",
+  "A file server fails and workstations cannot access the files it hosts. Identify the model.",
+  "A central file server without redundancy goes offline. Users can still use local applications but cannot access the server's shared files. Identify the model.",
+  "Clients rely on servers for the services those servers provide. A server failure can interrupt those services unless redundancy or recovery is available.",
+  "All client-server computers must stop functioning if one server fails.",
+  "A central file server is a requirement of peer-to-peer resource sharing."
+ ],
+ [
+  [
+   "Peer-to-peer",
+   "Client-server",
+   "WAN",
+   "LAN"
+  ],
+  "Which model allows the same device to request and provide shared resources?",
+  "A laptop shares a folder with another laptop and also requests files from it. Identify the model.",
+  "A small workgroup shares resources directly. When one laptop is switched off, only the resources it provides become unavailable. Identify the model.",
+  "Peers may act as both resource providers and requesters. When a peer goes offline, its own shared resources may become unavailable.",
+  "A single peer must always control every other device.",
+  "A peer going offline always disconnects every device on the network."
+ ]
+];
 const bank={
 cpu:[
  [
@@ -550,10 +835,10 @@ storage:[
 ]};
 function rotate(a,n){const i=n%a.length;return a.slice(i).concat(a.slice(0,i));}
 function make(id,level,index){
- if((!bank[id]&&!['security','os','utility'].includes(id))||!['easy','medium','hard'].includes(level)||!Number.isInteger(index)||index<0)throw Error('Invalid systems Skill request');
- if(['security','os','utility'].includes(id)){
-  const l=['easy','medium','hard'].indexOf(level),r=(id==='security'?securityBank:id==='os'?osBank:utilityBank)[index%10],a=0;
-  return {type:'systemsbuilder',skill:id,level,index,prompt:r[l+1],context:'OCR J277 · '+(id==='os'?'1.5.1 · Operating systems':id==='utility'?'1.5.2 · Utility software':index%10<6?'1.4.1 · Threats':'1.4.2 · Prevention'),a,choices:rotate(r[0].map((v,i)=>({v,i})),index+l),reasons:l?rotate(r.slice(4).map((v,i)=>({v,i})),index+l*2):null,why:r[4],hint:id==='os'?'Think about which operating system function manages the resource or interaction.':id==='utility'?'Identify whether the task needs confidentiality, smaller files or HDD file organisation.':'Identify what happens in the scenario, then choose a threat or a control that fits.'};
+ if((!bank[id]&&!['security','os','utility','netperformance','netmodels'].includes(id))||!['easy','medium','hard'].includes(level)||!Number.isInteger(index)||index<0)throw Error('Invalid systems Skill request');
+ if(['security','os','utility','netperformance','netmodels'].includes(id)){
+  const l=['easy','medium','hard'].indexOf(level),r=(id==='security'?securityBank:id==='os'?osBank:id==='utility'?utilityBank:id==='netperformance'?performanceBank:modelsBank)[index%10],a=0;
+  return {type:'systemsbuilder',skill:id,level,index,prompt:r[l+1],context:'OCR J277 · '+(id==='os'?'1.5.1 · Operating systems':id==='utility'?'1.5.2 · Utility software':id==='netperformance'?'1.3.1–1.3.2 · Network performance':id==='netmodels'?'1.3.1 · Network models':index%10<6?'1.4.1 · Threats':'1.4.2 · Prevention'),a,choices:rotate(r[0].map((v,i)=>({v,i})),index+l),reasons:l?rotate(r.slice(4).map((v,i)=>({v,i})),index+l*2):null,why:r[4],hint:id==='os'?'Think about which operating system function manages the resource or interaction.':id==='utility'?'Identify whether the task needs confidentiality, smaller files or HDD file organisation.':id==='netperformance'?'Compare bandwidth, shared usage and connection quality. For calculations, use consistent bit and byte units.':id==='netmodels'?'Distinguish geographical coverage from how devices share resources.':'Identify what happens in the scenario, then choose a threat or a control that fits.'};
  }
  const l=['easy','medium','hard'].indexOf(level),r=bank[id][index%10];
  return {type:'systemsbuilder',skill:id,level,index,prompt:r[l+1],context:'OCR J277 · '+(id==='memory'?'1.2.1 · Primary memory':id==='storage'?'1.2.2 · Secondary storage':'1.1.2 · CPU performance'),a:r[0],choices:rotate(labels[id].map((v,i)=>({v,i})),index+l),reasons:l?rotate(r.slice(4).map((v,i)=>({v,i})),index+l*2):null,why:r[4],hint:id==='memory'?'Think about volatility, speed and what the memory holds.':id==='storage'?'Think about capacity, speed, cost, portability and compatibility.':'Compare clock cycles, parallel work and access to frequently used data. Consider whether the information is sufficient.'};
@@ -566,7 +851,7 @@ function render(p,host,isLocked,setReady){
  const board=el('div','sys-skill-board'),s={a:-1,b:-1};
  function options(title,list,key){board.append(el('h3','sys-skill-label',title));const group=el('div','sys-skill-options');
   list.forEach(item=>{const b=el('button','sys-skill-option',item.v);b.type='button';b.setAttribute('aria-pressed','false');b.addEventListener('click',()=>{if(isLocked())return;s[key]=item.i;group.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));setReady(isComplete(p,s));});group.append(b);});board.append(group);}
- options('STEP 1 · '+(p.skill==='memory'?'Choose the memory':p.skill==='storage'?'Choose the storage':p.skill==='security'?'Identify the threat or choose the control':p.skill==='os'?'Identify the operating system function':p.skill==='utility'?'Choose the utility':'Identify the factor or decide if the evidence is sufficient'),p.choices,'a');
+ options('STEP 1 · '+(p.skill==='memory'?'Choose the memory':p.skill==='storage'?'Choose the storage':p.skill==='security'?'Identify the threat or choose the control':p.skill==='os'?'Identify the operating system function':p.skill==='utility'?'Choose the utility':p.skill==='netperformance'?'Choose the factor, connection or calculation result':p.skill==='netmodels'?'Identify the network type or model':'Identify the factor or decide if the evidence is sufficient'),p.choices,'a');
  if(p.reasons){if(p.level==='hard')board.append(el('p','sys-skill-write','Write your answer and reason in your book before selecting the best explanation.'));options('STEP 2 · '+(p.level==='hard'?'Justify your choice':'Explain your choice'),p.reasons,'b');}
  host.append(board);setReady(false);return s;
 }
