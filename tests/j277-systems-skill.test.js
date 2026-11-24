@@ -18,3 +18,15 @@ test('All eight Skills have 30 distinct scenarios and correctly check every deci
   assert.equal(prompts.size,30);
  }
 });
+
+test('Extended Skills mix new and original questions in ten-question rounds',()=>{
+ for(const id of ['cpu','utility','security'])for(const level of ['easy','medium','hard']){
+  const all=new Set();
+  for(let round=0;round<4;round++){
+   const current=new Set();
+   for(let i=0;i<10;i++){const p=skill.make(id,level,i,round);current.add(p.prompt);all.add(p.prompt);assert.equal(skill.isCorrect(p,{a:p.a,b:0}),true);}
+   assert.equal(current.size,10);
+  }
+  assert.equal(all.size,14);
+ }
+});

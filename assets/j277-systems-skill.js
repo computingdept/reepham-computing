@@ -834,7 +834,194 @@ storage:[
 [1,'Which non-volatile internal drive has no mechanical head or platter?','A handheld computer needs an internal drive that tolerates movement and vibration. Both quoted drives meet the capacity. Choose storage.','An internal drive for a vehicle must withstand vibration. Both quoted drives meet capacity and budget; shock resistance is the deciding factor. Choose storage.','SSDs have no moving parts and are generally more shock-resistant than mechanical HDDs.','SSDs cannot lose data or fail.','HDDs resist shock better because they have moving parts.']
 ]};
 function rotate(a,n){const i=n%a.length;return a.slice(i).concat(a.slice(0,i));}
-function make(id,level,index){
+const extraBanks={
+ "cpu": [
+  [
+   [
+    "Embedded system",
+    "General-purpose computer",
+    "Server",
+    "Secondary storage"
+   ],
+   "A washing machine controller runs the wash cycle. Identify the type of computer.",
+   "A microwave controller reads buttons and controls heating. Identify the system.",
+   "A traffic light controller responds to sensors and follows a programmed sequence. Identify the system and justify its suitability.",
+   "An embedded system is built into a larger device to perform a specific function or set of functions.",
+   "It must run any application the user installs.",
+   "It is embedded only if connected to the internet."
+  ],
+  [
+   [
+    "General-purpose computer",
+    "Embedded system",
+    "ROM",
+    "Cache"
+   ],
+   "Which type of computer can run many different applications?",
+   "A laptop runs games, a browser and a word processor. Identify the type of computer.",
+   "A designer needs to run changing combinations of applications rather than control one dedicated machine. Choose a type of computer.",
+   "A general-purpose computer is designed to run different programs for many tasks.",
+   "A general-purpose computer performs only one fixed function.",
+   "Cache is a complete general-purpose computer."
+  ],
+  [
+   [
+    "Embedded system",
+    "General-purpose computer",
+    "Network switch",
+    "Optical storage"
+   ],
+   "A thermostat controls heating using a sensor. Identify the type of system.",
+   "A car's braking controller responds to wheel sensor readings. Identify the system.",
+   "A battery-powered controller monitors a sensor and opens a valve when needed. It has limited resource requirements. Identify the system and justify its use.",
+   "An embedded system can be tailored to a dedicated task, potentially using less power and memory than a general-purpose computer.",
+   "Every embedded system needs the fastest processor available.",
+   "An embedded system cannot contain software."
+  ],
+  [
+   [
+    "Embedded system",
+    "General-purpose computer",
+    "Cloud storage",
+    "Protocol"
+   ],
+   "A digital alarm clock controls its display and alarm. Identify the system.",
+   "A dishwasher controls wash programmes using a dedicated processor. Identify the system.",
+   "A manufacturer needs a controller inside a device for a specific set of functions. Users do not need arbitrary applications. Choose the type of system.",
+   "An embedded system performs defined functions within a device; hardware and software can be tailored to its requirements.",
+   "Embedded systems cannot accept input or produce output.",
+   "Every dedicated controller needs a general-purpose operating system."
+  ]
+ ],
+ "utility": [
+  [
+   [
+    "Lossless compression",
+    "Lossy compression",
+    "Encryption",
+    "Defragmentation"
+   ],
+   "Which compression type restores the original exactly?",
+   "A spreadsheet contains exam marks. Choose a compression type for archiving it.",
+   "A school must reduce a database backup's size without losing any record. Recommend a compression type and explain why.",
+   "Lossless compression allows exact reconstruction of the original data, essential when every value matters.",
+   "Lossy compression always restores the original exactly.",
+   "Encryption guarantees a smaller file."
+  ],
+  [
+   [
+    "Lossy compression",
+    "Lossless compression",
+    "Encryption",
+    "Defragmentation"
+   ],
+   "Which compression type permanently discards some information?",
+   "A website accepts a slight drop in photograph quality to reduce file size. Choose the compression type.",
+   "A music service needs smaller audio files and can accept some loss of detail. Choose a compression type and justify the trade-off.",
+   "Lossy compression discards information to reduce file size, potentially reducing quality.",
+   "Lossy compression restores every original sample.",
+   "Defragmentation reduces audio quality."
+  ],
+  [
+   [
+    "Lossless compression",
+    "Lossy compression",
+    "Encryption",
+    "Defragmentation"
+   ],
+   "Which compression type suits source-code files?",
+   "A developer sends code in a smaller archive. Choose a compression type.",
+   "A program download must be reduced in size without changing any instruction after extraction. Recommend a compression type.",
+   "Lossless compression preserves all original information so code can be restored exactly.",
+   "Lossy compression safely removes executable instructions.",
+   "Encryption reduces the instructions executed."
+  ],
+  [
+   [
+    "Lossy compression",
+    "Lossless compression",
+    "Defragmentation",
+    "Encryption"
+   ],
+   "Which compression type may reduce image quality?",
+   "A gallery needs smaller preview images and accepts lower detail. Choose the compression type.",
+   "A news website keeps its original photos separately but needs small previews for users with slow connections. Recommend a compression type.",
+   "Lossy compression can discard visual information to reduce file size, at the cost of some quality.",
+   "Lossless compression permanently removes image details.",
+   "Defragmentation reduces photo resolution."
+  ]
+ ],
+ "security": [
+  [
+   [
+    "Multi-factor authentication",
+    "Defragmentation",
+    "Compression",
+    "Topology"
+   ],
+   "Which control uses more than one type of authentication evidence?",
+   "A teacher signs in with a password and an authenticator app on a registered phone. Identify the control.",
+   "A school wants to reduce the risk that a stolen password gives access to an account. Recommend a control requiring an additional independent factor.",
+   "Multi-factor authentication requires different types of evidence, such as something known and something possessed; a stolen password alone is insufficient.",
+   "Entering the same password twice provides two independent factors.",
+   "Compression prevents use of stolen passwords."
+  ],
+  [
+   [
+    "Staff training",
+    "Defragmentation",
+    "Compression",
+    "File storage"
+   ],
+   "Which measure helps users recognise phishing?",
+   "Staff receive suspicious requests to share account details. Choose a preventative measure focused on their behaviour.",
+   "Users are being tricked into revealing credentials by fake emails. Recommend a measure to help them recognise and report these requests.",
+   "Training helps staff recognise suspicious requests, verify them independently and report them safely.",
+   "Defragmentation removes the need to recognise phishing.",
+   "Compression verifies every sender."
+  ],
+  [
+   [
+    "Encryption",
+    "Defragmentation",
+    "Lossy compression",
+    "More RAM"
+   ],
+   "Which control protects the meaning of intercepted data?",
+   "A company sends confidential information between offices. Choose a control protecting its contents if captured.",
+   "Confidential records cross a network where interception is possible. Choose a measure to protect confidentiality in transit.",
+   "Encryption converts readable data into ciphertext so intercepted content should be unintelligible without the appropriate key.",
+   "Encryption prevents all packet capture.",
+   "Lossy compression makes documents confidential."
+  ],
+  [
+   [
+    "Strong passwords",
+    "Defragmentation",
+    "Increasing bandwidth",
+    "File extensions"
+   ],
+   "Which measure makes password guessing harder?",
+   "A user chooses a long unique password instead of a common short password. Identify the measure.",
+   "A school's accounts use easily guessed passwords. Recommend a control that makes guessing harder and explain why.",
+   "Long unique passwords increase the difficulty of guessing credentials; rate limiting and additional authentication can also reduce risk.",
+   "Short common passwords are harder to guess.",
+   "More bandwidth prevents password guessing."
+  ]
+ ]
+};
+function make(id,level,index,round=0){
+ if(extraBanks[id]){
+  const l=['easy','medium','hard'].indexOf(level),position=index%10;
+  if(position>0&&position%3===0){
+   const r=extraBanks[id][(round*3+Math.floor(position/3)-1)%4];
+   return {type:'systemsbuilder',skill:id,level,index,prompt:r[l+1],context:'OCR J277 · '+(id==='cpu'?'1.1.3 · Embedded systems':id==='utility'?'1.2.5 / 1.5.2 · Compression':'1.4.2 · Prevention'),a:0,choices:rotate(r[0].map((v,i)=>({v,i})),index+l),reasons:l?rotate(r.slice(4).map((v,i)=>({v,i})),index+l*2):null,why:r[4],hint:id==='cpu'?'Is this computer designed for a specific task or many applications?':id==='utility'?'Does the original data need to be restored exactly?':'Choose a measure that directly reduces the risk.'};
+  }
+  return {...makeOriginal(id,level,(round*7+position-Math.floor(position/3))%10),index};
+ }
+ return makeOriginal(id,level,index);
+}
+function makeOriginal(id,level,index){
  if((!bank[id]&&!['security','os','utility','netperformance','netmodels'].includes(id))||!['easy','medium','hard'].includes(level)||!Number.isInteger(index)||index<0)throw Error('Invalid systems Skill request');
  if(['security','os','utility','netperformance','netmodels'].includes(id)){
   const l=['easy','medium','hard'].indexOf(level),r=(id==='security'?securityBank:id==='os'?osBank:id==='utility'?utilityBank:id==='netperformance'?performanceBank:modelsBank)[index%10],a=0;
@@ -851,7 +1038,7 @@ function render(p,host,isLocked,setReady){
  const board=el('div','sys-skill-board'),s={a:-1,b:-1};
  function options(title,list,key){board.append(el('h3','sys-skill-label',title));const group=el('div','sys-skill-options');
   list.forEach(item=>{const b=el('button','sys-skill-option',item.v);b.type='button';b.setAttribute('aria-pressed','false');b.addEventListener('click',()=>{if(isLocked())return;s[key]=item.i;group.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));setReady(isComplete(p,s));});group.append(b);});board.append(group);}
- options('STEP 1 · '+(p.skill==='memory'?'Choose the memory':p.skill==='storage'?'Choose the storage':p.skill==='security'?'Identify the threat or choose the control':p.skill==='os'?'Identify the operating system function':p.skill==='utility'?'Choose the utility':p.skill==='netperformance'?'Choose the factor, connection or calculation result':p.skill==='netmodels'?'Identify the network type or model':'Identify the factor or decide if the evidence is sufficient'),p.choices,'a');
+ options('STEP 1 · '+(p.skill==='memory'?'Choose the memory':p.skill==='storage'?'Choose the storage':p.skill==='security'?'Identify the threat or choose the control':p.skill==='os'?'Identify the operating system function':p.skill==='utility'?'Choose the utility or compression type':p.skill==='netperformance'?'Choose the factor, connection or calculation result':p.skill==='netmodels'?'Identify the network type or model':'Identify the CPU factor or type of system'),p.choices,'a');
  if(p.reasons){if(p.level==='hard')board.append(el('p','sys-skill-write','Write your answer and reason in your book before selecting the best explanation.'));options('STEP 2 · '+(p.level==='hard'?'Justify your choice':'Explain your choice'),p.reasons,'b');}
  host.append(board);setReady(false);return s;
 }

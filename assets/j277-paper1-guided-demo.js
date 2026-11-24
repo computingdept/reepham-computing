@@ -78,11 +78,12 @@
       ['Reliable transport','TCP manages ordered delivery','Segments can be acknowledged and resent if needed.'],
       ['Web content','HTTPS protects the connection','HTTPS is HTTP carried over an encrypted connection.'],
       ['Route','IP addresses packets','Routers use IP information to forward packets.']]},
-    cpu:{title:'CPU Performance',task:'Compare computer specifications for a single calculation, parallel image processing and repeated memory access.',steps:[
+    cpu:{title:'CPU Performance & Embedded Systems',task:'Compare computer specifications for different workloads and a dedicated heating controller.',steps:[
       ['Clock speed','2 GHz → 3 GHz','For otherwise identical CPUs, more cycles per second can shorten a task that takes the same number of cycles.'],
       ['Number of cores','2 cores → 4 cores','Independent tasks can run on more cores when the software supports parallel processing.'],
       ['Cache size','Small cache → larger cache','More frequently used data may fit in cache, reducing slower accesses to main memory.'],
-      ['Make a judgement','Match the feature to the workload','A higher specification in one area does not guarantee a faster computer for every workload.']]},
+      ['Make a judgement','Match the feature to the workload','A higher specification in one area does not guarantee a faster computer for every workload.'],
+      ['Embedded systems','Heating controller → dedicated task','A computer built into a larger device for a defined function can be designed with only the resources it needs.']]},
     netperformance:{title:'Network Performance',task:'A school compares connections and estimates the time to transfer a 12 MB file at 16 Mb/s.',steps:[
       ['Bandwidth','Maximum data rate in bits per second','A higher capacity can allow more data to be transferred each second, if other conditions permit.'],
       ['Shared use','More active users share available capacity','Simultaneous traffic can reduce the transfer rate experienced by individual users.'],
@@ -103,12 +104,13 @@
       ['Print the document','Peripheral management','The OS communicates with devices through drivers and can queue jobs until a printer is ready.']]},
     utility:{title:'Utility Software',task:'A club needs to protect member records, send a smaller archive and maintain a fragmented magnetic drive.',steps:[
       ['Protect records','Encryption','Encryption turns readable data into ciphertext, helping protect confidentiality without the appropriate key.'],
-      ['Reduce file size','Compression','Lossless compression can restore the original exactly; lossy compression discards information to reduce size.'],
+      ['Preserve exact data','Lossless compression → member records','Lossless compression allows exact restoration of the original data, suitable for documents, records and code.'],
+      ['Accept reduced quality','Lossy compression → preview photograph','Discarding some information may reduce file size, but the original cannot be restored exactly.'],
       ['Maintain a magnetic HDD','Defragmentation','Reorganising file fragments may reduce mechanical seeking. SSDs do not require routine traditional defragmentation.'],
       ['Choose and justify','Requirement → utility → reason','Match each utility to the actual problem and explain the effect rather than simply naming a tool.']]},
     security:{title:'Cybersecurity Investigator',task:'A school receives a suspicious message asking for login details, then notices unusual network traffic.',steps:[
       ['Identify the threat','Fake message → phishing','The message tries to trick users into revealing information or clicking a dangerous link.'],
-      ['Protect the account','Training · strong passwords · authentication','Verify requests independently and use strong passwords and additional authentication where appropriate.'],
+      ['Protect the account','Training · strong passwords · multi-factor authentication','Verify requests independently. A long unique password plus a different factor, such as an authenticator app, makes a stolen password alone insufficient.'],
       ['Protect the network','Firewall · anti-malware · encryption','These controls address different risks: traffic filtering, malicious software and confidentiality of data.'],
       ['Limit the damage','Access levels · authorised security testing','Restrict permissions to what each user needs and identify weaknesses through authorised tests.'],
       ['Justify the decision','Threat → control → reason','Explain how the chosen control reduces the specific risk, rather than listing unrelated security measures.']]},
