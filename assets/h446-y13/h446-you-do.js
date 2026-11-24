@@ -57,4 +57,22 @@
     }
     markQuestion(heading);
   });
+
+  // Optional single-question pages. Reuse the existing question/answer controller
+  // without editing the overarching lesson script. The hook is installed only
+  // on explicitly opted-in You Do sections, before user interaction.
+  if(root.dataset.h446SingleQuestion==='true'){
+    document.addEventListener('DOMContentLoaded',()=>{
+      if(typeof h446QuestionSheetGroups!=='function'||typeof h446SequentialQuestions!=='function')return;
+      const defaultGroups=h446QuestionSheetGroups;
+      h446QuestionSheetGroups=function(page){
+        if(page!==root)return defaultGroups(page);
+        return h446SequentialQuestions(page).map((_,i)=>({start:i,end:i+1}));
+      };
+      if(root.classList.contains('active')&&root.dataset.answerMode!=='true'){
+        h446ShowQuestionSheet(root,0);
+        updateControl();
+      }
+    },{once:true});
+  }
 })();
