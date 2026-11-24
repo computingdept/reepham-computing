@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20261108-mobile-cues-visible1">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261115-objectives-focus1">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=464c7f849fd0">
-<meta name="lesson-status" content="ready"><style>.ready-badge{display:inline-block;background:#e4f3e8;color:#155735;font-size:12px;font-weight:850;padding:3px 7px;border-radius:5px;letter-spacing:.06em;white-space:nowrap}</style></head>
+<meta name="lesson-status" content="ready"><style>.ready-badge{display:inline-block;background:#e4f3e8;color:#155735;font-size:12px;font-weight:850;padding:3px 7px;border-radius:5px;letter-spacing:.06em;white-space:nowrap}</style><link rel="stylesheet" href="../../../assets/h446-y13/h446-you-do.css?v=20261124-y12-shared2"></head>
 <body>
 <a class="skip" href="#main">Skip to lesson</a>
 
@@ -344,11 +344,11 @@
   </div>
 </section>
 
-<section id="you-do" class="page phase-youdo" data-phase-time="25 minutes · on paper">
+<section id="you-do" class="page phase-youdo" data-phase-time="25 minutes · on paper" data-h446-y12-shared="true" data-h446-y12-legacy="true" data-h446-y13-bank="true" data-h446-two-page-pilot="true">
   <div class="youdo-deck">
-    <div class="youdo-rolling">
+    <div class="youdo-questions">
 
-      <article class="exam-card youdo-question wide">
+      <article class="exam-card youdo-question wide"><div class="youdo-question-prompt">
         <span class="phase-tag">QUESTION 1 · DATA TYPES</span>
         <span class="classroom-marks">Suggested classroom marks: 10</span>
         <h3>A weather-monitoring system</h3>
@@ -360,9 +360,22 @@
           <li>station identifier <code>"0042"</code>;</li>
           <li>whether the sensor is working.</li>
         </ol>
-      </article>
+      </div><div class="youdo-solution" hidden><strong>WORKED ANSWER / MARKS</strong><span class="answer-panel-label">Completed answer</span><div class="answer-result"><span class="answer-result-label">FINAL ANSWER</span><div class="answer-result-value">Integer · Real · Character · String · Boolean</div></div><span class="answer-panel-label">Working and marking guidance</span><div class="answer-working"><pre class="solution-code">number of readings → Integer
+Reason: a whole-number count.
 
-      <article class="exam-card youdo-question">
+air temperature, e.g. 18.5 → Real / floating point
+Reason: may contain a fractional part.
+
+one-letter category → Character
+Reason: one character is stored.
+
+station identifier "0042" → String
+Reason: it is an identifier and the leading zeros must be preserved.
+
+sensor working → Boolean
+Reason: only two states are required: true/false.</pre></div></div></article>
+
+      <article class="exam-card youdo-question"><div class="youdo-question-prompt">
         <span class="phase-tag">QUESTION 2 · DENARY → BINARY</span>
         <span class="classroom-marks">Suggested classroom marks: 6</span>
         <h3>Encode the readings</h3>
@@ -371,18 +384,31 @@
 b) 92
 c) 200</pre>
         <p class="source-note">Classroom adaptation of the conversion skill used in OCR June 2017 Q6(a)(i).</p>
-      </article>
+      </div><div class="youdo-solution" hidden><strong>WORKED ANSWER / MARKS</strong><span class="answer-panel-label">Completed answer</span><div class="answer-result"><span class="answer-result-label">FINAL ANSWER</span><div class="answer-result-value">37 → 00100101 · 92 → 01011100 · 200 → 11001000</div></div><span class="answer-panel-label">Working and marking guidance</span><div class="answer-working"><pre class="solution-code">37 = 32 + 4 + 1
+37 = 00100101
 
-      <article class="exam-card youdo-question">
+92 = 64 + 16 + 8 + 4
+92 = 01011100
+
+200 = 128 + 64 + 8
+200 = 11001000</pre></div></div></article>
+
+      <article class="exam-card youdo-question"><div class="youdo-question-prompt">
         <span class="phase-tag">QUESTION 3 · BINARY → DENARY</span>
         <span class="classroom-marks">Suggested classroom marks: 4</span>
         <h3>Convert unsigned 8-bit binary to denary</h3>
         <p class="question-text">Convert each unsigned 8-bit binary number to denary. Show which place values contribute to the total.</p>
         <pre class="arithmetic">a) 01101001₂
 b) 11000010₂</pre>
-      </article>
+      </div><div class="youdo-solution" hidden><strong>WORKED ANSWER / MARKS</strong><span class="answer-panel-label">Completed answer</span><div class="answer-result"><span class="answer-result-label">FINAL ANSWER</span><div class="answer-result-value">01101001 → 105 · 11000010 → 194</div></div><span class="answer-panel-label">Working and marking guidance</span><div class="answer-working"><pre class="solution-code">01101001
+= 64 + 32 + 8 + 1
+= 105
 
-      <article class="exam-card youdo-question" hidden>
+11000010
+= 128 + 64 + 2
+= 194</pre></div></div></article>
+
+      <article class="exam-card youdo-question" hidden><div class="youdo-question-prompt">
         <span class="phase-tag">QUESTION 4 · RANGE &amp; JUSTIFICATION</span>
         <span class="classroom-marks">Suggested classroom marks: 4</span>
         <h3>Choose a storage width</h3>
@@ -392,7 +418,17 @@ b) 11000010₂</pre>
           <li>Explain why 8 bits are insufficient.</li>
           <li>Determine the minimum number of bits required and justify it using the unsigned range.</li>
         </ol>
-      </article>
+      </div><div class="youdo-solution" hidden><strong>WORKED ANSWER / MARKS</strong><span class="answer-panel-label">Completed answer</span><div class="answer-result"><span class="answer-result-label">FINAL ANSWER</span><div class="answer-result-value">Minimum unsigned width: 9 bits</div></div><span class="answer-panel-label">Working and marking guidance</span><div class="answer-working"><pre class="solution-code">Largest unsigned 8-bit value:
+2^8 - 1 = 255
+
+8 bits are insufficient because:
+300 &gt; 255
+
+9 bits give:
+0 to 2^9 - 1
+= 0 to 511
+
+Minimum required width = 9 bits</pre></div></div></article>
 
     </div>
   </div>
@@ -543,6 +579,6 @@ b) 11000010₂</pre>
 </main>
 
 <div class="lesson-footer">Lesson 001 · OCR H446 1.4.1 Data Types <span>Use the menu or ← → keys</span> · READY</div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20261115-objectives-focus1"></script>
+<script src="../../../assets/h446-y13/h446-you-do.js?v=20261124-y12-shared2"></script><script src="../../../assets/h446-lesson/lesson.js?v=20261115-objectives-focus1"></script>
 </body>
 </html>
