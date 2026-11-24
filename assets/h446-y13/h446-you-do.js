@@ -58,25 +58,101 @@
     markQuestion(heading);
   });
 
-  // Explicit authored page sizes; only opted-in decks can change grouping.
-  // The existing controller retains all-question-first navigation and answer order.
-  if(root.dataset.h446SingleQuestion==='true'||root.dataset.h446PageGroups){
-    document.addEventListener('DOMContentLoaded',()=>{
-      if(typeof h446QuestionSheetGroups!=='function'||typeof h446SequentialQuestions!=='function')return;
-      const defaultGroups=h446QuestionSheetGroups;
-      h446QuestionSheetGroups=function(page){
-        if(page!==root)return defaultGroups(page);
-        const questions=h446SequentialQuestions(page);
-        if(root.dataset.h446SingleQuestion==='true')return questions.map((_,i)=>({start:i,end:i+1}));
-        const sizes=(root.dataset.h446PageGroups||'').split(',').map(Number);
-        if(!sizes.length||sizes.some(n=>![1,2,4].includes(n))||sizes.reduce((a,b)=>a+b,0)!==questions.length)return defaultGroups(page);
-        let start=0;
-        return sizes.map(n=>{const group={start,end:start+n};start+=n;return group;});
-      };
-      if(root.classList.contains('active')&&root.dataset.answerMode!=='true'){
-        h446ShowQuestionSheet(root,0);
-        updateControl();
-      }
-    },{once:true});
+  // Choose stable, ordered groups. Never split a question or change its content.
+  function selectGroups(profiles, fits, narrow){
+    const groups=[];
+    for(let i=0;i<profiles.length;){
+      const four=profiles.slice(i,i+4);
+      const pair=profiles.slice(i,i+2);
+      let size=1;
+      if(!narrow&&four.length===4&&four.every(p=>p.short)&&fits(i,4))size=4;
+      else if(!narrow&&pair.length===2&&pair.every(p=>!p.complex)&&fits(i,2))size=2;
+      groups.push({start:i,end:i+size});
+      i+=size;
+    }
+    return groups;
   }
+  function profileQuestion(q){
+    const prompt=q.querySelector('.youdo-question-prompt');
+    if(!prompt)return {short:false,complex:true};
+    const heading=prompt.querySelector('.rhs-y13-task,.y13-rhs-task,h2');
+    const tag=prompt.querySelector('.phase-tag');
+    const marks=Number((tag?.textContent||'').match(/\\b(\\d{1,2})\\s*marks?\\b/i)?.[1]||0);
+    const normalize=s=>(s||'').replace(/\\s+/g,' ').trim();
+    const task=normalize(heading?.textContent);
+    const source=normalize(prompt.querySelector('.rhs-y13-source,.y13-rhs-source-reference')?.textContent);
+    const length=Math.max(0,normalize(prompt.textContent).length-normalize(tag?.textContent).length-source.length);
+    const complex=!!prompt.querySelector('pre,svg,img,table,canvas,details,figure,iframe,math')
+      ||length>420||marks>=6||!task;
+    return {complex,short:!complex&&!!marks&&marks<=3&&length<=180
+      &&!prompt.querySelector('.rhs-y13-context,.y13-rhs-brief,.rhs-y13-context-title')};
+  }
+  // Measure the actual cards at their real desktop size, before displaying them.
+  // All temporary visibility and dataset values are restored synchronously.
+  function fitsOnScreen(questions,start,size){
+    if(!root.classList.contains('active')||root.clientWidth===0)return false;
+    const keys=['h446QuestionSheet','answerMode','h446GroupCount'];
+    const previous=keys.map(k=>root.dataset[k]);
+    const state=questions.map(q=>({hidden:q.hidden,answer:q.querySelector('.youdo-solution'),answerHidden:q.querySelector('.youdo-solution')?.hidden}));
+    try{
+      root.dataset.h446QuestionSheet='true';
+      root.dataset.answerMode='false';
+      root.dataset.h446GroupCount=String(size);
+      questions.forEach((q,i)=>{q.hidden=i<start||i>=start+size;if(state[i].answer)state[i].answer.hidden=true;});
+      const deck=root.querySelector('.youdo-questions');
+      if(!deck||deck.clientHeight<=0||deck.clientWidth<=0)return false;
+      const visible=questions.slice(start,start+size);
+      if(deck.scrollHeight>deck.clientHeight+4||deck.scrollWidth>deck.clientWidth+4)return false;
+      return visible.every(q=>{
+        const p=q.querySelector('.youdo-question-prompt');
+        const usable=el=>!!el&&el.clientHeight>0&&el.clientWidth>0&&el.scrollHeight<=el.clientHeight+3&&el.scrollWidth<=el.clientWidth+3;
+        if(!usable(q)||!usable(p))return false;
+        const bounds=q.getBoundingClientRect();
+        const content=p.getBoundingClientRect();
+        return content.bottom<=bounds.bottom-6&&content.right<=bounds.right+1;
+      });
+    }finally{
+      keys.forEach((k,i)=>{if(previous[i]===undefined)delete root.dataset[k];else root.dataset[k]=previous[i];});
+      questions.forEach((q,i)=>{q.hidden=state[i].hidden;if(state[i].answer)state[i].answer.hidden=state[i].answerHidden;});
+    }
+  }
+  function installGroups(){
+    if(typeof h446QuestionSheetGroups!=='function'||typeof h446SequentialQuestions!=='function'||typeof isH446BankQuestionSheet!=='function'||!isH446BankQuestionSheet(root))return;
+    const id=Number(location.pathname.match(/lesson-(\\d{3})/)?.[1]);
+    if(id<181||id>320)return;
+    const authored=root.dataset.h446SingleQuestion==='true'||!!root.dataset.h446PageGroups;
+    // The approved original two-question ERD pilot remains exactly as authored.
+    if(!authored&&(id===276||root.dataset.h446ReadabilityPilot==='true'))return;
+    const defaultGroups=h446QuestionSheetGroups;
+    const questions=h446SequentialQuestions(root);
+    if(!questions.length)return;
+    let groups=null;
+    if(authored){
+      const sizes=root.dataset.h446SingleQuestion==='true'?questions.map(()=>1):root.dataset.h446PageGroups.split(',').map(Number);
+      if(sizes.some(n=>![1,2,4].includes(n))||sizes.reduce((a,b)=>a+b,0)!==questions.length)return;
+      let start=0;
+      groups=sizes.map(n=>{const group={start,end:start+n};start+=n;return group;});
+    }else{
+      root.dataset.h446AutoGroups='true';
+      // Existing context is not rewritten. Open only question-context disclosures.
+      root.querySelectorAll('.youdo-question-prompt details.y13-rhs-context').forEach(d=>{d.open=true;});
+    }
+    h446QuestionSheetGroups=function(page){
+      if(page!==root)return defaultGroups(page);
+      if(groups)return groups;
+      const profiles=questions.map(profileQuestion);
+      const narrow=window.matchMedia('(max-width:900px)').matches;
+      if(!root.classList.contains('active')||root.clientWidth===0)return selectGroups(profiles,()=>false,narrow);
+      // Freeze the plan for this page visit, so forward/back navigation is stable.
+      try{groups=selectGroups(profiles,(start,size)=>fitsOnScreen(questions,start,size),narrow);}
+      catch(error){groups=selectGroups(profiles,()=>false,narrow);console.warn('H446 You Do layout fallback:',error);}
+      return groups;
+    };
+    if(root.classList.contains('active')&&root.dataset.answerMode!=='true'){
+      h446ShowQuestionSheet(root,0);
+      updateControl();
+    }
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',installGroups,{once:true});
+  else installGroups();
 })();
