@@ -160,3 +160,38 @@
     max-height:none!important;margin:12px 0!important;
   }
 }
+
+/* Compact, mark-by-mark answer trial; explicitly opted-in You Do only. */
+#you-do[data-h446-compact-answer="true"][data-answer-mode="true"] .youdo-question-prompt{
+  align-self:stretch;
+}
+#you-do[data-h446-compact-answer="true"][data-answer-mode="true"] .youdo-question-prompt .y13-rhs-task{
+  font-size:clamp(26px,2vw,30px)!important;
+}
+#you-do[data-h446-compact-answer="true"][data-answer-mode="true"] .youdo-question-prompt .y13-rhs-brief{
+  font-size:clamp(22px,1.6vw,24px)!important;
+}
+#you-do[data-h446-compact-answer="true"][data-answer-mode="true"] .h446-mark-points{
+  list-style:none;padding:0;margin:0;display:grid;gap:10px;
+  font-size:clamp(21px,1.65vw,26px);line-height:1.32;color:#182d20;
+}
+#you-do[data-h446-compact-answer="true"][data-answer-mode="true"] .h446-mark-points>li{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;
+  align-items:baseline;margin:0;padding:0 0 8px;border-bottom:1px solid #e4ece6;
+  font-size:inherit;line-height:inherit;
+}
+#you-do[data-h446-compact-answer="true"][data-answer-mode="true"] .h446-mark-points>li>span{
+  font-weight:700;color:#23613c;white-space:nowrap;
+}
+#you-do[data-h446-compact-answer="true"][data-answer-mode="true"] .youdo-solution>.h446-compact-diagram{
+  width:100%!important;height:auto!important;max-height:clamp(120px,22vh,200px)!important;
+  margin:18px auto 0!important;
+}
+#you-do[data-h446-compact-answer="true"][data-answer-mode="false"] .youdo-question-prompt>.h446-compact-diagram{
+  width:100%!important;height:auto!important;max-height:42vh!important;
+}
+@media(max-width:900px){
+  #you-do[data-h446-compact-answer="true"][data-answer-mode="true"] .h446-mark-points{
+    font-size:20px;
+  }
+}
