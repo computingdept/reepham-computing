@@ -137,6 +137,7 @@ body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-wi
 <link rel="stylesheet" href="/assets/binary-shift-workspace.css?v=20261112-unified1">
 <link rel="stylesheet" href="/assets/skills-system.css?v=20261113-shared2">
 <link rel="stylesheet" href="/assets/j277-paper1-guided-demo.css?v=20261115-clean-practice1">
+<link rel="stylesheet" href="/assets/j277-systems-skill.css?v=20261124-systems1">
 </head>
 <body class="course-hub course-inline-nav synergy-unified-hub rhsc-skills-system rhsc-skills-hub">
 <header class="topbar synergy-corners" aria-label="GCSE Computing navigation">
@@ -192,10 +193,10 @@ body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-wi
     <section class="skills-group" aria-labelledby="skills-systems-heading">
       <details class="group">
         <summary class="group-summary">
-          <h2 class="group-title" id="skills-systems-heading">Computer Systems<small>CPU architecture and processing</small></h2>
-          <span class="group-meta">1 skill <span class="group-chevron" aria-hidden="true"></span></span>
+          <h2 class="group-title" id="skills-systems-heading">Computer Systems<small>CPU, memory and secondary storage</small></h2>
+          <span class="group-meta">3 skills <span class="group-chevron" aria-hidden="true"></span></span>
         </summary>
-        <div class="group-content"><div class="tiles theory">
+        <div class="group-content"><div class="tiles theory" id="systems-tiles">
           <article class="tile rhsc-resource-card rhsc-resource-card--skill">
             <a class="tile-main" href="/exercise/skills-review/?skill=cpu-cycle" aria-label="Practise CPU Cycle Simulator"><span class="tile-title">CPU Cycle Simulator</span><span class="tile-sub">Fetch · Decode · Execute</span><span class="tile-ref">1.1.1</span></a>
             <div class="tile-actions"><a class="tile-action" href="/exercise/skills-review/?skill=cpu-cycle"><span>▶ Practise</span></a></div>
@@ -237,6 +238,7 @@ body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-wi
 <script src="/assets/j277-protocol-paths.js?v=20261111-paths1"></script>
 <script src="/assets/j277-impact-answer-builder.js?v=20261111-impact1"></script>
 <script src="/assets/j277-legislation-skill.js?v=20261123-law2"></script>
+<script src="/assets/j277-systems-skill.js?v=20261124-systems1"></script>
 <script src="/assets/skills-system.js?v=20261117-per-question1"></script>
 <script>
 (()=>{'use strict';
@@ -259,6 +261,8 @@ const specs={
  topology:{name:'Build a Network',sub:'Star · Mesh · Failures',glyph:'⬡',cat:'network',ref:'1.3.1',tint:'#e8f5ec',ink:'#285348',kind:'networkskill'},
  dns:{name:'DNS & Web Request Journey',sub:'Watch · Build · Fix',glyph:'⌘',cat:'network',ref:'1.3.1–1.3.2',tint:'#e8f5ec',ink:'#285348',kind:'dns'},
  protocol:{name:'Protocol Paths',sub:'Send · Receive · Repair',glyph:'⇢',cat:'network',ref:'1.3.2',tint:'#edf7ee',ink:'#285348',kind:'protocol'},
+ memory:{name:'Memory Explorer',sub:'RAM · ROM · Cache · Virtual memory',glyph:'▣',cat:'systems',ref:'1.2.1',tint:'#eef5fb',ink:'#285348',kind:'systemsbuilder'},
+ storage:{name:'Storage Selector',sub:'Magnetic · Optical · Solid state',glyph:'▣',cat:'systems',ref:'1.2.2',tint:'#eef5fb',ink:'#285348',kind:'systemsbuilder'},
  impact:{name:'Impact Answer Builder',sub:'Model · Improve · Evaluate',glyph:'✎',cat:'application',ref:'1.6',tint:'#e9f4ed',ink:'#285348',kind:'impact'},
  legislation:{name:'Legislation & Licences',sub:'Identify · Apply · Justify',glyph:'§',cat:'application',ref:'1.6.1',tint:'#eaf3eb',ink:'#285348',kind:'legislation'},
 };
@@ -472,6 +476,8 @@ function qs(id,l,i){const r=rngFor(id,l,i),dif=levelnames.indexOf(l),v=()=>rint(
   return window.J277ProtocolPaths.make(l,i);
  case 'impact':
   return window.J277ImpactBuilder.make(l,i);
+ case 'memory': case 'storage':
+  return window.J277SystemsSkill.make(id,l,i);
  case 'legislation':
   return window.J277LegislationSkill.make(l,i);
  case 'security':return fromBank(r,i,[
@@ -522,7 +528,7 @@ function tile(key){
  }
  card.append(primary,actions);return card;
 }
-Object.keys(specs).forEach(key=>$(specs[key].cat==='data'?'data-tiles':specs[key].cat==='network'?'network-tiles':'application-tiles').append(tile(key)));
+Object.keys(specs).forEach(key=>$(specs[key].cat==='data'?'data-tiles':specs[key].cat==='network'?'network-tiles':specs[key].cat==='systems'?'systems-tiles':'application-tiles').append(tile(key)));
 function getStorage(){try{return JSON.parse(localStorage.getItem(h446Conversion?'rhs-h446-conversion-progress':'rhs-j277-paper1-progress')||'{}')}catch{return {}}}
 function saveStorage(o){try{localStorage.setItem(h446Conversion?'rhs-h446-conversion-progress':'rhs-j277-paper1-progress',JSON.stringify(o))}catch{}}
 function persist(){
@@ -1380,6 +1386,7 @@ case 'networkskill':{answer=window.J277NetworkSkills.render(p,d,()=>locked,ready
 case 'dnsjourney':{answer=window.J277DnsJourney.render(p,d,()=>locked,ready=>$('check').classList.toggle('hidden',!ready));break;}
 case 'protocolpaths':{answer=window.J277ProtocolPaths.render(p,d,()=>locked,ready=>$('check').classList.toggle('hidden',!ready));break;}
 case 'impactbuilder':{answer=window.J277ImpactBuilder.render(p,d,()=>locked,ready=>$('check').classList.toggle('hidden',!ready));break;}
+case 'systemsbuilder':{answer=window.J277SystemsSkill.render(p,d,()=>locked,ready=>$('check').classList.toggle('hidden',!ready));break;}
 case 'legislationbuilder':{answer=window.J277LegislationSkill.render(p,d,()=>locked,ready=>$('check').classList.toggle('hidden',!ready));break;}
 case 'choice':{answer=null;const grid=document.createElement('div');grid.className='option-grid';p.options.forEach(opt=>{const b=document.createElement('button');b.type='button';b.className='choice';b.textContent=opt;b.addEventListener('click',()=>{if(locked)return;answer=opt;grid.querySelectorAll('.choice').forEach(n=>n.classList.toggle('selected',n===b))});grid.append(b)});d.append(grid);break;}
 case 'pixels': {
@@ -1454,8 +1461,8 @@ case 'pixels': {
   break;
 }
 }}
-function isAnswered(){if(question.type==='legislationbuilder')return window.J277LegislationSkill.isComplete(question,answer);if(question.type==='networkskill')return window.J277NetworkSkills.isComplete(question,answer);if(question.type==='impactbuilder')return window.J277ImpactBuilder.isComplete(question,answer);if(question.type==='protocolpaths')return window.J277ProtocolPaths.isComplete(question,answer);if(question.type==='dnsjourney')return window.J277DnsJourney.isComplete(question,answer);if(question.type==='pixels')return answer.size.trim()!=='';if(question.type==='soundcalc')return answer.final.trim()!=='';if(question.type==='imagecompact')return answer.final.trim()!==''&&(level==='hard'||answer.kind!==''&&(question.depthGiven||answer.depth.trim()!==''));if(question.type==='ascii')return answer.every(row=>row.denary.trim()!==''&&row.binary.trim()!=='');if(question.type==='textcancel')return answer.final!==''&&(level!=='medium'||!question.cancel8||answer.factor!=='');if(question.type==='grid')return answer.denary!==''&&answer.nibs.every(v=>v!=='')&&answer.hex.every(v=>v!=='');if(question.type==='add')return answer.overflow!==null;if(question.type==='countblocks')return answer.max!==''&&(question.countMode==='inverse'?answer.bitsNeeded!=='' :answer.patterns!=='');if(question.type==='textsteps'||question.type==='imagesteps')return Object.values(answer).every(v=>String(v).trim()!=='');if(question.type==='number')return answer!==null&&String(answer).trim()!=='';if(question.type==='hex')return answer.every(x=>!!x);if(question.type==='choice')return answer!==null;return true;}
-function validate(){const p=question;if(!isAnswered())return null;switch(p.type){case 'legislationbuilder':return window.J277LegislationSkill.isCorrect(p,answer);case 'networkskill':return window.J277NetworkSkills.isCorrect(p,answer);case 'impactbuilder':return window.J277ImpactBuilder.isCorrect(p,answer);case 'protocolpaths':return window.J277ProtocolPaths.isCorrect(p,answer);case 'dnsjourney':return window.J277DnsJourney.isCorrect(p,answer);case 'soundcalc':{
+function isAnswered(){if(question.type==='systemsbuilder')return window.J277SystemsSkill.isComplete(question,answer);if(question.type==='legislationbuilder')return window.J277LegislationSkill.isComplete(question,answer);if(question.type==='networkskill')return window.J277NetworkSkills.isComplete(question,answer);if(question.type==='impactbuilder')return window.J277ImpactBuilder.isComplete(question,answer);if(question.type==='protocolpaths')return window.J277ProtocolPaths.isComplete(question,answer);if(question.type==='dnsjourney')return window.J277DnsJourney.isComplete(question,answer);if(question.type==='pixels')return answer.size.trim()!=='';if(question.type==='soundcalc')return answer.final.trim()!=='';if(question.type==='imagecompact')return answer.final.trim()!==''&&(level==='hard'||answer.kind!==''&&(question.depthGiven||answer.depth.trim()!==''));if(question.type==='ascii')return answer.every(row=>row.denary.trim()!==''&&row.binary.trim()!=='');if(question.type==='textcancel')return answer.final!==''&&(level!=='medium'||!question.cancel8||answer.factor!=='');if(question.type==='grid')return answer.denary!==''&&answer.nibs.every(v=>v!=='')&&answer.hex.every(v=>v!=='');if(question.type==='add')return answer.overflow!==null;if(question.type==='countblocks')return answer.max!==''&&(question.countMode==='inverse'?answer.bitsNeeded!=='' :answer.patterns!=='');if(question.type==='textsteps'||question.type==='imagesteps')return Object.values(answer).every(v=>String(v).trim()!=='');if(question.type==='number')return answer!==null&&String(answer).trim()!=='';if(question.type==='hex')return answer.every(x=>!!x);if(question.type==='choice')return answer!==null;return true;}
+function validate(){const p=question;if(!isAnswered())return null;switch(p.type){case 'systemsbuilder':return window.J277SystemsSkill.isCorrect(p,answer);case 'legislationbuilder':return window.J277LegislationSkill.isCorrect(p,answer);case 'networkskill':return window.J277NetworkSkills.isCorrect(p,answer);case 'impactbuilder':return window.J277ImpactBuilder.isCorrect(p,answer);case 'protocolpaths':return window.J277ProtocolPaths.isCorrect(p,answer);case 'dnsjourney':return window.J277DnsJourney.isCorrect(p,answer);case 'soundcalc':{
   const value=String(answer.final).trim();
   return /^[0-9]+(?:[.][0-9]+)?$/.test(value)&&Math.abs(Number(value)-p.value)<1e-8;
  }case 'imagecompact': {
@@ -1485,8 +1492,8 @@ function showMsg(msg,type){const box=$('feedback');box.className='feedback '+typ
 // inflate the pupil's first-attempt accuracy.
 const reportedQuestions = new WeakSet();
 function submit(){if(locked)return;
- if(question.type==='legislationbuilder'){
-  const law=window.J277LegislationSkill;
+ if(question.type==='legislationbuilder'||question.type==='systemsbuilder'){
+  const law=question.type==='systemsbuilder'?window.J277SystemsSkill:window.J277LegislationSkill;
   if(!law.isComplete(question,answer)){showMsg(law.feedback(question,answer),'neutral');return;}
   const ok=law.isCorrect(question,answer);
   if(ok){if(wrong===0)firstTryScore++;score++;mark();}
@@ -1569,7 +1576,7 @@ const directSkill=new URLSearchParams(window.location.search).get('skill');
 if(Object.prototype.hasOwnProperty.call(specs,directSkill)){openSkill(directSkill);const requestedLevel=new URLSearchParams(window.location.search).get('level');if(['easy','medium','hard'].includes(requestedLevel))chooseLevel(requestedLevel);}
 })();
 </script>
-<script src="/assets/j277-paper1-guided-demo.js?v=20261114-guided1"></script>
+<script src="/assets/j277-paper1-guided-demo.js?v=20261124-systems1"></script>
 <script src="/assets/site-nav.js?v=20261107-quickbar1" defer></script>
 </body>
 </html>

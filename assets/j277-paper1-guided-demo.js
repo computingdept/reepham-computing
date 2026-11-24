@@ -78,6 +78,17 @@
       ['Reliable transport','TCP manages ordered delivery','Segments can be acknowledged and resent if needed.'],
       ['Web content','HTTPS protects the connection','HTTPS is HTTP carried over an encrypted connection.'],
       ['Route','IP addresses packets','Routers use IP information to forward packets.']]},
+    memory:{title:'Memory Explorer',task:'A student starts a computer, opens a drawing program and runs out of working memory.',steps:[
+      ['Start-up','ROM → boot instructions','Firmware is retained without power; start-up instructions can be stored in ROM.'],
+      ['Working data','RAM → active drawing','RAM holds currently used instructions and data; unsaved changes are volatile.'],
+      ['Repeated access','Cache → frequently used values','A small fast cache reduces the time needed to access commonly used instructions or data.'],
+      ['When RAM fills','Virtual memory → secondary storage','The operating system can move pages to secondary storage, but accessing them is slower than RAM.']]},
+    storage:{title:'Storage Selector',task:'Choose storage for a school archive, a portable laptop and a compatible disc player.',steps:[
+      ['Requirements','Capacity · speed · portability · cost','Identify what the device must do before selecting the storage technology.'],
+      ['Stationary archive','Magnetic HDD','An HDD may provide good capacity per pound, although it has mechanical parts.'],
+      ['Portable laptop','Solid-state SSD','An SSD has no moving parts and can offer quick access and good shock resistance.'],
+      ['Compatible disc player','Optical disc','A DVD is read by a laser and suits equipment designed to play that disc format.'],
+      ['Small file transfer','USB flash drive','A removable solid-state drive is compact; protect important data against loss.']]},
     impact:{title:'Impact answer builder',task:'Discuss a school using an online learning platform.',steps:[
       ['Identify an impact','Pupils can learn remotely','Say what changes for a named group.'],
       ['Develop the reason','Work is available after absence','Explain how the impact arises.'],
