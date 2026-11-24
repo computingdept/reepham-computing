@@ -217,8 +217,9 @@ function h446QuestionSheetGroups(page){
   // Four questions per sheet is the normal Year 13 classroom pattern.
   // A lesson with fewer authored questions displays all of those together,
   // rather than turning each question into a separate screen.
-  for(let start=0;start<questions.length;start+=4){
-    groups.push({start,end:Math.min(start+4,questions.length)});
+  const size=page.dataset.h446TwoPagePilot==='true'?2:4;
+  for(let start=0;start<questions.length;start+=size){
+    groups.push({start,end:Math.min(start+size,questions.length)});
   }
   return groups;
 }
@@ -1153,9 +1154,14 @@ function updateControl(){
       const start=Number(page.dataset.h446GroupStart||0);
       const group=h446QuestionSheetGroupFor(page,start);
       const i=Number(page.dataset.answerIndex||start);
-      label=page.dataset.answerMode!=='true'?'Begin self-marking →':
-        i<group.end-1?'Next answer →':
-        group.end<count?'Next questions →':'Continue → Key Vocabulary';
+      if(page.dataset.h446TwoPagePilot==='true'){
+        label=page.dataset.answerMode!=='true'?(group.end<count?'Next questions →':'Begin self-marking →'):
+          i<count-1?'Next answer →':'Continue → Key Vocabulary';
+      }else{
+        label=page.dataset.answerMode!=='true'?'Begin self-marking →':
+          i<group.end-1?'Next answer →':
+          group.end<count?'Next questions →':'Continue → Key Vocabulary';
+      }
     }else if(isH446SequentialYouDo(page)){
       const i=Number(page.dataset.answerIndex||0),count=h446SequentialQuestions(page).length;
       label=page.dataset.answerMode==='true'?(i<count-1?'Next question →':'Continue → Key Vocabulary'):'Reveal answer →';
@@ -1394,10 +1400,18 @@ function next(){
       const start=Number(page.dataset.h446GroupStart||0);
       const group=h446QuestionSheetGroupFor(page,start);
       const index=Number(page.dataset.answerIndex||start);
-      if(page.dataset.answerMode!=='true')h446ShowSingleAnswer(page,group.start);
-      else if(index<group.end-1)h446ShowSingleAnswer(page,index+1);
-      else if(group.end<count)h446ShowQuestionSheet(page,group.end);
-      else{showPage('vocabulary');return;}
+      if(page.dataset.h446TwoPagePilot==='true'){
+        if(page.dataset.answerMode!=='true'){
+          if(group.end<count)h446ShowQuestionSheet(page,group.end);
+          else h446ShowSingleAnswer(page,0);
+        }else if(index<count-1)h446ShowSingleAnswer(page,index+1);
+        else{showPage('vocabulary');return;}
+      }else{
+        if(page.dataset.answerMode!=='true')h446ShowSingleAnswer(page,group.start);
+        else if(index<group.end-1)h446ShowSingleAnswer(page,index+1);
+        else if(group.end<count)h446ShowQuestionSheet(page,group.end);
+        else{showPage('vocabulary');return;}
+      }
       updateSignals('you-do');updateControl();return;
     }
     if(isH446SequentialYouDo(page)){
@@ -1644,11 +1658,19 @@ function previousAction(){
       const start=Number(page.dataset.h446GroupStart||0);
       const group=h446QuestionSheetGroupFor(page,start);
       const index=Number(page.dataset.answerIndex||start);
-      if(page.dataset.answerMode==='true'){
-        if(index>group.start)h446ShowSingleAnswer(page,index-1);
-        else h446ShowQuestionSheet(page,group.start);
-      }else if(group.start>0)h446ShowSingleAnswer(page,group.start-1);
-      else{showPage('we-do');return;}
+      if(page.dataset.h446TwoPagePilot==='true'){
+        if(page.dataset.answerMode==='true'){
+          if(index>0)h446ShowSingleAnswer(page,index-1);
+          else h446ShowQuestionSheet(page,h446SequentialQuestions(page).length-1);
+        }else if(group.start>0)h446ShowQuestionSheet(page,group.start-1);
+        else{showPage('we-do');return;}
+      }else{
+        if(page.dataset.answerMode==='true'){
+          if(index>group.start)h446ShowSingleAnswer(page,index-1);
+          else h446ShowQuestionSheet(page,group.start);
+        }else if(group.start>0)h446ShowSingleAnswer(page,group.start-1);
+        else{showPage('we-do');return;}
+      }
       updateSignals('you-do');updateControl();return;
     }
     if(isH446SequentialYouDo(page)){
