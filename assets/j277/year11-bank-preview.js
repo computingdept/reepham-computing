@@ -48,6 +48,7 @@
     return String(s||"").replace(/\s*\[\d+(?:\s*marks?)?\]\s*$/i,"").trim();
   }
   function lineBreaks(s){return esc(s).replace(/\r\n?|\n/g,"<br>");}
+  function questionLines(s){return (window.RHSYouDoTrial?.commandWords?.(s)||esc(s)).replace(/\r\n?|\n/g,"<br>");}
   function answerParts(s){
     // Semicolons in the already-authored answer are presentation separators,
     // not automatically separate credited marks. The marking rule controls credit.
@@ -105,7 +106,7 @@
       '<div class="rhs-bank-grid" data-count="'+items.length+'">'+items.map(function(q,i){
         return '<section class="rhs-bank-card">'+
           '<div class="rhs-bank-card-head"><span>Q'+(start+i+1)+'</span><span>'+q.marks+' MARK'+(q.marks===1?'':'S')+'</span></div>'+
-          '<p class="rhs-bank-prompt">'+lineBreaks(originalQuestion(q.question))+'</p>'+
+          '<p class="rhs-bank-prompt">'+questionLines(originalQuestion(q.question))+'</p>'+
           (q.figure?'<img class="rhs-bank-question-figure" src="'+esc(q.figure)+'" alt="Question diagram">':"")+
           '<span class="rhs-bank-source">'+esc(q.reference)+'</span></section>';
       }).join("")+'</div></article>';
@@ -134,9 +135,10 @@
     return '<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage rhs-bank-review-stage" hidden>'+
       header("SELF-MARK · QUESTION "+(index+1)+" OF "+total,
         q.marks+" MARK"+(q.marks===1?'':'S'))+
-      '<div class="rhs-bank-review-question">'+
+      '<div class="rhs-j277-answer-layout"><div class="rhs-bank-review-question">'+
       '<span class="rhs-bank-label">QUESTION · '+esc(q.id)+'</span>'+
-      '<p>'+lineBreaks(originalQuestion(q.question))+'</p>'+
+      '<p>'+questionLines(originalQuestion(q.question))+'</p>'+
+      (q.figure?'<img class="rhs-bank-question-figure" src="'+esc(q.figure)+'" alt="Question diagram">':"")+
       '</div>'+
       '<div class="rhs-bank-answer-area'+(q.answerFigure?' rhs-bank-answer-area--with-figure':'')+'">'+
       (q.answerFigure?'<figure class="rhs-bank-answer-figure"><img src="'+esc(q.answerFigure)+'" alt="Worked answer diagram" loading="eager"></figure>':"")+
@@ -146,7 +148,7 @@
       '<div class="rhs-bank-scoring"><span class="rhs-bank-label">HOW TO AWARD MARKS</span>'+
       '<p>'+lineBreaks(q.rule)+'</p></div>'+
       '<div class="rhs-bank-source">'+esc(q.reference)+'</div>'+
-      '</div></div></article>';
+      '</div></div></div></article>';
   }
   async function load(){
     var urls=[
@@ -204,6 +206,8 @@
        !oldScreens[1].classList.contains("rhs-y-code-check"))
       throw new Error("Cannot verify original Code First/answer sequence");
     var codeScreens=oldScreens.slice(0,2);
+    // Before the You Do phase is visible, use a safe initial arrangement.
+    // The actual screen is measured before students leave Code First.
     var groups=questionGroups(questions);
     host.dataset.rhsBankPreview="true";
     function render(){
@@ -219,23 +223,6 @@
       return slides;
     }
     var slides=render();
-    // Apply overflow-driven splitting only to the newer adaptive batches.
-    // Preserve earlier preview screen counts until separately audited.
-    if(adaptiveLessons.includes(lessonId)){
-      for(var pass=0;pass<4;pass++){
-        var changed=false;
-        for(var i=0;i<groups.length;i++){
-          if(overflows(slides[i]) && groups[i].length>1){
-            var singlePages=groups[i].map(function(q){return [q];});
-            groups.splice.apply(groups,[i,1].concat(singlePages));
-            slides=render();
-            changed=true;
-            break;
-          }
-        }
-        if(!changed)break;
-      }
-    }
     codeScreens[0].hidden=false;
     codeScreens[1].hidden=true;
     host.dataset.rhsBankStart="2";
@@ -249,6 +236,33 @@
     var progress=host.querySelector(".youdo-window-progress");
     if(progress)progress.textContent="CODE FIRST · PREDICT";
     window.H446OptionalBridge?.refresh?.();
+    var shared=window.RHSYouDoTrial;
+    if(shared?.onExamLayoutReady && shared?.selectExamGroups && shared?.measureExamStage){
+      shared.onExamLayoutReady(host,rolling,function(){
+        try{
+          var totalMarks=questions.reduce(function(sum,q){return sum+q.marks;},0);
+          var chosen=shared.selectExamGroups(questions,function(part,start){
+            var tmp=document.createElement("div");
+            tmp.innerHTML=intro(part,start,questions.length,totalMarks,0,2);
+            return shared.measureExamStage(host,rolling,tmp.firstElementChild);
+          },matchMedia("(max-width:900px)").matches,function(q){
+            return singleScreenQuestion(q);
+          });
+          // Only replace question pages. Both code nodes and all marking
+          // pages survive unchanged, including their SVGs.
+          var newPages=document.createElement("div");
+          newPages.innerHTML=questionPageMarkup(chosen,questions);
+          var newSlides=Array.from(newPages.children);
+          if(newSlides.length!==chosen.length)throw Error("Invalid grouped question pages");
+          var oldPages=Array.from(rolling.querySelectorAll(":scope > .rhs-bank-question-stage"));
+          oldPages[0].replaceWith.apply(oldPages[0],newSlides);
+          oldPages.slice(1).forEach(function(node){node.remove();});
+          host.dataset.rhsBankQuestionPages=String(chosen.length);
+          host.dataset.j277ReviewStart=String(2+chosen.length);
+          if(typeof updateControl==="function")updateControl();
+        }catch(error){console.warn("J277 bank layout fallback: original pages retained",error);}
+      });
+    }
   }
   load().then(function(questions){
     replaceArchivedYouDo(questions);

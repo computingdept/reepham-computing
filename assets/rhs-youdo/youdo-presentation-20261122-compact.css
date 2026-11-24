@@ -243,3 +243,21 @@
 #you-do[data-rhs-youdo-trial="true"] .rhs-y-code-check .rhs-y-expected strong{
   font-size:clamp(28px,2.5vw,44px);
 }
+
+/* J277 exam sheets only: the approved H446 layout. Code First is untouched. */
+#you-do[data-rhs-j277-adaptive="true"] .rhs-y-challenge[data-count="1"]{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr)}
+#you-do[data-rhs-j277-adaptive="true"] .rhs-y-challenge[data-count="2"]{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:minmax(0,1fr)}
+#you-do[data-rhs-j277-adaptive="true"] .rhs-y-challenge:is([data-count="3"],[data-count="4"]){grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}
+#you-do[data-rhs-j277-adaptive="true"] .rhs-y-challenge-card{background:#fff;border-color:#dedee3}
+#you-do[data-rhs-j277-adaptive="true"] .rhs-y-challenge-card p{font-size:clamp(23px,1.75vw,28px);line-height:1.28}
+#you-do[data-rhs-j277-adaptive="true"] .rhs-y-challenge[data-count="1"] .rhs-y-challenge-card p{font-size:clamp(26px,2.3vw,36px)}
+#you-do[data-rhs-j277-adaptive="true"] mark.rhs-j277-command{background:#fff176;color:inherit;font-weight:inherit;padding:0 .1em}
+#you-do[data-rhs-j277-adaptive="true"] .rhs-j277-answer-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(14px,1.6vw,24px);margin-top:14px;align-items:start}
+#you-do[data-rhs-j277-adaptive="true"] .rhs-j277-answer-layout>.rhs-y-question,
+#you-do[data-rhs-j277-adaptive="true"] .rhs-j277-answer-layout>.rhs-y-review-body{min-width:0;border:1px solid #dedee3;border-radius:18px;padding:clamp(14px,1.5vw,24px);box-sizing:border-box}
+#you-do[data-rhs-j277-adaptive="true"] .rhs-j277-answer-layout .rhs-y-review-body.rhs-y-with-visual{display:flex;flex-direction:column}
+#you-do[data-rhs-j277-adaptive="true"] .rhs-j277-answer-layout .rhs-y-visual{width:100%}
+@media(max-width:900px){
+ #you-do[data-rhs-j277-adaptive="true"] .rhs-y-challenge[data-count]{grid-template-columns:1fr;grid-template-rows:none}
+ #you-do[data-rhs-j277-adaptive="true"] .rhs-j277-answer-layout{grid-template-columns:1fr}
+}

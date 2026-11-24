@@ -43,9 +43,71 @@
           '</span><span class="rhs-y-line-text">'+(colour(line)||'&#8203;')+'</span></span>';
       }).join("")+'</code></pre></div>';
   }
+
+  // J277 uses the H446 order: four, three, two, one. No question is split.
+  function selectExamGroups(items, fits, narrow, single){
+    var groups=[];
+    for(var i=0;i<items.length;){
+      var size=1;
+      if(!narrow){
+        for(var n=4;n>=2;n--){
+          var part=items.slice(i,i+n);
+          if(part.length===n && !part.some(single) && fits(part,i)){
+            size=n;break;
+          }
+        }
+      }
+      groups.push(items.slice(i,i+size));
+      i+=size;
+    }
+    return groups;
+  }
+  function measureExamStage(host,rolling,stage){
+    if(!host.classList.contains("active") || !rolling.clientWidth || !rolling.clientHeight)return false;
+    var shown=Array.from(rolling.children).filter(function(x){return !x.hidden;});
+    try{
+      shown.forEach(function(x){x.hidden=true;});
+      stage.style.visibility="hidden";stage.hidden=false;
+      rolling.appendChild(stage);
+      var boxes=[stage].concat(Array.from(stage.querySelectorAll(".rhs-y-challenge,.rhs-y-challenge-card,.rhs-bank-grid,.rhs-bank-card")));
+      return boxes.every(function(x){
+        return x.clientHeight>0 && x.clientWidth>0 &&
+          x.scrollHeight<=x.clientHeight+4 && x.scrollWidth<=x.clientWidth+4;
+      });
+    }finally{
+      stage.remove();shown.forEach(function(x){x.hidden=false;});
+    }
+  }
+  function onExamLayoutReady(host,rolling,callback){
+    var done=false,scheduled=false;
+    function attempt(){
+      scheduled=false;
+      if(done || !host.classList.contains("active") || !rolling.clientWidth || !rolling.clientHeight)return;
+      if(Number(host.dataset.windowStart||0)>1){done=true;observer.disconnect();return;}
+      done=true;observer.disconnect();
+      callback();
+    }
+    function queue(){
+      if(done||scheduled)return;
+      scheduled=true;requestAnimationFrame(attempt);
+    }
+    var observer=new MutationObserver(queue);
+    observer.observe(host,{attributes:true,attributeFilter:["class","data-window-start"]});
+    queue();
+  }
+  function commandWords(value){
+    var s=String(value||""),re=/(^|[.!?;]\\s+|\\n\\s*|\\([a-zivx0-9]+\\)\\s*)(Analyse|Annotate|Assess|Calculate|Compare|Complete|Construct|Convert|Define|Describe|Design|Determine|Discuss|Draw|Evaluate|Explain|Give|Identify|Justify|Label|List|Name|Outline|Predict|Recommend|Show|Simplify|Sketch|State|Suggest|Trace|Write|Select|Tick|Order|Solve|Add|Modify|Correct|Use)\\b/gi;
+    var out="",last=0,m;
+    while((m=re.exec(s))){
+      var start=m.index+m[1].length;
+      out+=escapeHtml(s.slice(last,start))+'<mark class="rhs-j277-command">'+escapeHtml(m[2])+'</mark>';
+      last=start+m[2].length;
+    }
+    return out+escapeHtml(s.slice(last));
+  }
   function questionText(text){
     var parts=String(text||"").split(/\n\s*\nSource:\s*/i);
-    return '<div class="rhs-y-question"><p>'+escapeHtml(parts[0]).replace(/\n/g,"<br />")+
+    return '<div class="rhs-y-question"><p>'+commandWords(parts[0]).replace(/\n/g,"<br />")+
       '</p>'+(parts[1]?'<small>'+escapeHtml("Source: "+parts.slice(1).join(" Source: "))+'</small>':"")+'</div>';
   }
   function markFromText(text){
@@ -178,34 +240,59 @@
       var found=explicit||bare;
       return found?Number(found[1]):null;
     }
-    var fullyMarked=questions.every(function(q){return questionMarks(q.question)!==null;});
-    var totalMarks=questions.reduce(function(total,q){
-      return total+(questionMarks(q.question)||0);
-    },0);
-    var challenge='<div class="rhs-y-head"><span>'+(data.preview?"UNAPPROVED LESSON PREVIEW · 4 EXAM QUESTIONS":"INDEPENDENT EXAM CHALLENGE")+'</span>'+
-      '<span>'+questions.length+' QUESTIONS'+(fullyMarked?' · '+totalMarks+' MARKS':'')+'</span></div><div class="rhs-y-challenge">'+
-      questions.map(function(q,i){
-        var text=String(q.question||"").split(/\n\s*\nSource:\s*/i)[0].trim();
-        var marks=questionMarks(text);
-        // Marks are shown once, at the top right, when present in the source.
-        text=text.replace(/\s*\[\d+(?:\s*marks?)?\]\s*$/i,"").trim();
-        return '<section class="rhs-y-challenge-card">'+
-          '<div class="rhs-y-challenge-card-head"><span>Q'+(i+1)+'</span>'+
-          '<span>'+(marks===null?'EXAM PRACTICE':marks+' MARK'+(marks===1?'':'S'))+'</span></div>'+
-          '<p>'+escapeHtml(text)+'</p></section>';
-      }).join("")+'</div>';
-    stages.push(makeStage(challenge,"rhs-y-challenge-stage"));
+    function challengeStage(group,start){
+      var fullyMarked=group.every(function(q){return questionMarks(q.question)!==null;});
+      var totalMarks=group.reduce(function(total,q){return total+(questionMarks(q.question)||0);},0);
+      var challenge='<div class="rhs-y-head"><span>'+(data.preview?"UNAPPROVED LESSON PREVIEW · EXAM QUESTIONS":"INDEPENDENT EXAM CHALLENGE")+'</span>'+
+        '<span>'+group.length+' QUESTIONS'+(fullyMarked?' · '+totalMarks+' MARKS':'')+'</span></div><div class="rhs-y-challenge" data-count="'+group.length+'">'+
+        group.map(function(q,i){
+          var text=String(q.question||"").split(/\n\s*\nSource:\s*/i)[0].trim();
+          var marks=questionMarks(text);
+          text=text.replace(/\s*\[\d+(?:\s*marks?)?\]\s*$/i,"").trim();
+          return '<section class="rhs-y-challenge-card">'+
+            '<div class="rhs-y-challenge-card-head"><span>Q'+(start+i+1)+'</span>'+
+            '<span>'+(marks===null?'EXAM PRACTICE':marks+' MARK'+(marks===1?'':'S'))+'</span></div>'+
+            '<p>'+commandWords(text)+'</p></section>';
+        }).join("")+'</div>';
+      return makeStage(challenge,"rhs-y-challenge-stage");
+    }
+    stages.push(challengeStage(questions,0));
     questions.forEach(function(q,i){
       var marks=questionMarks(q.question);
       var label=marks===null?"":marks+" MARKS";
       stages.push(makeStage(header(data.preview?"PREVIEW · SELF-MARK":"SELF-MARK",i+1,questions.length,label)+
-        questionText(q.question)+'<div class="rhs-y-review-body'+(q.visual?' rhs-y-with-visual':'')+'">'+
+        '<div class="rhs-j277-answer-layout">'+questionText(q.question)+'<div class="rhs-y-review-body'+(q.visual?' rhs-y-with-visual':'')+'">'+
         (q.visual?'<div class="rhs-y-visual">'+q.visual+'</div>':"")+
         '<div class="rhs-y-model">'+shortLabel("MODEL ANSWER · MARKING POINTS")+
-        markFromText(q.answer)+'</div></div>',
+        markFromText(q.answer)+'</div></div></div>',
         "rhs-y-mark-stage"));
     });
-    return prepareHost(host,container,stages,3);
+    var installed=prepareHost(host,container,stages,3);
+    if(!installed)return false;
+    host.dataset.rhsJ277Adaptive="true";
+    // Mapped Year 11 lessons must retain the original seven stages until the
+    // bank adapter has validated its mapping and taken ownership.
+    var mapped=["096","097","098","099","100","101","102","103","104","105","106","107","108","109","110","111","112","114","115","116","117","118","119","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","145","146","147","148","149","150","151","152","153","154","155","158","159","160","161","162","163","164"];
+    if(!mapped.includes(String(data.lesson))){
+      onExamLayoutReady(host,container,function(){
+        try{
+          var groups=selectExamGroups(questions,function(part,start){
+            return measureExamStage(host,container,challengeStage(part,start));
+          },matchMedia("(max-width:900px)").matches,function(q){
+            return String(q.question).split(/\r?\n/).length>=6;
+          });
+          var at=0,pages=groups.map(function(group){
+            var stage=challengeStage(group,at);at+=group.length;return stage;
+          });
+          var old=stages[2];
+          old.replaceWith.apply(old,pages);
+          host.dataset.j277ReviewStart=String(2+pages.length);
+          // Keep both Code First nodes and every individual answer unchanged.
+          if(typeof updateControl==="function")updateControl();
+        }catch(error){console.warn("J277 layout fallback: original question sheet retained",error);}
+      });
+    }
+    return true;
   }
   function installH446(){
     if(active||location.pathname.indexOf("/lessons/h446/lesson-220/")<0||
@@ -250,6 +337,10 @@
   }
   global.RHSYouDoTrial={
     installJ277:installJ277,
+    selectExamGroups:selectExamGroups,
+    measureExamStage:measureExamStage,
+    onExamLayoutReady:onExamLayoutReady,
+    commandWords:commandWords,
     installH446:installH446,
     restore:function(){if(restoreFn)restoreFn();}
   };
