@@ -196,30 +196,30 @@
   }
 }
 
-/* Mixed sheets, authored per lesson. Existing two-card and L223 layouts stay intact. */
-#you-do[data-h446-page-groups][data-answer-mode="false"][data-h446-group-count="4"] .youdo-questions{
+/* Mixed sheets, authored or automatically selected per lesson. Existing two-card and L223 layouts stay intact. */
+#you-do:is([data-h446-page-groups],[data-h446-auto-groups="true"])[data-answer-mode="false"][data-h446-group-count="4"] .youdo-questions{
   grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:clamp(10px,1vw,16px);
 }
-#you-do[data-h446-page-groups][data-answer-mode="false"][data-h446-group-count="4"] .youdo-question:not([hidden]){
+#you-do:is([data-h446-page-groups],[data-h446-auto-groups="true"])[data-answer-mode="false"][data-h446-group-count="4"] .youdo-question:not([hidden]){
   padding:clamp(12px,1.2vw,20px)!important;
 }
-#you-do[data-h446-page-groups][data-answer-mode="false"][data-h446-group-count="4"] .youdo-question-prompt .rhs-y13-task{
+#you-do:is([data-h446-page-groups],[data-h446-auto-groups="true"])[data-answer-mode="false"][data-h446-group-count="4"] .youdo-question-prompt .rhs-y13-task{
   font-size:clamp(23px,1.75vw,28px)!important;line-height:1.28!important;margin:6px 0 10px;
 }
-#you-do[data-h446-page-groups][data-answer-mode="false"][data-h446-group-count="4"] .phase-tag{
+#you-do:is([data-h446-page-groups],[data-h446-auto-groups="true"])[data-answer-mode="false"][data-h446-group-count="4"] .phase-tag{
   margin-bottom:8px!important;
 }
-#you-do[data-h446-page-groups][data-answer-mode="false"][data-h446-group-count="1"] .youdo-question-prompt:has(>.rhs-y13-code){
+#you-do:is([data-h446-page-groups],[data-h446-auto-groups="true"])[data-answer-mode="false"][data-h446-group-count="1"] .youdo-question-prompt:has(>.rhs-y13-code):not(:has(>.rhs-y13-code~.rhs-y13-code)){
   display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);column-gap:clamp(18px,2vw,32px);
   align-items:start;align-content:start;
 }
-#you-do[data-h446-page-groups][data-answer-mode="false"][data-h446-group-count="1"] .youdo-question-prompt:has(>.rhs-y13-code)>:not(.rhs-y13-code){
+#you-do:is([data-h446-page-groups],[data-h446-auto-groups="true"])[data-answer-mode="false"][data-h446-group-count="1"] .youdo-question-prompt:has(>.rhs-y13-code):not(:has(>.rhs-y13-code~.rhs-y13-code))>:not(.rhs-y13-code){
   grid-column:1;
 }
-#you-do[data-h446-page-groups][data-answer-mode="false"][data-h446-group-count="1"] .youdo-question-prompt:has(>.rhs-y13-code)>.phase-tag{
+#you-do:is([data-h446-page-groups],[data-h446-auto-groups="true"])[data-answer-mode="false"][data-h446-group-count="1"] .youdo-question-prompt:has(>.rhs-y13-code):not(:has(>.rhs-y13-code~.rhs-y13-code))>.phase-tag{
   grid-column:1/-1;justify-self:start;
 }
-#you-do[data-h446-page-groups][data-answer-mode="false"][data-h446-group-count="1"] .youdo-question-prompt>.rhs-y13-code{
+#you-do:is([data-h446-page-groups],[data-h446-auto-groups="true"])[data-answer-mode="false"][data-h446-group-count="1"] .youdo-question-prompt>.rhs-y13-code{
   grid-column:2;grid-row:2/7;font-size:clamp(18px,1.45vw,23px)!important;line-height:1.27!important;
   white-space:pre-wrap;max-height:none!important;margin:0!important;overflow-wrap:anywhere;
 }
@@ -233,6 +233,18 @@
   font-size:clamp(15px,1.1vw,18px)!important;line-height:1.22!important;max-height:none!important;
 }
 @media(max-width:900px){
-  #you-do[data-h446-page-groups][data-answer-mode="false"] .youdo-questions{grid-template-columns:1fr!important;grid-template-rows:none!important;}
-  #you-do[data-h446-page-groups][data-answer-mode="false"][data-h446-group-count="1"] .youdo-question-prompt:has(>.rhs-y13-code){display:block!important;}
+  #you-do:is([data-h446-page-groups],[data-h446-auto-groups="true"])[data-answer-mode="false"] .youdo-questions{grid-template-columns:1fr!important;grid-template-rows:none!important;}
+  #you-do:is([data-h446-page-groups],[data-h446-auto-groups="true"])[data-answer-mode="false"][data-h446-group-count="1"] .youdo-question-prompt:has(>.rhs-y13-code):not(:has(>.rhs-y13-code~.rhs-y13-code)){display:block!important;}
+}
+
+/* Automatically grouped questions keep all essential context visible.
+   Multiple separate code fragments stay in normal document flow, never overlap. */
+#you-do[data-h446-auto-groups="true"][data-answer-mode="false"][data-h446-group-count="1"] .youdo-question-prompt>.rhs-y13-code{
+  max-height:none!important;white-space:pre-wrap;overflow-wrap:anywhere;
+}
+#you-do[data-h446-auto-groups="true"][data-answer-mode="false"][data-h446-group-count="1"] .youdo-question-prompt :is(img,svg){
+  max-width:100%;height:auto;object-fit:contain;
+}
+#you-do[data-h446-auto-groups="true"][data-answer-mode="false"] details.y13-rhs-context>summary{
+  display:none;
 }
