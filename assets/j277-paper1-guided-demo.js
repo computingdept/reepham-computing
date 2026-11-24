@@ -83,6 +83,17 @@
       ['Number of cores','2 cores → 4 cores','Independent tasks can run on more cores when the software supports parallel processing.'],
       ['Cache size','Small cache → larger cache','More frequently used data may fit in cache, reducing slower accesses to main memory.'],
       ['Make a judgement','Match the feature to the workload','A higher specification in one area does not guarantee a faster computer for every workload.']]},
+    os:{title:'Operating Systems',task:'Follow the OS while a teacher signs in, opens two applications, saves a document and prints it.',steps:[
+      ['Sign in and interact','User management → user interface','Accounts and permissions control access; a graphical or command-line interface lets the user interact with the system.'],
+      ['Open applications','Memory management','The OS allocates RAM to running programs and releases it when no longer required.'],
+      ['Work simultaneously','Multitasking','The OS shares processor time so competing tasks can make progress.'],
+      ['Save the document','File management','The OS organises files and directories and supports storing and retrieving documents.'],
+      ['Print the document','Peripheral management','The OS communicates with devices through drivers and can queue jobs until a printer is ready.']]},
+    utility:{title:'Utility Software',task:'A club needs to protect member records, send a smaller archive and maintain a fragmented magnetic drive.',steps:[
+      ['Protect records','Encryption','Encryption turns readable data into ciphertext, helping protect confidentiality without the appropriate key.'],
+      ['Reduce file size','Compression','Lossless compression can restore the original exactly; lossy compression discards information to reduce size.'],
+      ['Maintain a magnetic HDD','Defragmentation','Reorganising file fragments may reduce mechanical seeking. SSDs do not require routine traditional defragmentation.'],
+      ['Choose and justify','Requirement → utility → reason','Match each utility to the actual problem and explain the effect rather than simply naming a tool.']]},
     security:{title:'Cybersecurity Investigator',task:'A school receives a suspicious message asking for login details, then notices unusual network traffic.',steps:[
       ['Identify the threat','Fake message → phishing','The message tries to trick users into revealing information or clicking a dangerous link.'],
       ['Protect the account','Training · strong passwords · authentication','Verify requests independently and use strong passwords and additional authentication where appropriate.'],

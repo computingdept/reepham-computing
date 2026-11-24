@@ -146,6 +146,291 @@ const securityBank=[
   "Testing someone else's systems without permission is acceptable if nothing is changed."
  ]
 ];
+// Software curriculum candidates: Y10 037–039; Y11 139–140 and relevant 155 revision. OCR 1.5.1–1.5.2.
+const osBank=[
+ [
+  [
+   "User interface",
+   "Memory management",
+   "Peripheral management",
+   "File management"
+  ],
+  "Which OS function allows a person to interact with a computer?",
+  "A receptionist uses windows and icons to open a booking application. Identify the OS function.",
+  "A library needs an interface that beginners can use without remembering commands. Identify the OS function and justify a suitable interface.",
+  "The user interface allows people to interact with a computer. A GUI uses visual controls such as icons and menus, which can help beginners.",
+  "Memory management organises icons to make a computer easy to use.",
+  "Peripheral management is responsible for displaying every application menu."
+ ],
+ [
+  [
+   "Memory management",
+   "User management",
+   "File management",
+   "Peripheral management"
+  ],
+  "Which OS function allocates RAM to running programs?",
+  "A computer opens two applications, both needing working memory. Which OS function allocates memory?",
+  "Two applications request RAM at the same time. Identify how the OS helps allocate memory and prevents applications interfering with each other's allocated memory.",
+  "Memory management allocates and manages RAM for programs and helps protect their memory areas from one another.",
+  "File management allocates a separate physical CPU to every program.",
+  "User management prevents memory use by all programs."
+ ],
+ [
+  [
+   "Multitasking",
+   "File management",
+   "User interface",
+   "Peripheral management"
+  ],
+  "Which OS function helps several programs run during the same period?",
+  "A pupil types a document while audio plays in the background. Identify the relevant OS function.",
+  "On a single-core computer, a user edits text while an application downloads a file. Identify the OS function that helps both programs make progress.",
+  "Multitasking allows programs to share processing time. The OS can switch the CPU between tasks so each makes progress.",
+  "Multitasking requires a separate core for every open program.",
+  "File management permanently stores every running program in ROM."
+ ],
+ [
+  [
+   "Peripheral management",
+   "User management",
+   "Memory management",
+   "File management"
+  ],
+  "Which OS function manages communication with a printer?",
+  "A computer connects to a new projector. Identify the OS function that manages this device.",
+  "A school attaches a scanner that requires a driver. Identify the OS function and explain the purpose of the driver.",
+  "Peripheral management controls communication with connected devices. A suitable driver lets the OS communicate with the particular hardware.",
+  "File management makes all peripherals use identical commands without drivers.",
+  "Memory management converts a scanner into an internal storage device."
+ ],
+ [
+  [
+   "File management",
+   "Multitasking",
+   "Peripheral management",
+   "User interface"
+  ],
+  "Which OS function organises files and folders?",
+  "A pupil creates a folder and moves documents into it. Identify the OS function.",
+  "A teacher needs to rename, move and retrieve documents saved in different folders. Identify and explain the relevant OS function.",
+  "File management organises files and directories and supports operations such as naming, moving, deleting and retrieving files.",
+  "Multitasking automatically moves all files into a single folder.",
+  "Peripheral management gives a file a name based on the monitor size."
+ ],
+ [
+  [
+   "User management",
+   "Memory management",
+   "Multitasking",
+   "Peripheral management"
+  ],
+  "Which OS function manages accounts and permissions?",
+  "A school computer lets a teacher install software but prevents a pupil from doing so. Identify the OS function.",
+  "Several staff share one computer but each needs a separate account and appropriate permissions. Identify the function that supports this.",
+  "User management manages accounts, authentication and access rights so users have appropriate permissions.",
+  "Multitasking grants every user administrator rights.",
+  "Peripheral management makes all user accounts share a password."
+ ],
+ [
+  [
+   "User interface",
+   "Peripheral management",
+   "File management",
+   "Memory management"
+  ],
+  "Which OS function can provide a command-line interface?",
+  "A technician types commands to manage a computer. Identify the OS function.",
+  "An experienced technician needs to repeat many administrative commands. Identify the OS function and explain why a CLI may be useful.",
+  "The user interface enables interaction. A command-line interface allows experienced users to enter commands efficiently and can support scripts.",
+  "File management requires every task to use a graphical menu.",
+  "Memory management eliminates the need to learn command syntax."
+ ],
+ [
+  [
+   "Memory management",
+   "User management",
+   "Peripheral management",
+   "User interface"
+  ],
+  "Which OS function releases memory when a program closes?",
+  "A drawing program closes and another application needs RAM. Identify the OS function that makes memory available.",
+  "A large program closes and its allocated memory can now be reused. Identify the OS function and explain its role.",
+  "Memory management allocates and releases working memory so available RAM can be reused by other processes.",
+  "The user interface permanently reserves RAM for every program ever opened.",
+  "Peripheral management deletes firmware to free working memory."
+ ],
+ [
+  [
+   "Peripheral management",
+   "File management",
+   "User management",
+   "Multitasking"
+  ],
+  "Which OS function manages a queue of print jobs?",
+  "Several users send documents to a shared printer. Identify the OS function that controls the device and its jobs.",
+  "A printer is busy when another document arrives. Identify the OS function that helps manage the output device and waiting jobs.",
+  "Peripheral management coordinates communication with devices; a print queue can hold jobs until the printer is ready.",
+  "User management makes the printer complete every job at once.",
+  "Multitasking guarantees every document is printed without waiting."
+ ],
+ [
+  [
+   "Multitasking",
+   "Peripheral management",
+   "User management",
+   "File management"
+  ],
+  "Which OS function shares CPU time between programs?",
+  "A web browser and a music player are active together. Identify the OS function that shares processor time.",
+  "Several programs need the CPU, including a background application. Identify the OS function that coordinates their execution.",
+  "Multitasking manages competing tasks and shares processor time so programs can make progress without each owning the CPU permanently.",
+  "File management increases the CPU clock speed whenever a file is opened.",
+  "User management ensures only one program can be open at a time."
+ ]
+];
+const utilityBank=[
+ [
+  [
+   "Encryption",
+   "Compression",
+   "Defragmentation",
+   "Operating system"
+  ],
+  "Which utility makes data unreadable without an appropriate key?",
+  "A business carries confidential records on a USB drive. Which utility protects the contents if the drive is lost?",
+  "A portable device may be stolen. Recommend a utility that helps protect the confidentiality of saved customer records and explain how it works.",
+  "Encryption transforms readable data into ciphertext; an appropriate key is needed to decrypt it. It helps protect confidentiality if storage is lost or stolen.",
+  "Compression always makes files unreadable without a secret key.",
+  "Defragmentation prevents anyone from reading a stolen drive."
+ ],
+ [
+  [
+   "Compression",
+   "Encryption",
+   "Defragmentation",
+   "Operating system"
+  ],
+  "Which utility reduces the size of files?",
+  "A teacher needs to send a folder of large documents by email. Choose a suitable utility.",
+  "A company wants to reduce the size of files transferred over a slow link, while preserving all original document content. Recommend a utility and method.",
+  "Lossless compression reduces the amount of data needed while allowing exact restoration of the original files; smaller files may transfer faster.",
+  "Encryption guarantees that the file becomes smaller.",
+  "Defragmentation reduces the number of characters in each document."
+ ],
+ [
+  [
+   "Defragmentation",
+   "Encryption",
+   "Compression",
+   "Operating system"
+  ],
+  "Which utility reorganises fragmented files on a magnetic HDD?",
+  "A magnetic hard drive has file fragments spread across the disk. Choose the utility that can reorganise them.",
+  "A computer uses a mechanical HDD and frequently accesses files stored in many separate fragments. Recommend an appropriate maintenance utility.",
+  "Defragmentation reorganises file fragments on an HDD to reduce unnecessary movement of the read/write head and potentially improve access time.",
+  "Defragmentation increases the drive's physical capacity by deleting file content.",
+  "Encryption physically moves file fragments next to each other."
+ ],
+ [
+  [
+   "Compression",
+   "Defragmentation",
+   "Encryption",
+   "Operating system"
+  ],
+  "Which utility can create a smaller archive of several files?",
+  "A school wants to package several documents into one smaller archive for download. Choose a utility.",
+  "A set of source-code files must be distributed in a smaller archive without losing any character. Recommend the utility.",
+  "Lossless compression can reduce archive size while preserving all original data when decompressed.",
+  "Lossy compression is guaranteed to restore source code exactly.",
+  "Encryption is designed to reduce every file to half its size."
+ ],
+ [
+  [
+   "Encryption",
+   "Compression",
+   "Defragmentation",
+   "Operating system"
+  ],
+  "Which utility protects the meaning of stored data using a key?",
+  "A researcher saves private information on a laptop. Choose a utility to help protect confidentiality.",
+  "An organisation wants stolen storage media to reveal no readable records without the authorised key. Choose a suitable utility.",
+  "Encryption helps make stored data unintelligible to unauthorised readers who lack the decryption key. Key management is essential.",
+  "Defragmentation hides data by placing each file in a different folder.",
+  "Compression provides confidentiality even when everyone has the decompression tool."
+ ],
+ [
+  [
+   "Compression",
+   "Encryption",
+   "Defragmentation",
+   "Operating system"
+  ],
+  "Which utility can help save storage space by encoding data more efficiently?",
+  "A photographer wants to reduce image file sizes and accepts some loss of image detail. Choose the utility.",
+  "A website needs smaller photographic images and can accept reduced quality. Recommend a utility and explain the appropriate compression type.",
+  "Lossy compression may reduce file size substantially by discarding some information. It can suit photographs when reduced quality is acceptable.",
+  "Lossy compression always restores every original pixel exactly.",
+  "Encryption improves image quality by rearranging pixels."
+ ],
+ [
+  [
+   "Defragmentation",
+   "Compression",
+   "Encryption",
+   "Operating system"
+  ],
+  "Which utility may reduce mechanical seeking on a fragmented HDD?",
+  "A desktop with a magnetic HDD is slow when reading fragmented files. Choose the relevant maintenance utility.",
+  "A technician proposes reorganising scattered file fragments on an HDD, but not routinely on an SSD. Identify the utility and explain the difference.",
+  "Defragmentation can reduce mechanical seeking on an HDD. SSDs have no mechanical read/write head and generally do not need traditional defragmentation.",
+  "Defragmentation is required to make the laser in an SSD move faster.",
+  "SSDs have rotating platters that need files placed together."
+ ],
+ [
+  [
+   "Encryption",
+   "Defragmentation",
+   "Compression",
+   "Operating system"
+  ],
+  "Which utility uses a key to protect data confidentiality?",
+  "A staff member sends a sensitive document that must not be readable by an unauthorised recipient. Choose a utility.",
+  "A company needs a confidential file to remain unreadable to someone who obtains a copy without the key. Recommend the relevant utility.",
+  "Encryption protects the confidentiality of data by converting it into ciphertext; only an authorised party with suitable key material should decrypt it.",
+  "Compression is equivalent to password protection in all cases.",
+  "Defragmentation prevents files from being copied."
+ ],
+ [
+  [
+   "Compression",
+   "Encryption",
+   "Defragmentation",
+   "Operating system"
+  ],
+  "Which utility can reduce the amount of storage needed for a backup archive?",
+  "A school wants to store copies of its documents using less space. Choose a utility that reduces file sizes.",
+  "An archive contains documents whose exact contents must be preserved while reducing storage requirements. Recommend a suitable utility.",
+  "Lossless compression can reduce storage requirements while preserving exact original data when restored; the reduction depends on the data.",
+  "Lossy compression guarantees that every original bit is restored.",
+  "Defragmentation removes repeated words from documents."
+ ],
+ [
+  [
+   "Defragmentation",
+   "Encryption",
+   "Compression",
+   "Operating system"
+  ],
+  "Which utility puts fragments of files into more contiguous locations on an HDD?",
+  "A mechanical drive spends time moving its head between parts of the same fragmented file. Choose a utility.",
+  "An administrator wants to improve sequential access to fragmented files on a magnetic drive without changing their content. Recommend a utility.",
+  "Defragmentation can reorganise file fragments into more contiguous locations on an HDD without changing file content, potentially reducing seek time.",
+  "Defragmentation encrypts files so they cannot be read.",
+  "Compression physically removes the read/write head from the drive."
+ ]
+];
 const bank={
 cpu:[
  [
@@ -265,10 +550,10 @@ storage:[
 ]};
 function rotate(a,n){const i=n%a.length;return a.slice(i).concat(a.slice(0,i));}
 function make(id,level,index){
- if((!bank[id]&&id!=='security')||!['easy','medium','hard'].includes(level)||!Number.isInteger(index)||index<0)throw Error('Invalid systems Skill request');
- if(id==='security'){
-  const l=['easy','medium','hard'].indexOf(level),r=securityBank[index%10],a=0;
-  return {type:'systemsbuilder',skill:id,level,index,prompt:r[l+1],context:'OCR J277 · '+(index%10<6?'1.4.1 · Threats':'1.4.2 · Prevention'),a,choices:rotate(r[0].map((v,i)=>({v,i})),index+l),reasons:l?rotate(r.slice(4).map((v,i)=>({v,i})),index+l*2):null,why:r[4],hint:'Identify what happens in the scenario, then choose a threat or a control that fits.'};
+ if((!bank[id]&&!['security','os','utility'].includes(id))||!['easy','medium','hard'].includes(level)||!Number.isInteger(index)||index<0)throw Error('Invalid systems Skill request');
+ if(['security','os','utility'].includes(id)){
+  const l=['easy','medium','hard'].indexOf(level),r=(id==='security'?securityBank:id==='os'?osBank:utilityBank)[index%10],a=0;
+  return {type:'systemsbuilder',skill:id,level,index,prompt:r[l+1],context:'OCR J277 · '+(id==='os'?'1.5.1 · Operating systems':id==='utility'?'1.5.2 · Utility software':index%10<6?'1.4.1 · Threats':'1.4.2 · Prevention'),a,choices:rotate(r[0].map((v,i)=>({v,i})),index+l),reasons:l?rotate(r.slice(4).map((v,i)=>({v,i})),index+l*2):null,why:r[4],hint:id==='os'?'Think about which operating system function manages the resource or interaction.':id==='utility'?'Identify whether the task needs confidentiality, smaller files or HDD file organisation.':'Identify what happens in the scenario, then choose a threat or a control that fits.'};
  }
  const l=['easy','medium','hard'].indexOf(level),r=bank[id][index%10];
  return {type:'systemsbuilder',skill:id,level,index,prompt:r[l+1],context:'OCR J277 · '+(id==='memory'?'1.2.1 · Primary memory':id==='storage'?'1.2.2 · Secondary storage':'1.1.2 · CPU performance'),a:r[0],choices:rotate(labels[id].map((v,i)=>({v,i})),index+l),reasons:l?rotate(r.slice(4).map((v,i)=>({v,i})),index+l*2):null,why:r[4],hint:id==='memory'?'Think about volatility, speed and what the memory holds.':id==='storage'?'Think about capacity, speed, cost, portability and compatibility.':'Compare clock cycles, parallel work and access to frequently used data. Consider whether the information is sufficient.'};
@@ -281,7 +566,7 @@ function render(p,host,isLocked,setReady){
  const board=el('div','sys-skill-board'),s={a:-1,b:-1};
  function options(title,list,key){board.append(el('h3','sys-skill-label',title));const group=el('div','sys-skill-options');
   list.forEach(item=>{const b=el('button','sys-skill-option',item.v);b.type='button';b.setAttribute('aria-pressed','false');b.addEventListener('click',()=>{if(isLocked())return;s[key]=item.i;group.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));setReady(isComplete(p,s));});group.append(b);});board.append(group);}
- options('STEP 1 · '+(p.skill==='memory'?'Choose the memory':p.skill==='storage'?'Choose the storage':p.skill==='security'?'Identify the threat or choose the control':'Identify the factor or decide if the evidence is sufficient'),p.choices,'a');
+ options('STEP 1 · '+(p.skill==='memory'?'Choose the memory':p.skill==='storage'?'Choose the storage':p.skill==='security'?'Identify the threat or choose the control':p.skill==='os'?'Identify the operating system function':p.skill==='utility'?'Choose the utility':'Identify the factor or decide if the evidence is sufficient'),p.choices,'a');
  if(p.reasons){if(p.level==='hard')board.append(el('p','sys-skill-write','Write your answer and reason in your book before selecting the best explanation.'));options('STEP 2 · '+(p.level==='hard'?'Justify your choice':'Explain your choice'),p.reasons,'b');}
  host.append(board);setReady(false);return s;
 }

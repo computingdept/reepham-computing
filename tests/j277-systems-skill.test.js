@@ -2,8 +2,8 @@
 const test=require('node:test');
 const assert=require('node:assert/strict');
 const skill=require('../assets/j277-systems-skill.js');
-test('All four Skills have 30 distinct scenarios and correctly check every decision and reason',()=>{
- for(const id of ['memory','storage','cpu','security']){
+test('All six Skills have 30 distinct scenarios and correctly check every decision and reason',()=>{
+ for(const id of ['memory','storage','cpu','security','os','utility']){
   const prompts=new Set();
   for(const level of ['easy','medium','hard'])for(let i=0;i<10;i++){
    const p=skill.make(id,level,i);prompts.add(p.prompt);
