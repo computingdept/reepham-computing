@@ -45,14 +45,14 @@
   }
 
   // J277 uses the H446 order: four, three, two, one. No question is split.
-  function selectExamGroups(items, fits, narrow, single){
+  function selectExamGroups(items, fits, narrow){
     var groups=[];
     for(var i=0;i<items.length;){
       var size=1;
       if(!narrow){
         for(var n=4;n>=2;n--){
           var part=items.slice(i,i+n);
-          if(part.length===n && !part.some(single) && fits(part,i)){
+          if(part.length===n && fits(part,i)){
             size=n;break;
           }
         }
@@ -278,9 +278,7 @@
         try{
           var groups=selectExamGroups(questions,function(part,start){
             return measureExamStage(host,container,challengeStage(part,start));
-          },matchMedia("(max-width:900px)").matches,function(q){
-            return String(q.question).split(/\r?\n/).length>=6;
-          });
+          },matchMedia("(max-width:900px)").matches);
           var at=0,pages=groups.map(function(group){
             var stage=challengeStage(group,at);at+=group.length;return stage;
           });

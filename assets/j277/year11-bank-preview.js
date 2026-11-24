@@ -60,41 +60,11 @@
   function header(name,detail){
     return '<div class="rhs-bank-head"><span>'+esc(name)+'</span><span>'+esc(detail)+'</span></div>';
   }
-  // Projector-fit pages retain complete questions and their mark counts.
-  // Long text uses pairs; large code/table/figure prompts use a whole screen.
-  // Lesson 114 stays two-first; older preview batches are left untouched.
-  var adaptiveLessons=["114","116","117","118","119","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","145","146","147","148","149","150","151","152","153","154","155","158","159","160","161","162","163","164"];
-  function singleScreenQuestion(q){
-    var text=originalQuestion(q.question);
-    // Extended-response, multi-scenario legal and gate-drawing questions need
-    // a full slide even where their literal word counts are modest.
-    if(["141","142","145","150","162"].includes(lessonId))return true;
-    return !!q.figure || !!q.visualPending ||
-      text.length>235 ||
-      text.split(/\r?\n/).length>=6 ||
-      /\n\s*(?:0[1-9]\s|SELECT\b|FROM\b|WHERE\b|while\b|for\b|if\b|endif\b|endwhile\b|myFile\s*=|____)/i.test(text);
-  }
+  // Until the classroom screen is measurable, use safe single-question pages.
+  // Once active, the shared fit check chooses 4, 3, 2 or 1 based only on
+  // available space, never on question type, length or lesson number.
   function questionGroups(items){
-    var adaptive=adaptiveLessons.includes(lessonId);
-    var mobile=adaptive && matchMedia("(max-width:800px)").matches;
-    var limit=lessonId==="114"?2:adaptive?4:items.length;
-    if(mobile)limit=1;
-    var groups=[],current=[],pairedLength=0;
-    function flush(){if(current.length){groups.push(current);current=[];pairedLength=0;}}
-    items.forEach(function(q){
-      if((adaptive && lessonId!=="114" && singleScreenQuestion(q)) || q.figure){
-        flush();groups.push([q]);return;
-      }
-      var textLength=originalQuestion(q.question).length;
-      var longText=adaptive && (textLength>130 || pairedLength>130);
-      if(current.length && (current.length>=limit || (longText && current.length>=2)))
-        flush();
-      current.push(q);
-      pairedLength+=textLength;
-      if(adaptive && current.length===2 && pairedLength>260)flush();
-    });
-    flush();
-    return groups;
+    return items.map(function(q){return [q];});
   }
   function intro(items,start,totalCount,totalMarks,pageIndex,pageCount){
     var last=start+items.length;
@@ -245,9 +215,7 @@
             var tmp=document.createElement("div");
             tmp.innerHTML=intro(part,start,questions.length,totalMarks,0,2);
             return shared.measureExamStage(host,rolling,tmp.firstElementChild);
-          },matchMedia("(max-width:900px)").matches,function(q){
-            return singleScreenQuestion(q);
-          });
+          },matchMedia("(max-width:900px)").matches);
           // Only replace question pages. Both code nodes and all marking
           // pages survive unchanged, including their SVGs.
           var newPages=document.createElement("div");
