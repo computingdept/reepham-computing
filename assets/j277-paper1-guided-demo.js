@@ -72,12 +72,14 @@
       ['URL','The browser knows the website name','A name alone is not an IP address.'],
       ['DNS lookup','Find the server IP address','A cached answer can avoid another DNS query.'],
       ['Request','The browser requests the webpage','HTTP or HTTPS carries the web request.'],
-      ['Response','The server returns data','The browser processes the response and displays the page.']]},
+      ['Response','The server returns data','The browser processes the response and displays the page.'],
+      ['Cloud storage','Remote server → authorised file access','A cloud file is stored remotely. Access depends on connectivity, permissions and the availability of the provider.']]},
     protocol:{title:'Protocol paths',task:'Choose protocols for a secure webpage.',steps:[
       ['Find the address','DNS resolves the domain','DNS helps find the appropriate server.'],
       ['Reliable transport','TCP manages ordered delivery','Segments can be acknowledged and resent if needed.'],
       ['Web content','HTTPS protects the connection','HTTPS is HTTP carried over an encrypted connection.'],
-      ['Route','IP addresses packets','Routers use IP information to forward packets.']]},
+      ['Route','IP addresses packets','Routers use IP information to forward packets at the internet layer.'],
+      ['Link standards','Ethernet or Wi-Fi','Shared standards allow compatible devices to exchange frames on local links. Separating responsibilities into layers simplifies communication.']]},
     cpu:{title:'CPU Performance & Embedded Systems',task:'Compare computer specifications for different workloads and a dedicated heating controller.',steps:[
       ['Clock speed','2 GHz → 3 GHz','For otherwise identical CPUs, more cycles per second can shorten a task that takes the same number of cycles.'],
       ['Number of cores','2 cores → 4 cores','Independent tasks can run on more cores when the software supports parallel processing.'],

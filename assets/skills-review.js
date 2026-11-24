@@ -7,7 +7,7 @@
 })(typeof globalThis!=='undefined'?globalThis:this,function(){
   'use strict';
   const names={
-    'cpu-cycle':{title:'CPU Cycle Simulator',course:'j277',spec:'J277 · 1.1.1',sub:'Fetch, decode and execute with registers'},
+    'cpu-cycle':{title:'CPU Cycle Simulator',course:'j277',spec:'J277 · 1.1.1',sub:'Fetch, decode, execute · CPU components and registers'},
     'trace-table':{title:'Trace Table Lab',course:'j277',spec:'J277 · 2.1.2',sub:'Record variable values after every statement'},
     'binary-search':{title:'Binary Search Decisions',course:'j277',spec:'J277 · 2.1.3',sub:'Choose the middle, then narrow the search'},
     'bitwise-mask':{title:'Bitwise Mask Lab',course:'h446',spec:'H446 · 1.4.1(i)',sub:'Apply AND, OR and XOR to binary masks'},
@@ -20,7 +20,7 @@
       ['Move the address','MAR ← PC','The Memory Address Register receives 100.'],
       ['Read the instruction','MDR ← Memory[MAR]','The Memory Data Register holds the fetched instruction.'],
       ['Load and advance','CIR ← MDR; PC ← 101','The Current Instruction Register holds the instruction and the PC moves on.'],
-      ['Decode and execute','Control Unit decodes; CPU executes','The instruction is understood, then carried out.'] ]},
+      ['Decode and execute','CU decodes; ALU calculates; ACC holds result','The control unit coordinates execution. For an arithmetic instruction, the ALU performs the calculation and the accumulator may hold the result.'] ]},
     'trace-table':{task:'Trace a different three-line program.',steps:[
       ['First statement','x = 2  →  x: 2','Record the value after the statement.'],
       ['Second statement','x = x + 4  →  x: 6','Use the previous value, then update x.'],
@@ -74,6 +74,18 @@
       model:'x progresses: '+rows.map(r=>r.values[1]).join(' → ')+'. Final x = '+v+'.'};
   }
   function cpuQuestion(level,n){
+    // Alternate the existing cycle exercises with component roles and execution.
+    if(n%2===1){
+      const roles=[['Program Counter (PC)','Address of the next instruction'],['Memory Address Register (MAR)','Address of the memory location being accessed'],['Memory Data Register (MDR)','Data or instruction transferred to or from memory'],['Current Instruction Register (CIR)','Current instruction being decoded or executed'],['Control Unit (CU)','Decodes instructions and coordinates CPU operations'],['Arithmetic Logic Unit (ALU)','Performs arithmetic and logical operations'],['Accumulator (ACC)','Holds intermediate arithmetic or logical results']];
+      if(level==='hard'){
+        const a=5+n,b=2+n%7;
+        return {type:'fields',prompt:'Trace the execution of an ADD instruction.',instruction:'Use the simplified accumulator-based CPU model. Give the component name or abbreviation shown in the labels, and the numerical result.',code:'ACC = '+a+'\nCIR = ADD '+b+'\nOperand already available = '+b,labels:['Component that performs addition (CU or ALU)','Accumulator after addition'],answers:['ALU',String(a+b)],hint:'The control unit coordinates the instruction; the ALU adds the two values.',model:'ALU calculates '+a+' + '+b+' = '+(a+b)+'. ACC = '+(a+b)+'.'};
+      }
+      const count=level==='easy'?3:4,offset=Math.floor(n/2)%roles.length;
+      const selected=Array.from({length:count},(_,i)=>roles[(offset+i)%roles.length]);
+      const options=roles.map(r=>r[0]);options.push(...options.splice(0,(offset+2)%options.length));
+      return {type:'order',prompt:'Match each role to the CPU component or register.',instruction:'Select a component or register for each description.',code:'Simplified CPU model: CU · ALU · PC · MAR · MDR · CIR · ACC',options,labels:selected.map(r=>r[1]),answers:selected.map(r=>r[0]),hint:'Think about whether the role involves an address, transferred data, an instruction, coordination or calculation.',model:selected.map(r=>r[0]+': '+r[1]).join('\n')};
+    }
     if(level==='easy')return {type:'order',prompt:n%2?'Which CPU stage happens first, second and third?':'Put the three CPU stages in the correct order.',
       instruction:'Choose a stage for each numbered position.',code:n%2?'Fetch: get the instruction\nDecode: work out its meaning\nExecute: carry out the instruction':'The processor needs to run its next instruction.',
       options:['Decode','Execute','Fetch'],labels:['Stage 1','Stage 2','Stage 3'],

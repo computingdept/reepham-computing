@@ -9,10 +9,16 @@ const named={
  POP:'Download email to one device',
  FTP:'Transfer files using FTP',
  HTTP:'Open an ordinary webpage',
- HTTPS:'Open a secure webpage'
+ HTTPS:'Open a secure webpage',
+ TCP:'Reliable, ordered delivery',IP:'Address and route packets',Ethernet:'Wired local network communication',WiFi:'Wireless local network communication'
 };
-const protocols=Object.keys(named);
+const protocols=['SMTP','IMAP','POP','FTP','HTTP','HTTPS'];
+const layerProtocols=['TCP','IP','Ethernet','WiFi'];
 const steps={
+ transport:{activity:'Provide reliable ordered delivery between applications',from:'Sending device',fromType:'laptop',to:'Receiving device',toType:'server',protocol:'TCP',why:'TCP is a transport-layer protocol that provides reliable ordered delivery.'},
+ route:{activity:'Address packets so routers can forward them between networks',from:'Sending network',fromType:'laptop',to:'Destination network',toType:'server',protocol:'IP',why:'IP provides packet addressing and supports routing between networks at the internet layer.'},
+ wired:{activity:'Send frames over a wired local Ethernet connection',from:'Wired computer',fromType:'laptop',to:'Local switch',toType:'server',protocol:'Ethernet',why:'Ethernet standards allow compatible devices to communicate over wired local networks at the link layer.'},
+ wireless:{activity:'Send frames over a wireless local network',from:'Tablet',fromType:'phone',to:'Access point',toType:'server',protocol:'WiFi',why:'Wi-Fi standards allow compatible wireless devices to communicate at the link layer.'},
  send:{activity:'Send an email',from:'Email app',fromType:'laptop',to:'Outgoing mail server',toType:'server',protocol:'SMTP',
   why:'SMTP is used to send outgoing email.'},
  sync:{activity:'Read the same inbox on two devices',from:'Phone email app',fromType:'phone',to:'Mail server',toType:'server',protocol:'IMAP',
@@ -54,6 +60,10 @@ const stories={
    broken:0,wrong:'FTP',effect:'The browser is not using the web protocol for that webpage request.'}
  ]
 };
+// Existing journey and repair controls also teach TCP/IP layers and standards.
+stories.easy.push({name:'Reliable network delivery',description:'Choose the transport and internet protocols for reliable delivery across networks.',keys:['transport','route'],layers:true},{name:'Local network standards',description:'Choose compatible wired and wireless network standards.',keys:['wired','wireless'],layers:true});
+stories.medium.push({name:'TCP/IP layer journey',description:'Follow a secure web request through application, transport and internet layers.',keys:['secure','transport','route'],layers:true},{name:'Compatible network devices',description:'Select the standards for wireless access, wired networking and packet addressing.',keys:['wireless','wired','route'],layers:true});
+stories.hard.push({name:'Reliable delivery is missing',description:'A secure webpage needs reliable ordered delivery. Identify the wrong layer protocol.',keys:['secure','transport','route'],broken:1,wrong:'IP',effect:'IP alone does not provide TCP’s reliable ordered delivery.',layers:true},{name:'Wireless device cannot use the chosen link standard',description:'A tablet needs wireless access, not a cable. Repair the incorrect standard.',keys:['wireless','transport','route'],broken:0,wrong:'Ethernet',effect:'The chosen wired standard does not provide the required Wi-Fi connection.',layers:true});
 function make(level,index){
  if(!Object.prototype.hasOwnProperty.call(stories,level))throw new RangeError('Invalid difficulty');
  const src=stories[level][index%stories[level].length];
@@ -61,8 +71,9 @@ function make(level,index){
  const p={type:'protocolpaths',level,index,title:src.name,description:src.description,path,
   prompt:src.name+': '+src.description,
   context:'OCR J277 1.3.2 · Simulated networks · No real communication',
-  hint:'Think about the action: sending email, getting email, transferring a file, or requesting a web page.',
-  choices:protocols,
+  hint:src.layers?'Application protocols support services; TCP provides reliable delivery; IP addresses packets; Ethernet and Wi-Fi support local links.':'Think about the action: sending email, getting email, transferring a file, or requesting a web page.',
+  choices:src.layers?[...protocols,...layerProtocols]:protocols,
+  layers:!!src.layers,
   mode:level==='hard'?'repair':'build'
  };
  if(level==='hard'){
@@ -117,7 +128,7 @@ function render(p,host,isLocked,setReady){
  practice.append(node('div','protocol-heading',p.mode==='repair'?'FIND AND REPAIR THE INCORRECT STEP':'YOUR TURN · COMPLETE EACH ARROW'));
  const pathRows=node('div','protocol-rows');
  practice.append(pathRows);
- const footer=node('p','protocol-note','TCP/IP supports communication across networks. The cards show application protocols.');
+ const footer=node('p','protocol-note',p.layers?'Shared standards enable compatible devices to communicate. Layers divide networking into separate responsibilities.':'TCP/IP supports communication across networks. The cards show application protocols.');
  function displayStep(step,protocol,number){
   const box=node('div','protocol-row');
   box.append(node('div','protocol-task',number+'. '+step.activity));

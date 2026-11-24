@@ -15,6 +15,18 @@ const base=[
  {id:'page',title:'Web server sends the webpage back to the browser',short:'Receive the page',focus:'server',
   explain:'The web server returns the webpage data. The browser can display the page.'}
 ];
+const cloudSteps=[
+ {id:'cloud-ask',title:'Browser asks DNS for the cloud service address',short:'Find service address',focus:'dns',explain:'DNS helps resolve the cloud service name to an IP address.'},
+ {id:'cloud-found',title:'DNS returns the service IP address',short:'Get IP address',focus:'dns',explain:'The browser receives an address to contact the service.'},
+ {id:'cloud-request',title:'Browser requests a saved file using HTTPS',short:'Request file',focus:'browser',explain:'The user signs in as needed and the browser requests the authorised file.'},
+ {id:'cloud-route',title:'Router forwards the request across networks',short:'Forward request',focus:'router',explain:'The network carries the request towards the provider’s servers.'},
+ {id:'cloud-file',title:'Cloud server returns the saved file data',short:'Receive file',focus:'server',explain:'Cloud storage keeps files on remote servers; the user can access them on connected devices, subject to access permissions.'}
+];
+const cloudIssues=[
+ {fault:'dns',title:'The cloud service name cannot be resolved',impact:'The browser may not know the service IP address.',repair:'Check DNS resolution.',explain:'Without an address, the browser may be unable to contact the cloud service.'},
+ {fault:'router',title:'The device has no working internet connection',impact:'A file stored only online cannot be retrieved.',repair:'Restore the internet connection or use a previously downloaded offline copy.',explain:'Cloud access normally needs a network connection unless an offline copy is available.'},
+ {fault:'server',title:'The cloud storage service is unavailable',impact:'Files hosted by the unavailable service may be inaccessible.',repair:'Check the provider’s service status and use an available backup if needed.',explain:'Cloud storage relies on remote provider infrastructure; service outages can interrupt access.'}
+];
 const issues=[
  {fault:'dns',title:'DNS is not responding',
   impact:'The browser cannot find the IP address for the website name.',
@@ -38,24 +50,25 @@ function mixed(items,index){
 }
 function make(level,index){
  if(!['easy','medium','hard'].includes(level))throw new RangeError('Invalid difficulty');
- const domain=sites[(index*3+(level==='medium'?1:level==='hard'?2:0))%sites.length];
- const p={type:'dnsjourney',mode:level,domain,
-  context:'How the internet works · GCSE J277 1.3 · Simplified journey',
-  hint:'DNS finds the IP address. The browser requests the page. Routers forward packets. The web server sends the page back.'};
+ const cloud=index%2===1,variant=Math.floor(index/2),domain=cloud?'files.'+sites[variant%sites.length].replace('www.',''):sites[(variant*3+(level==='medium'?1:level==='hard'?2:0))%sites.length];
+ const route=cloud?cloudSteps:base, faults=cloud?cloudIssues:issues;
+ const p={type:'dnsjourney',mode:level,domain,cloud,
+  context:cloud?'Cloud storage · GCSE J277 1.3.1 · Simplified journey':'How the internet works · GCSE J277 1.3 · Simplified journey',
+  hint:cloud?'Cloud storage keeps files on remote servers. DNS resolves the address; the network carries the file request and response.':'DNS finds the IP address. The browser requests the page. Routers forward packets. The web server sends the page back.'};
  if(level==='hard'){
-  p.issue=issues[index%issues.length];
-  p.impacts=issues.map(x=>({id:x.fault,title:x.impact}));
-  p.repairs=issues.map(x=>({id:x.fault,title:x.repair}));
-  p.prompt='A student cannot load '+domain+'. Follow the journey and explain what happens.';
+  p.issue=faults[variant%faults.length];
+  p.impacts=faults.map(x=>({id:x.fault,title:x.impact}));
+  p.repairs=faults.map(x=>({id:x.fault,title:x.repair}));
+  p.prompt=cloud?'A student cannot retrieve a cloud file from '+domain+'. Diagnose the problem.':'A student cannot load '+domain+'. Follow the journey and explain what happens.';
   p.why=p.issue.explain+' A suitable repair is: '+p.issue.repair;
  }else{
-  p.steps=level==='easy'?[base[0],base[1],base[2],base[4]]:base.slice();
+  p.steps=level==='easy'?[route[0],route[1],route[2],route[4]]:route.slice();
   p.options=mixed(p.steps.concat(level==='medium'?[
    {id:'wrong-page',title:'DNS sends the whole webpage to the browser'},
    {id:'wrong-email',title:'The browser uses email to request the webpage'}
   ]:[]),index+(level==='easy'?80:170));
-  p.prompt='What happens when you enter '+domain+' in a browser?';
-  p.why=p.steps.map((x,i)=>(i+1)+'. '+x.title).join(' → ')+'. DNS finds an address; it does not send the webpage.';
+  p.prompt=cloud?'How does a student retrieve a saved file from '+domain+'?':'What happens when you enter '+domain+' in a browser?';
+  p.why=p.steps.map((x,i)=>(i+1)+'. '+x.title).join(' → ')+(cloud?'. Cloud storage holds files remotely; authorised access requires a connection unless a local copy is available.':'. DNS finds an address; it does not send the webpage.');
  }
  return p;
 }
@@ -76,7 +89,8 @@ function icon(name){
  };
  svg.innerHTML=drawings[name];return svg;
 }
-function renderMap(board,focus,failed){
+function renderMap(board,focus,failed,cloud){
+ const serverLabel=cloud?'Cloud server':'Web server';
  const graphic=node('div','dns-visual');
  const line1=node('div','dns-visual-line');
  const line2=node('div','dns-visual-line');
@@ -85,12 +99,12 @@ function renderMap(board,focus,failed){
   e.append(icon(name),node('strong','',label));return e;
  }
  line1.append(card('browser','Browser'),node('span','dns-visual-arrow','↔'),card('dns','DNS server'));
- line2.append(card('browser','Browser'),node('span','dns-visual-arrow','→'),card('router','Router'),node('span','dns-visual-arrow','→'),card('server','Web server'));
- graphic.append(line1,node('div','dns-visual-divider','Find address · then request webpage'),line2);
+ line2.append(card('browser','Browser'),node('span','dns-visual-arrow','→'),card('router','Router'),node('span','dns-visual-arrow','→'),card('server',serverLabel));
+ graphic.append(line1,node('div','dns-visual-divider',cloud?'Find address · then request file':'Find address · then request webpage'),line2);
  board.append(graphic);
  return function setFocus(which,broken){
   for(const c of graphic.querySelectorAll('.dns-visual-node')){
-   const isFocus=c.querySelector('strong').textContent===({dns:'DNS server',router:'Router',server:'Web server',browser:'Browser'}[which]||'');
+   const isFocus=c.querySelector('strong').textContent===({dns:'DNS server',router:'Router',server:serverLabel,browser:'Browser'}[which]||'');
    c.classList.toggle('active',!!which&&isFocus);
    c.classList.toggle('failed',!!broken&&isFocus);
   }
@@ -104,7 +118,7 @@ function render(p,target,isLocked,setReady){
  site.append(node('span','dns-website-label','YOU TYPE IN THE BROWSER'),node('strong','',p.domain));
  board.append(site);
  const diagram=node('div','dns-visual-wrap');board.append(diagram);
- const setFocus=renderMap(diagram,'',p.mode==='hard'?p.issue.fault:'');
+ const setFocus=renderMap(diagram,'',p.mode==='hard'?p.issue.fault:'',p.cloud);
  if(p.mode==='hard'){
   setReady(true);
   const problem=node('div','dns-problem');
@@ -151,7 +165,7 @@ function render(p,target,isLocked,setReady){
     const selected=state.sequence[i],e=node('button','dns-learning-slot'+(selected?' chosen':''));e.type='button';
     const number=node('b','',String(i+1));
     const line=node('span','',selected?p.steps.concat(p.options).find(x=>x.id===selected).title:
-      (p.mode==='easy'?['Ask DNS','Get IP address','Request webpage','Receive webpage'][i]:'Tap a step'));
+      (p.mode==='easy'?p.steps[i].short:'Tap a step'));
     e.append(number,line);
     e.setAttribute('aria-label',selected?'Remove step '+(i+1)+': '+line.textContent:'Empty step '+(i+1));
     e.disabled=!selected||!!isLocked();
@@ -189,7 +203,7 @@ function render(p,target,isLocked,setReady){
    watch.hidden=true;state.phase='build';setReady(true);draw();
   }
  }
- board.append(node('p','dns-learning-note','DNS finds the IP address. Your browser requests the webpage.'));
+ board.append(node('p','dns-learning-note',p.cloud?'Cloud files are held on remote servers. Access depends on connectivity, permissions and service availability.':'DNS finds the IP address. Your browser requests the webpage.'));
  target.append(board);
  return state;
 }
@@ -207,6 +221,7 @@ function feedback(p,s){
  if(!isComplete(p,s))return p.mode==='hard'?
    'Choose what happens because of the fault and how to fix it.':
    s&&s.phase==='watch'?'Watch each step first, then build the journey.':'Fill all the numbered steps before checking.';
+ if(p.cloud)return p.mode==='hard'?'Think about whether the problem prevents finding the service, connecting to it, or receiving the file.':'Check the order: find the address, request the file, receive the data.';
  return p.mode==='hard'?
   'Think about the role of the highlighted component: DNS finds the address, the router forwards packets, and the web server sends back the page.':
   'Try again: DNS finds the IP address before the browser requests the page. The webpage comes from the web server, not DNS.';

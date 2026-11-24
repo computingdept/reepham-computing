@@ -81,3 +81,7 @@ test('review engine does not access stored mastery',()=>{
   assert.doesNotMatch(source,/localStorage|sessionStorage|fetch\(|XMLHttpRequest/);
   assert.ok(skills.clean('A, b C')===skills.clean('a b, c'));
 });
+
+test('CPU extension mixes role questions with original fetch and execution practice',()=>{
+ for(const level of levels)for(let n=0;n<16;n++){const q=skills.make('cpu-cycle',level,n);assert.ok(q.answers.length===q.labels.length);if(q.options)assert.ok(q.answers.every(a=>q.options.includes(a)));if(level==='hard'&&n%2===1)assert.deepEqual(q.answers,['ALU',String(5+n+2+n%7)]);}
+});
