@@ -136,3 +136,48 @@
   max-width:100%;width:100%;max-height:34vh;margin-top:12px;
   object-fit:contain;object-position:left top;
 }
+
+/* Lesson 276 opt-in pilot: two full-height cards per question sheet.
+   Keep all question text and given information visible, with a scroll fallback
+   rather than clipping on shorter displays. */
+#you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"] .youdo-questions{
+  gap:clamp(16px,1.6vw,26px);
+}
+#you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"][data-h446-group-count="2"] .youdo-questions{
+  grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:minmax(0,1fr);
+}
+#you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"] .youdo-question:not([hidden]){
+  border:1px solid #dedee3;border-radius:18px;background:#fff;
+  padding:clamp(20px,2vw,34px)!important;
+}
+#you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"] .youdo-question-prompt{
+  background:transparent!important;padding:0!important;border:0!important;
+  max-height:none!important;overflow:visible!important;
+}
+#you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"] .youdo-question .phase-tag{
+  font-size:clamp(12px,1vw,16px)!important;color:#54545b;
+  background:#f3f3f5;border:0;margin:0 0 14px;padding:6px 9px;
+}
+#you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"] .youdo-question h2{
+  font-size:clamp(25px,2vw,35px)!important;line-height:1.32;
+  letter-spacing:-.018em;color:#1d1d1f;margin:0 0 18px;
+}
+#you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"] .rhs-y13-context-title{
+  color:#55555d;font-size:clamp(12px,.95vw,15px);margin:16px 0 7px;
+}
+#you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"] .rhs-y13-context,
+#you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"] .y13-rhs-brief{
+  font-size:clamp(17px,1.3vw,23px);line-height:1.45;color:#29292e;
+  background:#f5f5f7;border-radius:10px;padding:12px 14px;margin:0 0 12px;
+}
+#you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"] .rhs-y13-source{
+  color:#606068;font-size:clamp(11px,.85vw,14px);margin-top:15px;
+}
+@media(max-width:900px){
+  #you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"] .youdo-questions{
+    grid-template-columns:1fr!important;grid-template-rows:none!important;
+  }
+  #you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"] .youdo-question:not([hidden]){
+    padding:18px!important;
+  }
+}
