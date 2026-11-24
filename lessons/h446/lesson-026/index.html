@@ -94,7 +94,7 @@
   #we-do .wedo-step .logic-tt{font-size:12px}
 }
 </style>
-<meta name="lesson-status" content="ready"><style>.ready-badge{display:inline-block;background:#e4f3e8;color:#155735;font-size:12px;font-weight:850;padding:3px 7px;border-radius:5px;letter-spacing:.06em;white-space:nowrap}</style></head>
+<meta name="lesson-status" content="ready"><style>.ready-badge{display:inline-block;background:#e4f3e8;color:#155735;font-size:12px;font-weight:850;padding:3px 7px;border-radius:5px;letter-spacing:.06em;white-space:nowrap}</style><link rel="stylesheet" href="../../../assets/h446-y13/h446-you-do.css?v=20261124-y12-shared2"></head>
 <body>
 <a class="skip" href="#main">Skip to lesson</a>
 
@@ -362,7 +362,7 @@ Exception   ¬D</pre>
   </article>
 </div></section>
 
-<section id="you-do" class="page phase-youdo" data-phase-time="20 minutes · OCR-style practice" data-window-size="1"><div class="youdo-deck">
+<section id="you-do" class="page phase-youdo" data-phase-time="20 minutes · OCR-style practice" data-window-size="1" data-h446-y12-shared="true" data-h446-y12-legacy="true" data-h446-y13-bank="true" data-h446-two-page-pilot="true"><div class="youdo-deck">
 <aside class="logic-translation-guide" aria-label="Strategy for turning word problems into logic gates">
   <div class="logic-translation-heading"><strong>WORDS → GATES</strong><span>1. Name the output → 2. Group options → 3. Add requirements → 4. Invert exceptions → 5. Write expression, then draw</span></div>
   <div class="logic-translation-cues">
@@ -373,7 +373,70 @@ Exception   ¬D</pre>
   </div>
   <p><strong>Top tip:</strong> Work backwards from the output to choose the final gate. Use brackets for grouped conditions. <strong>Watch out:</strong> “either” alone does not mean XOR.</p>
 </aside>
-<div class="youdo-rolling"><article class="exam-card youdo-question"><span class="phase-tag">OCR-STYLE · ALARM APPLICATION</span><h3>Burglar alarm circuit</h3><div class="question-text"><p>A burglar alarm has four inputs. Each input is <strong>1 when the condition is true</strong> and 0 otherwise:</p><ul><li><strong>A:</strong> door sensor detects movement</li><li><strong>B:</strong> motion sensor detects movement</li><li><strong>C:</strong> alarm is armed</li><li><strong>D:</strong> test mode is enabled</li></ul><p>The alarm sounds (<strong>Q = 1</strong>) only when <strong>at least one sensor detects movement</strong>, the alarm is <strong>armed</strong>, and test mode is <strong>off</strong>.</p><p><strong>Your tasks:</strong> (1) Write the Boolean expression for Q. (2) Draw the logic-gate circuit using AND, OR and NOT gates. (3) Label A, B, C, D and Q.</p></div><div class="success-check">Check your circuit: either sensor can trigger it, but only when armed and not in test mode.</div></article><article class="exam-card youdo-question"><span class="phase-tag">OCR-STYLE · COMPOUND LOGIC</span><h3>Expression and truth table</h3><div class="question-text"><p>For P = ¬(A ∨ B) ⊻ C, complete all eight output values.</p></div><div class="success-check">Use an intermediate A∨B column if needed.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT · DEFINE</span><h3>Create logic from words</h3><div class="question-text"><p>A cooling fan runs when temperature is high OR load is high, but only when maintenance mode is NOT enabled. Write the expression and truth table.</p></div><div class="success-check">The expression uses OR, AND and NOT correctly.</div></article><article class="exam-card youdo-question" hidden><span class="phase-tag">INDEPENDENT · REPRESENT</span><h3>Expression to gate plan</h3><div class="question-text"><p>Convert Q = (A ⊻ B) ∧ ¬C into a gate-by-gate plan and complete its truth table.</p></div><div class="success-check">Both representation and outputs agree.</div></article></div><div class="youdo-window-progress">Questions 1–2 of 4</div></div></section>
+<div class="youdo-questions"><article class="exam-card youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">OCR-STYLE · ALARM APPLICATION</span><h3>Burglar alarm circuit</h3><div class="question-text"><p>A burglar alarm has four inputs. Each input is <strong>1 when the condition is true</strong> and 0 otherwise:</p><ul><li><strong>A:</strong> door sensor detects movement</li><li><strong>B:</strong> motion sensor detects movement</li><li><strong>C:</strong> alarm is armed</li><li><strong>D:</strong> test mode is enabled</li></ul><p>The alarm sounds (<strong>Q = 1</strong>) only when <strong>at least one sensor detects movement</strong>, the alarm is <strong>armed</strong>, and test mode is <strong>off</strong>.</p><p><strong>Your tasks:</strong> (1) Write the Boolean expression for Q. (2) Draw the logic-gate circuit using AND, OR and NOT gates. (3) Label A, B, C, D and Q.</p></div><div class="success-check">Check your circuit: either sensor can trigger it, but only when armed and not in test mode.</div></div><div class="youdo-solution" hidden><strong>WORKED ANSWER / MARKS</strong><span class="answer-panel-label">Worked solution · 1 of 4</span><div class="answer-result"><span class="answer-result-label">FINAL ANSWER</span><div class="answer-result-value">Q = (A ∨ B) ∧ C ∧ ¬D</div></div><div class="answer-working"><pre class="solution-code">A = door sensor; B = motion sensor
+C = alarm armed; D = test mode
+
+Q = (A ∨ B) ∧ C ∧ ¬D
+
+1. OR A and B.
+2. NOT D.
+3. AND (A∨B) with C.
+4. AND that result with ¬D to give Q.</pre><p><strong>Check:</strong> A=1, B=0, C=1, D=0 gives Q=1. Changing D to 1 makes Q=0. A three-input final AND is also correct.</p>
+<figure class="answer-logic-figure">
+<svg viewBox="0 0 760 290" role="img" aria-label="Alarm logic-gate diagram. A and B enter OR, its output and armed C enter an AND gate; D passes through NOT and joins the final AND gate producing Q" xmlns="http://www.w3.org/2000/svg">
+<title>Q = (A OR B) AND C AND NOT D</title>
+<g stroke="#174c36" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<!-- Wires enter the actual gate shapes, with three successive operations. -->
+<path d="M55 57 H150 M55 115 H150 M227 87 H253 V112 H278 M55 157 H278 M357 134 H416 V163 H455 M55 248 H155 M230 248 H425 V205 H455 M545 183 H675"/>
+<!-- OR: A or B -->
+<path d="M140 38 Q178 86 140 137 Q191 133 227 87 Q196 46 140 38 Z" fill="#e9f4ed"/>
+<!-- AND: sensor OR result with armed C -->
+<path d="M278 91 H313 A44 44 0 0 1 313 178 H278 Z" fill="#e9f4ed"/>
+<!-- NOT: test mode D, including output bubble -->
+<path d="M155 217 L155 279 L210 248 Z" fill="#e9f4ed"/>
+<circle cx="221" cy="248" r="9" fill="#fff"/>
+<!-- Final AND: sensor-and-armed result and NOT D -->
+<path d="M455 142 H490 A42 42 0 0 1 490 225 H455 Z" fill="#e9f4ed"/>
+</g>
+<g fill="#173d31" font-family="Arial,sans-serif" font-size="22" font-weight="750">
+<text x="18" y="64">A</text><text x="18" y="122">B</text><text x="18" y="165">C</text><text x="18" y="255">D</text><text x="690" y="190">Q</text>
+<text x="163" y="95" font-size="18">OR</text><text x="295" y="143" font-size="18">AND</text><text x="467" y="192" font-size="18">AND</text><text x="164" y="205" font-size="15">NOT</text>
+</g>
+</svg>
+<figcaption>OR the sensors, combine with armed C, then AND with NOT D.</figcaption>
+</figure></div></div></article><article class="exam-card youdo-question"><div class="youdo-question-prompt"><span class="phase-tag">OCR-STYLE · COMPOUND LOGIC</span><h3>Expression and truth table</h3><div class="question-text"><p>For P = ¬(A ∨ B) ⊻ C, complete all eight output values.</p></div><div class="success-check">Use an intermediate A∨B column if needed.</div></div><div class="youdo-solution" hidden><strong>WORKED ANSWER / MARKS</strong><span class="answer-panel-label">Worked solution · 2 of 4</span><div class="answer-result"><span class="answer-result-label">FINAL ANSWER</span><div class="answer-result-value">P: 1, 0, 0, 1, 0, 1, 0, 1</div></div><div class="answer-working"><p>P = ¬(A ∨ B) ⊻ C. Calculate OR, then NOT, then XOR. XOR is 1 when its two inputs differ.</p><pre class="solution-code">A B C | A∨B | ¬(A∨B) | P
+0 0 0 |  0  |    1    | 1
+0 0 1 |  0  |    1    | 0
+0 1 0 |  1  |    0    | 0
+0 1 1 |  1  |    0    | 1
+1 0 0 |  1  |    0    | 0
+1 0 1 |  1  |    0    | 1
+1 1 0 |  1  |    0    | 0
+1 1 1 |  1  |    0    | 1</pre><p><strong>Check:</strong> For 000, NOT(0 OR 0)=1 and 1 XOR 0 = 1.</p></div></div></article><article class="exam-card youdo-question" hidden><div class="youdo-question-prompt"><span class="phase-tag">INDEPENDENT · DEFINE</span><h3>Create logic from words</h3><div class="question-text"><p>A cooling fan runs when temperature is high OR load is high, but only when maintenance mode is NOT enabled. Write the expression and truth table.</p></div><div class="success-check">The expression uses OR, AND and NOT correctly.</div></div><div class="youdo-solution" hidden><strong>WORKED ANSWER / MARKS</strong><span class="answer-panel-label">Worked solution · 3 of 4</span><div class="answer-result"><span class="answer-result-label">FINAL ANSWER</span><div class="answer-result-value">F = (T ∨ L) ∧ ¬M</div></div><div class="answer-working"><p>T = temperature high; L = load high; M = maintenance mode on.</p><pre class="solution-code">F = (T ∨ L) ∧ ¬M
+
+T L M | T∨L | ¬M | F
+0 0 0 |  0  |  1 | 0
+0 0 1 |  0  |  0 | 0
+0 1 0 |  1  |  1 | 1
+0 1 1 |  1  |  0 | 0
+1 0 0 |  1  |  1 | 1
+1 0 1 |  1  |  0 | 0
+1 1 0 |  1  |  1 | 1
+1 1 1 |  1  |  0 | 0</pre><p><strong>Check:</strong> At least one trigger must be high, and maintenance must be off.</p></div></div></article><article class="exam-card youdo-question" hidden><div class="youdo-question-prompt"><span class="phase-tag">INDEPENDENT · REPRESENT</span><h3>Expression to gate plan</h3><div class="question-text"><p>Convert Q = (A ⊻ B) ∧ ¬C into a gate-by-gate plan and complete its truth table.</p></div><div class="success-check">Both representation and outputs agree.</div></div><div class="youdo-solution" hidden><strong>WORKED ANSWER / MARKS</strong><span class="answer-panel-label">Worked solution · 4 of 4</span><div class="answer-result"><span class="answer-result-label">FINAL ANSWER</span><div class="answer-result-value">Q = (A ⊻ B) ∧ ¬C</div></div><div class="answer-working"><pre class="solution-code">Q = (A ⊻ B) ∧ ¬C
+
+1. XOR A and B.
+2. NOT C.
+3. AND those outputs.
+
+A B C | A ⊻ B | ¬C | Q
+0 0 0 |    0    |  1 | 0
+0 0 1 |    0    |  0 | 0
+0 1 0 |    1    |  1 | 1
+0 1 1 |    1    |  0 | 0
+1 0 0 |    1    |  1 | 1
+1 0 1 |    1    |  0 | 0
+1 1 0 |    0    |  1 | 0
+1 1 1 |    0    |  0 | 0</pre><p><strong>Check:</strong> Q=1 only when A and B differ and C=0.</p></div></div></article></div><div class="youdo-window-progress">Questions 1–2 of 4</div></div></section>
 
 <section id="vocabulary" class="page phase-vocab" data-phase-time="5 minutes" data-vocab-flow="retrieval"><div class="vocab-deck"><article class="vocab-stage"><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 1 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A value with two states.</p><span class="vocab-stage-count">1 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">Boolean</div><p>True/false or 1/0.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 2 OF 8</span><h2>Recall the term</h2><p class="vocab-question">True only if all required inputs are true.</p><span class="vocab-stage-count">2 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">AND</div><p>Symbol ∧.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 3 OF 8</span><h2>Recall the term</h2><p class="vocab-question">True if at least one input is true.</p><span class="vocab-stage-count">3 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">OR</div><p>Symbol ∨.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 4 OF 8</span><h2>Recall the term</h2><p class="vocab-question">Reverses a Boolean value.</p><span class="vocab-stage-count">4 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">NOT</div><p>¬A means NOT A.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 5 OF 8</span><h2>Recall the term</h2><p class="vocab-question">True when inputs differ.</p><span class="vocab-stage-count">5 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">XOR</div><p>Symbol ⊻; exactly one input is true.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 6 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A circuit implementing a Boolean operation.</p><span class="vocab-stage-count">6 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">logic gate</div><p>Examples: AND, OR, NOT, XOR.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 7 OF 8</span><h2>Recall the term</h2><p class="vocab-question">All input combinations and resulting outputs.</p><span class="vocab-stage-count">7 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">truth table</div><p>n inputs produce 2^n rows.</p></div></article><article class="vocab-stage" hidden><div class="vocab-prompt"><span class="vocab-test-label">QUESTION 8 OF 8</span><h2>Recall the term</h2><p class="vocab-question">A symbolic Boolean statement.</p><span class="vocab-stage-count">8 of 8</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">ANSWER</span><div class="vocab-answer-value">expression</div><p>It can be represented as gates.</p></div></article></div></section>
 
@@ -382,6 +445,6 @@ Exception   ¬D</pre>
 </main>
 
 <div class="lesson-footer">Lesson 026 · OCR H446 1.4.3 Boolean Algebra <span>Use the menu or ← → keys</span> · READY</div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20261115-objectives-focus1"></script>
+<script src="../../../assets/h446-y13/h446-you-do.js?v=20261124-y12-shared2"></script><script src="../../../assets/h446-lesson/lesson.js?v=20261115-objectives-focus1"></script>
 </body>
 </html>
