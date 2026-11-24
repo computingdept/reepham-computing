@@ -120,3 +120,43 @@
     font-size:19px!important;
   }
 }
+
+/* Optional single-question sheet: retain the standard two-card design elsewhere. */
+#you-do[data-h446-single-question="true"][data-answer-mode="false"] .youdo-question:not([hidden]){
+  padding:clamp(20px,2vw,34px)!important;
+}
+#you-do[data-h446-single-question="true"][data-answer-mode="false"] .youdo-question-prompt{
+  max-width:none!important;
+}
+#you-do[data-h446-single-question="true"][data-answer-mode="false"] .youdo-question-prompt:has(>.y13-rhs-illustration-question){
+  display:grid!important;
+  grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);
+  column-gap:clamp(18px,2vw,32px);
+  align-items:start;align-content:start;
+}
+#you-do[data-h446-single-question="true"][data-answer-mode="false"] .youdo-question-prompt:has(>.y13-rhs-illustration-question)>:not(.y13-rhs-illustration-question){
+  grid-column:1;
+}
+#you-do[data-h446-single-question="true"][data-answer-mode="false"] .youdo-question-prompt:has(>.y13-rhs-illustration-question)>.phase-tag{
+  grid-column:1/-1;justify-self:start;
+}
+#you-do[data-h446-single-question="true"][data-answer-mode="false"] .youdo-question-prompt>.y13-rhs-illustration-question{
+  grid-column:2;grid-row:2/7;
+  width:100%!important;max-width:none!important;height:auto!important;
+  max-height:65vh!important;object-fit:contain;object-position:center;
+  align-self:center;margin:0!important;
+}
+#you-do[data-h446-single-question="true"][data-answer-mode] .youdo-question-prompt>.y13-rhs-brief{
+  max-width:none;white-space:normal;
+}
+#you-do[data-h446-single-question="true"][data-answer-mode="true"] .youdo-question-prompt>.y13-rhs-brief{
+  display:block!important;
+}
+@media(max-width:900px){
+  #you-do[data-h446-single-question="true"][data-answer-mode="false"] .youdo-question-prompt:has(>.y13-rhs-illustration-question){
+    display:block!important;
+  }
+  #you-do[data-h446-single-question="true"][data-answer-mode="false"] .youdo-question-prompt>.y13-rhs-illustration-question{
+    max-height:none!important;margin:12px 0!important;
+  }
+}
