@@ -73,6 +73,7 @@
     for(let i=0;i<count;){
       let size=1;
       if(!narrow&&count-i>=4&&fits(i,4))size=4;
+      else if(!narrow&&count-i>=3&&fits(i,3))size=3;
       else if(!narrow&&count-i>=2&&fits(i,2))size=2;
       groups.push({start:i,end:i+size});
       i+=size;
@@ -131,17 +132,9 @@
       });
     }
     let groups=null;
-    // Temporary visual trial: only Lesson 090, only with the explicit preview URL.
-    const previewThree=year12&&id===90&&!authored&&questions.length===3
-      &&new URLSearchParams(location.search).get('youdo-three-preview')==='1'
-      &&!window.matchMedia('(max-width:900px)').matches;
-    if(previewThree){
-      root.dataset.h446ThreePreview='true';
-      root.dataset.h446AutoGroups='true';
-      groups=[{start:0,end:3}];
-    }else if(authored){
+    if(authored){
       const sizes=root.dataset.h446SingleQuestion==='true'?questions.map(()=>1):root.dataset.h446PageGroups.split(',').map(Number);
-      if(sizes.some(n=>![1,2,4].includes(n))||sizes.reduce((a,b)=>a+b,0)!==questions.length)return;
+      if(sizes.some(n=>![1,2,3,4].includes(n))||sizes.reduce((a,b)=>a+b,0)!==questions.length)return;
       let start=0;
       groups=sizes.map(n=>{const group={start,end:start+n};start+=n;return group;});
     }else{
