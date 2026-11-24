@@ -58,16 +58,20 @@
     markQuestion(heading);
   });
 
-  // Optional single-question pages. Reuse the existing question/answer controller
-  // without editing the overarching lesson script. The hook is installed only
-  // on explicitly opted-in You Do sections, before user interaction.
-  if(root.dataset.h446SingleQuestion==='true'){
+  // Explicit authored page sizes; only opted-in decks can change grouping.
+  // The existing controller retains all-question-first navigation and answer order.
+  if(root.dataset.h446SingleQuestion==='true'||root.dataset.h446PageGroups){
     document.addEventListener('DOMContentLoaded',()=>{
       if(typeof h446QuestionSheetGroups!=='function'||typeof h446SequentialQuestions!=='function')return;
       const defaultGroups=h446QuestionSheetGroups;
       h446QuestionSheetGroups=function(page){
         if(page!==root)return defaultGroups(page);
-        return h446SequentialQuestions(page).map((_,i)=>({start:i,end:i+1}));
+        const questions=h446SequentialQuestions(page);
+        if(root.dataset.h446SingleQuestion==='true')return questions.map((_,i)=>({start:i,end:i+1}));
+        const sizes=(root.dataset.h446PageGroups||'').split(',').map(Number);
+        if(!sizes.length||sizes.some(n=>![1,2,4].includes(n))||sizes.reduce((a,b)=>a+b,0)!==questions.length)return defaultGroups(page);
+        let start=0;
+        return sizes.map(n=>{const group={start,end:start+n};start+=n;return group;});
       };
       if(root.classList.contains('active')&&root.dataset.answerMode!=='true'){
         h446ShowQuestionSheet(root,0);
