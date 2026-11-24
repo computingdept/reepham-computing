@@ -3,6 +3,149 @@
 'use strict';
 const labels={memory:['RAM','ROM','Cache','Virtual memory'],storage:['Magnetic HDD','Solid-state SSD','Optical disc','USB flash drive'],cpu:['Clock speed','Number of cores','Cache size','Not enough information']};
 // Each row contains three separate scenarios and a worked reason, followed by two misconceptions.
+// Security curriculum candidates: Y10 030–034; Y11 137–138. OCR 1.4.1–1.4.2.
+const securityBank=[
+ [
+  [
+   "Phishing",
+   "Denial of service",
+   "Brute-force attack",
+   "Data interception"
+  ],
+  "A fake email asks you to enter your password. Identify the threat.",
+  "A message pretending to be from IT asks a teacher to sign in using a link. Identify the threat.",
+  "A convincing fake school email asks staff to submit their account details. Identify the attack and explain how it works.",
+  "Phishing uses deceptive messages to trick people into revealing information or taking unsafe actions. Staff training and checking requests independently help reduce the risk.",
+  "The attacker overwhelms the server with requests.",
+  "The attacker tries many possible passwords automatically."
+ ],
+ [
+  [
+   "Malware",
+   "Phishing",
+   "Data interception",
+   "Denial of service"
+  ],
+  "A downloaded game contains harmful software. Identify the threat.",
+  "A file secretly installs a program that damages other files. Identify the threat.",
+  "A school computer runs a downloaded program that encrypts its files and demands payment. Identify the type of threat.",
+  "Malware is malicious software. Ransomware can encrypt files; anti-malware, updates and safe downloads help reduce the risk, and backups can aid recovery.",
+  "Every encrypted file is evidence of phishing.",
+  "The threat is simply too many legitimate users visiting a website."
+ ],
+ [
+  [
+   "Brute-force attack",
+   "Phishing",
+   "SQL injection",
+   "Denial of service"
+  ],
+  "An attacker repeatedly guesses passwords. Identify the attack.",
+  "An account receives thousands of automated failed login attempts. Identify the attack.",
+  "A login is targeted by repeated automated attempts using different passwords. Identify the attack and explain the protection needed.",
+  "Brute-force attacks try many possible passwords. Strong passwords and limits on login attempts reduce risk; additional authentication can protect accounts.",
+  "The attack relies only on copying data in transit.",
+  "The attacker must send a convincing email to every user."
+ ],
+ [
+  [
+   "Denial of service",
+   "Data interception",
+   "SQL injection",
+   "Phishing"
+  ],
+  "A website is flooded with requests and stops responding. Identify the attack.",
+  "A server cannot respond to genuine users because of an overwhelming volume of unwanted traffic. Identify the attack.",
+  "A booking service becomes unavailable when traffic deliberately consumes its available resources. Identify the attack and its effect.",
+  "A denial-of-service attack overwhelms resources so legitimate users cannot access a service. Traffic filtering and rate limiting can help reduce the impact.",
+  "The attack always changes database records.",
+  "The attacker has to obtain a user's password first."
+ ],
+ [
+  [
+   "Data interception",
+   "Malware",
+   "Brute-force attack",
+   "Denial of service"
+  ],
+  "An unauthorised person reads data travelling over a network. Identify the threat.",
+  "Unencrypted information is captured while it travels between devices. Identify the threat.",
+  "A company discovers that private messages sent over a network were captured by an unauthorised party. Identify the threat and a suitable protection.",
+  "Data interception captures communications in transit. Encryption helps prevent captured content being understood without the appropriate key.",
+  "Encrypting the data prevents anyone from capturing network traffic at all.",
+  "The threat is caused by a server receiving too many requests."
+ ],
+ [
+  [
+   "SQL injection",
+   "Phishing",
+   "Data interception",
+   "Brute-force attack"
+  ],
+  "An attacker tries to make a website database run unintended commands through an input field. Identify the attack.",
+  "A poorly protected search form allows input to alter a database query. Identify the attack.",
+  "An online database returns unauthorised records because unsafe input changes the intended query. Identify the threat and explain a defensive measure.",
+  "SQL injection occurs when untrusted input alters a database query. Parameterised queries help keep input separate from commands; appropriate input validation is also useful.",
+  "The attack is only possible by guessing a user's password.",
+  "Increasing the network bandwidth prevents database query manipulation."
+ ],
+ [
+  [
+   "Firewall",
+   "Anti-malware software",
+   "Encryption",
+   "Access levels"
+  ],
+  "Which control filters network traffic according to rules?",
+  "A school wants to restrict unwanted inbound network traffic. Choose the most appropriate control.",
+  "A network administrator needs to allow legitimate connections while blocking traffic that violates network rules. Recommend the control.",
+  "A firewall monitors and filters network traffic using rules about allowed connections; it does not guarantee that all allowed traffic is safe.",
+  "A firewall removes every infected file already stored on a computer.",
+  "Encryption automatically decides which network connections may enter."
+ ],
+ [
+  [
+   "Anti-malware software",
+   "Firewall",
+   "Penetration testing",
+   "Encryption"
+  ],
+  "Which software scans for malicious programs?",
+  "A laptop may contain harmful downloaded files. Choose a tool to detect and quarantine them.",
+  "A school wants to detect known malicious files on its computers and prevent some infections. Recommend software and explain why updating it helps.",
+  "Anti-malware software detects and blocks or quarantines malicious files; updates improve recognition of new threats. It cannot detect every threat.",
+  "A firewall guarantees removal of all malicious files already on the disk.",
+  "Encryption detects every malicious program."
+ ],
+ [
+  [
+   "User access levels",
+   "Encryption",
+   "Penetration testing",
+   "Firewall"
+  ],
+  "Which control gives different users different permissions?",
+  "Students must read shared files but only teachers may change them. Choose the control.",
+  "An organisation wants staff to access only the files needed for their roles, even after successful login. Recommend the control.",
+  "User access levels restrict what authenticated users can see or change. Passwords authenticate users; permissions then limit their access.",
+  "A strong password automatically grants only the permissions a user needs.",
+  "Encryption alone decides which authenticated users may edit each file."
+ ],
+ [
+  [
+   "Penetration testing",
+   "Encryption",
+   "User access levels",
+   "Anti-malware software"
+  ],
+  "Which authorised activity tests systems for weaknesses?",
+  "A company hires an authorised specialist to check its website for vulnerabilities. Identify the activity.",
+  "Before launching a new service, a school wants an authorised security specialist to find exploitable weaknesses so they can be fixed. Recommend the method.",
+  "Penetration testing is authorised security testing to identify weaknesses so they can be fixed. The scope and permission must be agreed.",
+  "A backup automatically identifies every security weakness.",
+  "Testing someone else's systems without permission is acceptable if nothing is changed."
+ ]
+];
 const bank={
 cpu:[
  [
@@ -122,7 +265,11 @@ storage:[
 ]};
 function rotate(a,n){const i=n%a.length;return a.slice(i).concat(a.slice(0,i));}
 function make(id,level,index){
- if(!bank[id]||!['easy','medium','hard'].includes(level)||!Number.isInteger(index)||index<0)throw Error('Invalid systems Skill request');
+ if((!bank[id]&&id!=='security')||!['easy','medium','hard'].includes(level)||!Number.isInteger(index)||index<0)throw Error('Invalid systems Skill request');
+ if(id==='security'){
+  const l=['easy','medium','hard'].indexOf(level),r=securityBank[index%10],a=0;
+  return {type:'systemsbuilder',skill:id,level,index,prompt:r[l+1],context:'OCR J277 · '+(index%10<6?'1.4.1 · Threats':'1.4.2 · Prevention'),a,choices:rotate(r[0].map((v,i)=>({v,i})),index+l),reasons:l?rotate(r.slice(4).map((v,i)=>({v,i})),index+l*2):null,why:r[4],hint:'Identify what happens in the scenario, then choose a threat or a control that fits.'};
+ }
  const l=['easy','medium','hard'].indexOf(level),r=bank[id][index%10];
  return {type:'systemsbuilder',skill:id,level,index,prompt:r[l+1],context:'OCR J277 · '+(id==='memory'?'1.2.1 · Primary memory':id==='storage'?'1.2.2 · Secondary storage':'1.1.2 · CPU performance'),a:r[0],choices:rotate(labels[id].map((v,i)=>({v,i})),index+l),reasons:l?rotate(r.slice(4).map((v,i)=>({v,i})),index+l*2):null,why:r[4],hint:id==='memory'?'Think about volatility, speed and what the memory holds.':id==='storage'?'Think about capacity, speed, cost, portability and compatibility.':'Compare clock cycles, parallel work and access to frequently used data. Consider whether the information is sufficient.'};
 }
@@ -134,10 +281,10 @@ function render(p,host,isLocked,setReady){
  const board=el('div','sys-skill-board'),s={a:-1,b:-1};
  function options(title,list,key){board.append(el('h3','sys-skill-label',title));const group=el('div','sys-skill-options');
   list.forEach(item=>{const b=el('button','sys-skill-option',item.v);b.type='button';b.setAttribute('aria-pressed','false');b.addEventListener('click',()=>{if(isLocked())return;s[key]=item.i;group.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));setReady(isComplete(p,s));});group.append(b);});board.append(group);}
- options('STEP 1 · '+(p.skill==='memory'?'Choose the memory':p.skill==='storage'?'Choose the storage':'Identify the factor or decide if the evidence is sufficient'),p.choices,'a');
- if(p.reasons){if(p.level==='hard')board.append(el('p','sys-skill-write','Write your recommendation and reason in your book before selecting the best explanation.'));options('STEP 2 · '+(p.level==='hard'?'Justify your choice':'Explain your choice'),p.reasons,'b');}
+ options('STEP 1 · '+(p.skill==='memory'?'Choose the memory':p.skill==='storage'?'Choose the storage':p.skill==='security'?'Identify the threat or choose the control':'Identify the factor or decide if the evidence is sufficient'),p.choices,'a');
+ if(p.reasons){if(p.level==='hard')board.append(el('p','sys-skill-write','Write your answer and reason in your book before selecting the best explanation.'));options('STEP 2 · '+(p.level==='hard'?'Justify your choice':'Explain your choice'),p.reasons,'b');}
  host.append(board);setReady(false);return s;
 }
-function reveal(p,s,host){const board=host.querySelector('.sys-skill-board'),model=el('section','sys-skill-model');model.append(el('strong','','MODEL ANSWER'),el('h3','',labels[p.skill][p.a]),el('p','',p.why));if(p.level==='hard')model.append(el('small','','Compare your written answer with the model. The digital score checks your selections, not your written exam marks.'));board.append(model);board.querySelectorAll('button').forEach(b=>b.disabled=true);}
+function reveal(p,s,host){const board=host.querySelector('.sys-skill-board'),model=el('section','sys-skill-model');model.append(el('strong','','MODEL ANSWER'),el('h3','',p.choices.find(x=>x.i===p.a).v),el('p','',p.why));if(p.level==='hard')model.append(el('small','','Compare your written answer with the model. The digital score checks your selections, not your written exam marks.'));board.append(model);board.querySelectorAll('button').forEach(b=>b.disabled=true);}
 return {make,isComplete,isCorrect,feedback,render,reveal};
 });

@@ -208,11 +208,10 @@ body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-wi
       <details class="group">
         <summary class="group-summary">
           <h2 class="group-title" id="skills-apply-heading">Applying Computer Science<small>Explain impacts, make decisions and solve problems</small></h2>
-          <span class="group-meta">2 skills <span class="group-chevron" aria-hidden="true"></span></span>
+          <span class="group-meta">3 skills <span class="group-chevron" aria-hidden="true"></span></span>
         </summary>
         <div class="group-content">
           <div class="tiles theory" id="application-tiles"></div>
-          <p class="skills-preview">Future application activity: Cybersecurity Investigator</p>
         </div>
       </details>
     </section>
@@ -238,7 +237,7 @@ body.course-hub #practice.is-standard .answer-area .units-game{width:100%;max-wi
 <script src="/assets/j277-protocol-paths.js?v=20261111-paths1"></script>
 <script src="/assets/j277-impact-answer-builder.js?v=20261111-impact1"></script>
 <script src="/assets/j277-legislation-skill.js?v=20261123-law2"></script>
-<script src="/assets/j277-systems-skill.js?v=20261124-systems2"></script>
+<script src="/assets/j277-systems-skill.js?v=20261124-systems3"></script>
 <script src="/assets/skills-system.js?v=20261117-per-question1"></script>
 <script>
 (()=>{'use strict';
@@ -265,6 +264,7 @@ const specs={
  cpu:{name:'CPU Performance',sub:'Clock speed · Cores · Cache',glyph:'▣',cat:'systems',ref:'1.1.2',tint:'#eef5fb',ink:'#285348',kind:'systemsbuilder'},
  storage:{name:'Storage Selector',sub:'Magnetic · Optical · Solid state',glyph:'▣',cat:'systems',ref:'1.2.2',tint:'#eef5fb',ink:'#285348',kind:'systemsbuilder'},
  impact:{name:'Impact Answer Builder',sub:'Model · Improve · Evaluate',glyph:'✎',cat:'application',ref:'1.6',tint:'#e9f4ed',ink:'#285348',kind:'impact'},
+ security:{name:'Cybersecurity Investigator',sub:'Threats · Prevention · Justify',glyph:'▣',cat:'application',ref:'1.4.1–1.4.2',tint:'#eaf3eb',ink:'#285348',kind:'systemsbuilder'},
  legislation:{name:'Legislation & Licences',sub:'Identify · Apply · Justify',glyph:'§',cat:'application',ref:'1.6.1',tint:'#eaf3eb',ink:'#285348',kind:'legislation'},
 };
 if(h446Conversion){
@@ -481,13 +481,7 @@ function qs(id,l,i){const r=rngFor(id,l,i),dif=levelnames.indexOf(l),v=()=>rint(
   return window.J277SystemsSkill.make(id,l,i);
  case 'legislation':
   return window.J277LegislationSkill.make(l,i);
- case 'security':return fromBank(r,i,[
-   ['Which protection helps block unauthorised network traffic?','Firewall','Firewall','Compression','Defragmentation','Sampling','A firewall filters network traffic using rules.'],
-   ['A criminal repeatedly tries password combinations. What threat is this?','Brute-force attack','Brute-force attack','Phishing','DoS','Compression','Brute-force attacks systematically try passwords.'],
-   ['A convincing fake email asks a user to enter a password. What threat is this?','Phishing','Phishing','DoS','Defragmentation','Caching','Phishing tricks users into revealing information.'],
-   ['Which measure restricts what different users can do?','Access levels','Access levels','Lossy compression','Overclocking','Sampling','Access levels limit permissions.'],
-   ['Which measure helps protect data if it is intercepted?','Encryption','Encryption','Defragmentation','Screen brightness','Compression','Encryption makes captured data unreadable without a key.'],
-   ['A service is overwhelmed with traffic to make it unavailable. Which threat?','Denial of service','Denial of service','Phishing','Spyware only','Copyright','Denial of service attacks overwhelm resources.']]);
+ case 'security':return window.J277SystemsSkill.make(id,l,i);
  case 'software':return fromBank(r,i,[
    ['Which type of software manages hardware and runs applications?','Operating system','Operating system','Web browser','Word processor','Image editor','An OS manages computer resources and supports applications.'],
    ['Which utility can reduce file fragmentation on an HDD?','Defragmentation','Defragmentation','Compression only','Firewall','Accessibility tool','Defragmentation reorganises fragmented HDD files.'],
@@ -1577,7 +1571,7 @@ const directSkill=new URLSearchParams(window.location.search).get('skill');
 if(Object.prototype.hasOwnProperty.call(specs,directSkill)){openSkill(directSkill);const requestedLevel=new URLSearchParams(window.location.search).get('level');if(['easy','medium','hard'].includes(requestedLevel))chooseLevel(requestedLevel);}
 })();
 </script>
-<script src="/assets/j277-paper1-guided-demo.js?v=20261124-systems2"></script>
+<script src="/assets/j277-paper1-guided-demo.js?v=20261124-systems3"></script>
 <script src="/assets/site-nav.js?v=20261107-quickbar1" defer></script>
 </body>
 </html>

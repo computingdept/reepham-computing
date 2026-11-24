@@ -83,6 +83,12 @@
       ['Number of cores','2 cores → 4 cores','Independent tasks can run on more cores when the software supports parallel processing.'],
       ['Cache size','Small cache → larger cache','More frequently used data may fit in cache, reducing slower accesses to main memory.'],
       ['Make a judgement','Match the feature to the workload','A higher specification in one area does not guarantee a faster computer for every workload.']]},
+    security:{title:'Cybersecurity Investigator',task:'A school receives a suspicious message asking for login details, then notices unusual network traffic.',steps:[
+      ['Identify the threat','Fake message → phishing','The message tries to trick users into revealing information or clicking a dangerous link.'],
+      ['Protect the account','Training · strong passwords · authentication','Verify requests independently and use strong passwords and additional authentication where appropriate.'],
+      ['Protect the network','Firewall · anti-malware · encryption','These controls address different risks: traffic filtering, malicious software and confidentiality of data.'],
+      ['Limit the damage','Access levels · authorised security testing','Restrict permissions to what each user needs and identify weaknesses through authorised tests.'],
+      ['Justify the decision','Threat → control → reason','Explain how the chosen control reduces the specific risk, rather than listing unrelated security measures.']]},
     legislation:{title:'Legislation and Licences',task:'A school builds an app and plans to store user details, test its network, use artwork and share code.',steps:[
       ['Personal data','Data Protection Act 2018 and UK GDPR','Collect only necessary personal information and process it lawfully and securely.'],
       ['Permission to access','Computer Misuse Act 1990','Obtain authorisation before accessing or testing systems; permission is limited to the agreed scope.'],
