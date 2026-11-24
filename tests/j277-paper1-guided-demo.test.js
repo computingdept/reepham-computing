@@ -5,9 +5,9 @@ const fs=require('node:fs');
 const path=require('node:path');
 const guided=require('../assets/j277-paper1-guided-demo.js');
 
-test('All eighteen supported J277 Paper 1 Skills have explained separate examples',()=>{
+test('All twenty supported J277 Paper 1 Skills have explained separate examples',()=>{
   const ids=['convert','add','shift','count','units','text','ascii','image',
-    'sound','pixels','address','hardware','topology','dns','protocol','impact','memory','storage'];
+    'sound','pixels','address','hardware','topology','dns','protocol','impact','memory','storage','cpu','legislation'];
   assert.deepEqual([...guided.skills].sort(),[...ids].sort());
   for(const id of ids){
     const q=guided.get(id);

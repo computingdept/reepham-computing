@@ -78,6 +78,16 @@
       ['Reliable transport','TCP manages ordered delivery','Segments can be acknowledged and resent if needed.'],
       ['Web content','HTTPS protects the connection','HTTPS is HTTP carried over an encrypted connection.'],
       ['Route','IP addresses packets','Routers use IP information to forward packets.']]},
+    cpu:{title:'CPU Performance',task:'Compare computer specifications for a single calculation, parallel image processing and repeated memory access.',steps:[
+      ['Clock speed','2 GHz → 3 GHz','For otherwise identical CPUs, more cycles per second can shorten a task that takes the same number of cycles.'],
+      ['Number of cores','2 cores → 4 cores','Independent tasks can run on more cores when the software supports parallel processing.'],
+      ['Cache size','Small cache → larger cache','More frequently used data may fit in cache, reducing slower accesses to main memory.'],
+      ['Make a judgement','Match the feature to the workload','A higher specification in one area does not guarantee a faster computer for every workload.']]},
+    legislation:{title:'Legislation and Licences',task:'A school builds an app and plans to store user details, test its network, use artwork and share code.',steps:[
+      ['Personal data','Data Protection Act 2018 and UK GDPR','Collect only necessary personal information and process it lawfully and securely.'],
+      ['Permission to access','Computer Misuse Act 1990','Obtain authorisation before accessing or testing systems; permission is limited to the agreed scope.'],
+      ['Original artwork','Copyright, Designs and Patents Act 1988','Check permission or an applicable exception before copying or sharing protected work.'],
+      ['Software licences','Open source or proprietary','Check the licence conditions for use, modification and redistribution; open source does not mean no conditions.']]},
     memory:{title:'Memory Explorer',task:'A student starts a computer, opens a drawing program and runs out of working memory.',steps:[
       ['Start-up','ROM → boot instructions','Firmware is retained without power; start-up instructions can be stored in ROM.'],
       ['Working data','RAM → active drawing','RAM holds currently used instructions and data; unsaved changes are volatile.'],

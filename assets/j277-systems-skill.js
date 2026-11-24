@@ -1,9 +1,101 @@
 /* J277 reusable systems Skills. No lesson or assignment logic. */
 (function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.J277SystemsSkill=api;})(typeof globalThis!=='undefined'?globalThis:this,function(){
 'use strict';
-const labels={memory:['RAM','ROM','Cache','Virtual memory'],storage:['Magnetic HDD','Solid-state SSD','Optical disc','USB flash drive']};
+const labels={memory:['RAM','ROM','Cache','Virtual memory'],storage:['Magnetic HDD','Solid-state SSD','Optical disc','USB flash drive'],cpu:['Clock speed','Number of cores','Cache size','Not enough information']};
 // Each row contains three separate scenarios and a worked reason, followed by two misconceptions.
 const bank={
+cpu:[
+ [
+  0,
+  "Which factor is measured in GHz?",
+  "Two otherwise identical CPUs run at 2 GHz and 3 GHz. Which specification differs?",
+  "A school compares two CPUs of the same design with equal cores and cache. One runs at 3 GHz rather than 2 GHz. Which factor could explain faster execution?",
+  "Clock speed measures cycles per second. With the same CPU design and workload, a higher clock speed can allow more instructions to be processed per second.",
+  "Clock speed measures how many cores a CPU contains.",
+  "GHz measures the amount of data held in cache."
+ ],
+ [
+  1,
+  "Which CPU specification counts independent processing cores?",
+  "Two otherwise identical CPUs have two and four cores. Which feature differs?",
+  "A video renderer can divide its work into independent tasks. Both CPUs have the same design, clock speed and cache per core. One has twice as many cores. Identify the useful difference.",
+  "More cores can process more tasks simultaneously when software can divide its work between them.",
+  "Extra cores always double the speed of every individual instruction.",
+  "More cores increase the clock frequency of each core automatically."
+ ],
+ [
+  2,
+  "Which CPU specification describes the capacity of its small, fast local memory?",
+  "Two otherwise identical CPUs have 4 MB and 8 MB of cache. Which factor differs?",
+  "An application repeatedly accesses data that no longer fits in a small cache. A larger cache may hold more of the working set. Identify the relevant specification.",
+  "A larger cache may hold more frequently used data and instructions, reducing slower RAM accesses.",
+  "Cache permanently stores all the user's files.",
+  "Larger cache always doubles the number of cores."
+ ],
+ [
+  3,
+  "One CPU has a higher clock speed but fewer cores than another. Can the faster CPU always be identified from these facts alone?",
+  "CPU A has 3 GHz and two cores; CPU B has 2 GHz and four cores. No workload is given. Can we know which finishes first?",
+  "A buyer compares two processors of different designs. Only clock speeds are known. Can they reliably predict which completes every program faster?",
+  "Performance depends on the workload and other CPU characteristics. These facts alone do not determine which CPU completes a particular program faster.",
+  "The larger GHz figure always guarantees better performance in every program.",
+  "The CPU with more cores always finishes every program first."
+ ],
+ [
+  0,
+  "Which factor describes the number of clock cycles per second?",
+  "A CPU with the same design runs at a higher frequency while the core count stays fixed. What has changed?",
+  "A task cannot be divided across cores. Two otherwise identical CPUs with identical cache differ only in operating frequency. Which factor may reduce its execution time?",
+  "Higher clock speed means more clock cycles each second; for an otherwise identical CPU it can improve performance even on a single-core task.",
+  "Clock speed is the amount of permanent storage.",
+  "A higher frequency means the software must use more cores."
+ ],
+ [
+  1,
+  "Which specification may help a computer run independent tasks in parallel?",
+  "A computer renders multiple independent images concurrently. Which CPU specification can provide more simultaneous execution resources?",
+  "A teacher runs several demanding independent applications at once. With otherwise similar CPU designs and frequency, which upgrade may improve simultaneous processing?",
+  "Additional cores provide more execution resources for independent tasks and parallel programs, where software and other resources allow.",
+  "Additional cores remove the need for RAM.",
+  "Extra cores force every program to run twice as fast."
+ ],
+ [
+  2,
+  "Which specification can reduce trips from the CPU to RAM by holding more local data?",
+  "A processor often reuses a small lookup table. Which CPU feature can reduce repeated retrieval from RAM?",
+  "A program frequently reuses data that could fit in a larger cache but not a smaller one. Which specification could reduce cache misses?",
+  "A larger cache can reduce cache misses when more of the frequently accessed data fits, avoiding slower RAM retrieval.",
+  "Cache size measures the CPU clock frequency.",
+  "A larger cache guarantees no access to RAM is ever needed."
+ ],
+ [
+  3,
+  "A CPU has a larger cache but a lower clock speed than another. Is the fastest CPU always obvious?",
+  "CPU A has more cache; CPU B has a higher clock speed. The program is unknown. What can be concluded about the winner?",
+  "One processor has more cores, another more cache, and no relevant benchmark or workload is supplied. Can we guarantee either will finish first?",
+  "Different programs benefit from different resources. The listed differences are not enough to guarantee a winner for an unspecified workload.",
+  "A larger cache guarantees that every task is faster.",
+  "Core count alone determines execution time."
+ ],
+ [
+  0,
+  "Which specification changes when a CPU runs at 2.4 rather than 2.8 GHz?",
+  "A CPU has the same cores and cache as before but operates at a higher frequency. Identify the change.",
+  "Two otherwise identical CPUs perform a calculation using the same number of clock cycles. One completes more clock cycles each second. Which factor explains the difference?",
+  "The clock speed is the rate of clock cycles; more cycles per second can reduce the time for the same number of cycles.",
+  "The cache is the number of cycles per second.",
+  "A CPU's core count equals its clock frequency."
+ ],
+ [
+  1,
+  "Which factor describes whether a CPU has four or eight processing cores?",
+  "A program divides a workload across multiple cores. Which CPU specification could let it process more independent parts at once?",
+  "A simulation can run six independent calculations in parallel. Two otherwise similar processors have two and six available cores. Which factor may allow more calculations to proceed together?",
+  "More available cores allow more independent parts of a parallel workload to be processed at the same time, subject to software and resource limits.",
+  "Adding cores automatically increases the speed of all sequential tasks.",
+  "More cores increase the size of every cache by definition."
+ ]
+],
 memory:[
 [0,'Where are the instructions and data for an open word processor normally held?','A pupil edits a spreadsheet. Which main memory holds its working data?','An unsaved document is lost when power fails. Which memory held the unsaved work?','RAM holds currently used instructions and data; it is volatile.','ROM is the temporary working area for open programs.','Virtual memory permanently saves every document.'],
 [1,'Which memory can hold firmware needed to start a computer?','A controller needs its boot instructions after power is restored. Which memory fits?','An embedded device must retain fixed start-up instructions when unplugged. Choose the memory.','ROM is non-volatile and can hold firmware or start-up instructions.','RAM retains its contents without power.','Cache keeps boot instructions permanently.'],
@@ -32,7 +124,7 @@ function rotate(a,n){const i=n%a.length;return a.slice(i).concat(a.slice(0,i));}
 function make(id,level,index){
  if(!bank[id]||!['easy','medium','hard'].includes(level)||!Number.isInteger(index)||index<0)throw Error('Invalid systems Skill request');
  const l=['easy','medium','hard'].indexOf(level),r=bank[id][index%10];
- return {type:'systemsbuilder',skill:id,level,index,prompt:r[l+1],context:'OCR J277 · '+(id==='memory'?'1.2.1 · Primary memory':'1.2.2 · Secondary storage'),a:r[0],choices:rotate(labels[id].map((v,i)=>({v,i})),index+l),reasons:l?rotate(r.slice(4).map((v,i)=>({v,i})),index+l*2):null,why:r[4],hint:id==='memory'?'Think about volatility, speed and what the memory holds.':'Think about capacity, speed, cost, portability and compatibility.'};
+ return {type:'systemsbuilder',skill:id,level,index,prompt:r[l+1],context:'OCR J277 · '+(id==='memory'?'1.2.1 · Primary memory':id==='storage'?'1.2.2 · Secondary storage':'1.1.2 · CPU performance'),a:r[0],choices:rotate(labels[id].map((v,i)=>({v,i})),index+l),reasons:l?rotate(r.slice(4).map((v,i)=>({v,i})),index+l*2):null,why:r[4],hint:id==='memory'?'Think about volatility, speed and what the memory holds.':id==='storage'?'Think about capacity, speed, cost, portability and compatibility.':'Compare clock cycles, parallel work and access to frequently used data. Consider whether the information is sufficient.'};
 }
 function isComplete(p,s){return !!s&&s.a>=0&&(!p.reasons||s.b>=0);}
 function isCorrect(p,s){return isComplete(p,s)&&s.a===p.a&&(!p.reasons||s.b===0);}
@@ -42,7 +134,7 @@ function render(p,host,isLocked,setReady){
  const board=el('div','sys-skill-board'),s={a:-1,b:-1};
  function options(title,list,key){board.append(el('h3','sys-skill-label',title));const group=el('div','sys-skill-options');
   list.forEach(item=>{const b=el('button','sys-skill-option',item.v);b.type='button';b.setAttribute('aria-pressed','false');b.addEventListener('click',()=>{if(isLocked())return;s[key]=item.i;group.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));setReady(isComplete(p,s));});group.append(b);});board.append(group);}
- options('STEP 1 · '+(p.skill==='memory'?'Choose the memory':'Choose the storage'),p.choices,'a');
+ options('STEP 1 · '+(p.skill==='memory'?'Choose the memory':p.skill==='storage'?'Choose the storage':'Identify the factor or decide if the evidence is sufficient'),p.choices,'a');
  if(p.reasons){if(p.level==='hard')board.append(el('p','sys-skill-write','Write your recommendation and reason in your book before selecting the best explanation.'));options('STEP 2 · '+(p.level==='hard'?'Justify your choice':'Explain your choice'),p.reasons,'b');}
  host.append(board);setReady(false);return s;
 }
