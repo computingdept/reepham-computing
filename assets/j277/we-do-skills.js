@@ -97,7 +97,7 @@ function appendPractice(config,doc){
  const el=(tag,cls,txt)=>{const n=doc.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=txt;return n;};
  const a=el('article','wedo-example skill-wedo-example');a.hidden=true;
  const reference=el('div','wedo-reference'),practice=el('div','wedo-practice');
- reference.append(el('span','phase-tag','YOUR TURN · SKILL PRACTICE'),el('h2','',config.title),el('p','','Open the Skill on your device. Choose the level your teacher sets, and practise the method independently.'));
+ reference.append(el('span','phase-tag','YOUR TURN · SKILL PRACTICE'),el('h2','',config.title),el('p','',config.practiceNote||'Open the Skill on your device. Choose the level your teacher sets, and practise the method independently.'));
  const link=el('a','skill-wedo-launch','Practise '+config.title+' →');link.href=config.url;link.target='_blank';link.rel='noopener';reference.append(link);
  practice.append(el('span','phase-tag','CLASS CHECK'),el('h2','','Before we move on'),el('p','',config.check));
  const check=el('div','wedo-step skill-wedo-step');check.hidden=true;check.append(el('span','wedo-step-label','MODEL ANSWER'),el('p','skill-wedo-result',config.answer));practice.append(check);
