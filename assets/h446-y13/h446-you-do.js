@@ -85,11 +85,34 @@
     markQuestion(heading);
   });
 
+  // Only shared exam decks are affected. Retain the previously approved
+  // compact linked-list and ERD/readability pilots exactly as authored.
+  if(root.dataset.h446CompactAnswer!=='true'&&root.dataset.h446ReadabilityPilot!=='true'){
+    root.querySelectorAll('.youdo-question').forEach(q=>{
+      const prompt=q.querySelector('.youdo-question-prompt');
+      const answer=q.querySelector('.youdo-solution');
+      if(!prompt||!answer)return;
+      const visual='svg,img,table';
+      const code='pre:not(.arithmetic)';
+      const qVisual=!!prompt.querySelector(visual);
+      const aVisual=!!answer.querySelector(visual);
+      const qCode=!!prompt.querySelector(code);
+      const aCode=!!answer.querySelector(code);
+      q.classList.toggle('h446-specialist-visual-question',qVisual);
+      q.classList.toggle('h446-specialist-visual-answer',aVisual);
+      q.classList.toggle('h446-specialist-question',qVisual||qCode);
+      q.classList.toggle('h446-specialist-answer',qVisual||aVisual||qCode||aCode);
+    });
+  }
+
   // Choose stable, ordered groups. Never split a question or change its content.
   // Measure the actual cards at their real desktop size, before displaying them.
   // All temporary visibility and dataset values are restored synchronously.
   function fitsOnScreen(questions,start,size){
     if(!root.classList.contains('active')||root.clientWidth===0)return false;
+    // A diagram or table on the question needs a whole screen in adaptive
+    // decks. Explicitly authored grouping remains authoritative.
+    if(size>1&&questions.slice(start,start+size).some(q=>q.classList.contains('h446-specialist-visual-question')))return false;
     const keys=['h446QuestionSheet','answerMode','h446GroupCount'];
     const previous=keys.map(k=>root.dataset[k]);
     const state=questions.map(q=>({hidden:q.hidden,answer:q.querySelector('.youdo-solution'),answerHidden:q.querySelector('.youdo-solution')?.hidden}));
