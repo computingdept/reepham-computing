@@ -133,6 +133,46 @@
       (reveal?'<div class="rhs-flow-fallback" hidden>'+lineBreaks(q.answer)+'</div>':"")+
       '</div></div><span class="rhs-bank-source">'+esc(q.reference)+'</span></section>';
   }
+  // Reuse the approved specialist card for other illustrated bank records.
+  // Preserve both authored question and answer text until the individual SVG
+  // has been checked for completeness. A question-only diagram stays available
+  // on the answer screen; an answer-only diagram never appears on a question.
+  function graphicCard(q,index,total,reveal){
+    var art=reveal?(q.answerFigure||q.figure):q.figure;
+    if(!art)return null;
+    var raw=originalQuestion(q.question);
+    var split=raw.match(/\n\s*\n(?=(?:Analyse|Calculate|Choose|Classify|Complete|Correct|Decide|Describe|Determine|Draw|Explain|For each|Give|Identify|Match|Name|Provide|Rewrite|Select|Show|State|Supply|Trace|Use|Work out|Write)\b)/i);
+    var context=split?raw.slice(0,split.index):"";
+    var task=split?raw.slice(split.index+split[0].length):raw;
+    function renderText(value,cls){
+      if(!value)return "";
+      // Preserve numbered code as code, including indentation and line numbers.
+      var lines=value.split(/\r?\n/),out="",prose=[],code=[];
+      function flushProse(){
+        if(prose.length&&prose.join("\n").trim())out+='<p class="'+cls+'">'+questionLines(prose.join("\n").trim())+'</p>';
+        prose=[];
+      }
+      function flushCode(){
+        if(code.length)out+='<pre class="rhs-graphic-code"><code>'+esc(code.join("\n"))+'</code></pre>';
+        code=[];
+      }
+      lines.forEach(function(line){
+        if(/^\d{2}[ \t]/.test(line)){flushProse();code.push(line);}
+        else{flushCode();prose.push(line);}
+      });
+      flushCode();flushProse();return out;
+    }
+    var worked=reveal&&!!q.answerFigure;
+    return '<section class="rhs-bank-card rhs-bank-flow-pilot rhs-bank-graphic-card">'+
+      '<div class="rhs-bank-card-head"><span>'+(reveal?'QUESTION '+(index+1)+' OF '+total:'Q'+(index+1))+'</span><span>'+q.marks+' MARK'+(q.marks===1?'':'S')+'</span></div>'+
+      '<div class="rhs-flow-body"><div class="rhs-flow-copy">'+
+      renderText(context,"rhs-flow-context")+renderText(task,"rhs-flow-task")+
+      (reveal?'<p class="rhs-graphic-answer">'+lineBreaks(q.answer)+'</p><p class="rhs-flow-marking"><strong>Marking guidance:</strong> '+lineBreaks(q.rule)+'</p>':"")+
+      '</div><div class="rhs-flow-art">'+
+      '<img class="rhs-flow-figure" src="'+esc(art)+'" alt="'+esc(worked?q.answer:"Question illustration")+'" loading="eager">'+
+      (reveal?'<div class="rhs-flow-fallback" hidden>Diagram unavailable. The answer text and marking guidance remain available.</div>':"")+
+      '</div></div><span class="rhs-bank-source">'+esc(q.reference)+'</span></section>';
+  }
   function answerParts(s){
     // Semicolons in the already-authored answer are presentation separators,
     // not automatically separate credited marks. The marking rule controls credit.
@@ -161,6 +201,8 @@
         if(wide)return wide;
         var trace=items.length===1?traceParts(q):null;
         if(trace)return traceCard(q,trace,start+i,totalCount,false);
+        var graphic=items.length===1?graphicCard(q,start+i,totalCount,false):null;
+        if(graphic)return graphic;
         return '<section class="rhs-bank-card">'+
           '<div class="rhs-bank-card-head"><span>Q'+(start+i+1)+'</span><span>'+q.marks+' MARK'+(q.marks===1?'':'S')+'</span></div>'+
           '<p class="rhs-bank-prompt">'+(h446Preview||items.length===4?questionCardText(q.question):questionLines(originalQuestion(q.question)))+'</p>'+
@@ -217,6 +259,9 @@
     var trace=traceParts(q);
     if(trace)return '<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage rhs-bank-review-stage rhs-trace-review" hidden>'+
       '<div class="rhs-bank-grid" data-count="1">'+traceCard(q,trace,index,total,true)+'</div></article>';
+    var graphic=graphicCard(q,index,total,true);
+    if(graphic)return '<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage rhs-bank-review-stage rhs-flow-review" hidden>'+
+      '<div class="rhs-bank-grid" data-count="1">'+graphic+'</div></article>';
     return '<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage rhs-bank-review-stage" hidden>'+
       header((sharedPresentation?"QUESTION ":"SELF-MARK · QUESTION ")+(index+1)+" OF "+total,
         q.marks+" MARK"+(q.marks===1?'':'S'))+
@@ -353,7 +398,7 @@
         try{
           var totalMarks=questions.reduce(function(sum,q){return sum+q.marks;},0);
           function fits(part,start){
-            if(part.length>1&&part.some(function(q){return !!traceParts(q)||!!wideCard(q,0,questions.length,false);}))return false;
+            if(part.length>1&&part.some(function(q){return !!q.figure;}))return false;
             var tmp=document.createElement("div");
             tmp.innerHTML=intro(part,start,questions.length,totalMarks,0,2);
             var stage=tmp.firstElementChild;
