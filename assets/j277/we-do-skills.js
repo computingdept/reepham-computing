@@ -2,6 +2,14 @@
 (function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.J277WeDoSkills=api;})(typeof globalThis!=='undefined'?globalThis:this,function(){
 'use strict';
 const pilots={
+ "p2:thinking:abstraction-decomposition":{"source":"thinking","query":{"level":"medium"},"task":"Plan a library checkout system. Decide which information matters and how to divide the problem.","predict":"Which details are needed to lend a book, and which can be ignored?","questions":["What is the problem we need to solve?","Which details affect the loan?","Which details can be ignored?","What smaller tasks make up the checkout?","Why should checks happen before confirming the loan?"],"check":"Explain the difference between abstraction and decomposition.","answer":"Abstraction removes irrelevant detail. Decomposition splits a complex problem into smaller manageable tasks."},
+ "p2:thinking:algorithmic-thinking":{"source":"thinking","query":{"level":"easy"},"task":"Plan a journey app that finds a suitable bus journey.","predict":"What ordered steps would the app need to follow?","questions":["What is the goal of the app?","Which information matters when planning the journey?","What smaller jobs could the program perform?","Why must the instructions be in a clear order?"],"check":"What is algorithmic thinking?","answer":"Developing a clear, ordered set of instructions to solve a problem."},
+ "p2:sequence:ipo":{"query":{"level":"easy"},"task":"Design an algorithm that asks for an age and calculates the age in two years.","predict":"Identify the input, process and output.","questions":["Which value must be entered first?","What calculation is needed?","Which value should be displayed?"],"check":"Why must the input come before the process?","answer":"The calculation needs the input value before it can produce the result."},
+ "p2:sequence:input-output":{"query":{"level":"medium"},"task":"Trace a sequence with an input value of 5.","predict":"What will the program display?","questions":["What value is stored in number?","What value is stored in double?","What is printed?"],"check":"What would be printed if the input was 8 instead?","answer":"16, because the input is multiplied by 2."},
+ "p2:variables:assignment":{"query":{"level":"medium"},"task":"Trace how the integer variable lives changes after each assignment.","predict":"Does assigning a new value add to the old value or replace it?","questions":["What initial value is stored?","What value is calculated using the previous value?","What value replaces the current value?"],"check":"What is the final value and data type of lives?","answer":"7, an integer. Assignment replaces the previous stored value."},
+ "p2:operators:arithmetic":{"query":{"level":"medium","code":["a = 19 DIV 4"]},"task":"Use integer division to divide 19 items into groups of 4.","predict":"How many complete groups can be made?","questions":["What whole-number quotient does DIV return?","What is displayed?"],"check":"What would 19 MOD 4 return, and why?","answer":"3, because 3 items remain after making four complete groups."},
+ "p2:selection:if":{"query":{"level":"easy"},"task":"Trace an IF decision using age = 14.","predict":"Which message will be printed?","questions":["What age is stored?","Is age >= 16 true or false?","Which branch is chosen?","Which message is printed?","What happens at ENDIF?"],"check":"Which message would be printed if age was 16?","answer":"Eligible, because 16 >= 16 is True."},
+
  "p1:impact:social":{"demoFocus":"social","task":"A school introduces an online learning platform.","predict":"Who benefits from online learning, and who might be disadvantaged?","focus":[0,1,2,3],"questions":["How might pupils benefit?","Who could be disadvantaged and why?","What ethical concern might arise from monitoring?","How could the school reduce these risks?"],"check":"Explain one social disadvantage of using an online learning platform.","answer":"Pupils without a reliable internet connection or device may struggle to access work, widening the gap in learning opportunities."},
  "p1:legislation:data-protection":{"demoFocus":"data-protection","task":"A school club creates an online sign-up form for pupils.","predict":"What information does the club actually need, and who should be allowed to see it?","focus":[0,1,2,3],"questions":["Which information is personal data?","Should the form ask for unnecessary information?","How should the club protect the records?","What should happen when information is wrong or no longer needed?"],"check":"Explain why a school club should restrict access to personal data.","answer":"Restricting access helps prevent unauthorised people from viewing or changing personal information and supports secure processing under the Data Protection Act 2018 and UK GDPR."},
  "p1:legislation:computer-misuse":{"demoFocus":"computer-misuse","task":"Consider three incidents involving a school's computer systems.","predict":"What makes access to a computer authorised or unauthorised?","focus":[0,1,2,3],"questions":["Which issue arises from accessing someone else's account without permission?","How does intending to commit fraud change the situation?","Which issue arises from deliberately disrupting a service?","When is security testing authorised?"],"check":"Does knowing a password mean you have permission to access an account?","answer":"No. Access requires authorisation; knowing the password alone does not grant permission."},
@@ -43,18 +51,18 @@ const pilots={
   answer:'Three iterations: i = 2, 3, 4. The upper bound is included.'
  }
 };
-function prepare(config,paper1,paper2){
+function prepare(config,paper1,paper2,thinking){
  const rule=pilots[config.variant?config.id+':'+config.variant:config.id];if(!rule)return null;
  if(config.id.startsWith('p1:')){
   const d=paper1?.get(config.id.slice(3),rule.demoFocus);if(!d)return null;
   return {...rule,steps:rule.focus.map((i,j)=>({title:d.steps[i][0],value:d.steps[i][1],explanation:d.steps[i][2],question:rule.questions[j]}))};
  }
- const d=paper2?.make(config.id.slice(3),{level:'easy'});if(!d)return null;
- return {...rule,lines:d.lines,columns:d.columns,steps:d.steps.map((s,i)=>({line:s[0],value:s[1],result:s[2],explanation:s[3],question:config.id==='p2:while-until'?(s[0]===1?'What is the initial value of i?':s[0]===2?'Is the condition true?':s[0]===3?'What value is printed now?':s[0]===4?'What is the new value of i?':'Which line runs next?'):(i===0?'What value does i start with?':s[0]===2?'What is printed now?':s[0]===3?'What is the next counter value?':'Will the loop body run again?')}))};
+ const d=rule.source==='thinking'?thinking?.makeDemo(rule.query):paper2?.make(config.id.slice(3),rule.query||{level:'easy'});if(!d)return null;
+ return {...rule,codeLabel:d.codeLabel,lines:d.lines,columns:d.columns,steps:d.steps.map((s,i)=>({line:s[0],value:s[1],result:s[2],explanation:s[3],question:rule.questions?.[i]??(config.id==='p2:while-until'?(s[0]===1?'What is the initial value of i?':s[0]===2?'Is the condition true?':s[0]===3?'What value is printed now?':s[0]===4?'What is the new value of i?':'Which line runs next?'):(i===0?'What value does i start with?':s[0]===2?'What is printed now?':s[0]===3?'What is the next counter value?':'Will the loop body run again?'))}))};
 }
 function install(config,doc=document,win=window){
  const page=doc.getElementById('we-do');if(!page||page.dataset.skillPilot==='true')return false;
- let model;try{model=prepare(config,win.RHSCPaper1GuidedDemo,win.J277SkillsGuidedExamples);}catch(e){return false;}
+ let model;try{model=prepare(config,win.RHSCPaper1GuidedDemo,win.J277SkillsGuidedExamples,win.J277Paper2Thinking);}catch(e){return false;}
  if(!model?.steps?.length)return false;
  const deck=page.querySelector('.wedo-focus-deck');if(!deck)return false;
  const el=(tag,cls,txt)=>{const n=doc.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=txt;return n;};
@@ -64,7 +72,7 @@ function install(config,doc=document,win=window){
  first.reference.append(el('span','phase-tag','WE DO · '+config.title.toUpperCase()),el('h2','','Work it out together'),el('p','skill-wedo-task',model.task));
  const codeLines=[];
  if(model.lines){
-  const code=el('div','skill-wedo-code');code.setAttribute('aria-label','OCR Exam Reference Language');
+  const code=el('div','skill-wedo-code');code.setAttribute('aria-label',model.source==='thinking'?'Computational thinking plan':'OCR Exam Reference Language');
   model.lines.forEach((line,i)=>{const row=el('div','skill-wedo-code-line');row.append(el('span','skill-wedo-line-no',String(i+1)),el('code','',line));code.append(row);codeLines.push(row);});first.reference.append(code);
  }
  first.reference.append(el('p','skill-wedo-predict',model.predict));
@@ -75,7 +83,7 @@ function install(config,doc=document,win=window){
   const step=el('div','wedo-step skill-wedo-step');step.hidden=true;
   step.append(el('span','wedo-step-label','STEP '+(i+1)+' OF '+model.steps.length));
   if(model.lines){
-   step.append(el('h2','','Trace the current line'));
+   step.append(el('h2','',model.source==='thinking'?'Reason through the plan':'Trace the current line'));
    const table=el('table','skill-wedo-trace'),head=el('tr'),body=el('tr');
    model.columns.forEach(c=>head.append(el('th','',c)));body.append(el('td','',s.value),el('td','',s.result));table.append(head,body);step.append(table);
   }else{step.append(el('h2','',s.title),el('div','skill-wedo-result',s.value));}

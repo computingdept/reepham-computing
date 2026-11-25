@@ -60,3 +60,12 @@ test('impact and legislation lessons share two Skills with distinct curriculum-f
  }
  assert.equal(topics.size,5);
 });
+
+
+test('computational thinking and coding batch uses existing demonstrations',()=>{
+ const thinking=require('../exercise/paper2/thinking.js');const batch={"045":{"id":"p2:thinking","title":"Computational Thinking","url":"/exercise/paper2/thinking/","variant":"abstraction-decomposition"},"046":{"id":"p2:thinking","title":"Computational Thinking","url":"/exercise/paper2/thinking/","variant":"algorithmic-thinking"},"047":{"id":"p2:sequence","title":"Sequence","url":"/exercise/paper2/sequence/","variant":"ipo"},"051":{"id":"p2:sequence","title":"Sequence","url":"/exercise/paper2/sequence/","variant":"input-output"},"052":{"id":"p2:variables","title":"Variables & Constants","url":"/exercise/paper2/variables/","variant":"assignment"},"053":{"id":"p2:operators","title":"Operators","url":"/exercise/paper2/operators/","variant":"arithmetic"},"055":{"id":"p2:selection","title":"Selection","url":"/exercise/paper2/selection/","variant":"if"}};
+ for(const [id,config] of Object.entries(batch)){
+  assert.equal(config.id,map.lessons[id].primary);const model=api.prepare(config,p1,p2,thinking);
+  assert.ok(model.steps.length>=2);assert.ok(model.steps.every(s=>s.question&&s.explanation&&s.line>=1&&s.line<=model.lines.length));
+ }
+});
