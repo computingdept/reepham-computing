@@ -9,6 +9,7 @@
   var lessonId=match&&match[1];
   var allowlist=["096","097","098","099","100","101","102","103","104","105","106","107","108","109","110","111","112","114","115","116","117","118","119","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","145","146","147","148","149","150","151","152","153","154","155","158","159","160","161","162","163","164"]; // Mapped Year 11 lessons only; protected timed lessons unchanged.
   if(!lessonId || allowlist.indexOf(lessonId)<0)return;
+  var h446Preview=["096","100","118"].includes(lessonId)&&new URLSearchParams(location.search).get("youdo-style")==="h446"&&!!window.RHSYouDoLayout;
 
   var host=document.getElementById("you-do");
   var rolling=host&&host.querySelector(".youdo-rolling.rhs-y-rolling");
@@ -180,6 +181,7 @@
     // The actual screen is measured before students leave Code First.
     var groups=questionGroups(questions);
     host.dataset.rhsBankPreview="true";
+    if(h446Preview)host.dataset.rhsH446Preview="true";
     function render(){
       var source=document.createElement("div");
       source.innerHTML=questionPageMarkup(groups,questions)+
@@ -211,11 +213,18 @@
       shared.onExamLayoutReady(host,rolling,function(){
         try{
           var totalMarks=questions.reduce(function(sum,q){return sum+q.marks;},0);
-          var chosen=shared.selectExamGroups(questions,function(part,start){
+          function fits(part,start){
             var tmp=document.createElement("div");
             tmp.innerHTML=intro(part,start,questions.length,totalMarks,0,2);
-            return shared.measureExamStage(host,rolling,tmp.firstElementChild);
-          },matchMedia("(max-width:900px)").matches);
+            var stage=tmp.firstElementChild;
+            // Until a diagram has loaded, use the safe full-screen fallback.
+            if(h446Preview&&Array.from(stage.querySelectorAll("img")).some(function(img){return !img.complete||!img.naturalWidth;}))return false;
+            return shared.measureExamStage(host,rolling,stage);
+          }
+          var narrow=matchMedia("(max-width:900px)").matches;
+          var chosen=h446Preview
+            ?window.RHSYouDoLayout.selectGroups(questions.length,function(start,size){return fits(questions.slice(start,start+size),start);},narrow).map(function(g){return questions.slice(g.start,g.end);})
+            :shared.selectExamGroups(questions,fits,narrow);
           // Only replace question pages. Both code nodes and all marking
           // pages survive unchanged, including their SVGs.
           var newPages=document.createElement("div");
@@ -237,6 +246,7 @@
   }).catch(function(err){
     // Invalid mappings fail closed; the original lesson stays available.
     delete host.dataset.rhsBankPreview;
+    delete host.dataset.rhsH446Preview;
     console.error("J277 bank loading failed; original You Do retained:",err);
   });
 })();

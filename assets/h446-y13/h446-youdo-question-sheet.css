@@ -140,13 +140,16 @@
 /* Lesson 276 opt-in pilot: two full-height cards per question sheet.
    Keep all question text and given information visible, with a scroll fallback
    rather than clipping on shorter displays. */
-#you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"] .youdo-questions{
+#you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"] .youdo-questions,
+#you-do[data-rhs-h446-preview="true"] .rhs-bank-grid{
   gap:clamp(16px,1.6vw,26px);
 }
-#you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"][data-h446-group-count="2"] .youdo-questions{
+#you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"][data-h446-group-count="2"] .youdo-questions,
+#you-do[data-rhs-h446-preview="true"] .rhs-bank-grid[data-count="2"]{
   grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:minmax(0,1fr);
 }
-#you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"] .youdo-question:not([hidden]){
+#you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"] .youdo-question:not([hidden]),
+#you-do[data-rhs-h446-preview="true"] .rhs-bank-card{
   border:1px solid #dedee3;border-radius:18px;background:#fff;
   padding:clamp(20px,2vw,34px)!important;
 }
@@ -158,7 +161,8 @@
   font-size:clamp(12px,1vw,16px)!important;color:#54545b;
   background:#f3f3f5;border:0;margin:0 0 14px;padding:6px 9px;
 }
-#you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"] .youdo-question h2{
+#you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"] .youdo-question h2,
+#you-do[data-rhs-h446-preview="true"] .rhs-bank-prompt{
   font-size:clamp(25px,2vw,35px)!important;line-height:1.32;
   letter-spacing:-.018em;color:#1d1d1f;margin:0 0 18px;
 }
@@ -174,10 +178,12 @@
   color:#606068;font-size:clamp(11px,.85vw,14px);margin-top:15px;
 }
 @media(max-width:900px){
-  #you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"] .youdo-questions{
+  #you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"] .youdo-questions,
+#you-do[data-rhs-h446-preview="true"] .rhs-bank-grid{
     grid-template-columns:1fr!important;grid-template-rows:none!important;
   }
-  #you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"] .youdo-question:not([hidden]){
+  #you-do[data-h446-two-page-pilot="true"][data-answer-mode="false"] .youdo-question:not([hidden]),
+#you-do[data-rhs-h446-preview="true"] .rhs-bank-card{
     padding:18px!important;
   }
 }

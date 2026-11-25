@@ -1,6 +1,20 @@
 /* H446 You Do phase module. Opt-in; no global navigation or other phases. */
 (function(){
   'use strict';
+  function selectGroups(count, fits, narrow){
+    const groups=[];
+    for(let i=0;i<count;){
+      let size=1;
+      if(!narrow&&count-i>=4&&fits(i,4))size=4;
+      else if(!narrow&&count-i>=3&&fits(i,3))size=3;
+      else if(!narrow&&count-i>=2&&fits(i,2))size=2;
+      groups.push({start:i,end:i+size});
+      i+=size;
+    }
+    return groups;
+  }
+  // Shared pure grouping policy; course-specific controllers keep their own DOM.
+  window.RHSYouDoLayout=Object.freeze({selectGroups});
   if(!/^\/lessons\/h446\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname))return;
   const root=document.querySelector('#you-do[data-h446-two-page-pilot="true"]');
   if(!root)return;
@@ -68,18 +82,6 @@
   });
 
   // Choose stable, ordered groups. Never split a question or change its content.
-  function selectGroups(count, fits, narrow){
-    const groups=[];
-    for(let i=0;i<count;){
-      let size=1;
-      if(!narrow&&count-i>=4&&fits(i,4))size=4;
-      else if(!narrow&&count-i>=3&&fits(i,3))size=3;
-      else if(!narrow&&count-i>=2&&fits(i,2))size=2;
-      groups.push({start:i,end:i+size});
-      i+=size;
-    }
-    return groups;
-  }
   // Measure the actual cards at their real desktop size, before displaying them.
   // All temporary visibility and dataset values are restored synchronously.
   function fitsOnScreen(questions,start,size){
