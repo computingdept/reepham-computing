@@ -69,3 +69,6 @@ test('computational thinking and coding batch uses existing demonstrations',()=>
   assert.ok(model.steps.length>=2);assert.ok(model.steps.every(s=>s.question&&s.explanation&&s.line>=1&&s.line<=model.lines.length));
  }
 });
+
+
+test('array and record lessons reuse existing Skill demos',()=>{const batch={"065":{"id":"p2:array-1d","title":"1D Arrays","url":"/exercise/paper2/array-1d/","variant":"lesson065"},"066":{"id":"p2:array-1d","title":"1D Arrays","url":"/exercise/paper2/array-1d/","variant":"lesson066"},"067":{"id":"p2:array-2d","title":"2D Arrays","url":"/exercise/paper2/array-2d/","variant":"lesson067"},"068":{"id":"p2:records","title":"Records","url":"/exercise/paper2/records/","variant":"lesson068"}};for(const [id,config] of Object.entries(batch)){assert.equal(config.id,map.lessons[id].primary);const model=api.prepare(config,p1,p2);assert.ok(model.steps.length>=2);assert.ok(model.steps.every(s=>s.question&&s.explanation&&s.line>=1&&s.line<=model.lines.length));}});
