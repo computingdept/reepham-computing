@@ -37,3 +37,15 @@ test('security lessons share one Skill with five curriculum-specific focuses',()
  }
  assert.equal(topics.size,5);
 });
+
+
+test('OS and utility lessons reuse mapped demos; assessment and feedback stay untouched',()=>{
+ const batch={"037":{"id":"p1:os","title":"Operating Systems","url":"/exercise/paper1/?skill=os","variant":"interfaces-memory"},"038":{"id":"p1:os","title":"Operating Systems","url":"/exercise/paper1/?skill=os","variant":"files-devices"},"039":{"id":"p1:utility","title":"Utility Software","url":"/exercise/paper1/?skill=utility"}};
+ for(const [id,config] of Object.entries(batch)){
+  assert.equal(config.id,map.lessons[id].primary);const model=api.prepare(config,p1,p2);
+  assert.ok(model.steps.length>=3);assert.ok(model.steps.every(s=>s.question&&s.explanation));
+  assert.deepEqual(model.steps.map(s=>s.value),model.focus.map(i=>p1.get(config.id.slice(3)).steps[i][1]));
+ }
+ assert.notDeepEqual(api.prepare(batch['037'],p1,p2).steps,api.prepare(batch['038'],p1,p2).steps);
+ assert.ok(!map.lessons['035'].primary&&!map.lessons['036'].primary);
+});
