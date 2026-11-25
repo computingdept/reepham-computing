@@ -27,3 +27,13 @@ test('network lessons reuse shared demos with lesson-appropriate focus',()=>{
  }
  assert.notDeepEqual(api.prepare(batch['028'],p1,p2).steps,api.prepare(batch['029'],p1,p2).steps);
 });
+
+test('security lessons share one Skill with five curriculum-specific focuses',()=>{
+ const batch={"030":{"id":"p1:security","title":"Cybersecurity Investigator","url":"/exercise/paper1/?skill=security","variant":"malware"},"031":{"id":"p1:security","title":"Cybersecurity Investigator","url":"/exercise/paper1/?skill=security","variant":"attacks"},"032":{"id":"p1:security","title":"Cybersecurity Investigator","url":"/exercise/paper1/?skill=security","variant":"firewalls"},"033":{"id":"p1:security","title":"Cybersecurity Investigator","url":"/exercise/paper1/?skill=security","variant":"controls"},"034":{"id":"p1:security","title":"Cybersecurity Investigator","url":"/exercise/paper1/?skill=security"}};
+ const topics=new Set();for(const [id,config] of Object.entries(batch)){
+ assert.equal(config.id,map.lessons[id].primary);const model=api.prepare(config,p1,p2);
+ assert.ok(model.steps.length>=3);assert.ok(model.steps.every(s=>s.question&&s.explanation));
+ const source=p1.get('security',model.demoFocus);assert.deepEqual(model.steps.map(s=>s.value),model.focus.map(i=>source.steps[i][1]));topics.add(model.task);
+ }
+ assert.equal(topics.size,5);
+});

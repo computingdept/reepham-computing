@@ -138,7 +138,62 @@
       ['Balance','There may be access and privacy concerns','Consider a drawback, not just a benefit.'],
       ['Evaluate','Judge when it is worthwhile','Support your conclusion with a reason.']]}
   };
-  function get(id){return examples[id]||null;}
+  // Focused classroom examples reuse the same three-part step schema.
+  const securityFocus={
+  "malware": {
+    "title": "Malware and social engineering",
+    "task": "A pupil downloads a fake update. Later a caller claims to be from IT and asks for their login details.",
+    "steps": [
+      [
+        "Malware",
+        "Fake update → malicious software",
+        "Malware is software designed to harm or misuse a computer. A fake update may contain malicious code."
+      ],
+      [
+        "Social engineering",
+        "Fake IT caller → manipulate a person",
+        "Social engineering uses deception to persuade someone to reveal information or take an unsafe action."
+      ],
+      [
+        "Phishing",
+        "Deceptive message → request for credentials",
+        "Phishing is a form of social engineering using deceptive messages to trick people."
+      ],
+      [
+        "Reduce risk",
+        "Trusted downloads · verify requests · training",
+        "Use trusted sources, up-to-date anti-malware and verify unusual requests independently."
+      ]
+    ]
+  },
+  "attacks": {
+    "title": "Network attacks",
+    "task": "A school's IT team investigates four separate incidents. Match each symptom to its likely threat.",
+    "steps": [
+      [
+        "Brute-force attack",
+        "Repeated password guesses",
+        "Trying many possible passwords can lead to unauthorised access if a guess succeeds."
+      ],
+      [
+        "Denial of service",
+        "Overloaded service → unavailable",
+        "An overwhelming volume of unwanted requests can exhaust resources, preventing legitimate users from accessing a service."
+      ],
+      [
+        "Data interception",
+        "Private data captured in transit",
+        "An unauthorised party captures network communications. Encryption can help protect their contents."
+      ],
+      [
+        "SQL injection",
+        "Unsafe input alters a database query",
+        "Untrusted input changes the intended query. Parameterised queries and appropriate validation help reduce risk."
+      ]
+    ]
+  }
+};
+  function get(id,focus){return id==='security'&&focus?securityFocus[focus]||null:examples[id]||null;}
   function mount(doc,win){
     const practice=doc.getElementById('practice');
     const title=practice&&practice.querySelector('.skill-top');
