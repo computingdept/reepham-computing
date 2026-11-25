@@ -49,29 +49,36 @@
   function traceQuestion(level,n){
     const a=2+(n%6),b=2+(n%4);
     if(level==='easy'){
-      return {type:'trace',prompt:'Complete x after each statement.',instruction:'One trace-table row for every executed statement.',
+      return {type:'trace',prompt:'Complete x after each statement.',instruction:'Record x after executing each numbered line.',
         code:['x = '+a,'x = x + '+b,'x = x * 2'].join('\n'),columns:['x'],
-        rows:[{line:'x = '+a,values:[a]},{line:'x = x + '+b,values:[a+b]},{line:'x = x * 2',values:[(a+b)*2]}],
+        rows:[{line:1,values:[a]},{line:2,values:[a+b]},{line:3,values:[(a+b)*2]}],
         hint:'Write the new x immediately after each line. Use the updated value on the next line.',
         model:'x values: '+[a,a+b,(a+b)*2].join(' → ')+'.'};
     }
     if(level==='medium'){
       const x=a,y=b;
-      return {type:'trace',prompt:'Trace x and y after each statement.',instruction:'Write both current values on each row.',
+      return {type:'trace',prompt:'Trace x and y after each statement.',instruction:'Record both current values after each line. A dash means the variable has not been assigned yet.',
         code:['x = '+x,'y = '+y,'x = x + y','y = x - y','x = x * 2'].join('\n'),
         columns:['x','y'],rows:[
-          {line:'x = x + y',values:[x+y,y]},
-          {line:'y = x - y',values:[x+y,x]},
-          {line:'x = x * 2',values:[2*(x+y),x]}],
-        hint:'After x = x + y, x changes but y does not. Record both variables after every statement.',
-        model:'After x = x + y: ('+(x+y)+', '+y+'); after y = x - y: ('+(x+y)+', '+x+'); final: ('+(2*(x+y))+', '+x+').'};
+          {line:1,values:[x,null]},{line:2,values:[x,y]},
+          {line:3,values:[x+y,y]},{line:4,values:[x+y,x]},{line:5,values:[2*(x+y),x]}],
+        hint:'After x = x + y, x changes but y does not. Carry forward the unchanged variable.',
+        model:'Line 1: ('+x+', —); line 2: ('+x+', '+y+'); line 3: ('+(x+y)+', '+y+'); line 4: ('+(x+y)+', '+x+'); line 5: ('+(2*(x+y))+', '+x+').'};
     }
-    const limit=3+(n%2),start=n%3;let v=start;const rows=[];
-    for(let i=1;i<=limit;i++){v+=i;rows.push({line:'i = '+i+' · x = x + i',values:[i,v]});}
-    return {type:'trace',prompt:'Trace this FOR loop, including every iteration.',instruction:'The i column is shown; fill in x after the body runs.',
+    const limit=3+(n%2),start=n%3;let v=start;const rows=[{line:1,values:[null,start]}];
+    for(let i=1;i<=limit;i++){v+=i;rows.push({line:3,values:[i,v]});}
+    return {type:'trace',prompt:'Trace the running total in this FOR loop.',instruction:'Record x after its initial assignment (line 1) and after each execution of line 3. The i column is provided.',
       code:'x = '+start+'\nFOR i = 1 TO '+limit+'\n  x = x + i\nNEXT i',
       columns:['i','x'],given:[true,false],rows,hint:'Start with x = '+start+'. Add i on each iteration, carrying forward the previous x.',
       model:'x progresses: '+rows.map(r=>r.values[1]).join(' → ')+'. Final x = '+v+'.'};
+  }
+  // Numeric fields must compare signed integers, not punctuation-stripped tokens.
+  function matchesAnswer(actual,expected,numeric=false){
+    if(numeric||/^[+-]?\d+$/.test(String(expected))){
+      const value=String(actual??'').trim().replace(/^−/,'-');
+      return /^[+-]?\d+$/.test(value)&&Number.isSafeInteger(Number(value))&&Number(value)===Number(expected);
+    }
+    return clean(actual)===clean(expected);
   }
   function cpuQuestion(level,n){
     // Alternate the existing cycle exercises with component roles and execution.
@@ -79,7 +86,7 @@
       const roles=[['Program Counter (PC)','Address of the next instruction'],['Memory Address Register (MAR)','Address of the memory location being accessed'],['Memory Data Register (MDR)','Data or instruction transferred to or from memory'],['Current Instruction Register (CIR)','Current instruction being decoded or executed'],['Control Unit (CU)','Decodes instructions and coordinates CPU operations'],['Arithmetic Logic Unit (ALU)','Performs arithmetic and logical operations'],['Accumulator (ACC)','Holds intermediate arithmetic or logical results']];
       if(level==='hard'){
         const a=5+n,b=2+n%7;
-        return {type:'fields',prompt:'Trace the execution of an ADD instruction.',instruction:'Use the simplified accumulator-based CPU model. Give the component name or abbreviation shown in the labels, and the numerical result.',code:'ACC = '+a+'\nCIR = ADD '+b+'\nOperand already available = '+b,labels:['Component that performs addition (CU or ALU)','Accumulator after addition'],answers:['ALU',String(a+b)],hint:'The control unit coordinates the instruction; the ALU adds the two values.',model:'ALU calculates '+a+' + '+b+' = '+(a+b)+'. ACC = '+(a+b)+'.'};
+        return {type:'fields',prompt:'Trace the execution of an ADD instruction.',instruction:'Use the simplified accumulator-based CPU model. Give the component abbreviation (CU or ALU) and the numerical result.',code:'ACC = '+a+'\nCIR = ADD '+b+'\nOperand already available = '+b,labels:['Component that performs addition (CU or ALU)','Accumulator after addition'],answers:['ALU',String(a+b)],hint:'The control unit coordinates the instruction; the ALU adds the two values.',model:'ALU calculates '+a+' + '+b+' = '+(a+b)+'. ACC = '+(a+b)+'.'};
       }
       const count=level==='easy'?3:4,offset=Math.floor(n/2)%roles.length;
       const selected=Array.from({length:count},(_,i)=>roles[(offset+i)%roles.length]);
@@ -190,6 +197,14 @@
     let level='easy',n=0,q=null,answered=false,step=0,chosen=null,notes=[];
     $('title').textContent=meta.title;$('subtitle').textContent=meta.sub;$('spec').textContent=meta.spec;
     $('qualification').textContent=meta.course==='h446'?'A Level Computer Science':'GCSE Computer Science';
+    if(id==='cpu-cycle'||id==='trace-table'){
+      doc.title=meta.title+' · Skills practice · Synergy Assist';
+      doc.body.classList.add('classroom-skill');
+      const badge=doc.querySelector('.review-badge'),footer=doc.querySelector('footer');
+      if(badge)badge.textContent='CLASSROOM PRACTICE';
+      if(footer)footer.textContent='Practise and check your answers. This activity is not included in Skills mastery or assignment scores.';
+      $('activity').setAttribute('aria-label','Current Skill challenge');
+    }
     $('back').href=meta.course==='h446'?'/exercise/h446/tools.html':id==='cpu-cycle'?'/exercise/paper1/':'/exercise/paper2/';
     const setText=(id,text)=>{$(id).textContent=text;};
     function addField(parent,label,options){
@@ -226,14 +241,15 @@
       q=make(id,level,n);answered=false;step=0;chosen=null;notes=[];
       setText('question-number','Question '+(n+1));setText('prompt',q.prompt);setText('instruction',q.instruction);setText('feedback','');
       $('explainer').hidden=true;$('visual').replaceChildren();$('entry').replaceChildren();
-      if(q.code)$('visual').append(el('div','data-label','GIVEN / ALGORITHM'),el('pre','review-code',q.code));
+      if(q.code){const code=q.type==='trace'?q.code.split('\n').map((line,i)=>String(i+1).padStart(2,'0')+'  '+line).join('\n'):q.code;$('visual').append(el('div','data-label','GIVEN / ALGORITHM'),el('pre','review-code',code));}
       if(q.type==='trace'){
-        const table=el('table','trace-table'),head=el('tr');['Executed statement',...q.columns].forEach(c=>head.append(el('th','',c)));table.append(head);
+        const table=el('table','trace-table'),head=el('tr');['Line',...q.columns].forEach(c=>head.append(el('th','',c)));table.append(head);
         q.rows.forEach((r,i)=>{
           const row=el('tr');row.append(el('td','',r.line));
           r.values.forEach((v,j)=>{
             const cell=el('td');
-            if(q.given?.[j])cell.textContent=String(v);
+            if(v===null)cell.textContent='—';
+            else if(q.given?.[j])cell.textContent=String(v);
             else {const input=el('input');input.type='text';input.inputMode='numeric';input.setAttribute('aria-label','Row '+(i+1)+', '+q.columns[j]);input.dataset.row=i;input.dataset.col=j;cell.append(input);}
             row.append(cell);
           });table.append(row);
@@ -266,12 +282,12 @@
           success=true;renderSearch();
         }
       }else{
-        const expected=q.type==='trace'?q.rows.flatMap((r,i)=>r.values.map((v,j)=>q.given?.[j]?null:String(v)).filter(v=>v!==null)):
+        const expected=q.type==='trace'?q.rows.flatMap((r,i)=>r.values.map((v,j)=>q.given?.[j]||v===null?null:String(v)).filter(v=>v!==null)):
           q.type==='bits'?[q.answer]:q.answers;
         const actual=q.type==='trace'?[...$('entry').querySelectorAll('input')].map(x=>x.value):
           q.type==='bits'?[ [...$('entry').querySelectorAll('[data-bit]')].map(x=>x.textContent).join('') ]:
           [...$('entry').querySelectorAll('input,select')].map(x=>x.value);
-        success=actual.length===expected.length&&actual.every((v,i)=>clean(v)===clean(expected[i]));
+        success=actual.length===expected.length&&actual.every((v,i)=>(id==='trace-table'||id==='cpu-cycle')?matchesAnswer(v,expected[i],q.type==='trace'):clean(v)===clean(expected[i]));
         detail=success?'Correct. You have followed the process.':'Not quite. Check the current values and use Hint or Demo if needed.';
       }
       $('feedback').className='feedback '+(success?'good':'bad');setText('feedback',detail);
@@ -311,5 +327,5 @@
     doc.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('demo').hidden)$('demo-back').click();});
     render();return {id,render,make};
   }
-  return {names,make,demos,bits,clean,simulate,searchTrace,mount};
+  return {names,make,demos,bits,clean,matchesAnswer,simulate,searchTrace,mount};
 });

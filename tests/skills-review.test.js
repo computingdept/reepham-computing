@@ -25,13 +25,13 @@ test('trace rows only contain integers and match their code statements',()=>{
   for(const level of levels)for(let n=0;n<10;n++){
     const q=skills.make('trace-table',level,n);
     assert.ok(q.rows.length>=3);
-    for(const row of q.rows)for(const v of row.values)assert.equal(Number.isInteger(v),true);
+    for(const row of q.rows)for(const v of row.values)assert.equal(v===null||Number.isInteger(v),true);
     if(level==='easy'){
       const a=2+n%6,b=2+n%4;
       assert.deepEqual(q.rows.map(r=>r.values),[[a],[a+b],[(a+b)*2]]);
     }
     if(level==='hard'){
-      assert.equal(q.rows.length,3+n%2);
+      assert.equal(q.rows.length,4+n%2);
       assert.deepEqual(q.columns,['i','x']);
     }
   }
@@ -85,3 +85,5 @@ test('review engine does not access stored mastery',()=>{
 test('CPU extension mixes role questions with original fetch and execution practice',()=>{
  for(const level of levels)for(let n=0;n<16;n++){const q=skills.make('cpu-cycle',level,n);assert.ok(q.answers.length===q.labels.length);if(q.options)assert.ok(q.answers.every(a=>q.options.includes(a)));if(level==='hard'&&n%2===1)assert.deepEqual(q.answers,['ALU',String(5+n+2+n%7)]);}
 });
+
+test('J277 trace tables use numbered lines, include initialization and preserve signed answers',()=>{for(let n=0;n<10;n++){const m=skills.make('trace-table','medium',n),h=skills.make('trace-table','hard',n);assert.deepEqual(m.rows.map(r=>r.line),[1,2,3,4,5]);assert.equal(m.rows[0].values[1],null);assert.equal(h.rows[0].line,1);assert.ok(h.rows.slice(1).every(r=>r.line===3));}assert.equal(skills.matchesAnswer('-5',5,true),false);assert.equal(skills.matchesAnswer('5',5,true),true);assert.equal(skills.matchesAnswer('',0,true),false);assert.equal(skills.matchesAnswer('5.0',5,true),false);assert.equal(skills.matchesAnswer('−5',-5,true),true);});
