@@ -155,11 +155,11 @@
           '<div class="j277-u-simple-answer">'+answerMarkup+'</div>'),
         newCard("j277-u-batch j277-u-batch-questions",
           head("INDEPENDENT EXAM PRACTICE",examCount+' QUESTIONS · ONE SCREEN')+
-          '<div class="j277-u-batch-grid">'+questionPanels.join("")+'</div>'),
+          '<div class="j277-u-batch-grid" data-count="'+examCount+'">'+questionPanels.join("")+'</div>'),
         ...answerPages.map((markup,i)=>
           newCard("j277-u-answer-page",
             head("SELF-MARK · EXAM QUESTION "+(i+1),"ANSWER "+(i+1)+" OF "+examCount)+
-            markup))
+            '<div class="j277-u-teacher-review"><div class="j277-u-review-prompt">'+questionPanels[i]+'</div>'+markup+'</div>'))
       ];
       if(output.length!==3+examCount||questionPanels.length!==answerPages.length)
         throw Error("Per-question answer sequence or marking count mismatch");
@@ -172,7 +172,7 @@
         j277ReviewStart:"3",codingFirst:"true",
         workMode:"independent",windowStart:"0"
       });
-      css.href="../../../assets/j277/youdo-unified.css?v=20261122-exam-svg-large-v1";
+      css.href="../../../assets/j277/youdo-unified.css?v=20261125-classroom-standard7";
       document.head.appendChild(css);
       const labels=[
         "Check Code First →","Begin exam questions →","Show answer 1 →",

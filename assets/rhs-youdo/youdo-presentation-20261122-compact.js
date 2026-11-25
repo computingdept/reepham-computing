@@ -96,6 +96,11 @@
     queue();
   }
   function commandWords(value){
+    if(global.RHSYouDoLayout?.commandRanges){
+      var raw=String(value||""),out="",last=0;
+      global.RHSYouDoLayout.commandRanges(raw).sort(function(a,b){return a.start-b.start;}).forEach(function(r){if(r.start<last)return;out+=escapeHtml(raw.slice(last,r.start))+'<mark class="rhs-j277-command h446-youdo-command">'+escapeHtml(raw.slice(r.start,r.start+r.length))+'</mark>';last=r.start+r.length;});
+      return out+escapeHtml(raw.slice(last));
+    }
     var s=String(value||""),re=/(^|[.!?;]\\s+|\\n\\s*|\\([a-zivx0-9]+\\)\\s*)(Analyse|Annotate|Assess|Calculate|Compare|Complete|Construct|Convert|Define|Describe|Design|Determine|Discuss|Draw|Evaluate|Explain|Give|Identify|Justify|Label|List|Name|Outline|Predict|Recommend|Show|Simplify|Sketch|State|Suggest|Trace|Write|Select|Tick|Order|Solve|Add|Modify|Correct|Use)\\b/gi;
     var out="",last=0,m;
     while((m=re.exec(s))){
@@ -105,9 +110,17 @@
     }
     return out+escapeHtml(s.slice(last));
   }
+  function examTaskText(text){
+    var raw=String(text||""),first=global.RHSYouDoLayout?.commandRanges(raw)?.[0];
+    if(first&&first.start>0){
+      var before=raw.slice(0,first.start),boundary=before.match(/\r?\n[\t ]*\r?\n\s*$/);
+      if(boundary&&before.slice(0,boundary.index).trim())return '<span class="rhs-y-context">'+commandWords(before.slice(0,boundary.index))+'</span><span class="rhs-y-task">'+commandWords(raw.slice(first.start))+'</span>';
+    }
+    return commandWords(raw);
+  }
   function questionText(text){
     var parts=String(text||"").split(/\n\s*\nSource:\s*/i);
-    return '<div class="rhs-y-question"><p>'+commandWords(parts[0]).replace(/\n/g,"<br />")+
+    return '<div class="rhs-y-question"><p>'+examTaskText(parts[0]).replace(/\n/g,"<br />")+
       '</p>'+(parts[1]?'<small>'+escapeHtml("Source: "+parts.slice(1).join(" Source: "))+'</small>':"")+'</div>';
   }
   function markFromText(text){
@@ -252,7 +265,7 @@
           return '<section class="rhs-y-challenge-card">'+
             '<div class="rhs-y-challenge-card-head"><span>Q'+(start+i+1)+'</span>'+
             '<span>'+(marks===null?'EXAM PRACTICE':marks+' MARK'+(marks===1?'':'S'))+'</span></div>'+
-            '<p>'+commandWords(text)+'</p></section>';
+            '<p>'+(group.length===4?examTaskText(text):commandWords(text))+'</p></section>';
         }).join("")+'</div>';
       return makeStage(challenge,"rhs-y-challenge-stage");
     }

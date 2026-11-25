@@ -11,6 +11,7 @@
   if(!lessonId || allowlist.indexOf(lessonId)<0)return;
   var h446Preview=["096","100","109","110","118","137"].includes(lessonId)&&new URLSearchParams(location.search).get("youdo-style")==="h446"&&!!window.RHSYouDoLayout;
 
+  var sharedPresentation=!!window.RHSYouDoLayout;
   // Explicit four-card comparison is limited to L096; normal adaptive grouping remains unchanged.
   var fourPreview=h446Preview&&lessonId==="096"&&new URLSearchParams(location.search).get("youdo-layout")==="4";
   var host=document.getElementById("you-do");
@@ -52,7 +53,7 @@
   }
   function lineBreaks(s){return esc(s).replace(/\r\n?|\n/g,"<br>");}
   function questionLines(s){
-    if(h446Preview&&window.RHSYouDoLayout?.commandRanges){
+    if(sharedPresentation&&window.RHSYouDoLayout?.commandRanges){
       var raw=String(s||""),out="",last=0;
       var ranges=window.RHSYouDoLayout.commandRanges(raw).sort(function(a,b){return a.start-b.start;});
       ranges.forEach(function(r){
@@ -68,7 +69,7 @@
   // Keep every word and only split where the authored paragraph boundary is explicit.
   function questionCardText(s){
     var raw=originalQuestion(s);
-    if(h446Preview&&window.RHSYouDoLayout?.commandRanges){
+    if(sharedPresentation&&window.RHSYouDoLayout?.commandRanges){
       var first=window.RHSYouDoLayout.commandRanges(raw)[0];
       if(first&&first.start>0){
         var before=raw.slice(0,first.start);
@@ -107,7 +108,7 @@
       '<div class="rhs-bank-grid" data-count="'+items.length+'">'+items.map(function(q,i){
         return '<section class="rhs-bank-card">'+
           '<div class="rhs-bank-card-head"><span>Q'+(start+i+1)+'</span><span>'+q.marks+' MARK'+(q.marks===1?'':'S')+'</span></div>'+
-          '<p class="rhs-bank-prompt">'+questionCardText(q.question)+'</p>'+
+          '<p class="rhs-bank-prompt">'+(h446Preview||items.length===4?questionCardText(q.question):questionLines(originalQuestion(q.question)))+'</p>'+
           (q.figure?'<img class="rhs-bank-question-figure" src="'+esc(q.figure)+'" alt="Question diagram">':"")+
           '<span class="rhs-bank-source">'+esc(q.reference)+'</span></section>';
       }).join("")+'</div></article>';
@@ -134,11 +135,11 @@
   }
   function markScreen(q,index,total){
     return '<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage rhs-bank-review-stage" hidden>'+
-      header((h446Preview?"QUESTION ":"SELF-MARK · QUESTION ")+(index+1)+" OF "+total,
+      header((sharedPresentation?"QUESTION ":"SELF-MARK · QUESTION ")+(index+1)+" OF "+total,
         q.marks+" MARK"+(q.marks===1?'':'S'))+
       '<div class="rhs-j277-answer-layout"><div class="rhs-bank-review-question">'+
-      (h446Preview?'':'<span class="rhs-bank-label">QUESTION · '+esc(q.id)+'</span>')+
-      '<p>'+(h446Preview?questionCardText(q.question):questionLines(originalQuestion(q.question)))+'</p>'+
+      (sharedPresentation?'':'<span class="rhs-bank-label">QUESTION · '+esc(q.id)+'</span>')+
+      '<p>'+(sharedPresentation?questionCardText(q.question):questionLines(originalQuestion(q.question)))+'</p>'+
       (q.figure?'<img class="rhs-bank-question-figure" src="'+esc(q.figure)+'" alt="Question diagram">':"")+
       '</div>'+
       '<div class="rhs-bank-answer-area'+(q.answerFigure?' rhs-bank-answer-area--with-figure':'')+'">'+
@@ -212,6 +213,7 @@
     var groups=fourPreview&&questions.length===4&&!matchMedia("(max-width:900px)").matches?[questions]:questionGroups(questions);
     host.dataset.rhsBankPreview="true";
     if(h446Preview)host.dataset.rhsH446Preview="true";
+    if(sharedPresentation)host.dataset.rhsBankShared="true";
     function render(){
       var source=document.createElement("div");
       source.innerHTML=questionPageMarkup(groups,questions)+
@@ -227,7 +229,7 @@
     var slides=render();
     // New bank stages are not the original renderer's observed nodes.
     // Reset scroll when a new marking slide becomes visible, without altering navigation.
-    if(h446Preview){
+    if(sharedPresentation){
       var lastVisible=null;
       var resetReviewScroll=function(){
         var visible=rolling.querySelector(":scope > .rhs-bank-review-stage:not([hidden])");
@@ -263,11 +265,11 @@
             tmp.innerHTML=intro(part,start,questions.length,totalMarks,0,2);
             var stage=tmp.firstElementChild;
             // Until a diagram has loaded, use the safe full-screen fallback.
-            if(h446Preview&&Array.from(stage.querySelectorAll("img")).some(function(img){return !img.complete||!img.naturalWidth;}))return false;
+            if(sharedPresentation&&Array.from(stage.querySelectorAll("img")).some(function(img){return !img.complete||!img.naturalWidth;}))return false;
             return shared.measureExamStage(host,rolling,stage);
           }
           var narrow=matchMedia("(max-width:900px)").matches;
-          var chosen=fourPreview&&questions.length===4&&!narrow?[questions]:h446Preview
+          var chosen=fourPreview&&questions.length===4&&!narrow?[questions]:sharedPresentation
             ?window.RHSYouDoLayout.selectGroups(questions.length,function(start,size){return fits(questions.slice(start,start+size),start);},narrow).map(function(g){return questions.slice(g.start,g.end);})
             :shared.selectExamGroups(questions,fits,narrow);
           // Only replace question pages. Both code nodes and all marking
@@ -292,6 +294,7 @@
     // Invalid mappings fail closed; the original lesson stays available.
     delete host.dataset.rhsBankPreview;
     delete host.dataset.rhsH446Preview;
+    delete host.dataset.rhsBankShared;
     console.error("J277 bank loading failed; original You Do retained:",err);
   });
 })();
