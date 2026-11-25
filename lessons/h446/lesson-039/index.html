@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20261025-exit-rollout1">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261115-objectives-focus1">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1915">
-<meta name="lesson-status" content="ready"><style>.ready-badge{display:inline-block;background:#e4f3e8;color:#155735;font-size:12px;font-weight:850;padding:3px 7px;border-radius:5px;letter-spacing:.06em;white-space:nowrap}</style></head>
+<meta name="lesson-status" content="ready"><style>.ready-badge{display:inline-block;background:#e4f3e8;color:#155735;font-size:12px;font-weight:850;padding:3px 7px;border-radius:5px;letter-spacing:.06em;white-space:nowrap}</style><link rel="stylesheet" href="/assets/j277/we-do-skills.css?v=20261124-pilot1"></head>
 <body>
 <a class="skip" href="#main">Skip to lesson</a>
 
@@ -72,7 +72,7 @@ endclass
 pokemon1 = new Pokemon("Charizard","fire",1000,160)
 pokemon2 = new Pokemon("Squirtle","water",1800,90)
 pokemon1.fight(pokemon2)
-print(pokemon1.getType(), pokemon2.HP)</code></pre><span class="ido-example-count">One worked example · reveal each step</span></div><div class="ido-method"><div class="ido-step"><span class="ido-step-label">STEP 1</span><h2>Identify state and behaviour</h2><p><strong>Attributes:</strong> name, type, HP, attack. <strong>Methods:</strong> getType() returns data; fight(opponent) changes it.</p></div><div class="ido-step" hidden><span class="ido-step-label">STEP 2</span><h2>Create two independent objects</h2><p>pokemon1 starts with 1000 HP; pokemon2 starts with 1800 HP. The constructor supplies their initial values.</p></div><div class="ido-step" hidden><span class="ido-step-label">STEP 3</span><h2>Trace the method call</h2><p>Charizard deals <strong>160 damage</strong> to Squirtle: 1800 − 160 = <strong>1640 HP</strong>. Charizard remains on 1000 HP. Output: <strong>fire, 1640</strong>.</p></div></div></article></div></section><section id="we-do" class="page phase-wedo" data-phase-time="12 minutes"><div class="wedo-focus-deck"><article class="wedo-example"><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE · TRY → CLUE → IMPROVE</span><h2>Trace both Pokémon's state</h2><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:1.01rem;line-height:1.36"><code>pokemon1 = new Pokemon("Charizard","fire",1000,160)
+print(pokemon1.getType(), pokemon2.HP)</code></pre><span class="ido-example-count">One worked example · reveal each step</span></div><div class="ido-method"><div class="ido-step"><span class="ido-step-label">STEP 1</span><h2>Identify state and behaviour</h2><p><strong>Attributes:</strong> name, type, HP, attack. <strong>Methods:</strong> getType() returns data; fight(opponent) changes it.</p></div><div class="ido-step" hidden><span class="ido-step-label">STEP 2</span><h2>Create two independent objects</h2><p>pokemon1 starts with 1000 HP; pokemon2 starts with 1800 HP. The constructor supplies their initial values.</p></div><div class="ido-step" hidden><span class="ido-step-label">STEP 3</span><h2>Trace the method call</h2><p>Charizard deals <strong>160 damage</strong> to Squirtle: 1800 − 160 = <strong>1640 HP</strong>. Charizard remains on 1000 HP. Output: <strong>fire, 1640</strong>.</p></div></div></article></div></section><section id="we-do" data-skill-pilot="true" class="page phase-wedo" data-phase-time="12 minutes"><div class="wedo-focus-deck"><article class="wedo-example"><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE · TRY → CLUE → IMPROVE</span><h2>Trace both Pokémon's state</h2><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:1.01rem;line-height:1.36"><code>pokemon1 = new Pokemon("Charizard","fire",1000,160)
 pokemon2 = new Pokemon("Squirtle","water",1800,90)
 pokemon1.fight(pokemon2)
 pokemon2.fight(pokemon1)
@@ -93,7 +93,11 @@ while pokemon1.HP &gt; 0 AND pokemon2.HP &gt; 0
   if pokemon2.HP &gt; 0 then
     pokemon2.fight(pokemon1)
   endif
-endwhile</code></pre></div></div></article></div></section><section id="you-do" class="page phase-youdo" data-phase-time="25 minutes · OCR pseudocode exam practice" data-window-size="1"><div class="youdo-deck"><div class="youdo-rolling"><article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT · 1 OF 5 · IDENTIFY · 4 MARKS</span><h3>IDENTIFY · 4 marks</h3><div class="question-text"><p>From this <code>Pokemon</code> class extract, name <strong>two attributes</strong> and <strong>two methods</strong>. [4]</p><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:1.03rem;line-height:1.4"><code>class Pokemon
+endwhile</code></pre></div></div></article>
+    <article class="wedo-example skill-wedo-example" hidden>
+      <div class="wedo-reference"><span class="phase-tag">YOUR TURN · SKILL PRACTICE</span><h2>OOP Lab</h2><p>Trace attributes, method calls and changes in object state.</p><a class="skill-wedo-launch" href="/exercise/h446/oop-lab/?focus=state" target="_blank" rel="noopener">Practise OOP Lab →</a></div>
+      <div class="wedo-practice"><span class="phase-tag">CLASS CHECK</span><h2>Before we move on</h2><p>An object has HP = 30. Its method subtracts 8 from HP. What is its new HP?</p><div class="wedo-step skill-wedo-step" hidden><span class="wedo-step-label">MODEL ANSWER</span><p class="skill-wedo-result">22. The method changes the attribute of that object.</p></div></div>
+    </article></div></section><section id="you-do" class="page phase-youdo" data-phase-time="25 minutes · OCR pseudocode exam practice" data-window-size="1"><div class="youdo-deck"><div class="youdo-rolling"><article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT · 1 OF 5 · IDENTIFY · 4 MARKS</span><h3>IDENTIFY · 4 marks</h3><div class="question-text"><p>From this <code>Pokemon</code> class extract, name <strong>two attributes</strong> and <strong>two methods</strong>. [4]</p><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:1.03rem;line-height:1.4"><code>class Pokemon
   public type
   public HP
   public attack
