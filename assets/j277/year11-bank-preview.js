@@ -64,6 +64,23 @@
     }
     return (window.RHSYouDoTrial?.commandWords?.(s)||esc(s)).replace(/\r\n?|\n/g,"<br>");
   }
+  // Distinguish an existing scenario paragraph from a command-led task.
+  // Keep every word and only split where the authored paragraph boundary is explicit.
+  function questionCardText(s){
+    var raw=originalQuestion(s);
+    if(h446Preview&&window.RHSYouDoLayout?.commandRanges){
+      var first=window.RHSYouDoLayout.commandRanges(raw)[0];
+      if(first&&first.start>0){
+        var before=raw.slice(0,first.start);
+        var boundary=before.match(/\r?\n[\t ]*\r?\n\s*$/);
+        if(boundary&&before.slice(0,boundary.index).trim()){
+          return '<span class="rhs-bank-context">'+questionLines(before.slice(0,boundary.index))+'</span>'+
+            '<span class="rhs-bank-task">'+questionLines(raw.slice(first.start))+'</span>';
+        }
+      }
+    }
+    return questionLines(raw);
+  }
   function answerParts(s){
     // Semicolons in the already-authored answer are presentation separators,
     // not automatically separate credited marks. The marking rule controls credit.
@@ -90,7 +107,7 @@
       '<div class="rhs-bank-grid" data-count="'+items.length+'">'+items.map(function(q,i){
         return '<section class="rhs-bank-card">'+
           '<div class="rhs-bank-card-head"><span>Q'+(start+i+1)+'</span><span>'+q.marks+' MARK'+(q.marks===1?'':'S')+'</span></div>'+
-          '<p class="rhs-bank-prompt">'+questionLines(originalQuestion(q.question))+'</p>'+
+          '<p class="rhs-bank-prompt">'+questionCardText(q.question)+'</p>'+
           (q.figure?'<img class="rhs-bank-question-figure" src="'+esc(q.figure)+'" alt="Question diagram">':"")+
           '<span class="rhs-bank-source">'+esc(q.reference)+'</span></section>';
       }).join("")+'</div></article>';
