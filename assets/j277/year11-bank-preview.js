@@ -134,11 +134,11 @@
   }
   function markScreen(q,index,total){
     return '<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage rhs-bank-review-stage" hidden>'+
-      header("SELF-MARK · QUESTION "+(index+1)+" OF "+total,
+      header((h446Preview?"QUESTION ":"SELF-MARK · QUESTION ")+(index+1)+" OF "+total,
         q.marks+" MARK"+(q.marks===1?'':'S'))+
       '<div class="rhs-j277-answer-layout"><div class="rhs-bank-review-question">'+
-      '<span class="rhs-bank-label">QUESTION · '+esc(q.id)+'</span>'+
-      '<p>'+questionLines(originalQuestion(q.question))+'</p>'+
+      (h446Preview?'':'<span class="rhs-bank-label">QUESTION · '+esc(q.id)+'</span>')+
+      '<p>'+(h446Preview?questionCardText(q.question):questionLines(originalQuestion(q.question)))+'</p>'+
       (q.figure?'<img class="rhs-bank-question-figure" src="'+esc(q.figure)+'" alt="Question diagram">':"")+
       '</div>'+
       '<div class="rhs-bank-answer-area'+(q.answerFigure?' rhs-bank-answer-area--with-figure':'')+'">'+
@@ -215,7 +215,7 @@
     function render(){
       var source=document.createElement("div");
       source.innerHTML=questionPageMarkup(groups,questions)+
-        questions.map(markScreen).join("");
+        questions.map(function(q,i){return markScreen(q,i,questions.length);}).join("");
       var slides=Array.from(source.children);
       if(slides.length!==groups.length+questions.length ||
          slides.some(function(node){return !node.matches(".rhs-bank-stage.youdo-question");}))
@@ -225,6 +225,21 @@
       return slides;
     }
     var slides=render();
+    // New bank stages are not the original renderer's observed nodes.
+    // Reset scroll when a new marking slide becomes visible, without altering navigation.
+    if(h446Preview){
+      var lastVisible=null;
+      var resetReviewScroll=function(){
+        var visible=rolling.querySelector(":scope > .rhs-bank-review-stage:not([hidden])");
+        if(visible===lastVisible)return;
+        lastVisible=visible;
+        if(!visible)return;
+        host.scrollTop=0;rolling.scrollTop=0;visible.scrollTop=0;
+        visible.querySelectorAll(".rhs-bank-review-question,.rhs-bank-answer-area").forEach(function(panel){panel.scrollTop=0;});
+      };
+      var reviewObserver=new MutationObserver(resetReviewScroll);
+      reviewObserver.observe(rolling,{subtree:true,attributes:true,attributeFilter:["hidden"],childList:true});
+    }
     codeScreens[0].hidden=false;
     codeScreens[1].hidden=true;
     host.dataset.rhsBankStart="2";
