@@ -87,7 +87,6 @@
     return '<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage rhs-bank-question-stage" data-rhs-question-page="'+(pageIndex+1)+'" hidden>'+
       header("ADDITIONAL EXAM PRACTICE · "+range,
         totalCount+" QUESTIONS · "+totalMarks+" MARKS")+
-      '<p class="rhs-bank-instruction">Complete the questions on this screen. '+(pageCount>1?"Continue for the remaining questions before self-marking.":"Mark your answers on the following screens.")+'</p>'+
       '<div class="rhs-bank-grid" data-count="'+items.length+'">'+items.map(function(q,i){
         return '<section class="rhs-bank-card">'+
           '<div class="rhs-bank-card-head"><span>Q'+(start+i+1)+'</span><span>'+q.marks+' MARK'+(q.marks===1?'':'S')+'</span></div>'+
