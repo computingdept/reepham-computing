@@ -418,11 +418,12 @@
    Only the shared H446 question-sheet renderer marks these cards as specialist.
    Existing compact/readability pilots and ordinary exam cards are excluded. */
 #you-do[data-h446-question-sheet="true"] .h446-specialist-question .youdo-question-prompt :is(.rhs-y13-context,.y13-rhs-brief,.rhs-y13-context-title),
-#you-do[data-h446-question-sheet="true"] .h446-specialist-answer .youdo-question-prompt :is(.rhs-y13-context,.y13-rhs-brief,.rhs-y13-context-title){
+#you-do[data-h446-question-sheet="true"][data-answer-mode="true"] .h446-specialist-answer .youdo-question-prompt :is(.rhs-y13-context,.y13-rhs-brief,.rhs-y13-context-title){
   font-size:clamp(17px,1.3vw,22px)!important;line-height:1.28!important;font-weight:450!important;
   margin:4px 0 7px!important;padding:6px 8px!important;
 }
-#you-do[data-h446-question-sheet="true"] :is(.h446-specialist-question,.h446-specialist-answer) .youdo-question-prompt :is(h2,h3,.rhs-y13-task,.y13-rhs-task){
+#you-do[data-h446-question-sheet="true"] .h446-specialist-question .youdo-question-prompt :is(h2,h3,.rhs-y13-task,.y13-rhs-task),
+#you-do[data-h446-question-sheet="true"][data-answer-mode="true"] .h446-specialist-answer .youdo-question-prompt :is(h2,h3,.rhs-y13-task,.y13-rhs-task){
   font-size:clamp(20px,1.55vw,26px)!important;line-height:1.27!important;margin:6px 0 9px!important;
 }
 #you-do[data-h446-question-sheet="true"] :is(.h446-specialist-question,.h446-specialist-answer) :is(.youdo-question-prompt,.youdo-solution) pre:not(.arithmetic){
@@ -442,7 +443,7 @@
   grid-column:auto;grid-row:auto;
 }
 #you-do[data-h446-question-sheet="true"][data-answer-mode="false"][data-h446-group-count="1"] .h446-specialist-visual-question .youdo-question-prompt :is(img,svg){
-  display:block;width:auto!important;height:auto!important;max-width:100%!important;
+  display:block;width:100%!important;height:auto!important;max-width:100%!important;
   max-height:48vh!important;object-fit:contain;object-position:top center;margin:6px auto!important;
 }
 /* Give the worked figure more width and height, but retain the question and
@@ -457,7 +458,7 @@
   font-size:clamp(15px,1.1vw,18px)!important;line-height:1.27!important;padding:7px 10px!important;margin:7px 0 0!important;
 }
 #you-do[data-h446-question-sheet="true"][data-answer-mode="true"] .h446-specialist-visual-answer .youdo-solution :is(img,svg){
-  display:block;width:auto!important;height:auto!important;max-width:100%!important;
+  display:block;width:100%!important;height:auto!important;max-width:100%!important;
   max-height:48vh!important;object-fit:contain;object-position:top center;margin:6px auto!important;
 }
 #you-do[data-h446-question-sheet="true"][data-answer-mode="true"] .h446-specialist-visual-question .youdo-question-prompt :is(img,svg){
