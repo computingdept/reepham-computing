@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=dc51cfd62494">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261115-objectives-focus1">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=464c7f849fd0">
-<meta name="lesson-status" content="ready"><style>.ready-badge{display:inline-block;background:#e4f3e8;color:#155735;font-size:12px;font-weight:850;padding:3px 7px;border-radius:5px;letter-spacing:.06em;white-space:nowrap}</style></head>
+<meta name="lesson-status" content="ready"><style>.ready-badge{display:inline-block;background:#e4f3e8;color:#155735;font-size:12px;font-weight:850;padding:3px 7px;border-radius:5px;letter-spacing:.06em;white-space:nowrap}</style><link rel="stylesheet" href="/assets/j277/we-do-skills.css?v=20261124-pilot1"></head>
 <body>
 <a class="skip" href="#main">Skip to lesson</a>
 
@@ -87,7 +87,7 @@ next[3] = 1
 data[1] = "Daisy"</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 4 · STOP</span><h2>Reach null</h2><pre class="arithmetic">next[1] = -1
 stop</pre></div></div></article></div></section>
 
-<section id="we-do" class="page phase-wedo" data-phase-time="12 minutes"><div class="wedo-focus-deck"><article class="wedo-example"><div class="wedo-reference"><span class="phase-tag">OCR JUNE 2023 H446/01 Q2(c)(iv)</span><h2>Access the second linked-list item</h2><p>OCR asks how the second item is reached using pointer values.</p><span class="wedo-example-count">Example 1 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the same trace</h2><pre class="arithmetic">firstIndex = start
+<section id="we-do" data-skill-pilot="true" class="page phase-wedo" data-phase-time="12 minutes"><div class="wedo-focus-deck"><article class="wedo-example"><div class="wedo-reference"><span class="phase-tag">OCR JUNE 2023 H446/01 Q2(c)(iv)</span><h2>Access the second linked-list item</h2><p>OCR asks how the second item is reached using pointer values.</p><span class="wedo-example-count">Example 1 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the same trace</h2><pre class="arithmetic">firstIndex = start
 secondIndex = ?
 secondData = data[?]</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the same trace</h2><pre class="arithmetic">firstIndex = start
 secondIndex = next[firstIndex]
@@ -105,7 +105,11 @@ while (current != -1)
     current = next[current];
 }</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE · C#</span><h2>Insert at front</h2><p><code>newIndex</code> is an unused array slot. Change the links, then traverse again.</p><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Test in .NET Fiddle →</a><span class="wedo-example-count">Example 3 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Fill the same code</h2><pre class="arithmetic">next[newIndex] = ?;
 start = ?;</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Fill the same code</h2><pre class="arithmetic">next[newIndex] = start;
-start = newIndex;</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE · C#</span><h2>Remove second item</h2><p>Bypass the item immediately after <code>start</code>, then run the traversal to prove the change.</p><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Test in .NET Fiddle →</a><span class="wedo-example-count">Example 4 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Fill the same code</h2><pre class="arithmetic">next[start] = ?;</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Fill the same code</h2><pre class="arithmetic">next[start] = next[next[start]];</pre></div></div></article></div></section>
+start = newIndex;</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE · C#</span><h2>Remove second item</h2><p>Bypass the item immediately after <code>start</code>, then run the traversal to prove the change.</p><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Test in .NET Fiddle →</a><span class="wedo-example-count">Example 4 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Fill the same code</h2><pre class="arithmetic">next[start] = ?;</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Fill the same code</h2><pre class="arithmetic">next[start] = next[next[start]];</pre></div></div></article>
+    <article class="wedo-example skill-wedo-example" hidden>
+      <div class="wedo-reference"><span class="phase-tag">YOUR TURN · SKILL PRACTICE</span><h2>Linked List Builder</h2><p>Follow pointers, then practise insertion or deletion.</p><a class="skill-wedo-launch" href="/exercise/h446/linked-list/?focus=traverse" target="_blank" rel="noopener">Practise Linked List Builder →</a></div>
+      <div class="wedo-practice"><span class="phase-tag">CLASS CHECK</span><h2>Before we move on</h2><p>Node 2 points to node 5. Node 5 points to node 8. To remove node 5 from the chain, what should next[2] become?</p><div class="wedo-step skill-wedo-step" hidden><span class="wedo-step-label">MODEL ANSWER</span><p class="skill-wedo-result">8. Bypass node 5 by copying its next pointer into next[2].</p></div></div>
+    </article></div></section>
 
 <section id="you-do" class="page phase-youdo" data-phase-time="25 minutes · .NET Fiddle" data-you-do-mode="coding" data-window-size="3"><div class="youdo-deck"><div class="youdo-rolling">
 

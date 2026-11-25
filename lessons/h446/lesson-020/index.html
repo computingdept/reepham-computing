@@ -79,7 +79,7 @@
   #i-do .ido-reference h2{margin:3px 0 7px}
   #i-do .ido-reference p{margin:5px 0}
 }
-</style><script defer src="../../../assets/h446-lesson/compact-tv-model-layout.js?v=20261025-compact3"></script></head>
+</style><script defer src="../../../assets/h446-lesson/compact-tv-model-layout.js?v=20261025-compact3"></script><link rel="stylesheet" href="/assets/j277/we-do-skills.css?v=20261124-pilot1"></head>
 <body>
 <a class="skip" href="#main">Skip to lesson</a>
 
@@ -155,7 +155,7 @@ second = 8
 top = -1</pre></div><div class="ido-step" hidden><span class="ido-step-label">STEP 4 · PUSH</span><h2>Store result</h2><pre class="arithmetic">top = 0
 stack[0] = 15</pre></div></div></article></div></section>
 
-<section id="we-do" class="page phase-wedo" data-phase-time="12 minutes"><div class="wedo-focus-deck"><article class="wedo-example"><div class="wedo-reference"><span class="phase-tag">OCR JUNE 2023 H446/01 Q2(b)</span><h2>Trace a stack</h2><p>OCR uses a calculator-style stack with push/pop operations.</p><span class="wedo-example-count">Example 1 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the same state</h2><pre class="arithmetic">Start: empty
+<section id="we-do" data-skill-pilot="true" class="page phase-wedo" data-phase-time="12 minutes"><div class="wedo-focus-deck"><article class="wedo-example"><div class="wedo-reference"><span class="phase-tag">OCR JUNE 2023 H446/01 Q2(b)</span><h2>Trace a stack</h2><p>OCR uses a calculator-style stack with push/pop operations.</p><span class="wedo-example-count">Example 1 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Complete the same state</h2><pre class="arithmetic">Start: empty
 push 8 → [8]
 push 7 → [?]
 A: pop two, add, push → [?]</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Complete the same state</h2><pre class="arithmetic">Start: empty
@@ -167,7 +167,11 @@ Queue = FIFO</pre></div></div></article><article class="wedo-example" hidden><di
 stack[top] = value;</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Fill the same code</h2><pre class="arithmetic">top = top + 1;
 stack[top] = value;</pre></div></div></article><article class="wedo-example" hidden><div class="wedo-reference"><span class="phase-tag">GUIDED PRACTICE</span><h2>Dequeue code</h2><p>Complete array-based dequeue.</p><span class="wedo-example-count">Example 4 of 4</span></div><div class="wedo-practice"><div class="wedo-step"><span class="wedo-step-label">YOUR TURN</span><h2>Fill the same code</h2><pre class="arithmetic">value = queue[?];
 front = ?;</pre></div><div class="wedo-step" hidden><span class="wedo-step-label">CHECK</span><h2>Fill the same code</h2><pre class="arithmetic">value = queue[front];
-front = front + 1;</pre></div></div></article></div></section>
+front = front + 1;</pre></div></div></article>
+    <article class="wedo-example skill-wedo-example" hidden>
+      <div class="wedo-reference"><span class="phase-tag">YOUR TURN · SKILL PRACTICE</span><h2>Stack &amp; Queue Tracer</h2><p>Practise bounded stack operations. Use the classroom examples for linear queues; circular queues are a later extension.</p><a class="skill-wedo-launch" href="/exercise/h446/stack-queue-advanced/?focus=stack" target="_blank" rel="noopener">Practise Stack &amp; Queue Tracer →</a></div>
+      <div class="wedo-practice"><span class="phase-tag">CLASS CHECK</span><h2>Before we move on</h2><p>A stack receives Push(4), Push(7), then Pop(). Which value is returned?</p><div class="wedo-step skill-wedo-step" hidden><span class="wedo-step-label">MODEL ANSWER</span><p class="skill-wedo-result">7. A stack uses last in, first out (LIFO).</p></div></div>
+    </article></div></section>
 
 <section id="you-do" data-self-marking="rich" class="page phase-youdo" data-phase-time="25 minutes · .NET Fiddle" data-you-do-mode="coding" data-window-size="2"><div class="youdo-deck"><div class="youdo-rolling"><article class="exam-card youdo-question"><span class="phase-tag">INDEPENDENT 1 · STACK</span><a class="coding-launch" href="https://dotnetfiddle.net/" target="_blank" rel="noopener">Open .NET Fiddle →</a><h3>Implement push/pop</h3><div class="question-text"><p>Create an integer stack array and write code that pushes 5, 8 and 3, then pops and prints one item.</p></div><div class="success-check">Trace the top pointer before and after each push or pop.</div><div class="youdo-solution" hidden><strong>ANSWER 1 OF 4</strong><pre class="arithmetic">int[] stack = new int[5];
 int top = -1;
