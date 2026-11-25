@@ -14,16 +14,7 @@
     return groups;
   }
   // Shared pure grouping policy; course-specific controllers keep their own DOM.
-  window.RHSYouDoLayout=Object.freeze({selectGroups});
-  if(!/^\/lessons\/h446\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname))return;
-  const root=document.querySelector('#you-do[data-h446-two-page-pilot="true"]');
-  if(!root)return;
-  const year12=root.dataset.h446Y12Shared==='true';
-  const legacy=year12&&root.dataset.h446Y12Legacy==='true';
-  // Authored command metadata is authoritative. No guessing from ordinary verbs.
-  function markQuestion(heading){
-    const explicit=heading.dataset.h446Commands;
-    const plain=heading.textContent;
+  function commandRanges(plain,explicit){
     const command='Analyse|Annotate|Assess|Calculate|Compare|Complete|Construct|Convert|Define|Describe|Design|Determine|Discuss|Draw|Evaluate|Explain|Give|Identify|Illustrate|Justify|Label|List|Name|Outline|Predict|Recommend|Show|Simplify|Sketch|State|Suggest|Trace|Write|Perform|Normalise|Select|Tick|Order|Solve|Add|Modify|Correct|Use';
     const pattern=new RegExp('(?:^|[.!?;]\\s+|\\([a-zivx0-9]+\\)\\s*|\\b(?:and|then)\\s+)('+command+')\\b','gi');
     const matches=[];
@@ -40,6 +31,19 @@
         matches.push({start,length:m[1].length});
       }
     }
+    return matches;
+  }
+  window.RHSYouDoLayout=Object.freeze({selectGroups,commandRanges});
+  if(!/^\/lessons\/h446\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname))return;
+  const root=document.querySelector('#you-do[data-h446-two-page-pilot="true"]');
+  if(!root)return;
+  const year12=root.dataset.h446Y12Shared==='true';
+  const legacy=year12&&root.dataset.h446Y12Legacy==='true';
+  // Authored command metadata is authoritative. No guessing from ordinary verbs.
+  function markQuestion(heading){
+    const explicit=heading.dataset.h446Commands;
+    const plain=heading.textContent;
+    const matches=commandRanges(plain,explicit);
     // Prevent the legacy shared highlighter from adding misleading commands.
     heading.setAttribute('data-rhsc-command-ready','true');
     const walk=document.createTreeWalker(heading,NodeFilter.SHOW_TEXT);

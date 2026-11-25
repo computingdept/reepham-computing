@@ -9,7 +9,7 @@
   var lessonId=match&&match[1];
   var allowlist=["096","097","098","099","100","101","102","103","104","105","106","107","108","109","110","111","112","114","115","116","117","118","119","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","145","146","147","148","149","150","151","152","153","154","155","158","159","160","161","162","163","164"]; // Mapped Year 11 lessons only; protected timed lessons unchanged.
   if(!lessonId || allowlist.indexOf(lessonId)<0)return;
-  var h446Preview=["096","100","118"].includes(lessonId)&&new URLSearchParams(location.search).get("youdo-style")==="h446"&&!!window.RHSYouDoLayout;
+  var h446Preview=["096","100","109","110","118","137"].includes(lessonId)&&new URLSearchParams(location.search).get("youdo-style")==="h446"&&!!window.RHSYouDoLayout;
 
   var host=document.getElementById("you-do");
   var rolling=host&&host.querySelector(".youdo-rolling.rhs-y-rolling");
@@ -49,7 +49,19 @@
     return String(s||"").replace(/\s*\[\d+(?:\s*marks?)?\]\s*$/i,"").trim();
   }
   function lineBreaks(s){return esc(s).replace(/\r\n?|\n/g,"<br>");}
-  function questionLines(s){return (window.RHSYouDoTrial?.commandWords?.(s)||esc(s)).replace(/\r\n?|\n/g,"<br>");}
+  function questionLines(s){
+    if(h446Preview&&window.RHSYouDoLayout?.commandRanges){
+      var raw=String(s||""),out="",last=0;
+      var ranges=window.RHSYouDoLayout.commandRanges(raw).sort(function(a,b){return a.start-b.start;});
+      ranges.forEach(function(r){
+        if(r.start<last)return;
+        out+=esc(raw.slice(last,r.start))+'<mark class="rhs-j277-command">'+esc(raw.slice(r.start,r.start+r.length))+'</mark>';
+        last=r.start+r.length;
+      });
+      return (out+esc(raw.slice(last))).replace(/\r\n?|\n/g,"<br>");
+    }
+    return (window.RHSYouDoTrial?.commandWords?.(s)||esc(s)).replace(/\r\n?|\n/g,"<br>");
+  }
   function answerParts(s){
     // Semicolons in the already-authored answer are presentation separators,
     // not automatically separate credited marks. The marking rule controls credit.
