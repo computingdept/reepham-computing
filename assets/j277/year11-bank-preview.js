@@ -11,6 +11,8 @@
   if(!lessonId || allowlist.indexOf(lessonId)<0)return;
   var h446Preview=["096","100","109","110","118","137"].includes(lessonId)&&new URLSearchParams(location.search).get("youdo-style")==="h446"&&!!window.RHSYouDoLayout;
 
+  // Explicit four-card comparison is limited to L096; normal adaptive grouping remains unchanged.
+  var fourPreview=h446Preview&&lessonId==="096"&&new URLSearchParams(location.search).get("youdo-layout")==="4";
   var host=document.getElementById("you-do");
   var rolling=host&&host.querySelector(".youdo-rolling.rhs-y-rolling");
   if(!host || host.dataset.rhsYoudoTrial!=="true" || !rolling ||
@@ -55,7 +57,7 @@
       var ranges=window.RHSYouDoLayout.commandRanges(raw).sort(function(a,b){return a.start-b.start;});
       ranges.forEach(function(r){
         if(r.start<last)return;
-        out+=esc(raw.slice(last,r.start))+'<mark class="rhs-j277-command">'+esc(raw.slice(r.start,r.start+r.length))+'</mark>';
+        out+=esc(raw.slice(last,r.start))+'<mark class="rhs-j277-command h446-youdo-command">'+esc(raw.slice(r.start,r.start+r.length))+'</mark>';
         last=r.start+r.length;
       });
       return (out+esc(raw.slice(last))).replace(/\r\n?|\n/g,"<br>");
@@ -191,7 +193,7 @@
     var codeScreens=oldScreens.slice(0,2);
     // Before the You Do phase is visible, use a safe initial arrangement.
     // The actual screen is measured before students leave Code First.
-    var groups=questionGroups(questions);
+    var groups=fourPreview&&questions.length===4&&!matchMedia("(max-width:900px)").matches?[questions]:questionGroups(questions);
     host.dataset.rhsBankPreview="true";
     if(h446Preview)host.dataset.rhsH446Preview="true";
     function render(){
@@ -234,7 +236,7 @@
             return shared.measureExamStage(host,rolling,stage);
           }
           var narrow=matchMedia("(max-width:900px)").matches;
-          var chosen=h446Preview
+          var chosen=fourPreview&&questions.length===4&&!narrow?[questions]:h446Preview
             ?window.RHSYouDoLayout.selectGroups(questions.length,function(start,size){return fits(questions.slice(start,start+size),start);},narrow).map(function(g){return questions.slice(g.start,g.end);})
             :shared.selectExamGroups(questions,fits,narrow);
           // Only replace question pages. Both code nodes and all marking
