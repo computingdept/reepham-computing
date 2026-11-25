@@ -103,6 +103,17 @@
     }).join("")+'</code></pre>';
     return {before:prose(lines.slice(0,start),false),code:code,after:prose(lines.slice(end),true)};
   }
+  // Use exactly the same geometry for the blank and worked trace table.
+  function traceCard(q,trace,index,total,reveal){
+    var image='<img class="rhs-trace-figure" src="'+esc(reveal?q.answerFigure:q.figure)+'" alt="'+esc(reveal?q.answer:"Blank trace table")+'" loading="eager">';
+    return '<section class="rhs-bank-card rhs-bank-trace-pilot">'+
+      '<div class="rhs-bank-card-head"><span>'+(reveal?'QUESTION '+(index+1)+' OF '+total:'Q'+(index+1))+'</span><span>'+q.marks+' MARK'+(q.marks===1?'':'S')+'</span></div>'+
+      trace.before+'<div class="rhs-trace-body">'+trace.code+image+
+      (reveal?'<div class="rhs-trace-fallback" hidden>'+lineBreaks(q.answer)+'</div>':"")+
+      '</div>'+trace.after+
+      (reveal?'<p class="rhs-trace-marking"><strong>Marking guidance:</strong> '+lineBreaks(q.rule)+'</p>':"")+
+      '<span class="rhs-bank-source">'+esc(q.reference)+'</span></section>';
+  }
   function answerParts(s){
     // Semicolons in the already-authored answer are presentation separators,
     // not automatically separate credited marks. The marking rule controls credit.
@@ -128,11 +139,11 @@
         totalCount+" QUESTIONS · "+totalMarks+" MARKS")+
       '<div class="rhs-bank-grid" data-count="'+items.length+'">'+items.map(function(q,i){
         var trace=items.length===1?traceParts(q):null;
-        var figure=q.figure?'<img class="rhs-bank-question-figure" src="'+esc(q.figure)+'" alt="Question diagram">':"";
-        return '<section class="rhs-bank-card'+(trace?' rhs-bank-trace-pilot':'')+'">'+
+        if(trace)return traceCard(q,trace,start+i,totalCount,false);
+        return '<section class="rhs-bank-card">'+
           '<div class="rhs-bank-card-head"><span>Q'+(start+i+1)+'</span><span>'+q.marks+' MARK'+(q.marks===1?'':'S')+'</span></div>'+
-          (trace?trace.before+'<div class="rhs-trace-body">'+trace.code+figure+'</div>'+trace.after:
-            '<p class="rhs-bank-prompt">'+(h446Preview||items.length===4?questionCardText(q.question):questionLines(originalQuestion(q.question)))+'</p>'+figure)+
+          '<p class="rhs-bank-prompt">'+(h446Preview||items.length===4?questionCardText(q.question):questionLines(originalQuestion(q.question)))+'</p>'+
+          (q.figure?'<img class="rhs-bank-question-figure" src="'+esc(q.figure)+'" alt="Question diagram">':"")+
           '<span class="rhs-bank-source">'+esc(q.reference)+'</span></section>';
       }).join("")+'</div></article>';
   }
@@ -158,14 +169,15 @@
   }
   function markScreen(q,index,total){
     var trace=traceParts(q);
-    return '<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage rhs-bank-review-stage'+(trace?' rhs-bank-trace-pilot':'')+'" hidden>'+
+    if(trace)return '<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage rhs-bank-review-stage rhs-trace-review" hidden>'+
+      '<div class="rhs-bank-grid" data-count="1">'+traceCard(q,trace,index,total,true)+'</div></article>';
+    return '<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage rhs-bank-review-stage" hidden>'+
       header((sharedPresentation?"QUESTION ":"SELF-MARK · QUESTION ")+(index+1)+" OF "+total,
         q.marks+" MARK"+(q.marks===1?'':'S'))+
       '<div class="rhs-j277-answer-layout"><div class="rhs-bank-review-question">'+
       (sharedPresentation?'':'<span class="rhs-bank-label">QUESTION · '+esc(q.id)+'</span>')+
-      (trace?trace.before+trace.code+trace.after:
-        '<p>'+(sharedPresentation?questionCardText(q.question):questionLines(originalQuestion(q.question)))+'</p>'+
-        (q.figure?'<img class="rhs-bank-question-figure" src="'+esc(q.figure)+'" alt="Question diagram">':""))+
+      '<p>'+(sharedPresentation?questionCardText(q.question):questionLines(originalQuestion(q.question)))+'</p>'+
+      (q.figure?'<img class="rhs-bank-question-figure" src="'+esc(q.figure)+'" alt="Question diagram">':"")+
       '</div>'+
       '<div class="rhs-bank-answer-area'+(q.answerFigure?' rhs-bank-answer-area--with-figure':'')+'">'+
       (q.answerFigure?'<figure class="rhs-bank-answer-figure"><img src="'+esc(q.answerFigure)+'" alt="Worked answer diagram" loading="eager"></figure>':"")+
@@ -249,6 +261,15 @@
         throw new Error("Unexpected exam-bank screen structure");
       slides.forEach(function(node){node.hidden=true;});
       rolling.replaceChildren.apply(rolling,codeScreens.concat(slides));
+      // Keep the verified answer text available if a worked SVG fails to load.
+      rolling.querySelectorAll(".rhs-trace-review .rhs-trace-figure").forEach(function(img){
+        function fallback(){
+          var text=img.parentElement.querySelector(".rhs-trace-fallback");
+          if(text){img.hidden=true;text.hidden=false;}
+        }
+        img.addEventListener("error",fallback,{once:true});
+        if(img.complete&&!img.naturalWidth)fallback();
+      });
       return slides;
     }
     var slides=render();
@@ -262,7 +283,7 @@
         lastVisible=visible;
         if(!visible)return;
         host.scrollTop=0;rolling.scrollTop=0;visible.scrollTop=0;
-        visible.querySelectorAll(".rhs-bank-review-question,.rhs-bank-answer-area").forEach(function(panel){panel.scrollTop=0;});
+        visible.querySelectorAll(".rhs-bank-review-question,.rhs-bank-answer-area,.rhs-bank-trace-pilot").forEach(function(panel){panel.scrollTop=0;});
       };
       var reviewObserver=new MutationObserver(resetReviewScroll);
       reviewObserver.observe(rolling,{subtree:true,attributes:true,attributeFilter:["hidden"],childList:true});
