@@ -114,6 +114,25 @@
       (reveal?'<p class="rhs-trace-marking"><strong>Marking guidance:</strong> '+lineBreaks(q.rule)+'</p>':"")+
       '<span class="rhs-bank-source">'+esc(q.reference)+'</span></section>';
   }
+  // Lesson 115: paired wide table/code artwork, using the tested flow-card geometry.
+  function wideCard(q,index,total,reveal){
+    if(lessonId!=="115" || !q.figure || !q.answerFigure ||
+      !["RHS-J277-115","RHS-J277-161"].includes(q.id))return null;
+    var raw=originalQuestion(q.question);
+    var split=raw.match(/\n\s*\n(?=(?:Write|Choose)\b)/);
+    var context=split?raw.slice(0,split.index):"";
+    var task=split?raw.slice(split.index+split[0].length):raw;
+    return '<section class="rhs-bank-card rhs-bank-flow-pilot">'+
+      '<div class="rhs-bank-card-head"><span>'+(reveal?'QUESTION '+(index+1)+' OF '+total:'Q'+(index+1))+'</span><span>'+q.marks+' MARK'+(q.marks===1?'':'S')+'</span></div>'+
+      '<div class="rhs-flow-body"><div class="rhs-flow-copy">'+
+      (context?'<p class="rhs-flow-context">'+questionLines(context)+'</p>':"")+
+      '<p class="rhs-flow-task">'+questionLines(task)+'</p>'+
+      (reveal?'<p class="rhs-flow-marking"><strong>Marking guidance:</strong> '+lineBreaks(q.rule)+'</p>':"")+
+      '</div><div class="rhs-flow-art">'+
+      '<img class="rhs-flow-figure" src="'+esc(reveal?q.answerFigure:q.figure)+'" alt="'+esc(reveal?q.answer:"Question illustration")+'" loading="eager">'+
+      (reveal?'<div class="rhs-flow-fallback" hidden>'+lineBreaks(q.answer)+'</div>':"")+
+      '</div></div><span class="rhs-bank-source">'+esc(q.reference)+'</span></section>';
+  }
   function answerParts(s){
     // Semicolons in the already-authored answer are presentation separators,
     // not automatically separate credited marks. The marking rule controls credit.
@@ -138,6 +157,8 @@
       header("ADDITIONAL EXAM PRACTICE · "+range,
         totalCount+" QUESTIONS · "+totalMarks+" MARKS")+
       '<div class="rhs-bank-grid" data-count="'+items.length+'">'+items.map(function(q,i){
+        var wide=items.length===1?wideCard(q,start+i,totalCount,false):null;
+        if(wide)return wide;
         var trace=items.length===1?traceParts(q):null;
         if(trace)return traceCard(q,trace,start+i,totalCount,false);
         return '<section class="rhs-bank-card">'+
@@ -188,6 +209,9 @@
       '<span class="rhs-bank-source">'+esc(q.reference)+'</span></section></div></article>';
   }
   function markScreen(q,index,total){
+    var wide=wideCard(q,index,total,true);
+    if(wide)return '<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage rhs-bank-review-stage rhs-flow-review" hidden>'+
+      '<div class="rhs-bank-grid" data-count="1">'+wide+'</div></article>';
     var flow=flowScreen(q,index,total);
     if(flow)return flow;
     var trace=traceParts(q);
@@ -329,7 +353,7 @@
         try{
           var totalMarks=questions.reduce(function(sum,q){return sum+q.marks;},0);
           function fits(part,start){
-            if(part.length>1&&part.some(function(q){return !!traceParts(q);}))return false;
+            if(part.length>1&&part.some(function(q){return !!traceParts(q)||!!wideCard(q,0,questions.length,false);}))return false;
             var tmp=document.createElement("div");
             tmp.innerHTML=intro(part,start,questions.length,totalMarks,0,2);
             var stage=tmp.firstElementChild;
