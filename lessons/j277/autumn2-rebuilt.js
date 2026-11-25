@@ -2138,7 +2138,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     !!lesson.year11 && !lesson.isAssessment && rhsSharedYouDoEnabled;
   const rhsH446YouDoPreview=rhsYear11BankActive&&["096","100","109","110","118","137"].includes(String(number))&&new URLSearchParams(location.search).get("youdo-style")==="h446";
   const rhsYear11BankActiveHead=rhsYear11BankActive
-    ?'<link rel="stylesheet" href="../../../assets/j277/year11-bank-preview.css?v=20261122-j277-live-b1">'+(rhsH446YouDoPreview?'<link rel="stylesheet" href="../../../assets/h446-y13/h446-you-do.css?v=20261125-four-preview3">':""):"";
+    ?'<link rel="stylesheet" href="../../../assets/j277/year11-bank-preview.css?v=20261122-j277-live-b1">'+(rhsH446YouDoPreview?'<link rel="stylesheet" href="../../../assets/h446-y13/h446-you-do.css?v=20261125-question-focus4">':""):"";
   const rhsYear11BankActiveSetup=rhsYear11BankActive
     ?(rhsH446YouDoPreview?'<script src="../../../assets/h446-y13/h446-you-do.js?v=20261125-four-preview3"></script>':"")+'<script src="../../../assets/j277/year11-bank-preview.js?v=20261125-no-instruction1"></script>':"";
   const lessonControllerVersion=rhsExamPilot?"20261121-rhs-codefirst-isolated-v10":rhsYear11BankActive?"20261122-j277-live-controller-b1":"20261115-codefirst-brush2";
