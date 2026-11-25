@@ -167,7 +167,29 @@
     stage.style.visibility="";
     return result;
   }
+  // Only these two worked flowcharts need the tall-art answer layout.
+  function flowScreen(q,index,total){
+    if(lessonId!=="106" || q.figure || !q.answerFigure ||
+      !["RHS-J277-036","RHS-J277-145"].includes(q.id))return null;
+    var raw=originalQuestion(q.question);
+    var split=raw.match(/\.\s+(?=(?:Design|Draw)\b)/);
+    var context=split?raw.slice(0,split.index+1):"";
+    var task=split?raw.slice(split.index+split[0].length):raw;
+    return '<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage rhs-bank-review-stage rhs-flow-review" hidden>'+
+      '<div class="rhs-bank-grid" data-count="1"><section class="rhs-bank-card rhs-bank-flow-pilot">'+
+      '<div class="rhs-bank-card-head"><span>QUESTION '+(index+1)+' OF '+total+'</span><span>'+q.marks+' MARK'+(q.marks===1?'':'S')+'</span></div>'+
+      '<div class="rhs-flow-body"><div class="rhs-flow-copy">'+
+      (context?'<p class="rhs-flow-context">'+questionLines(context)+'</p>':"")+
+      '<p class="rhs-flow-task">'+questionLines(task)+'</p>'+
+      '<p class="rhs-flow-marking"><strong>Marking guidance:</strong> '+lineBreaks(q.rule)+'</p>'+
+      '</div><div class="rhs-flow-art">'+
+      '<img class="rhs-flow-figure" src="'+esc(q.answerFigure)+'" alt="'+esc(q.answer)+'" loading="eager">'+
+      '<div class="rhs-flow-fallback" hidden>'+lineBreaks(q.answer)+'</div></div></div>'+
+      '<span class="rhs-bank-source">'+esc(q.reference)+'</span></section></div></article>';
+  }
   function markScreen(q,index,total){
+    var flow=flowScreen(q,index,total);
+    if(flow)return flow;
     var trace=traceParts(q);
     if(trace)return '<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage rhs-bank-review-stage rhs-trace-review" hidden>'+
       '<div class="rhs-bank-grid" data-count="1">'+traceCard(q,trace,index,total,true)+'</div></article>';
@@ -262,9 +284,9 @@
       slides.forEach(function(node){node.hidden=true;});
       rolling.replaceChildren.apply(rolling,codeScreens.concat(slides));
       // Keep the verified answer text available if a worked SVG fails to load.
-      rolling.querySelectorAll(".rhs-trace-review .rhs-trace-figure").forEach(function(img){
+      rolling.querySelectorAll(".rhs-trace-review .rhs-trace-figure,.rhs-flow-review .rhs-flow-figure").forEach(function(img){
         function fallback(){
-          var text=img.parentElement.querySelector(".rhs-trace-fallback");
+          var text=img.parentElement.querySelector(".rhs-trace-fallback,.rhs-flow-fallback");
           if(text){img.hidden=true;text.hidden=false;}
         }
         img.addEventListener("error",fallback,{once:true});
@@ -283,7 +305,7 @@
         lastVisible=visible;
         if(!visible)return;
         host.scrollTop=0;rolling.scrollTop=0;visible.scrollTop=0;
-        visible.querySelectorAll(".rhs-bank-review-question,.rhs-bank-answer-area,.rhs-bank-trace-pilot").forEach(function(panel){panel.scrollTop=0;});
+        visible.querySelectorAll(".rhs-bank-review-question,.rhs-bank-answer-area,.rhs-bank-trace-pilot,.rhs-bank-flow-pilot").forEach(function(panel){panel.scrollTop=0;});
       };
       var reviewObserver=new MutationObserver(resetReviewScroll);
       reviewObserver.observe(rolling,{subtree:true,attributes:true,attributeFilter:["hidden"],childList:true});
