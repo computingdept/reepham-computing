@@ -2104,7 +2104,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       v && !(String(number)==="021" && i===2 && v.title==="Two different network extents")?diagram(v):"")
   }:null;
   const rhsSharedYouDoHead=rhsSharedYouDoEnabled?
-    '<link rel="stylesheet" href="../../../assets/rhs-youdo/youdo-presentation-20261122-compact.css?v=20261125-classroom-standard7">':"";
+    '<link rel="stylesheet" href="../../../assets/rhs-youdo/youdo-presentation-20261122-compact.css?v=20261125-brush1">':"";
   const rhsSharedYouDoSetup=rhsSharedYouDoEnabled?
     '<script src="../../../assets/h446-y13/h446-you-do.js?v=20261125-classroom-standard7"></script><script src="../../../assets/rhs-youdo/youdo-presentation-20261122-compact.js?v=20261125-classroom-standard7"></script><script>window.RHSYouDoTrial.installJ277('+JSON.stringify(rhsSharedYouDoData).replace(/</g,"\\u003c")+');</script>':"";
   // J277-only default presentation: one independent question per screen,
@@ -2138,7 +2138,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     !!lesson.year11 && !lesson.isAssessment && rhsSharedYouDoEnabled;
   const rhsH446YouDoPreview=rhsYear11BankActive&&["096","100","109","110","118","137"].includes(String(number))&&new URLSearchParams(location.search).get("youdo-style")==="h446";
   const rhsYear11BankActiveHead=rhsYear11BankActive
-    ?'<link rel="stylesheet" href="../../../assets/j277/year11-bank-preview.css?v=20261122-j277-live-b1">':"";
+    ?'<link rel="stylesheet" href="../../../assets/j277/year11-bank-preview.css?v=20261125-brush1">':"";
   const rhsYear11BankActiveSetup=rhsYear11BankActive
     ?'<script src="../../../assets/j277/year11-bank-preview.js?v=20261125-classroom-standard7"></script>':"";
   const lessonControllerVersion=rhsExamPilot?"20261121-rhs-codefirst-isolated-v10":rhsYear11BankActive?"20261122-j277-live-controller-b1":"20261115-codefirst-brush2";

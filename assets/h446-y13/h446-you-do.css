@@ -1,25 +1,7 @@
 /* H446 You Do phase styles: keep the established pilot layout and add
    independently owned exam command markers. All local selectors are scoped. */
 @import url("./h446-youdo-question-sheet.css?v=20261125-shared-trial1");
-#you-do[data-h446-two-page-pilot="true"] :is(.rhs-y13-task,.y13-rhs-task) mark.h446-youdo-command,
-#you-do[data-rhs-h446-preview="true"] :is(.rhs-bank-prompt,.rhs-bank-review-question) mark.rhs-j277-command,
-#you-do[data-rhs-bank-shared="true"][data-rhs-bank-preview="true"] :is(.rhs-bank-prompt,.rhs-bank-review-question) mark.rhs-j277-command,
-#you-do[data-rhs-j277-adaptive="true"] :is(.rhs-y-challenge-stage,.rhs-y-mark-stage) mark.rhs-j277-command{
-  background-color:transparent!important;
-  background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%2056'%20preserveAspectRatio='none'%3E%3Cpath%20d='M3%2014%20Q55%2010%20103%2013%20T200%2011%20Q255%2013%20309%2011%20T397%2013%20L399%2043%20Q339%2047%20274%2044%20Q208%2047%20138%2045%20T3%2046Z'%20fill='%23FFF44F'%20fill-opacity='.86'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:center;background-size:100% 100%;
-  color:inherit;font-weight:inherit;padding:.02em .12em;border:0;border-radius:0;
-  box-shadow:none;box-decoration-break:clone;-webkit-box-decoration-break:clone;
-}
-@media(prefers-contrast:more){
-  #you-do[data-h446-two-page-pilot="true"] :is(.rhs-y13-task,.y13-rhs-task) mark.h446-youdo-command,
-#you-do[data-rhs-h446-preview="true"] :is(.rhs-bank-prompt,.rhs-bank-review-question) mark.rhs-j277-command,
-#you-do[data-rhs-bank-shared="true"][data-rhs-bank-preview="true"] :is(.rhs-bank-prompt,.rhs-bank-review-question) mark.rhs-j277-command,
-#you-do[data-rhs-j277-adaptive="true"] :is(.rhs-y-challenge-stage,.rhs-y-mark-stage) mark.rhs-j277-command{
-    background-image:none;text-decoration:underline;text-decoration-color:#937800;
-    text-decoration-thickness:.15em;text-underline-offset:.06em;
-  }
-}
+@import url("../rhs-youdo/command-brush.css?v=20261125-brush1");
 
 /* Approved Year 13 answer presentation. Only opt-in H446 You Do answer slides.
    Question sheets, navigation and all other phases remain unchanged. */
@@ -278,9 +260,6 @@
 }
 #you-do[data-h446-y12-legacy="true"] .youdo-question-prompt :is(.question-text,li){
   font-size:clamp(20px,1.55vw,26px);line-height:1.35;
-}
-#you-do[data-h446-y12-legacy="true"] .youdo-question-prompt .h446-legacy-task mark.h446-youdo-command{
-  background:#fff176;color:inherit;font-weight:inherit;padding:0 .1em;
 }
 #you-do[data-h446-y12-legacy="true"] :is(.youdo-question-prompt,.youdo-solution) pre{
   white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%;
