@@ -9,7 +9,7 @@
   // renderer for the real 004–018 sequence. 001–003 keep their existing pages.
   if (Number(n) >= 4 && Number(n) <= 18) {
     const loader = document.createElement("script");
-    loader.src = "../autumn1-rebuilt.js?v=20261125-wedo-early1";
+    loader.src = "../autumn1-rebuilt.js?v=20261125-wedo-visual1";
     loader.onload = () => window.J277Autumn1.render(n,mode);
     loader.onerror = () => { document.body.textContent = "Year 10 lesson resources could not be loaded."; };
     document.head.appendChild(loader);
@@ -317,6 +317,9 @@ next.addEventListener('click',goNext);previous.addEventListener('click',goPrevio
         JSON.stringify(unified003Payload).replace(/</g,"\\u003c")+
         ';<\/script><script src="../../../assets/j277/youdo-unified.js?v=20261122-no-answer-svg-leak-v2"><\/script>'
       :'<script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"><\/script>';
+    const weDo003=n==="003"&&mode==="lesson"&&new URLSearchParams(location.search).get("we-do")!=="original";
+    const weDo003Head=weDo003?'<link rel="stylesheet" href="/assets/j277/we-do-skills.css?v=20261124-pilot1">':"";
+    const weDo003Setup=weDo003?'<script src="/assets/j277/we-do-skills.js?v=20261125-pilot13"><\/script><script>window.J277WeDoSkills&&window.J277WeDoSkills.install('+JSON.stringify({"id":"p1:convert","title":"Conversion grid","url":"/exercise/paper1/?skill=convert","preserve":true,"check":"Convert 1010 0011 into hexadecimal.","answer":"A3. The first nibble is 10 (A) and the second is 3."})+');<\/script>':"";
     const qCards=codeCard+qs.map((q,i)=>`<article class="exam-card youdo-question" hidden><span class="phase-tag">QUESTION ${i+2} · ${i===3?'ASSESSMENT PRACTICE':'INDEPENDENT PRACTICE'}</span><h3>${esc(title)}</h3><div class="question-text">${q}</div></article>`).join("");
 
     const vocabStages=vocab.map((v,i)=>`<article class="vocab-stage"${i?' hidden':''}><div class="vocab-prompt"><span class="vocab-test-label">DEFINITION ${i+1} OF ${vocab.length}</span><h2>What is the term?</h2><p class="vocab-question">${esc(v.definition)}</p><span class="vocab-stage-count">${i+1} of ${vocab.length}</span></div><div class="vocab-answer" data-vocab-answer hidden><span class="vocab-test-label">TERM</span><div class="vocab-answer-value">${esc(v.term)}</div></div></article>`).join("");
@@ -348,7 +351,7 @@ next.addEventListener('click',goNext);previous.addEventListener('click',goPrevio
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20261025-exit-unified1">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=cf45749fa0cf">
 <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
-<link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261114-j277-nl-glance1"><link rel="stylesheet" href="../../../assets/j277/independent-nav.css?v=20261027-unified-nav1"><link rel="stylesheet" href="../../../assets/classroom-visual-zoom.css?v=20261114-diagram-scale1"></head><body>
+<link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261114-j277-nl-glance1"><link rel="stylesheet" href="../../../assets/j277/independent-nav.css?v=20261027-unified-nav1"><link rel="stylesheet" href="../../../assets/classroom-visual-zoom.css?v=20261114-diagram-scale1">${weDo003Head}</head><body>
 <a class="skip" href="#main">Skip to lesson</a>
 <div class="navwrap"><div class="lesson-header-links"><a class="course-back" href="../../../j277-hub.html?year=10">← Year 10 lessons</a>${n==='003'?'<a class="lesson-resource-link" href="independent.html?version=bw">Independent lesson · Print</a>':''}</div><nav class="phase-nav" aria-label="Lesson phases"><button type="button" data-page="do-now">Do Now</button><button type="button" data-page="overview">Objectives</button><button type="button" data-page="new-learning">New Learning</button><button type="button" data-page="i-do">I Do</button><button type="button" data-page="we-do">We Do</button><button type="button" data-page="you-do">You Do</button><button type="button" data-page="vocabulary">Key Vocabulary</button><button type="button" data-page="exit">Exit Ticket</button></nav><div class="nav-tools"><button id="advance" class="control-btn">Continue →</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div></div>
 <div class="signal-wrap"><div class="signals" aria-label="Classroom routine"><span id="phase-logo" class="signal-tile signal-phase"></span><span id="behaviour-logo" class="signal-tile signal-routine"></span><span id="response-logo" class="signal-tile signal-response"></span></div><div class="signal-meta"><span id="phase-time" class="signal-phase-time"></span><span class="lesson-label">OCR J277 · Lesson ${n}<br>${esc(title)}</span></div></div>
@@ -362,7 +365,7 @@ next.addEventListener('click',goNext);previous.addEventListener('click',goPrevio
 <section id="vocabulary" class="page phase-vocab" data-phase-time="4 minutes" data-vocab-flow="retrieval"><div class="vocab-deck">${vocabStages}</div></section>
 <section id="exit" class="page phase-exit" data-phase-time="2 minutes" data-exit-correct="${n==='003'?'no':''}" data-exit-explanation="${n==='003'?'Hexadecimal is a shorter way to write binary; it does not change how bits are stored.':''}"><div class="exit-compact"><div class="exit-check-card"><div class="exit-check-kicker">CHECK LEARNING · TRUE OR FALSE?</div><p class="exit-check-question">${exitQ}</p><div class="exit-check-response"><span class="exit-key-item">👍 <span>Thumb up = True</span></span><span class="exit-key-item">👎 <span>Thumb down = False</span></span></div></div><div class="exit-reflection-strip"><div class="exit-confidence-title"><strong>How did the lesson go?</strong><span>Show one response.</span></div><div class="exit-confidence-choice"><div><strong>👍 Thumb up</strong><span>I can apply this independently.</span></div></div><div class="exit-confidence-choice"><div><strong>↔ Thumb sideways</strong><span>I understand most of it but need more practice.</span></div></div><div class="exit-confidence-choice"><div><strong>👎 Thumb down</strong><span>I need help with this topic.</span></div></div></div></div></section>
 </main><div class="lesson-footer">Lesson ${n} · ${esc(title)} <span>Year 10 · OCR J277</span></div>
-<script src="../../../assets/h446-lesson/lesson.js?v=20261115-codefirst-brush2"><\/script>${unified003Scripts}<script src="../../../assets/classroom-visual-zoom.js?v=20261114-clickclose2"><\/script></body></html>`);
+${weDo003Setup}<script src="../../../assets/h446-lesson/lesson.js?v=20261115-codefirst-brush2"><\/script>${unified003Scripts}<script src="../../../assets/classroom-visual-zoom.js?v=20261114-clickclose2"><\/script></body></html>`);
     document.close();
   }).catch(err => {
     document.body.innerHTML='<p style="font-family:sans-serif;padding:2rem">Lesson failed to load: '+esc(err.message)+'</p>';

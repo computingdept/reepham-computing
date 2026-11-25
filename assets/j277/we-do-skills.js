@@ -90,7 +90,21 @@ function prepare(config,paper1,paper2,thinking,modules={}){
  let d=rule.source==='thinking'?thinking?.makeDemo(rule.query):rule.source?modules[rule.source]?.makeDemo(rule.query):paper2?.make(config.id.slice(3),rule.query||{level:'easy'});if(rule.demoVariant)d=d?.variants?.find(v=>v.label===rule.demoVariant)?.example;if(!d)return null;
  return {...rule,codeLabel:d.codeLabel,lines:d.lines,columns:d.columns,steps:d.steps.map((s,i)=>({line:s[0],value:s[1],result:s[2],explanation:s[3],question:rule.questions?.[i]??rule.repeatQuestions?.[s[0]]??(config.id==='p2:while-until'?(s[0]===1?'What is the initial value of i?':s[0]===2?'Is the condition true?':s[0]===3?'What value is printed now?':s[0]===4?'What is the new value of i?':'Which line runs next?'):(i===0?'What value does i start with?':s[0]===2?'What is printed now?':s[0]===3?'What is the next counter value?':'Will the loop body run again?'))}))};
 }
+// Preserve a strong authored visual demonstration and append only the mapped practice.
+function appendPractice(config,doc){
+ const page=doc.getElementById('we-do'),deck=page?.querySelector('.wedo-focus-deck');
+ if(!deck||page.dataset.skillPilot==='true'||!deck.querySelector('.wedo-example')||!config.url||!config.check||!config.answer)return false;
+ const el=(tag,cls,txt)=>{const n=doc.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=txt;return n;};
+ const a=el('article','wedo-example skill-wedo-example');a.hidden=true;
+ const reference=el('div','wedo-reference'),practice=el('div','wedo-practice');
+ reference.append(el('span','phase-tag','YOUR TURN · SKILL PRACTICE'),el('h2','',config.title),el('p','','Open the Skill on your device. Choose the level your teacher sets, and practise the method independently.'));
+ const link=el('a','skill-wedo-launch','Practise '+config.title+' →');link.href=config.url;link.target='_blank';link.rel='noopener';reference.append(link);
+ practice.append(el('span','phase-tag','CLASS CHECK'),el('h2','','Before we move on'),el('p','',config.check));
+ const check=el('div','wedo-step skill-wedo-step');check.hidden=true;check.append(el('span','wedo-step-label','MODEL ANSWER'),el('p','skill-wedo-result',config.answer));practice.append(check);
+ a.append(reference,practice);deck.append(a);page.dataset.skillPilot='true';return true;
+}
 function install(config,doc=document,win=window){
+ if(config.preserve)return appendPractice(config,doc);
  const page=doc.getElementById('we-do');if(!page||page.dataset.skillPilot==='true')return false;
  let model;try{model=prepare(config,win.RHSCPaper1GuidedDemo,win.J277SkillsGuidedExamples,win.J277Paper2Thinking,{'algorithm-repair':win.J277AlgorithmRepair,strings:win.J277Paper2Strings,'validation-auth':win.J277ValidationAuth,functions:win.J277Paper2Functions,files:win.J277Paper2Files,sql:win.J277Paper2SQL,random:win.J277Paper2Random,maintain:win.J277Maintain,'test-data':win.J277TestData,ides:win.J277Ides});}catch(e){return false;}
  if(!model?.steps?.length)return false;
