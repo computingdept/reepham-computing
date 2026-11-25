@@ -82,6 +82,27 @@
     }
     return questionLines(raw);
   }
+  // Pilot only: the four authored trace questions in Lesson 107.
+  function traceParts(q){
+    if(lessonId!=="107" || !q.figure || !q.answerFigure ||
+      !["RHS-J277-039","RHS-J277-091","RHS-J277-163","RHS-J277-222"].includes(q.id))return null;
+    var lines=originalQuestion(q.question).split(/\r?\n/);
+    var start=lines.findIndex(function(l){return /^\d{2}[ \t]/.test(l);});
+    if(start<0)return null;
+    var end=start;
+    while(end<lines.length&&/^\d{2}[ \t]/.test(lines[end]))end++;
+    if(end-start<2 || lines.slice(end).some(function(l){return /^\d{2}[ \t]/.test(l);}))return null;
+    function prose(chunk,task){
+      return chunk.join("\n").trim().split(/\n\s*\n/).filter(Boolean).map(function(p){
+        var isTask=task||/^(Trace|Complete)\b/i.test(p);
+        return '<p class="'+(isTask?'rhs-trace-task':'rhs-trace-prose')+'">'+questionLines(p)+'</p>';
+      }).join("");
+    }
+    var code='<pre class="rhs-trace-code"><code>'+lines.slice(start,end).map(function(line){
+      return '<span class="rhs-trace-code-line"><span class="rhs-trace-line-number">'+esc(line.slice(0,2))+'</span><span class="rhs-trace-code-text">'+esc(line.slice(3))+'</span></span>';
+    }).join("")+'</code></pre>';
+    return {before:prose(lines.slice(0,start),false),code:code,after:prose(lines.slice(end),true)};
+  }
   function answerParts(s){
     // Semicolons in the already-authored answer are presentation separators,
     // not automatically separate credited marks. The marking rule controls credit.
@@ -106,10 +127,12 @@
       header("ADDITIONAL EXAM PRACTICE · "+range,
         totalCount+" QUESTIONS · "+totalMarks+" MARKS")+
       '<div class="rhs-bank-grid" data-count="'+items.length+'">'+items.map(function(q,i){
-        return '<section class="rhs-bank-card">'+
+        var trace=items.length===1?traceParts(q):null;
+        var figure=q.figure?'<img class="rhs-bank-question-figure" src="'+esc(q.figure)+'" alt="Question diagram">':"";
+        return '<section class="rhs-bank-card'+(trace?' rhs-bank-trace-pilot':'')+'">'+
           '<div class="rhs-bank-card-head"><span>Q'+(start+i+1)+'</span><span>'+q.marks+' MARK'+(q.marks===1?'':'S')+'</span></div>'+
-          '<p class="rhs-bank-prompt">'+(h446Preview||items.length===4?questionCardText(q.question):questionLines(originalQuestion(q.question)))+'</p>'+
-          (q.figure?'<img class="rhs-bank-question-figure" src="'+esc(q.figure)+'" alt="Question diagram">':"")+
+          (trace?trace.before+'<div class="rhs-trace-body">'+trace.code+figure+'</div>'+trace.after:
+            '<p class="rhs-bank-prompt">'+(h446Preview||items.length===4?questionCardText(q.question):questionLines(originalQuestion(q.question)))+'</p>'+figure)+
           '<span class="rhs-bank-source">'+esc(q.reference)+'</span></section>';
       }).join("")+'</div></article>';
   }
@@ -134,13 +157,15 @@
     return result;
   }
   function markScreen(q,index,total){
-    return '<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage rhs-bank-review-stage" hidden>'+
+    var trace=traceParts(q);
+    return '<article class="exam-card youdo-question rhs-y-stage rhs-bank-stage rhs-bank-review-stage'+(trace?' rhs-bank-trace-pilot':'')+'" hidden>'+
       header((sharedPresentation?"QUESTION ":"SELF-MARK · QUESTION ")+(index+1)+" OF "+total,
         q.marks+" MARK"+(q.marks===1?'':'S'))+
       '<div class="rhs-j277-answer-layout"><div class="rhs-bank-review-question">'+
       (sharedPresentation?'':'<span class="rhs-bank-label">QUESTION · '+esc(q.id)+'</span>')+
-      '<p>'+(sharedPresentation?questionCardText(q.question):questionLines(originalQuestion(q.question)))+'</p>'+
-      (q.figure?'<img class="rhs-bank-question-figure" src="'+esc(q.figure)+'" alt="Question diagram">':"")+
+      (trace?trace.before+trace.code+trace.after:
+        '<p>'+(sharedPresentation?questionCardText(q.question):questionLines(originalQuestion(q.question)))+'</p>'+
+        (q.figure?'<img class="rhs-bank-question-figure" src="'+esc(q.figure)+'" alt="Question diagram">':""))+
       '</div>'+
       '<div class="rhs-bank-answer-area'+(q.answerFigure?' rhs-bank-answer-area--with-figure':'')+'">'+
       (q.answerFigure?'<figure class="rhs-bank-answer-figure"><img src="'+esc(q.answerFigure)+'" alt="Worked answer diagram" loading="eager"></figure>':"")+
@@ -261,6 +286,7 @@
         try{
           var totalMarks=questions.reduce(function(sum,q){return sum+q.marks;},0);
           function fits(part,start){
+            if(part.length>1&&part.some(function(q){return !!traceParts(q);}))return false;
             var tmp=document.createElement("div");
             tmp.innerHTML=intro(part,start,questions.length,totalMarks,0,2);
             var stage=tmp.firstElementChild;
