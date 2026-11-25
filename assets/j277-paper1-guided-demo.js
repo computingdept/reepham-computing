@@ -193,7 +193,143 @@
     ]
   }
 };
-  function get(id,focus){return id==='security'&&focus?securityFocus[focus]||null:examples[id]||null;}
+  const curriculumFocus={
+  "impact": {
+    "social": {
+      "title": "Ethical and social impacts",
+      "task": "A school introduces an online learning platform.",
+      "steps": [
+        [
+          "Social benefit",
+          "Access to work after absence",
+          "Pupils can catch up remotely, helping them keep up with lessons."
+        ],
+        [
+          "Digital divide",
+          "Unequal access to devices or internet",
+          "Pupils without reliable internet or a suitable device may have fewer opportunities to learn."
+        ],
+        [
+          "Ethical concern",
+          "Privacy and monitoring",
+          "Collecting detailed activity data raises questions about fairness, consent and responsible use."
+        ],
+        [
+          "Reduce the drawback",
+          "Loan devices and limit data collection",
+          "Support pupils who lack equipment and only collect information that is needed."
+        ]
+      ]
+    },
+    "evaluation": {
+      "title": "Evaluating technology impacts",
+      "task": "A school is considering replacing working computers with newer, more energy-efficient models.",
+      "steps": [
+        [
+          "Identify a benefit",
+          "Lower energy use during operation",
+          "More efficient computers may reduce electricity consumption over their lifetime."
+        ],
+        [
+          "Identify a drawback",
+          "Manufacturing and electronic waste",
+          "Producing new devices uses resources; discarding working equipment creates waste."
+        ],
+        [
+          "Compare alternatives",
+          "Repair, upgrade or replace",
+          "Keeping suitable computers for longer may reduce manufacturing impacts, but older devices may use more energy."
+        ],
+        [
+          "Reach a justified conclusion",
+          "Replace only when the benefits outweigh the costs",
+          "Consider remaining useful life, electricity use, repair options and responsible reuse or recycling."
+        ]
+      ]
+    }
+  },
+  "legislation": {
+    "data-protection": {
+      "title": "Data Protection Act 2018",
+      "task": "A school club creates an online sign-up form for pupils.",
+      "steps": [
+        [
+          "Identify personal data",
+          "Names and contact details",
+          "Information relating to an identifiable person is personal data."
+        ],
+        [
+          "Collect only what is needed",
+          "Data minimisation",
+          "Do not request information that is unnecessary for the stated purpose."
+        ],
+        [
+          "Keep data secure",
+          "Restricted access and secure storage",
+          "Use appropriate safeguards so only authorised people can access personal information."
+        ],
+        [
+          "Keep information accurate",
+          "Correct errors and remove data when no longer needed",
+          "Personal data should be accurate and kept no longer than necessary for its purpose."
+        ]
+      ]
+    },
+    "computer-misuse": {
+      "title": "Computer Misuse Act 1990",
+      "task": "Consider three incidents involving a school's computer systems.",
+      "steps": [
+        [
+          "Unauthorised access",
+          "Opening another person's account without permission",
+          "Knowingly obtaining unauthorised access to computer material can be an offence."
+        ],
+        [
+          "Access with further criminal intent",
+          "Accessing an account intending to commit fraud",
+          "Unauthorised access with intent to commit or facilitate a further offence is distinct from simple unauthorised access."
+        ],
+        [
+          "Unauthorised impairment",
+          "Deliberately disrupting a school computer service without permission",
+          "Unauthorised acts intended to impair computer operation, or reckless as to that impairment, may be offences."
+        ],
+        [
+          "Authorised testing",
+          "Permission and agreed scope",
+          "Security testing must stay within the authorisation given. Technical ability does not imply permission."
+        ]
+      ]
+    },
+    "copyright-licences": {
+      "title": "Copyright and software licences",
+      "task": "Pupils are developing an app using images and existing software.",
+      "steps": [
+        [
+          "Copyright",
+          "Original image from another creator",
+          "Check permission, licence terms or an applicable exception before copying protected work."
+        ],
+        [
+          "Open-source software",
+          "Source code available under an open-source licence",
+          "The licence permits use, modification and redistribution subject to its terms."
+        ],
+        [
+          "Proprietary software",
+          "Use subject to the owner's licence",
+          "Users generally do not have the same rights to modify and redistribute the software."
+        ],
+        [
+          "Choose and justify",
+          "Check the terms before sharing an app",
+          "Free of charge does not mean open source or free of copyright restrictions."
+        ]
+      ]
+    }
+  }
+};
+  function get(id,focus){if(focus){return id==='security'?securityFocus[focus]||null:curriculumFocus[id]?.[focus]||null;}return examples[id]||null;}
   function mount(doc,win){
     const practice=doc.getElementById('practice');
     const title=practice&&practice.querySelector('.skill-top');

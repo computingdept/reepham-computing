@@ -49,3 +49,14 @@ test('OS and utility lessons reuse mapped demos; assessment and feedback stay un
  assert.notDeepEqual(api.prepare(batch['037'],p1,p2).steps,api.prepare(batch['038'],p1,p2).steps);
  assert.ok(!map.lessons['035'].primary&&!map.lessons['036'].primary);
 });
+
+
+test('impact and legislation lessons share two Skills with distinct curriculum-focused demos',()=>{
+ const batch={"040":{"id":"p1:impact","title":"Impact Answer Builder","url":"/exercise/paper1/?skill=impact","variant":"social"},"041":{"id":"p1:legislation","title":"Legislation & Licences","url":"/exercise/paper1/?skill=legislation","variant":"data-protection"},"042":{"id":"p1:legislation","title":"Legislation & Licences","url":"/exercise/paper1/?skill=legislation","variant":"computer-misuse"},"043":{"id":"p1:legislation","title":"Legislation & Licences","url":"/exercise/paper1/?skill=legislation","variant":"copyright-licences"},"044":{"id":"p1:impact","title":"Impact Answer Builder","url":"/exercise/paper1/?skill=impact","variant":"evaluation"}};
+ const topics=new Set();for(const [id,config] of Object.entries(batch)){
+  assert.equal(config.id,map.lessons[id].primary);const model=api.prepare(config,p1,p2);
+  assert.equal(model.steps.length,4);assert.ok(model.steps.every(s=>s.question&&s.explanation));
+  assert.deepEqual(model.steps.map(s=>s.value),p1.get(config.id.slice(3),config.variant).steps.map(s=>s[1]));topics.add(model.task);
+ }
+ assert.equal(topics.size,5);
+});
