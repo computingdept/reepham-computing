@@ -1,17 +1,28 @@
 /* H446 You Do phase module. Opt-in; no global navigation or other phases. */
 (function(){
   'use strict';
+  // Optimize the complete ordered set, not just the next page.
+  // Fewer screens first; then fewer isolated questions; then larger earlier
+  // groups. A four-question set therefore prefers 4, then 2+2, then 3+1.
+  // Only measured, fitting multi-question screens are eligible.
   function selectGroups(count, fits, narrow){
-    const groups=[];
-    for(let i=0;i<count;){
-      let size=1;
-      if(!narrow&&count-i>=4&&fits(i,4))size=4;
-      else if(!narrow&&count-i>=3&&fits(i,3))size=3;
-      else if(!narrow&&count-i>=2&&fits(i,2))size=2;
-      groups.push({start:i,end:i+size});
-      i+=size;
+    if(narrow)return Array.from({length:count},(_,i)=>({start:i,end:i+1}));
+    const best=Array(count+1);
+    best[count]={groups:[],singles:0};
+    for(let start=count-1;start>=0;start--){
+      let choice=null;
+      for(let size=Math.min(4,count-start);size>=1;size--){
+        if(size>1&&!fits(start,size))continue;
+        const rest=best[start+size];
+        const candidate={groups:[{start,end:start+size},...rest.groups],singles:rest.singles+(size===1?1:0)};
+        if(!choice||candidate.groups.length<choice.groups.length||
+          (candidate.groups.length===choice.groups.length&&candidate.singles<choice.singles))choice=candidate;
+        // A single fitting screen is already optimal for this suffix.
+        if(choice.groups.length===1)break;
+      }
+      best[start]=choice;
     }
-    return groups;
+    return best[0].groups;
   }
   // Shared screen-fit test: use the actual scrollable boxes, not a second
   // arbitrary gap inside a card. Both courses use this same tolerance.
@@ -164,13 +175,15 @@
     // A diagram or table on the question needs a whole screen in adaptive
     // decks. Explicitly authored grouping remains authoritative.
     if(size>1&&questions.slice(start,start+size).some(q=>q.classList.contains('h446-specialist-visual-question')))return false;
-    const keys=['h446QuestionSheet','answerMode','h446GroupCount'];
+    const keys=['h446QuestionSheet','answerMode','h446GroupCount','h446GroupStart','windowStart'];
     const previous=keys.map(k=>root.dataset[k]);
     const state=questions.map(q=>({hidden:q.hidden,answer:q.querySelector('.youdo-solution'),answerHidden:q.querySelector('.youdo-solution')?.hidden}));
     try{
       root.dataset.h446QuestionSheet='true';
       root.dataset.answerMode='false';
       root.dataset.h446GroupCount=String(size);
+      root.dataset.h446GroupStart=String(start);
+      root.dataset.windowStart=String(start);
       questions.forEach((q,i)=>{q.hidden=i<start||i>=start+size;if(state[i].answer)state[i].answer.hidden=true;});
       const deck=root.querySelector('.youdo-questions');
       const visible=questions.slice(start,start+size);

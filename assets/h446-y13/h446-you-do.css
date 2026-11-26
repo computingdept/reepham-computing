@@ -482,3 +482,19 @@
 #you-do .rhs-credited-points>li:last-child{border-bottom:0}
 #you-do .rhs-credited-mark{font-weight:750;color:#23613c;white-space:nowrap;text-align:right}
 #you-do .rhs-credited-text{min-width:0;overflow-wrap:anywhere}
+
+
+/* Shared question-sheet geometry: the legacy H446 label has width:max-content.
+   Allow it to wrap within the same readable card width, instead of making an
+   otherwise fitting question fail the horizontal overflow check. */
+#you-do[data-h446-question-sheet="true"][data-answer-mode="false"] .youdo-question-prompt>.phase-tag{
+  width:fit-content;max-width:100%;white-space:normal;overflow-wrap:anywhere;text-align:left;
+}
+@media(min-width:901px){
+  #you-do[data-h446-question-sheet="true"][data-h446-auto-groups="true"][data-answer-mode="false"] .youdo-questions>.youdo-question:not([hidden]){
+    margin:0!important;height:auto;min-height:0;min-width:0;align-self:stretch;
+  }
+  #you-do[data-h446-question-sheet="true"][data-h446-auto-groups="true"][data-answer-mode="false"] .youdo-question-prompt{
+    min-width:0;max-width:100%;
+  }
+}
