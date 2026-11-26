@@ -2581,17 +2581,17 @@ function applyPublishedH446Q2(){
         return list;
       };
       const cardHeading=card.querySelector(':scope > strong');
+      const reviewHeading=review.querySelector('.review-number');
+      const reviewTitle=review.querySelector(':scope > h2');
       if(cardHeading)cardHeading.textContent='2 · MCQ · EARLIER LEARNING';
+      if(reviewHeading)reviewHeading.textContent='QUESTION 2 OF 4 · MCQ';
+      if(reviewTitle)reviewTitle.textContent='Retrieval';
       cardQuestion.textContent=entry.question;
-      card.querySelectorAll('.h446-q2-options').forEach(node=>node.remove());
-      cardQuestion.after(makeChoices(false));
       reviewQuestion.textContent=entry.question;
-      review.querySelectorAll('.h446-q2-options').forEach(node=>node.remove());
-      reviewQuestion.after(makeChoices(true));
-      for(const heading of [cardHeading,review.querySelector('.review-number')]){
-        if(!heading)continue;
-        if(heading!==cardHeading)heading.textContent='QUESTION 2 OF 4 · MCQ';
-      }
+      // Replace all authored Q2 content only after the central entry is validated.
+      // Legacy cards may have a title paragraph followed by the original prompt.
+      card.replaceChildren(...(cardHeading?[cardHeading]:[]),cardQuestion,makeChoices(false));
+      review.replaceChildren(...(reviewHeading?[reviewHeading]:[]),...(reviewTitle?[reviewTitle]:[]),reviewQuestion,makeChoices(true));
       const label=answerPanel.querySelector('.review-label');
       const verdict=document.createElement('p');
       verdict.className='review-answer';
