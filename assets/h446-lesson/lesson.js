@@ -2651,10 +2651,11 @@ function applyReviewedH446Q34Sources(){
     .then(response=>{
       if(!response.ok)throw Error('H446 Q3/Q4 source bank unavailable');
       return response.json();
-    }).then(bank=>{
+    }).then(async bank=>{
       if(bank.course!=='h446'||bank.status!=='reviewed')return;
       const entry=bank.lessons?.[id];
       if(!entry)return;
+      const {validReplacement,replaceDoNowText}=await import('./h446-do-now-q34.js');
       for(const position of [2,3]){
         const source=entry['q'+(position+1)];
         if(!source)continue;
@@ -2677,17 +2678,10 @@ function applyReviewedH446Q34Sources(){
           tag.title=prior?'Knowledge from GCSE':('Previously taught in '+refs.join(', '));
           heading.append(tag);
         }
-        const replacement=source.replacement;
-        if(replacement&&typeof replacement.question==='string'&&replacement.question.trim()
-          &&typeof replacement.answer==='string'&&replacement.answer.trim()){
-          const cardPrompt=cards[position].querySelector('p');
-          const reviewPrompt=reviews[position].querySelector('.review-question');
-          const reviewAnswer=answerCards[position].querySelector('.review-answer');
-          if(cardPrompt&&reviewPrompt&&reviewAnswer){
-            cardPrompt.textContent=replacement.question;
-            reviewPrompt.textContent=replacement.question;
-            reviewAnswer.textContent=replacement.answer;
-          }
+        const replacement=validReplacement(source);
+        if(replacement){
+          const applied=replaceDoNowText(cards[position],reviews[position],answerCards[position],replacement,headingText);
+          if(!applied)console.warn('H446 Q'+(position+1)+' replacement retained authored media or unsupported markup:',id);
         }
       }
       section.dataset.h446Q34Reviewed='true';
