@@ -129,7 +129,20 @@
       questions.forEach((q,i)=>{q.hidden=i<start||i>=start+size;if(state[i].answer)state[i].answer.hidden=true;});
       const deck=root.querySelector('.youdo-questions');
       const visible=questions.slice(start,start+size);
-      return boxesFit([deck,...visible]);
+      if(!deck||!deck.clientHeight||!deck.clientWidth)return false;
+      // Measure the question contents rather than the outer grid's scroll
+      // extent. Grid gutters and inherited card margins are not content.
+      // Reject genuine card overflow and keep code/visual safeguards.
+      return visible.every(q=>{
+        const prompt=q.querySelector('.youdo-question-prompt');
+        if(!prompt||!q.clientHeight||!q.clientWidth)return false;
+        if(boxesFit([q]))return true;
+        const card=q.getBoundingClientRect(),content=prompt.getBoundingClientRect();
+        const style=getComputedStyle(q);
+        const bottom=card.bottom-(parseFloat(style.paddingBottom)||0)-(parseFloat(style.borderBottomWidth)||0);
+        const right=card.right-(parseFloat(style.paddingRight)||0)-(parseFloat(style.borderRightWidth)||0);
+        return boxesFit([prompt])&&content.bottom<=bottom+4&&content.right<=right+4;
+      });
     }finally{
       keys.forEach((k,i)=>{if(previous[i]===undefined)delete root.dataset[k];else root.dataset[k]=previous[i];});
       questions.forEach((q,i)=>{q.hidden=state[i].hidden;if(state[i].answer)state[i].answer.hidden=state[i].answerHidden;});
