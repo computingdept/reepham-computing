@@ -29,10 +29,10 @@
       "sourceRefs": [
         "L101"
       ],
-      "statement": "11111111 plus 00000001 fits within eight unsigned bits without overflow.",
+      "statement": "Adding 11111111 and 00000001 as unsigned 8-bit numbers causes no overflow.",
       "correct": false,
-      "explanation": "The true sum is 256, requiring nine bits; only eight stored bits would contain 00000000.",
-      "correction": "The true sum is 256, requiring nine bits; only eight stored bits would contain 00000000."
+      "explanation": "The sum is 256, which needs nine bits. The eight stored bits would be 00000000.",
+      "correction": "The sum causes overflow because 256 is too large for eight unsigned bits."
     },
     "103": {
       "id": "J277-L103-Q1",
@@ -48,30 +48,30 @@
       "sourceRefs": [
         "L103"
       ],
-      "statement": "A bitmap stores every pixel colour using only a filename, not binary data.",
+      "statement": "A bitmap stores pixel colours in its filename, not as binary data.",
       "correct": false,
-      "explanation": "Each pixel has a colour code stored in binary.",
-      "correction": "Each pixel has a colour code stored in binary."
+      "explanation": "A filename identifies the file; it does not store every pixel colour.",
+      "correction": "Each pixel's colour is represented by a binary code."
     },
     "105": {
       "id": "J277-L105-Q1",
       "sourceRefs": [
         "L104"
       ],
-      "statement": "Lossy compression always restores every bit of the original file exactly.",
+      "statement": "Lossy compression always allows the original file to be restored exactly.",
       "correct": false,
-      "explanation": "It discards some information, so the exact original cannot necessarily be restored.",
-      "correction": "It discards some information, so the exact original cannot necessarily be restored."
+      "explanation": "Lossy compression removes some information from the original file.",
+      "correction": "Lossy compression cannot guarantee exact recovery of the original file."
     },
     "106": {
       "id": "J277-L106-Q1",
       "sourceRefs": [
         "L105"
       ],
-      "statement": "Abstraction means keeping every detail, even those unrelated to the problem.",
+      "statement": "Abstraction keeps every detail, even those not needed to solve the problem.",
       "correct": false,
-      "explanation": "Removing irrelevant detail while keeping what is needed to solve the problem.",
-      "correction": "Removing irrelevant detail while keeping what is needed to solve the problem."
+      "explanation": "Only relevant details are needed to solve the problem.",
+      "correction": "Abstraction removes irrelevant details and keeps the important ones."
     },
     "107": {
       "id": "J277-L107-Q1",
@@ -87,10 +87,10 @@
       "sourceRefs": [
         "L107"
       ],
-      "statement": "A trace table can ignore the order in which assignments are executed.",
+      "statement": "A trace table can ignore the order in which assignments run.",
       "correct": false,
-      "explanation": "Each variable value depends on the state produced by earlier executed instructions.",
-      "correction": "Each variable value depends on the state produced by earlier executed instructions."
+      "explanation": "Later instructions can use values stored by earlier instructions.",
+      "correction": "A trace table records variable changes in the order instructions execute."
     },
     "109": {
       "id": "J277-L109-Q1",
@@ -99,17 +99,17 @@
       ],
       "statement": "Linear search can work on an unsorted list.",
       "correct": true,
-      "explanation": "No; it examines items in sequence until a match is found or the list ends."
+      "explanation": "It checks items one at a time until the target is found or the list ends."
     },
     "110": {
       "id": "J277-L110-Q1",
       "sourceRefs": [
         "L109"
       ],
-      "statement": "Binary search can always work correctly on an unsorted list.",
+      "statement": "Binary search always works correctly on an unsorted list.",
       "correct": false,
-      "explanation": "The list must be sorted. This lets the search safely rule out half the remaining items.",
-      "correction": "The list must be sorted. This lets the search safely rule out half the remaining items."
+      "explanation": "Binary search uses the sorted order to decide which half to discard.",
+      "correction": "Binary search requires sorted data."
     },
     "111": {
       "id": "J277-L111-Q1",
@@ -118,18 +118,18 @@
       ],
       "statement": "In ascending bubble sort, adjacent items swap when the left value is smaller.",
       "correct": false,
-      "explanation": "When the left item is greater than the right item.",
-      "correction": "When the left item is greater than the right item."
+      "explanation": "Swapping such a pair would put it in the wrong order.",
+      "correction": "Swap adjacent items when the left value is greater than the right value."
     },
     "112": {
       "id": "J277-L112-Q1",
       "sourceRefs": [
         "L111"
       ],
-      "statement": "Insertion sort leaves the next unsorted item in its original position regardless of value.",
+      "statement": "Insertion sort always leaves the next unsorted item in its original position.",
       "correct": false,
-      "explanation": "Place the next item in the correct position in the sorted part. Shift larger items right.",
-      "correction": "Place the next item in the correct position in the sorted part. Shift larger items right."
+      "explanation": "Larger items in the sorted section may need to shift right.",
+      "correction": "Insertion sort places the next item in its correct position in the sorted section."
     },
     "113": {
       "id": "J277-L113-Q1",
@@ -138,110 +138,110 @@
       ],
       "statement": "Merge sort combines sorted lists by comparing their next available items.",
       "correct": true,
-      "explanation": "Compare the next item in each list. Take the smaller. Repeat, then add any items left over."
+      "explanation": "For ascending order, take the smaller next item each time, then add any remaining items."
     },
     "114": {
       "id": "J277-L114-Q1",
       "sourceRefs": [
         "L113"
       ],
-      "statement": "The CPU control unit performs all arithmetic calculations instead of the ALU.",
+      "statement": "The control unit, rather than the ALU, performs the CPU's arithmetic calculations.",
       "correct": false,
-      "explanation": "The ALU performs arithmetic and logical operations.",
-      "correction": "The ALU performs arithmetic and logical operations."
+      "explanation": "The control unit coordinates CPU operations.",
+      "correction": "The Arithmetic Logic Unit (ALU) performs arithmetic and logical operations."
     },
     "115": {
       "id": "J277-L115-Q1",
       "sourceRefs": [
         "L114"
       ],
-      "statement": "In OCR ERL, 'COMPUTER'.substring(1,3) gives 'OMP'.",
+      "statement": "In OCR ERL, \"COMPUTER\".substring(1,3) returns \"OMP\".",
       "correct": true,
-      "explanation": "OMP; indexing starts at zero and the second argument gives length."
+      "explanation": "Indexing starts at 0. Start at index 1 and take three characters."
     },
     "116": {
       "id": "J277-L116-Q1",
       "sourceRefs": [
         "L115"
       ],
-      "statement": "A two-dimensional array needs only one index to select a cell.",
+      "statement": "A two-dimensional array needs only one index to access an element.",
       "correct": false,
-      "explanation": "Use two indexes: one for the row and one for the column.",
-      "correction": "Use two indexes: one for the row and one for the column."
+      "explanation": "An element has both a row position and a column position.",
+      "correction": "Use two indices: one for the row and one for the column."
     },
     "117": {
       "id": "J277-L117-Q1",
       "sourceRefs": [
         "L116"
       ],
-      "statement": "A local variable is normally accessible only within its subprogram or local scope.",
+      "statement": "A local variable can normally only be accessed within the subprogram or scope where it is declared.",
       "correct": true,
-      "explanation": "A local variable can be used only within its own subprogram or local scope."
+      "explanation": "A local variable is not available throughout the whole program."
     },
     "118": {
       "id": "J277-L118-Q1",
       "sourceRefs": [
         "L117"
       ],
-      "statement": "A program must open a file before reading it.",
+      "statement": "In OCR ERL, a file must be opened before it can be read.",
       "correct": true,
-      "explanation": "Opening establishes a handle or connection through which the program accesses the file."
+      "explanation": "Opening the file allows the program to access its contents."
     },
     "119": {
       "id": "J277-L119-Q1",
       "sourceRefs": [
         "L118"
       ],
-      "statement": "SQL SELECT specifies which fields or columns to return.",
+      "statement": "SQL SELECT specifies which fields to return.",
       "correct": true,
-      "explanation": "The fields (columns) to return."
+      "explanation": "Fields are the columns in a database table."
     },
     "120": {
       "id": "J277-L120-Q1",
       "sourceRefs": [
         "L119"
       ],
-      "statement": "In OCR ERL, random(1,6) can produce 0.",
+      "statement": "In OCR ERL, random(1,6) can return 0.",
       "correct": false,
-      "explanation": "Any integer from 1 through 6 inclusive.",
-      "correction": "Any integer from 1 through 6 inclusive."
+      "explanation": "0 is outside the specified range.",
+      "correction": "random(1,6) returns an integer from 1 to 6 inclusive."
     },
     "121": {
       "id": "J277-L121-Q1",
       "sourceRefs": [
         "L120"
       ],
-      "statement": "A trace table records executed variable updates in the order they occur.",
+      "statement": "A trace table records variable changes in the order they happen.",
       "correct": true,
-      "explanation": "Executed variable updates in their actual order."
+      "explanation": "It follows the order in which the instructions execute."
     },
     "122": {
       "id": "J277-L122-Q1",
       "sourceRefs": [
         "L121"
       ],
-      "statement": "Trying a new question checks whether you can independently apply a corrected method.",
+      "statement": "Trying a new question checks whether you can apply a corrected method independently.",
       "correct": true,
-      "explanation": "To check that the method can be applied independently rather than copied."
+      "explanation": "It helps check understanding rather than simply copying a correction."
     },
     "123": {
       "id": "J277-L123-Q1",
       "sourceRefs": [
         "L122"
       ],
-      "statement": "Authentication checks evidence that a user is who they claim to be.",
+      "statement": "Authentication checks whether a user is who they claim to be.",
       "correct": true,
-      "explanation": "Whether a user has supplied suitable evidence of the claimed identity."
+      "explanation": "For example, a system can check the user's login credentials."
     },
     "124": {
       "id": "J277-L124-Q1",
       "sourceRefs": [
         "L123"
       ],
-      "statement": "Defensive design assumes inputs will always be valid and harmless.",
+      "statement": "Defensive design assumes all inputs will be valid and safe.",
       "correct": false,
-      "explanation": "Planning for invalid, unexpected or malicious use and handling it safely.",
-      "correction": "Planning for invalid, unexpected or malicious use and handling it safely."
+      "explanation": "Unexpected or malicious inputs can cause problems.",
+      "correction": "Defensive design plans for invalid, unexpected or malicious use."
     },
     "125": {
       "id": "J277-L125-Q1",
@@ -257,10 +257,10 @@
       "sourceRefs": [
         "L125"
       ],
-      "statement": "A logic error always prevents a program from running.",
+      "statement": "A logic error always stops a program from running.",
       "correct": false,
-      "explanation": "A mistake in the algorithm that gives the wrong result, even though the code follows the language's rules.",
-      "correction": "A mistake in the algorithm that gives the wrong result, even though the code follows the language's rules."
+      "explanation": "Code with a logic error can still run.",
+      "correction": "A logic error occurs when the algorithm behaves incorrectly or produces the wrong result."
     },
     "127": {
       "id": "J277-L127-Q1",
@@ -276,9 +276,9 @@
       "sourceRefs": [
         "L127"
       ],
-      "statement": "An embedded system sits within a larger device to perform a specific task.",
+      "statement": "An embedded system is built into a larger device to perform a specific task.",
       "correct": true,
-      "explanation": "It is built into a larger device for a specific task, often with limited resources."
+      "explanation": "For example, a controller can be built into a device to carry out a dedicated task."
     },
     "129": {
       "id": "J277-L129-Q1",
@@ -294,10 +294,10 @@
       "sourceRefs": [
         "L129"
       ],
-      "statement": "A parameter is a global variable that cannot receive arguments.",
+      "statement": "A parameter is a global variable that cannot receive an argument.",
       "correct": false,
-      "explanation": "A named input received by a subprogram when called with an argument.",
-      "correction": "A named input received by a subprogram when called with an argument."
+      "explanation": "A parameter is a named input in a subprogram's definition.",
+      "correction": "A parameter receives an argument when the subprogram is called."
     },
     "131": {
       "id": "J277-L131-Q1",
@@ -313,10 +313,10 @@
       "sourceRefs": [
         "L131"
       ],
-      "statement": "For £5 tickets, total = tickets + 5 correctly multiplies the price by the number of tickets.",
+      "statement": "If tickets cost £5 each, total = tickets + 5 calculates the total price.",
       "correct": false,
-      "explanation": "Use total = tickets * 5; addition does not calculate £5 for each ticket.",
-      "correction": "Use total = tickets * 5; addition does not calculate £5 for each ticket."
+      "explanation": "Multiply the number of tickets by the price per ticket.",
+      "correction": "Use total = tickets * 5."
     },
     "133": {
       "id": "J277-L133-Q1",
@@ -332,9 +332,9 @@
       "sourceRefs": [
         "L133"
       ],
-      "statement": "A WAN connects networks over a large geographic area.",
+      "statement": "A WAN connects networks over a large geographical area.",
       "correct": true,
-      "explanation": "A WAN links networks over a large area, often using links provided by other organisations."
+      "explanation": "A wide area network can connect networks across towns or countries."
     },
     "135": {
       "id": "J277-L135-Q1",
@@ -359,19 +359,19 @@
       "sourceRefs": [
         "L136"
       ],
-      "statement": "More active users may compete for finite network bandwidth.",
+      "statement": "More active network users may reduce the bandwidth available to each user.",
       "correct": true,
-      "explanation": "Users may compete for finite bandwidth, reducing the data rate available to each."
+      "explanation": "Users share the network's available bandwidth, so each may get a lower data rate."
     },
     "138": {
       "id": "J277-L138-Q1",
       "sourceRefs": [
         "L137"
       ],
-      "statement": "SQL injection is prevented simply by using a longer computer password.",
+      "statement": "Using a longer computer password is enough to prevent SQL injection.",
       "correct": false,
-      "explanation": "Unsafe input changes an SQL query. An attacker may then view or change data.",
-      "correction": "Unsafe input changes an SQL query. An attacker may then view or change data."
+      "explanation": "SQL injection occurs when unsafe input changes an SQL query.",
+      "correction": "A longer password does not prevent SQL injection; input must be handled safely."
     },
     "139": {
       "id": "J277-L139-Q1",
@@ -387,18 +387,18 @@
       "sourceRefs": [
         "L139"
       ],
-      "statement": "Operating-system file management includes saving and moving files.",
+      "statement": "Operating system file management includes saving and moving files.",
       "correct": true,
-      "explanation": "It manages files and folders: naming, saving, copying, moving and deleting them."
+      "explanation": "The operating system manages files and folders, including copying, renaming and deleting them."
     },
     "141": {
       "id": "J277-L141-Q1",
       "sourceRefs": [
         "L140"
       ],
-      "statement": "A compression utility reduces the space needed to store data.",
+      "statement": "A compression utility reduces the storage space needed for data.",
       "correct": true,
-      "explanation": "It reduces the storage space required for data, using a suitable lossless or lossy method."
+      "explanation": "Compression can use lossless or lossy methods."
     },
     "142": {
       "id": "J277-L142-Q1",
@@ -407,36 +407,36 @@
       ],
       "statement": "Digital technology can never affect language, traditions or culture.",
       "correct": false,
-      "explanation": "Digital communication can change language, access, traditions and how people take part in communities.",
-      "correction": "Digital communication can change language, access, traditions and how people take part in communities."
+      "explanation": "Digital communication can change how people communicate and take part in communities.",
+      "correction": "Digital technology can affect language, traditions and culture."
     },
     "143": {
       "id": "J277-L143-Q1",
       "sourceRefs": [
         "L142"
       ],
-      "statement": "Proprietary software normally gives users specified usage rights while its source code is controlled by its owner.",
+      "statement": "Proprietary software is normally licensed to users, but its source code is controlled by its owner.",
       "correct": true,
-      "explanation": "Source code is normally controlled by its owner and users receive specified usage rights."
+      "explanation": "Users receive rights to use the software under its licence."
     },
     "144": {
       "id": "J277-L144-Q1",
       "sourceRefs": [
         "L143"
       ],
-      "statement": "The Copyright, Designs and Patents Act is the main law that defines unauthorised computer access offences.",
+      "statement": "The Copyright, Designs and Patents Act is the main law covering unauthorised access to computers.",
       "correct": false,
-      "explanation": "The Computer Misuse Act 1990.",
-      "correction": "The Computer Misuse Act 1990."
+      "explanation": "Copyright law protects original works, including software.",
+      "correction": "The Computer Misuse Act 1990 covers unauthorised access to computer systems."
     },
     "145": {
       "id": "J277-L145-Q1",
       "sourceRefs": [
         "L144"
       ],
-      "statement": "Testing a new example helps check whether a corrected method can be applied independently.",
+      "statement": "Trying a new example helps check whether you can apply a corrected method independently.",
       "correct": true,
-      "explanation": "To check that the underlying method works independently on another case."
+      "explanation": "A new example tests whether you understand the method rather than just the original answer."
     },
     "146": {
       "id": "J277-L146-Q1",
@@ -445,37 +445,37 @@
       ],
       "statement": "A NOT gate has two inputs and behaves like an AND gate.",
       "correct": false,
-      "explanation": "It is a one-input inverter, usually a triangle with a small output bubble.",
-      "correction": "It is a one-input inverter, usually a triangle with a small output bubble."
+      "explanation": "A NOT gate reverses its input.",
+      "correction": "A NOT gate has one input and inverts it."
     },
     "147": {
       "id": "J277-L147-Q1",
       "sourceRefs": [
         "L146"
       ],
-      "statement": "Three independent Boolean inputs require six truth-table rows.",
+      "statement": "Three Boolean inputs require six rows in a truth table.",
       "correct": false,
-      "explanation": "8, because 2 to the power 3 is 8; list every combination exactly once.",
-      "correction": "8, because 2 to the power 3 is 8; list every combination exactly once."
+      "explanation": "There are 2³ = 8 possible input combinations.",
+      "correction": "Eight rows are needed, one for each possible combination."
     },
     "148": {
       "id": "J277-L148-Q1",
       "sourceRefs": [
         "L147"
       ],
-      "statement": "An interpreter must always create a standalone executable before any code can run.",
+      "statement": "An interpreter must create a standalone executable before any code can run.",
       "correct": false,
-      "explanation": "An interpreter translates and runs code as it goes, often one statement at a time. This gives quick feedback during testing.",
-      "correction": "An interpreter translates and runs code as it goes, often one statement at a time. This gives quick feedback during testing."
+      "explanation": "An interpreter translates and executes code as the program runs.",
+      "correction": "An interpreter does not need to create a standalone executable before running code."
     },
     "149": {
       "id": "J277-L149-Q1",
       "sourceRefs": [
         "L148"
       ],
-      "statement": "IDE error diagnostics can help locate coding mistakes.",
+      "statement": "An IDE's error messages can help programmers locate mistakes in code.",
       "correct": true,
-      "explanation": "They show errors and often their location, helping the programmer find the cause."
+      "explanation": "They can identify an error and show where it occurs."
     },
     "150": {
       "id": "J277-L150-Q1",
@@ -484,8 +484,8 @@
       ],
       "statement": "Binary search always succeeds even when its list is unsorted.",
       "correct": false,
-      "explanation": "The list must be sorted. This lets the search safely rule out half the remaining items.",
-      "correction": "The list must be sorted. This lets the search safely rule out half the remaining items."
+      "explanation": "Binary search relies on sorted order to discard half the remaining items.",
+      "correction": "Binary search requires sorted data."
     },
     "151": {
       "id": "J277-L151-Q1",
