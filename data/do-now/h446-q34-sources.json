@@ -3023,7 +3023,11 @@
       "q4": {
         "sourceRefs": [
           "L001"
-        ]
+        ],
+        "replacement": {
+          "question": "Write 200 as unsigned 8-bit binary. Explain why 300 cannot fit in eight bits.",
+          "answer": "200 = 128 + 64 + 8 = 11001000. Eight unsigned bits represent 0–255. The value 300 requires at least nine bits."
+        }
       }
     },
     "003": {
@@ -3039,7 +3043,11 @@
       "q4": {
         "sourceRefs": [
           "L002"
-        ]
+        ],
+        "replacement": {
+          "question": "Add 01110000 and 00100000 as 8-bit two’s-complement integers. Give the stored result and explain any overflow.",
+          "answer": "10010000. The denary sum is 112 + 32 = 144, outside the signed range −128 to 127. Signed overflow occurs; the stored result represents −112."
+        }
       }
     },
     "004": {
@@ -3055,7 +3063,11 @@
       "q4": {
         "sourceRefs": [
           "L003"
-        ]
+        ],
+        "replacement": {
+          "question": "Logically shift unsigned 10110000 left by one bit. Give the stored result and explain why it is not twice the original value.",
+          "answer": "01100000 = 96. The leftmost 1 is discarded. The mathematical result, 176 × 2 = 352, exceeds the unsigned 8-bit maximum of 255."
+        }
       }
     },
     "005": {
@@ -3071,7 +3083,11 @@
       "q4": {
         "sourceRefs": [
           "L003"
-        ]
+        ],
+        "replacement": {
+          "question": "Calculate 10110110 AND 00001111. Give the result in binary and hexadecimal.",
+          "answer": "00000110₂ = 06₁₆. The mask clears the upper nibble and preserves the lower nibble, 0110."
+        }
       }
     },
     "006": {
@@ -3115,7 +3131,11 @@
       "q4": {
         "sourceRefs": [
           "L007"
-        ]
+        ],
+        "replacement": {
+          "question": "Subtract 010000 0010 from 011000 0010. Use a 6-bit two’s-complement fractional mantissa and 4-bit two’s-complement exponent. Give the normalised result.",
+          "answer": "The exponents are both 2. Subtract the mantissas: 011000 − 010000 = 001000. Shift the mantissa left once and decrease the exponent to 1. Result: 010000 0001 (3 − 2 = 1)."
+        }
       }
     },
     "009": {
@@ -3139,7 +3159,11 @@
       "q4": {
         "sourceRefs": [
           "L009"
-        ]
+        ],
+        "replacement": {
+          "question": "Given mark = 85: if mark >= 80, print Distinction; else if mark >= 50, print Pass; otherwise print Fail. Give the output and explain why.",
+          "answer": "Distinction. The first condition is true, so its branch executes and the remaining branches are skipped."
+        }
       }
     },
     "011": {
@@ -3152,7 +3176,11 @@
         "sourceRefs": [
           "L009",
           "L010"
-        ]
+        ],
+        "replacement": {
+          "question": "A program reads a mark, loops through five scores and uses if to count passes. Name the three programming constructs.",
+          "answer": "Sequence (instructions in order), iteration (repetition) and selection (if chooses whether to increase the count)."
+        }
       }
     },
     "012": {
@@ -3164,7 +3192,11 @@
       "q4": {
         "sourceRefs": [
           "L011"
-        ]
+        ],
+        "replacement": {
+          "question": "In Triple(7), identify the argument. In Triple(int number), identify the parameter.",
+          "answer": "Argument: 7, the value supplied. Parameter: number, the named input in the method declaration."
+        }
       }
     },
     "013": {
@@ -3181,7 +3213,11 @@
         "sourceRefs": [
           "L009",
           "L010"
-        ]
+        ],
+        "replacement": {
+          "question": "Which programming construct avoids duplicating instructions that print the same three lines repeatedly? Explain.",
+          "answer": "Iteration: a loop repeats the instructions without needing duplicate statements."
+        }
       }
     },
     "014": {
@@ -3226,7 +3262,11 @@
       "q4": {
         "sourceRefs": [
           "L014"
-        ]
+        ],
+        "replacement": {
+          "question": "On a 3 × 3 board numbered 1–9 row by row, give the zero-based row and column of square 8. Why reject an occupied square?",
+          "answer": "Row 2, column 1. Rejecting an occupied square prevents overwriting a previous move."
+        }
       }
     },
     "017": {
@@ -3238,7 +3278,11 @@
       "q4": {
         "sourceRefs": [
           "L013"
-        ]
+        ],
+        "replacement": {
+          "question": "Why must elements of a C# string[,] array be compatible with string?",
+          "answer": "An array has a declared element type. Every element must be compatible with that type."
+        }
       }
     },
     "018": {
@@ -3274,7 +3318,11 @@
       "q4": {
         "sourceRefs": [
           "L018"
-        ]
+        ],
+        "replacement": {
+          "question": "A program frequently inserts items at the start of a collection. Choose a C# fixed-size array or List<T> and justify your choice.",
+          "answer": "List<T>. Its size can change and items can be inserted without manually creating a new fixed-size array."
+        }
       }
     },
     "020": {
@@ -3290,7 +3338,11 @@
       "q4": {
         "sourceRefs": [
           "L019"
-        ]
+        ],
+        "replacement": {
+          "question": "Given data = [10, 20, 30, 40], next = [2, -1, 1, 0], start = 3, follow the next pointers until −1. List the data values visited.",
+          "answer": "Indices: 3 → 0 → 2 → 1 → −1. Data: 40 → 10 → 30 → 20. The −1 marks the end."
+        }
       }
     },
     "021": {
@@ -3318,7 +3370,11 @@
       "q4": {
         "sourceRefs": [
           "L021"
-        ]
+        ],
+        "replacement": {
+          "question": "An undirected graph has vertices A, B, C, D and edges A–B, A–C, C–D. Write its adjacency list.",
+          "answer": "A: B, C; B: A; C: A, D; D: C. Each undirected edge appears at both ends."
+        }
       }
     },
     "023": {
@@ -3383,7 +3439,11 @@
       "q4": {
         "sourceRefs": [
           "L025"
-        ]
+        ],
+        "replacement": {
+          "question": "Binary search for 23 in [2, 7, 11, 16, 23, 31, 44]. Give the zero-based indices checked, in order.",
+          "answer": "3 → 5 → 4 (values 16 → 31 → 23). Each comparison narrows the sorted search interval."
+        }
       }
     },
     "027": {
@@ -3419,7 +3479,11 @@
       "q4": {
         "sourceRefs": [
           "L006"
-        ]
+        ],
+        "replacement": {
+          "question": "Add 01000000 0011 and 01000000 0010 using an 8-bit two’s-complement fractional mantissa and 4-bit two’s-complement exponent. Show alignment and the normalised result.",
+          "answer": "Align both exponents to 3: shift the second mantissa right, 01000000 → 00100000. Add: 01000000 + 00100000 = 01100000. Result: 01100000 0011, already normalised (0.75 × 2³ = 6)."
+        }
       }
     },
     "030": {
@@ -3479,7 +3543,11 @@
       "q4": {
         "sourceRefs": [
           "L023"
-        ]
+        ],
+        "replacement": {
+          "question": "An empty five-bucket hash table uses h(k) = k MOD 5 and linear probing. Insert 7, 12 and 17 in order. Give their final indices.",
+          "answer": "All three hash to index 2. Store 7 at 2; 12 probes to 3; 17 probes past 2 and 3 to 4."
+        }
       }
     },
     "034": {
@@ -3495,7 +3563,11 @@
       "q4": {
         "sourceRefs": [
           "L020"
-        ]
+        ],
+        "replacement": {
+          "question": "A print server processes jobs in submission order. Choose a data structure and explain why a stack is unsuitable.",
+          "answer": "Queue: FIFO processes the earliest job first. A stack uses LIFO and would process the most recently added job first."
+        }
       }
     },
     "035": {
@@ -3511,7 +3583,11 @@
       "q4": {
         "sourceRefs": [
           "L030"
-        ]
+        ],
+        "replacement": {
+          "question": "For a half adder, Sum = A XOR B and Carry = A AND B. Calculate both outputs for (0,1), (1,0), (1,1). Explain the final carry.",
+          "answer": "(0,1): Sum 1, Carry 0; (1,0): Sum 1, Carry 0; (1,1): Sum 0, Carry 1. Since 1 + 1 = 10₂, the sum bit is 0 and the carry bit is 1."
+        }
       }
     },
     "036": {
@@ -3547,7 +3623,11 @@
       "q4": {
         "sourceRefs": [
           "L012"
-        ]
+        ],
+        "replacement": {
+          "question": "A caller’s int total = 5 is passed by value to a method. The method sets its parameter to 9. Give the caller’s total and explain why.",
+          "answer": "5. The method changes its local copy, not the caller’s integer."
+        }
       }
     },
     "039": {
@@ -3563,7 +3643,11 @@
       "q4": {
         "sourceRefs": [
           "L038"
-        ]
+        ],
+        "replacement": {
+          "question": "Two separate Student objects have Name values Ada and Ben. The second changes to Eve. What is the first Name, and why?",
+          "answer": "Ada. Each object has its own attribute values; changing one instance does not change the other."
+        }
       }
     },
     "040": {
@@ -3575,7 +3659,11 @@
       "q4": {
         "sourceRefs": [
           "L039"
-        ]
+        ],
+        "replacement": {
+          "question": "Charizard has 1000 HP and Squirtle has 1800 HP. Charizard attacks Squirtle for 160 damage. Why does Charizard’s HP remain unchanged?",
+          "answer": "Each Pokémon object stores its own attributes. Only Squirtle’s HP changes, so Charizard remains at 1000 HP."
+        }
       }
     },
     "041": {
@@ -3591,7 +3679,11 @@
       "q4": {
         "sourceRefs": [
           "L038"
-        ]
+        ],
+        "replacement": {
+          "question": "Two separate Book objects have titles Dune and 1984. The first title changes to Foundation. What is the second title, and why?",
+          "answer": "1984. Each separately instantiated Book object has its own attribute values."
+        }
       }
     },
     "042": {
@@ -3607,7 +3699,11 @@
       "q4": {
         "sourceRefs": [
           "L041"
-        ]
+        ],
+        "replacement": {
+          "question": "An Account has balance 5. Deposit(amount) accepts positive amounts only. Trace Deposit(7), Deposit(-4), Deposit(3). Give the final balance.",
+          "answer": "5 → 12 → 12 (negative deposit rejected) → 15. Final balance: 15."
+        }
       }
     },
     "043": {
@@ -3619,7 +3715,11 @@
       "q4": {
         "sourceRefs": [
           "L042"
-        ]
+        ],
+        "replacement": {
+          "question": "Dog inherits Animal’s public Eat() method and defines public Bark(). Which methods can a Dog object call, and which is inherited?",
+          "answer": "Eat() and Bark(). Eat() is inherited from Animal; Bark() is defined in Dog."
+        }
       }
     },
     "044": {
@@ -3635,7 +3735,11 @@
       "q4": {
         "sourceRefs": [
           "L043"
-        ]
+        ],
+        "replacement": {
+          "question": "An Animal array holds a Dog then a Cat. Both override Sound(), returning Woof and Meow respectively. A loop prints each Sound() result. Give the output in order.",
+          "answer": "Woof, then Meow. The overridden method is selected using the actual type of each object."
+        }
       }
     },
     "045": {
@@ -3676,7 +3780,11 @@
       "q4": {
         "sourceRefs": [
           "L013"
-        ]
+        ],
+        "replacement": {
+          "question": "A zero-indexed 4 × 3 array a starts with zeros. For r = 0 to 3 inclusive, set a[r,2] = r + 1. Give the last column from top to bottom.",
+          "answer": "1, 2, 3, 4. Column index 2 is the last column; each row receives r + 1."
+        }
       }
     },
     "048": {
@@ -3708,7 +3816,11 @@
       "q4": {
         "sourceRefs": [
           "L020"
-        ]
+        ],
+        "replacement": {
+          "question": "An empty stack performs push(A), push(B), push(C), x=pop(), push(D), push(x), pop(). Give the final stack from bottom to top.",
+          "answer": "A, B, D. The first pop stores C in x. After pushing D and then C, the final pop removes C."
+        }
       }
     },
     "050": {
@@ -3724,7 +3836,11 @@
       "q4": {
         "sourceRefs": [
           "L020"
-        ]
+        ],
+        "replacement": {
+          "question": "An empty queue performs enqueue(A), enqueue(B), enqueue(C), x=dequeue(), enqueue(x), dequeue(). Give the final queue from front to rear.",
+          "answer": "C, A. The first dequeue removes A into x; A is added at the rear, then B is removed."
+        }
       }
     },
     "051": {
