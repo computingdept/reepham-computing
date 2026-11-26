@@ -2,11 +2,11 @@
   "schema_version": 1,
   "id": "h446-045",
   "course": "h446",
-  "title": "OOP · Synoptic Exam Practice",
+  "title": "Recursion · Understanding and Tracing",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
-  "intro": "Catch up on oop · synoptic exam practice. Retrieve earlier learning, read and trace the C# example, and practise OOP concepts with feedback.",
+  "intro": "Catch up on the key A Level ideas. Complete four retrieval questions, work through the examples, then practise and explain your reasoning.",
   "stages": [
     {
       "id": "remember",
@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "How does LibraryBook reject a second loan?",
-          "answer": "It tests its private onLoan value and returns false.",
+          "prompt": "True or false? A Student borrowing a Book is normally an inheritance relationship.",
+          "answer": "False",
           "options": [
-            "It tests its private onLoan value and returns false.",
-            "Initialise a new object.",
-            "Sorted input."
+            "True",
+            "False"
           ],
-          "feedback": "Model answer: It tests its private onLoan value and returns false."
+          "feedback": "False. Borrowing is an association: a Student is not a kind of Book."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "What is a constructor for?",
-          "answer": "Initialise a new object.",
+          "prompt": "In Book(string title), what is title?",
+          "answer": "Parameter",
           "options": [
-            "Initialise a new object.",
-            "Sorted input.",
-            "Restricted direct changes and validated updates."
+            "Parameter",
+            "Property",
+            "Method",
+            "Class"
           ],
-          "feedback": "Model answer: Initialise a new object."
+          "feedback": "A parameter received by the constructor."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "What does binary search require?",
-          "answer": "Sorted input.",
+          "prompt": "Values A, B and C are pushed onto a stack in that order. Which is popped first?",
+          "answer": "C",
           "options": [
-            "Sorted input.",
-            "Restricted direct changes and validated updates.",
-            "It tests its private onLoan value and returns false."
+            "C",
+            "A",
+            "B"
           ],
-          "feedback": "Model answer: Sorted input."
+          "feedback": "C. A stack is last in, first out."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "Give two benefits of a private balance and public Deposit. [challenge]",
-          "answer": "Restricted direct changes and validated updates.",
+          "prompt": "A function AddTwo(x) returns x + 2. Calculate AddTwo(AddTwo(3)).",
+          "answer": "7",
           "options": [
-            "Restricted direct changes and validated updates.",
-            "It tests its private onLoan value and returns false.",
-            "Initialise a new object."
+            "7",
+            "5",
+            "9"
           ],
-          "feedback": "Model answer: Restricted direct changes and validated updates."
+          "feedback": "The inner call returns 5; the outer call returns 7."
         }
       ]
     },
@@ -75,62 +75,62 @@
       "blocks": [
         {
           "type": "facts",
-          "title": "Key OOP vocabulary",
+          "title": "Key vocabulary",
           "items": [
-            "constructor — Initialises a newly created object",
-            "encapsulation — Control access to object state",
-            "inheritance — Reuse accessible members of a base class",
-            "polymorphism — Common call with different implementations",
-            "test case — Action/input with an expected outcome"
+            "recursion — A function calling itself to solve a smaller problem.",
+            "base case — A condition that stops further recursive calls.",
+            "recursive case — A call to the same function with a smaller or simpler input.",
+            "call stack — Memory holding active function calls and their local values.",
+            "return value — The result passed back to the caller."
           ]
         },
         {
           "type": "paragraph",
-          "title": "C# model",
-          "text": "Device d = new Laptop(\"L01\");\nConsole.WriteLine(d.Label());\n\nclass Device {\n  public string Id;\n  public Device(string id) { Id = id; }\n  public virtual string Label() { return \"Device\"; }\n}\n\nclass Laptop : Device {\n  public Laptop(string id) : base(id) { }\n  public override string Label() { return \"Laptop\"; }\n}"
+          "title": "C# worked example",
+          "text": "int Factorial(int n)\n{\n    if (n == 0) return 1;\n    return n * Factorial(n - 1);\n}"
         },
         {
           "type": "paragraph",
-          "title": "Explain the trace",
-          "text": "The Laptop constructor passes an ID to Device, and the virtual Label call dispatches to Laptop's override."
+          "title": "Trace the calls",
+          "text": "Factorial(3) → Factorial(2) → Factorial(1) → Factorial(0). The returns are 1, 1, 2, 6."
         }
       ],
       "questions": [
         {
           "id": "l1",
           "kind": "choice",
-          "prompt": "Which definition matches 'constructor'?",
-          "answer": "Initialises a newly created object",
+          "prompt": "Which definition matches 'recursion'?",
+          "answer": "A function calling itself to solve a smaller problem.",
           "options": [
-            "Initialises a newly created object",
-            "Control access to object state",
-            "Reuse accessible members of a base class"
+            "A function calling itself to solve a smaller problem.",
+            "A condition that stops further recursive calls.",
+            "A call to the same function with a smaller or simpler input."
           ],
-          "feedback": "Model answer: Initialises a newly created object"
+          "feedback": "Model answer: A function calling itself to solve a smaller problem."
         },
         {
           "id": "l2",
           "kind": "choice",
-          "prompt": "Which definition matches 'encapsulation'?",
-          "answer": "Control access to object state",
+          "prompt": "Which definition matches 'base case'?",
+          "answer": "A condition that stops further recursive calls.",
           "options": [
-            "Control access to object state",
-            "Reuse accessible members of a base class",
-            "Common call with different implementations"
+            "A condition that stops further recursive calls.",
+            "A call to the same function with a smaller or simpler input.",
+            "Memory holding active function calls and their local values."
           ],
-          "feedback": "Model answer: Control access to object state"
+          "feedback": "Model answer: A condition that stops further recursive calls."
         },
         {
           "id": "l3",
           "kind": "choice",
-          "prompt": "Which definition matches 'inheritance'?",
-          "answer": "Reuse accessible members of a base class",
+          "prompt": "Which definition matches 'recursive case'?",
+          "answer": "A call to the same function with a smaller or simpler input.",
           "options": [
-            "Reuse accessible members of a base class",
-            "Common call with different implementations",
-            "Action/input with an expected outcome"
+            "A call to the same function with a smaller or simpler input.",
+            "Memory holding active function calls and their local values.",
+            "The result passed back to the caller."
           ],
-          "feedback": "Model answer: Reuse accessible members of a base class"
+          "feedback": "Model answer: A call to the same function with a smaller or simpler input."
         }
       ]
     },
@@ -143,58 +143,58 @@
       "blocks": [
         {
           "type": "paragraph",
-          "title": "Try → Discuss → Improve",
-          "text": "Predict the outcome of the object-oriented example, then check and improve."
+          "title": "Guided practice",
+          "text": "Trace Factorial(4), starting with the base case and working back through the calls."
         }
       ],
       "questions": [
         {
           "id": "p1",
           "kind": "choice",
-          "prompt": "What does new Device(\"D01\").Label() return?",
-          "answer": "Device",
+          "prompt": "What is Factorial(0)?",
+          "answer": "1",
           "options": [
-            "Device",
-            "Laptop",
-            "D01"
+            "1",
+            "0",
+            "2"
           ],
-          "feedback": "Model answer: Device"
+          "feedback": "Model answer: 1"
         },
         {
           "id": "p2",
           "kind": "choice",
-          "prompt": "What does class Laptop : Device declare?",
-          "answer": "Laptop inherits Device",
+          "prompt": "What is Factorial(2)?",
+          "answer": "2",
           "options": [
-            "Laptop inherits Device",
-            "Device inherits Laptop",
-            "Laptop contains a separate Device field"
+            "2",
+            "1",
+            "4"
           ],
-          "feedback": "Model answer: Laptop inherits Device"
+          "feedback": "Model answer: 2"
         },
         {
           "id": "p3",
           "kind": "choice",
-          "prompt": "Which term means: Common call with different implementations?",
-          "answer": "polymorphism",
+          "prompt": "What is Factorial(3)?",
+          "answer": "6",
           "options": [
-            "polymorphism",
-            "encapsulation",
-            "inheritance"
+            "6",
+            "3",
+            "9"
           ],
-          "feedback": "Model answer: polymorphism"
+          "feedback": "Model answer: 6"
         },
         {
           "id": "p4",
           "kind": "choice",
-          "prompt": "Which term means: Action/input with an expected outcome?",
-          "answer": "test case",
+          "prompt": "What is Factorial(4)?",
+          "answer": "24",
           "options": [
-            "test case",
-            "inheritance",
-            "constructor"
+            "24",
+            "12",
+            "16"
           ],
-          "feedback": "Model answer: test case"
+          "feedback": "Model answer: 24"
         }
       ]
     },
@@ -204,54 +204,51 @@
       "minutes": 3,
       "sign": "YouDo_CodingIcon.png",
       "lead": "You Do",
-      "blocks": [],
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Independent practice",
+          "text": "State two features of a terminating recursive function.\n\nTrace SumTo(3), giving the value returned by each call.\nfunction SumTo(n)\n    if n == 0 then\n        return 0\n    endif\n    return n + SumTo(n - 1)\nendfunction\n\nExplain why the call stack is needed during recursion."
+        }
+      ],
       "questions": [
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "What does Device d = new Laptop(\"L01\"); d.Label() return?",
-          "answer": "Laptop",
+          "prompt": "What is the final return of SumTo(3) with base case 0 returning 0?",
+          "answer": "6",
           "options": [
-            "Laptop",
-            "Device",
-            "L01"
+            "6",
+            "3",
+            "9"
           ],
-          "feedback": "Model answer: Laptop"
+          "feedback": "Model answer: 6"
         },
         {
           "id": "a2",
           "kind": "choice",
-          "prompt": "What does base(id) do in Laptop's constructor?",
-          "answer": "Calls the Device constructor",
+          "prompt": "Which call returns first in Factorial(4)?",
+          "answer": "Factorial(0)",
           "options": [
-            "Calls the Device constructor",
-            "Overrides Device.Label()",
-            "Creates a new Device object"
+            "Factorial(0)",
+            "Factorial(4)",
+            "Factorial(1)"
           ],
-          "feedback": "Model answer: Calls the Device constructor"
+          "feedback": "Model answer: Factorial(0)"
         },
         {
           "id": "a3",
           "kind": "choice",
-          "prompt": "Why does override matter?",
-          "answer": "It supplies Laptop's implementation of Label()",
+          "prompt": "What happens to active calls as they return?",
+          "answer": "They are removed from the call stack.",
           "options": [
-            "It supplies Laptop's implementation of Label()",
-            "It makes the Id field static",
-            "It prevents a Device reference to a Laptop"
+            "They are removed from the call stack.",
+            "They remain indefinitely.",
+            "They create another object."
           ],
-          "feedback": "Model answer: It supplies Laptop's implementation of Label()"
+          "feedback": "Model answer: They are removed from the call stack."
         }
-      ],
-      "writing": {
-        "prompt": "Why does override matter? Explain why.",
-        "model": "It supplies Laptop's implementation of Label()",
-        "checklist": [
-          "My explanation matches the scenario.",
-          "I used accurate OOP vocabulary.",
-          "I corrected my answer against the model."
-        ]
-      }
+      ]
     },
     {
       "id": "check",
@@ -263,24 +260,36 @@
       "questions": [
         {
           "id": "c1",
-          "kind": "truefalse",
-          "prompt": "A Device variable can refer to a Laptop.",
-          "answer": "true",
-          "feedback": "Correct: TRUE. Explain with lesson vocabulary."
+          "kind": "choice",
+          "prompt": "A recursive function calls itself.",
+          "answer": "True",
+          "options": [
+            "True",
+            "False"
+          ],
+          "feedback": "Recursion involves a function calling itself."
         },
         {
           "id": "c2",
-          "kind": "truefalse",
-          "prompt": "Constructors remove the need for testing.",
-          "answer": "false",
-          "feedback": "Correct: FALSE. Explain with lesson vocabulary."
+          "kind": "choice",
+          "prompt": "A base case must make another recursive call.",
+          "answer": "False",
+          "options": [
+            "True",
+            "False"
+          ],
+          "feedback": "The base case returns without making another call."
         },
         {
           "id": "c3",
-          "kind": "truefalse",
-          "prompt": "An override can return type-specific output.",
-          "answer": "true",
-          "feedback": "Correct: TRUE. Explain with lesson vocabulary."
+          "kind": "choice",
+          "prompt": "Each active recursive call has its own stack frame.",
+          "answer": "True",
+          "options": [
+            "True",
+            "False"
+          ],
+          "feedback": "Each frame stores that call’s own parameters, local values and return information."
         }
       ]
     }
