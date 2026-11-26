@@ -2041,15 +2041,9 @@ function prepareJ277DoNowSourceLabels(){
   if(questions.length!==4||reviews.length!==4)return;
   for(let i=0;i<4;i++){
     const stage=number===1?(i===3?'CHALLENGE':'KS3 RECALL'):(i===0?'LAST LESSON':i===3?'CHALLENGE':'RETRIEVAL');
-    const label=number===1?'PRIOR · '+refs[i]:'TAUGHT · '+refs[i];
     for(const [heading,answerView] of [[questions[i],false],[reviews[i],true]]){
       heading.classList.add('j277-origin-heading');
       heading.textContent=(answerView?'QUESTION '+(i+1)+' OF 4':String(i+1))+' · '+stage;
-      const origin=document.createElement('span');
-      origin.className='j277-retrieval-origin';
-      origin.textContent=label;
-      origin.title=number===1?'Prior Key Stage 3 learning':'Previously taught in '+refs[i];
-      heading.appendChild(origin);
     }
   }
 }
@@ -2118,19 +2112,12 @@ function prepareH446DoNowSourceLabels(){
       review.parentElement?.querySelectorAll('.review-explain').forEach(note=>note.remove());
     }
     const style=n===1?(i===3?'CHALLENGE':'PRIOR KNOWLEDGE'):(i===0?'LAST LESSON':i===3?'CHALLENGE':'RETRIEVAL');
-    const fromGCSE=source==='GCSE';
-    const reference=fromGCSE?'PRIOR · GCSE':'TAUGHT · '+source;
     const headings=[card.querySelector(':scope > strong'),review.querySelector('.review-number')];
     for(let k=0;k<headings.length;k++){
       const heading=headings[k];
       if(!heading)continue;
       heading.classList.add('h446-origin-heading');
       heading.textContent=(k===0?String(i+1):'QUESTION '+(i+1)+' OF 4')+' · '+style;
-      const tag=document.createElement('span');
-      tag.className='h446-retrieval-origin';
-      tag.textContent=reference;
-      tag.title=fromGCSE?'GCSE knowledge revisited; no H446 lesson source claimed':'Previously taught in '+source;
-      heading.append(tag);
     }
   }
 }
@@ -2512,8 +2499,6 @@ function applyPublishedH446Q1(){
       [...first.children].forEach(node=>{if(node!==cardHeading&&node!==prompt)node.remove();});
       prompt.textContent=question;
       answerPrompt.textContent=question;
-      const reference=diagnostic?(number===1?'PRIOR · GCSE':'PRIOR · YEAR 12')
-        :'TAUGHT · '+predecessor;
       for(const [heading,title] of [
         [cardHeading,'1 · TRUE / FALSE · '+(diagnostic?'DIAGNOSTIC':'LAST LESSON')],
         [review.querySelector('.review-number'),'QUESTION 1 OF 4 · TRUE / FALSE']
@@ -2521,11 +2506,6 @@ function applyPublishedH446Q1(){
         if(!heading)continue;
         heading.classList.add('h446-origin-heading');
         heading.textContent=title;
-        const origin=document.createElement('span');
-        origin.className='h446-retrieval-origin';
-        origin.textContent=reference;
-        origin.title=diagnostic?'Prior-stage diagnostic':'Knowledge taught in '+predecessor;
-        heading.append(origin);
       }
       const label=answerPanel.querySelector('.review-label');
       const verdict=document.createElement('p');
@@ -2608,14 +2588,9 @@ function applyPublishedH446Q2(){
       reviewQuestion.textContent=entry.question;
       review.querySelectorAll('.h446-q2-options').forEach(node=>node.remove());
       reviewQuestion.after(makeChoices(true));
-      const reference=diagnostic?'TAUGHT · GCSE':'TAUGHT · '+source;
       for(const heading of [cardHeading,review.querySelector('.review-number')]){
         if(!heading)continue;
         if(heading!==cardHeading)heading.textContent='QUESTION 2 OF 4 · MCQ';
-        const origin=document.createElement('span');
-        origin.className='h446-retrieval-origin';
-        origin.textContent=reference;
-        heading.append(document.createTextNode(' '),origin);
       }
       const label=answerPanel.querySelector('.review-label');
       const verdict=document.createElement('p');
@@ -2665,7 +2640,6 @@ function applyReviewedH446Q34Sources(){
         const prior=source.priorStage==='GCSE';
         if(!prior&&(!Array.isArray(refs)||!refs.length||!refs.every(ref=>
           /^L\d{3}$/.test(ref)&&Number(ref.slice(1))<number)))continue;
-        const label=prior?'PRIOR · GCSE':'TAUGHT · '+refs.join(' + ');
         const headingText=position===2?'RETRIEVAL':'CHALLENGE';
         const headings=[cards[position].querySelector(':scope > strong'),
           reviews[position].querySelector('.review-number')];
@@ -2674,11 +2648,6 @@ function applyReviewedH446Q34Sources(){
           heading.classList.add('h446-origin-heading');
           heading.textContent=(index===0?String(position+1):'QUESTION '+(position+1)+' OF 4')
             +' · '+headingText;
-          const tag=document.createElement('span');
-          tag.className='h446-retrieval-origin';
-          tag.textContent=label;
-          tag.title=prior?'Knowledge from GCSE':('Previously taught in '+refs.join(', '));
-          heading.append(tag);
         }
         const replacement=validReplacement(source);
         if(replacement){
