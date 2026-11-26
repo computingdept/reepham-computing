@@ -655,9 +655,9 @@
         "H446-Year12-algorithms"
       ],
       "previousTaughtLesson": null,
-      "statement": "Binary search requires sorted data before it can safely discard half of a search interval.",
+      "statement": "Binary search requires data sorted by the search key.",
       "correct": true,
-      "explanation": "Year 13 starting diagnostic revisiting previously taught Year 12 algorithms.",
+      "explanation": "Comparing the target with the middle element allows half of the remaining search interval to be discarded.",
       "diagnostic": true,
       "exceptionReason": "Year 13 course entry: prior Year 12 algorithm knowledge"
     },
@@ -667,10 +667,10 @@
         "L181"
       ],
       "previousTaughtLesson": "L181",
-      "statement": "A recursive algorithm never needs a base case.",
+      "statement": "A terminating recursive algorithm does not need a base case.",
       "correct": false,
-      "explanation": "A base case stops the recursive calls.",
-      "correction": "A base case stops the recursive calls."
+      "explanation": "A base case provides a stopping condition so that recursive calls terminate.",
+      "correction": "A base case provides a stopping condition so that recursive calls terminate."
     },
     "183": {
       "id": "H446-L183-Q1",
@@ -688,10 +688,10 @@
         "L183"
       ],
       "previousTaughtLesson": "L183",
-      "statement": "A recursive function can be debugged without checking its base case.",
+      "statement": "When debugging a recursive function, its base case never needs to be checked.",
       "correct": false,
-      "explanation": "An incorrect or unreachable base case can cause non-termination or wrong answers.",
-      "correction": "An incorrect or unreachable base case can cause non-termination or wrong answers."
+      "explanation": "An incorrect or unreachable base case can cause non-termination or an incorrect return value.",
+      "correction": "An incorrect or unreachable base case can cause non-termination or an incorrect return value."
     },
     "185": {
       "id": "H446-L185-Q1",
@@ -699,9 +699,9 @@
         "L184"
       ],
       "previousTaughtLesson": "L184",
-      "statement": "Ascending bubble sort moves the largest remaining value towards the end after a complete pass.",
+      "statement": "After a complete pass of ascending bubble sort, the largest remaining unsorted value is in its correct position.",
       "correct": true,
-      "explanation": "Out-of-order adjacent pairs are swapped."
+      "explanation": "Adjacent elements are swapped when the left element is greater than the right."
     },
     "186": {
       "id": "H446-L186-Q1",
@@ -709,10 +709,10 @@
         "L185"
       ],
       "previousTaughtLesson": "L185",
-      "statement": "Insertion sort always starts a new sorted list from scratch for every element.",
+      "statement": "Insertion sort rebuilds the entire sorted section from scratch for each new element.",
       "correct": false,
-      "explanation": "It grows an existing sorted prefix by inserting the next element.",
-      "correction": "It grows an existing sorted prefix by inserting the next element."
+      "explanation": "Insertion sort extends the existing sorted section by inserting the next element into its correct position.",
+      "correction": "Insertion sort extends the existing sorted section by inserting the next element into its correct position."
     },
     "187": {
       "id": "H446-L187-Q1",
@@ -751,10 +751,10 @@
         "L189"
       ],
       "previousTaughtLesson": "L189",
-      "statement": "An O(n) search generally grows more slowly than an O(log n) search for large n.",
+      "statement": "For large input sizes n, linear time complexity O(n) grows more slowly than logarithmic time complexity O(log n).",
       "correct": false,
-      "explanation": "Logarithmic growth is slower than linear growth.",
-      "correction": "Logarithmic growth is slower than linear growth."
+      "explanation": "Logarithmic growth is slower than linear growth as input size increases.",
+      "correction": "Logarithmic growth is slower than linear growth as input size increases."
     },
     "191": {
       "id": "H446-L191-Q1",
@@ -762,9 +762,9 @@
         "L190"
       ],
       "previousTaughtLesson": "L190",
-      "statement": "A local variable normally cannot be accessed outside the scope where it was declared.",
+      "statement": "A local variable can be accessed only within its scope.",
       "correct": true,
-      "explanation": "Scope determines which code can use the variable."
+      "explanation": "Scope defines the part of a program in which a variable can be accessed."
     },
     "192": {
       "id": "H446-L192-Q1",
@@ -772,10 +772,10 @@
         "L191"
       ],
       "previousTaughtLesson": "L191",
-      "statement": "A function that returns a value and a procedure that does not are identical in their return behaviour.",
+      "statement": "A function that returns a value and a procedure that returns no value have the same return behaviour.",
       "correct": false,
-      "explanation": "A function returns a result; a procedure-style routine does not.",
-      "correction": "A function returns a result; a procedure-style routine does not."
+      "explanation": "A function returns a result to the caller, whereas a procedure does not return a result.",
+      "correction": "A function returns a result to the caller, whereas a procedure does not return a result."
     },
     "193": {
       "id": "H446-L193-Q1",
@@ -783,9 +783,9 @@
         "L192"
       ],
       "previousTaughtLesson": "L192",
-      "statement": "Passing a variable by reference can allow a subroutine to change the caller's variable.",
+      "statement": "Passing a variable by reference allows a subroutine to modify the caller’s variable.",
       "correct": true,
-      "explanation": "By value instead provides a copy of the value."
+      "explanation": "Passing by reference gives access to the original variable; passing by value supplies a copy of its value."
     },
     "194": {
       "id": "H446-L194-Q1",
@@ -804,9 +804,9 @@
         "L194"
       ],
       "previousTaughtLesson": "L194",
-      "statement": "In normalised positive two's-complement floating point, the mantissa starts with 01.",
+      "statement": "A positive normalised two’s complement binary mantissa starts with the bits 01.",
       "correct": true,
-      "explanation": "The leading bits differ for negative normalised mantissas."
+      "explanation": "The sign bit is 0 and the first fractional bit is 1. A negative normalised mantissa starts with 10."
     },
     "196": {
       "id": "H446-L196-Q1",
@@ -825,9 +825,9 @@
         "L196"
       ],
       "previousTaughtLesson": "L196",
-      "statement": "A record can group named fields of different types.",
+      "statement": "A record can group named fields of different data types.",
       "correct": true,
-      "explanation": "Records differ from homogeneous arrays and positional tuples."
+      "explanation": "For example, a record can contain a string field and an integer field."
     },
     "198": {
       "id": "H446-L198-Q1",
@@ -835,10 +835,10 @@
         "L197"
       ],
       "previousTaughtLesson": "L197",
-      "statement": "A queue removes the last item inserted before older items.",
+      "statement": "A queue removes the most recently added element before any older elements.",
       "correct": false,
-      "explanation": "FIFO queues remove the earliest inserted item first.",
-      "correction": "FIFO queues remove the earliest inserted item first."
+      "explanation": "A queue uses first in, first out (FIFO). The earliest added element is removed first.",
+      "correction": "A queue uses first in, first out (FIFO). The earliest added element is removed first."
     },
     "199": {
       "id": "H446-L199-Q1",
@@ -856,10 +856,10 @@
         "L199"
       ],
       "previousTaughtLesson": "L199",
-      "statement": "In a binary search tree, values smaller than a node are always stored to its right.",
+      "statement": "In a binary search tree, keys smaller than a node’s key are stored in its right subtree.",
       "correct": false,
-      "explanation": "Standard BST ordering puts smaller values to the left.",
-      "correction": "Standard BST ordering puts smaller values to the left."
+      "explanation": "Smaller keys are stored in the left subtree; larger keys are stored in the right subtree.",
+      "correction": "Smaller keys are stored in the left subtree; larger keys are stored in the right subtree."
     },
     "201": {
       "id": "H446-L201-Q1",
@@ -877,10 +877,10 @@
         "L201"
       ],
       "previousTaughtLesson": "L201",
-      "statement": "Two different keys can never map to the same hash value.",
+      "statement": "A hash function cannot produce the same hash value for two different keys.",
       "correct": false,
-      "explanation": "A hash collision occurs when different keys share a bucket or hash.",
-      "correction": "A hash collision occurs when different keys share a bucket or hash."
+      "explanation": "A hash collision occurs when different keys produce the same hash value.",
+      "correction": "A hash collision occurs when different keys produce the same hash value."
     },
     "203": {
       "id": "H446-L203-Q1",
@@ -898,10 +898,10 @@
         "L203"
       ],
       "previousTaughtLesson": "L203",
-      "statement": "A Karnaugh-map group of four 1s must retain every variable in the resulting term.",
+      "statement": "A valid group of four 1s in a Karnaugh map retains every input variable in the simplified term.",
       "correct": false,
-      "explanation": "Variables that change inside a valid group can be eliminated.",
-      "correction": "Variables that change inside a valid group can be eliminated."
+      "explanation": "Input variables that change within the group are eliminated from the simplified term.",
+      "correction": "Input variables that change within the group are eliminated from the simplified term."
     },
     "205": {
       "id": "H446-L205-Q1",
@@ -940,10 +940,10 @@
         "L207"
       ],
       "previousTaughtLesson": "L207",
-      "statement": "An algorithm with O(n²) growth will normally scale better than O(n) for very large inputs.",
+      "statement": "For large input sizes n, quadratic time complexity O(n²) grows more slowly than linear time complexity O(n).",
       "correct": false,
-      "explanation": "Quadratic growth increases faster than linear growth.",
-      "correction": "Quadratic growth increases faster than linear growth."
+      "explanation": "Quadratic growth increases faster than linear growth as input size increases.",
+      "correction": "Quadratic growth increases faster than linear growth as input size increases."
     },
     "209": {
       "id": "H446-L209-Q1",
@@ -961,10 +961,10 @@
         "L209"
       ],
       "previousTaughtLesson": "L209",
-      "statement": "For raw image data, increasing colour depth always decreases the required file size.",
+      "statement": "Increasing colour depth decreases the size of uncompressed image data when the image dimensions remain unchanged.",
       "correct": false,
-      "explanation": "More bits per pixel increase uncompressed size for the same dimensions.",
-      "correction": "More bits per pixel increase uncompressed size for the same dimensions."
+      "explanation": "Colour depth is the number of bits per pixel. Increasing it increases the amount of uncompressed image data.",
+      "correction": "Colour depth is the number of bits per pixel. Increasing it increases the amount of uncompressed image data."
     },
     "211": {
       "id": "H446-L211-Q1",
@@ -993,9 +993,9 @@
         "L212"
       ],
       "previousTaughtLesson": "L212",
-      "statement": "Tracing an algorithm means updating the values in the order its instructions execute.",
+      "statement": "Tracing an algorithm requires variable values to be updated in the order in which instructions execute.",
       "correct": true,
-      "explanation": "This supports accurate Paper 2 exam answers."
+      "explanation": "A trace table records intermediate variable values and relevant outputs as the algorithm executes."
     },
     "214": {
       "id": "H446-L214-Q1",
@@ -1003,10 +1003,10 @@
         "L213"
       ],
       "previousTaughtLesson": "L213",
-      "statement": "A negative two's-complement number always starts with a zero sign bit.",
+      "statement": "A negative binary number represented using two’s complement has a sign bit of 0.",
       "correct": false,
-      "explanation": "The highest bit is 1 for negative two's-complement values.",
-      "correction": "The highest bit is 1 for negative two's-complement values."
+      "explanation": "The most significant bit is 1 for a negative two’s complement number.",
+      "correction": "The most significant bit is 1 for a negative two’s complement number."
     },
     "215": {
       "id": "H446-L215-Q1",
@@ -1035,9 +1035,9 @@
         "L216"
       ],
       "previousTaughtLesson": "L216",
-      "statement": "Quicksort uses a pivot to partition values into appropriate regions.",
+      "statement": "Quicksort partitions elements by comparing them with a selected pivot.",
       "correct": true,
-      "explanation": "Partitioning separates elements for the subsequent sorting work."
+      "explanation": "Partitioning creates smaller subproblems that can then be sorted recursively."
     },
     "218": {
       "id": "H446-L218-Q1",
@@ -1056,9 +1056,9 @@
         "L218"
       ],
       "previousTaughtLesson": "L218",
-      "statement": "Dijkstra's algorithm finds shortest paths under the usual non-negative-edge condition.",
+      "statement": "Dijkstra’s algorithm finds shortest paths in graphs with non-negative edge weights.",
       "correct": true,
-      "explanation": "Its greedy choice is valid for non-negative edge weights."
+      "explanation": "The algorithm repeatedly selects the unvisited reachable vertex with the smallest tentative distance."
     },
     "220": {
       "id": "H446-L220-Q1",
@@ -1066,10 +1066,10 @@
         "L219"
       ],
       "previousTaughtLesson": "L219",
-      "statement": "Dijkstra's algorithm can safely treat an unvisited node with the largest tentative distance as the next shortest.",
+      "statement": "Dijkstra’s algorithm selects the unvisited node with the largest tentative distance as its next node.",
       "correct": false,
-      "explanation": "It selects the smallest tentative distance among unvisited candidates.",
-      "correction": "It selects the smallest tentative distance among unvisited candidates."
+      "explanation": "It selects the unvisited reachable node with the smallest tentative distance.",
+      "correction": "It selects the unvisited reachable node with the smallest tentative distance."
     },
     "221": {
       "id": "H446-L221-Q1",
@@ -1077,9 +1077,9 @@
         "L220"
       ],
       "previousTaughtLesson": "L220",
-      "statement": "In A* search, f(n) = g(n) + h(n).",
+      "statement": "In A* search, the evaluation function is f(n) = g(n) + h(n).",
       "correct": true,
-      "explanation": "g is known cost so far; h estimates remaining cost."
+      "explanation": "g(n) is the cumulative path cost from the start node to n. h(n) is the estimated cost from n to the goal."
     },
     "222": {
       "id": "H446-L222-Q1",
@@ -1087,10 +1087,10 @@
         "L221"
       ],
       "previousTaughtLesson": "L221",
-      "statement": "A* is guaranteed to find an optimal route with any arbitrary overestimating heuristic.",
+      "statement": "A* search guarantees an optimal route even when its heuristic can arbitrarily overestimate the remaining path cost.",
       "correct": false,
-      "explanation": "Optimality requires suitable heuristic conditions, such as admissibility in standard settings.",
-      "correction": "Optimality requires suitable heuristic conditions, such as admissibility in standard settings."
+      "explanation": "An admissible heuristic never overestimates the true remaining cost. Optimality depends on the heuristic and the search implementation.",
+      "correction": "An admissible heuristic never overestimates the true remaining cost. Optimality depends on the heuristic and the search implementation."
     },
     "223": {
       "id": "H446-L223-Q1",
@@ -1098,9 +1098,9 @@
         "L222"
       ],
       "previousTaughtLesson": "L222",
-      "statement": "Algorithm choice should explain requirements and preconditions, not merely name the method.",
+      "statement": "Justifying the choice of an algorithm involves explaining how it meets the problem requirements and any necessary preconditions.",
       "correct": true,
-      "explanation": "For example, binary search needs sorted data."
+      "explanation": "For example, binary search requires data sorted by the search key."
     },
     "224": {
       "id": "H446-L224-Q1",
@@ -1119,9 +1119,9 @@
         "L224"
       ],
       "previousTaughtLesson": "L224",
-      "statement": "Inserting a smaller value into a binary search tree follows a left link from the comparison node.",
+      "statement": "When inserting a key into a binary search tree, a key smaller than the current node’s key is directed to the left subtree.",
       "correct": true,
-      "explanation": "Standard BST ordering places smaller values in the left subtree."
+      "explanation": "This preserves the binary search tree ordering property."
     },
     "226": {
       "id": "H446-L226-Q1",
@@ -1150,10 +1150,10 @@
         "L227"
       ],
       "previousTaughtLesson": "L227",
-      "statement": "An IDE's debugger can only show final output and cannot pause execution.",
+      "statement": "An IDE debugger can display final program output but cannot pause a running program.",
       "correct": false,
-      "explanation": "Debuggers support breakpoints, stepping and inspecting variables.",
-      "correction": "Debuggers support breakpoints, stepping and inspecting variables."
+      "explanation": "Breakpoints pause execution so that the programmer can inspect variables and step through instructions.",
+      "correction": "Breakpoints pause execution so that the programmer can inspect variables and step through instructions."
     },
     "229": {
       "id": "H446-L229-Q1",
@@ -1171,10 +1171,10 @@
         "L229"
       ],
       "previousTaughtLesson": "L229",
-      "statement": "Functional, procedural and object-oriented paradigms always structure programs identically.",
+      "statement": "Functional, procedural and object-oriented programming paradigms organise programs in exactly the same way.",
       "correct": false,
-      "explanation": "They organise state and computation in different ways.",
-      "correction": "They organise state and computation in different ways."
+      "explanation": "Functional programming emphasises functions, procedural programming uses procedures and functions, and object-oriented programming organises attributes and methods in objects.",
+      "correction": "Functional programming emphasises functions, procedural programming uses procedures and functions, and object-oriented programming organises attributes and methods in objects."
     },
     "231": {
       "id": "H446-L231-Q1",
