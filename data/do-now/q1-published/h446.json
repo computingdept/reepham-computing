@@ -2601,10 +2601,10 @@
         "L045"
       ],
       "previousTaughtLesson": "L045",
-      "statement": "A base case must make another recursive call.",
+      "statement": "The base case of a recursive function must make another recursive call.",
       "correct": false,
-      "explanation": "A base case stops further calls and returns a result.",
-      "correction": "A base case stops further calls and returns a result."
+      "explanation": "A base case terminates the recursion by returning without another recursive call.",
+      "correction": "A base case terminates the recursion by returning without another recursive call."
     },
     "047": {
       "id": "H446-L047-Q1",
@@ -2612,10 +2612,10 @@
         "L046"
       ],
       "previousTaughtLesson": "L046",
-      "statement": "A simple iterative loop normally creates a new call stack frame for every iteration.",
+      "statement": "Repeating a loop body creates a new call stack frame on every iteration, even when no function is called.",
       "correct": false,
-      "explanation": "Iteration repeats in the same call; recursion creates additional active calls.",
-      "correction": "Iteration repeats in the same call; recursion creates additional active calls."
+      "explanation": "Iteration repeats instructions within the current call. Recursive function calls create additional active stack frames.",
+      "correction": "Iteration repeats instructions within the current call. Recursive function calls create additional active stack frames."
     },
     "048": {
       "id": "H446-L048-Q1",
@@ -2634,10 +2634,10 @@
         "L048"
       ],
       "previousTaughtLesson": "L048",
-      "statement": "List<T>.RemoveAt removes the first element equal to a given value.",
+      "statement": "In C#, List<T>.RemoveAt removes the first element that matches a specified value.",
       "correct": false,
-      "explanation": "RemoveAt uses an index; Remove matches a value.",
-      "correction": "RemoveAt uses an index; Remove matches a value."
+      "explanation": "RemoveAt removes an element at a specified index. Remove removes the first occurrence of a specified value.",
+      "correction": "RemoveAt removes an element at a specified index. Remove removes the first occurrence of a specified value."
     },
     "050": {
       "id": "H446-L050-Q1",
@@ -2645,9 +2645,9 @@
         "L049"
       ],
       "previousTaughtLesson": "L049",
-      "statement": "Stack<T>.Pop removes the current top item.",
+      "statement": "In C#, Stack<T>.Pop removes the element at the top of a non-empty stack.",
       "correct": true,
-      "explanation": "A stack follows last-in, first-out."
+      "explanation": "A stack uses last in, first out (LIFO). Pop also returns the removed element."
     },
     "051": {
       "id": "H446-L051-Q1",
@@ -2665,10 +2665,10 @@
         "L051"
       ],
       "previousTaughtLesson": "L051",
-      "statement": "Every node of a linked list must occupy the next memory address after its predecessor.",
+      "statement": "Successive nodes in a linked list must occupy consecutive memory locations.",
       "correct": false,
-      "explanation": "Nodes are connected by references, not required to be consecutive in memory.",
-      "correction": "Nodes are connected by references, not required to be consecutive in memory."
+      "explanation": "Nodes are connected using pointers or references and do not need to occupy consecutive memory locations.",
+      "correction": "Nodes are connected using pointers or references and do not need to occupy consecutive memory locations."
     },
     "053": {
       "id": "H446-L053-Q1",
@@ -2676,9 +2676,9 @@
         "L052"
       ],
       "previousTaughtLesson": "L052",
-      "statement": "In a binary search tree, values smaller than a node belong to its left subtree.",
+      "statement": "In a binary search tree, keys smaller than a node’s key are stored in its left subtree.",
       "correct": true,
-      "explanation": "This ordering supports efficient directed searches in suitable trees."
+      "explanation": "Comparing the search key with a node’s key determines which subtree to search next."
     },
     "054": {
       "id": "H446-L054-Q1",
@@ -2686,9 +2686,9 @@
         "L053"
       ],
       "previousTaughtLesson": "L053",
-      "statement": "Breadth-first traversal of a graph typically uses a queue.",
+      "statement": "Breadth-first traversal of a graph can be implemented using a queue.",
       "correct": true,
-      "explanation": "FIFO order supports visiting nodes level by level."
+      "explanation": "A first-in, first-out (FIFO) queue allows vertices to be visited in order of increasing distance from the start vertex, measured in edges."
     },
     "055": {
       "id": "H446-L055-Q1",
@@ -2696,10 +2696,10 @@
         "L054"
       ],
       "previousTaughtLesson": "L054",
-      "statement": "A hash collision proves that two keys are identical.",
+      "statement": "A hash collision means that the two original keys must be identical.",
       "correct": false,
-      "explanation": "Different keys can map to the same hash bucket.",
-      "correction": "Different keys can map to the same hash bucket."
+      "explanation": "A hash collision occurs when different keys produce the same hash value or hash-table index.",
+      "correction": "A hash collision occurs when different keys produce the same hash value or hash-table index."
     },
     "056": {
       "id": "H446-L056-Q1",
@@ -2718,9 +2718,9 @@
         "L056"
       ],
       "previousTaughtLesson": "L056",
-      "statement": "Post-order tree traversal visits a node's children before the node itself.",
+      "statement": "Post-order tree traversal visits a node’s children before visiting the node itself.",
       "correct": true,
-      "explanation": "For a binary tree the typical order is left, right, root."
+      "explanation": "For a binary tree, post-order traversal visits the left subtree, right subtree and then the root."
     },
     "058": {
       "id": "H446-L058-Q1",
@@ -2738,10 +2738,10 @@
         "L058"
       ],
       "previousTaughtLesson": "L058",
-      "statement": "An exam answer choosing a data structure needs only its name, never a justification.",
+      "statement": "When an exam question asks you to justify a choice of data structure, naming the structure is sufficient.",
       "correct": false,
-      "explanation": "The required operations and scenario should justify the choice.",
-      "correction": "The required operations and scenario should justify the choice."
+      "explanation": "A justification must explain how the properties and operations of the data structure meet the requirements of the scenario.",
+      "correction": "A justification must explain how the properties and operations of the data structure meet the requirements of the scenario."
     },
     "060": {
       "id": "H446-L060-Q1",
@@ -2770,9 +2770,9 @@
         "L061"
       ],
       "previousTaughtLesson": "L061",
-      "statement": "A precondition states something that must hold before an operation can work correctly.",
+      "statement": "A precondition specifies a requirement that must be satisfied before an operation begins.",
       "correct": true,
-      "explanation": "It is checked before relying on the operation."
+      "explanation": "The algorithm assumes its preconditions are satisfied in order to operate correctly."
     },
     "063": {
       "id": "H446-L063-Q1",
@@ -2780,10 +2780,10 @@
         "L062"
       ],
       "previousTaughtLesson": "L062",
-      "statement": "Procedural thinking means the steps of a solution may be executed in any order.",
+      "statement": "Thinking procedurally means that the steps of an algorithm can be executed in any order.",
       "correct": false,
-      "explanation": "The order and dependencies of subtasks matter.",
-      "correction": "The order and dependencies of subtasks matter."
+      "explanation": "Thinking procedurally involves identifying the required steps and their order, taking dependencies into account.",
+      "correction": "Thinking procedurally involves identifying the required steps and their order, taking dependencies into account."
     },
     "064": {
       "id": "H446-L064-Q1",
@@ -2801,10 +2801,10 @@
         "L064"
       ],
       "previousTaughtLesson": "L064",
-      "statement": "Two tasks are independent when one must wait for the other's output.",
+      "statement": "Two tasks are independent when one task requires the output of the other before it can proceed.",
       "correct": false,
-      "explanation": "Independent tasks do not require that dependency before progressing.",
-      "correction": "Independent tasks do not require that dependency before progressing."
+      "explanation": "Independent tasks do not depend on each other’s results and may be executed concurrently.",
+      "correction": "Independent tasks do not depend on each other’s results and may be executed concurrently."
     },
     "066": {
       "id": "H446-L066-Q1",
@@ -2812,9 +2812,9 @@
         "L065"
       ],
       "previousTaughtLesson": "L065",
-      "statement": "A computational problem needs identifiable inputs, constraints and an assessable outcome.",
+      "statement": "Defining a computational problem involves identifying its inputs, constraints and required outcome.",
       "correct": true,
-      "explanation": "These features help define a problem that an algorithm can solve."
+      "explanation": "These requirements help determine what the algorithm must process and produce."
     },
     "067": {
       "id": "H446-L067-Q1",
@@ -2822,10 +2822,10 @@
         "L066"
       ],
       "previousTaughtLesson": "L066",
-      "statement": "Decomposition combines every subproblem into one unmanageable task.",
+      "statement": "Decomposition combines smaller tasks into a single, more complex problem.",
       "correct": false,
-      "explanation": "It divides a problem into smaller, more manageable parts.",
-      "correction": "It divides a problem into smaller, more manageable parts."
+      "explanation": "Decomposition breaks a complex problem into smaller, more manageable subproblems.",
+      "correction": "Decomposition breaks a complex problem into smaller, more manageable subproblems."
     },
     "068": {
       "id": "H446-L068-Q1",
@@ -2843,10 +2843,10 @@
         "L068"
       ],
       "previousTaughtLesson": "L068",
-      "statement": "Backtracking must keep exploring a branch after it has been shown invalid.",
+      "statement": "Backtracking continues exploring a branch after determining that it cannot lead to a valid solution.",
       "correct": false,
-      "explanation": "It can undo a choice and return to an earlier decision point.",
-      "correction": "It can undo a choice and return to an earlier decision point."
+      "explanation": "Backtracking abandons an unsuccessful branch and returns to an earlier decision point to try an alternative.",
+      "correction": "Backtracking abandons an unsuccessful branch and returns to an earlier decision point to try an alternative."
     },
     "070": {
       "id": "H446-L070-Q1",
@@ -2875,10 +2875,10 @@
         "L071"
       ],
       "previousTaughtLesson": "L071",
-      "statement": "Pipelining requires one task to finish every stage before the next task starts.",
+      "statement": "Pipelining requires one task to complete all its stages before the next task can begin.",
       "correct": false,
-      "explanation": "Different stages can work on different tasks concurrently.",
-      "correction": "Different stages can work on different tasks concurrently."
+      "explanation": "Pipelining overlaps stages so that different stages process different tasks at the same time.",
+      "correction": "Pipelining overlaps stages so that different stages process different tasks at the same time."
     },
     "073": {
       "id": "H446-L073-Q1",
@@ -2896,10 +2896,10 @@
         "L073"
       ],
       "previousTaughtLesson": "L073",
-      "statement": "A boundary test should use only values far away from the permitted limits.",
+      "statement": "Boundary testing uses only values well away from the permitted limits.",
       "correct": false,
-      "explanation": "Useful boundary tests include values at and just outside limits.",
-      "correction": "Useful boundary tests include values at and just outside limits."
+      "explanation": "Boundary test data includes values at and immediately either side of a permitted boundary.",
+      "correction": "Boundary test data includes values at and immediately either side of a permitted boundary."
     },
     "075": {
       "id": "H446-L075-Q1",
@@ -2907,9 +2907,9 @@
         "L074"
       ],
       "previousTaughtLesson": "L074",
-      "statement": "An O(log n) algorithm typically grows more slowly than an O(n) algorithm as n increases.",
+      "statement": "As input size n increases, logarithmic time complexity O(log n) grows more slowly than linear time complexity O(n).",
       "correct": true,
-      "explanation": "A logarithmic algorithm scales more slowly than a linear one."
+      "explanation": "Logarithmic growth increases more slowly than linear growth as input size increases."
     },
     "076": {
       "id": "H446-L076-Q1",
@@ -2917,10 +2917,10 @@
         "L075"
       ],
       "previousTaughtLesson": "L075",
-      "statement": "An O(n²) algorithm grows more slowly than an O(n) algorithm for sufficiently large n.",
+      "statement": "As input size n increases, quadratic time complexity O(n²) grows more slowly than linear time complexity O(n).",
       "correct": false,
-      "explanation": "Quadratic work grows faster than linear work as input size increases.",
-      "correction": "Quadratic work grows faster than linear work as input size increases."
+      "explanation": "Quadratic growth increases more rapidly than linear growth for large input sizes.",
+      "correction": "Quadratic growth increases more rapidly than linear growth for large input sizes."
     },
     "077": {
       "id": "H446-L077-Q1",
@@ -2928,9 +2928,9 @@
         "L076"
       ],
       "previousTaughtLesson": "L076",
-      "statement": "Algorithm choice may depend on both time complexity and available memory.",
+      "statement": "The choice of algorithm can depend on both time complexity and memory requirements.",
       "correct": true,
-      "explanation": "Space use, preconditions and input characteristics all matter."
+      "explanation": "Time complexity, space complexity, input characteristics and preconditions affect algorithm selection."
     },
     "078": {
       "id": "H446-L078-Q1",
@@ -2949,9 +2949,9 @@
         "L078"
       ],
       "previousTaughtLesson": "L078",
-      "statement": "Binary search can discard half of a sorted search interval after each comparison.",
+      "statement": "Binary search can eliminate approximately half of the remaining search interval after an unsuccessful comparison with the middle element.",
       "correct": true,
-      "explanation": "The direction of the comparison identifies the half to retain."
+      "explanation": "The comparison with the middle element determines which half of the sorted interval could contain the target."
     },
     "080": {
       "id": "H446-L080-Q1",
@@ -2970,9 +2970,9 @@
         "L080"
       ],
       "previousTaughtLesson": "L080",
-      "statement": "Insertion sort grows a sorted prefix by inserting the next item into its position.",
+      "statement": "Insertion sort builds a sorted section by inserting each successive element into its correct position.",
       "correct": true,
-      "explanation": "Earlier larger elements may be shifted to make space."
+      "explanation": "For ascending order, larger elements in the sorted section are shifted to make space for the next element."
     },
     "082": {
       "id": "H446-L082-Q1",
@@ -2980,10 +2980,10 @@
         "L081"
       ],
       "previousTaughtLesson": "L081",
-      "statement": "Merge sort combines two ordered lists by always taking their larger next element.",
+      "statement": "When merging two ascending sorted lists, merge sort repeatedly selects the larger of the two next available elements.",
       "correct": false,
-      "explanation": "Ascending merge chooses the smaller available next element.",
-      "correction": "Ascending merge chooses the smaller available next element."
+      "explanation": "To produce ascending order, select the smaller of the two next available elements.",
+      "correction": "To produce ascending order, select the smaller of the two next available elements."
     },
     "083": {
       "id": "H446-L083-Q1",
@@ -2991,9 +2991,9 @@
         "L082"
       ],
       "previousTaughtLesson": "L082",
-      "statement": "A quicksort partition puts elements on appropriate sides of a chosen pivot.",
+      "statement": "Quicksort partitions elements by comparing them with a selected pivot.",
       "correct": true,
-      "explanation": "Partitioning prepares the smaller subproblems for recursive sorting."
+      "explanation": "Partitioning separates the data into subproblems that can then be sorted recursively."
     },
     "084": {
       "id": "H446-L084-Q1",
@@ -3001,10 +3001,10 @@
         "L083"
       ],
       "previousTaughtLesson": "L083",
-      "statement": "Dijkstra's algorithm guarantees correct shortest paths with arbitrary negative edge weights.",
+      "statement": "Standard Dijkstra’s algorithm is guaranteed to find correct shortest paths in a graph containing negative edge weights.",
       "correct": false,
-      "explanation": "Standard Dijkstra assumes non-negative edge weights.",
-      "correction": "Standard Dijkstra assumes non-negative edge weights."
+      "explanation": "Standard Dijkstra’s algorithm requires non-negative edge weights.",
+      "correction": "Standard Dijkstra’s algorithm requires non-negative edge weights."
     },
     "085": {
       "id": "H446-L085-Q1",
@@ -3012,9 +3012,9 @@
         "L084"
       ],
       "previousTaughtLesson": "L084",
-      "statement": "In A* search, the score f is calculated from g plus h.",
+      "statement": "In A* search, the evaluation function is f(n) = g(n) + h(n).",
       "correct": true,
-      "explanation": "g is the cost so far and h estimates the remaining cost."
+      "explanation": "g(n) is the cumulative path cost from the start node to n. h(n) is the estimated cost from n to the goal."
     },
     "086": {
       "id": "H446-L086-Q1",
@@ -3022,10 +3022,10 @@
         "L085"
       ],
       "previousTaughtLesson": "L085",
-      "statement": "A sorting algorithm and a shortest-path algorithm solve exactly the same problem.",
+      "statement": "A sorting algorithm and a shortest-path algorithm have the same purpose.",
       "correct": false,
-      "explanation": "Sorting orders items; pathfinding seeks routes or costs through a graph.",
-      "correction": "Sorting orders items; pathfinding seeks routes or costs through a graph."
+      "explanation": "Sorting arranges data in order; a shortest-path algorithm finds a minimum-cost path through a graph.",
+      "correction": "Sorting arranges data in order; a shortest-path algorithm finds a minimum-cost path through a graph."
     },
     "087": {
       "id": "H446-L087-Q1",
@@ -3043,10 +3043,10 @@
         "L087"
       ],
       "previousTaughtLesson": "L087",
-      "statement": "A well-designed algorithm needs no tests if the pseudocode looks correct.",
+      "statement": "An algorithm does not need testing if its pseudocode appears to be correct.",
       "correct": false,
-      "explanation": "Normal, boundary and invalid cases should still be tested.",
-      "correction": "Normal, boundary and invalid cases should still be tested."
+      "explanation": "Testing with appropriate normal, boundary and invalid data can identify errors that inspection alone may miss.",
+      "correction": "Testing with appropriate normal, boundary and invalid data can identify errors that inspection alone may miss."
     },
     "089": {
       "id": "H446-L089-Q1",
@@ -3064,10 +3064,10 @@
         "L089"
       ],
       "previousTaughtLesson": "L089",
-      "statement": "The CPU control unit performs arithmetic calculations instead of the ALU.",
+      "statement": "The control unit (CU), rather than the arithmetic logic unit (ALU), performs arithmetic calculations.",
       "correct": false,
-      "explanation": "The ALU handles arithmetic and logic; the control unit coordinates operations.",
-      "correction": "The ALU handles arithmetic and logic; the control unit coordinates operations."
+      "explanation": "The ALU performs arithmetic and logical operations. The CU coordinates instruction execution.",
+      "correction": "The ALU performs arithmetic and logical operations. The CU coordinates instruction execution."
     },
     "091": {
       "id": "H446-L091-Q1",
@@ -3085,10 +3085,10 @@
         "L091"
       ],
       "previousTaughtLesson": "L091",
-      "statement": "The data bus carries memory addresses while the address bus carries values.",
+      "statement": "The data bus transfers memory addresses and the address bus transfers data values.",
       "correct": false,
-      "explanation": "The address bus carries addresses and the data bus carries data.",
-      "correction": "The address bus carries addresses and the data bus carries data."
+      "explanation": "The address bus carries addresses; the data bus carries data and instructions.",
+      "correction": "The address bus carries addresses; the data bus carries data and instructions."
     },
     "093": {
       "id": "H446-L093-Q1",
@@ -3096,9 +3096,9 @@
         "L092"
       ],
       "previousTaughtLesson": "L092",
-      "statement": "Harvard architecture has separate instruction and data memory paths.",
+      "statement": "Harvard architecture uses separate memories and buses for instructions and data.",
       "correct": true,
-      "explanation": "This contrasts with the shared-memory organisation of von Neumann architecture."
+      "explanation": "Von Neumann architecture uses a shared memory for instructions and data."
     },
     "094": {
       "id": "H446-L094-Q1",
@@ -3106,10 +3106,10 @@
         "L093"
       ],
       "previousTaughtLesson": "L093",
-      "statement": "Doubling a processor's clock speed guarantees twice the performance on every task.",
+      "statement": "Doubling a processor’s clock speed always halves the execution time of every program.",
       "correct": false,
-      "explanation": "Core count, cache, instruction mix and other factors also affect performance.",
-      "correction": "Core count, cache, instruction mix and other factors also affect performance."
+      "explanation": "Execution time also depends on factors such as the instruction count, cycles per instruction and memory delays.",
+      "correction": "Execution time also depends on factors such as the instruction count, cycles per instruction and memory delays."
     },
     "095": {
       "id": "H446-L095-Q1",
