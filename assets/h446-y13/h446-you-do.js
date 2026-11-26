@@ -13,6 +13,12 @@
     }
     return groups;
   }
+  // Shared screen-fit test: use the actual scrollable boxes, not a second
+  // arbitrary gap inside a card. Both courses use this same tolerance.
+  function boxesFit(boxes){
+    return Array.from(boxes).every(box=>box&&box.clientHeight>0&&box.clientWidth>0&&
+      box.scrollHeight<=box.clientHeight+4&&box.scrollWidth<=box.clientWidth+4);
+  }
   // Shared pure grouping policy; course-specific controllers keep their own DOM.
   function commandRanges(plain,explicit){
     const command='Analyse|Annotate|Assess|Calculate|Compare|Complete|Construct|Convert|Define|Describe|Design|Determine|Discuss|Draw|Evaluate|Explain|Give|Identify|Illustrate|Justify|Label|List|Name|Outline|Predict|Recommend|Show|Simplify|Sketch|State|Suggest|Trace|Write|Perform|Normalise|Select|Tick|Order|Solve|Add|Modify|Correct|Use';
@@ -33,7 +39,7 @@
     }
     return matches;
   }
-  window.RHSYouDoLayout=Object.freeze({selectGroups,commandRanges});
+  window.RHSYouDoLayout=Object.freeze({selectGroups,commandRanges,boxesFit});
   if(!/^\/lessons\/h446\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname))return;
   const root=document.querySelector('#you-do[data-h446-two-page-pilot="true"]');
   if(!root)return;
@@ -122,17 +128,8 @@
       root.dataset.h446GroupCount=String(size);
       questions.forEach((q,i)=>{q.hidden=i<start||i>=start+size;if(state[i].answer)state[i].answer.hidden=true;});
       const deck=root.querySelector('.youdo-questions');
-      if(!deck||deck.clientHeight<=0||deck.clientWidth<=0)return false;
       const visible=questions.slice(start,start+size);
-      if(deck.scrollHeight>deck.clientHeight+4||deck.scrollWidth>deck.clientWidth+4)return false;
-      return visible.every(q=>{
-        const p=q.querySelector('.youdo-question-prompt');
-        const usable=el=>!!el&&el.clientHeight>0&&el.clientWidth>0&&el.scrollHeight<=el.clientHeight+3&&el.scrollWidth<=el.clientWidth+3;
-        if(!usable(q)||!usable(p))return false;
-        const bounds=q.getBoundingClientRect();
-        const content=p.getBoundingClientRect();
-        return content.bottom<=bounds.bottom-6&&content.right<=bounds.right+1;
-      });
+      return boxesFit([deck,...visible]);
     }finally{
       keys.forEach((k,i)=>{if(previous[i]===undefined)delete root.dataset[k];else root.dataset[k]=previous[i];});
       questions.forEach((q,i)=>{q.hidden=state[i].hidden;if(state[i].answer)state[i].answer.hidden=state[i].answerHidden;});
@@ -184,6 +181,27 @@
     if(root.classList.contains('active')&&root.dataset.answerMode!=='true'){
       h446ShowQuestionSheet(root,0);
       updateControl();
+    }
+    // Like J277, settle the initial grouping after the phase is visible and
+    // the classroom header has updated. Never regroup during self-marking.
+    if(!authored){
+      let settled=false,scheduled=false;
+      const settle=()=>{
+        scheduled=false;
+        if(settled||!root.classList.contains('active')||!root.clientWidth||!root.clientHeight)return;
+        if(root.dataset.answerMode==='true'||Number(root.dataset.h446GroupStart||0)!==0)return;
+        settled=true;observer.disconnect();
+        groups=null;
+        h446ShowQuestionSheet(root,0);
+        updateControl();
+      };
+      const queue=()=>{
+        if(settled||scheduled)return;
+        scheduled=true;requestAnimationFrame(settle);
+      };
+      const observer=new MutationObserver(queue);
+      observer.observe(root,{attributes:true,attributeFilter:['class']});
+      queue();
     }
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',installGroups,{once:true});
