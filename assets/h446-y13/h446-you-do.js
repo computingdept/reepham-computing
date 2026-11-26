@@ -39,7 +39,38 @@
     }
     return matches;
   }
-  window.RHSYouDoLayout=Object.freeze({selectGroups,commandRanges,boxesFit});
+  // Only split explicitly credited prose when the sum matches the question's
+  // published total. Never infer marks from punctuation or level-based schemes.
+  function creditedPoints(value,total){
+    if(!Number.isInteger(total)||total<1)return null;
+    let source=String(value??'').trim();
+    if(/\r|\n/.test(source))return null;
+    const prefix=source.match(/^\[(\d+)\]\s+/);
+    if(prefix){
+      if(Number(prefix[1])!==total)return null;
+      source=source.slice(prefix[0].length);
+    }
+    const points=[];let previous=0;
+    for(const match of source.matchAll(/\s+\[([1-9]\d*)\](?=\s|[;,.!?]|$)/g)){
+      const chunk=source.slice(previous,match.index).trim();
+      const label=points.length?chunk.replace(/^[;,.!?]\s*/, ''):chunk;
+      if(!label||/\[\d+\]/.test(label))return null;
+      points.push({text:label,marks:Number(match[1])});
+      previous=match.index+match[0].length;
+    }
+    const tail=source.slice(previous).trim();
+    if(tail&&!/^[.!?;]$/.test(tail))return null;
+    if(!points.length||points.reduce((sum,p)=>sum+p.marks,0)!==total)return null;
+    return points;
+  }
+  function creditedMarkup(value,total){
+    const points=creditedPoints(value,total);
+    if(!points)return null;
+    const esc=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    return '<ul class="rhs-credited-points">'+points.map(p=>
+      '<li><span class="rhs-credited-text">'+esc(p.text)+'</span><span class="rhs-credited-mark">['+p.marks+']</span></li>').join('')+'</ul>';
+  }
+  window.RHSYouDoLayout=Object.freeze({selectGroups,commandRanges,boxesFit,creditedPoints,creditedMarkup});
   if(!/^\/lessons\/h446\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname))return;
   const root=document.querySelector('#you-do[data-h446-two-page-pilot="true"]');
   if(!root)return;
@@ -89,6 +120,20 @@
       }
     }
     markQuestion(heading);
+  });
+
+  // Format existing credited model-answer prose without changing the stored
+  // question or marking scheme. Leave rich markup and specialist lists intact.
+  root.querySelectorAll('.youdo-solution').forEach(solution=>{
+    const header=solution.querySelector(':scope > strong:first-child');
+    const match=header?.textContent.match(/\b(\d+)\s*marks?\b/i);
+    if(!match)return;
+    const paragraphs=solution.querySelectorAll(':scope > p.rhs-y13-answer, :scope > p.y13-rhs-answer');
+    if(paragraphs.length!==1||paragraphs[0].children.length)return;
+    const markup=creditedMarkup(paragraphs[0].textContent,Number(match[1]));
+    if(!markup)return;
+    paragraphs[0].insertAdjacentHTML('beforebegin',markup);
+    paragraphs[0].remove();
   });
 
   // Only shared exam decks are affected. Retain the previously approved

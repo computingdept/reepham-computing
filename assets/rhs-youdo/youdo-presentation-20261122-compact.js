@@ -129,8 +129,10 @@
     return '<div class="rhs-y-question"><p>'+examTaskText(parts[0]).replace(/\n/g,"<br />")+
       '</p>'+(parts[1]?'<small>'+escapeHtml("Source: "+parts.slice(1).join(" Source: "))+'</small>':"")+'</div>';
   }
-  function markFromText(text){
+  function markFromText(text,total){
     var s=String(text||"");
+    var shared=global.RHSYouDoLayout?.creditedMarkup(s,total);
+    if(shared)return shared;
     // Existing [1], [2] or [4] tokens are part of the authored mark scheme.
     // Divide only for presentation; never change the text or its credit.
     var matches=s.match(/(?:[\s\S]*?\[\d+\])(?:\s+|$)|[\s\S]+$/g)||[s];
@@ -283,7 +285,7 @@
         '<div class="rhs-j277-answer-layout">'+questionText(q.question)+'<div class="rhs-y-review-body'+(q.visual?' rhs-y-with-visual':'')+'">'+
         (q.visual?'<div class="rhs-y-visual">'+q.visual+'</div>':"")+
         '<div class="rhs-y-model">'+shortLabel("MODEL ANSWER · MARKING POINTS")+
-        markFromText(q.answer)+'</div></div></div>',
+        markFromText(q.answer,marks)+'</div></div></div>',
         "rhs-y-mark-stage"));
     });
     var installed=prepareHost(host,container,stages,3);
