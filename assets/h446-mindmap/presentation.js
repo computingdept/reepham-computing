@@ -248,7 +248,7 @@ function slideBody(s){
    content='<p>'+escapeHtml(q.text)+'</p>';
    if(mcq)content+='<ol class="q2-options" aria-label="Four multiple-choice answers">'+q.options.map((option,n)=>'<li><span>'+"ABCD"[n]+'</span>'+escapeHtml(option)+'</li>').join('')+'</ol>';
   }
-  return '<article class="q-card '+(s.type==="answers"?"answer":"")+'"><div class="num">'+escapeHtml(q.label)+'</div>'+content+'</article>';
+  return '<article class="q-card '+(s.type==="answers"?"answer":"")+'"><div class="num">'+escapeHtml(q.label.replace(/ · (?:TAUGHT · )?L\d{3}(?: \+ L\d{3})*$/,''))+'</div>'+content+'</article>';
  }).join("")+'</div>';
  if(s.type==="map")return '<div class="map-stage"><div class="map-panel">'+mapSVG(s.level,s.focus)+'</div><div class="map-caption"><span>ONE A3 LANDSCAPE SHEET · '+(lesson===36?"BUILD THE FIRST TWO BRANCHES":"CONTINUE THE SAME SHEET")+'</span><strong>'+escapeHtml(s.caption)+'</strong></div></div>';
  if(s.type==="model"){
