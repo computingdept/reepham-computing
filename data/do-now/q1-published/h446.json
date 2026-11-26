@@ -2127,9 +2127,9 @@
         "KS4-prior-learning"
       ],
       "previousTaughtLesson": null,
-      "statement": "A whole-number count is suitably stored as an integer rather than a real number.",
+      "statement": "An integer is a suitable data type for storing the number of pupils in a class.",
       "correct": true,
-      "explanation": "An integer represents whole numbers; this is a GCSE diagnostic before H446 begins.",
+      "explanation": "An integer stores whole-number values without a fractional part.",
       "diagnostic": true,
       "exceptionReason": "Course entry: prior GCSE knowledge"
     },
@@ -2160,10 +2160,10 @@
         "L003"
       ],
       "previousTaughtLesson": "L003",
-      "statement": "A logical right shift discards the leftmost bit.",
+      "statement": "A logical right shift of an unsigned binary number discards its leftmost bit.",
       "correct": false,
-      "explanation": "A right shift discards the rightmost bit and moves the remaining bits right.",
-      "correction": "A right shift discards the rightmost bit and moves the remaining bits right."
+      "explanation": "A logical right shift discards the least significant bit on the right and inserts a 0 at the most significant position.",
+      "correction": "A logical right shift discards the least significant bit on the right and inserts a 0 at the most significant position."
     },
     "005": {
       "id": "H446-L005-Q1",
@@ -2171,9 +2171,9 @@
         "L004"
       ],
       "previousTaughtLesson": "L004",
-      "statement": "A positive normalised two's-complement binary mantissa begins 01.",
+      "statement": "A positive normalised two’s complement binary mantissa starts with the bits 01.",
       "correct": true,
-      "explanation": "In the H446 convention a positive normalised mantissa starts 0.1 in binary."
+      "explanation": "The sign bit is 0 and the first fractional bit is 1 (0.1 in binary)."
     },
     "006": {
       "id": "H446-L006-Q1",
@@ -2181,10 +2181,10 @@
         "L005"
       ],
       "previousTaughtLesson": "L005",
-      "statement": "A floating-point exponent is added to the mantissa to obtain the stored value.",
+      "statement": "A binary floating-point value is calculated by adding the exponent to the mantissa.",
       "correct": false,
-      "explanation": "The value is the mantissa multiplied by 2 raised to the exponent.",
-      "correction": "The value is the mantissa multiplied by 2 raised to the exponent."
+      "explanation": "Multiply the mantissa by 2 raised to the power of the exponent.",
+      "correction": "Multiply the mantissa by 2 raised to the power of the exponent."
     },
     "007": {
       "id": "H446-L007-Q1",
@@ -2192,9 +2192,9 @@
         "L006"
       ],
       "previousTaughtLesson": "L006",
-      "statement": "Two floating-point mantissas should be aligned to the same exponent before addition.",
+      "statement": "Before adding two binary floating-point numbers, their mantissas must be expressed using the same exponent.",
       "correct": true,
-      "explanation": "Matching exponents makes their binary place values line up."
+      "explanation": "Aligning the exponents gives corresponding mantissa bits the same place values."
     },
     "008": {
       "id": "H446-L008-Q1",
@@ -2202,10 +2202,10 @@
         "L007"
       ],
       "previousTaughtLesson": "L007",
-      "statement": "Floating-point subtraction can directly combine mantissas with different exponents.",
+      "statement": "Binary floating-point mantissas with different exponents can be subtracted without aligning their exponents.",
       "correct": false,
-      "explanation": "The exponents must first be aligned, then the mantissas can be subtracted.",
-      "correction": "The exponents must first be aligned, then the mantissas can be subtracted."
+      "explanation": "Express both mantissas using the same exponent before subtracting them.",
+      "correction": "Express both mantissas using the same exponent before subtracting them."
     },
     "009": {
       "id": "H446-L009-Q1",
@@ -2213,9 +2213,9 @@
         "L008"
       ],
       "previousTaughtLesson": "L008",
-      "statement": "Unicode represents a wider range of writing systems than standard ASCII.",
+      "statement": "Unicode can represent characters from more writing systems than standard 7-bit ASCII.",
       "correct": true,
-      "explanation": "ASCII has a small character set; Unicode supports many languages and symbols."
+      "explanation": "Standard ASCII defines 128 characters. Unicode defines a much larger character repertoire."
     },
     "010": {
       "id": "H446-L010-Q1",
@@ -2223,10 +2223,10 @@
         "L009"
       ],
       "previousTaughtLesson": "L009",
-      "statement": "In C#, both branches of an if–else statement execute on every run.",
+      "statement": "In a C# if–else statement, both the if block and the else block execute for the same condition test.",
       "correct": false,
-      "explanation": "Only the branch selected by the condition executes.",
-      "correction": "Only the branch selected by the condition executes."
+      "explanation": "Selection executes the if block when the condition is true and the else block when it is false.",
+      "correction": "Selection executes the if block when the condition is true and the else block when it is false."
     },
     "011": {
       "id": "H446-L011-Q1",
@@ -2234,9 +2234,9 @@
         "L010"
       ],
       "previousTaughtLesson": "L010",
-      "statement": "A while loop can repeat until its condition becomes false.",
+      "statement": "A C# while loop repeats while its condition evaluates to true.",
       "correct": true,
-      "explanation": "The condition controls whether another iteration runs."
+      "explanation": "The condition is tested before each iteration. When it evaluates to false, the loop terminates."
     },
     "012": {
       "id": "H446-L012-Q1",
@@ -2255,9 +2255,9 @@
         "L012"
       ],
       "previousTaughtLesson": "L012",
-      "statement": "A local variable is normally accessible only inside its declaring scope.",
+      "statement": "A local variable in C# can be accessed only within its scope.",
       "correct": true,
-      "explanation": "Scope limits where a variable can be read or changed."
+      "explanation": "Scope defines the part of a program in which a variable can be accessed."
     },
     "014": {
       "id": "H446-L014-Q1",
@@ -2265,10 +2265,10 @@
         "L013"
       ],
       "previousTaughtLesson": "L013",
-      "statement": "In a sequence of instructions, their execution order cannot change the outcome.",
+      "statement": "Changing the order of statements in a sequence can never affect the program’s result.",
       "correct": false,
-      "explanation": "Statements in sequence run in order; changing that order may change state.",
-      "correction": "Statements in sequence run in order; changing that order may change state."
+      "explanation": "Sequence executes statements in order. Changing that order can change variable values and the result.",
+      "correction": "Sequence executes statements in order. Changing that order can change variable values and the result."
     },
     "015": {
       "id": "H446-L015-Q1",
@@ -2276,9 +2276,9 @@
         "L014"
       ],
       "previousTaughtLesson": "L014",
-      "statement": "A loop can redraw a noughts-and-crosses board after each turn.",
+      "statement": "Iteration can be used to redraw a noughts-and-crosses board after each turn.",
       "correct": true,
-      "explanation": "Iteration avoids writing the same board-display steps repeatedly."
+      "explanation": "A loop can repeat the instructions that display the board instead of duplicating those instructions."
     },
     "016": {
       "id": "H446-L016-Q1",
@@ -2286,10 +2286,10 @@
         "L015"
       ],
       "previousTaughtLesson": "L015",
-      "statement": "In the modelled MakeMove() method, a successful move returns false.",
+      "statement": "In the C# noughts-and-crosses MakeMove() method from Lesson 15, a successful move returns false.",
       "correct": false,
-      "explanation": "A successful move returns true; false indicates failure.",
-      "correction": "A successful move returns true; false indicates failure."
+      "explanation": "MakeMove() returns true for a successful move and false for an invalid move.",
+      "correction": "MakeMove() returns true for a successful move and false for an invalid move."
     },
     "017": {
       "id": "H446-L017-Q1",
@@ -2297,9 +2297,9 @@
         "L016"
       ],
       "previousTaughtLesson": "L016",
-      "statement": "A valid move in a turn-based game should update the board's stored state.",
+      "statement": "A valid move in noughts and crosses requires the stored board state to be updated.",
       "correct": true,
-      "explanation": "The new state allows subsequent turns and win checks to use the updated board."
+      "explanation": "The updated state is used when checking for a win or draw and processing subsequent moves."
     },
     "018": {
       "id": "H446-L018-Q1",
@@ -2328,10 +2328,10 @@
         "L019"
       ],
       "previousTaughtLesson": "L019",
-      "statement": "Following pointers in a linked list always requires consecutive array positions.",
+      "statement": "In an array-based linked list, successive nodes must occupy consecutive array indexes.",
       "correct": false,
-      "explanation": "Nodes are followed using their links, not necessarily neighbouring physical positions.",
-      "correction": "Nodes are followed using their links, not necessarily neighbouring physical positions."
+      "explanation": "Each node stores a pointer to the next node’s index. The nodes need not occupy consecutive indexes.",
+      "correction": "Each node stores a pointer to the next node’s index. The nodes need not occupy consecutive indexes."
     },
     "021": {
       "id": "H446-L021-Q1",
@@ -2339,10 +2339,10 @@
         "L020"
       ],
       "previousTaughtLesson": "L020",
-      "statement": "A queue removes the most recently added item first.",
+      "statement": "A queue removes the most recently added element first.",
       "correct": false,
-      "explanation": "A queue uses first-in, first-out; a stack uses last-in, first-out.",
-      "correction": "A queue uses first-in, first-out; a stack uses last-in, first-out."
+      "explanation": "A queue uses first in, first out (FIFO). A stack uses last in, first out (LIFO).",
+      "correction": "A queue uses first in, first out (FIFO). A stack uses last in, first out (LIFO)."
     },
     "022": {
       "id": "H446-L022-Q1",
@@ -2360,10 +2360,10 @@
         "L022"
       ],
       "previousTaughtLesson": "L022",
-      "statement": "In a binary search tree, values smaller than a node are placed in its right subtree.",
+      "statement": "In a binary search tree ordered by ascending key, a node’s smaller keys are stored in its right subtree.",
       "correct": false,
-      "explanation": "Smaller values go left; larger values go right under the standard ordering rule.",
-      "correction": "Smaller values go left; larger values go right under the standard ordering rule."
+      "explanation": "Smaller keys are stored in the left subtree and larger keys in the right subtree.",
+      "correction": "Smaller keys are stored in the left subtree and larger keys in the right subtree."
     },
     "024": {
       "id": "H446-L024-Q1",
@@ -2371,9 +2371,9 @@
         "L023"
       ],
       "previousTaughtLesson": "L023",
-      "statement": "Two different keys can produce the same hash-table bucket.",
+      "statement": "A hash function can map two different keys to the same index in a hash table.",
       "correct": true,
-      "explanation": "This is a collision, which needs a defined handling method."
+      "explanation": "This is a hash collision and requires a collision-resolution method."
     },
     "025": {
       "id": "H446-L025-Q1",
@@ -2381,10 +2381,10 @@
         "L024"
       ],
       "previousTaughtLesson": "L024",
-      "statement": "The best data structure is always the one that uses the least memory.",
+      "statement": "The only factor when choosing a data structure is its memory usage.",
       "correct": false,
-      "explanation": "The required operations, access patterns, speed and memory all affect the choice.",
-      "correction": "The required operations, access patterns, speed and memory all affect the choice."
+      "explanation": "The required operations, access patterns, time complexity and memory usage all affect the choice.",
+      "correction": "The required operations, access patterns, time complexity and memory usage all affect the choice."
     },
     "026": {
       "id": "H446-L026-Q1",
@@ -2392,9 +2392,9 @@
         "L025"
       ],
       "previousTaughtLesson": "L025",
-      "statement": "Binary search relies on the search data being sorted.",
+      "statement": "Binary search requires the data to be sorted by the search key.",
       "correct": true,
-      "explanation": "Ordering makes it valid to discard half of the remaining search range."
+      "explanation": "Comparing the target with the middle element allows half of the remaining search range to be discarded."
     },
     "027": {
       "id": "H446-L027-Q1",
@@ -2402,10 +2402,10 @@
         "L026"
       ],
       "previousTaughtLesson": "L026",
-      "statement": "An AND gate outputs 1 whenever either input is 1.",
+      "statement": "A two-input AND gate outputs 1 when at least one input is 1.",
       "correct": false,
-      "explanation": "AND outputs 1 only when both inputs are 1.",
-      "correction": "AND outputs 1 only when both inputs are 1."
+      "explanation": "An AND gate outputs 1 only when both inputs are 1.",
+      "correction": "An AND gate outputs 1 only when both inputs are 1."
     },
     "028": {
       "id": "H446-L028-Q1",
@@ -2423,9 +2423,9 @@
         "L028"
       ],
       "previousTaughtLesson": "L028",
-      "statement": "Horizontally or vertically adjacent Karnaugh-map cells differ in one input bit.",
+      "statement": "Horizontally or vertically adjacent cells in a Karnaugh map differ in the value of exactly one input variable.",
       "correct": true,
-      "explanation": "This allows a changing variable to be eliminated when adjacent 1s are grouped."
+      "explanation": "When adjacent 1s form a valid group, the variable that changes can be eliminated from the Boolean expression."
     },
     "030": {
       "id": "H446-L030-Q1",
@@ -2433,10 +2433,10 @@
         "L029"
       ],
       "previousTaughtLesson": "L029",
-      "statement": "Grouping four adjacent 1s in a Karnaugh map always retains every input variable.",
+      "statement": "Grouping four adjacent 1s in a valid Karnaugh map group retains every input variable in the resulting term.",
       "correct": false,
-      "explanation": "Variables that change within a valid group are removed from the simplified term.",
-      "correction": "Variables that change within a valid group are removed from the simplified term."
+      "explanation": "Input variables that change within the group are eliminated; only those with constant values are retained.",
+      "correction": "Input variables that change within the group are eliminated; only those with constant values are retained."
     },
     "031": {
       "id": "H446-L031-Q1",
@@ -2444,9 +2444,9 @@
         "L030"
       ],
       "previousTaughtLesson": "L030",
-      "statement": "A full adder includes a carry-in as well as the two main input bits.",
+      "statement": "A full adder has two data inputs and a carry-in input.",
       "correct": true,
-      "explanation": "It produces a sum bit and a carry-out bit."
+      "explanation": "It produces two outputs: a sum bit and a carry-out bit."
     },
     "032": {
       "id": "H446-L032-Q1",
@@ -2454,10 +2454,10 @@
         "L031"
       ],
       "previousTaughtLesson": "L031",
-      "statement": "A rising-edge D-type flip-flop changes Q continuously whenever D changes.",
+      "statement": "The output Q of a rising-edge-triggered D-type flip-flop changes whenever input D changes.",
       "correct": false,
-      "explanation": "It samples D on the active clock edge and holds Q between clock events.",
-      "correction": "It samples D on the active clock edge and holds Q between clock events."
+      "explanation": "Q takes the value of D at the rising clock edge and retains that value between rising edges.",
+      "correction": "Q takes the value of D at the rising clock edge and retains that value between rising edges."
     },
     "033": {
       "id": "H446-L033-Q1",
@@ -2465,9 +2465,9 @@
         "L032"
       ],
       "previousTaughtLesson": "L032",
-      "statement": "A login routine can validate that a username is not empty before checking credentials.",
+      "statement": "A presence check can reject an empty username before authentication.",
       "correct": true,
-      "explanation": "Input validation can reject a blank username before authentication logic runs."
+      "explanation": "A presence check is input validation that checks whether a required value has been entered."
     },
     "034": {
       "id": "H446-L034-Q1",
@@ -2475,10 +2475,10 @@
         "L033"
       ],
       "previousTaughtLesson": "L033",
-      "statement": "Linear probing must stop permanently when a collision occurs in the final bucket.",
+      "statement": "During linear probing, reaching the last index of a hash table prevents probing any further indexes.",
       "correct": false,
-      "explanation": "Probing can wrap to bucket 0 when searching for another available location.",
-      "correction": "Probing can wrap to bucket 0 when searching for another available location."
+      "explanation": "Linear probing can wrap from the last index to index 0 to continue searching for a suitable location.",
+      "correction": "Linear probing can wrap from the last index to index 0 to continue searching for a suitable location."
     },
     "035": {
       "id": "H446-L035-Q1",
@@ -2486,9 +2486,9 @@
         "L034"
       ],
       "previousTaughtLesson": "L034",
-      "statement": "Testing a completed login project should include invalid as well as valid inputs.",
+      "statement": "A login program should be tested using both valid and invalid input data.",
       "correct": true,
-      "explanation": "Invalid-input cases can expose faults missed by successful login tests."
+      "explanation": "Invalid test data checks that the program rejects unsuitable input and handles it correctly."
     },
     "036": {
       "id": "H446-L036-Q1",
@@ -2496,9 +2496,9 @@
         "L035"
       ],
       "previousTaughtLesson": "L035",
-      "statement": "Showing the steps of a calculation can reveal an error even when its final answer is wrong.",
+      "statement": "Showing the intermediate steps of a calculation can help identify an incorrect final answer.",
       "correct": true,
-      "explanation": "Working makes methods checkable and can support method marks in an exam."
+      "explanation": "The intermediate values can be checked to locate where the calculation went wrong."
     },
     "037": {
       "id": "H446-L037-Q1",
@@ -2506,10 +2506,10 @@
         "L036"
       ],
       "previousTaughtLesson": "L036",
-      "statement": "A useful revision mind-map branch consists only of an unexplained topic heading.",
+      "statement": "A revision mind map containing only topic headings provides enough detail to explain each topic.",
       "correct": false,
-      "explanation": "A strong branch also includes an example or method, misconception and labelled link.",
-      "correction": "A strong branch also includes an example or method, misconception and labelled link."
+      "explanation": "A useful mind map also includes definitions, examples or methods and labelled relationships between concepts.",
+      "correction": "A useful mind map also includes definitions, examples or methods and labelled relationships between concepts."
     },
     "038": {
       "id": "H446-L038-Q1",
@@ -2517,9 +2517,9 @@
         "L037"
       ],
       "previousTaughtLesson": "L037",
-      "statement": "Binary search requires an appropriately ordered collection.",
+      "statement": "Binary search requires the data to be sorted by the search key.",
       "correct": true,
-      "explanation": "This was covered when the mind map connected algorithms with data structures."
+      "explanation": "The ordering allows the algorithm to discard half of the remaining search range after a comparison."
     },
     "039": {
       "id": "H446-L039-Q1",
@@ -2527,10 +2527,10 @@
         "L038"
       ],
       "previousTaughtLesson": "L038",
-      "statement": "An object is a blueprint from which classes are created.",
+      "statement": "An object is a blueprint from which classes are instantiated.",
       "correct": false,
-      "explanation": "A class is the blueprint; an object is an instance.",
-      "correction": "A class is the blueprint; an object is an instance."
+      "explanation": "A class defines attributes and methods. An object is an instance of a class.",
+      "correction": "A class defines attributes and methods. An object is an instance of a class."
     },
     "040": {
       "id": "H446-L040-Q1",
@@ -2538,9 +2538,9 @@
         "L039"
       ],
       "previousTaughtLesson": "L039",
-      "statement": "An object's method can change values stored in its attributes.",
+      "statement": "A method can change the value of an object’s attribute.",
       "correct": true,
-      "explanation": "For example, an attack method can reduce another object's HP."
+      "explanation": "For example, an attack method can reduce the health attribute of a target object."
     },
     "041": {
       "id": "H446-L041-Q1",
@@ -2548,9 +2548,9 @@
         "L040"
       ],
       "previousTaughtLesson": "L040",
-      "statement": "A constructor can give a newly created object its initial attribute values.",
+      "statement": "A constructor can initialise the attributes of a newly instantiated object.",
       "correct": true,
-      "explanation": "Constructor code runs during object creation and sets initial state."
+      "explanation": "A constructor executes during instantiation and can assign the object’s initial attribute values."
     },
     "042": {
       "id": "H446-L042-Q1",
@@ -2558,10 +2558,10 @@
         "L041"
       ],
       "previousTaughtLesson": "L041",
-      "statement": "Keeping a field private allows any outside code to change it directly.",
+      "statement": "A private field in a C# class can be modified directly by any code outside that class.",
       "correct": false,
-      "explanation": "Private access helps encapsulate state; controlled methods may manage changes.",
-      "correction": "Private access helps encapsulate state; controlled methods may manage changes."
+      "explanation": "Encapsulation restricts direct access to private fields. Public methods can provide controlled access.",
+      "correction": "Encapsulation restricts direct access to private fields. Public methods can provide controlled access."
     },
     "043": {
       "id": "H446-L043-Q1",
@@ -2569,9 +2569,9 @@
         "L042"
       ],
       "previousTaughtLesson": "L042",
-      "statement": "A derived class can inherit accessible members of its base class.",
+      "statement": "A subclass can inherit accessible attributes and methods from its superclass.",
       "correct": true,
-      "explanation": "Inheritance supports reuse and specialisation."
+      "explanation": "Inheritance allows a subclass to reuse and extend the features defined by its superclass."
     },
     "044": {
       "id": "H446-L044-Q1",
@@ -2579,10 +2579,10 @@
         "L043"
       ],
       "previousTaughtLesson": "L043",
-      "statement": "An overridden virtual method always runs the base-class implementation.",
+      "statement": "When a C# virtual method is overridden, a call on a subclass object always executes the superclass implementation.",
       "correct": false,
-      "explanation": "Dynamic dispatch can choose the derived class's override.",
-      "correction": "Dynamic dispatch can choose the derived class's override."
+      "explanation": "Dynamic dispatch selects the overridden method according to the object’s runtime type.",
+      "correction": "Dynamic dispatch selects the overridden method according to the object’s runtime type."
     },
     "045": {
       "id": "H446-L045-Q1",
@@ -2590,10 +2590,10 @@
         "L044"
       ],
       "previousTaughtLesson": "L044",
-      "statement": "A Student borrowing a Book is normally an inheritance relationship.",
+      "statement": "In a class diagram, the relationship between a Student class and a Book class, representing a student borrowing a book, is inheritance.",
       "correct": false,
-      "explanation": "Borrowing is an association: a Student is not a kind of Book.",
-      "correction": "Borrowing is an association: a Student is not a kind of Book."
+      "explanation": "This is an association between two classes. Inheritance represents an is-a relationship between a subclass and its superclass.",
+      "correction": "This is an association between two classes. Inheritance represents an is-a relationship between a subclass and its superclass."
     },
     "046": {
       "id": "H446-L046-Q1",
