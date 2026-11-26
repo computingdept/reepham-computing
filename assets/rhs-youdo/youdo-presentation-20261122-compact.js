@@ -46,6 +46,11 @@
 
   // J277 uses the H446 order: four, three, two, one. No question is split.
   function selectExamGroups(items, fits, narrow){
+    if(global.RHSYouDoLayout?.selectGroups){
+      return global.RHSYouDoLayout.selectGroups(items.length,function(i,n){
+        return fits(items.slice(i,i+n),i);
+      },narrow).map(function(g){return items.slice(g.start,g.end);});
+    }
     var groups=[];
     for(var i=0;i<items.length;){
       var size=1;
@@ -70,6 +75,7 @@
       stage.style.visibility="hidden";stage.hidden=false;
       rolling.appendChild(stage);
       var boxes=[stage].concat(Array.from(stage.querySelectorAll(".rhs-y-challenge,.rhs-y-challenge-card,.rhs-bank-grid,.rhs-bank-card")));
+      if(global.RHSYouDoLayout?.boxesFit)return global.RHSYouDoLayout.boxesFit(boxes);
       return boxes.every(function(x){
         return x.clientHeight>0 && x.clientWidth>0 &&
           x.scrollHeight<=x.clientHeight+4 && x.scrollWidth<=x.clientWidth+4;
