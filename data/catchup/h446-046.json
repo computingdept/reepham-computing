@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "h446-046",
   "course": "h446",
-  "title": "Objects in Arrays and Lists",
+  "title": "Recursion · Writing, Debugging and Iteration",
   "year": 12,
   "estimated_minutes": 15,
   "pass_percent": 80,
@@ -19,50 +19,50 @@
         {
           "id": "r1",
           "kind": "choice",
-          "prompt": "What is a constructor used for?",
-          "answer": "Initialising an object's state.",
+          "prompt": "True or false? A base case must make another recursive call.",
+          "answer": "False",
           "options": [
-            "There is not enough information to determine the result.",
-            "This result cannot be obtained using the stated method.",
-            "Initialising an object's state."
+            "True",
+            "False"
           ],
-          "feedback": "Model answer: Initialising an object's state."
+          "feedback": "False. A base case stops further calls and returns a result."
         },
         {
           "id": "r2",
           "kind": "choice",
-          "prompt": "What does private mean for an instance field?",
-          "answer": "It cannot be accessed directly from outside the class.",
+          "prompt": "Which symbol means logical AND in C#?",
+          "answer": "&&",
           "options": [
-            "This result cannot be obtained using the stated method.",
-            "It cannot be accessed directly from outside the class.",
-            "There is not enough information to determine the result."
+            "!",
+            "^",
+            "&&",
+            "||"
           ],
-          "feedback": "Model answer: It cannot be accessed directly from outside the class."
+          "feedback": "&& requires both conditions to be true."
         },
         {
           "id": "r3",
           "kind": "choice",
-          "prompt": "What index identifies the first C# array item?",
-          "answer": "Zero.",
+          "prompt": "A loop repeatedly halves n starting at 40 using integer division. List the next three values.",
+          "answer": "20, 10, 5",
           "options": [
-            "Zero.",
-            "There is not enough information to determine the result.",
-            "This result cannot be obtained using the stated method."
+            "20, 10, 5",
+            "20, 5, 2",
+            "40, 20, 10"
           ],
-          "feedback": "Model answer: Zero."
+          "feedback": "20, 10, 5."
         },
         {
           "id": "r4",
           "kind": "choice",
-          "prompt": "A rising-edge D flip-flop has Q=0 and D=1 just before the next active edge. Give Q after it and why.",
-          "answer": "At the next rising edge Q becomes 1, because the flip-flop captures D at the active clock edge.",
+          "prompt": "PowerTwo(n) returns 1 when n = 0; otherwise it returns 2 * PowerTwo(n - 1). What does PowerTwo(3) return?",
+          "answer": "8",
           "options": [
-            "At the next rising edge Q becomes 2, because the flip-flop captures D at the active clock edge.",
-            "At the next rising edge Q becomes 0, because the flip-flop captures D at the active clock edge.",
-            "At the next rising edge Q becomes 1, because the flip-flop captures D at the active clock edge."
+            "8",
+            "4",
+            "16"
           ],
-          "feedback": "Model answer: At the next rising edge Q becomes 1, because the flip-flop captures D at the active clock edge. Explanation: Worked response reconstructed from the challenge question because the classroom model is malformed; teacher review pending."
+          "feedback": "8: the returns are 1, 2, 4, 8."
         }
       ]
     },
@@ -77,69 +77,65 @@
           "type": "facts",
           "title": "Key vocabulary",
           "items": [
-            "object — Instance of a class.",
-            "reference — Value identifying an object instance.",
-            "aliasing — Several references to the same object.",
-            "index — Position in a sequence."
+            "termination — Reaching a condition where the algorithm stops.",
+            "recursive step — Calling the function on a smaller or simpler input.",
+            "iteration — Repeating instructions using a loop.",
+            "stack overflow — Failure when active calls exhaust available stack space.",
+            "precondition — An input rule assumed by an algorithm."
           ]
         },
         {
           "type": "paragraph",
-          "title": "Observe",
-          "text": "A class describes an object; the array stores references to two Book instances."
+          "title": "C# worked example",
+          "text": "int CountDigits(int n)\n{\n    if (n < 10) return 1;\n    return 1 + CountDigits(n / 10);\n}"
         },
         {
           "type": "paragraph",
-          "title": "Explain",
-          "text": "Indexes start at 0. shelf[1] identifies the second reference, then.Title reads its property."
+          "title": "Trace the calls",
+          "text": "CountDigits(582) → CountDigits(58) → CountDigits(5). Returns are 1, 2, 3. For non-negative input the call moves towards the base case."
         },
         {
           "type": "paragraph",
-          "title": "Apply",
-          "text": "An array has a fixed length after creation; individual array elements can refer to objects whose properties change."
-        },
-        {
-          "type": "paragraph",
-          "title": "Worked example · Trace and justify",
-          "text": "Index 0 refers to the first object; its Title is Ada."
+          "title": "Compare with iteration",
+          "text": "An iterative solution uses a while loop and reuses local variables. Recursive calls add active stack frames. Recursion can express tree traversal more clearly."
         }
       ],
       "questions": [
         {
           "id": "l1",
           "kind": "choice",
-          "prompt": "Which description matches 'object'?",
-          "answer": "Instance of a class.",
+          "prompt": "Which definition matches 'termination'?",
+          "answer": "Reaching a condition where the algorithm stops.",
           "options": [
-            "Several references to the same object.",
-            "Instance of a class.",
-            "Value identifying an object instance."
+            "Reaching a condition where the algorithm stops.",
+            "Calling the function on a smaller or simpler input.",
+            "Repeating instructions using a loop."
           ],
-          "feedback": "object — Instance of a class."
+          "feedback": "Model answer: Reaching a condition where the algorithm stops."
         },
         {
           "id": "l2",
           "kind": "choice",
-          "prompt": "Which description matches 'reference'?",
-          "answer": "Value identifying an object instance.",
+          "prompt": "Which definition matches 'recursive step'?",
+          "answer": "Calling the function on a smaller or simpler input.",
           "options": [
-            "Value identifying an object instance.",
-            "Instance of a class.",
-            "Several references to the same object."
+            "Calling the function on a smaller or simpler input.",
+            "Repeating instructions using a loop.",
+            "Failure when active calls exhaust available stack space."
           ],
-          "feedback": "reference — Value identifying an object instance."
+          "feedback": "Model answer: Calling the function on a smaller or simpler input."
         },
         {
           "id": "l3",
           "kind": "choice",
-          "prompt": "Which description matches 'aliasing'?",
-          "answer": "Several references to the same object.",
+          "prompt": "Which definition matches 'iteration'?",
+          "answer": "Repeating instructions using a loop.",
           "options": [
-            "Instance of a class.",
-            "Value identifying an object instance.",
-            "Several references to the same object."
+            "Repeating instructions using a loop.",
+            "Failure when active calls exhaust available stack space.",
+            "An input rule assumed by an algorithm."
           ],
-          "feedback": "aliasing — Several references to the same object."
+          "feedback": "Model answer: Repeating instructions using a loop."
         }
       ]
     },
@@ -152,58 +148,58 @@
       "blocks": [
         {
           "type": "paragraph",
-          "title": "Trace and justify",
-          "text": "Index 1 refers to the second object. The property update changes its Title; output is Updated."
+          "title": "Guided practice",
+          "text": "Trace CountDigits(9031), dividing by 10 at each call. Then consider how to repair a recursive step that increases n."
         }
       ],
       "questions": [
         {
           "id": "p1",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? Position in a sequence.",
-          "answer": "index",
+          "prompt": "What is CountDigits(9031)?",
+          "answer": "4",
           "options": [
-            "object",
-            "reference",
-            "index"
+            "4",
+            "3",
+            "5"
           ],
-          "feedback": "index — Position in a sequence."
+          "feedback": "Model answer: 4"
         },
         {
           "id": "p2",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? Instance of a class.",
-          "answer": "object",
+          "prompt": "What is CountDigits(9)?",
+          "answer": "1",
           "options": [
-            "aliasing",
-            "object",
-            "reference"
+            "1",
+            "0",
+            "9"
           ],
-          "feedback": "object — Instance of a class."
+          "feedback": "Model answer: 1"
         },
         {
           "id": "p3",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? Value identifying an object instance.",
-          "answer": "reference",
+          "prompt": "Which argument moves SumTo(n) towards a base case of 0?",
+          "answer": "n - 1",
           "options": [
-            "reference",
-            "object",
-            "aliasing"
+            "n - 1",
+            "n + 1",
+            "n"
           ],
-          "feedback": "reference — Value identifying an object instance."
+          "feedback": "Model answer: n - 1"
         },
         {
           "id": "p4",
           "kind": "choice",
-          "prompt": "Which term best matches this explanation? Several references to the same object.",
-          "answer": "aliasing",
+          "prompt": "Which method uses a loop?",
+          "answer": "Iteration",
           "options": [
-            "object",
-            "reference",
-            "aliasing"
+            "Iteration",
+            "Recursion",
+            "Inheritance"
           ],
-          "feedback": "aliasing — Several references to the same object."
+          "feedback": "Model answer: Iteration"
         }
       ]
     },
@@ -213,54 +209,51 @@
       "minutes": 3,
       "sign": "YouDo_CodingIcon.png",
       "lead": "You Do",
-      "blocks": [],
+      "blocks": [
+        {
+          "type": "paragraph",
+          "title": "Independent practice",
+          "text": "Identify and correct the error that prevents this function terminating for positive n.\nint SumTo(int n)\n{\n    if (n == 0) return 0;\n    return n + SumTo(n + 1);\n}\n\nWrite a recursive function in C# that returns 2 to the power n, for a non-negative integer n.\n\nCompare recursion with iteration. Give two differences and one advantage of recursion for a suitable problem."
+        }
+      ],
       "questions": [
         {
           "id": "a1",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: FOUNDATION · Q1 OF 3 Given shelf titles Dune,Holes, give output of shelf[1].Title and reason. [4]",
-          "answer": "/ MARKS Holes [2]; 0-based index 1 selects second element and its Title [2].",
+          "prompt": "What is PowerTwo(3) with base case 0 returning 1?",
+          "answer": "8",
           "options": [
-            "/ MARKS Book[] b={new Book{Title=\"A\"},new Book{Title=\"B\"}}; [4] Console.WriteLine(b[0].Title); [2], assuming Book declares Title property.",
-            "/ MARKS Both elements hold references [2] to same instance [2]; mutation visible through either reference [2]; this is aliasing, not array-index copying.",
-            "/ MARKS Holes [2]; 0-based index 1 selects second element and its Title [2]."
+            "8",
+            "6",
+            "9"
           ],
-          "feedback": "/ MARKS Holes [2]; 0-based index 1 selects second element and its Title [2]."
+          "feedback": "Model answer: 8"
         },
         {
           "id": "a2",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: CORE · Q2 OF 3 Write C# to create an array of two Book objects with titles A and B, then print first title. [6]",
-          "answer": "/ MARKS Book[] b={new Book{Title=\"A\"},new Book{Title=\"B\"}}; [4] Console.WriteLine(b[0].Title); [2], assuming Book declares Title property.",
+          "prompt": "What may happen if recursive calls never reach a base case?",
+          "answer": "Stack overflow",
           "options": [
-            "/ MARKS Both elements hold references [2] to same instance [2]; mutation visible through either reference [2]; this is aliasing, not array-index copying.",
-            "/ MARKS Book[] b={new Book{Title=\"A\"},new Book{Title=\"B\"}}; [4] Console.WriteLine(b[0].Title); [2], assuming Book declares Title property.",
-            "/ MARKS Holes [2]; 0-based index 1 selects second element and its Title [2]."
+            "Stack overflow",
+            "Automatic loop conversion",
+            "Guaranteed termination"
           ],
-          "feedback": "/ MARKS Book[] b={new Book{Title=\"A\"},new Book{Title=\"B\"}}; [4] Console.WriteLine(b[0].Title); [2], assuming Book declares Title property."
+          "feedback": "Model answer: Stack overflow"
         },
         {
           "id": "a3",
           "kind": "choice",
-          "prompt": "Choose the response that best addresses this independent task: CHALLENGE · Q3 OF 3 Two array elements reference the SAME Book object. Changing its title via first reference is then printed via second. Explain. [6]",
-          "answer": "/ MARKS Both elements hold references [2] to same instance [2]; mutation visible through either reference [2]; this is aliasing, not array-index copying.",
+          "prompt": "Which is normally more stack-memory efficient for simple repetition?",
+          "answer": "Iteration",
           "options": [
-            "/ MARKS Both elements hold references [2] to same instance [2]; mutation visible through either reference [2]; this is aliasing, not array-index copying.",
-            "/ MARKS Holes [2]; 0-based index 1 selects second element and its Title [2].",
-            "/ MARKS Book[] b={new Book{Title=\"A\"},new Book{Title=\"B\"}}; [4] Console.WriteLine(b[0].Title); [2], assuming Book declares Title property."
+            "Iteration",
+            "Recursion",
+            "Both always use identical memory"
           ],
-          "feedback": "/ MARKS Both elements hold references [2] to same instance [2]; mutation visible through either reference [2]; this is aliasing, not array-index copying."
+          "feedback": "Model answer: Iteration"
         }
-      ],
-      "writing": {
-        "prompt": "Write an exam-style response in your own words. CHALLENGE · Q3 OF 3 Two array elements reference the SAME Book object. Changing its title via first reference is then printed via second. Explain. [6]",
-        "model": "/ MARKS Both elements hold references [2] to same instance [2]; mutation visible through either reference [2]; this is aliasing, not array-index copying.",
-        "checklist": [
-          "I answered the specific question, not just the general topic.",
-          "I used precise H446 terminology and linked claims to the task.",
-          "I checked my response against the model and improved omissions."
-        ]
-      }
+      ]
     },
     {
       "id": "check",
@@ -272,24 +265,36 @@
       "questions": [
         {
           "id": "c1",
-          "kind": "truefalse",
-          "prompt": "reference means: Value identifying an object instance.",
-          "answer": "true",
-          "feedback": "reference — Value identifying an object instance."
+          "kind": "choice",
+          "prompt": "A recursive call should move towards a reachable base case.",
+          "answer": "True",
+          "options": [
+            "True",
+            "False"
+          ],
+          "feedback": "Progress towards a stopping condition allows the calls to finish."
         },
         {
           "id": "c2",
-          "kind": "truefalse",
-          "prompt": "aliasing means: Several references to the same object.",
-          "answer": "true",
-          "feedback": "aliasing — Several references to the same object."
+          "kind": "choice",
+          "prompt": "A simple iterative loop normally creates a new call stack frame for every iteration.",
+          "answer": "False",
+          "options": [
+            "True",
+            "False"
+          ],
+          "feedback": "A loop repeats in the same call; recursion creates additional active calls."
         },
         {
           "id": "c3",
-          "kind": "truefalse",
-          "prompt": "index means: Instance of a class.",
-          "answer": "false",
-          "feedback": "index — Position in a sequence."
+          "kind": "choice",
+          "prompt": "Recursion can make tree traversal easier to express.",
+          "answer": "True",
+          "options": [
+            "True",
+            "False"
+          ],
+          "feedback": "Each subtree can be processed using the same recursive algorithm."
         }
       ]
     }
