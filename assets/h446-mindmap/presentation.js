@@ -367,14 +367,21 @@ function applyReviewedH446MindMapQ34(){
   .then(response=>{
    if(!response.ok)throw Error("H446 Q3/Q4 source bank unavailable");
    return response.json();
-  }).then(bank=>{
+  }).then(async bank=>{
    const entry=bank.course==="h446"&&bank.status==="reviewed"?bank.lessons?.[id]:null;
    if(!entry)return;
+   const {validReplacement}=await import('../h446-lesson/h446-do-now-q34.js');
    const items=lesson===36?D36:D37;
    for(const n of [3,4]){
     const source=entry["q"+n], refs=source?.sourceRefs;
     if(!Array.isArray(refs)||!refs.length||!refs.every(ref=>/^L\d{3}$/.test(ref)&&Number(ref.slice(1))<lesson))continue;
     items[n-1].label="Q"+n+" · "+(n===3?"RETRIEVAL":"CHALLENGE")+" · TAUGHT · "+refs.join(" + ");
+    const replacement=validReplacement(source);
+    if(replacement){
+     items[n-1].text=replacement.question;
+     items[n-1].answer=replacement.answer;
+     delete items[n-1].explanation;
+    }
    }
    if(index<=1)render();
   }).catch(error=>console.warn("H446 guided source labels retained:",error));
