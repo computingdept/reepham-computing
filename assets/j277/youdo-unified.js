@@ -27,7 +27,7 @@
     '</strong><span>'+esc(count)+'</span></div>';
   const css=document.createElement("link");
   css.rel="stylesheet";
-  css.href="../../../assets/j277/youdo-unified.css?v=20261121-001-v1";
+  css.href="../../../assets/j277/youdo-unified.css?v=3760e602b5bb";
 
   const injected=window.RHSJ277YouDoData;
   const hasInjected=!!injected && injected.lesson===number &&
@@ -172,7 +172,7 @@
         j277ReviewStart:"3",codingFirst:"true",
         workMode:"independent",windowStart:"0"
       });
-      css.href="../../../assets/j277/youdo-unified.css?v=20261125-classroom-standard7";
+      css.href="../../../assets/j277/youdo-unified.css?v=3760e602b5bb";
       document.head.appendChild(css);
       const labels=[
         "Check Code First →","Begin exam questions →","Show answer 1 →",

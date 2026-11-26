@@ -315,7 +315,7 @@ next.addEventListener('click',goNext);previous.addEventListener('click',goPrevio
     const unified003Scripts=unified003
       ?'<script>window.RHSJ277YouDoData='+
         JSON.stringify(unified003Payload).replace(/</g,"\\u003c")+
-        ';<\/script><script src="../../../assets/j277/youdo-unified.js?v=20261122-no-answer-svg-leak-v2"><\/script>'
+        ';<\/script><script src="../../../assets/j277/youdo-unified.js?v=3760e602b5bb"><\/script>'
       :'<script src="../../../assets/j277/youdo-grouped.js?v=20261024-adaptive1"><\/script>';
     const weDo003=n==="003"&&mode==="lesson"&&new URLSearchParams(location.search).get("we-do")!=="original";
     const weDo003Head=weDo003?'<link rel="stylesheet" href="/assets/j277/we-do-skills.css?v=20261124-pilot1">':"";
