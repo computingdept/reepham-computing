@@ -1,0 +1,67 @@
+name: Shared You Do release
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/shared-youdo-release.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: shared-youdo-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test release logic and shared pagination
+        run: |
+          node --test tests/release-youdo.test.cjs tests/shared-youdo-pagination.test.cjs
+      - name: Generate complete version-only release
+        run: |
+          node scripts/release-youdo.cjs --write
+          node scripts/release-youdo.cjs --check
+          git diff --check
+          git diff --stat
+      - name: Validate that every edit is a shared asset URL version
+        run: |
+          node <<'JS'
+          const {execFileSync}=require('node:child_process');
+          const fs=require('node:fs');
+          const {ASSETS,LOADERS,rewrite}=require('./scripts/release-youdo.cjs');
+          const changed=execFileSync('git',['diff','--name-only','-z'],{encoding:'utf8'}).split('\0').filter(Boolean);
+          const targets=new Set([...ASSETS,...LOADERS]);
+          for(const file of changed){
+            const before=execFileSync('git',['show','HEAD:'+file],{encoding:'utf8'});
+            const after=fs.readFileSync(file,'utf8');
+            const generated=LOADERS.includes(file)||file==='assets/j277/youdo-unified.js';
+            if(rewrite(file,before,targets,'RELEASE',generated)!==rewrite(file,after,targets,'RELEASE',generated))
+              throw Error('Non-version change: '+file);
+          }
+          console.log('Validated '+changed.length+' files; no lesson content changed.');
+          JS
+      - name: Create a single release branch
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo 'All enrolled shared references are current.' >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          branch="youdo-release/${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -u
+          git commit -m "Refresh all enrolled shared You Do asset references"
+          git push origin "HEAD:refs/heads/$branch"
+          echo "Single release branch: $branch" >> "$GITHUB_STEP_SUMMARY"
+          echo "Source and version tests passed; classroom visual validation still required before merging." >> "$GITHUB_STEP_SUMMARY"
+          echo "Review: https://github.com/$GITHUB_REPOSITORY/compare/main...$branch" >> "$GITHUB_STEP_SUMMARY"

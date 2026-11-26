@@ -37,3 +37,18 @@ test("missing asset aborts the entire plan", () => {
   const f = fixture(); delete f[ASSETS[0]];
   assert.throws(() => plan(f), /Missing release source/);
 });
+
+test("legacy GCSE adapters, preview assets and static renderers share the release version", () => {
+  const f=fixture();
+  f["assets/j277/youdo-unified.js"]='css.href="../../../assets/j277/youdo-unified.css?v=old";';
+  f["assets/j277/youdo-unified.css"]='@import url("../h446-y13/h446-you-do.css?v=old");';
+  f["lessons/j277/h446-adapter.js"]='const ui = "../../../assets/j277/youdo-unified.js?v=old";';
+  f["lessons/j277/lesson-004/index.html"]='<script src="../h446-adapter.js?v=old"></script>';
+  f["lessons/j277/autumn2-rebuilt.js"]='const bank = "../../../assets/j277/year11-bank-preview.js?v=old";';
+  const p=plan(f);
+  for(const key of ["assets/j277/youdo-unified.js","assets/j277/youdo-unified.css","lessons/j277/h446-adapter.js","lessons/j277/lesson-004/index.html","lessons/j277/autumn2-rebuilt.js"]){
+    assert.ok(p.updates[key].includes("?v="+p.version),key);
+    assert.equal(p.updates[key].replaceAll("?v="+p.version,"?v=old"),f[key]);
+  }
+  assert.deepEqual(plan({...f,...p.updates}).updates,{});
+});

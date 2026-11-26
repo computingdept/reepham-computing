@@ -9,14 +9,20 @@ const ASSETS = [
   "assets/h446-y13/h446-youdo-question-sheet.css",
   "assets/rhs-youdo/command-brush.css",
   "assets/rhs-youdo/youdo-presentation-20261122-compact.js",
-  "assets/rhs-youdo/youdo-presentation-20261122-compact.css"
+  "assets/rhs-youdo/youdo-presentation-20261122-compact.css",
+  "assets/j277/youdo-unified.js",
+  "assets/j277/youdo-unified.css",
+  "assets/j277/year11-bank-preview.js",
+  "assets/j277/year11-bank-preview.css"
 ];
 const LOADERS = [
   "lessons/j277/autumn1-rebuilt.js",
-  "lessons/j277/autumn2-rebuilt.js"
+  "lessons/j277/autumn2-rebuilt.js",
+  "lessons/j277/h446-adapter.js"
 ];
 const ASSET_SET = new Set(ASSETS);
 const LOADER_SET = new Set(LOADERS);
+const GENERATED_CONTEXT = new Set([...LOADERS, "assets/j277/youdo-unified.js"]);
 const REF = /(["'])([./A-Za-z0-9_-]+\.(?:js|css))(\?v=[A-Za-z0-9_.-]+)?\1/g;
 function rewrite(file, body, targets, version, generated = false) {
   const context = generated ? "lessons/j277/lesson-020/index.html" : file;
@@ -33,7 +39,7 @@ function plan(files) {
   const source = {};
   for (const name of [...ASSETS, ...LOADERS]) {
     if (typeof files[name] !== "string") throw new Error("Missing release source: " + name);
-    source[name] = rewrite(name, files[name], ASSET_SET, "RELEASE", LOADER_SET.has(name));
+    source[name] = rewrite(name, files[name], ASSET_SET, "RELEASE", GENERATED_CONTEXT.has(name));
   }
   // Normalize embedded release versions before hashing, so the result is stable.
   const version = crypto.createHash("sha256")
@@ -41,7 +47,7 @@ function plan(files) {
   const updates = {};
   const enrolled = {h446: 0, j277: 0};
   for (const name of [...ASSETS, ...LOADERS]) {
-    const body = rewrite(name, files[name], ASSET_SET, version, LOADER_SET.has(name));
+    const body = rewrite(name, files[name], ASSET_SET, version, GENERATED_CONTEXT.has(name));
     if (body !== files[name]) updates[name] = body;
   }
   for (const [name, old] of Object.entries(files)) {
