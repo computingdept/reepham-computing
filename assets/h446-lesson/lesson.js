@@ -2731,6 +2731,16 @@ function applyPublishedJ277Q1(){
       reviewAnswer.replaceChildren(...(label?[label]:[]),...parts);
     }).catch(error=>console.warn('J277 Q1 unchanged:',error));
 }
+/* Do Now source badges are informational, not navigation links.
+   Remove only legacy Year 12 source-link wrappers in the Do Now phase,
+   independently of the question-bank fetch or any replacement. */
+if(/^\/lessons\/h446\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname)){
+  document.querySelectorAll('#do-now .year12-reference').forEach(node=>{
+    if(node.querySelector('a')&&!node.querySelector('svg,img,figure,table,pre')){
+      node.remove();
+    }
+  });
+}
 prepareJ277DoNowSourceLabels();
 applyPublishedJ277Q1();
 prepareH446DoNowSourceLabels();
