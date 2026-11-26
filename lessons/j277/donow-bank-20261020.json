@@ -6748,11 +6748,11 @@
           "question_number": 4,
           "role": "Prior learning — challenge",
           "format": "Constructed response",
-          "question": "A program joins strings and takes part of an eight-character word. Correct both claims. Explain why. (a) Joining strings adds their numbers. (b) substring(1,3) always means positions 1 to 3 in every language.",
+          "question": "In OCR ERL, join the strings \"AB\" and \"12\". Then find \"COMPUTER\".substring(1,3). Explain both results.",
           "options": [],
           "correct_option": "",
-          "answer": "(a) Joining 'AB' and '12' gives 'AB12', with no added space. (b) For 'COMPUTER', substring(1,3) in OCR ERL gives 'OMP': indexes start at 0 and 3 is the length. Follow each language's rules.",
-          "explanation": "(a) Joining 'AB' and '12' gives 'AB12', with no added space. (b) For 'COMPUTER', substring(1,3) in OCR ERL gives 'OMP': indexes start at 0 and 3 is the length. Follow each language's rules.",
+          "answer": "AB12: concatenation joins the strings. OMP: indexing starts at 0, so start at index 1 and take 3 characters.",
+          "explanation": "AB12: concatenation joins the strings. OMP: indexing starts at 0, so start at index 1 and take 3 characters.",
           "check_ids": [
             "B067.01",
             "B067.02"
@@ -6881,11 +6881,11 @@
           "question_number": 4,
           "role": "Prior learning — challenge",
           "format": "Constructed response",
-          "question": "A program calculates an area and shows a menu in several places. Correct both claims. Explain why. (a) A function cannot return a value. (b) A procedure must return a value.",
+          "question": "A program calculates an area and displays a menu in several places. Which task suits a function and which suits a procedure? Explain why.",
           "options": [],
           "correct_option": "",
-          "answer": "(a) A function returns a value, such as an area. (b) A procedure performs a task, such as showing a menu, without returning a value. Use arguments and return values to avoid unwanted changes to global data.",
-          "explanation": "(a) A function returns a value, such as an area. (b) A procedure performs a task, such as showing a menu, without returning a value. Use arguments and return values to avoid unwanted changes to global data.",
+          "answer": "A function calculates and returns the area. A procedure displays the menu without returning a value.",
+          "explanation": "A function calculates and returns the area. A procedure displays the menu without returning a value.",
           "check_ids": [
             "B072.01",
             "B072.02"
@@ -7014,11 +7014,11 @@
           "question_number": 4,
           "role": "Prior learning — challenge",
           "format": "Constructed response",
-          "question": "Two functions each have a local total. Several procedures share a global score. Correct both claims. Explain why. (a) All subprograms can read every local variable. (b) Only one subprogram can read a global variable.",
+          "question": "Two functions each have a local variable called total. Several procedures share a global score. Explain why changing one local total does not change the other, but changing score can affect other procedures.",
           "options": [],
           "correct_option": "",
-          "answer": "(a) Each local total is used only in its own scope. (b) A global score can be used across the program. This risks unwanted changes. Use arguments and return values to make changes clear.",
-          "explanation": "(a) Each local total is used only in its own scope. (b) A global score can be used across the program. This risks unwanted changes. Use arguments and return values to make changes clear.",
+          "answer": "Each local total belongs to its own scope. A global score is shared, so a change can affect other procedures that use it.",
+          "explanation": "Each local total belongs to its own scope. A global score is shared, so a change can affect other procedures that use it.",
           "check_ids": [
             "B072.04",
             "B072.05"
@@ -7152,11 +7152,11 @@
           "question_number": 4,
           "role": "Prior learning — challenge",
           "format": "Constructed response",
-          "question": "A program saves a result to a text file. “writeLine(text) only shows text on screen.” Correct this. How should the program save the result?",
+          "question": "A program displays a result on screen but must also save it to a text file. Explain how to use writeLine(text) to save it.",
           "options": [],
           "correct_option": "",
-          "answer": "writeLine(text) writes a line through an open file handle. Open the file, write, then close it. Printing on screen does not save it.",
-          "explanation": "writeLine(text) writes a line through an open file handle. Open the file, write, then close it. Printing on screen does not save it.",
+          "answer": "Open the file for writing, use writeLine(text) to write the result, then close the file. Displaying text on screen does not save it.",
+          "explanation": "Open the file for writing, use writeLine(text) to write the result, then close the file. Displaying text on screen does not save it.",
           "check_ids": [
             "B068.03"
           ],
@@ -7282,11 +7282,11 @@
           "question_number": 4,
           "role": "Prior learning — challenge",
           "format": "Constructed response",
-          "question": "A program repeats the same price calculation in several places. “Copying long code blocks always makes maintenance easier.” Correct this. How would a subprogram help?",
+          "question": "A program repeats the same price calculation in several places. Explain how a subprogram would help if the calculation needed changing.",
           "options": [],
           "correct_option": "",
-          "answer": "Put shared code in one subprogram. It can be reused, tested and changed in one place.",
-          "explanation": "Put shared code in one subprogram. It can be reused, tested and changed in one place.",
+          "answer": "Place the calculation in one subprogram and call it where needed. The calculation can then be changed and tested in one place.",
+          "explanation": "Place the calculation in one subprogram and call it where needed. The calculation can then be changed and tested in one place.",
           "check_ids": [
             "B076.01"
           ],
@@ -7412,11 +7412,11 @@
           "question_number": 4,
           "role": "Prior learning — challenge",
           "format": "Constructed response",
-          "question": "An indicator uses Q = NOT A. Give outputs for A=0 and A=1, then evaluate NOT(NOT A) for both values.",
+          "question": "Give the output of NOT A when A = 0 and when A = 1. Explain what happens if NOT is applied twice.",
           "options": [],
           "correct_option": "",
-          "answer": "(a) Q: 1, 0. Double NOT: 0, 1, restoring A.",
-          "explanation": "(a) Q: 1, 0. Double NOT: 0, 1, restoring A.",
+          "answer": "For A = 0: 1. For A = 1: 0. Applying NOT twice restores the original value: 0 and 1 respectively.",
+          "explanation": "For A = 0: 1. For A = 1: 0. Applying NOT twice restores the original value: 0 and 1 respectively.",
           "check_ids": [
             "B083.04"
           ],
@@ -7543,8 +7543,8 @@
           "question": "Merge the sorted lists [2, 7] and [4, 6] into ascending order. Give the values in order. Why not just join the lists?",
           "options": [],
           "correct_option": "",
-          "answer": "(a) [2, 4, 6, 7]. Keep taking the smaller next item. Just joining the lists would put 7 before 4.",
-          "explanation": "(a) [2, 4, 6, 7]. Keep taking the smaller next item. Just joining the lists would put 7 before 4.",
+          "answer": "[2,4,6,7]. Keep taking the smaller next item. Simply joining the lists would put 7 before 4.",
+          "explanation": "[2,4,6,7]. Keep taking the smaller next item. Simply joining the lists would put 7 before 4.",
           "check_ids": [
             "B061.03"
           ],
@@ -7668,11 +7668,11 @@
           "question_number": 4,
           "role": "Prior learning — challenge",
           "format": "Constructed response",
-          "question": "Either of two sensors can trigger an output. “An OR gate is a rectangle with a memory address inside.” Correct this. Describe the right symbol and why it matters.",
+          "question": "A pupil draws an OR gate as a rectangle. Describe how to correct the symbol so it can be distinguished from an AND gate.",
           "options": [],
           "correct_option": "",
-          "answer": "Curved input edge; pointed, curved output edge. Usually two inputs. Check the symbol before applying the gate's rule.",
-          "explanation": "Curved input edge; pointed, curved output edge. Usually two inputs. Check the symbol before applying the gate's rule.",
+          "answer": "An OR gate has a curved input edge and a curved, pointed output edge. An AND gate has a flat input edge and rounded output edge.",
+          "explanation": "An OR gate has a curved input edge and a curved, pointed output edge. An AND gate has a flat input edge and rounded output edge.",
           "check_ids": [
             "B082.02"
           ],
@@ -7796,11 +7796,11 @@
           "question_number": 4,
           "role": "Prior learning — challenge",
           "format": "Constructed response",
-          "question": "RAM is full. Apps keep moving data between RAM and an SSD. Correct both claims. Explain why. (a) Virtual memory needs no secondary storage. (b) Virtual memory is faster than RAM because SSDs hold more.",
+          "question": "A computer runs out of free RAM. Explain how virtual memory helps and why using an SSD for it can still slow the computer down.",
           "options": [],
           "correct_option": "",
-          "answer": "(a) Virtual memory uses secondary storage when RAM is too full. (b) Moving data between RAM and slower secondary storage takes time. More storage space does not mean faster access.",
-          "explanation": "(a) Virtual memory uses secondary storage when RAM is too full. (b) Moving data between RAM and slower secondary storage takes time. More storage space does not mean faster access.",
+          "answer": "Virtual memory uses space on secondary storage when RAM is full. Moving data between RAM and the slower SSD adds delays.",
+          "explanation": "Virtual memory uses space on secondary storage when RAM is full. Moving data between RAM and the slower SSD adds delays.",
           "check_ids": [
             "B011.01",
             "B011.02"
@@ -7927,11 +7927,11 @@
           "question_number": 4,
           "role": "Prior learning — challenge",
           "format": "Constructed response",
-          "question": "A programmer edits and tests code often. Correct: 'Interpreters must create a standalone executable first.' Why might interpreting help?",
+          "question": "A programmer edits and tests code frequently. Explain why an interpreter may be useful and give one advantage of using a compiler for the finished program.",
           "options": [],
           "correct_option": "",
-          "answer": "An interpreter translates and runs code as it goes, giving quick testing feedback. A compiler creates code that can be run again and shared without translating it each time.",
-          "explanation": "An interpreter translates and runs code as it goes, giving quick testing feedback. A compiler creates code that can be run again and shared without translating it each time.",
+          "answer": "An interpreter translates and runs code as it goes, allowing quick testing feedback. A compiler produces code that can run again without retranslating the unchanged source.",
+          "explanation": "An interpreter translates and runs code as it goes, allowing quick testing feedback. A compiler produces code that can run again without retranslating the unchanged source.",
           "check_ids": [
             "B088.02"
           ],
@@ -8059,11 +8059,11 @@
           "question_number": 4,
           "role": "Prior learning — challenge",
           "format": "Constructed response",
-          "question": "A file stores text, not a photo of a page. “Every letter A is stored as a tiny bitmap.” Correct this. How is a letter stored and read?",
+          "question": "Two computers receive the same text file but display different letters. Explain how characters are stored and why the computers must use matching encodings.",
           "options": [],
           "correct_option": "",
-          "answer": "Each character has a number code stored in binary. Both computers need a matching encoding to show the intended characters.",
-          "explanation": "Each character has a number code stored in binary. Both computers need a matching encoding to show the intended characters.",
+          "answer": "Characters are assigned numerical codes stored in binary. Matching encodings allow both computers to interpret those codes consistently.",
+          "explanation": "Characters are assigned numerical codes stored in binary. Matching encodings allow both computers to interpret those codes consistently.",
           "check_ids": [
             "B025.01"
           ],
@@ -8185,11 +8185,11 @@
           "question_number": 4,
           "role": "Prior learning — challenge",
           "format": "Constructed response",
-          "question": "A website needs English, Greek and Chinese text. “Unicode has fewer characters than standard ASCII.” Correct this. Why does Unicode suit this site?",
+          "question": "A website needs English, Greek and Chinese text. Explain why Unicode is more suitable than standard ASCII.",
           "options": [],
           "correct_option": "",
-          "answer": "Unicode supports far more characters than standard ASCII. It can cover English, Greek and Chinese. Use an encoding with enough codes; Unicode characters do not always take one byte.",
-          "explanation": "Unicode supports far more characters than standard ASCII. It can cover English, Greek and Chinese. Use an encoding with enough codes; Unicode characters do not always take one byte.",
+          "answer": "Unicode supports far more characters, including those used in Greek and Chinese. Standard ASCII has only 128 codes.",
+          "explanation": "Unicode supports far more characters, including those used in Greek and Chinese. Standard ASCII has only 128 codes.",
           "check_ids": [
             "B027.01"
           ],
@@ -8311,11 +8311,11 @@
           "question_number": 4,
           "role": "Prior learning — challenge",
           "format": "Constructed response",
-          "question": "An image file is larger than its raw pixel data. “Metadata is just the colour of each pixel.” Correct this. How can metadata affect file size?",
+          "question": "An uncompressed image file is larger than its raw pixel data. Explain how metadata accounts for the difference and give two examples.",
           "options": [],
           "correct_option": "",
-          "answer": "Metadata is extra information, such as width, height or colour depth. It adds to raw pixel data, so the real file may be larger.",
-          "explanation": "Metadata is extra information, such as width, height or colour depth. It adds to raw pixel data, so the real file may be larger.",
+          "answer": "Metadata stores extra information, such as image width and height or colour depth. It adds to the pixel data, increasing the file size.",
+          "explanation": "Metadata stores extra information, such as image width and height or colour depth. It adds to the pixel data, increasing the file size.",
           "check_ids": [
             "B029.01"
           ],
@@ -8427,11 +8427,11 @@
           "question_number": 4,
           "role": "Prior learning — challenge",
           "format": "Constructed response",
-          "question": "A microphone records digital sound. “Sampling stores every instant of the sound wave.” Correct this. How does it affect recorded detail?",
+          "question": "A student says digital sound stores every point on a sound wave. Explain how sound is actually sampled and what limits the detail.",
           "options": [],
           "correct_option": "",
-          "answer": "Measure amplitude at regular intervals. Store each rounded (quantised) value in binary. Sample rate and bit depth limit the detail captured.",
-          "explanation": "Measure amplitude at regular intervals. Store each rounded (quantised) value in binary. Sample rate and bit depth limit the detail captured.",
+          "answer": "Amplitude is measured at regular intervals. Each rounded value is stored in binary. Sample rate and bit depth limit the detail.",
+          "explanation": "Amplitude is measured at regular intervals. Each rounded value is stored in binary. Sample rate and bit depth limit the detail.",
           "check_ids": [
             "B031.01"
           ],
