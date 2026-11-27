@@ -327,3 +327,148 @@ body.h446-donow-layout-parity #do-now .donow-stage:first-child .donow-questions 
     font-size:clamp(24.15px,1.9425vw,31.5px)!important;
   }
 }
+
+/* J277 DO NOW ONLY — single GCSE layout, 12 November 2026.
+   The H446 classroom engine remains shared; these narrower selectors override
+   its stretched-height rows without changing H446, other phases, answers
+   or navigation. Keep four MCQ choices and readable, fixed-size text.
+   Short-projector exceptions are editorial work, NOT a font-shrinking trigger. */
+:where(body:where(:has(.course-back[href*="j277-hub"]))) #do-now .j277-mcq{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  width:100%;
+  min-width:0;
+  margin:6px 0 0;
+  padding:0;
+  gap:6px 9px;
+  list-style-type:upper-alpha;
+  list-style-position:inside;
+  font-size:clamp(17px,1.2vw,22px);
+  line-height:1.2;
+}
+:where(body:where(:has(.course-back[href*="j277-hub"]))) #do-now .j277-mcq > li{
+  min-width:0;
+  margin:0;
+  padding:6px 9px;
+  border:1px solid #d9e5de;
+  border-radius:9px;
+  background:#f8faf9;
+  overflow-wrap:anywhere;
+  line-height:1.2;
+}
+:where(body:where(:has(.course-back[href*="j277-hub"]))) #do-now .j277-mcq > li::marker{font-weight:800}
+
+@media (min-width:901px) and (min-height:500px){
+  body:where(:has(.course-back[href*="j277-hub"])):not(.answer-page) #do-now .donow-stage:first-child{
+    height:auto;
+    min-height:0;
+  }
+  body:where(:has(.course-back[href*="j277-hub"])):not(.answer-page) #do-now .donow-questions{
+    height:auto;
+    min-height:0;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-template-rows:auto auto;
+    grid-auto-rows:auto;
+    align-content:start;
+    align-items:stretch;
+    gap:clamp(5px,.8vh,8px) clamp(10px,1vw,15px);
+    padding-bottom:2px;
+  }
+  body:where(:has(.course-back[href*="j277-hub"])):not(.answer-page) #do-now .donow-questions > .donow-question{
+    min-width:0;
+    min-height:0;
+    height:100%;
+    padding:clamp(5px,.65vh,9px) clamp(11px,1vw,16px);
+    justify-content:flex-start;
+    align-items:stretch;
+  }
+  body:where(:has(.course-back[href*="j277-hub"])):not(.answer-page) #do-now .donow-questions > .donow-question > strong{
+    margin:0 0 2px;
+    font-size:clamp(15px,1.1vw,19px);
+    line-height:1.22;
+  }
+  body:where(:has(.course-back[href*="j277-hub"])):not(.answer-page) #do-now .donow-questions > .donow-question > p{
+    margin:0;
+    line-height:1.22;
+  }
+  body:where(:has(.course-back[href*="j277-hub"])):not(.answer-page) #do-now .donow-questions .j277-mcq{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    margin:3px 0 0;
+    gap:3px 8px;
+    line-height:1.18;
+  }
+  body:where(:has(.course-back[href*="j277-hub"])):not(.answer-page) #do-now .donow-questions .j277-mcq > li{
+    padding:2px 8px;
+    line-height:1.18;
+  }
+}
+
+/* J277 DO NOW ONLY — distinguish the four retrieval questions at a glance.
+   Inset outlines leave card dimensions, large text and the 2×2 grid untouched. */
+:where(body:where(:has(.course-back[href*="j277-hub"]))) #do-now .donow-stage:first-child .donow-questions > .donow-question{
+  outline:2px solid var(--j277-donow-outline);
+  outline-offset:-2px;
+}
+:where(body:where(:has(.course-back[href*="j277-hub"]))) #do-now .donow-stage:first-child .donow-questions > .donow-question:nth-child(1){
+  --j277-donow-outline:#347ca8; /* Last lesson: blue */
+}
+:where(body:where(:has(.course-back[href*="j277-hub"]))) #do-now .donow-stage:first-child .donow-questions > .donow-question:nth-child(2){
+  --j277-donow-outline:#2c8b68; /* Earlier learning MCQ: green */
+}
+:where(body:where(:has(.course-back[href*="j277-hub"]))) #do-now .donow-stage:first-child .donow-questions > .donow-question:nth-child(3){
+  --j277-donow-outline:#b97624; /* Earlier learning: amber */
+}
+:where(body:where(:has(.course-back[href*="j277-hub"]))) #do-now .donow-stage:first-child .donow-questions > .donow-question:nth-child(4){
+  --j277-donow-outline:#8662a8; /* Challenge: plum */
+}
+
+/* Published H446 Q2 choices and answer. Scoped to the single Do Now phase. */
+#do-now[data-h446-q2-published="true"] .h446-q2-options{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(5px,.6vw,9px);
+  list-style:none;
+  margin:10px 0 0;
+  padding:0;
+  width:100%;
+}
+#do-now[data-h446-q2-published="true"] .h446-q2-options li{
+  display:flex;
+  align-items:center;
+  min-width:0;
+  gap:8px;
+  border:1px solid #c9dcd2;
+  border-radius:8px;
+  padding:clamp(6px,.65vw,10px);
+  background:#f7faf8;
+  color:#17392a;
+  font-size:clamp(22px,1.8vw,28px);
+  font-weight:650;
+  line-height:1.15;
+}
+#do-now[data-h446-q2-published="true"] .h446-q2-letter{
+  flex:none;
+  display:inline-grid;
+  place-items:center;
+  width:1.45em;
+  height:1.45em;
+  background:#e4eee8;
+  border-radius:5px;
+  color:#206145;
+  font-weight:850;
+}
+#do-now[data-h446-q2-published="true"] .h446-q2-options--review li.h446-q2-correct{
+  background:#e4f4e7;
+  border-color:#368451;
+  box-shadow:inset 0 0 0 1px #368451;
+}
+#do-now[data-h446-q2-published="true"] .donow-review-question .h446-q2-options{
+  margin-top:15px;
+}
+#do-now[data-h446-q2-published="true"] .donow-review-answer .h446-q2-explain{
+  margin-top:12px;
+}
+@media(max-width:700px){
+  #do-now[data-h446-q2-published="true"] .h446-q2-options li{font-size:17px;padding:6px;gap:5px}
+  #do-now[data-h446-q2-published="true"] .h446-q2-options{gap:5px}
+}
