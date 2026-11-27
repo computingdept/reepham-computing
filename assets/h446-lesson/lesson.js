@@ -108,7 +108,7 @@ function createStageNavigator(selector,labels){
     },
     nextLabel(page){
       const items=stages(page),i=visibleIndex(items);
-      return i===0&&items.length>1?labels.first:i<items.length-1?labels.next:labels.last;
+      return !items.length&&labels.empty!==undefined?labels.empty:i===0&&items.length>1?labels.first:i<items.length-1?labels.next:labels.last;
     },
     canBack(page){return visibleIndex(stages(page))>0;},
     step(page,direction){
@@ -124,6 +124,7 @@ function createStageNavigator(selector,labels){
 let doNowNavigation=createStageNavigator('.donow-stage',{
   first:'Reveal answer 1 →',next:'Next answer →',last:'Continue → Objectives'
 });
+let newLearningNavigation=createStageNavigator('.nl-stage',{first:'Next step →',next:'Next step →',last:'Continue → I Do',empty:'Continue →'});
 // -1 means the starting problem is visible and no modelled step is revealed.
 // Reading from the end also supports opt-in cumulative examples.
 function modellingStepIndex(steps){
@@ -946,10 +947,7 @@ function resetPhaseState(id){
     }
   }
   if(id==='do-now')doNowNavigation.reset(page);
-  if(id==='new-learning'){
-    const stages=[...page.querySelectorAll('.nl-stage')];
-    if(stages.length)showOnly(stages,0);
-  }
+  if(id==='new-learning')newLearningNavigation.reset(page);
   if(id==='i-do')idoNavigation.reset(page);
   if(id==='we-do'){
     const examples=[...page.querySelectorAll('.wedo-example')];
@@ -1210,11 +1208,7 @@ function updateControl(){
   }else if(current==='do-now'){
     label=doNowNavigation.nextLabel(page);
   }else if(current==='new-learning'){
-    const stages=[...page.querySelectorAll('.nl-stage')];
-    if(stages.length){
-      const i=visibleIndex(stages);
-      label=i<stages.length-1?'Next step →':'Continue → I Do';
-    }
+    label=newLearningNavigation.nextLabel(page);
   }else if(current==='i-do'){
     label=idoNavigation.nextLabel(page);
   }else if(current==='we-do'){
@@ -1420,11 +1414,7 @@ function next(){
     }
   }
   if(current==='do-now'&&doNowNavigation.step(page,1)){updateControl();return;}
-  if(current==='new-learning'){
-    const stages=[...page.querySelectorAll('.nl-stage')];
-    const i=visibleIndex(stages);
-    if(i<stages.length-1){showOnly(stages,i+1);updateControl();return;}
-  }
+  if(current==='new-learning'&&newLearningNavigation.step(page,1)){updateControl();return;}
   if(current==='i-do'&&idoNavigation.next(page)){updateControl();return;}
   if(current==='we-do'){
     const examples=[...page.querySelectorAll('.wedo-example')];
@@ -1825,15 +1815,7 @@ function previousAction(){
       }
     }
   }
-  if(current==='new-learning'){
-    const stages=[...page.querySelectorAll('.nl-stage')];
-    const i=visibleIndex(stages);
-    if(i>0){
-      showOnly(stages,i-1);
-      updateControl();
-      return;
-    }
-  }
+  if(current==='new-learning'&&newLearningNavigation.step(page,-1)){updateControl();return;}
   if(current==='we-do'){
     const examples=[...page.querySelectorAll('.wedo-example')];
     if(examples.length){
@@ -2475,11 +2457,14 @@ if(document.getElementById('we-do')&&/^\/lessons\/(?:h446|j277)\/lesson-\d{3}(?:
     .then(({prepareWedoLabels})=>prepareWedoLabels())
     .catch(error=>console.warn('We Do presentation module unavailable; original labels retained:',error));
 }
-/* New Learning presentation, scoped to numbered J277 and H446 lessons. */
+/* New Learning phase module; synchronous generic navigation remains available. */
 if(document.getElementById('new-learning')&&/^\/lessons\/(?:h446|j277)\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname)){
-  import('./new-learning.js?v=20261127-labels1')
-    .then(({prepareNewLearningLabels})=>prepareNewLearningLabels())
-    .catch(error=>console.warn('New Learning presentation module unavailable; original labels retained:',error));
+  import('./new-learning.js?v=20261127-navigation1')
+    .then(({prepareNewLearningLabels,createNewLearningNavigation})=>{
+      newLearningNavigation=createNewLearningNavigation(createStageNavigator);
+      prepareNewLearningLabels();
+    })
+    .catch(error=>console.warn('New Learning phase module unavailable; original labels and navigation retained:',error));
 }
 showPage(location.hash.slice(1)||'do-now');
 /* Identity is non-essential presentation. A badge/label problem must never

@@ -10,3 +10,7 @@ export function prepareNewLearningLabels(){
     });
   });
 }
+
+export function createNewLearningNavigation(createStageNavigator){
+  return createStageNavigator('.nl-stage',{first:'Next step →',next:'Next step →',last:'Continue → I Do',empty:'Continue →'});
+}
