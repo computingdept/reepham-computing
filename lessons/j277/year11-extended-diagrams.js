@@ -84,16 +84,23 @@ function subjectScene(spec,stage){
  if(/Boolean Logic: AND, OR and NOT/.test(title)){
   const gate=learn?(stage===1?"OR":stage===2?"NOT":"AND"):(mode==="guided"?"OR":"AND");
   let h=small(24,78,"LOGIC GATE · "+gate+" · evaluate each input pair");
-  h+=label(24,138,85,46,"A",K.sky,21)+arrow(109,161,271,161);
-  if(gate!=="NOT"){h+=label(24,222,85,46,"B",K.sky,21)+arrow(109,245,271,245);}
-  if(gate==="AND"){
-   h+='<path d="M270 130 H328 A73 73 0 0 1 328 276 H270Z" fill="'+K.amber+'" stroke="#b18738" stroke-width="3"/>';
-  }else if(gate==="OR"){
-   h+='<path d="M270 130 Q332 202 270 276 Q362 284 421 203 Q362 122 270 130Z" fill="'+K.amber+'" stroke="#b18738" stroke-width="3"/>';
+  const wire=(x,y,u,v)=>'<path d="M'+x+' '+y+'L'+u+' '+v+'" fill="none" stroke="'+K.dark+'" stroke-width="3" stroke-linecap="round"/>';
+  if(gate==="NOT"){
+   h+=label(24,180,85,46,"A = 1",K.sky,19)+wire(109,203,279,203);
+   h+='<path d="M279 140L409 203L279 266Z" fill="'+K.amber+'" stroke="#b18738" stroke-width="3"/><circle cx="421" cy="203" r="12" fill="white" stroke="#b18738" stroke-width="3"/>';
+   h+=wire(433,203,491,203);
   }else{
-   h+='<path d="M279 140 L409 203 L279 266Z" fill="'+K.amber+'" stroke="#b18738" stroke-width="3"/><circle cx="421" cy="203" r="11" fill="white" stroke="#b18738" stroke-width="3"/>';
+   const inputX=gate==="OR"?290.5:270;
+   h+=label(24,138,85,46,"A = 1",K.sky,19)+wire(109,161,inputX,161);
+   h+=label(24,222,85,46,"B = 0",K.sky,19)+wire(109,245,inputX,245);
+   if(gate==="AND"){
+    h+='<path d="M270 130H328A73 73 0 0 1 328 276H270Z" fill="'+K.amber+'" stroke="#b18738" stroke-width="3"/>';
+    h+=wire(401,203,491,203);
+   }else{
+    h+='<path d="M270 130Q332 203 270 276Q362 284 421 203Q362 122 270 130Z" fill="'+K.amber+'" stroke="#b18738" stroke-width="3"/>';
+    h+=wire(421,203,491,203);
+   }
   }
-  h+=arrow(435,203,485,203);
   h+=label(491,171,119,67,stage>=3?(gate==="AND"?"0":gate==="OR"?"1":"0"):"?",stage>=3?K.mint:K.grey,25);
   h+=small(53,319,gate==="NOT"?"Input example: A = 1":"Input example: A = 1, B = 0");
   h+=small(53,349,gate==="NOT"?"NOT acts on one input; output is inverted":gate==="AND"?"AND only gives 1 when both inputs are 1":"OR gives 1 when one or both inputs are 1");
@@ -101,8 +108,8 @@ function subjectScene(spec,stage){
  }
  if(/Truth Tables and Combined Logic/.test(title)){
   const guided=mode==="guided",formula=guided?"(A OR B) AND C":"(A AND B) OR C";
-  let h=small(29,74,"Q = "+formula);
-  const cols=[["A",40],["B",129],["C",218],["X",341],["Q",482]];
+  let h=small(29,74,"Q = "+formula)+text(598,74,guided?"X = A OR B":"X = A AND B",14,"end");
+  const cols=[["A",28],["B",135],["C",242],["X",349],["Q",482]];
   cols.forEach(([name,x])=>{h+=label(x,84,name==="Q"?115:96,32,name,K.sky,17)});
   for(let i=0;i<8;i++){
    const a=(i>>2)&1,b=(i>>1)&1,c=i&1,x=guided?(a||b)?1:0:(a&&b)?1:0,q=guided?(x&&c)?1:0:(x||c)?1:0;
@@ -200,11 +207,13 @@ function subjectScene(spec,stage){
  }
   if(/Programming Languages and Translators/.test(title)){
   let h=small(29,85,"SOURCE CODE · TWO TRANSLATION APPROACHES");
-  h+=label(31,148,160,78,"SOURCE",K.sky,23)+arrow(191,185,241,185);
+  h+=label(25,147,155,78,"SOURCE",K.sky,22);
+  h+='<path d="M180 186H207V134H238M230 128L238 134L230 140M207 186V250H238M230 244L238 250L230 256" stroke="'+K.blue+'" stroke-width="3" stroke-linejoin="round" fill="none"/>';
   h+=label(241,101,169,66,"COMPILER",stage>=1?K.amber:K.grey,20);
   h+=label(241,217,169,66,"INTERPRETER",stage>=2?K.amber:K.grey,19);
-  h+=arrow(413,136,461,136)+arrow(413,250,461,250);
-  h+=label(465,103,145,64,"OUTPUT",K.mint,18)+label(465,217,145,64,"EXECUTE",K.mint,18);
+  h+=arrow(410,134,455,134)+arrow(410,250,455,250);
+  h+=label(459,101,157,66,"OUTPUT CODE",K.mint,17)+label(459,217,157,66,"EXECUTES",K.mint,19);
+  h+=text(537,187,"Run later",15)+text(537,303,"During interpretation",14);
   h+=small(47,350,"The CPU ultimately executes machine instructions.");
   return h;
  }
@@ -213,8 +222,9 @@ function subjectScene(spec,stage){
   const source=["counter = 3","counter = counter + 2","print(counter)"];
   source.forEach((v,i)=>h+=label(42,145+i*53,340,45,(i+1)+": "+v,i===stage-1?K.amber:K.grey,16));
   h+=label(404,145,194,46,"WATCH",K.mint,18);
-  h+=label(404,200,194,48,"counter = "+(stage>=2?"5":"3"),K.amber,18);
+  h+=label(404,200,194,48,"counter = "+(stage>=2?"5":stage>=1?"3":"—"),stage>=1?K.amber:K.grey,18);
   h+=label(404,265,194,46,stage>=3?"OUTPUT: 5":"OUTPUT: ?",K.light,17);
+  if(stage>=1)h+='<circle cx="33" cy="'+(167+(stage-1)*53)+'" r="6" fill="#bf8a31"/>';
   return h;
  }
  return "";
