@@ -579,7 +579,7 @@
  b+=C(18,96,132,75,v(0,"Input A"),colour[0]);
  if(!isNot)b+=C(18,210,132,75,v(1,"Input B"),colour[0]);
  if(isNot){b+=L(150,134,213,134)+L(213,134,213,184)+L(213,184,236,184);}
- else {b+=L(150,151,236,151)+L(150,229,236,229);}
+ else {b+=L(150,151, isOr?243:236,151)+L(150,229,isOr?246:236,229);}
  if(isNot){
   b+='<path d="M236 126 L364 184 L236 244 Z" fill="#e5f3e9" stroke="'+green+'" stroke-width="4"/>'+
   '<circle cx="372" cy="184" r="9" fill="#fff" stroke="'+green+'" stroke-width="4"/>';
@@ -588,7 +588,7 @@
  }else{
   b+='<path d="M236 135 L307 135 C386 135 386 251 307 251 L236 251 Z" fill="#e5f3e9" stroke="'+green+'" stroke-width="4"/>';
  }
- b+=A(isNot?382:378,193,433,193)+C(438,153,98,81,"Q",colour[2]);
+ b+=L(isNot?381:isOr?377:366,isNot?184:isOr?194:193,438,193)+C(438,153,98,81,"Q",colour[2]);
  b+=T(306,192,isNot?"NOT":isOr?"OR":"AND",17);
  b+=T(282,297,kind==="combined-logic"?"Q=(A AND B) OR C · concept stage":isNot?"Q=NOT A":isOr?"Q=A OR B":"Q=A AND B",17);
  }
@@ -599,12 +599,12 @@
    b+=L(119,205,165,205)+L(165,205,165,184)+L(165,184,185,184);
    b+='<path d="M185 102 L232 102 C303 102 303 212 232 212 L185 212 Z" fill="#dff2e8" stroke="'+green+'" stroke-width="4"/>';
    b+=T(240,163,"AND",16);
-   b+=L(304,157,332,157)+L(332,157,332,204)+L(332,204,359,204);
+   b+=L(285.25,157,332,157)+L(332,157,332,204)+L(332,204,370,204);
    b+=T(319,142,"X",15);
-   b+=L(119,277,322,277)+L(322,277,322,255)+L(322,255,359,255);
+   b+=L(119,277,322,277)+L(322,277,322,255)+L(322,255,369,255);
    b+='<path d="M357 180 Q392 229 357 277 Q442 283 475 229 Q442 175 357 180 Z" fill="#f7edd4" stroke="'+green+'" stroke-width="4"/>';
    b+=T(420,234,"OR",17);
-   b+=L(477,229,500,229)+C(503,195,49,70,"Q",colour[2]);
+   b+=L(475,229,503,229)+C(503,195,49,70,"Q",colour[2]);
    b+=T(279,329,"Q = (A AND B) OR C",18);
  }
 else if(["if-branch","nested-if","validation"].includes(kind)){
@@ -615,7 +615,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  b+=C(37,99,188,92,v(0,"Loop condition"),colour[0])+A(228,145,317,145)+C(321,99,203,92,v(1,"Loop body"),colour[1]);
  b+=L(423,195,423,257)+L(423,257,128,257)+L(128,257,128,195)+T(282,289,v(2,"Repeat while required"),17);
  }else if(["array-1d","linear-search","binary-search","bubble-sort","insertion-sort","merge-sort"].includes(kind)){
- const a=labels.length>=5?labels.slice(0,6):["3","7","1","9","4","6"],w=80,g=7,x0=(560-(a.length*w+(a.length-1)*g))/2;
+ const a=labels.length&&labels.every(v=>/^-?\d+(?:\.\d+)?$/.test(v))?labels.slice(0,6):["3","7","1","9","4","6"],w=80,g=7,x0=(560-(a.length*w+(a.length-1)*g))/2;
  a.forEach((v,i)=>{const x=x0+i*(w+g);b+=B(x,127,w,96,kind==="binary-search"&&i===Math.floor((a.length-1)/2)?colour[2]:kind==="bubble-sort"&&i<2?"#f9dede":colour[0]);b+=T(x+w/2,185,v,24)+T(x+w/2,109,String(i),15);});
  b+=T(280,264,kind==="binary-search"?"Sorted data · compare midpoint":kind==="linear-search"?"Check each position in turn":kind==="bubble-sort"?"Compare neighbours, swap if necessary":kind==="insertion-sort"?"Grow a sorted section":kind==="merge-sort"?"Divide into halves · merge ordered": "Arrays start at index zero",16);
  }else if(["array-2d","sql-table","truth-table","combined-truth"].includes(kind)){
@@ -878,24 +878,22 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     lower=family==="test"?"Compare expected and actual results":"Record a value only when it changes or prints";
   }else if(["array","search","sort","merge","string"].includes(family)){
     if(family==="merge"){
-      const original=items.slice(),len=original.length,half=Math.ceil(len/2),left=original.slice(0,half),right=original.slice(half);
-      const chartRow=(items,x,y,w)=>items.map((a,i)=>box(x+i*(w+5),y,w,64,i%2?c.greenP:c.blueP,5)+text(x+i*(w+5)+w/2,y+42,a,20)).join("");
-      const num=(a,b)=>Number(a)-Number(b);
-      if(stage===0){
-        body+=text(280,93,"START · UNSORTED DATA",18)+chart(original,[],128);
-      }else if(stage===1){
-        body+=text(280,91,"DIVIDE INTO TWO HALVES",18);
-        body+=chartRow(left,48,148,84)+chartRow(right,329,148,84);
-        body+=text(280,182,"+",28,c.gold);
-      }else if(stage===2){
-        body+=text(280,91,"SORT EACH SMALL GROUP",18);
-        body+=chartRow(left.slice().sort(num),48,148,84)+chartRow(right.slice().sort(num),329,148,84);
-        body+=text(280,182,"+",28,c.gold);
-      }else{
-        body+=text(280,93,"MERGE IN ASCENDING ORDER",18);
-        body+=chart(original.slice().sort(num),[],128);
+      const original=items.slice();
+      const levels=[[original]];
+      while(levels[levels.length-1].some(g=>g.length>1)){
+        levels.push(levels[levels.length-1].flatMap(g=>g.length<=1?[g]:[g.slice(0,Math.ceil(g.length/2)),g.slice(Math.ceil(g.length/2))]));
       }
-      lower="Split → sort small groups → merge ordered values";
+      const merged=levels.slice(0,-1).reverse().map(groups=>groups.map(g=>g.slice().sort((a,b)=>Number(a)-Number(b))));
+      const shown=stage===0?levels.slice(0,1):stage===1?levels:stage===2?levels.concat(merged.slice(0,1)):levels.concat(merged);
+      const dy=Math.min(52,225/Math.max(1,shown.length-1)),hh=Math.min(37,dy-8);
+      shown.forEach((groups,i)=>{
+        let x=26;const y=69+i*dy;
+        groups.forEach(g=>{const w=508*g.length/original.length;
+          body+=box(x+3,y,w-6,hh,i>=levels.length?c.greenP:c.blueP,5)+text(x+w/2,y+hh*.68,g.join("  "),Math.min(19,w/Math.max(2,g.join("  ").length)*1.5));
+          x+=w;
+        });
+      });
+      lower=stage===0?"Start with the unsorted list":stage===1?"Split until every group has one item":stage===2?"Merge neighbouring items into sorted groups":"Merge sorted groups until one list remains";
     }else{
     let arr=items.slice();
     if(family==="string"){arr=String(val(0,"COMPUTER")).split("").slice(0,9);}
@@ -965,23 +963,23 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     body+=line(113,202,163,202)+line(163,202,163,191)+line(163,191,183,191);
     body+='<path d="M183 110 L231 110 C297 110 297 217 231 217 L183 217 Z" fill="'+c.greenP+'" stroke="'+c.green+'" stroke-width="3.5"/>';
     body+=text(238,170,"AND",16);
-    body+=line(297,164,323,164)+line(323,164,323,211)+line(323,211,353,211);
+    body+=line(280.5,164,323,164)+line(323,164,323,211)+line(323,211,365,211);
     body+=text(309,150,"X="+xval,15,stage>=1?c.green:c.muted);
-    body+=line(113,274,315,274)+line(315,274,315,253)+line(315,253,353,253);
+    body+=line(113,274,315,274)+line(315,274,315,253)+line(315,253,365,253);
     body+='<path d="M351 189 Q388 232 351 280 Q432 287 466 233 Q432 181 351 189 Z" fill="'+c.goldP+'" stroke="'+c.green+'" stroke-width="3.5"/>';
     body+=text(414,237,"OR",16);
-    body+=line(467,233,488,233)+card(493,196,58,73,"Q="+qval,c.goldP);
+    body+=line(466,233,493,233)+card(493,196,58,73,"Q="+qval,c.goldP);
     lower="X = A AND B; then Q = X OR C";
   }else if(family==="gate"){
     const op=(String(p.gate||"AND")).toUpperCase();
     body+=card(22,93,134,72,"A",c.blueP);
     if(op!=="NOT")body+=card(22,207,134,72,"B",c.blueP);
     if(op==="NOT"){body+=line(156,128,208,128)+line(208,128,208,185)+line(208,185,234,185);}
-    else {body+=line(156,148,235,148)+line(156,223,235,223);}
+    else {body+=line(156,148,op==="OR"?248:235,148)+line(156,223,op==="OR"?249:235,223);}
     if(op==="NOT"){body+='<path d="M234 130 L372 185 L234 241 Z" fill="'+c.greenP+'" stroke="'+c.green+'" stroke-width="4"/><circle cx="380" cy="185" r="9" fill="#fff" stroke="'+c.green+'" stroke-width="4"/>';}
     else if(op==="OR"){body+='<path d="M232 128 Q289 186 232 244 Q343 254 392 185 Q343 116 232 128 Z" fill="'+c.greenP+'" stroke="'+c.green+'" stroke-width="4"/>';}
     else {body+='<path d="M235 129 L301 129 C381 129 381 242 301 242 L235 242 Z" fill="'+c.greenP+'" stroke="'+c.green+'" stroke-width="4"/>';}
-    body+=text(309,192,op,18)+arrow(op==="NOT"?390:396,185,442,185)+card(445,150,92,73,guided?"?":"Q",c.goldP);
+    body+=text(309,192,op,18)+line(op==="NOT"?389:op==="OR"?392:361,185,445,185)+card(445,150,92,73,guided?"?":"Q",c.goldP);
     lower=op==="NOT"?"NOT reverses one input":op==="OR"?"OR needs at least one input high":"AND requires both inputs high";
   }else if(family==="dice"){
     if(guided){body+=chart(["1","2","3","4","5","6"],[],126);lower="Possible values within the stated range";}
