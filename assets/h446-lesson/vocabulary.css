@@ -67,3 +67,58 @@
 
 .phase-vocab{overflow:hidden!important}
 @media(max-width:900px){.phase-vocab{overflow:visible!important}}
+
+/* J277/H446 retrieval: one stationary full-width question card. The existing
+   hidden attribute and navigation still control when the answer is revealed.
+   Keep legacy cards, KS3, Objectives and print presentation unchanged. */
+@media screen{
+  body:not(.answer-page):where(:has(.course-back:is([href*="j277-hub"],[href*="h446-hub"]))) #vocabulary .vocab-stage:has(> .vocab-prompt):has(> .vocab-answer){
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    justify-content:flex-start;
+    gap:0;
+    height:auto;
+    min-height:clamp(280px,44vh,390px);
+    padding:clamp(16px,1.8vw,26px);
+    background:#fff;
+    border:1px solid var(--line);
+    border-top:7px solid var(--green);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+  }
+  body:not(.answer-page):where(:has(.course-back:is([href*="j277-hub"],[href*="h446-hub"]))) #vocabulary .vocab-stage:has(> .vocab-prompt):has(> .vocab-answer) > :is(.vocab-prompt,.vocab-answer){
+    height:auto;
+    min-height:0;
+    padding:0;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    box-shadow:none;
+  }
+  body:not(.answer-page):where(:has(.course-back:is([href*="j277-hub"],[href*="h446-hub"]))) #vocabulary .vocab-stage:has(> .vocab-prompt):has(> .vocab-answer) > .vocab-prompt{
+    flex:0 0 auto;
+    justify-content:flex-start;
+  }
+  body:not(.answer-page):where(:has(.course-back:is([href*="j277-hub"],[href*="h446-hub"]))) #vocabulary .vocab-stage:has(> .vocab-prompt):has(> .vocab-answer) > .vocab-answer:not([hidden]){
+    flex:0 0 auto;
+    align-items:center;
+    justify-content:flex-start;
+    text-align:center;
+    margin-top:clamp(22px,3vh,36px);
+    padding-top:clamp(16px,2vh,26px);
+    border-top:1px solid var(--line);
+  }
+  body:not(.answer-page):where(:has(.course-back:is([href*="j277-hub"],[href*="h446-hub"]))) #vocabulary .vocab-stage:has(> .vocab-prompt):has(> .vocab-answer) > .vocab-answer .vocab-answer-value{
+    margin:0 auto 12px;
+  }
+  body:not(.answer-page):where(:has(.course-back:is([href*="j277-hub"],[href*="h446-hub"]))) #vocabulary .vocab-stage:has(> .vocab-prompt):has(> .vocab-answer) > .vocab-prompt:has(> .vocab-test-label) > .vocab-stage-count{
+    display:none;
+  }
+  body:not(.answer-page):where(:has(.course-back:is([href*="j277-hub"],[href*="h446-hub"]))) #vocabulary[data-vocab-flow="retrieval"] .vocab-stage > .vocab-answer > .vocab-test-label{
+    display:none;
+  }
+}
+@media screen and (max-width:700px){
+  body:not(.answer-page):where(:has(.course-back:is([href*="j277-hub"],[href*="h446-hub"]))) #vocabulary .vocab-stage:has(> .vocab-prompt):has(> .vocab-answer){min-height:240px}
+}
