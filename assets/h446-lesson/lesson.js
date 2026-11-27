@@ -2469,6 +2469,12 @@ if(document.getElementById('i-do')&&/^\/lessons\/(?:h446|j277)\/lesson-\d{3}(?:\
     })
     .catch(error=>console.warn('I Do phase module unavailable; original labels and navigation retained:',error));
 }
+/* We Do phase presentation, scoped to numbered J277 and H446 lessons. */
+if(document.getElementById('we-do')&&/^\/lessons\/(?:h446|j277)\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname)){
+  import('./we-do.js?v=20261127-labels1')
+    .then(({prepareWedoLabels})=>prepareWedoLabels())
+    .catch(error=>console.warn('We Do presentation module unavailable; original labels retained:',error));
+}
 showPage(location.hash.slice(1)||'do-now');
 /* Identity is non-essential presentation. A badge/label problem must never
    interrupt lesson content, classroom signals, or phase navigation. */
