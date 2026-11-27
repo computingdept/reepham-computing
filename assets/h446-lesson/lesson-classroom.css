@@ -2969,3 +2969,15 @@ body:not(.answer-page) #i-do[data-ido-compact-history="true"] .ido-method
   padding:5px 9px!important;
   margin:3px 0 5px!important;
 }
+
+/* Approved shared Do Now question typography: 5% larger on classroom displays.
+   First question screen only; original grid, headings, answers and mobile unchanged. */
+@media screen and (min-width:901px) and (min-height:500px) {
+  body:not(.answer-page) #do-now .donow-stage:first-child .donow-question p {
+    font-size:clamp(25.5px,2.098vw,32.1px)!important;
+  }
+  body:not(.answer-page) #do-now .donow-stage:first-child .donow-question .j277-mcq,
+  body.h446-donow-layout-parity:not(.answer-page) #do-now[data-h446-q2-published="true"] .donow-stage:first-child .h446-q2-options li {
+    font-size:clamp(24.15px,1.9425vw,31.5px)!important;
+  }
+}
