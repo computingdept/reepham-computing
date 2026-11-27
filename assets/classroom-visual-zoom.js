@@ -21,7 +21,7 @@
       if (standaloneReference) document.querySelector("#new-learning")?.classList.add("a1-visual-learning");
       // Preserve the existing J277 presentation and its figure-wide tap target.
       document.querySelectorAll("#new-learning svg, #i-do svg, #we-do svg").forEach(svg => {
-        prepareZoomTarget(svg.closest("figure") || svg, svg);
+        if (!svg.closest("[data-no-zoom], [data-flowchart-code]")) prepareZoomTarget(svg.closest("figure") || svg, svg);
       });
       return;
     }

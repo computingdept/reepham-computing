@@ -2451,10 +2451,11 @@ if(document.getElementById('we-do')&&/^\/lessons\/(?:h446|j277)\/lesson-\d{3}(?:
 }
 /* New Learning phase module; synchronous generic navigation remains available. */
 if(document.getElementById('new-learning')&&/^\/lessons\/(?:h446|j277)\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname)){
-  import('./new-learning.js?v=20261127-navigation1')
-    .then(({prepareNewLearningLabels,createNewLearningNavigation})=>{
+  import('./new-learning.js?v=20261127-flowchart-code1')
+    .then(({prepareNewLearningLabels,createNewLearningNavigation,prepareFlowchartCode})=>{
       newLearningNavigation=createNewLearningNavigation(createStageNavigator);
       prepareNewLearningLabels();
+      prepareFlowchartCode();
     })
     .catch(error=>console.warn('New Learning phase module unavailable; original labels and navigation retained:',error));
 }

@@ -14,3 +14,28 @@ export function prepareNewLearningLabels(){
 export function createNewLearningNavigation(createStageNavigator){
   return createStageNavigator('.nl-stage',{first:'Next step →',next:'Next step →',last:'Continue → I Do',empty:'Continue →'});
 }
+
+/* Approved SVG/code pairs only. No automatic code generation or extra controls. */
+export function prepareFlowchartCode(){
+  const root=document.getElementById('new-learning');
+  if(!root)return;
+  root.querySelectorAll('figure[data-flowchart-code]').forEach(figure=>{
+    if(figure.dataset.flowchartReady)return;
+    const svg=figure.querySelector(':scope > svg');
+    const code=figure.querySelector(':scope > pre.flowchart-code');
+    if(!svg||!code)return;
+    figure.dataset.flowchartReady='true';
+    function toggle(){
+      const showCode=code.hidden;
+      code.hidden=!showCode;
+      svg.toggleAttribute('hidden',showCode);
+      figure.setAttribute('aria-pressed',String(showCode));
+      figure.setAttribute('aria-label',showCode?'Show flowchart':'Show equivalent code');
+    }
+    figure.addEventListener('click',toggle);
+    figure.addEventListener('keydown',event=>{
+      if(event.key!=='Enter'&&event.key!==' ')return;
+      event.preventDefault();event.stopPropagation();toggle();
+    });
+  });
+}

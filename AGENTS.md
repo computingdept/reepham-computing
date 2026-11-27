@@ -69,3 +69,10 @@ This guidance is mandatory for new and edited lessons. Existing legacy code is m
 6. Change only You Do. Protect all other seven phases, H446 and Cloudflare. Verify real browser rendering before claiming success.
 
 No unrecorded question choices or implicit SVG reuse. If the mapping is incomplete, update the mapping as a proposal and leave the live lesson content untouched until the relevant approvals.
+
+## Approved SVG artwork workflow (27 November 2026)
+
+- Improve SVGs by category: retain, refine or replace, show the proposed diagram, obtain teacher approval, commit, then move on. Do not reopen lesson phases, create dashboards or perform unrelated audits. Reuse identical approved artwork when the teaching purpose matches.
+- Flowcharts: Start at top, End at bottom aligned with Start, correct OCR symbols, orthogonal connectors, clear arrowheads, Yes/No labels with clear space, consistent variables, no crossings through symbols, independent output exit paths and a clean merge before End. No decorative frame or redundant title/footer.
+- For each programming flowchart, author matching code alongside the artwork (J277 OCR ERL; H446 C# or appropriate syllabus language). Never infer code from SVG at runtime. In New Learning only, an approved SVG/code pair toggles on click or keyboard activation in the same reference area. Clicking again restores the artwork. No extra buttons, links or pop-ups. Non-opted-in artwork retains normal zoom. Do not reveal code early in I Do, We Do or You Do.
+- Use the shared New Learning behaviour and stylesheet, not lesson-local scripts/styles. J277 authored visual records may supply approvedFlowchartSvg and flowchartCode; the shared renderer emits the opt-in figure. Pilot: Lesson 056 step 3. No bulk retrofit until the teacher checks the pilot. Continue the SVG review, not a phase redesign.
