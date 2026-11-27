@@ -174,6 +174,19 @@ let objectivesNavigation=createDefinitionNavigator({
   skip:page=>page.dataset.ks3VocabIntro!=='true'&&window.matchMedia('(max-width:700px)').matches,
   labels:{inactive:'Next step →',reveal:'Reveal definition →',next:'Next term →',last:'Continue →'}
 });
+let vocabularyNavigation={
+  retrieval:createDefinitionNavigator({
+    stage:'.vocab-stage',response:'[data-vocab-answer]',active:()=>true,skip:()=>false,
+    labels:{inactive:'Continue →',reveal:'Reveal term →',next:'Next definition →',last:'Continue → Exit Ticket'}
+  }),
+  term:createDefinitionNavigator({
+    stage:'.vocab-stage',response:'[data-vocab-answer]',active:()=>true,skip:()=>false,
+    labels:{inactive:'Continue →',reveal:'Reveal definition →',next:'Next term →',last:'Continue → Exit Ticket'}
+  })
+};
+function getVocabularyNavigation(page){
+  return page.dataset.vocabFlow==='retrieval'?vocabularyNavigation.retrieval:vocabularyNavigation.term;
+}
 // -1 means the starting problem is visible and no modelled step is revealed.
 // Reading from the end also supports opt-in cumulative examples.
 function modellingStepIndex(steps){
@@ -1045,11 +1058,7 @@ function resetPhaseState(id){
   if(id==='vocabulary'){
     const stages=[...page.querySelectorAll('.vocab-stage')];
     if(stages.length){
-      showOnly(stages,0);
-      stages.forEach(stage=>{
-        const answer=stage.querySelector('[data-vocab-answer]');
-        if(answer)answer.hidden=true;
-      });
+      getVocabularyNavigation(page).reset(page);
     }else{
       page.querySelectorAll('.vocab-card').forEach((card,i)=>{
         const term=card.querySelector('dt');
@@ -1369,15 +1378,7 @@ function updateControl(){
   }else if(current==='vocabulary'){
     const stages=[...page.querySelectorAll('.vocab-stage')];
     if(stages.length){
-      const i=visibleIndex(stages);
-      const answer=stages[i].querySelector('[data-vocab-answer]');
-      if(page.dataset.vocabFlow==='retrieval'){
-        if(answer&&answer.hidden)label='Reveal term →';
-        else if(i<stages.length-1)label='Next definition →';
-        else label='Continue → Exit Ticket';
-      }else if(answer&&answer.hidden)label='Reveal definition →';
-      else if(i<stages.length-1)label='Next term →';
-      else label='Continue → Exit Ticket';
+      label=getVocabularyNavigation(page).nextLabel(page);
     }else if(page.querySelector('.vocab-card [data-answer][hidden]')){
       label='Reveal next answer';
     }
@@ -1574,18 +1575,7 @@ function next(){
   if(current==='vocabulary'){
     const stages=[...page.querySelectorAll('.vocab-stage')];
     if(stages.length){
-      const i=visibleIndex(stages);
-      const answer=stages[i].querySelector('[data-vocab-answer]');
-      if(answer&&answer.hidden){
-        answer.hidden=false;
-        updateControl();return;
-      }
-      if(i<stages.length-1){
-        showOnly(stages,i+1);
-        const nextAnswer=stages[i+1].querySelector('[data-vocab-answer]');
-        if(nextAnswer)nextAnswer.hidden=true;
-        updateControl();return;
-      }
+      if(getVocabularyNavigation(page).next(page)){updateControl();return;}
     }else{
       const answer=page.querySelector('.vocab-card [data-answer][hidden]');
       if(answer){
@@ -1646,20 +1636,7 @@ function previousAction(){
   if(current==='vocabulary'){
     const stages=[...page.querySelectorAll('.vocab-stage')];
     if(stages.length){
-      const i=visibleIndex(stages);
-      const answer=stages[i].querySelector('[data-vocab-answer]');
-      if(answer&&!answer.hidden){
-        answer.hidden=true;
-        updateControl();
-        return;
-      }
-      if(i>0){
-        showOnly(stages,i-1);
-        const previousAnswer=stages[i-1].querySelector('[data-vocab-answer]');
-        if(previousAnswer)previousAnswer.hidden=false;
-        updateControl();
-        return;
-      }
+      if(getVocabularyNavigation(page).previous(page)){updateControl();return;}
     }
   }
   // Optional phases belong between You Do and Key Vocabulary when populated.
@@ -2472,6 +2449,14 @@ if(document.getElementById('overview')&&/^\/lessons\/(?:h446|j277)\/lesson-\d{3}
       objectivesNavigation=createObjectivesNavigation(createDefinitionNavigator);
     })
     .catch(error=>console.warn('Objectives phase module unavailable; original navigation retained:',error));
+}
+/* Vocabulary phase contract; legacy cards and preparation stay synchronous. */
+if(document.getElementById('vocabulary')&&/^\/lessons\/(?:h446|j277)\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname)){
+  import('./vocabulary.js?v=20261127-navigation1')
+    .then(({createVocabularyNavigation})=>{
+      vocabularyNavigation=createVocabularyNavigation(createDefinitionNavigator);
+    })
+    .catch(error=>console.warn('Vocabulary phase module unavailable; original navigation retained:',error));
 }
 showPage(location.hash.slice(1)||'do-now');
 /* Identity is non-essential presentation. A badge/label problem must never
