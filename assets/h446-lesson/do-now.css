@@ -129,6 +129,10 @@
 .donow-review-answer .review-answer{
   font-size:clamp(23px,2vw,32px);line-height:1.3;color:var(--green-dark);font-weight:850;
 }
+/* J277/H446 Q3 and Q4: prose answers use regular weight; retain authored emphasis. */
+:where(body.h446-donow-layout-parity,body:has(.course-back[href*="j277-hub"])) #do-now .donow-deck > .donow-stage:is(:nth-child(4 of .donow-stage),:nth-child(5 of .donow-stage)) .donow-review-answer .review-answer{
+  font-weight:400;
+}
 .donow-review-answer .review-explain{margin-top:18px}
 .donow-review .reference-media{
   flex:1;min-height:0;display:grid;place-items:center;margin-top:10px;
