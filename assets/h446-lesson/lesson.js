@@ -2361,10 +2361,10 @@ if(document.getElementById('exit')&&!document.getElementById('exit-answer-rollou
   document.head.appendChild(link);
 }
 prepareVerifiedExitTicket();
-// Opt-in Today / Next trial. Ordinary lessons keep their authored Exit Ticket.
+// Shared Today / Next preview, available on numbered standard lessons.
 if(new URLSearchParams(location.search).get('exit')==='summary'&&
-    /^\/lessons\/(?:j277\/lesson-002|h446\/lesson-046)\/(?:index\.html)?$/i.test(location.pathname)){
-  import('./exit-summary.js?v=20261127-curriculum1')
+    /^\/lessons\/(?:j277|h446)\/lesson-\d{3}\/(?:index\.html)?$/i.test(location.pathname)){
+  import('./exit-summary.js?v=20261127-curriculum2')
     .then(async ({prepareExitSummary})=>{
       if(await prepareExitSummary()&&current==='exit'){
         updateSignals('exit');

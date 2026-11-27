@@ -64,20 +64,42 @@ async function nextLessonContent(course,id){
   // Use the next authored lesson rather than the generic H446 spec label.
   const doc=new DOMParser().parseFromString(await getText(new URL(next.route,root)),'text/html');
   const title=doc.querySelector('#overview h1')?.textContent.trim().replace(/^Lesson\s+\d{3}\s*[·:–—-]\s*/i,'');
-  const objective=doc.querySelector('#overview .objectives li')?.textContent.trim();
+  const objective=readObjectives(doc.getElementById('overview'))[0];
   if(!title||!objective||title.length>110||objective.length>240)return null;
   return {next:title,detail:objective};
+}
+// Older H446 pages use a plain list under the explicitly labelled objectives.
+function readObjectives(overview){
+  if(!overview)return [];
+  let items=[...overview.querySelectorAll('.objectives li')];
+  if(!items.length){
+    const heading=[...overview.querySelectorAll('strong,h2,h3')].find(el=>/^by the end(?: of (?:this|the) lesson)?[,\s]+you can/i.test(el.textContent.trim()));
+    const list=heading?.nextElementSibling;
+    if(list?.matches('ul,ol'))items=[...list.querySelectorAll(':scope > li')];
+  }
+  return items.map(li=>li.textContent.trim()).filter(Boolean);
+}
+function eligibleLesson(course,id,doc){
+  const you=doc.getElementById('you-do');
+  if(!you||you.dataset.assessmentMode==='true'||doc.body.classList.contains('j277-assessment-lesson'))return false;
+  if(course==='h446'&&id>=161&&id<=180)return false;
+  const label=[doc.title,doc.querySelector('#overview h1')?.textContent,you.dataset.phaseTime].join(' ');
+  if(/\b(?:mock|timed|assessment|closed.book|NEA)\b/i.test(label))return false;
+  return true;
 }
 export async function prepareExitSummary(){
   const match=location.pathname.match(/\/lessons\/(j277|h446)\/lesson-(\d{3})\/(?:index\.html)?$/i);
   const page=document.getElementById('exit');
   const overview=document.getElementById('overview');
   if(!match||!page||!overview||page.dataset.exitSummary==='true')return false;
-  const objectives=[...overview.querySelectorAll('.objectives li')].map(li=>{
-    const text=li.textContent.trim().replace(/[;.]$/,'');
+  const course=match[1].toLowerCase(),id=Number(match[2]);
+  if(!eligibleLesson(course,id,document))return false;
+  const objectives=readObjectives(overview).map(value=>{
+    const text=value.replace(/[;.]$/,'');
     return text?text[0].toUpperCase()+text.slice(1):'';
   }).filter(Boolean);
-  if(objectives.length<1||objectives.length>5)return false;
+  // Keep the recap punchy; don't compress or rewrite unusually long objectives.
+  if(objectives.length<1||objectives.length>5||objectives.some(x=>x.length>180)||objectives.join(' ').length>500)return false;
   const content=await nextLessonContent(match[1].toLowerCase(),Number(match[2]));
   if(!content)return false;
   const make=(tag,cls,text)=>{
