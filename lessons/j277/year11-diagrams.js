@@ -91,26 +91,29 @@ function draw(spec){
     h+=indexed(ar.map(String),{active:Math.min(focus+1,ar.length-1),done:spec.hide?[]:[...Array(Math.min(focus+2,ar.length)).keys()]});h+=T(320,264,"Keep a sorted prefix; insert the next value in its correct position",17);
   }
  }else if(type==="merge"){
-  const vals=a.length?a:["8","3","5","1","7","2","6","4"],half=Math.ceil(vals.length/2);
-  h+=box(90,76,460,42,vals.join("  "),C.light,18);
-  if(n>=1){
-    h+=L(320,121,168,142)+L(320,121,469,142);
-    h+=box(20,147,285,43,vals.slice(0,half).join("  "),C.cream,17);
-    h+=box(335,147,285,43,vals.slice(half).join("  "),C.cream,17);
-    vals.slice(0,8).forEach((value,i)=>{const width=Math.min(70,590/vals.length-5),left=(640-vals.length*(width+4))/2;h+=box(left+i*(width+4),208,width,38,value,C.light,18)});
-  }
-  if(n>=2){
-    let pairs=[];for(let i=0;i<vals.length;i+=2)pairs.push(vals.slice(i,i+2).map(Number).sort((x,y)=>x-y).join(" "));
-    pairs.slice(0,4).forEach((pair,i)=>{h+=box(13+i*158,265,141,35,pair,C.mint,17)});
-  }
-  if(n>=3)h+=box(95,311,450,38,vals.map(Number).sort((x,y)=>x-y).join("  "),C.mint,19);
+  const vals=a.length?a:["8","3","5","1","7","2","6","4"];
+  const split=(arr)=>arr.length<2?[arr]:[arr.slice(0,Math.ceil(arr.length/2)),arr.slice(Math.ceil(arr.length/2))];
+  let levels=[[vals]];
+  while(levels[levels.length-1].some(g=>g.length>1))levels.push(levels[levels.length-1].flatMap(split));
+  const levelsUp=levels.slice(0,-1).reverse().map(groups=>groups.map(g=>g.slice().sort((x,y)=>Number(x)-Number(y))));
+  const stages=n===0?levels.slice(0,1):n===1?levels:n===2?levels.concat(levelsUp.slice(0,1)):levels.concat(levelsUp);
+  const gap=38;
+  stages.forEach((groups,j)=>{
+    const y=65+j*gap;let offset=0;
+    groups.forEach(g=>{
+      const w=580*g.length/vals.length;
+      h+=box(30+offset+3,y,w-6,31,g.join(" "),j===stages.length-1&&n===3?C.mint:j>=levels.length?C.mint:C.light,Math.min(17,(w-10)/Math.max(2,g.join(" ").length)*1.55));
+      offset+=w;
+    });
+  });
+  h+=T(320,335,n===0?"Start with the unsorted list":n===1?"Split until each group contains one item":n===2?"Merge neighbouring sorted groups":"Merge until one sorted list remains",15);
  }else if(type==="compare"){
   h+=box(25,116,280,120,"LINEAR SEARCH",C.light,23)+box(335,116,280,120,"BINARY SEARCH",C.mint,23);
   h+=T(165,276,"Works on unsorted lists",17)+T(480,276,"Requires sorted data",17);
  }else{
   h+=box(22,130,180,92,a[0]||"INPUT",C.light)+L(206,174,228,174)+box(233,130,175,92,a[1]||"PROCESS",C.mint)+L(412,174,433,174)+box(440,130,175,92,a[2]||"OUTPUT",C.cream);
  }
- if(label&&!(type==="merge"&&n===3))h+=T(320,337,label,14,C.muted);
+ if(label&&type!=="merge")h+=T(320,337,label,14,C.muted);
  return '<figure class="a1-scene y11-scene" aria-label="'+esc(title)+'"><svg viewBox="0 0 640 360" role="img" aria-label="'+esc(title)+'" xmlns="http://www.w3.org/2000/svg">'+R(1,1,638,358,"#fbfdfc","#bfd4c7",16)+h+'</svg></figure>';
 }
 window.J277Y11Diagram=draw;

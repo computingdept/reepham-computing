@@ -129,27 +129,32 @@
     const values=phase==="guided"?[7,2,6,4]:[3,9,1,8,5],target=phase==="guided"?6:8,match=phase==="guided"?-1:3;
     const start=values.length===4?83:27,width=values.length===4?96:92,gap=10;
     return svgScene("Linear search: compare each item with the target and identify its zero-based index",
-      note(26,34,"FIND "+target+" · SCAN LEFT TO RIGHT",20)+
-      values.map((n,i)=>pill(start+i*(width+gap),76,width,81,String(n),i===match?"#f9e3a6":"#e0eef9",25)).join("")+
-      values.map((n,i)=>note(start+29+i*(width+gap),65,"i="+i,16)).join("")+
-      note(phase==="guided"?99:130,205,phase==="guided"?"COMPARE IN ORDER · FIND INDEX":"MATCH AT INDEX "+match+" · ZERO-BASED",19));
+      note(26,30,"FIND "+target+" · SCAN LEFT TO RIGHT",20)+
+      values.map((n,i)=>pill(start+i*(width+gap),71,width,65,String(n),i===match?"#f9e3a6":match>=0&&i<match?"#e8edeb":"#e0eef9",25)).join("")+
+      values.map((n,i)=>note(start+29+i*(width+gap),61,"i="+i,16)).join("")+
+      values.map((n,i)=>match<0?"":note(start+i*(width+gap)+12,158,i===match?"MATCH":i<match?"Not "+target:"Untested",13)).join("")+
+      '<path d="M44 179H516M505 172L516 179L505 186" fill="none" stroke="#428063" stroke-width="2.5"/>'+
+      note(phase==="guided"?99:90,214,phase==="guided"?"COMPARE IN ORDER · FIND INDEX":"INDEX 3 · FOUR COMPARISONS",19));
   }
   if(kind==="sorting"){
-    const original=phase==="guided"?"4    2    3":"5    1    4    2";
-    const after=phase==="guided"?"?    ?    ?":"1    4    2    5";
+    const guided=phase==="guided";
+    const rows=guided?[[4,2,3],["?","?","?"]]:[[5,1,4,2],[1,5,4,2],[1,4,5,2],[1,4,2,5]];
+    const labels=guided?["Start","Your result"]:["Start","Swap 5 / 1","Swap 5 / 4","Swap 5 / 2"];
     return svgScene("One full bubble-sort pass swaps out-of-order neighbouring values",
-      note(22,31,"BUBBLE SORT · ONE PASS",19)+
-      pill(32,54,496,52,original,"#e0eef9",24)+
-      '<path d="M280 108 V143 M272 134 L280 143 L288 134" fill="none" stroke="#337a65" stroke-width="3"/>'+
-      pill(32,150,496,51,after,"#e4f2e9",25)+
-      note(phase==="guided"?108:164,224,phase==="guided"?"Predict the result after one pass":"Largest value moves right",16));
+      note(22,27,"BUBBLE SORT · ONE PASS",19)+
+      rows.map((r,i)=>{
+        const y=guided?54+i*76:38+i*43;
+        return note(24,y+27,labels[i],15)+r.map((v,j)=>pill(177+j*89,y,80,36,String(v),!guided&&i===3&&j===3?"#d1e9da":!guided&&i>0&&(j===i-1||j===i)?"#faebcc":"#e0eef9",21)).join("");
+      }).join("")+
+      note(guided?108:164,218,guided?"Predict the result after one pass":"Largest value moves right",16));
   }
   if(kind==="programming"){
     const nums=phase==="guided"?[6,3,8]:[4,7,9];
     return svgScene("One-dimensional array has zero-based indexes",
-      note(27,32,"ONE-DIMENSIONAL ARRAY",20)+
+      note(27,32,"ONE-DIMENSIONAL ARRAY · marks",20)+
       nums.map((n,i)=>pill(32+i*171,80,157,70,String(n),i===0?"#fff0d1":"#e0eef9",25)).join("")+
-      nums.map((n,i)=>note(82+i*171,67,"index "+i,16)).join("")+
+      nums.map((n,i)=>note(64+i*171,67,"marks["+i+"]",17)).join("")+
+      '<path d="M32 159V172H531V159" fill="none" stroke="#428063" stroke-width="2"/>'+
       note(78,204,"First item is at index 0, not 1",18));
   }
   if(kind==="testing"){
