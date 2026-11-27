@@ -1290,7 +1290,8 @@ function updateControl(){
   teacherNextAction.textContent=label.replace(/[←→]/g,'').trim();
   teacherNextAction.title=teacherNextAction.textContent;
   advance.title=teacherNextAction.textContent;
-  previous.disabled=order.indexOf(current)===0||(current==='you-do'&&page?.dataset.assessmentMode==='true');
+  const canStepBackInDoNow=current==='do-now'&&visibleIndex([...page.querySelectorAll('.donow-stage')])>0;
+  previous.disabled=(order.indexOf(current)===0&&!canStepBackInDoNow)||(current==='you-do'&&page?.dataset.assessmentMode==='true');
   document.getElementById('page-count').textContent=(order.indexOf(current)+1)+' / '+order.length;
   syncClassroomFocus();
   updateMobileLessonStatus();
@@ -1538,6 +1539,12 @@ function next(){
 }
 function previousAction(){
   const page=document.getElementById(current);
+  if(current==='do-now'){
+    const stages=[...page.querySelectorAll('.donow-stage')];
+    const i=visibleIndex(stages);
+    if(i>0){showOnly(stages,i-1);updateControl();}
+    return;
+  }
   if(current==='catch-up'||current==='exam-practice'){
     if(window.H446Optional?.step?.(current,-1)){updateControl();return;}
     const prior=order[Math.max(0,order.indexOf(current)-1)];
