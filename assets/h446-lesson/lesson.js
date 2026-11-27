@@ -1150,7 +1150,9 @@ function updateSignals(id){
   const page=document.getElementById(id);
   let values=id==='you-do'&&(page?.dataset.workMode==='independent'||page?.dataset.assessmentMode==='true')
     ?youDoIndependentSignals
-    :(signalMap[id]||['','','']);
+    :id==='exit'&&page?.dataset.exitSummary==='true'
+      ?['Lesson Summary','Listen','Reflection']
+      :(signalMap[id]||['','','']);
   const kinds=['phase','routine','response'];
 
   ['phase-logo','behaviour-logo','response-logo'].forEach((key,i)=>{
@@ -2359,6 +2361,19 @@ if(document.getElementById('exit')&&!document.getElementById('exit-answer-rollou
   document.head.appendChild(link);
 }
 prepareVerifiedExitTicket();
+// Opt-in Today / Next trial. Ordinary lessons keep their authored Exit Ticket.
+if(new URLSearchParams(location.search).get('exit')==='summary'&&
+    /^\/lessons\/(?:j277\/lesson-002|h446\/lesson-046)\/(?:index\.html)?$/i.test(location.pathname)){
+  import('./exit-summary.js?v=20261127-pilot1')
+    .then(async ({prepareExitSummary})=>{
+      if(await prepareExitSummary()&&current==='exit'){
+        updateSignals('exit');
+        updateControl();
+      }
+    })
+    .catch(error=>console.warn('Exit summary preview unavailable; original ticket retained:',error));
+}
+
 /* Do Now sources and phase navigation configuration are maintained in the
    shared phase module. The platform retains the synchronous stage engine. */
 if(document.getElementById('do-now')&&/^\/lessons\/(?:h446|j277)\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname)){
