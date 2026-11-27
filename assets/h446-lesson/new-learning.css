@@ -149,3 +149,31 @@
   #new-learning .nl-reference,#new-learning .nl-explanation{height:auto;overflow:visible}
   #new-learning .nl-stage{height:auto}
 }
+
+/* Classroom typography: New Learning is continuous explanation, not a model
+   response. Keep the two reading panels on the same scale in J277 and H446.
+   The former shared desktop settings are retained for other courses. */
+@media (min-width:901px) and (min-height:500px){
+  body:not(.answer-page):where(:not(:has(.course-back:is([href*="j277-hub"],[href*="h446-hub"])))) #new-learning .nl-reference :is(p,li),
+  body:not(.answer-page):where(:not(:has(.course-back:is([href*="j277-hub"],[href*="h446-hub"])))) #new-learning .nl-stage :is(p,li){
+    font-size:clamp(24px,1.95vw,31px)!important;
+    line-height:1.32;
+  }
+  body:not(.answer-page):where(:not(:has(.course-back:is([href*="j277-hub"],[href*="h446-hub"])))) #new-learning .nl-explanation .nl-stage :is(p,li){
+    font-size:clamp(29px,2.05vw,35px)!important;
+    line-height:1.29;
+  }
+  body:not(.answer-page):where(:has(.course-back:is([href*="j277-hub"],[href*="h446-hub"]))) #new-learning .nl-reference :is(p,li),
+  body:not(.answer-page):where(:has(.course-back:is([href*="j277-hub"],[href*="h446-hub"]))) #new-learning .nl-explanation .nl-stage :is(p,li){
+    font-size:clamp(24px,1.7vw,30px)!important;
+    font-weight:400;
+    line-height:1.36;
+  }
+  body:not(.answer-page):where(:has(.course-back:is([href*="j277-hub"],[href*="h446-hub"]))) #new-learning :is(.nl-reference,.nl-explanation) h2{
+    font-size:clamp(28px,2.35vw,37px);
+    font-weight:700;
+  }
+  body:not(.answer-page):where(:has(.course-back:is([href*="j277-hub"],[href*="h446-hub"]))) #new-learning :is(.nl-reference,.nl-explanation) :is(strong,mark.rhsc-keyword){
+    font-weight:700;
+  }
+}
