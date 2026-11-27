@@ -360,3 +360,10 @@ export function prepareDoNow(){
   applyPublishedH446Q2();
   applyReviewedH446Q34Sources();
 }
+
+// The phase owns its stage contract; the platform owns generic button/keyboard/swipe mechanics.
+export function createDoNowNavigation(createStageNavigator){
+  return createStageNavigator('.donow-stage',{
+    first:'Reveal answer 1 →',next:'Next answer →',last:'Continue → Objectives'
+  });
+}

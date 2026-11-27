@@ -98,6 +98,32 @@ function visibleIndex(items){
 function showOnly(items,index){
   items.forEach((item,i)=>item.hidden=i!==index);
 }
+// Generic stage-deck navigation: the phase supplies its selector and labels.
+function createStageNavigator(selector,labels){
+  const stages=page=>[...page.querySelectorAll(selector)];
+  return {
+    reset(page){
+      const items=stages(page);
+      if(items.length)showOnly(items,0);
+    },
+    nextLabel(page){
+      const items=stages(page),i=visibleIndex(items);
+      return i===0&&items.length>1?labels.first:i<items.length-1?labels.next:labels.last;
+    },
+    canBack(page){return visibleIndex(stages(page))>0;},
+    step(page,direction){
+      const items=stages(page),i=visibleIndex(items),target=i+direction;
+      if(target<0||target>=items.length)return false;
+      showOnly(items,target);
+      return true;
+    }
+  };
+}
+// Synchronous fallback for existing KS3 pages and delayed/unavailable module loading.
+// No lesson loses working stage navigation because of an optional module request.
+let doNowNavigation=createStageNavigator('.donow-stage',{
+  first:'Reveal answer 1 →',next:'Next answer →',last:'Continue → Objectives'
+});
 // -1 means the starting problem is visible and no modelled step is revealed.
 // Reading from the end also supports opt-in cumulative examples.
 function modellingStepIndex(steps){
@@ -829,10 +855,7 @@ function resetPhaseState(id){
       });
     }
   }
-  if(id==='do-now'){
-    const stages=[...page.querySelectorAll('.donow-stage')];
-    if(stages.length)showOnly(stages,0);
-  }
+  if(id==='do-now')doNowNavigation.reset(page);
   if(id==='new-learning'){
     const stages=[...page.querySelectorAll('.nl-stage')];
     if(stages.length)showOnly(stages,0);
@@ -1107,11 +1130,7 @@ function updateControl(){
       label='Next step →';
     }
   }else if(current==='do-now'){
-    const stages=[...page.querySelectorAll('.donow-stage')];
-    const i=visibleIndex(stages);
-    if(i===0 && stages.length>1)label='Reveal answer 1 →';
-    else if(i<stages.length-1)label='Next answer →';
-    else label='Continue → Objectives';
+    label=doNowNavigation.nextLabel(page);
   }else if(current==='new-learning'){
     const stages=[...page.querySelectorAll('.nl-stage')];
     if(stages.length){
@@ -1290,7 +1309,7 @@ function updateControl(){
   teacherNextAction.textContent=label.replace(/[←→]/g,'').trim();
   teacherNextAction.title=teacherNextAction.textContent;
   advance.title=teacherNextAction.textContent;
-  const canStepBackInDoNow=current==='do-now'&&visibleIndex([...page.querySelectorAll('.donow-stage')])>0;
+  const canStepBackInDoNow=current==='do-now'&&doNowNavigation.canBack(page);
   previous.disabled=(order.indexOf(current)===0&&!canStepBackInDoNow)||(current==='you-do'&&page?.dataset.assessmentMode==='true');
   document.getElementById('page-count').textContent=(order.indexOf(current)+1)+' / '+order.length;
   syncClassroomFocus();
@@ -1336,11 +1355,7 @@ function next(){
       return;
     }
   }
-  if(current==='do-now'){
-    const stages=[...page.querySelectorAll('.donow-stage')];
-    const i=visibleIndex(stages);
-    if(i<stages.length-1){showOnly(stages,i+1);updateControl();return;}
-  }
+  if(current==='do-now'&&doNowNavigation.step(page,1)){updateControl();return;}
   if(current==='new-learning'){
     const stages=[...page.querySelectorAll('.nl-stage')];
     const i=visibleIndex(stages);
@@ -1540,9 +1555,7 @@ function next(){
 function previousAction(){
   const page=document.getElementById(current);
   if(current==='do-now'){
-    const stages=[...page.querySelectorAll('.donow-stage')];
-    const i=visibleIndex(stages);
-    if(i>0){showOnly(stages,i-1);updateControl();}
+    if(doNowNavigation.step(page,-1))updateControl();
     return;
   }
   if(current==='catch-up'||current==='exam-practice'){
@@ -2376,11 +2389,14 @@ if(document.getElementById('exit')&&!document.getElementById('exit-answer-rollou
   document.head.appendChild(link);
 }
 prepareVerifiedExitTicket();
-/* Do Now question sources are maintained in the shared phase module.
-   The lesson controller retains synchronous stage navigation. */
+/* Do Now sources and phase navigation configuration are maintained in the
+   shared phase module. The platform retains the synchronous stage engine. */
 if(document.getElementById('do-now')&&/^\/lessons\/(?:h446|j277)\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname)){
-  import('./do-now.js?v=20261127-source1')
-    .then(({prepareDoNow})=>prepareDoNow())
+  import('./do-now.js?v=20261127-navigation1')
+    .then(({prepareDoNow,createDoNowNavigation})=>{
+      doNowNavigation=createDoNowNavigation(createStageNavigator);
+      prepareDoNow();
+    })
     .catch(error=>console.warn('Do Now source module unavailable; authored content retained:',error));
 }
 prepareMobileSwipeNavigation();
