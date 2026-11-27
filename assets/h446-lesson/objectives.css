@@ -1,0 +1,189 @@
+/* Shared Objectives phase presentation. Existing rules and responsive breakpoints retained. */
+
+/* H446 OBJECTIVES + VOCAB INTRO PROTOTYPE
+   Activated only when #overview has data-objectives-vocab="true". */
+#overview[data-objectives-vocab="true"]{
+  overflow:hidden!important;
+}
+#overview[data-objectives-vocab="true"] .objectives-vocab-layout{
+  display:grid;
+  grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);
+  gap:16px;
+  align-items:start;
+}
+#overview[data-objectives-vocab="true"] .objectives-vocab-left,
+#overview[data-objectives-vocab="true"] .objective-vocab-stage{
+  min-width:0;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  box-shadow:var(--shadow);
+}
+#overview[data-objectives-vocab="true"] .objectives-vocab-left{
+  padding:18px 20px;
+  border-top:7px solid var(--green);
+}
+#overview[data-objectives-vocab="true"] .objectives-vocab-left h1{
+  margin:0 0 14px;
+  font-size:clamp(30px,2.8vw,44px);
+}
+#overview[data-objectives-vocab="true"] .objectives{
+  margin:0;
+  padding:14px 16px;
+  box-shadow:none;
+}
+#overview[data-objectives-vocab="true"] .objectives li{
+  font-size:clamp(18px,1.35vw,22px);
+  line-height:1.32;
+}
+#overview[data-objectives-vocab="true"] .vocab-intro{
+  margin-top:12px;
+  padding:12px 14px;
+}
+#overview[data-objectives-vocab="true"] .objective-vocab-stage{
+  padding:22px 24px;
+  border-top:7px solid var(--green);
+}
+#overview[data-objectives-vocab="true"] .objective-vocab-stage[hidden]{
+  display:none!important;
+}
+#overview[data-objectives-vocab="true"] .objective-vocab-count{
+  display:block;
+  margin-bottom:14px;
+  color:var(--green);
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.1em;
+}
+#overview[data-objectives-vocab="true"] .objective-vocab-stage h2{
+  margin:0;
+  color:var(--green-dark);
+  font-size:clamp(42px,4.2vw,68px);
+  line-height:1.05;
+  letter-spacing:-.02em;
+}
+#overview[data-objectives-vocab="true"] .objective-vocab-definition{
+  margin-top:22px;
+  padding-top:18px;
+  border-top:1px solid var(--line);
+}
+#overview[data-objectives-vocab="true"] .objective-vocab-definition[hidden]{
+  display:none!important;
+}
+#overview[data-objectives-vocab="true"] .objective-vocab-definition > span{
+  display:block;
+  margin-bottom:8px;
+  color:var(--green);
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.1em;
+}
+#overview[data-objectives-vocab="true"] .objective-vocab-definition p{
+  margin:0;
+  font-size:clamp(24px,2vw,32px);
+  line-height:1.3;
+  font-weight:800;
+}
+@media(max-height:760px) and (min-width:901px){
+  #overview[data-objectives-vocab="true"] .objectives-vocab-left{padding:12px 14px}
+  #overview[data-objectives-vocab="true"] .objectives-vocab-left h1{font-size:30px;margin-bottom:9px}
+  #overview[data-objectives-vocab="true"] .objectives{padding:10px 12px}
+  #overview[data-objectives-vocab="true"] .objectives li{font-size:17px}
+  #overview[data-objectives-vocab="true"] .vocab-intro{margin-top:8px;padding:9px 11px}
+  #overview[data-objectives-vocab="true"] .objective-vocab-stage{padding:16px 18px}
+  #overview[data-objectives-vocab="true"] .objective-vocab-stage h2{font-size:40px}
+  #overview[data-objectives-vocab="true"] .objective-vocab-definition{margin-top:14px;padding-top:12px}
+  #overview[data-objectives-vocab="true"] .objective-vocab-definition p{font-size:23px}
+}
+@media(max-width:900px){
+  #overview[data-objectives-vocab="true"]{overflow:visible!important}
+  #overview[data-objectives-vocab="true"] .objectives-vocab-layout{grid-template-columns:1fr}
+}
+
+
+/* Minimal supporting analogy/example beneath Objectives vocabulary definitions. */
+#overview[data-objectives-vocab="true"] .objective-vocab-support{
+  margin:10px 0 0;
+  max-width:38rem;
+  color:var(--muted);
+  font-size:clamp(17px,1.35vw,22px);
+  line-height:1.4;
+  font-weight:600;
+}
+
+/* Shared staged vocabulary focus: one authoritative H446 presentation.
+   The preview chips remain available on mobile rather than being removed;
+   the shared Objectives reveal controls continue to own the interaction. */
+@media(min-width:701px){
+  #overview[data-vocab-display="focus"] .vocab-intro{display:none}
+  #overview[data-vocab-display="focus"] .objectives-vocab-layout{align-items:stretch}
+  #overview[data-vocab-display="focus"] .objectives-vocab-right{display:flex;min-width:0}
+  #overview[data-vocab-display="focus"] .objective-vocab-stage{
+    flex:1;
+    min-height:clamp(300px,47vh,480px);
+    padding:clamp(20px,2.2vw,30px);
+    padding-top:clamp(12px,1.35vw,18px);
+  }
+  #overview[data-vocab-display="focus"] .objective-vocab-count{margin-bottom:6px}
+  #overview[data-vocab-display="focus"] .objective-vocab-stage h2{
+    font-size:clamp(44px,4.3vw,72px);
+    width:fit-content;
+    max-width:100%;
+    padding:.02em .14em;
+    background-color:transparent;
+    background-image:var(--rhsc-central-ink-a);
+    background-repeat:no-repeat;
+    background-position:center 68%;
+    background-size:100% 80%;
+    color:#24241a;
+    overflow-wrap:anywhere;
+  }
+  #overview[data-vocab-display="focus"] .objective-vocab-definition{
+    margin-top:clamp(10px,1.4vh,16px);
+    padding:clamp(13px,1.55vw,21px);
+    background:var(--green-soft);
+    border:1px solid var(--line);
+    border-left:6px solid var(--green);
+    border-radius:12px;
+  }
+  #overview[data-vocab-display="focus"] .objective-vocab-definition > span{display:none}
+  #overview[data-vocab-display="focus"] .objective-vocab-definition p:not(.objective-vocab-support){
+    font-size:clamp(25px,2.3vw,36px);
+    line-height:1.28;
+  }
+  #overview[data-vocab-display="focus"] .objective-vocab-support{
+    margin-top:clamp(10px,1.4vh,15px);
+    padding:11px 0 0;
+    max-width:none;
+    background:transparent;
+    border:0;
+    border-top:1px solid var(--line);
+    border-radius:0;
+    color:var(--ink);
+    font-size:clamp(19px,1.45vw,24px);
+    line-height:1.35;
+  }
+  #overview[data-vocab-display="focus"] .objective-vocab-support-label{
+    display:block;
+    margin-bottom:5px;
+    color:var(--green);
+    font-size:clamp(13px,1.05vw,16px);
+    letter-spacing:.08em;
+  }
+}
+/* H446 phones show the vocabulary preview, not the large term panel. */
+@media(max-width:700px){
+  #overview[data-vocab-display="focus"] .vocab-intro-list .vocab-tip{
+    min-height:44px;
+    display:inline-flex;
+    align-items:center;
+    padding:9px 12px;
+    font-size:clamp(17px,4.1vw,20px);
+  }
+}
+@media(max-height:760px) and (min-width:901px){
+  #overview[data-objectives-vocab="true"] .objective-vocab-support{
+    margin-top:7px;
+    font-size:16px;
+  }
+}
