@@ -13,10 +13,10 @@ function lines(x,y,arr,font=17,color=K.dark){return arr.map((l,i)=>text(x,y+i*30
 function table(stage,scenario,asQuery=false){
  const rows=[["101","Ada","72"],["102","Ben","43"],["103","Mia","81"]],heads=["ID","Name","Mark"];
  const selectedRow=scenario==="guided"?2:0,selectedCol=1;
- let h=small(23,71,"PUPILS · FIELD INDEX")+small(20,105,"Row");
+ let h=small(23,71,asQuery?"PUPILS · SELECT A FIELD AND FILTER ROWS":"PUPILS · ROW AND COLUMN INDEX")+small(20,105,asQuery?"Record":"Row");
  const posX=[130,290,450],colW=154;
  for(let c=0;c<3;c++){
-   let fill=stage>=2&&selectedCol===c&&!asQuery?K.amber:K.sky;
+   let fill=(asQuery?c===(scenario==="guided"?0:1):stage>=2&&selectedCol===c)?K.amber:K.sky;
    h+=label(posX[c],80,colW,46,heads[c],fill,19);
    h+=text(posX[c]+77,143,"col "+c,13,"middle","#62796e");
  }
@@ -25,7 +25,7 @@ function table(stage,scenario,asQuery=false){
   for(let j=0;j<3;j++){
    const isSelected=!asQuery&&stage>=3&&selectedRow===i&&selectedCol===j;
    const match=asQuery&&(scenario==="guided"?Number(r[2])<50:Number(r[2])>=50);
-   const color=isSelected?K.amber:asQuery&&stage>=2&&match?K.mint:asQuery&&stage>=2&&!match?K.grey:stage>=2&&j===selectedCol&&!asQuery?K.mint:K.light;
+   const color=isSelected?K.amber:asQuery&&stage>=2&&match&&j===(scenario==="guided"?0:1)?K.amber:asQuery&&stage>=2&&match?K.mint:asQuery&&stage>=2&&!match?K.grey:stage>=2&&j===selectedCol&&!asQuery?K.mint:stage>=1&&!asQuery&&selectedRow===i?K.sky:K.light;
    h+=label(posX[j],y,colW,50,r[j],color,21);
   }
  });
@@ -45,20 +45,23 @@ function file(stage,mode,phase){
    h+=label(32,230,233,48,'writeLine("Mia,81")',stage>=2?K.mint:K.grey,17);
    h+=label(32,294,233,46,"close()",stage>=3?K.amber:K.grey);
    h+=arrow(280,209,325,209);
-   h+=label(333,149,269,48,"Ada,72",stage>=1?K.mint:K.grey);
-   h+=label(333,212,269,48,"Mia,81",stage>=2?K.mint:K.grey);
+   h+=small(336,139,"RESULTS.TXT · CONTENTS");
+   h+=label(333,149,269,48,stage>=1?"Ada,72":"Empty",stage>=1?K.mint:K.grey);
+   h+=label(333,212,269,48,stage>=2?"Mia,81":"",stage>=2?K.mint:K.grey);
+   if(stage>=3)h+=label(333,294,269,46,"File closed",K.mint,18);
    return h;
  }
- const rows=[header,...entries];
+ const rows=[header,...entries],closing=stage===3&&phase==="i-do";
+ const pointer=closing?-1:stage===0?0:Math.min(stage-1,2);
  h+=small(29,148,"FILE CONTENTS");
  for(let i=0;i<4;i++){
-   const y=166+i*49,active=stage===1&&i===0||stage===2&&i===1||stage===3&&i===2;
-   h+=label(25,y,301,43,rows[i],active?K.amber:i<=stage?K.mint:K.light,18);
+   const y=166+i*49,active=i===pointer;
+   h+=label(25,y,301,43,rows[i],active?K.amber:i<pointer||closing&&i<2?K.mint:K.light,18);
    h+=small(331,y+27,"line "+(i+1));
  }
- h+=arrow(383,234,410,234);
- h+=label(418,159,186,55,stage===0?"open file":stage===1?"read header":stage===2?"read first":phase==="i-do"?"close()":"read next",K.sky,19);
- h+=label(418,229,186,72,stage===1?header:stage>=2?(phase==="i-do"?entries[0]:stage===3?entries[1]:entries[0]):"file handle",K.amber,stage<2?16:15);
+ if(pointer>=0){const y=188+pointer*49;h+=arrow(386,y,410,y);h+=text(512,y-10,stage===0?"Next line":"Read line",14);}
+ h+=label(418,110,186,42,stage===0?"Open file":stage===1?"readLine()":stage===2?"readLine()":closing?"close()":"readLine()",K.sky,18);
+ h+=label(418,310,186,48,closing?"File closed":stage===1?header:stage===2?entries[0]:stage===3?entries[1]:"File handle",closing?K.mint:K.amber,15);
  return h;
 }
 function equivalent(stage,mode){
@@ -454,9 +457,12 @@ function layout(spec,stage){
  }
  if(kind==="function"){
   let inp=scenario==="guided"?"9":"7",func=scenario==="guided"?"addTax(price)":"double(x)",out=scenario==="guided"?"11":"14";
-  let h=label(18,139,151,82,inp,K.sky,27)+arrow(169,180,207,180)+label(210,120,218,121,func,K.mint,20)+arrow(428,180,471,180);
+  let h=small(25,92,"ARGUMENT")+small(218,92,"FUNCTION / LOCAL PARAMETER")+small(477,92,"RETURN VALUE");
+  h+=label(18,139,151,82,inp,K.sky,27)+arrow(169,180,207,180)+label(210,120,218,121,func,K.mint,20)+arrow(428,180,471,180);
   h+=label(474,139,142,82,stage>=3?out:"?",stage>=3?K.amber:K.grey,27);
-  h+=small(220,267,scenario==="guided"?"return price + 2":"return x * 2");
+  h+=label(210,264,218,47,scenario==="guided"?"return price + 2":"return x * 2",K.sky,17);
+  if(stage>=1)h+=text(319,255,scenario==="guided"?"price = 9":"x = 7",17);
+  if(stage>=3)h+=text(545,258,"Back to caller",15);
   return h;
  }
  if(kind==="condition"){
