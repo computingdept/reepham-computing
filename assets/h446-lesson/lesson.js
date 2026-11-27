@@ -2448,6 +2448,21 @@ prepareYouDoSolutionsLink();
   link.dataset.h446QuestionSheetCss='true';
   document.head.appendChild(link);
 })();
+/* I Do presentation labels: use one clear example heading and remove only
+   the redundant question-visibility caption. Preserve actual example counts,
+   teaching cues, specialist content and every reveal stage. */
+function prepareIdoLabels(){
+  if(!/^\/lessons\/(?:h446|j277)\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname))return;
+  document.querySelectorAll('#i-do .ido-reference > .phase-tag').forEach(label=>{
+    if(label.children.length===0 && /^(?:EXAMPLE|I DO\s*·\s*(?:COMPLETE MODEL|ONE COMPLETE MODEL|MODEL EXAMPLE|WATCH THE FULL METHOD|BUILD THE ERL PROGRAM)|ONE COMPLETE WORKED EXAMPLE|ONE WORKING SOLUTION FIRST)$/i.test(label.textContent.trim())){
+      label.textContent='EXAMPLE';
+    }
+  });
+  document.querySelectorAll('#i-do .ido-reference .ido-example-count').forEach(label=>{
+    if(/^(?:Question stays visible|Worked example)[.!]?$/i.test(label.textContent.trim()))label.remove();
+  });
+}
+prepareIdoLabels();
 showPage(location.hash.slice(1)||'do-now');
 /* Identity is non-essential presentation. A badge/label problem must never
    interrupt lesson content, classroom signals, or phase navigation. */
