@@ -216,15 +216,15 @@
 .donow-review-question h2,.donow-review-answer h2{
   margin:0 0 14px;font-size:clamp(27px,2.5vw,39px);
 }
-.donow-review-question .review-question{
-  font-size:clamp(23px,2vw,32px);line-height:1.3;margin:0;
+.donow-review-question .review-question,
+.donow-review-answer :is(.review-explain,.j277-q1-correction,.j277-q1-explanation,.h446-q2-explain){
+  font-size:clamp(23px,2vw,32px);line-height:1.3;font-weight:400;
 }
+.donow-review-question .review-question{margin:0}
 .donow-review-answer .review-answer{
-  font-size:clamp(23px,1.9vw,31px);line-height:1.32;color:var(--green-dark);font-weight:850;
+  font-size:clamp(23px,2vw,32px);line-height:1.3;color:var(--green-dark);font-weight:850;
 }
-.donow-review-answer .review-explain{
-  margin-top:18px;font-size:clamp(18px,1.4vw,23px);line-height:1.4;
-}
+.donow-review-answer .review-explain{margin-top:18px}
 .donow-review .reference-media{
   flex:1;min-height:0;display:grid;place-items:center;margin-top:10px;
 }
@@ -235,9 +235,9 @@
 
 @media(max-height:760px) and (min-width:901px){
   .donow-review-question,.donow-review-answer{padding:16px}
-  .donow-review-question .review-question{font-size:22px}
-  .donow-review-answer .review-answer{font-size:22px}
-  .donow-review-answer .review-explain{font-size:18px;margin-top:12px}
+  .donow-review-question .review-question,
+  .donow-review-answer :is(.review-answer,.review-explain,.j277-q1-correction,.j277-q1-explanation,.h446-q2-explain){font-size:22px}
+  .donow-review-answer .review-explain{margin-top:12px}
 }
 @media(max-width:900px){
   .donow-review{height:auto;grid-template-columns:1fr}
