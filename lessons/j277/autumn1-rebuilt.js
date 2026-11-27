@@ -162,12 +162,13 @@
       note(72,214,"Normal: 56 · Erroneous: hello",16));
   }
   if(kind==="shift"&&phase==="guided"){
-    const bits="00101000";
+    const bits="00101000",result="00010100";
     return svgScene("8-bit right shift: 00101000 becomes 00010100",
-      note(25,33,"8-BIT SHIFT · RIGHT 1",20)+
-      [128,64,32,16,8,4,2,1].map((v,i)=>card(20+i*65,55,60,43,bits[i],"#e0eef9",22)).join("")+
-      '<path d="M280 106 V141 M271 132 L280 142 L289 132" stroke="#b37f3d" stroke-width="4" fill="none"/>'+
-      note(83,175,"00101000  →  00010100",21)+note(152,210,"40 ÷ 2 = 20",19));
+      note(22,29,"RIGHT SHIFT 1 PLACE",18)+
+      [...bits].map((v,i)=>card(22+i*65,43,58,42,v,i===7?"#f6e4df":"#e0eef9",22)).join("")+
+      Array.from({length:7},(_,i)=>'<path d="M'+(51+i*65)+' 86L'+(116+i*65)+' 139M'+(106+i*65)+' 137L'+(116+i*65)+' 139L'+(111+i*65)+' 130" fill="none" stroke="#527063" stroke-width="2"/>').join("")+
+      [...result].map((v,i)=>card(22+i*65,141,58,42,v,i===0?"#faebcc":"#e4f2e9",22)).join("")+
+      note(22,210,"New zero",16)+note(352,210,"40 ÷ 2 = 20",18));
   }
   return null;
  }
@@ -175,8 +176,13 @@
   const aligned=guideMatchedDiagram(kind,phase);if(aligned)return aligned;
 
   if(kind==="shift"){
-   let positions=[128,64,32,16,8,4,2,1],bits="00010110";
-   return svgScene("Eight-bit logical left shift: 00010110 becomes 01011000 after shifting left two places",note(26,37,"8-bit value: 00010110",19)+positions.map((v,i)=>pill(20+i*65,57,60,48,`${bits[i]}`,"#eaf3ee",23)).join("")+`<path d="M280 109 V149 L269 137 M280 149 L291 137" stroke="#be8632" fill="none" stroke-width="4"/>`+note(35,169,"LEFT 2 PLACES · fill zeros on right",17)+note(115,209,"01011000  =  88",23));
+   const bits="00010110",result="01011000";
+   return svgScene("Eight-bit logical left shift: 00010110 becomes 01011000 after shifting left two places",
+    note(22,29,"LEFT SHIFT 2 PLACES",18)+
+    [...bits].map((v,i)=>pill(22+i*65,43,58,42,v,i<2?"#f6e4df":"#e0eef9",22)).join("")+
+    Array.from({length:6},(_,i)=>'<path d="M'+(181+i*65)+' 86L'+(51+i*65)+' 139M'+(61+i*65)+' 139L'+(51+i*65)+' 139L'+(58+i*65)+' 131" fill="none" stroke="#527063" stroke-width="2"/>').join("")+
+    [...result].map((v,i)=>pill(22+i*65,141,58,42,v,i>=6?"#faebcc":"#e4f2e9",22)).join("")+
+    note(22,210,"22 × 4 = 88",18)+note(348,210,"New zeros →",16));
   }
   if(kind==="chars"){
    return svgScene("Character set: three characters mapped to numbers and binary codes",note(28,34,"CHARACTER",17)+note(208,34,"DENARY CODE",17)+note(380,34,"BINARY",17)+[["A","65","01000001"],["B","66","01000010"],["a","97","01100001"]].map((row,i)=>pill(20,49+i*54,110,43,row[0],"#e4f0e8",22)+pill(168,49+i*54,135,43,row[1]) +pill(335,49+i*54,200,43,row[2],"#fdf2df",19)).join(""));
@@ -186,21 +192,27 @@
    return svgScene("Bitmap image drawn as a six by four grid of pixels",note(35,31,"6 pixels wide",17)+cells+note(387,84,"24 pixels",19)+note(387,126,"8 bits/pixel",18)+note(387,173,"192 bits",20)+note(35,223,"raw size = width × height × colour depth",16));
   }
   if(kind==="wave"||kind==="audio-size"){
-   const points=Array.from({length:150},(_,i)=>{let x=20+i*3.35,y=120-55*Math.sin(i*.15)-8*Math.sin(i*.44);return `${i?'L':'M'}${x.toFixed(1)} ${y.toFixed(1)}`;}).join(" ");
-   return svgScene("Sound sampling: measured amplitude at equally spaced points along an analogue waveform",note(24,29,"Analogue sound wave",19)+`<path d="${points}" stroke="#287d6d" stroke-width="3.5" fill="none"/>`+[0,1,2,3,4,5,6,7,8,9].map(i=>{let j=i*15,x=20+j*3.35,y=120-55*Math.sin(j*.15)-8*Math.sin(j*.44);return `<line x1="${x}" x2="${x}" y1="42" y2="195" stroke="#cf9650" stroke-dasharray="4 5" stroke-width="1.7"/><circle cx="${x}" cy="${y}" r="5.5" fill="#c57422" stroke="white" stroke-width="2"/>`;}).join("")+note(215,219,"Samples taken at regular intervals",16));
+   const points=Array.from({length:150},(_,i)=>{let x=47+i*3.2,y=120-55*Math.sin(i*.15)-8*Math.sin(i*.44);return `${i?'L':'M'}${x.toFixed(1)} ${y.toFixed(1)}`;}).join(" ");
+   return svgScene("Sound sampling: measured amplitude at equally spaced points along an analogue waveform",
+    note(23,27,"Analogue sound wave",18)+
+    '<path d="M39 39V192H535 M34 47L39 39L44 47 M527 187L535 192L527 197" fill="none" stroke="#527063" stroke-width="2"/>'+
+    '<path d="M39 120H526" stroke="#a4b7ab" stroke-dasharray="4 4"/>'+
+    '<text x="15" y="120" text-anchor="middle" font-size="12" font-weight="700" fill="#254a3a" transform="rotate(-90 15 120)">Amplitude</text>'+
+    `<path d="${points}" stroke="#287d6d" stroke-width="3" fill="none"/>`+
+    [0,1,2,3,4,5,6,7,8,9].map(i=>{let j=i*15,x=47+j*3.2,y=120-55*Math.sin(j*.15)-8*Math.sin(j*.44);return `<line x1="${x}" x2="${x}" y1="${y}" y2="192" stroke="#cf9650" stroke-dasharray="4 4" stroke-width="1.5"/><circle cx="${x}" cy="${y}" r="5" fill="#c57422" stroke="white" stroke-width="1.7"/>`;}).join("")+
+    note(490,210,"Time",13)+note(57,222,"Samples are taken at regular intervals",15));
   }
   if(kind==="compression"){
-   return svgScene("Lossless compression can restore an original text file exactly, whereas lossy compression reduces size by permanently discarding some image detail.",
-    pill(22,23,155,49,"TEXT FILE","#e3f1e9",20)+
-    pill(202,23,155,49,"LOSSLESS","#e3f1e9",20)+
-    pill(382,23,155,49,"RESTORED","#e3f1e9",20)+
-    line(177,47,201,47)+line(357,47,381,47)+
-    note(37,94,"Original text",15)+note(219,94,"Smaller file",15)+note(386,94,"Exact copy",15)+
-    pill(22,123,155,49,"PHOTO","#faecce",20)+
-    pill(202,123,155,49,"LOSSY","#faecce",20)+
-    pill(382,123,155,49,"RESULT","#faecce",20)+
-    line(177,147,201,147)+line(357,147,381,147)+
-    note(31,195,"Original detail",15)+note(209,195,"Smaller file",15)+note(383,195,"Some detail lost",15));
+   const image=(x,y,coarse)=>{const colours=["#e2c486","#a5c5b2","#8daed2","#526d8a"];const n=coarse?3:6;return Array.from({length:n*n},(_,i)=>'<rect x="'+(x+(i%n)*60/n)+'" y="'+(y+Math.floor(i/n)*60/n)+'" width="'+(60/n)+'" height="'+(60/n)+'" fill="'+colours[(Math.floor((i%n)*3/n)+Math.floor(Math.floor(i/n)*3/n)+(coarse?0:i%2))%4]+'" stroke="#fff" stroke-width=".5"/>').join("");};
+   return svgScene("Lossless compression restores the original text exactly, while lossy compression discards some image detail.",
+    note(20,26,"LOSSLESS · EXACT COPY",17)+
+    pill(20,39,156,45,"AAAABB","#e4f2e9",20)+pill(202,39,156,45,"4A 2B","#faebcc",20)+pill(384,39,156,45,"AAAABB","#e4f2e9",20)+
+    '<path d="M177 61H200M194 56L200 61L194 66 M359 61H382M376 56L382 61L376 66" fill="none" stroke="#428063" stroke-width="2.4"/>'+
+    note(42,101,"Original",14)+note(221,101,"Encoded",14)+note(400,101,"Restored",14)+
+    note(20,127,"LOSSY · SOME DETAIL LOST",17)+
+    image(64,136,false)+pill(202,144,156,45,"LOSSY","#faebcc",19)+image(426,136,true)+
+    '<path d="M130 166H200M194 161L200 166L194 171 M359 166H423M417 161L423 166L417 171" fill="none" stroke="#428063" stroke-width="2.4"/>'+
+    note(34,217,"Original detail",14)+note(228,217,"Smaller file",14)+note(391,217,"Less detail",14));
   }
   if(kind==="memory"){
    return svgScene("The CPU accesses cache and RAM for working data. ROM holds non-volatile firmware; SSD stores saved files long-term.",
@@ -217,7 +229,13 @@
    return svgScene("Virtual memory sends less-used pages from limited RAM to slower secondary storage",pill(20,58,190,120,"RAM   4 GB","#e1eff8",22)+pill(360,58,176,120,"SSD / HDD","#f8edda",21)+`<path d="M216 89 C285 45 297 45 350 89 M342 83 L351 90 L348 73" fill="none" stroke="#be772e" stroke-width="4"/><path d="M350 145 C280 184 270 184 216 145 M222 137 L216 145 L229 150" fill="none" stroke="#28779a" stroke-width="4"/>`+note(241,55,"swap out",16)+note(238,192,"swap in",16));
   }
   if(kind==="storage"||kind==="choice"){
-   return svgScene("Three secondary storage technologies: magnetic hard disk, optical disc and solid-state SSD",pill(17,42,166,122,"MAGNETIC HDD","#e5f1ec",19)+pill(195,42,166,122,"OPTICAL DISC","#ecf1f8",18)+pill(373,42,166,122,"SOLID STATE","#faedda",19)+note(33,190,"capacity / cost",16)+note(211,190,"removable media",16)+note(393,190,"speed / durability",16));
+   const disk='<circle cx="100" cy="105" r="37" fill="#dbe8f1" stroke="#527063" stroke-width="2"/>'+[13,23,31].map(r=>'<circle cx="100" cy="105" r="'+r+'" fill="none" stroke="#8faabd" stroke-width="1.5"/>').join("")+'<circle cx="100" cy="105" r="7" fill="#fff" stroke="#527063"/><circle cx="148" cy="143" r="8" fill="#64748b"/><path d="M148 143L117 98" stroke="#475569" stroke-width="6" stroke-linecap="round"/>';
+   const optical='<circle cx="278" cy="105" r="37" fill="#eff2f0" stroke="#527063" stroke-width="2"/>'+[14,23,32].map(r=>'<circle cx="278" cy="105" r="'+r+'" fill="none" stroke="#8ba69d" stroke-width="1.5" stroke-dasharray="3 2"/>').join("")+'<circle cx="278" cy="105" r="7" fill="#fff" stroke="#527063"/><rect x="319" y="133" width="17" height="10" rx="3" fill="#475569"/><path d="M322 133L297 119" stroke="#b44b42" stroke-width="3"/>';
+   const flash='<rect x="413" y="70" width="86" height="73" rx="6" fill="#39766e" stroke="#245e45" stroke-width="2"/>'+[0,1,2,3].map(i=>'<rect x="'+(421+(i%2)*36)+'" y="'+(78+Math.floor(i/2)*28)+'" width="29" height="22" rx="3" fill="#263d51"/>').join("")+'<path d="M420 139H491" stroke="#d4b26c" stroke-width="5" stroke-dasharray="4 4"/>';
+   return svgScene("Three secondary storage technologies: magnetic hard disk, optical disc and solid-state SSD",
+    '<rect x="17" y="17" width="166" height="181" rx="10" fill="#e5f1ec" stroke="#92b4a0"/><rect x="195" y="17" width="166" height="181" rx="10" fill="#ecf1f8" stroke="#92b4a0"/><rect x="373" y="17" width="166" height="181" rx="10" fill="#faedda" stroke="#92b4a0"/>'+
+    note(29,43,"MAGNETIC HDD",16)+note(211,43,"OPTICAL DISC",16)+note(397,43,"SOLID STATE",16)+disk+optical+flash+
+    note(44,180,"Capacity / cost",14)+note(216,180,"Removable media",14)+note(389,180,"Speed / durability",14));
   }
   if(kind==="units"){
    return svgScene("Data unit ladder: bit to nibble to byte to KB to MB to GB",["1 bit","4 bits = nibble","8 bits = byte","1,000 bytes = KB","1,000 KB = MB","1,000 MB = GB"].map((t,i)=>pill(30+(i%3)*178,44+Math.floor(i/3)*86,161,56,t,i<3?"#e4f2e8":"#f6edda",i>=3?15:18)).join(""));
