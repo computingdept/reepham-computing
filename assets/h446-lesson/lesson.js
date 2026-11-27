@@ -2117,7 +2117,7 @@ function prepareH446DoNowSourceLabels(){
       const heading=headings[k];
       if(!heading)continue;
       heading.classList.add('h446-origin-heading');
-      heading.textContent=(k===0?String(i+1):'QUESTION '+(i+1)+' OF 4')+' · '+style;
+      heading.textContent=(k===0?String(i+1):'QUESTION '+(i+1)+' OF 4')+' · '+style+' · '+source;
     }
   }
 }
@@ -2500,8 +2500,8 @@ function applyPublishedH446Q1(){
       prompt.textContent=question;
       answerPrompt.textContent=question;
       for(const [heading,title] of [
-        [cardHeading,'1 · TRUE / FALSE · '+(diagnostic?'DIAGNOSTIC':'LAST LESSON')],
-        [review.querySelector('.review-number'),'QUESTION 1 OF 4 · TRUE / FALSE']
+        [cardHeading,'1 · TRUE / FALSE · '+(diagnostic?(number===1?'GCSE':'YEAR 12'):entry.previousTaughtLesson)],
+        [review.querySelector('.review-number'),'QUESTION 1 OF 4 · TRUE / FALSE · '+(diagnostic?(number===1?'GCSE':'YEAR 12'):entry.previousTaughtLesson)]
       ]){
         if(!heading)continue;
         heading.classList.add('h446-origin-heading');
@@ -2583,8 +2583,8 @@ function applyPublishedH446Q2(){
       const cardHeading=card.querySelector(':scope > strong');
       const reviewHeading=review.querySelector('.review-number');
       const reviewTitle=review.querySelector(':scope > h2');
-      if(cardHeading)cardHeading.textContent='2 · MCQ · EARLIER LEARNING';
-      if(reviewHeading)reviewHeading.textContent='QUESTION 2 OF 4 · MCQ';
+      if(cardHeading)cardHeading.textContent='2 · MCQ · '+source;
+      if(reviewHeading)reviewHeading.textContent='QUESTION 2 OF 4 · MCQ · '+source;
       if(reviewTitle)reviewTitle.textContent='Retrieval';
       cardQuestion.textContent=entry.question;
       reviewQuestion.textContent=entry.question;
@@ -2641,13 +2641,14 @@ function applyReviewedH446Q34Sources(){
         if(!prior&&(!Array.isArray(refs)||!refs.length||!refs.every(ref=>
           /^L\d{3}$/.test(ref)&&Number(ref.slice(1))<number)))continue;
         const headingText=position===2?'RETRIEVAL':'CHALLENGE';
+         const sourceLabel=prior?'GCSE':refs.join(' + ');
         const headings=[cards[position].querySelector(':scope > strong'),
           reviews[position].querySelector('.review-number')];
         for(const [index,heading] of headings.entries()){
           if(!heading)continue;
           heading.classList.add('h446-origin-heading');
           heading.textContent=(index===0?String(position+1):'QUESTION '+(position+1)+' OF 4')
-            +' · '+headingText;
+            +' · '+headingText+' · '+sourceLabel;
         }
         const replacement=validReplacement(source);
         if(replacement){
