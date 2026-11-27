@@ -131,12 +131,102 @@ function modellingStepIndex(steps){
   return -1;
 }
 function resetModelSteps(steps){steps.forEach(step=>{step.hidden=true;});}
-// Existing lessons still reveal one model step at a time; opt-in phases retain
-// all decisions up to the newly revealed step.
-function showIdoModelSteps(steps,index,page){
-  if(page?.dataset.idoReveal!=='cumulative'){showOnly(steps,index);return;}
-  steps.forEach((step,i)=>{step.hidden=i>index;});
+// Generic model-deck mechanics. I Do supplies its phase contract; We Do is unchanged.
+function createModelNavigator(config){
+  function reveal(steps,index,page){
+    if(!config.cumulative(page)){showOnly(steps,index);return;}
+    steps.forEach((step,i)=>{step.hidden=i>index;});
+  }
+  return {
+    reset(page){
+    const examples=[...page.querySelectorAll(config.example)];
+    if(examples.length){
+      showOnly(examples,0);
+      examples.forEach(example=>{
+        const steps=[...example.querySelectorAll(config.step)];
+        if(steps.length)resetModelSteps(steps);
+      });
+    }else{
+      const stages=[...page.querySelectorAll(config.legacy)];
+      if(stages.length)showOnly(stages,0);
+    }
+    },
+    nextLabel(page){
+      let label=config.labels.legacyLast;
+    const examples=[...page.querySelectorAll(config.example)];
+    if(examples.length){
+      const exampleIndex=visibleIndex(examples);
+      const example=examples[exampleIndex];
+      const steps=[...example.querySelectorAll(config.step)];
+      const stepIndex=modellingStepIndex(steps);
+      if(steps.length && stepIndex<0)label=config.labels.first;
+      else if(stepIndex<steps.length-1)label=config.labels.next;
+      else if(exampleIndex<examples.length-1)label=config.labels.example;
+      else label=config.labels.last;
+    }else{
+      const stages=[...page.querySelectorAll(config.legacy)];
+      const i=visibleIndex(stages);
+      label=i<stages.length-1?config.labels.legacyNext:config.labels.legacyLast;
+    }
+      return label;
+    },
+    next(page){
+    const examples=[...page.querySelectorAll(config.example)];
+    if(examples.length){
+      const exampleIndex=visibleIndex(examples);
+      const example=examples[exampleIndex];
+      const steps=[...example.querySelectorAll(config.step)];
+      const stepIndex=modellingStepIndex(steps);
+      if(steps.length && stepIndex<steps.length-1){
+        reveal(steps,stepIndex+1,page);return true;
+      }
+      if(exampleIndex<examples.length-1){
+        showOnly(examples,exampleIndex+1);
+        const nextSteps=[...examples[exampleIndex+1].querySelectorAll(config.step)];
+        if(nextSteps.length)resetModelSteps(nextSteps);
+        return true;
+      }
+    }else{
+      const stages=[...page.querySelectorAll(config.legacy)];
+      const i=visibleIndex(stages);
+      if(i<stages.length-1){showOnly(stages,i+1);return true;}
+    }
+      return false;
+    },
+    previous(page){
+    const examples=[...page.querySelectorAll(config.example)];
+    if(examples.length){
+      const exampleIndex=visibleIndex(examples);
+      const example=examples[exampleIndex];
+      const steps=[...example.querySelectorAll(config.step)];
+      const stepIndex=modellingStepIndex(steps);
+
+      if(stepIndex>=0){
+        if(stepIndex===0)resetModelSteps(steps);
+        else reveal(steps,stepIndex-1,page);
+        return true;
+      }
+
+      if(exampleIndex>0){
+        showOnly(examples,exampleIndex-1);
+        const previousSteps=[...examples[exampleIndex-1].querySelectorAll(config.step)];
+        if(previousSteps.length)reveal(previousSteps,previousSteps.length-1,page);
+        return true;
+      }
+    }else{
+      const stages=[...page.querySelectorAll(config.legacy)];
+      const i=visibleIndex(stages);
+      if(i>0){
+        showOnly(stages,i-1);
+        return true;
+      }
+    }
+      return false;
+    }
+  };
 }
+// Keep navigation usable on older lessons and while the phase module loads.
+let idoNavigation=createModelNavigator({example:'.ido-example',step:'.ido-step',legacy:'.model-stage',cumulative:page=>page?.dataset.idoReveal==='cumulative',labels:{first:'Reveal Step 1 →',next:'Reveal next step →',example:'Next example →',last:'Continue → We Do',legacyNext:'Next worked example →',legacyLast:'Continue →'}});
 
 /* Opt-in J277 Welcome review only: Code First, then Q2–Q4 together on TV
    or one at a time on mobile. Numbered lessons remain unchanged. */
@@ -860,19 +950,7 @@ function resetPhaseState(id){
     const stages=[...page.querySelectorAll('.nl-stage')];
     if(stages.length)showOnly(stages,0);
   }
-  if(id==='i-do'){
-    const examples=[...page.querySelectorAll('.ido-example')];
-    if(examples.length){
-      showOnly(examples,0);
-      examples.forEach(example=>{
-        const steps=[...example.querySelectorAll('.ido-step')];
-        if(steps.length)resetModelSteps(steps);
-      });
-    }else{
-      const stages=[...page.querySelectorAll('.model-stage')];
-      if(stages.length)showOnly(stages,0);
-    }
-  }
+  if(id==='i-do')idoNavigation.reset(page);
   if(id==='we-do'){
     const examples=[...page.querySelectorAll('.wedo-example')];
     if(examples.length){
@@ -1138,21 +1216,7 @@ function updateControl(){
       label=i<stages.length-1?'Next step →':'Continue → I Do';
     }
   }else if(current==='i-do'){
-    const examples=[...page.querySelectorAll('.ido-example')];
-    if(examples.length){
-      const exampleIndex=visibleIndex(examples);
-      const example=examples[exampleIndex];
-      const steps=[...example.querySelectorAll('.ido-step')];
-      const stepIndex=modellingStepIndex(steps);
-      if(steps.length && stepIndex<0)label='Reveal Step 1 →';
-      else if(stepIndex<steps.length-1)label='Reveal next step →';
-      else if(exampleIndex<examples.length-1)label='Next example →';
-      else label='Continue → We Do';
-    }else{
-      const stages=[...page.querySelectorAll('.model-stage')];
-      const i=visibleIndex(stages);
-      label=i<stages.length-1?'Next worked example →':'Continue →';
-    }
+    label=idoNavigation.nextLabel(page);
   }else if(current==='we-do'){
     const examples=[...page.querySelectorAll('.wedo-example')];
     if(examples.length){
@@ -1361,28 +1425,7 @@ function next(){
     const i=visibleIndex(stages);
     if(i<stages.length-1){showOnly(stages,i+1);updateControl();return;}
   }
-  if(current==='i-do'){
-    const examples=[...page.querySelectorAll('.ido-example')];
-    if(examples.length){
-      const exampleIndex=visibleIndex(examples);
-      const example=examples[exampleIndex];
-      const steps=[...example.querySelectorAll('.ido-step')];
-      const stepIndex=modellingStepIndex(steps);
-      if(steps.length && stepIndex<steps.length-1){
-        showIdoModelSteps(steps,stepIndex+1,page);updateControl();return;
-      }
-      if(exampleIndex<examples.length-1){
-        showOnly(examples,exampleIndex+1);
-        const nextSteps=[...examples[exampleIndex+1].querySelectorAll('.ido-step')];
-        if(nextSteps.length)resetModelSteps(nextSteps);
-        updateControl();return;
-      }
-    }else{
-      const stages=[...page.querySelectorAll('.model-stage')];
-      const i=visibleIndex(stages);
-      if(i<stages.length-1){showOnly(stages,i+1);updateControl();return;}
-    }
-  }
+  if(current==='i-do'&&idoNavigation.next(page)){updateControl();return;}
   if(current==='we-do'){
     const examples=[...page.querySelectorAll('.wedo-example')];
     if(examples.length){
@@ -1815,38 +1858,7 @@ function previousAction(){
       }
     }
   }
-  if(current==='i-do'){
-    const examples=[...page.querySelectorAll('.ido-example')];
-    if(examples.length){
-      const exampleIndex=visibleIndex(examples);
-      const example=examples[exampleIndex];
-      const steps=[...example.querySelectorAll('.ido-step')];
-      const stepIndex=modellingStepIndex(steps);
-
-      if(stepIndex>=0){
-        if(stepIndex===0)resetModelSteps(steps);
-        else showIdoModelSteps(steps,stepIndex-1,page);
-        updateControl();
-        return;
-      }
-
-      if(exampleIndex>0){
-        showOnly(examples,exampleIndex-1);
-        const previousSteps=[...examples[exampleIndex-1].querySelectorAll('.ido-step')];
-        if(previousSteps.length)showIdoModelSteps(previousSteps,previousSteps.length-1,page);
-        updateControl();
-        return;
-      }
-    }else{
-      const stages=[...page.querySelectorAll('.model-stage')];
-      const i=visibleIndex(stages);
-      if(i>0){
-        showOnly(stages,i-1);
-        updateControl();
-        return;
-      }
-    }
-  }
+  if(current==='i-do'&&idoNavigation.previous(page)){updateControl();return;}
 
   showPage(order[Math.max(0,order.indexOf(current)-1)]);
 }
@@ -2448,21 +2460,15 @@ prepareYouDoSolutionsLink();
   link.dataset.h446QuestionSheetCss='true';
   document.head.appendChild(link);
 })();
-/* I Do presentation labels: use one clear example heading and remove only
-   the redundant question-visibility caption. Preserve actual example counts,
-   teaching cues, specialist content and every reveal stage. */
-function prepareIdoLabels(){
-  if(!/^\/lessons\/(?:h446|j277)\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname))return;
-  document.querySelectorAll('#i-do .ido-reference > .phase-tag').forEach(label=>{
-    if(label.children.length===0 && /^(?:EXAMPLE|I DO\s*·\s*(?:COMPLETE MODEL|ONE COMPLETE MODEL|MODEL EXAMPLE|WATCH THE FULL METHOD|BUILD THE ERL PROGRAM)|ONE COMPLETE WORKED EXAMPLE|ONE WORKING SOLUTION FIRST)$/i.test(label.textContent.trim())){
-      label.textContent='EXAMPLE';
-    }
-  });
-  document.querySelectorAll('#i-do .ido-reference .ido-example-count').forEach(label=>{
-    if(/^(?:Question stays visible|Worked example)[.!]?$/i.test(label.textContent.trim()))label.remove();
-  });
+/* I Do phase module; generic navigation remains available during loading. */
+if(document.getElementById('i-do')&&/^\/lessons\/(?:h446|j277)\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname)){
+  import('./i-do.js?v=20261127-extract1')
+    .then(({prepareIdoLabels,createIdoNavigation})=>{
+      idoNavigation=createIdoNavigation(createModelNavigator);
+      prepareIdoLabels();
+    })
+    .catch(error=>console.warn('I Do phase module unavailable; original labels and navigation retained:',error));
 }
-prepareIdoLabels();
 showPage(location.hash.slice(1)||'do-now');
 /* Identity is non-essential presentation. A badge/label problem must never
    interrupt lesson content, classroom signals, or phase navigation. */
