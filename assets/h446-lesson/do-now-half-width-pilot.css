@@ -1,11 +1,11 @@
-/* Shared J277 / H446 Do Now width trial. Linked only by the two pilot lessons.
-   Questions only: existing answer stages, typography, content and controls are unchanged. */
-@media screen and (min-width: 901px) and (min-height: 650px) {
-  body:not(.answer-page) #do-now .donow-stage:first-child .donow-questions {
-    width: min(100%, max(55vw, 720px));
-    margin-inline: auto;
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: none;
-    grid-auto-rows: auto;
+/* Shared J277 / H446 Do Now typography trial, replacing the rejected width trial.
+   Original grid, spacing, headings, answer stages and mobile layout are unchanged. */
+@media screen and (min-width:901px) and (min-height:500px) {
+  body:not(.answer-page) #do-now .donow-stage:first-child .donow-question p {
+    font-size:clamp(25.5px,2.098vw,32.1px)!important;
+  }
+  body:not(.answer-page) #do-now .donow-stage:first-child .donow-question .j277-mcq,
+  body.h446-donow-layout-parity:not(.answer-page) #do-now[data-h446-q2-published="true"] .donow-stage:first-child .h446-q2-options li {
+    font-size:clamp(24.15px,1.9425vw,31.5px)!important;
   }
 }
