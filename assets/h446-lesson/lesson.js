@@ -125,6 +125,55 @@ let doNowNavigation=createStageNavigator('.donow-stage',{
   first:'Reveal answer 1 →',next:'Next answer →',last:'Continue → Objectives'
 });
 let newLearningNavigation=createStageNavigator('.nl-stage',{first:'Next step →',next:'Next step →',last:'Continue → I Do',empty:'Continue →'});
+// Shared staged prompt/response mechanics: a phase supplies its DOM contract.
+function createDefinitionNavigator(config){
+  const stages=page=>[...page.querySelectorAll(config.stage)];
+  const response=stage=>stage?.querySelector(config.response);
+  return {
+    reset(page){
+      if(!config.active(page))return;
+      const items=stages(page);
+      if(items.length){
+        showOnly(items,0);
+        items.forEach(item=>{const answer=response(item);if(answer)answer.hidden=true;});
+      }
+    },
+    nextLabel(page){
+      if(!config.active(page))return config.labels.inactive;
+      const items=stages(page),i=visibleIndex(items),answer=response(items[i]);
+      return answer&&answer.hidden?config.labels.reveal:i<items.length-1?config.labels.next:config.labels.last;
+    },
+    skip(page){return config.active(page)&&config.skip(page);},
+    next(page){
+      if(!config.active(page))return false;
+      const items=stages(page),i=visibleIndex(items),answer=response(items[i]);
+      if(answer&&answer.hidden){answer.hidden=false;return true;}
+      if(i<items.length-1){
+        showOnly(items,i+1);
+        const following=response(items[i+1]);if(following)following.hidden=true;
+        return true;
+      }
+      return false;
+    },
+    previous(page){
+      if(!config.active(page))return false;
+      const items=stages(page),i=visibleIndex(items),answer=response(items[i]);
+      if(answer&&!answer.hidden){answer.hidden=true;return true;}
+      if(i>0){
+        showOnly(items,i-1);
+        const preceding=response(items[i-1]);if(preceding)preceding.hidden=false;
+        return true;
+      }
+      return false;
+    }
+  };
+}
+let objectivesNavigation=createDefinitionNavigator({
+  stage:'.objective-vocab-stage',response:'[data-objective-vocab-definition]',
+  active:page=>page.dataset.objectivesVocab==='true',
+  skip:page=>page.dataset.ks3VocabIntro!=='true'&&window.matchMedia('(max-width:700px)').matches,
+  labels:{inactive:'Next step →',reveal:'Reveal definition →',next:'Next term →',last:'Continue →'}
+});
 // -1 means the starting problem is visible and no modelled step is revealed.
 // Reading from the end also supports opt-in cumulative examples.
 function modellingStepIndex(steps){
@@ -936,16 +985,7 @@ function resetPhaseState(id){
   const page=document.getElementById(id);
   if(!page)return;
   document.querySelectorAll('details.answers').forEach(d=>d.open=false);
-  if(id==='overview'&&page.dataset.objectivesVocab==='true'){
-    const stages=[...page.querySelectorAll('.objective-vocab-stage')];
-    if(stages.length){
-      showOnly(stages,0);
-      stages.forEach(stage=>{
-        const definition=stage.querySelector('[data-objective-vocab-definition]');
-        if(definition)definition.hidden=true;
-      });
-    }
-  }
+  if(id==='overview')objectivesNavigation.reset(page);
   if(id==='do-now')doNowNavigation.reset(page);
   if(id==='new-learning')newLearningNavigation.reset(page);
   if(id==='i-do')idoNavigation.reset(page);
@@ -1195,16 +1235,7 @@ function updateControl(){
   const page=document.getElementById(current);
   let label='Continue →';
   if(current==='overview'){
-    if(page.dataset.objectivesVocab==='true'){
-      const stages=[...page.querySelectorAll('.objective-vocab-stage')];
-      const i=visibleIndex(stages);
-      const definition=stages[i]?.querySelector('[data-objective-vocab-definition]');
-      if(definition&&definition.hidden)label='Reveal definition →';
-      else if(i<stages.length-1)label='Next term →';
-      else label='Continue →';
-    }else{
-      label='Next step →';
-    }
+    label=objectivesNavigation.nextLabel(page);
   }else if(current==='do-now'){
     label=doNowNavigation.nextLabel(page);
   }else if(current==='new-learning'){
@@ -1392,27 +1423,11 @@ function next(){
   const page=document.getElementById(current);
   // Phone objectives show the key terms as a reference list; do not require
   // twelve separate reveal swipes before the student can reach New Learning.
-  if(current==='overview'&&page.dataset.objectivesVocab==='true'&&page.dataset.ks3VocabIntro!=='true'&&window.matchMedia('(max-width:700px)').matches){
+  if(current==='overview'&&objectivesNavigation.skip(page)){
     showPage(order[order.indexOf('overview')+1]||'new-learning');
     return;
   }
-  if(current==='overview'&&page.dataset.objectivesVocab==='true'){
-    const stages=[...page.querySelectorAll('.objective-vocab-stage')];
-    const i=visibleIndex(stages);
-    const definition=stages[i]?.querySelector('[data-objective-vocab-definition]');
-    if(definition&&definition.hidden){
-      definition.hidden=false;
-      updateControl();
-      return;
-    }
-    if(i<stages.length-1){
-      showOnly(stages,i+1);
-      const nextDefinition=stages[i+1].querySelector('[data-objective-vocab-definition]');
-      if(nextDefinition)nextDefinition.hidden=true;
-      updateControl();
-      return;
-    }
-  }
+  if(current==='overview'&&objectivesNavigation.next(page)){updateControl();return;}
   if(current==='do-now'&&doNowNavigation.step(page,1)){updateControl();return;}
   if(current==='new-learning'&&newLearningNavigation.step(page,1)){updateControl();return;}
   if(current==='i-do'&&idoNavigation.next(page)){updateControl();return;}
@@ -1616,23 +1631,7 @@ function previousAction(){
     }
     return;
   }
-  if(current==='overview'&&page.dataset.objectivesVocab==='true'){
-    const stages=[...page.querySelectorAll('.objective-vocab-stage')];
-    const i=visibleIndex(stages);
-    const definition=stages[i]?.querySelector('[data-objective-vocab-definition]');
-    if(definition&&!definition.hidden){
-      definition.hidden=true;
-      updateControl();
-      return;
-    }
-    if(i>0){
-      showOnly(stages,i-1);
-      const previousDefinition=stages[i-1].querySelector('[data-objective-vocab-definition]');
-      if(previousDefinition)previousDefinition.hidden=false;
-      updateControl();
-      return;
-    }
-  }
+  if(current==='overview'&&objectivesNavigation.previous(page)){updateControl();return;}
   if(current==='exit'){
     const stages=[...page.querySelectorAll('.exit-stage')];
     if(stages.length){
@@ -2465,6 +2464,14 @@ if(document.getElementById('new-learning')&&/^\/lessons\/(?:h446|j277)\/lesson-\
       prepareNewLearningLabels();
     })
     .catch(error=>console.warn('New Learning phase module unavailable; original labels and navigation retained:',error));
+}
+/* Objectives navigation: keep synchronous behaviour available for every course. */
+if(document.getElementById('overview')&&/^\/lessons\/(?:h446|j277)\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname)){
+  import('./objectives.js?v=20261127-navigation1')
+    .then(({createObjectivesNavigation})=>{
+      objectivesNavigation=createObjectivesNavigation(createDefinitionNavigator);
+    })
+    .catch(error=>console.warn('Objectives phase module unavailable; original navigation retained:',error));
 }
 showPage(location.hash.slice(1)||'do-now');
 /* Identity is non-essential presentation. A badge/label problem must never
