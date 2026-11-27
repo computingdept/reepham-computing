@@ -2030,20 +2030,20 @@ function prepareMobileSwipeNavigation(){
 /* J277 Year 10: each question and answer names the lesson in which
    its underlying knowledge was previously taught, with KS3 for L001. */
 function prepareJ277DoNowSourceLabels(){
-  const found=location.pathname.match(/\/lessons\/j277\/lesson-(\d{3})(?:\/|\.html|$)/i);
-  if(!found)return;
-  const number=Number(found[1]);
-  const prior={"1":["KS3","KS3","KS3 Maths","KS3"],"2":["L001","L001","L001","L001"],"3":["L002","L001","L002","L002"],"4":["L003","L001","L002","L001 + L003"],"5":["L004","L003","L002","L004"],"6":["L005","L002","L003","L005"],"7":["L006","L003","L005","L006"],"8":["L007","L004","L005","L007"],"9":["L008","L005","L007","L007 + L008"],"10":["L009","L006","L005","L007 + L009"],"11":["L010","L008","L004","L010"],"12":["L011","L007","L010","L011"],"13":["L012","L011","L005","L011 + L012"],"14":["L013","L012","L010","L013"],"15":["L014","L006","L013","L014"],"16":["L015","L010","L012","L007 + L015"],"17":["L016","L004","L008","L011 + L016"],"18":["L017","L003","L012","L007 + L010 + L015"]};
-  const refs=prior[number];
-  if(!refs)return;
+  if(!/\/lessons\/j277\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname))return;
   const questions=[...document.querySelectorAll('#do-now .donow-questions .donow-question > strong')];
   const reviews=[...document.querySelectorAll('#do-now .donow-review-question .review-number')];
   if(questions.length!==4||reviews.length!==4)return;
+  const labels=['LAST LESSON','MCQ','RETRIEVAL','CHALLENGE'];
   for(let i=0;i<4;i++){
-    const stage=number===1?(i===3?'CHALLENGE':'KS3 RECALL'):(i===0?'LAST LESSON':i===3?'CHALLENGE':'RETRIEVAL');
+    // Use the source already rendered from the active bank (or authored static card).
+    // Do not infer a source from the lesson number or the superseded legacy map.
+    const source=questions[i].textContent.split(' · ').pop().trim();
+    if(!/^(?:L\d{3}|KS3)(?:\s*[,/+–-]\s*(?:L\d{3}|KS3))*$/.test(source))continue;
+    const ref=[...new Set(source.split(/\s*,\s*/).filter(Boolean))].join(' + ');
     for(const [heading,answerView] of [[questions[i],false],[reviews[i],true]]){
       heading.classList.add('j277-origin-heading');
-      heading.textContent=(answerView?'QUESTION '+(i+1)+' OF 4':String(i+1))+' · '+stage;
+      heading.textContent=(answerView?'QUESTION '+(i+1)+' OF 4':String(i+1))+' · '+labels[i]+' · '+ref;
     }
   }
 }
@@ -2685,6 +2685,14 @@ function applyPublishedJ277Q1(){
       const question='True or false? '+entry.statement;
       prompt.textContent=question;
       reviewPrompt.textContent=question;
+      const refs=entry.sourceRefs;
+      if(Array.isArray(refs)&&refs.length&&refs.every(ref=>/^(?:L\d{3}|KS3)$/.test(ref))){
+        const source=[...new Set(refs)].join(' + ');
+        const cardHeading=first.querySelector(':scope > strong');
+        const reviewHeading=review.querySelector('.review-number');
+        if(cardHeading)cardHeading.textContent='1 · TRUE / FALSE · '+source;
+        if(reviewHeading)reviewHeading.textContent='QUESTION 1 OF 4 · TRUE / FALSE · '+source;
+      }
       const label=reviewAnswer.querySelector('.review-label');
       const answer=document.createElement('p');
       answer.className='review-answer';
