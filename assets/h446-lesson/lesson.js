@@ -2361,8 +2361,9 @@ if(document.getElementById('exit')&&!document.getElementById('exit-answer-rollou
   document.head.appendChild(link);
 }
 prepareVerifiedExitTicket();
-// Shared Today / Next preview, available on numbered standard lessons.
-if(new URLSearchParams(location.search).get('exit')==='summary'&&
+// Today / Next is the default for eligible numbered J277/H446 lessons.
+// The phase module retains the original Exit Ticket when eligibility or data checks fail.
+if(document.getElementById('exit')&&
     /^\/lessons\/(?:j277|h446)\/lesson-\d{3}\/(?:index\.html)?$/i.test(location.pathname)){
   import('./exit-summary.js?v=20261127-curriculum2')
     .then(async ({prepareExitSummary})=>{
