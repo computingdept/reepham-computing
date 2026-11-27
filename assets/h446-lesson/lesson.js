@@ -2364,7 +2364,7 @@ prepareVerifiedExitTicket();
 // Opt-in Today / Next trial. Ordinary lessons keep their authored Exit Ticket.
 if(new URLSearchParams(location.search).get('exit')==='summary'&&
     /^\/lessons\/(?:j277\/lesson-002|h446\/lesson-046)\/(?:index\.html)?$/i.test(location.pathname)){
-  import('./exit-summary.js?v=20261127-pilot1')
+  import('./exit-summary.js?v=20261127-pilot2')
     .then(async ({prepareExitSummary})=>{
       if(await prepareExitSummary()&&current==='exit'){
         updateSignals('exit');

@@ -35,7 +35,9 @@ export function prepareExitSummary(){
   objectives.forEach(objective=>list.append(make('li','',objective+'.')));
   today.append(list);
   const next=make('div','exit-summary-next');
-  next.append(make('h2','','Next lesson…'),make('h3','',content.next),make('p','',content.detail));
+  const nextTitle=make('h3');
+  nextTitle.append(make('mark','rhsc-shared-keyword',content.next));
+  next.append(make('h2','','Next lesson…'),nextTitle,make('p','',content.detail));
   panel.append(today,next);
   // Load styling before replacing the legacy ticket. A failed request leaves it intact.
   const style=make('link');
