@@ -2513,13 +2513,12 @@ function applyPublishedH446Q1(){
       verdict.textContent=entry.correct?'TRUE':'FALSE';
       const explanation=document.createElement('p');
       explanation.className='review-explain';
-      explanation.textContent=(entry.correct?'Explanation: ':'Correction: ')
-        +(entry.correct?entry.explanation:entry.correction);
+      explanation.textContent=entry.correct?entry.explanation:entry.correction;
       const parts=[verdict,explanation];
       if(!entry.correct&&entry.explanation!==entry.correction){
         const detail=document.createElement('p');
         detail.className='review-explain';
-        detail.textContent='Explanation: '+entry.explanation;
+        detail.textContent=entry.explanation;
         parts.push(detail);
       }
       answerPanel.replaceChildren(...(label?[label]:[]),...parts);
@@ -2701,12 +2700,12 @@ function applyPublishedJ277Q1(){
       if(entry.correction){
         const correction=document.createElement('p');
         correction.className='j277-q1-correction';
-        correction.textContent='Correction: '+entry.correction;
+        correction.textContent=entry.correction;
         parts.push(correction);
       }
       const explanation=document.createElement('p');
       explanation.className='j277-q1-explanation';
-      explanation.textContent='Explanation: '+entry.explanation;
+      explanation.textContent=entry.explanation;
       parts.push(explanation);
       reviewAnswer.replaceChildren(...(label?[label]:[]),...parts);
     }).catch(error=>console.warn('J277 Q1 unchanged:',error));
