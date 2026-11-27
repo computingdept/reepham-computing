@@ -35,11 +35,11 @@ function draw(spec){
   h+=T(36,98,"PHYSICAL RAM",17,C.muted,"start")+T(365,98,"SECONDARY STORAGE",17,C.muted,"start");
   for(let i=0;i<4;i++)h+=R(40+i*62,125,56,82,i===3?C.cream:C.mint);
   for(let i=0;i<4;i++)h+=R(367+i*57,125,50,82,i<n?C.cream:C.grey);
-  h+=L(298,168,350,168)+T(320,239,"Pages may be moved between RAM and storage",16);
+  h+=L(298,153,350,153)+'<path d="M350 181H298M309 174L298 181L309 188" fill="none" stroke="#4b82ac" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>'+T(324,140,"Out",12,C.gold)+T(324,202,"In",12,C.blue)+T(320,239,"Pages may be moved between RAM and storage",16);
   h+=T(320,275,"Secondary storage is slower than RAM",18,C.gold);
  }else if(type==="storage"){
   const names=["MAGNETIC","OPTICAL","SOLID STATE"],descs=["Magnetised surface","Laser reads pits/lands","Flash memory cells"];
-  for(let i=0;i<3;i++){const x=22+i*205;h+=R(x,95,188,208,i===n%3?C.cream:i===2?C.mint:C.light)+T(x+94,138,names[i],18)+T(x+94,270,descs[i],13);if(i===0){h+='<circle cx="'+(x+94)+'" cy="198" r="43" fill="#b8cedd" stroke="'+C.blue+'" stroke-width="7"/><circle cx="'+(x+94)+'" cy="198" r="12" fill="#fff"/>';}else if(i===1){h+='<circle cx="'+(x+94)+'" cy="198" r="43" fill="#eff2f0" stroke="'+C.green+'" stroke-width="7"/><circle cx="'+(x+94)+'" cy="198" r="9" fill="'+C.grey+'" stroke="'+C.green+'"/>';}else{h+=R(x+58,163,72,70,C.mint,C.green)+T(x+94,204,"FLASH",14);}}
+  for(let i=0;i<3;i++){const x=22+i*205;h+=R(x,95,188,208,i===n%3?C.cream:i===2?C.mint:C.light)+T(x+94,138,names[i],18)+T(x+94,270,descs[i],13);if(i===0){h+='<circle cx="'+(x+94)+'" cy="198" r="43" fill="#dbe8f1" stroke="'+C.blue+'" stroke-width="4"/>'+[17,26,35].map(r=>'<circle cx="'+(x+94)+'" cy="198" r="'+r+'" fill="none" stroke="#8faabd" stroke-width="1.3"/>').join("")+'<circle cx="'+(x+94)+'" cy="198" r="9" fill="#fff" stroke="#527063"/><circle cx="'+(x+145)+'" cy="238" r="10" fill="#64748b"/><path d="M'+(x+145)+' 238L'+(x+114)+' 185" stroke="#475569" stroke-width="7" stroke-linecap="round"/><rect x="'+(x+109)+'" y="179" width="11" height="10" rx="2" fill="#bf8a31"/>';}else if(i===1){h+='<circle cx="'+(x+94)+'" cy="198" r="43" fill="#eff2f0" stroke="'+C.green+'" stroke-width="4"/>'+[17,26,35].map(r=>'<circle cx="'+(x+94)+'" cy="198" r="'+r+'" fill="none" stroke="#8ba69d" stroke-width="2" stroke-dasharray="3 2"/>').join("")+'<circle cx="'+(x+94)+'" cy="198" r="9" fill="'+C.grey+'" stroke="'+C.green+'"/><rect x="'+(x+136)+'" y="231" width="24" height="13" rx="3" fill="#475569"/><path d="M'+(x+146)+' 231L'+(x+116)+' 216" stroke="#b44b42" stroke-width="3"/><circle cx="'+(x+116)+'" cy="216" r="3" fill="#b44b42"/>';}else{h+=R(x+45,159,98,80,"#39766e",C.green,7)+[0,1,2,3].map(j=>R(x+53+(j%2)*42,166+Math.floor(j/2)*31,35,25,"#263d51","#263d51",3)).join("")+'<path d="M'+(x+55)+' 233H'+(x+133)+'" stroke="#d4b26c" stroke-width="5" stroke-dasharray="4 4"/>';}}
  }else if(type==="units"){
   const names=["bit","byte","kB","MB","GB"];for(let i=0;i<5;i++){h+=box(12+i*127,126,112,87,names[i],i===n?C.cream:C.light,24);if(i<4)h+=T(132+i*127,177,i===0?"÷8":"÷1000",14,C.muted);}
   h+=T(320,263,"Going to larger units: divide | Going to smaller units: multiply",18);
@@ -47,8 +47,10 @@ function draw(spec){
   h+=binaryBits(a[0]||"10110100",n,!!spec.hide);h+=T(320,244,"128     64      32      16       8        4         2         1",13,C.muted);h+=T(320,295,"Read place values from left (MSB) to right (LSB)",17);
  }else if(type==="addition"){
   const A=(a[0]||"00010110").padStart(8,"0").slice(-8),B=(a[1]||"00001101").padStart(8,"0").slice(-8),result=((parseInt(A,2)+parseInt(B,2))%256).toString(2).padStart(8,"0");
-  h+=T(70,113,"A",20,C.muted)+T(70,164,"B",20,C.muted)+T(70,224,"SUM",18,C.green);
-  for(let j=0;j<8;j++){const x=130+j*57,col=7-j,active=col===n;h+=R(x,77,50,172,active?C.cream:C.light);h+=T(x+25,115,A[j],22)+T(x+25,164,B[j],22)+T(x+25,227,!spec.hide&&(n===3||col<=n)?result[j]:"?",22,C.green);}
+  h+=T(70,94,"Carry",14,C.gold)+T(70,133,"A",20,C.muted)+T(70,174,"B",20,C.muted)+T(70,235,"SUM",18,C.green);
+  const carries=Array(8).fill(0);let carry=0;
+  for(let j=7;j>=0;j--){carries[j]=carry;carry=(Number(A[j])+Number(B[j])+carry)>=2?1:0;}
+  for(let j=0;j<8;j++){const x=130+j*57,col=7-j,active=col===n;h+=R(x,77,50,172,active?C.cream:C.light);h+=T(x+25,95,!spec.hide&&(n===3||col<=n)&&carries[j]?"1":"·",14,C.gold)+T(x+25,134,A[j],22)+T(x+25,175,B[j],22)+'<path d="M'+(x+5)+' 199H'+(x+45)+'" stroke="#527063" stroke-width="2"/>'+T(x+25,235,!spec.hide&&(n===3||col<=n)?result[j]:"?",22,C.green);}
   h+=T(320,285,"Work from the right-hand bit; carry 1 into the next column if needed.",17);
  }else if(type==="hex"){
   const v=(a[0]||"10101111").replace(/[^01]/g,"").padStart(8,"0").slice(-8);
