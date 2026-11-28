@@ -2436,7 +2436,7 @@ prepareYouDoSolutionsLink();
 })();
 /* I Do phase module; generic navigation remains available during loading. */
 if(document.getElementById('i-do')&&/^\/lessons\/(?:h446|j277)\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname)){
-  import('./i-do.js?v=20261128-specialist2')
+  import('./i-do.js?v=20261128-route1')
     .then(({prepareIdoLabels,createIdoNavigation})=>{
       idoNavigation=createIdoNavigation(createModelNavigator);
       prepareIdoLabels();
