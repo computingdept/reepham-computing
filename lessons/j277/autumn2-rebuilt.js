@@ -1552,16 +1552,11 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    return '<figure class="a1-scene nl-shift-board" data-no-zoom><svg data-nl-animation="shift-'+direction+'" viewBox="0 0 540 190" role="img" aria-label="Shift '+direction+' one place: 6 becomes '+value+'" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="'+clipId+'"><rect x="37" y="42" width="465" height="58"/></clipPath></defs>'+cells+'<g data-shift-before=""><g clip-path="url(#'+clipId+')"><g class="nl-shift-motion" style="--nl-shift-dx:'+dx+'px">'+before+'</g></g><text class="nl-shift-denary" x="270" y="151">Denary: 6</text></g><g data-shift-after="">'+after+'<text class="nl-shift-denary" x="270" y="151">Denary: '+value+'</text></g></svg></figure>';
   }
   if(kind==="nl-binary-overflow"){
-   const frame=(label,body)=>svgScene(label,body).replace('viewBox="0 0 560 232"','viewBox="0 0 560 340"').replace('width="554" height="226"','width="554" height="334"');
-   const x=i=>65+i*59, row=(bits,y,highlight=-1,fill="#e4f1e8")=>[...bits].map((v,i)=>pill(x(i),y,52,36,v,i===highlight?fill:"#e4f1e8",22)).join("");
-   const arrow=(x1,y1,x2,y2)=>'<path d="M'+x1+' '+y1+' L'+x2+' '+y2+'" stroke="#49816a" stroke-width="2" fill="none"/>';
-   const A="11111111",B="00000001",sum=(parseInt(A,2)+parseInt(B,2)).toString(2);
-   let body=note(24,27,"8-BIT ADDITION · OVERFLOW",20)+row(A,39)+note(38,98,"+",25)+row(B,78);
-   body+=line(65,120,536,120)+pill(7,129,48,36,sum[0],"#f5d7d3",22)+row(sum.slice(1),129);
-   body+=note(24,185,"Carry beyond 8 bits is lost · stored result = 0",15);
-   body+=note(24,219,"LEFT SHIFT · 1 PLACE",20)+row("10000001",229,0,"#f5d7d3")+row("00000010",280,7,"#fae9c9");
-   for(let i=1;i<8;i++)body+=arrow(x(i)+26,266,x(i-1)+26,279);
-   return frame("255 plus 1 requires nine bits; only eight zero bits are stored. A left shift of 10000001 discards the leading one and produces 00000010.",body);
+   const x=i=>74+i*56;
+   const row=(bits,y)=>[...bits].map((v,i)=>pill(x(i),y,50,38,v,"#e4f1e8",23)).join("");
+   const body=note(24,29,"255 + 1",23)+row("11111111",47)+note(43,112,"+",26)+row("00000001",94)+line(74,140,516,140)
+    +'<g data-nl-result="">'+pill(18,154,50,38,"1","#f5d7d3",23)+row("00000000",154)+note(18,215,"Extra bit",15)+note(18,247,"256 needs 9 bits. Only 8 are available.",19)+'</g>';
+   return svgScene("255 plus 1 equals 256, which needs nine bits. The extra bit cannot fit into eight-bit storage.",body).replace('viewBox="0 0 560 232"','viewBox="0 0 560 264"').replace('width="554" height="226"','width="554" height="258"').replace("<svg ",'<svg data-nl-animation="overflow" ');
   }
   if(kind==="shift"){
    let positions=[128,64,32,16,8,4,2,1],bits="00010110";
