@@ -126,3 +126,65 @@ body:not(.answer-page) #i-do[data-ido-compact-history="true"] .ido-method
   padding:5px 9px!important;
   margin:3px 0 5px!important;
 }
+
+/* H446 code-led I Do · DotNetFiddle light editor · explicit pilot marker. */
+@media screen{
+  #i-do .ido-example.h446-code-model .h13-grid{
+    grid-template-columns:minmax(0,35fr) minmax(0,65fr)!important;
+    align-items:start;
+  }
+  #i-do .ido-example.h446-code-model .h446-code-explanations{
+    display:grid;grid-template-columns:minmax(0,1fr);
+  }
+  #i-do .ido-example.h446-code-model .h446-code-explanations > .ido-step{
+    grid-area:1/1;min-width:0;display:block!important;
+  }
+  #i-do .ido-example.h446-code-model .h446-code-explanations > .ido-step[hidden]{
+    visibility:hidden;pointer-events:none;
+  }
+  body:not(.answer-page) #i-do .ido-example.h446-code-model .ido-method .ido-step > p{
+    font-size:clamp(17px,1.2vw,22px)!important;line-height:1.35;
+    margin:6px 0 10px;
+  }
+  #i-do .ido-example.h446-code-model .ido-method .ido-step h2{
+    font-size:clamp(20px,1.55vw,27px)!important;line-height:1.2;
+  }
+  #i-do .ido-example.h446-code-model .h446-model-source{
+    box-sizing:border-box;background:#fff;color:#000;border:1px solid #cbd5df;
+    border-radius:8px;margin:8px 0 0!important;padding:10px 8px!important;
+    font:400 clamp(16px,1.16vw,22px)/1.26 Consolas,"Liberation Mono",monospace!important;
+    white-space:pre!important;overflow-x:auto;overflow-y:visible;
+    overflow-wrap:normal!important;max-height:none!important;tab-size:4;
+  }
+  #i-do .ido-example.h446-code-model .h446-model-source code{
+    display:block;font:inherit!important;color:inherit;background:none;
+    white-space:normal;overflow-wrap:normal;
+  }
+  #i-do .ido-example.h446-code-model .h446-code-line{
+    display:block;white-space:pre;min-height:1.26em;line-height:1.26;
+    padding:0 4px;border-radius:3px;
+  }
+  #i-do .ido-example.h446-code-model .h446-code-line::before{
+    content:attr(data-line);display:inline-block;width:2.5em;text-align:right;
+    padding-right:.75em;box-sizing:border-box;font-size:.8em;color:#757d85;
+    user-select:none;font-variant-numeric:tabular-nums;
+  }
+  #i-do .ido-example.h446-code-model .h446-code-line-active{
+    background:#fff4ce;box-shadow:inset 3px 0 #d6a83e;
+  }
+  #i-do .ido-example.h446-code-model .h446-cs-keyword{color:#0200ff}
+  #i-do .ido-example.h446-code-model .h446-cs-string{color:#991515}
+  #i-do .ido-example.h446-code-model .h446-cs-comment{color:#007500}
+  #i-do .ido-example.h446-code-model .h446-code-plan{
+    margin:12px 0 0;padding-left:1.4em;display:grid;gap:10px;
+    font-size:clamp(17px,1.2vw,22px);line-height:1.35;
+  }
+  #i-do .ido-example.h446-code-model .h446-code-plan li::marker{color:#476c5d;font-weight:700}
+  @media(min-width:901px) and (max-height:760px){
+    #i-do .ido-example.h446-code-model .h446-model-source{font-size:clamp(15px,1.1vw,18px)!important}
+  }
+  @media(max-width:900px){
+    #i-do .ido-example.h446-code-model .h13-grid{grid-template-columns:minmax(0,1fr)!important}
+    #i-do .ido-example.h446-code-model .h446-model-source{font-size:14px!important}
+  }
+}
