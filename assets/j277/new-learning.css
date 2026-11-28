@@ -113,20 +113,31 @@
   #new-learning [data-nl-animation].nl-playing [data-nl-result]{animation:none;opacity:1}
 }
 
-/* Single-row teaching adaptation of the Skills Lab shift board. */
+/* Single-row SVG animation. One movement on entering a reveal, no controls. */
 #new-learning .nl-shift-board{background:transparent;border:0;padding:0}
 #new-learning .nl-shift-board svg{display:block;width:100%;height:auto}
-#new-learning .nl-shift-board .nl-bit rect{fill:#f0f6f2;stroke:#bdcfc3;stroke-width:1.5}
-#new-learning .nl-shift-board .nl-bit-on rect{fill:#d2e9da;stroke:#7ca88b}
-#new-learning .nl-shift-board text{text-anchor:middle;fill:#173c2d;font-family:Consolas,ui-monospace,monospace;font-weight:700}
-#new-learning .nl-shift-board [data-shift-digit]{font-size:25px}
+#new-learning .nl-shift-board rect.nl-bit-cell{fill:#f0f6f2;stroke:#bdcfc3;stroke-width:1.5}
+#new-learning .nl-shift-board text{text-anchor:middle;fill:#173c2d;font-family:Arial,Helvetica,sans-serif;font-weight:700}
 #new-learning .nl-shift-board .nl-bit-place{font-size:16px;fill:#54725e}
-#new-learning .nl-shift-board svg.nl-shifting .nl-bit [data-shift-digit]{visibility:hidden}
-#new-learning .nl-shift-board svg.nl-shifting .nl-bit rect{fill:#f0f6f2;stroke:#bdcfc3}
-#new-learning .nl-shift-board .nl-shift-value{text-align:center;font-size:clamp(22px,2.2vw,34px);margin:8px 0 16px}
-#new-learning .nl-shift-controls{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
-#new-learning .nl-shift-controls button{font:inherit;font-weight:700;padding:10px 16px;min-height:44px;background:#fff;border:1px solid #a3c3b2;border-radius:10px;color:#173c2d;cursor:pointer}
-#new-learning .nl-shift-controls button:hover:not(:disabled){background:#eaf4ee}
-#new-learning .nl-shift-controls button:disabled{opacity:.55;cursor:default}
-#new-learning .nl-shift-controls button:focus-visible{outline:3px solid #54725e;outline-offset:2px}
-@media print{#new-learning .nl-shift-controls{display:none}}
+#new-learning .nl-shift-board .nl-bit-digit{font-size:28px}
+#new-learning .nl-shift-board .nl-bit-digit.nl-bit-one{fill:#14704c}
+#new-learning .nl-shift-board .nl-shift-denary{font-size:26px}
+#new-learning .nl-shift-board .nl-shift-direction{font-size:22px;fill:#54725e}
+#new-learning .nl-shift-board [data-shift-before]{visibility:hidden}
+#new-learning .nl-shift-board .nl-playing [data-shift-before]{
+ animation:j277-shift-before 2.6s linear both;
+}
+#new-learning .nl-shift-board .nl-playing [data-shift-before] .nl-shift-motion{
+ animation:j277-shift-slide 2.6s ease-in-out both;
+}
+#new-learning .nl-shift-board .nl-playing [data-shift-after]{
+ animation:j277-shift-after 2.6s linear both;
+}
+@keyframes j277-shift-before{0%,86%{visibility:visible}87%,100%{visibility:hidden}}
+@keyframes j277-shift-slide{0%,30%{transform:translateX(0)}85%,100%{transform:translateX(var(--nl-shift-dx))}}
+@keyframes j277-shift-after{0%,86%{visibility:hidden}87%,100%{visibility:visible}}
+@media(prefers-reduced-motion:reduce),print{
+ #new-learning .nl-shift-board .nl-playing [data-shift-before]{animation:none;visibility:hidden}
+ #new-learning .nl-shift-board .nl-playing [data-shift-before] .nl-shift-motion{animation:none}
+ #new-learning .nl-shift-board .nl-playing [data-shift-after]{animation:none;visibility:visible}
+}
