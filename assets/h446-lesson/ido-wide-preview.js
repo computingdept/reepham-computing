@@ -11,15 +11,20 @@
 
   // Content-based decision; no lesson numbers participate in classification.
   // Count hidden stages too. Avoid widening if the method needs the space.
-  function chooseWide(section,reference,method){
+  function chooseWide(section,reference,method,protectedModel=false){
     if(section.querySelectorAll(".ido-example").length!==1)return false;
     const svgs=[...reference.querySelectorAll(":scope > svg,:scope > .adder-ido-diagram > svg,.j277-ido-visual-frame .y11-scene svg,:scope > .route-figure > svg,:scope > .h-figure > svg,:scope > .draft-figure > svg,:scope > .p23-figure > svg,:scope > .h13-figure > svg,:scope > .n13-figure > svg")];
-    const substantial=svgs.some(svg=>{
+    // Recognise staged GCSE figures without changing the existing H446 classifier.
+    const j277Staged=eligible[1].toLowerCase()==="j277"&&!protectedModel
+      ? [...reference.querySelectorAll(":scope > .j277-ido-visual-frame > .j277-learning-scene > svg")]:[];
+    const substantial=[...svgs,...j277Staged].some(svg=>{
       const v=(svg.getAttribute("viewBox")||"").trim().split(/[\s,]+/).map(Number);
       const ratio=v.length===4&&v[2]>0&&v[3]>0?v[2]/v[3]:0;
       const labels=svg.querySelectorAll("text").length;
       const shapes=svg.querySelectorAll("rect,path,line,circle,polygon,polyline,ellipse").length;
-      return ratio>=1.2&&labels>=7&&shapes>=6;
+      // Small indexed arrays are still meaningful algorithm models.
+      const algorithm=j277Staged.includes(svg)&&/;\s*(?:search|sort|merge);\s*model$/i.test(svg.getAttribute("aria-label")||"");
+      return ratio>=1.2&&labels>=7&&(shapes>=6||(algorithm&&shapes>=4));
     });
     if(!substantial||method.querySelector("svg,table,canvas,img"))return false;
     const length=node=>(node.textContent||"").replace(/\s+/g," ").trim().length;
@@ -105,14 +110,14 @@
     // Never relabel timed, mock, assessment or NEA examples through this rule.
     const legacyModelLabel=/^I DO\s*·\s*(?:UNMARKED EXAMPLE|UNMARKED MODEL|FULL MODEL|WORKED MODEL)$/i.test(tag.textContent.trim());
     const timedH446=eligible[1].toLowerCase()==="h446"&&[212,213,214,222,243,247,250,280,305,306,308].includes(Number(eligible[2]));
-    const protectedModel=timedH446||/\b(?:mock|assessment)\b/i.test(document.title||"")||section.dataset.assessmentMode==="true"||/\b(?:timed|mock|assessment|closed.book)\b/i.test(section.dataset.phaseTime||"");
+    const protectedModel=timedH446||/\b(?:mock|assessment)\b/i.test(document.title||"")||section.dataset.assessmentMode==="true"||/\b(?:timed|mock|assessment|closed.book)\b/i.test(section.dataset.phaseTime||"")||/\btimed\b/i.test(document.title||"");
     if(legacyModelLabel&&!protectedModel)tag.textContent="EXAMPLE";
 
     // Only compact generic example labels; retain meaningful specialist teaching cues.
     const genericLabel=/^(?:EXAMPLE|WORKED EXAMPLE|I DO|I DO\s*·\s*(?:MODEL|COMPLETE MODEL|ONE COMPLETE MODEL|MODEL EXAMPLE|WATCH THE FULL METHOD)|ONE COMPLETE WORKED EXAMPLE|ONE WORKING SOLUTION FIRST)$/i.test(tag.textContent.trim());
     const draftLabel=((draftPilot||teachingPilot)&&tag.textContent.trim()==="I DO · TEACHER MODEL")||(network&&tag.textContent.trim()==="I DO · WORKED EXAMPLE");
     if(!genericLabel&&!draftLabel&&!(routePilot&&tag.textContent.trim()==="I DO · SAFE HEURISTIC"))return;
-    const wide=mode==="wide"||(mode==="auto"&&chooseWide(section,panel,method));
+    const wide=mode==="wide"||(mode==="auto"&&chooseWide(section,panel,method,protectedModel));
     // Unqualified specialist layouts retain their original presentation in full.
     if((specialist||routePilot)&&!wide)return;
     // One controller even if a legacy pilot script tag also loads this file.
@@ -120,7 +125,7 @@
     if(!document.querySelector('link[rel="stylesheet"][href*="/ido-wide-preview.css"]')||specialist||routePilot){
       const css=document.createElement("link");
       css.rel="stylesheet";
-      css.href="/assets/h446-lesson/ido-wide-preview.css?v="+(network?"20261128-network1":teachingPilot?"20261128-teaching1":draftPilot?"20261128-draft1":routePilot?"20261128-route1":specialist?"20261128-specialist1":"20261128-shared1");
+      css.href="/assets/h446-lesson/ido-wide-preview.css?v="+(network?"20261128-network1":teachingPilot?"20261128-teaching1":draftPilot?"20261128-draft1":routePilot?"20261128-route1":specialist?"20261128-specialist1":"20261128-j277staged1");
       document.head.appendChild(css);
     }
     const original=tag.textContent;
