@@ -1887,7 +1887,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  .j277-visual-lesson #new-learning .nl-explanation h2{font-size:clamp(22px,1.55vw,29px);line-height:1.23;margin:0 0 13px}
  .j277-visual-lesson #new-learning .nl-stage p{font-size:clamp(17px,1.12vw,21px);line-height:1.35}
  .j277-visual-lesson #new-learning .nl-reference-note{font-size:clamp(14px,1vw,17px);padding:9px 12px}
- .j277-visual-lesson #new-learning .j277-cpu-visual{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+ .j277-visual-lesson #new-learning .j277-cpu-visual{flex:1;min-height:0;display:flex;align-items:flex-start;justify-content:center}
  .j277-visual-lesson #new-learning .j277-cpu-visual[hidden]{display:none!important}
  .j277-visual-lesson #new-learning .nl-reference .j277-cpu-visual .a1-scene{width:100%;max-width:none;margin:0;display:block}
  .j277-visual-lesson #new-learning .nl-reference .j277-cpu-visual svg{
@@ -2051,7 +2051,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    min-width:0;
  }
  .j277-visual-lesson #new-learning .nl-reference .j277-cpu-visual{
-   flex:1;display:flex;align-items:center;justify-content:center;min-height:0;
+   flex:1;display:flex;align-items:flex-start;justify-content:center;min-height:0;
  }
  .j277-visual-lesson #new-learning .nl-reference .j277-cpu-visual .a1-scene{
    display:block;
