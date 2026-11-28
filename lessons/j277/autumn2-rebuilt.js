@@ -1562,16 +1562,25 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    let positions=[128,64,32,16,8,4,2,1],bits="00010110";
    return svgScene("Eight-bit logical left shift: 00010110 becomes 01011000 after shifting left two places",note(26,37,"8-bit value: 00010110",19)+positions.map((v,i)=>pill(20+i*65,57,60,48,`${bits[i]}`,"#eaf3ee",23)).join("")+`<path d="M280 109 V149 L269 137 M280 149 L291 137" stroke="#be8632" fill="none" stroke-width="4"/>`+note(35,169,"LEFT 2 PLACES · fill zeros on right",17)+note(115,209,"01011000  =  88",23));
   }
-  // New Learning: four distinct visual explanations for characters and images.
-  if(["nl-character-codes","nl-bitmap-grid","nl-colour-depth","nl-image-size"].includes(kind)){
+  // New Learning: distinct visual explanations for characters and images.
+  if(["nl-character-codes","nl-unicode","nl-bitmap-grid","nl-colour-depth","nl-image-size"].includes(kind)){
    const palette=["#eaf1f7","#3a7298","#d86c70","#f4c86e"];
    const picture=["00000000","02200220","02222220","00222200","00022000","00000000"];
    const grid=(x,y,size)=>picture.map((row,j)=>[...row].map((c,i)=>'<rect x="'+(x+i*size)+'" y="'+(y+j*size)+'" width="'+size+'" height="'+size+'" fill="'+palette[Number(c)]+'" stroke="#ffffff" stroke-width="1.2"/>').join("")).join("");
    const frame=(label,body)=>svgScene(label,body).replace('viewBox="0 0 560 232"','viewBox="0 0 560 300"').replace('width="554" height="226"','width="554" height="294"');
    if(kind==="nl-character-codes"){
     const rows=[["A","65","01000001"],["B","66","01000010"],["a","97","01100001"]];
-    const body=note(24,30,"ASCII",23)+note(28,65,"Character",16)+note(208,65,"Denary code",16)+note(380,65,"Binary",16)+rows.map((r,i)=>pill(20,76+i*53,110,44,r[0],"#e4f0e8",25)+pill(168,76+i*53,135,44,r[1],"#e4f0e8",22)+pill(335,76+i*53,200,44,r[2],"#fdf2df",21)).join("")+note(24,267,"Unicode can represent many more characters.",19);
-    return frame("ASCII maps A to 65, B to 66, and lowercase a to 97. Unicode supports many more characters.",body);
+    const body=note(24,30,"ASCII",23)+note(28,65,"Character",16)+note(208,65,"Denary code",16)+note(380,65,"Binary",16)+rows.map((r,i)=>pill(20,76+i*53,110,44,r[0],"#e4f0e8",25)+pill(168,76+i*53,135,44,r[1],"#e4f0e8",22)+pill(335,76+i*53,200,44,r[2],"#fdf2df",21)).join("")+note(24,267,"128 characters · 7 bits (shown in 8-bit form)",18);
+    return frame("ASCII maps A to 65, B to 66, and lowercase a to 97. Standard ASCII uses seven bits; these codes are shown padded to eight bits.",body);
+   }
+   if(kind==="nl-unicode"){
+    const samples=[["A","English"],["你","Chinese"],["あ","Japanese"],["😀","Emoji"]];
+    const cards=samples.map(([character,label],i)=>{
+     const x=24+i*130;
+     const tile='<rect x="'+x+'" y="76" width="122" height="118" rx="9" fill="'+(i===0?"#e4f0e8":"#e8f0f7")+'" stroke="#92b4a0"/><text x="'+(x+61)+'" y="151" font-size="49" font-weight="600" fill="#1c573e" text-anchor="middle" style="font-family:Arial,\'PingFang SC\',\'Hiragino Sans\',\'Noto Sans CJK SC\',\'Apple Color Emoji\',\'Segoe UI Emoji\',sans-serif">'+character+'</text><text x="'+(x+61)+'" y="219" font-size="18" font-weight="700" text-anchor="middle" fill="#254a3a">'+label+'</text>';
+     return i===0?tile:'<g data-nl-result="" style="--nl-delay:'+((i-1)*0.35)+'s">'+tile+'</g>';
+    }).join("");
+    return frame("Unicode represents English letters, Chinese and Japanese characters, and emoji. The last three examples cannot be represented in standard ASCII.",note(24,34,"Unicode",24)+cards+'<g data-nl-result="" style="--nl-delay:1.05s">'+note(24,270,"Many more characters than ASCII",22)+'</g>').replace("<svg ",'<svg data-nl-animation="unicode" ');
    }
    if(kind==="nl-bitmap-grid"){
     const size=34,x=65,y=46;
