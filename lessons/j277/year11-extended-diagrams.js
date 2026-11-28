@@ -439,7 +439,34 @@ function matchedLessonScene(spec,stage){
  return "";
 }
 
+// Detailed I Do only: one test or one CPU operation per reveal.
+function detailedTestPlan(spec,stage){
+ const rows=spec.idoTestRows||[],headers=["Test type","Input","Expected result"],xs=[20,224,402],ws=[196,170,218];
+ let h="";
+ for(let r=0;r<=rows.length;r++){
+   const y=67+r*43,shown=r===0||r<=stage,active=r>0&&r===stage;
+   for(let j=0;j<3;j++)h+=label(xs[j],y,ws[j],38,shown?(r===0?headers[j]:rows[r-1][j]):"",r===0?K.sky:active?K.amber:shown?K.mint:K.grey,r===0?17:18);
+ }
+ return h;
+}
+function detailedCpuFetch(stage){
+ const highlight=(active)=>active?K.amber:K.sky;
+ const pc=stage>=4?"43":"42",mar=stage>=1?"42":"—",mdr=stage>=3?"ADD 5":"—",acc=stage>=6?"15":"10";
+ const card=(x,y,w,head,value,active)=>box(x,y,w,83,highlight(active))+text(x+w/2,y+26,head,16)+text(x+w/2,y+60,value,23);
+ const link=(x1,y1,x2,y2)=>{const angle=Math.atan2(y2-y1,x2-x1),len=10;return '<path d="M'+x1+' '+y1+' L'+x2+' '+y2+' M'+(x2-len*Math.cos(angle-.6))+' '+(y2-len*Math.sin(angle-.6))+' L'+x2+' '+y2+' L'+(x2-len*Math.cos(angle+.6))+' '+(y2-len*Math.sin(angle+.6))+'" stroke="#b77e28" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>';};
+ let h=card(25,100,150,"PC",pc,stage===0||stage===1||stage===4)+card(222,100,150,"MAR",mar,stage===1||stage===2)+card(420,100,195,"RAM · ADDRESS 42","ADD 5",stage===2||stage===3)+card(420,232,195,"MDR",mdr,stage===3||stage===5)+card(222,232,150,"CONTROL UNIT",stage>=5?"ADD 5":"—",stage===5||stage===6)+card(25,232,150,"ALU / ACC",acc,stage===6);
+ if(stage===1)h+=link(177,141,218,141);
+ if(stage===2)h+=link(374,141,416,141);
+ if(stage===3)h+=link(518,185,518,228);
+ if(stage===4)h+=text(100,210,"PC + 1",17,"middle","#a67427");
+ if(stage===5)h+=link(416,273,376,273);
+ if(stage===6)h+=link(218,273,179,273);
+ h+=text(320,352,["PC points to the next instruction","Copy address 42 into MAR","Request the instruction at address 42","Transfer ADD 5 into MDR","PC now points to address 43","Control unit decodes ADD 5","ALU adds 5: ACC = 15"][stage],19);
+ return h;
+}
 function layout(spec,stage){
+ if(spec.phase==="i-do"&&spec.idoDetailedExtended==="test-plan")return detailedTestPlan(spec,stage);
+ if(spec.phase==="i-do"&&spec.idoDetailedExtended==="cpu-fetch")return detailedCpuFetch(stage);
  const exact=matchedLessonScene(spec,stage);if(exact)return exact;
  const special=subjectScene(spec,stage);if(special)return special;
  const kind=String(spec.y11),scenario=String(spec.scenario||"model"),mode=String(spec.phase||"learning");
@@ -529,12 +556,14 @@ function layout(spec,stage){
 }
 window.J277Y11Diagram=function(spec){
  if(!spec||!spec.y11||!(spec.year11Extension||spec.y11Version===2))return earlier?earlier(spec):"";
- const stage=Math.max(0,Math.min(3,Number(spec.focus)||0));
+ const detailed=spec.phase==="i-do"&&["test-plan","cpu-fetch"].includes(spec.idoDetailedExtended);
+ const stage=Math.max(0,Math.min(detailed?6:3,Number(spec.focus)||0));
  const header=String(spec.title||spec.topic||"J277 VISUAL MODEL"),body=layout(spec,stage);
  const labelText=String(spec.caption||"Model the question, then reveal the method");
  // Independent question-data diagrams are reference material, not guided steps.
  // Omitting the step badge also leaves the full header legible on all screens.
- const stepBadge=spec.phase==="question-data"?"":text(615,39,stage===3?"CHECK":("STEP "+(stage+1)),14,"end","#247552");
+ const stepBadge=spec.phase==="question-data"?"":text(615,39,!detailed&&stage===3?"CHECK":("STEP "+(stage+1)),14,"end","#247552");
  return '<figure class="a1-scene y11-scene" role="group" aria-label="'+E(header)+'"><svg viewBox="0 0 640 404" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="'+E(header)+'">'+box(1,1,638,402,"#fcfefc","#c7d9cc")+text(23,38,header.slice(0,52),21,"start")+stepBadge+body+text(320,394,labelText.slice(0,84),14,"middle","#537268")+'</svg></figure>';
 };
+window.J277Y11Diagram.idoExtendedVersion=1;
 })();
