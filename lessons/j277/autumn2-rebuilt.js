@@ -1588,8 +1588,23 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     return frame("A heart bitmap has 8 columns and 6 rows, making 48 pixels. One pixel is outlined.",note(65,30,"8 pixels wide",20)+grid(x,y,size)+'<rect x="'+(x+3*size)+'" y="'+(y+2*size)+'" width="'+size+'" height="'+size+'" fill="none" stroke="#173c2d" stroke-width="4"/>'+line(x+4*size,y+2.5*size,383,118)+note(388,114,"One pixel",20)+note(359,194,"6 pixels high",19)+note(359,229,"48 pixels",23));
    }
    if(kind==="nl-colour-depth"){
-    const row=(depth,y)=>{const colours=depth===1?["#ffffff","#173c2d"]:palette;return note(25,y+22,depth+" bit"+(depth===1?"":"s"),22)+colours.map((c,i)=>'<rect x="'+(155+i*58)+'" y="'+y+'" width="50" height="47" rx="4" fill="'+c+'" stroke="#8ba99b"/>'+note(155+i*58+10,y+68,i.toString(2).padStart(depth,"0"),18)).join("")+note(405,y+26,colours.length+" colours",20)};
-    return frame("One bit can represent two colours. Two bits can represent four colours. Each binary code maps to one colour.",row(1,36)+row(2,155)+note(25,267,"More bits per pixel = more possible colours",19));
+    // Same 8 × 6 heart outline and grid geometry at every depth.
+    const shades=["#edf4fa","#dceaf5","#c1d8ea","#9ebdd5","#fff1ee","#fbd6d3","#f6b7b6","#ed9699","#e17d83","#d86c70","#c6535d","#ad3f50","#97384b","#812d40","#6a2238","#531a2e"];
+    const two=["#eaf1f7","#f4c86e","#d86c70","#a44750"];
+    const render=(depth)=>{
+     const cols=depth===1?["#ffffff","#202020"]:depth===2?two:shades;
+     const cells=picture.map((row,j)=>[...row].map((c,i)=>{
+      const heart=c!=="0";let index;
+      if(depth===1)index=heart?1:0;
+      else if(depth===2)index=heart?(j===1||i===2?1:i>=5||j>=4?3:2):0;
+      else index=heart?Math.min(15,5+j*2+Math.max(0,i-2)):Math.min(3,Math.floor((i+j)/3));
+      return '<rect x="'+(65+i*34)+'" y="'+(46+j*34)+'" width="34" height="34" fill="'+cols[index]+'" stroke="#fff" stroke-width="1.2"/>';
+     }).join("")).join("");
+     const n=2**depth, power=depth===1?"¹":depth===2?"²":"⁴";
+     return cells+note(359,88,depth+" bit"+(depth===1?"":"s"),29)+note(359,115,"per pixel",18)+note(359,164,"2"+power+" = "+n,29)+note(359,190,"possible colours",18);
+    };
+    const body=note(65,30,"8 × 6 pixels",20)+'<g data-nl-sequence-step="" style="--nl-delay:0s;--nl-duration:2.6s">'+render(1)+'</g><g data-nl-sequence-step="" style="--nl-delay:2.6s;--nl-duration:2.6s">'+render(2)+'</g><g data-nl-sequence-final="">'+render(4)+'</g>'+note(65,280,"Same 48 pixels. More possible colours.",20);
+    return frame("The same 8 by 6 heart at 1-bit, 2-bit and 4-bit colour depth, allowing 2, 4 and 16 possible colours. Resolution stays unchanged.",body).replace("<svg ",'<svg data-nl-animation="colour-depth" style="--nl-total:5.2s" ');
    }
    const body=grid(32,48,27)+note(32,30,"8 × 6 pixels",20)+note(282,69,"48 pixels",23)+note(282,108,"× 2 bits per pixel",20)+line(282,123,522,123)+'<g data-nl-result="">'+note(282,159,"96 bits",25)+note(282,201,"÷ 8 = 12 bytes",23)+'</g>'+note(32,267,"Uncompressed image data",19);
    return frame("An 8 by 6 image at 2 bits per pixel needs 96 bits or 12 bytes, excluding metadata.",body).replace("<svg ",'<svg data-nl-animation="image-size" ');
@@ -2336,7 +2351,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20261025-exit-unified1">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261127-flowchart-code1">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
- <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261113-card-outlines1">${lessonStyles}<link rel="stylesheet" href="../../../assets/j277/new-learning.css?v=20261128-shiftsequence1"><link rel="stylesheet" href="../../../assets/classroom-visual-zoom.css?v=20261114-clickclose2"></head>`;
+ <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261113-card-outlines1">${lessonStyles}<link rel="stylesheet" href="../../../assets/j277/new-learning.css?v=20261128-colourdepth1"><link rel="stylesheet" href="../../../assets/classroom-visual-zoom.css?v=20261114-clickclose2"></head>`;
  function renderLesson(number,lesson,rhsExistingPriorExam=null){
   // Canonicalise the Year 11 diagram schema before generating any phase.
   // A silent fallback would hide the dedicated SVGs and disable I Do / We Do reveals.
