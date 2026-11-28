@@ -162,3 +162,19 @@
  #new-learning .nl-shift-board .nl-playing [data-shift-sequence-step] .nl-shift-motion{animation:none}
  #new-learning .nl-shift-board .nl-playing [data-shift-sequence-final]{animation:none;visibility:visible}
 }
+
+/* Generic timed SVG scene sequence: fixed geometry, no controls.
+   Intermediate scenes are visible only during their assigned interval. */
+#new-learning [data-nl-sequence-step]{visibility:hidden}
+#new-learning .nl-playing [data-nl-sequence-step]{
+ animation:j277-nl-sequence-step var(--nl-duration,2.6s) linear var(--nl-delay,0s) forwards;
+}
+#new-learning .nl-playing [data-nl-sequence-final]{
+ animation:j277-nl-sequence-final .01s steps(1,end) var(--nl-total,5.2s) both;
+}
+@keyframes j277-nl-sequence-step{0%,99.99%{visibility:visible}100%{visibility:hidden}}
+@keyframes j277-nl-sequence-final{0%{visibility:hidden}100%{visibility:visible}}
+@media(prefers-reduced-motion:reduce),print{
+ #new-learning .nl-playing [data-nl-sequence-step]{animation:none;visibility:hidden}
+ #new-learning .nl-playing [data-nl-sequence-final]{animation:none;visibility:visible}
+}
