@@ -2,44 +2,48 @@
     "codeModelling": {
       "mode": "persistent-code",
       "ido": {
-        "question": "This classroom login example uses a password supplied for testing. Identify the faults and improve the program so it stops after three attempts.",
+        "question": "Identify and correct the login errors. Stop after three attempts. Assume a test password is supplied.",
         "scaffold": "// Faulty example\nguess = input(\"Password?\")\nwhile guess != password\n    print(password)\n    guess = input(\"Try again:\")\nendwhile\nprint(\"Welcome\")",
         "steps": [
           {
             "title": "Identify the faults",
-            "explanation": "The loop permits unlimited guesses and exposes the password after failure.",
+            "explanation": "Unlimited guesses and a displayed password.",
             "code": "// Faulty instructions\nwhile guess != password\n    print(password)"
           },
           {
             "title": "Remove the secret output",
-            "explanation": "Never display the stored password. Report only a generic outcome.",
+            "explanation": "Remove the password output.",
             "code": "// Delete print(password)\n// Use a generic failure message"
           },
           {
             "title": "Set up attempt control",
-            "explanation": "Start with zero attempts and no authenticated user.",
+            "explanation": "Start with zero attempts and no successful login.",
             "code": "attempts = 0\nauthenticated = false"
           },
           {
             "title": "Restrict the loop",
-            "explanation": "Continue only while fewer than three attempts have been made and login has not succeeded.",
-            "code": "attempts = 0\nauthenticated = false\nwhile attempts < 3 AND authenticated == false"
+            "explanation": "Continue while attempts are below 3 and login has not succeeded.",
+            "code": "attempts = 0\nauthenticated = false\nwhile attempts < 3 AND authenticated == false",
+            "displayCode": "while attempts < 3 AND authenticated == false"
           },
           {
             "title": "Check one guess",
-            "explanation": "Compare the input with the supplied test password. Count every attempt.",
-            "code": "attempts = 0\nauthenticated = false\nwhile attempts < 3 AND authenticated == false\n    guess = input(\"Password?\")\n    authenticated = guess == password\n    attempts = attempts + 1\nendwhile"
+            "explanation": "Read a guess, check it and count the attempt.",
+            "code": "attempts = 0\nauthenticated = false\nwhile attempts < 3 AND authenticated == false\n    guess = input(\"Password?\")\n    authenticated = guess == password\n    attempts = attempts + 1\nendwhile",
+            "displayCode": "    guess = input(\"Password?\")\n    authenticated = guess == password\n    attempts = attempts + 1\nendwhile"
           },
           {
             "title": "Report the outcome",
-            "explanation": "Display Welcome on success or Locked after three failures. This is a simplified classroom model, not a production password system.",
-            "code": "attempts = 0\nauthenticated = false\nwhile attempts < 3 AND authenticated == false\n    guess = input(\"Password?\")\n    authenticated = guess == password\n    attempts = attempts + 1\nendwhile\nif authenticated == true then\n    print(\"Welcome\")\nelse\n    print(\"Locked\")\nendif"
+            "explanation": "Print the outcome after the loop.",
+            "code": "attempts = 0\nauthenticated = false\nwhile attempts < 3 AND authenticated == false\n    guess = input(\"Password?\")\n    authenticated = guess == password\n    attempts = attempts + 1\nendwhile\nif authenticated == true then\n    print(\"Welcome\")\nelse\n    print(\"Locked\")\nendif",
+            "displayCode": "if authenticated == true then\n    print(\"Welcome\")\nelse\n    print(\"Locked\")\nendif"
           },
           {
             "title": "Test both outcomes",
-            "explanation": "Three wrong guesses give Locked. A correct second guess gives Welcome, then the loop stops.",
+            "explanation": "Three wrong guesses: Locked. Correct second guess: Welcome.",
             "code": "attempts = 0\nauthenticated = false\nwhile attempts < 3 AND authenticated == false\n    guess = input(\"Password?\")\n    authenticated = guess == password\n    attempts = attempts + 1\nendwhile\nif authenticated == true then\n    print(\"Welcome\")\nelse\n    print(\"Locked\")\nendif"
           }
-        ]
+        ],
+        "starterLabel": "FAULTY CODE"
       }
     }}}

@@ -1616,12 +1616,37 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   return `<section id="new-learning" class="page phase-focus${hasDiagram?' a1-visual-learning':''}" data-phase-time="New learning"><div class="nl-focus"><article class="nl-reference">${heading}${visuals}${note}</article><article class="nl-explanation">${stages}</article></div></section>`;
  }
 
+ function erlModelCode(source){
+   const code=String(source??"");
+   const keywords=/^(?:if|then|else|elseif|endif|switch|case|default|endswitch|for|to|step|next|while|endwhile|do|until|function|endfunction|procedure|endprocedure|return|array|const|global|and|or|not|xor|div|mod|select|from|where|order|by|asc|desc)$/i;
+   const builtins=/^(?:print|input|int|float|real|str|string|bool|asc|chr|random|open|newfile|readline|writeline|endoffile|close|substring|length|upper|lower)$/i;
+   const tokens=/(\/\/[^\n]*|#[^\n]*|"(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\\\n])*'|\b\d+(?:\.\d+)?\b|\b[A-Za-z_]\w*\b|[^\w\s]+|\s+|.)/g;
+   return Array.from(code.matchAll(tokens),m=>{
+     const t=m[0],kind=t.startsWith("//")||t.startsWith("#")?"comment":/^["']/.test(t)?"string":/^(?:true|false|null)$/i.test(t)?"literal":/^\d/.test(t)?"literal":keywords.test(t)?"keyword":builtins.test(t)?"builtin":"";
+     return kind?'<span class="erl-'+kind+'">'+escape(t)+'</span>':escape(t);
+   }).join("");
+ }
+ function idoStarterPresentation(m){
+   const scaffold=String(m.scaffold??""),question=String(m.question??"");
+   const hasBlanks=/(?:^|[^\w])_{1,}(?!\w)|\.\.\./.test(scaffold);
+   const faulty=/^\s*\/\/\s*faulty\b/i.test(scaffold)||(!hasBlanks&&/\b(?:faulty|logic error|syntax error|locate the fault|find the fault)\b/i.test(question));
+   const trace=!faulty&&/\btrace\b/i.test(question)&&!hasBlanks;
+   return {label:m.starterLabel||(faulty?"FAULTY CODE":trace?"TRACE THIS CODE":hasBlanks?"STARTER · BLANKS TO COMPLETE":"STARTER CODE"),note:hasBlanks?"The blanks are planning prompts, not executable ERL.":""};
+ }
  function iDo(lesson){
   // Explicit opt-in: keep the coding question/scaffold visible while model ERL builds one step at a time.
   if(lesson.codeModelling && lesson.codeModelling.ido){
     const m=lesson.codeModelling.ido;
-    const steps=arr(m.steps,(item,i)=>'<div class="ido-step" hidden><span class="ido-step-label">STEP '+(i+1)+' OF '+m.steps.length+'</span><h2>'+escape(item.title)+'</h2><p>'+escape(item.explanation)+'</p><pre class="j277-model-code j277-model-result"><code>'+escape(item.code)+'</code></pre></div>');
-    return '<section id="i-do" class="page phase-ido j277-code-model-phase" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">I DO · BUILD THE ERL PROGRAM</span><h2>'+escape(m.question)+'</h2><p class="j277-code-scaffold-label">STARTER · BLANKS TO COMPLETE</p><pre class="j277-model-code j277-model-starter"><code>'+escape(m.scaffold)+'</code></pre><p class="j277-code-scaffold-note">The blanks are planning prompts, not executable ERL.</p></div><div class="ido-method"><span class="phase-tag">TEACHER MODEL · ONE STEP AT A TIME</span>'+steps+'</div></article></div></section>';
+    const starter=idoStarterPresentation(m);
+    const steps=arr(m.steps,(item,i)=>{
+      const shown=item.displayCode??item.code;
+      const isFocus=item.displayCode!==undefined&&item.displayCode!==item.code;
+      const lines=String(shown).split("\n");
+      const longest=Math.max(...lines.map(l=>l.replace(/\t/g,"    ").length),0);
+      const compact=lines.length>10||longest>44;
+      return '<div class="ido-step" hidden><span class="ido-step-label">STEP '+(i+1)+' OF '+m.steps.length+'</span><h2>'+escape(item.title)+'</h2><p>'+escape(item.explanation)+'</p>'+(isFocus?'<div class="j277-model-focus-label">FOCUS · CODE SECTION</div>':'')+'<pre class="j277-model-code j277-model-result'+(compact?' j277-model-compact':'')+'"><code>'+erlModelCode(shown)+'</code></pre></div>';
+    });
+    return '<section id="i-do" class="page phase-ido j277-code-model-phase" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">I DO · BUILD THE ERL PROGRAM</span><h2>'+escape(m.question)+'</h2><p class="j277-code-scaffold-label">'+escape(starter.label)+'</p><pre class="j277-model-code j277-model-starter"><code>'+escape(m.scaffold)+'</code></pre>'+(starter.note?'<p class="j277-code-scaffold-note">'+escape(starter.note)+'</p>':"")+'</div><div class="ido-method"><span class="phase-tag">TEACHER MODEL · ONE STEP AT A TIME</span>'+steps+'</div></article></div></section>';
   }
   const isCpu=["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis);
   const headings=lesson.m.headings||["Read the comparison","Explain cache size","Explain number of cores","Check all four marks"];
@@ -2043,6 +2068,40 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  }
  .j277-code-model-phase pre.j277-model-starter{
    background:#f3f8f5;color:#1b392f;border:1px solid #b6d2c4;
+ }
+
+ /* J277 I Do code models only: compact classroom reading and ERL-style token colours. */
+ #i-do.j277-code-model-phase .ido-method .ido-step > p{
+   font-size:clamp(16px,1.1vw,21px)!important;line-height:1.3;font-weight:500;
+   margin:6px 0 10px;
+ }
+ #i-do.j277-code-model-phase .ido-reference .j277-code-scaffold-label{
+   margin:10px 0 5px!important;font-size:clamp(12px,.9vw,15px)!important;
+ }
+ #i-do.j277-code-model-phase .ido-method pre.j277-model-result{
+   font-size:clamp(15px,1.05vw,20px)!important;line-height:1.35;font-weight:500;
+   white-space:pre;overflow-x:auto;overflow-wrap:normal;tab-size:4;
+   background:#153044;color:#f7fcff;padding:10px 12px;
+ }
+ #i-do.j277-code-model-phase .ido-method pre.j277-model-result.j277-model-compact{
+   font-size:clamp(13px,.88vw,17px)!important;line-height:1.28;
+ }
+ #i-do.j277-code-model-phase .ido-method pre.j277-model-result code{
+   font:inherit;white-space:inherit;overflow-wrap:normal;color:inherit;
+ }
+ #i-do.j277-code-model-phase .ido-method .erl-keyword{color:#91c5ff;font-weight:650}
+ #i-do.j277-code-model-phase .ido-method .erl-builtin{color:#f3df9d}
+ #i-do.j277-code-model-phase .ido-method .erl-string{color:#ffc49b}
+ #i-do.j277-code-model-phase .ido-method .erl-literal{color:#b9e6ab}
+ #i-do.j277-code-model-phase .ido-method .erl-comment{color:#9fc6ad;font-style:italic}
+ #i-do.j277-code-model-phase .ido-method .j277-model-focus-label{
+   font-size:12px;font-weight:700;letter-spacing:.04em;color:#52675d;margin:4px 0;
+ }
+ @media(max-width:900px){
+   #i-do.j277-code-model-phase .ido-method pre.j277-model-result,
+   #i-do.j277-code-model-phase .ido-method pre.j277-model-result.j277-model-compact{
+     font-size:14px!important;
+   }
  }
  @media(max-width:900px){
    #i-do.j277-code-model-phase .ido-example,
