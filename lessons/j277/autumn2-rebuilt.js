@@ -2081,7 +2081,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  #i-do.j277-code-model-phase .ido-method pre.j277-model-result{
    font-size:clamp(15px,1.05vw,20px)!important;line-height:1.35;font-weight:500;
    white-space:pre;overflow-x:auto;overflow-wrap:normal;tab-size:4;
-   background:#153044;color:#f7fcff;padding:10px 12px;
+   background:#242b3a;color:#f4f7fa;padding:10px 12px;
  }
  #i-do.j277-code-model-phase .ido-method pre.j277-model-result.j277-model-compact{
    font-size:clamp(13px,.88vw,17px)!important;line-height:1.28;
@@ -2089,11 +2089,11 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  #i-do.j277-code-model-phase .ido-method pre.j277-model-result code{
    font:inherit;white-space:inherit;overflow-wrap:normal;color:inherit;
  }
- #i-do.j277-code-model-phase .ido-method .erl-keyword{color:#91c5ff;font-weight:650}
- #i-do.j277-code-model-phase .ido-method .erl-builtin{color:#f3df9d}
- #i-do.j277-code-model-phase .ido-method .erl-string{color:#ffc49b}
- #i-do.j277-code-model-phase .ido-method .erl-literal{color:#b9e6ab}
- #i-do.j277-code-model-phase .ido-method .erl-comment{color:#9fc6ad;font-style:italic}
+ #i-do.j277-code-model-phase .ido-method .erl-keyword{color:#70d9ee;font-weight:650}
+ #i-do.j277-code-model-phase .ido-method .erl-builtin{color:#d5acff}
+ #i-do.j277-code-model-phase .ido-method .erl-string{color:#a8d875}
+ #i-do.j277-code-model-phase .ido-method .erl-literal{color:#ffc336}
+ #i-do.j277-code-model-phase .ido-method .erl-comment{color:#f18ac4;font-style:normal}
  #i-do.j277-code-model-phase .ido-method .j277-model-focus-label{
    font-size:12px;font-weight:700;letter-spacing:.04em;color:#52675d;margin:4px 0;
  }
