@@ -1681,7 +1681,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       const compact=lines.length>10||longest>44;
       return '<div class="ido-step" hidden><span class="ido-step-label">STEP '+(i+1)+' OF '+m.steps.length+'</span><h2>'+escape(item.title)+'</h2><p>'+escape(item.explanation)+'</p>'+(isFocus?'<div class="j277-model-focus-label">FOCUS · CODE SECTION</div>':'')+'<pre class="j277-model-code j277-model-result'+(compact?' j277-model-compact':'')+'"><code>'+erlModelCode(shown)+'</code></pre></div>';
     });
-    return '<section id="i-do" class="page phase-ido j277-code-model-phase'+(fixed?' j277-ido-fixed-code':'')+'" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">I DO · BUILD THE ERL PROGRAM</span><h2>'+escape(m.question)+'</h2><p class="j277-code-scaffold-label">'+escape(starter.label)+'</p><pre class="j277-model-code j277-model-starter"><code>'+(fixed?numberedCode(m.scaffold,String(m.scaffold).split("\n").length):escape(m.scaffold))+'</code></pre>'+(starter.note?'<p class="j277-code-scaffold-note">'+escape(starter.note)+'</p>':"")+'</div><div class="ido-method"><span class="phase-tag">TEACHER MODEL · ONE STEP AT A TIME</span>'+steps+'</div></article></div></section>';
+    return '<section id="i-do" class="page phase-ido j277-code-model-phase'+(fixed?' j277-ido-fixed-code':'')+(fixed&&m.largeCodePreview===true?' j277-ido-large-code-preview':'')+'" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">I DO · BUILD THE ERL PROGRAM</span><h2>'+escape(m.question)+'</h2><p class="j277-code-scaffold-label">'+escape(starter.label)+'</p><pre class="j277-model-code j277-model-starter"><code>'+(fixed?numberedCode(m.scaffold,String(m.scaffold).split("\n").length):escape(m.scaffold))+'</code></pre>'+(starter.note?'<p class="j277-code-scaffold-note">'+escape(starter.note)+'</p>':"")+'</div><div class="ido-method"><span class="phase-tag">TEACHER MODEL · ONE STEP AT A TIME</span>'+steps+'</div></article></div></section>';
   }
   const isCpu=["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis);
   const headings=lesson.m.headings||["Read the comparison","Explain cache size","Explain number of cores","Check all four marks"];
@@ -2215,6 +2215,12 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    #i-do.j277-ido-fixed-code .ido-method .ido-step > pre.j277-model-result,
    #i-do.j277-ido-fixed-code .ido-reference pre.j277-model-starter{
      font-size:14px!important;
+   }
+ }
+ /* Preview larger model text on a short program before central adoption. */
+ @media(min-width:901px){
+   #i-do.j277-ido-fixed-code.j277-ido-large-code-preview .ido-method .ido-step > pre.j277-model-result{
+     font-size:clamp(21px,1.52vw,28px)!important;
    }
  }
  @media(max-width:900px){
