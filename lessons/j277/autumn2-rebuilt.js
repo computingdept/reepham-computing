@@ -1631,7 +1631,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    const hasBlanks=/(?:^|[^\w])_{1,}(?!\w)|\.\.\./.test(scaffold);
    const faulty=/^\s*\/\/\s*faulty\b/i.test(scaffold)||(!hasBlanks&&/\b(?:faulty|logic error|syntax error|locate the fault|find the fault)\b/i.test(question));
    const trace=!faulty&&/\btrace\b/i.test(question)&&!hasBlanks;
-   return {label:m.starterLabel||(faulty?"FAULTY CODE":trace?"TRACE THIS CODE":hasBlanks?"STARTER · BLANKS TO COMPLETE":"STARTER CODE"),note:hasBlanks?"The blanks are planning prompts, not executable ERL.":""};
+   return {label:m.starterLabel||(faulty?"FAULTY CODE":trace?"TRACE THIS CODE":"STARTER CODE"),note:""};
  }
  function iDo(lesson){
   // Explicit opt-in: keep the coding question/scaffold visible while model ERL builds one step at a time.
