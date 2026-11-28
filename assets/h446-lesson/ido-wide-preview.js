@@ -1,15 +1,13 @@
-/* Shared J277/H446 opt-in preview: preserve existing content and reveal structure. */
+/* Shared J277/H446 automatic I Do layout. Preserve existing content and reveal structure. */
 (function(){
   "use strict";
-  const eligible=/\/lessons\/(h446|j277)\/lesson-(\d{3})\//.exec(location.pathname);
-  const approved={h446:["023","030","218"],j277:["109","112","146"]};
-  const controls={h446:["024","025","027"],j277:[]};
+  // Numbered classroom lesson routes only; exclude print/answer pages and NEA.
+  const eligible=/^\/lessons\/(h446|j277)\/lesson-(\d{3})(?:\/index\.html|\/|\.html)?$/i.exec(location.pathname);
+  if(!eligible)return;
+  if(eligible[1].toLowerCase()==="h446"&&Number(eligible[2])>=161&&Number(eligible[2])<=180)return;
   const q=new URLSearchParams(location.search);
-  const mode=q.get("ido-layout");
-  if(!eligible||q.get("ido-header")!=="compact")return;
-  if(!approved[eligible[1]].includes(eligible[2])&&
-    !(mode==="auto"&&controls[eligible[1]].includes(eligible[2])))return;
-  if(eligible[1]==="h446"&&mode!=="wide"&&mode!=="auto")return;
+  const mode=q.get("ido-layout")||"auto";
+  if(mode==="off")return;
 
   // Content-based decision; no lesson numbers participate in classification.
   // Count hidden stages too. Avoid widening if the method needs the space.
@@ -36,14 +34,30 @@
   }
   const desktop=matchMedia("screen and (min-width:901px)");
   function setup(){
-    const panel=document.querySelector("#i-do .ido-focus-deck > .ido-example > .ido-reference");
+    const root=document.documentElement;
+    if(root.dataset.rhsIdoLayoutReady||document.body?.classList.contains("answer-page"))return;
+    const section=document.getElementById("i-do");
+    // Preserve specialist/code-modelling and compact-TV relocation layouts.
+    if(!section||section.matches(".j277-code-model-phase")||
+       section.querySelectorAll(".ido-example").length!==1||
+       document.querySelector('script[src*="compact-tv-model-layout.js"]'))return;
+    const panel=section.querySelector(".ido-focus-deck > .ido-example > .ido-reference");
     const tag=panel?.querySelector(":scope > .phase-tag");
     const title=panel?.querySelector(":scope > h2");
-    if(!tag||!title||tag.nextElementSibling!==title)return;
-    const section=document.getElementById("i-do");
+    if(!tag||!title||tag.nextElementSibling!==title||tag.children.length)return;
     const method=panel.parentElement.querySelector(":scope > .ido-method");
-    if(!section||!method)return;
+    if(!method||panel.parentElement.children.length!==2)return;
+    // Only compact generic example labels; retain meaningful specialist teaching cues.
+    if(!/^(?:EXAMPLE|WORKED EXAMPLE|I DO|I DO\s*·\s*(?:MODEL|COMPLETE MODEL|ONE COMPLETE MODEL|MODEL EXAMPLE|WATCH THE FULL METHOD)|ONE COMPLETE WORKED EXAMPLE|ONE WORKING SOLUTION FIRST)$/i.test(tag.textContent.trim()))return;
     const wide=mode==="wide"||(mode==="auto"&&chooseWide(section,panel,method));
+    // One controller even if a legacy pilot script tag also loads this file.
+    root.dataset.rhsIdoLayoutReady="1";
+    if(!document.querySelector('link[rel="stylesheet"][href*="/ido-wide-preview.css"]')){
+      const css=document.createElement("link");
+      css.rel="stylesheet";
+      css.href="/assets/h446-lesson/ido-wide-preview.css?v=20261128-shared1";
+      document.head.appendChild(css);
+    }
     const original=tag.textContent;
     let header=null;
     function sync(){
