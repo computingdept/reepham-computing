@@ -242,5 +242,15 @@ body:not(.answer-page) #i-do[data-ido-compact-history="true"] .ido-method
 
 /* Addressed assembly listings already contain their line identifiers. */
 #i-do .h446-code-model pre[data-addressed-code="true"] > code{white-space:pre!important;overflow-wrap:normal!important;word-break:normal!important;}
+/* Block-level rows provide the visual line breaks. Collapse the separating
+   newline text nodes so they remain available to textContent/copy without
+   occupying an additional line on screen. Raw listings retain pre spacing. */
+#i-do .ido-example.h446-code-model pre.h446-model-source > code:has(> .h446-code-line){
+  white-space:normal!important;
+}
+#i-do .ido-example.h446-code-model pre.h446-model-source > code > .h446-code-line{
+  display:block;white-space:pre!important;line-height:1.26!important;
+  min-height:1.26em;margin:0!important;padding-block:0!important;
+}
 #i-do .h446-code-model pre[data-addressed-code="true"] .h446-code-line::before{display:none;}
 #i-do .h446-code-model pre[data-addressed-code="true"] .h446-code-line{white-space:pre!important;}
