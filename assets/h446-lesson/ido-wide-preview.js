@@ -44,8 +44,8 @@
     let panel=section.querySelector(".ido-focus-deck > .ido-example > .ido-reference");
     let method=panel?.parentElement.querySelector(":scope > .ido-method");
     let specialist=false;
-    // One approved test route only; classification still uses the common rule.
-    if(!panel&&eligible[1].toLowerCase()==="h446"&&eligible[2]==="184"&&q.get("ido-specialist")==="1"){
+    // Approved nested algorithm-grid family; classify by structure, not lesson number.
+    if(!panel&&eligible[1].toLowerCase()==="h446"){
       const grid=section.querySelector(".ido-focus-deck > .ido-example > .algorithm-grid");
       if(grid?.children.length===2&&[...grid.children].every(node=>node.matches(".algorithm-panel"))){
         [panel,method]=grid.children;
@@ -59,6 +59,8 @@
     // Only compact generic example labels; retain meaningful specialist teaching cues.
     if(!/^(?:EXAMPLE|WORKED EXAMPLE|I DO|I DO\s*·\s*(?:MODEL|COMPLETE MODEL|ONE COMPLETE MODEL|MODEL EXAMPLE|WATCH THE FULL METHOD)|ONE COMPLETE WORKED EXAMPLE|ONE WORKING SOLUTION FIRST)$/i.test(tag.textContent.trim()))return;
     const wide=mode==="wide"||(mode==="auto"&&chooseWide(section,panel,method));
+    // Unqualified specialist layouts retain their original presentation in full.
+    if(specialist&&!wide)return;
     // One controller even if a legacy pilot script tag also loads this file.
     root.dataset.rhsIdoLayoutReady="1";
     if(!document.querySelector('link[rel="stylesheet"][href*="/ido-wide-preview.css"]')||specialist){
