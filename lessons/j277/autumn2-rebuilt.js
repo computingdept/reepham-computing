@@ -1541,11 +1541,11 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
      h+=moving("0",entry-direction,sourceY,direction*59,resultY-sourceY,"#fae9c9");
      return h+'</g>';
     };
-    let body=note(24,27,"LOGICAL LEFT SHIFT · 1 PLACE",20)+track(-1,37,104,0);
-    body+=note(24,158,"Leftmost bit discarded · zero enters on right",15);
-    body+=note(24,185,"LOGICAL RIGHT SHIFT · 1 PLACE",20)+track(1,195,262,1.7);
-    body+=note(24,319,"Rightmost bit discarded · zero enters on left",15);
-    return frame("Logical shifts of 10010110: left gives 00101100; right gives 01001011. Edge bits are discarded and zero fills the vacant position.",body).replace("<svg ",'<svg data-nl-animation="logical-shifts" ');
+    let body=note(24,27,"LEFT SHIFT · 1 PLACE",20)+track(-1,37,104,0);
+    body+=note(24,158,"Lose the left bit · add a zero on the right",15);
+    body+=note(24,185,"RIGHT SHIFT · 1 PLACE",20)+track(1,195,262,1.7);
+    body+=note(24,319,"Lose the right bit · add a zero on the left",15);
+    return frame("Bit shifts of 10010110: left gives 00101100; right gives 01001011. Edge bits are discarded and zero fills the vacant position.",body).replace("<svg ",'<svg data-nl-animation="logical-shifts" ');
    }
    const A="11111111",B="00000001",sum=(parseInt(A,2)+parseInt(B,2)).toString(2);
    let body=note(24,27,"8-BIT ADDITION · OVERFLOW",20)+row(A,39)+note(38,98,"+",25)+row(B,78);
