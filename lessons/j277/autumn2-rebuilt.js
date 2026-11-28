@@ -1660,6 +1660,10 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     const prosePlan=fixed&&starter.label==="PLAN"&&planLines.length>0&&planLines.every(line=>/^\s*\/\/\s*\S/.test(line));
     const planMarkup=prosePlan?'<ol class="j277-ido-plan">'+planLines.map(line=>'<li>'+escape(line.replace(/^\s*\/\/\s*/,"").trim())+'</li>').join("")+'</ol>':"";
     const fixedRows=fixed?Math.max(...m.steps.map(item=>String(item.code).split("\n").length)):0;
+    // Choose one classroom font tier from the longest and tallest reveal,
+    // not the currently visible snippet. Longer programs retain room to fit.
+    const fixedWidth=fixed?Math.max(...m.steps.flatMap(item=>String(item.code).split("\n").map(line=>line.replace(/\t/g,"    ").length)),0):0;
+    const codeSize=!fixed?"":fixedRows<=8&&fixedWidth<=38?"large":fixedRows<=10&&fixedWidth<=46?"medium":"standard";
     // Number only actual source lines, never the empty rows reserved for layout.
     const numberedCode=(source,rows,highlights=new Set(),highlightSyntax=false)=>{
       const lines=String(source).split("\n");
@@ -1686,7 +1690,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       const compact=lines.length>10||longest>44;
       return '<div class="ido-step" hidden><span class="ido-step-label">STEP '+(i+1)+' OF '+m.steps.length+'</span><h2>'+escape(item.title)+'</h2><p>'+escape(item.explanation)+'</p>'+(isFocus?'<div class="j277-model-focus-label">FOCUS · CODE SECTION</div>':'')+'<pre class="j277-model-code j277-model-result'+(compact?' j277-model-compact':'')+'"><code>'+erlModelCode(shown)+'</code></pre></div>';
     });
-    return '<section id="i-do" class="page phase-ido j277-code-model-phase'+(fixed?' j277-ido-fixed-code':'')+(fixed&&m.largeCodePreview===true?' j277-ido-large-code-preview':'')+'" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">I DO · BUILD THE ERL PROGRAM</span><h2>'+escape(m.question)+'</h2><p class="j277-code-scaffold-label">'+escape(starter.label)+'</p>'+(prosePlan?planMarkup:'<pre class="j277-model-code j277-model-starter"><code>'+(fixed?numberedCode(m.scaffold,String(m.scaffold).split("\n").length):escape(m.scaffold))+'</code></pre>')+(starter.note?'<p class="j277-code-scaffold-note">'+escape(starter.note)+'</p>':"")+'</div><div class="ido-method"><span class="phase-tag">TEACHER MODEL · ONE STEP AT A TIME</span>'+steps+'</div></article></div></section>';
+    return '<section id="i-do" class="page phase-ido j277-code-model-phase'+(fixed?' j277-ido-fixed-code':'')+(fixed?' j277-ido-code-size-'+codeSize:'')+'" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">I DO · BUILD THE ERL PROGRAM</span><h2>'+escape(m.question)+'</h2><p class="j277-code-scaffold-label">'+escape(starter.label)+'</p>'+(prosePlan?planMarkup:'<pre class="j277-model-code j277-model-starter"><code>'+(fixed?numberedCode(m.scaffold,String(m.scaffold).split("\n").length):escape(m.scaffold))+'</code></pre>')+(starter.note?'<p class="j277-code-scaffold-note">'+escape(starter.note)+'</p>':"")+'</div><div class="ido-method"><span class="phase-tag">TEACHER MODEL · ONE STEP AT A TIME</span>'+steps+'</div></article></div></section>';
   }
   const isCpu=["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis);
   const headings=lesson.m.headings||["Read the comparison","Explain cache size","Explain number of cores","Check all four marks"];
@@ -2240,10 +2244,21 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
      font-size:14px!important;
    }
  }
- /* Preview larger model text on a short program before central adoption. */
+ /* Classroom code size tiers: the largest reveal determines one font size. */
  @media(min-width:901px){
-   #i-do.j277-ido-fixed-code.j277-ido-large-code-preview .ido-method .ido-step > pre.j277-model-result{
+   #i-do.j277-ido-fixed-code.j277-ido-code-size-large .ido-method .ido-step > pre.j277-model-result{
      font-size:clamp(21px,1.52vw,28px)!important;
+   }
+   #i-do.j277-ido-fixed-code.j277-ido-code-size-medium .ido-method .ido-step > pre.j277-model-result{
+     font-size:clamp(19px,1.38vw,25px)!important;
+   }
+ }
+ @media(min-width:901px) and (max-height:760px){
+   #i-do.j277-ido-fixed-code.j277-ido-code-size-large .ido-method .ido-step > pre.j277-model-result{
+     font-size:clamp(21px,1.42vw,24px)!important;
+   }
+   #i-do.j277-ido-fixed-code.j277-ido-code-size-medium .ido-method .ido-step > pre.j277-model-result{
+     font-size:clamp(19px,1.25vw,22px)!important;
    }
  }
  @media(max-width:900px){
