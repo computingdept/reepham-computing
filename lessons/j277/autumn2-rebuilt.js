@@ -1638,7 +1638,22 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   if(lesson.codeModelling && lesson.codeModelling.ido){
     const m=lesson.codeModelling.ido;
     const starter=idoStarterPresentation(m);
-    const fixed=m.fixedCode===true;
+    // Standard for code-led I Do models; trace tables keep their specialist layout.
+    const traceModel=m.steps.some(item=>/^\s*Line\s*\|/im.test(String(item.code)));
+    const fixed=m.fixedCode===true||(m.fixedCode!==false&&!traceModel);
+    // Respect authored highlights; otherwise identify added or changed source lines.
+    const changedLines=(previous,current)=>{
+      const a=String(previous??"").split("\n"),b=String(current??"").split("\n");
+      const dp=Array.from({length:a.length+1},()=>Array(b.length+1).fill(0));
+      for(let i=a.length-1;i>=0;i--)for(let j=b.length-1;j>=0;j--)
+        dp[i][j]=a[i]===b[j]?1+dp[i+1][j+1]:Math.max(dp[i+1][j],dp[i][j+1]);
+      const matched=new Set();
+      for(let i=0,j=0;i<a.length&&j<b.length;){
+        if(a[i]===b[j]){matched.add(j++);i++;}
+        else if(dp[i+1][j]>=dp[i][j+1])i++;else j++;
+      }
+      return b.flatMap((line,j)=>line.trim()&&!matched.has(j)?[j+1]:[]);
+    };
     const fixedRows=fixed?Math.max(...m.steps.map(item=>String(item.code).split("\n").length)):0;
     // Number only actual source lines, never the empty rows reserved for layout.
     const numberedCode=(source,rows,highlights=new Set(),highlightSyntax=false)=>{
@@ -1651,12 +1666,13 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     };
     // Invisible sizing copies reserve the largest explanation at the current width.
     const fixedCopy=fixed?m.steps.map(item=>'<span class="j277-model-measure" aria-hidden="true">'+escape(item.explanation)+'</span>').join(""):"";
+    const fixedTitles=fixed?m.steps.map(item=>'<span class="j277-model-measure" aria-hidden="true">'+escape(item.title)+'</span>').join(""):"";
     const steps=arr(m.steps,(item,i)=>{
       if(fixed){
         const lines=String(item.code).split("\n");
-        const highlights=new Set(item.highlightLines||[]);
+        const highlights=new Set(item.highlightLines??changedLines(i?m.steps[i-1].code:"",item.code));
         const panel=numberedCode(item.code,fixedRows,highlights,true);
-        return '<div class="ido-step" hidden><span class="ido-step-label">STEP '+(i+1)+' OF '+m.steps.length+'</span><h2>'+escape(item.title)+'</h2><div class="j277-model-explanation"><p>'+escape(item.explanation)+'</p>'+fixedCopy+'</div><pre class="j277-model-code j277-model-result"><code>'+panel+'</code></pre></div>';
+        return '<div class="ido-step" hidden><span class="ido-step-label">STEP '+(i+1)+' OF '+m.steps.length+'</span><div class="j277-model-heading"><h2>'+escape(item.title)+'</h2>'+fixedTitles+'</div><div class="j277-model-explanation"><p>'+escape(item.explanation)+'</p>'+fixedCopy+'</div><pre class="j277-model-code j277-model-result"><code>'+panel+'</code></pre></div>';
       }
       const shown=item.displayCode??item.code;
       const isFocus=item.displayCode!==undefined&&item.displayCode!==item.code;
@@ -2156,9 +2172,13 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  #i-do.j277-ido-fixed-code .ido-method .ido-step > .ido-step-label{
    margin:0!important;line-height:20px;
  }
- #i-do.j277-ido-fixed-code .ido-method .ido-step > h2{
-   font-size:clamp(19px,1.35vw,25px)!important;line-height:1.2;
-   margin:0!important;align-self:center;
+ #i-do.j277-ido-fixed-code .ido-method .j277-model-heading{
+   display:grid;grid-template-columns:minmax(0,1fr);align-items:start;min-width:0;
+ }
+ body:not(.answer-page) #i-do.j277-ido-fixed-code .ido-method .j277-model-heading > :is(h2,span){
+   grid-area:1/1;min-width:0;font-size:clamp(19px,1.35vw,25px)!important;
+   line-height:1.2!important;font-weight:700;letter-spacing:-.025em;
+   margin:0!important;padding:0;overflow-wrap:break-word;
  }
  #i-do.j277-ido-fixed-code .ido-method .j277-model-explanation{
    display:grid;grid-template-columns:minmax(0,1fr);align-items:start;min-width:0;
