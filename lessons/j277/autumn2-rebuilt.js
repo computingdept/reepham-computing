@@ -2076,7 +2076,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  const y11Sync=lesson.year11?'<script>(function(){document.querySelectorAll("#we-do .wedo-example").forEach(ex=>{const steps=[...ex.querySelectorAll(".wedo-step")],visuals=[...ex.querySelectorAll("[data-y11-guided-visual]")];if(!steps.length||!visuals.length)return;function sync(){const i=Math.max(0,steps.findIndex(el=>!el.hidden));visuals.forEach((v,j)=>v.hidden=i!==j)}const obs=new MutationObserver(sync);steps.forEach(x=>obs.observe(x,{attributes:true,attributeFilter:["hidden"]}));sync()})})();<\/script>':"";
   // The shared I Do controller owns the approved pilot list and all presentation rules.
   const idoPreviewHead=new URLSearchParams(location.search).get("ido-header")==="compact"
-    ?'<link rel="stylesheet" href="../../../assets/h446-lesson/ido-wide-preview.css?v=20261128-shared1"><script defer src="../../../assets/h446-lesson/ido-wide-preview.js?v=20261128-shared1"></script>':"";
+    ?'<link rel="stylesheet" href="../../../assets/h446-lesson/ido-wide-preview.css?v=20261128-shared1"><script defer src="../../../assets/h446-lesson/ido-wide-preview.js?v=20261128-auto1"></script>':"";
   const baseHead=sharedHead(number,lesson.t,lesson.year11).replace("</head>",idoPreviewHead+"</head>");
   const pageHead=String(number)==="057"
     ?baseHead.replace("</head>",'<link rel="stylesheet" href="../../../assets/j277/code-first-trace.css?v=20261025-loop-trace1"></head>')
