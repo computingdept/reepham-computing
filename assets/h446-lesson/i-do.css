@@ -152,7 +152,7 @@ body:not(.answer-page) #i-do[data-ido-compact-history="true"] .ido-method
   #i-do .ido-example.h446-code-model .h446-model-source{
     box-sizing:border-box;background:#fff;color:#000;border:1px solid #cbd5df;
     border-radius:8px;margin:8px 0 0!important;padding:10px 8px!important;
-    font:400 clamp(16px,1.16vw,22px)/1.26 Consolas,"Liberation Mono",monospace!important;
+    font:400 clamp(17px,1.32vw,23px)/1.26 Consolas,"Liberation Mono",monospace!important;
     white-space:pre!important;overflow-x:auto;overflow-y:visible;
     overflow-wrap:normal!important;max-height:none!important;tab-size:4;
   }
@@ -175,13 +175,58 @@ body:not(.answer-page) #i-do[data-ido-compact-history="true"] .ido-method
   #i-do .ido-example.h446-code-model .h446-cs-keyword{color:#0200ff}
   #i-do .ido-example.h446-code-model .h446-cs-string{color:#991515}
   #i-do .ido-example.h446-code-model .h446-cs-comment{color:#007500}
-  #i-do .ido-example.h446-code-model .h446-code-plan{
-    margin:12px 0 0;padding-left:1.4em;display:grid;gap:10px;
-    font-size:clamp(17px,1.2vw,22px);line-height:1.35;
+  #i-do .ido-example.h446-code-model .h446-code-plan-label{
+    font-size:13px!important;font-weight:700;letter-spacing:.05em;
+    color:#476c5d;margin:12px 0 4px!important;
   }
-  #i-do .ido-example.h446-code-model .h446-code-plan li::marker{color:#476c5d;font-weight:700}
+  #i-do .ido-example.h446-code-model .h446-code-plan{
+    list-style:none;counter-reset:h446-plan;
+    margin:8px 0 0!important;padding:0!important;display:grid;gap:12px;
+  }
+  body:not(.answer-page) #i-do .ido-example.h446-code-model .h446-code-plan > li{
+    counter-increment:h446-plan;list-style:none;display:grid;
+    grid-template-columns:1.65em minmax(0,1fr);gap:.55em;align-items:start;
+    margin:0!important;padding:0!important;
+    font-size:clamp(17px,1.2vw,22px)!important;line-height:1.35!important;font-weight:500;
+  }
+  #i-do .ido-example.h446-code-model .h446-code-plan > li::before{
+    content:counter(h446-plan);display:grid;place-items:center;
+    width:1.75em;height:1.75em;border-radius:50%;
+    background:#e5eee9;color:#184a3c;font-size:.82em;font-weight:700;
+  }
+  /* Persistent source stays above the explanation. Reserving the space
+     below the editor prevents jumps without a large initial blank at the top. */
+  #i-do .ido-example.h446-code-model.h446-persistent-code .ido-method{
+    display:flex;flex-direction:column;justify-content:flex-start;align-items:stretch;
+    gap:10px;
+  }
+  #i-do .ido-example.h446-code-model.h446-persistent-code .ido-method > pre.h446-model-source{
+    order:-1;margin:0!important;flex:none;
+  }
+  #i-do .ido-example.h446-code-model.h446-persistent-code .h446-code-explanations{
+    flex:none;align-items:start;
+  }
+  #i-do .ido-example.h446-code-model.h446-persistent-code .ido-step > .ido-step-label{
+    margin:0 0 4px;
+  }
+  #i-do .ido-example.h446-code-model.h446-persistent-code .ido-step h2{
+    margin:0 0 4px;
+  }
+  body:not(.answer-page) #i-do .ido-example.h446-code-model.h446-persistent-code .ido-method .ido-step > p{
+    margin:0;line-height:1.3!important;
+  }
+  @media(min-width:901px){
+    #i-do .ido-example.h446-code-model[data-code-size="large"] .h446-model-source{
+      font-size:clamp(21px,1.52vw,28px)!important;
+    }
+    #i-do .ido-example.h446-code-model[data-code-size="medium"] .h446-model-source{
+      font-size:clamp(19px,1.38vw,25px)!important;
+    }
+  }
   @media(min-width:901px) and (max-height:760px){
-    #i-do .ido-example.h446-code-model .h446-model-source{font-size:clamp(15px,1.1vw,18px)!important}
+    #i-do .ido-example.h446-code-model .h446-model-source{font-size:clamp(17px,1.22vw,20px)!important}
+    #i-do .ido-example.h446-code-model[data-code-size="large"] .h446-model-source{font-size:clamp(21px,1.42vw,24px)!important}
+    #i-do .ido-example.h446-code-model[data-code-size="medium"] .h446-model-source{font-size:clamp(19px,1.25vw,22px)!important}
   }
   @media(max-width:900px){
     #i-do .ido-example.h446-code-model .h13-grid{grid-template-columns:minmax(0,1fr)!important}

@@ -28,9 +28,22 @@ export function csharpTokens(source){
   const tokens=String(source).match(/\/\/[^\n]*|\/\*[\s\S]*?\*\/|@"(?:""|[^"])*"|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|[A-Za-z_]\w*|\s+|./gs)||[];
   return tokens.map(value=>({value,kind:value.startsWith("//")||value.startsWith("/*")?"comment":/^(?:@"|["'])/.test(value)?"string":keywords.has(value)?"keyword":""}));
 }
+export function h446CodeSize(sources){
+  const lines=sources.map(source=>String(source).split('\n'));
+  const rows=Math.max(0,...lines.map(program=>program.length));
+  const width=Math.max(0,...lines.flatMap(program=>program.map(line=>line.replace(/\t/g,'    ').length)));
+  return rows<=8&&width<=44?'large':rows<=12&&width<=56?'medium':'standard';
+}
 export function prepareH446CodeModels(){
   if(!/^\/lessons\/h446\/lesson-\d{3}(?:\/|\.html|$)/i.test(location.pathname))return;
   document.querySelectorAll('#i-do .ido-example.h446-code-model').forEach(example=>{
+    const label=example.querySelector('.ido-reference > .phase-tag');
+    if(label&&label.children.length===0)label.textContent='EXAMPLE';
+    const sources=[...example.querySelectorAll('pre.h446-model-source > code')].map(code=>code.textContent);
+    if(sources.length)example.dataset.codeSize=h446CodeSize(sources);
+    // A persistent listing belongs at the top, even before the first reveal.
+    const persistent=example.querySelector('.ido-method > pre.h446-model-source > code');
+    if(persistent)example.classList.add('h446-persistent-code');
     if(example.dataset.codeModelReady)return;
     const code=example.querySelector('pre.h446-model-source > code');
     const stages=[...example.querySelectorAll('.ido-step')];
