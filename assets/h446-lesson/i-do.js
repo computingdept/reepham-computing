@@ -49,14 +49,15 @@ export function prepareH446CodeModels(){
     const stages=[...example.querySelectorAll('.ido-step')];
     if(!code||!stages.length)return;
     const source=code.textContent,lines=source.split('\n');
+    const addressed=code.parentElement.dataset.addressedCode==='true';
     const rows=lines.map((line,i)=>{
       const row=document.createElement('span');
-      row.className='h446-code-line';row.dataset.line=String(i+1);
+      row.className='h446-code-line';row.dataset.line=addressed?'':String(i+1);
       return row;
     });
     // Tokenise the entire program so block comments retain their colour across lines.
     let rowIndex=0;
-    for(const token of csharpTokens(source)){
+    for(const token of addressed?[{value:source,kind:''}]:csharpTokens(source)){
       const parts=token.value.split('\n');
       parts.forEach((part,i)=>{
         if(i)rowIndex++;
