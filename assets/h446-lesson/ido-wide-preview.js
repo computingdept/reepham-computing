@@ -13,7 +13,7 @@
   // Count hidden stages too. Avoid widening if the method needs the space.
   function chooseWide(section,reference,method){
     if(section.querySelectorAll(".ido-example").length!==1)return false;
-    const svgs=[...reference.querySelectorAll(":scope > svg,:scope > .adder-ido-diagram > svg,.j277-ido-visual-frame .y11-scene svg")];
+    const svgs=[...reference.querySelectorAll(":scope > svg,:scope > .adder-ido-diagram > svg,.j277-ido-visual-frame .y11-scene svg,:scope > .route-figure > svg,:scope > .h-figure > svg")];
     const substantial=svgs.some(svg=>{
       const v=(svg.getAttribute("viewBox")||"").trim().split(/[\s,]+/).map(Number);
       const ratio=v.length===4&&v[2]>0&&v[3]>0?v[2]/v[3]:0;
@@ -44,6 +44,7 @@
     let panel=section.querySelector(".ido-focus-deck > .ido-example > .ido-reference");
     let method=panel?.parentElement.querySelector(":scope > .ido-method");
     let specialist=false;
+    let routePilot=false;
     // Approved nested algorithm-grid family; classify by structure, not lesson number.
     if(!panel&&eligible[1].toLowerCase()==="h446"){
       const grid=section.querySelector(".ido-focus-deck > .ido-example > .algorithm-grid");
@@ -52,21 +53,30 @@
         specialist=true;
       }
     }
+    // Two reviewed pathfinding routes only, until the teacher verifies both.
+    if(!panel&&eligible[1].toLowerCase()==="h446"&&["220","221"].includes(eligible[2])&&q.get("ido-route")==="1"){
+      const grid=section.querySelector(".ido-focus-deck > .ido-example > :is(.route-grid,.h-grid)");
+      if(grid?.children.length===2&&[...grid.children].every(node=>node.matches(grid.matches(".route-grid")?".route-pane":".h-panel"))){
+        [panel,method]=grid.children;
+        routePilot=true;
+      }
+    }
     const tag=panel?.querySelector(":scope > .phase-tag");
     const title=panel?.querySelector(":scope > h2");
     if(!tag||!title||tag.nextElementSibling!==title||tag.children.length)return;
     if(!method||panel.parentElement.children.length!==2)return;
     // Only compact generic example labels; retain meaningful specialist teaching cues.
-    if(!/^(?:EXAMPLE|WORKED EXAMPLE|I DO|I DO\s*·\s*(?:MODEL|COMPLETE MODEL|ONE COMPLETE MODEL|MODEL EXAMPLE|WATCH THE FULL METHOD)|ONE COMPLETE WORKED EXAMPLE|ONE WORKING SOLUTION FIRST)$/i.test(tag.textContent.trim()))return;
+    const genericLabel=/^(?:EXAMPLE|WORKED EXAMPLE|I DO|I DO\s*·\s*(?:MODEL|COMPLETE MODEL|ONE COMPLETE MODEL|MODEL EXAMPLE|WATCH THE FULL METHOD)|ONE COMPLETE WORKED EXAMPLE|ONE WORKING SOLUTION FIRST)$/i.test(tag.textContent.trim());
+    if(!genericLabel&&!(routePilot&&tag.textContent.trim()==="I DO · SAFE HEURISTIC"))return;
     const wide=mode==="wide"||(mode==="auto"&&chooseWide(section,panel,method));
     // Unqualified specialist layouts retain their original presentation in full.
-    if(specialist&&!wide)return;
+    if((specialist||routePilot)&&!wide)return;
     // One controller even if a legacy pilot script tag also loads this file.
     root.dataset.rhsIdoLayoutReady="1";
-    if(!document.querySelector('link[rel="stylesheet"][href*="/ido-wide-preview.css"]')||specialist){
+    if(!document.querySelector('link[rel="stylesheet"][href*="/ido-wide-preview.css"]')||specialist||routePilot){
       const css=document.createElement("link");
       css.rel="stylesheet";
-      css.href="/assets/h446-lesson/ido-wide-preview.css?v="+(specialist?"20261128-specialist1":"20261128-shared1");
+      css.href="/assets/h446-lesson/ido-wide-preview.css?v="+(routePilot?"20261128-route1":specialist?"20261128-specialist1":"20261128-shared1");
       document.head.appendChild(css);
     }
     const original=tag.textContent;
@@ -77,16 +87,17 @@
         header.className="rhs-ido-compact-header";
         panel.insertBefore(header,tag);
         header.append(tag,title);
-        tag.textContent="EXAMPLE";
+        tag.textContent=genericLabel?"EXAMPLE":original;
         document.documentElement.classList.add("rhs-ido-compact-preview");
         document.documentElement.classList.toggle("rhs-ido-specialist-preview",specialist);
+        document.documentElement.classList.toggle("rhs-ido-route-preview",routePilot);
         document.documentElement.classList.toggle("rhs-ido-wide-preview",wide);
       }else if(!desktop.matches&&header){
         tag.textContent=original;
         header.before(tag,title);
         header.remove();
         header=null;
-        document.documentElement.classList.remove("rhs-ido-wide-preview","rhs-ido-compact-preview","rhs-ido-specialist-preview");
+        document.documentElement.classList.remove("rhs-ido-wide-preview","rhs-ido-compact-preview","rhs-ido-specialist-preview","rhs-ido-route-preview");
       }
     }
     sync();
