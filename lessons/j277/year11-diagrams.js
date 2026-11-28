@@ -25,7 +25,9 @@ function wave(focus){
  return out+T(320,307,"Sample points measure amplitude at regular intervals",17);
 }
 function draw(spec){
- const type=String(spec.y11||"generic"),a=Array.isArray(spec.values)?spec.values.map(String):[],n=Math.max(0,Math.min(3,Number(spec.focus)||0));
+ const type=String(spec.y11||"generic"),a=Array.isArray(spec.values)?spec.values.map(String):[];
+ const detailedAddition=type==="addition"&&spec.idoBitSteps===true, snapshots=(type==="bubble"||type==="insertion")&&Array.isArray(spec.idoSnapshots)&&spec.idoSnapshots.length?spec.idoSnapshots:null;
+ const n=Math.max(0,Math.min(detailedAddition?8:snapshots?snapshots.length-1:3,Number(spec.focus)||0));
  const title=String(spec.title||"VISUAL MODEL"),label=String(spec.note||"").slice(0,92),target=String(spec.target??"");
  let h=T(28,46,title.slice(0,47),21,C.ink,"start",850)+T(609,46,"STEP "+(n+1),13,C.green,"end",850);
  if(type==="memory"){
@@ -50,8 +52,8 @@ function draw(spec){
   h+=T(70,94,"Carry",14,C.gold)+T(70,133,"A",20,C.muted)+T(70,174,"B",20,C.muted)+T(70,235,"SUM",18,C.green);
   const carries=Array(8).fill(0);let carry=0;
   for(let j=7;j>=0;j--){carries[j]=carry;carry=(Number(A[j])+Number(B[j])+carry)>=2?1:0;}
-  for(let j=0;j<8;j++){const x=130+j*57,col=7-j,active=col===n;h+=R(x,77,50,172,active?C.cream:C.light);h+=T(x+25,95,!spec.hide&&(n===3||col<=n)&&carries[j]?"1":"·",14,C.gold)+T(x+25,134,A[j],22)+T(x+25,175,B[j],22)+'<path d="M'+(x+5)+' 199H'+(x+45)+'" stroke="#527063" stroke-width="2"/>'+T(x+25,235,!spec.hide&&(n===3||col<=n)?result[j]:"?",22,C.green);}
-  h+=T(320,285,"Work from the right-hand bit; carry 1 into the next column if needed.",17);
+  for(let j=0;j<8;j++){const x=130+j*57,col=7-j,active=detailedAddition?col===n-1:col===n;h+=R(x,77,50,172,active?C.cream:C.light);h+=T(x+25,95,!spec.hide&&(detailedAddition?col<=n:n===3||col<=n)&&carries[j]?"1":"·",14,C.gold)+T(x+25,134,A[j],22)+T(x+25,175,B[j],22)+'<path d="M'+(x+5)+' 199H'+(x+45)+'" stroke="#527063" stroke-width="2"/>'+T(x+25,235,!spec.hide&&(detailedAddition?col<n:n===3||col<=n)?result[j]:detailedAddition?"":"?",22,C.green);}
+  h+=T(320,285,detailedAddition?(n===0?"Align the bits. Begin at the right.":n===8?"All eight result bits are complete.":"Result bits and carries remain visible."):"Work from the right-hand bit; carry 1 into the next column if needed.",17);
  }else if(type==="hex"){
   const v=(a[0]||"10101111").replace(/[^01]/g,"").padStart(8,"0").slice(-8);
   h+=binaryBits(v,n,!!spec.hide);
@@ -85,7 +87,12 @@ function draw(spec){
   h+=indexed(values,{active:spec.hide?-1:mid,excluded:spec.hide?[]:discarded});if(!spec.hide)h+=T(320,261,"LOW "+low+"     MID "+mid+"     HIGH "+high,20);h+=T(320,300,"Sorted data required; discard the half that cannot contain the target",16);
  }else if(type==="bubble"||type==="insertion"){
   let ar=(a.length?a:["5","2","8","1","4"]).map(Number),focus=n;
-  if(type==="bubble"){if(!spec.hide)for(let i=0;i<=focus;i++){let j=i%Math.max(1,ar.length-1);if(ar[j]>ar[j+1]){let t=ar[j];ar[j]=ar[j+1];ar[j+1]=t;}}
+  if(snapshots){
+    const state=snapshots[n];
+    h+=indexed(state.values.map(String),{active:state.active,active2:state.active2,done:state.done||[]});
+    h+=T(320,261,state.caption||"",18);
+    if(state.key!==undefined)h+=T(320,293,"Key held: "+state.key,18,C.gold);
+  }else if(type==="bubble"){if(!spec.hide)for(let i=0;i<=focus;i++){let j=i%Math.max(1,ar.length-1);if(ar[j]>ar[j+1]){let t=ar[j];ar[j]=ar[j+1];ar[j+1]=t;}}
     h+=indexed(ar.map(String),{active:focus%Math.max(1,ar.length-1),active2:focus%Math.max(1,ar.length-1)+1});h+=T(320,265,"Compare neighbouring values; swap when the left value is larger",18);
   }else{if(!spec.hide)for(let i=1;i<=Math.min(focus+1,ar.length-1);i++){let key=ar[i],j=i-1;while(j>=0&&ar[j]>key){ar[j+1]=ar[j];j--;}ar[j+1]=key;}
     h+=indexed(ar.map(String),{active:Math.min(focus+1,ar.length-1),done:spec.hide?[]:[...Array(Math.min(focus+2,ar.length)).keys()]});h+=T(320,264,"Keep a sorted prefix; insert the next value in its correct position",17);

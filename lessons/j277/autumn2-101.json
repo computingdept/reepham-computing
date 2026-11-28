@@ -93,23 +93,34 @@
       ],
       "focus": 0,
       "target": "",
-      "note": "Start on the right; include the carry from the previous column.",
-      "hide": false
+      "note": "Carry into the next column is shown above the inputs.",
+      "hide": false,
+      "idoBitSteps": true
     },
     "m": {
       "title": "Binary Addition and Shifts · worked example",
       "q": "Add the eight-bit values 00010110 and 00001101, showing the carry where needed. [4 marks]",
       "headings": [
-        "Rightmost bit",
-        "Second bit",
-        "Third bit and carry",
-        "Remaining columns"
+        "Set up the addition",
+        "Column 1",
+        "Column 2",
+        "Column 4",
+        "Column 8",
+        "Column 16",
+        "Column 32",
+        "Column 64",
+        "Column 128"
       ],
       "st": [
-        "Units: 0 + 1 = 1, carry 0.",
-        "Twos: 1 + 0 = 1, carry 0.",
-        "Fours: 1 + 1 = 10 in binary. Write 0, carry 1.",
-        "Eights: 0+1+1=10; sixteens: 1+0+1=10. Write 0 and carry 1 each time. Thirty-twos: 0+0+1=1; remaining bits are 0. Result: 00100011 (35)."
+        "Align both eight-bit values. Start at the right-hand column with no carry.",
+        "0 + 1 = 1 in binary. Write 1; no carry out.",
+        "1 + 0 = 1 in binary. Write 1; no carry out.",
+        "1 + 1 = 10 in binary. Write 0; carry 1 left.",
+        "0 + 1 + 1 (carry in) = 10 in binary. Write 0; carry 1 left.",
+        "1 + 0 + 1 (carry in) = 10 in binary. Write 0; carry 1 left.",
+        "0 + 0 + 1 (carry in) = 1 in binary. Write 1; no carry out.",
+        "0 + 0 = 0 in binary. Write 0; no carry out.",
+        "0 + 0 = 0 in binary. Write 0; no carry out. Result: 00100011 (35)."
       ]
     },
     "w": [

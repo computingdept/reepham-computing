@@ -368,24 +368,44 @@
         "scaffold": "array points = [4, 7, 9, 2, 6]\ntotal = _____\nfor i = _____\n    total = _____\nnext i\nprint(total)",
         "steps": [
           {
-            "title": "Initialise the accumulator",
-            "explanation": "Set total to zero before the loop.",
+            "title": "Set up the accumulator",
+            "explanation": "Store five scores and initialise total to 0.",
             "code": "array points = [4, 7, 9, 2, 6]\ntotal = 0"
           },
           {
-            "title": "Traverse every element",
-            "explanation": "Indices 0 to 4 visit all five elements exactly once.",
-            "code": "array points = [4, 7, 9, 2, 6]\ntotal = 0\nfor i = 0 to 4"
-          },
-          {
-            "title": "Add the current element",
-            "explanation": "Use points[i], not i. The running totals are 4, 11, 20, 22, 28.",
+            "title": "Build the loop",
+            "explanation": "Visit each index from 0 to 4, adding the current element.",
             "code": "array points = [4, 7, 9, 2, 6]\ntotal = 0\nfor i = 0 to 4\n    total = total + points[i]\nnext i"
           },
           {
-            "title": "Display the final total",
-            "explanation": "Print after the loop so the output is 28 once.",
-            "code": "array points = [4, 7, 9, 2, 6]\ntotal = 0\nfor i = 0 to 4\n    total = total + points[i]\nnext i\nprint(total)"
+            "title": "Iteration 1 · i = 0",
+            "explanation": "points[0] is 4. 0 + 4 = 4.",
+            "code": "array points = [4, 7, 9, 2, 6]\ntotal = 0\nfor i = 0 to 4\n    total = total + points[i]\nnext i\n// Running totals: 4"
+          },
+          {
+            "title": "Iteration 2 · i = 1",
+            "explanation": "points[1] is 7. 4 + 7 = 11.",
+            "code": "array points = [4, 7, 9, 2, 6]\ntotal = 0\nfor i = 0 to 4\n    total = total + points[i]\nnext i\n// Running totals: 4, 11"
+          },
+          {
+            "title": "Iteration 3 · i = 2",
+            "explanation": "points[2] is 9. 11 + 9 = 20.",
+            "code": "array points = [4, 7, 9, 2, 6]\ntotal = 0\nfor i = 0 to 4\n    total = total + points[i]\nnext i\n// Running totals: 4, 11, 20"
+          },
+          {
+            "title": "Iteration 4 · i = 3",
+            "explanation": "points[3] is 2. 20 + 2 = 22.",
+            "code": "array points = [4, 7, 9, 2, 6]\ntotal = 0\nfor i = 0 to 4\n    total = total + points[i]\nnext i\n// Running totals: 4, 11, 20, 22"
+          },
+          {
+            "title": "Iteration 5 · i = 4",
+            "explanation": "points[4] is 6. 22 + 6 = 28.",
+            "code": "array points = [4, 7, 9, 2, 6]\ntotal = 0\nfor i = 0 to 4\n    total = total + points[i]\nnext i\n// Running totals: 4, 11, 20, 22, 28"
+          },
+          {
+            "title": "Output",
+            "explanation": "Print once after the loop. The final total is 28.",
+            "code": "array points = [4, 7, 9, 2, 6]\ntotal = 0\nfor i = 0 to 4\n    total = total + points[i]\nnext i\nprint(total)\n// Running totals: 4, 11, 20, 22, 28"
           }
         ]
       }

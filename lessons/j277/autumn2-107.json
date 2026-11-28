@@ -6,24 +6,54 @@
         "scaffold": "1  total = 0\n2  for i = 1 to 4\n3      total = total + i\n4  next i\n5  print(total)\n\nLine | i | total | Output\n  1  |   |   _   |\n  2  | _ |       |\n  3  |   |   _   |\n ... |   |       |\n  5  |   |       |   _",
         "steps": [
           {
-            "title": "Initialise",
-            "explanation": "Line 1 sets total to 0; no output yet.",
+            "title": "Line 1",
+            "explanation": "Set total to 0.",
             "code": "Line | i | total | Output\n  1  |   |   0   |"
           },
           {
-            "title": "First two iterations",
-            "explanation": "Record i on line 2 and total on line 3. The totals become 1 and 3.",
-            "code": "Line | i | total | Output\n  1  |   |   0   |\n  2  | 1 |       |\n  3  |   |   1   |\n  2  | 2 |       |\n  3  |   |   3   |"
+            "title": "Line 2",
+            "explanation": "The FOR loop starts with i = 1.",
+            "code": "Line | i | total | Output\n  1  |   |   0   |\n  2  | 1 |       |"
           },
           {
-            "title": "Finish the loop",
-            "explanation": "The next two additions produce 6 and 10. Repeated line numbers identify the instructions executed.",
-            "code": "Line | i | total | Output\n  1  |   |   0   |\n  2  | 1 |       |\n  3  |   |   1   |\n  2  | 2 |       |\n  3  |   |   3   |\n  2  | 3 |       |\n  3  |   |   6   |\n  2  | 4 |       |\n  3  |   |  10   |"
+            "title": "Line 3",
+            "explanation": "Add 1 to 0: total = 1.",
+            "code": "Line | i | total | Output\n  1  |   |   0   |\n  2  | 1 |       |\n  3  |   |   1   |"
           },
           {
-            "title": "Record output",
-            "explanation": "PRINT executes after the loop. Output is 10. Record the four loop-body values of i.",
-            "code": "Line | i | total | Output\n  1  |   |   0   |\n  2  | 1 |       |\n  3  |   |   1   |\n  2  | 2 |       |\n  3  |   |   3   |\n  2  | 3 |       |\n  3  |   |   6   |\n  2  | 4 |       |\n  3  |   |  10   |\n  5  |   |       |  10"
+            "title": "Line 4",
+            "explanation": "NEXT i advances to 2 and repeats the loop.",
+            "code": "Line | i | total | Output\n  1  |   |   0   |\n  2  | 1 |       |\n  3  |   |   1   |\n  4  | 2 |       |"
+          },
+          {
+            "title": "Line 3",
+            "explanation": "Add 2 to 1: total = 3.",
+            "code": "Line | i | total | Output\n  1  |   |   0   |\n  2  | 1 |       |\n  3  |   |   1   |\n  4  | 2 |       |\n  3  |   |   3   |"
+          },
+          {
+            "title": "Line 4",
+            "explanation": "NEXT i advances to 3.",
+            "code": "Line | i | total | Output\n  1  |   |   0   |\n  2  | 1 |       |\n  3  |   |   1   |\n  4  | 2 |       |\n  3  |   |   3   |\n  4  | 3 |       |"
+          },
+          {
+            "title": "Line 3",
+            "explanation": "Add 3 to 3: total = 6.",
+            "code": "Line | i | total | Output\n  1  |   |   0   |\n  2  | 1 |       |\n  3  |   |   1   |\n  4  | 2 |       |\n  3  |   |   3   |\n  4  | 3 |       |\n  3  |   |   6   |"
+          },
+          {
+            "title": "Line 4",
+            "explanation": "NEXT i advances to 4.",
+            "code": "Line | i | total | Output\n  1  |   |   0   |\n  2  | 1 |       |\n  3  |   |   1   |\n  4  | 2 |       |\n  3  |   |   3   |\n  4  | 3 |       |\n  3  |   |   6   |\n  4  | 4 |       |"
+          },
+          {
+            "title": "Line 3",
+            "explanation": "Add 4 to 6: total = 10.",
+            "code": "Line | i | total | Output\n  1  |   |   0   |\n  2  | 1 |       |\n  3  |   |   1   |\n  4  | 2 |       |\n  3  |   |   3   |\n  4  | 3 |       |\n  3  |   |   6   |\n  4  | 4 |       |\n  3  |   |  10   |"
+          },
+          {
+            "title": "Line 5",
+            "explanation": "The loop has finished; print 10. The trace records the counter values used inside the loop.",
+            "code": "Line | i | total | Output\n  1  |   |   0   |\n  2  | 1 |       |\n  3  |   |   1   |\n  4  | 2 |       |\n  3  |   |   3   |\n  4  | 3 |       |\n  3  |   |   6   |\n  4  | 4 |       |\n  3  |   |  10   |\n  5  |   |       |  10"
           }
         ]
       }
