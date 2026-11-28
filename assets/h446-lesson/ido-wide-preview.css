@@ -46,3 +46,23 @@
     display:block;width:100%;max-width:100%;height:auto;max-height:min(60vh,540px);margin:5px auto 8px;
   }
 }
+
+/* Nested pathfinding grids: same approved split, with existing figure caps
+   and hidden-state rules left intact. Scoped to the opt-in I Do pilot. */
+@media screen and (min-width:901px){
+  html.rhs-ido-route-preview body #i-do .ido-focus-deck > .ido-example > :is(.route-grid,.h-grid){
+    grid-column:1 / -1;min-width:0;width:100%;
+  }
+  html.rhs-ido-route-preview.rhs-ido-wide-preview body #i-do .ido-focus-deck > .ido-example > :is(.route-grid,.h-grid){
+    grid-template-columns:minmax(0,65fr) minmax(0,35fr)!important;
+  }
+  html.rhs-ido-route-preview body #i-do :is(.route-pane,.h-panel) > .rhs-ido-compact-header{
+    display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px;margin:0 0 8px;min-width:0;
+  }
+  html.rhs-ido-route-preview body #i-do .rhs-ido-compact-header > .phase-tag{
+    flex:0 0 auto;margin:0;
+  }
+  html.rhs-ido-route-preview body #i-do .rhs-ido-compact-header > h2{
+    min-width:0;margin:0;line-height:1.15;
+  }
+}
