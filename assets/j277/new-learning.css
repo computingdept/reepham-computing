@@ -80,3 +80,35 @@
      max-height:none;
    }
 }
+
+/* New Learning animation protocol: static end state by default, one playback
+   when the teacher enters an opted-in reveal. No motion outside this phase. */
+#new-learning [data-nl-animation] [data-nl-moving]{visibility:hidden;pointer-events:none}
+#new-learning [data-nl-animation].nl-playing [data-nl-moving]{
+  animation:j277-nl-move 1.45s ease-in-out var(--nl-delay,0s) both;
+}
+#new-learning [data-nl-animation].nl-playing [data-nl-moving="discard"]{
+  animation-name:j277-nl-discard;
+}
+#new-learning [data-nl-animation].nl-playing [data-nl-result]{
+  animation:j277-nl-show-result 1.45s linear var(--nl-delay,0s) both;
+}
+@keyframes j277-nl-move{
+  0%{visibility:visible;opacity:0;transform:translate(0,0)}
+  12%{opacity:1}
+  82%{opacity:1;transform:translate(var(--nl-dx),var(--nl-dy))}
+  100%{visibility:hidden;opacity:0;transform:translate(var(--nl-dx),var(--nl-dy))}
+}
+@keyframes j277-nl-discard{
+  0%{visibility:visible;opacity:0;transform:translate(0,0)}
+  12%{opacity:1}
+  70%,100%{visibility:hidden;opacity:0;transform:translate(var(--nl-dx),var(--nl-dy))}
+}
+@keyframes j277-nl-show-result{
+  0%,80%{opacity:0}
+  100%{opacity:1}
+}
+@media(prefers-reduced-motion:reduce),print{
+  #new-learning [data-nl-animation].nl-playing [data-nl-moving]{animation:none;visibility:hidden}
+  #new-learning [data-nl-animation].nl-playing [data-nl-result]{animation:none;opacity:1}
+}
