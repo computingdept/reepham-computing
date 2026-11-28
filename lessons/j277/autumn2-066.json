@@ -360,6 +360,35 @@
         ],
         "foot": ""
       }
+    },
+    "codeModelling": {
+      "mode": "persistent-code",
+      "ido": {
+        "question": "A competition stores five points values. Use a FOR loop to calculate and print the total.",
+        "scaffold": "array points = [4, 7, 9, 2, 6]\ntotal = _____\nfor i = _____\n    total = _____\nnext i\nprint(total)",
+        "steps": [
+          {
+            "title": "Initialise the accumulator",
+            "explanation": "Set total to zero before the loop.",
+            "code": "array points = [4, 7, 9, 2, 6]\ntotal = 0"
+          },
+          {
+            "title": "Traverse every element",
+            "explanation": "Indices 0 to 4 visit all five elements exactly once.",
+            "code": "array points = [4, 7, 9, 2, 6]\ntotal = 0\nfor i = 0 to 4"
+          },
+          {
+            "title": "Add the current element",
+            "explanation": "Use points[i], not i. The running totals are 4, 11, 20, 22, 28.",
+            "code": "array points = [4, 7, 9, 2, 6]\ntotal = 0\nfor i = 0 to 4\n    total = total + points[i]\nnext i"
+          },
+          {
+            "title": "Display the final total",
+            "explanation": "Print after the loop so the output is 28 once.",
+            "code": "array points = [4, 7, 9, 2, 6]\ntotal = 0\nfor i = 0 to 4\n    total = total + points[i]\nnext i\nprint(total)"
+          }
+        ]
+      }
     }
   }
 }

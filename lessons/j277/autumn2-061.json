@@ -348,6 +348,35 @@
         ],
         "foot": ""
       }
+    },
+    "codeModelling": {
+      "mode": "persistent-code",
+      "ido": {
+        "question": "Members aged 12 or over may join. Fix the missing keyword and the incorrect comparison. Test age 12.",
+        "scaffold": "age = 12\nif age > 12 then\n    print(\"Join\")\n_____",
+        "steps": [
+          {
+            "title": "Read the rule",
+            "explanation": "Age 12 must be accepted; > 12 would reject that boundary value.",
+            "code": "age = 12\nif age > 12 then\n    print(\"Join\")"
+          },
+          {
+            "title": "Fix the syntax error",
+            "explanation": "Every IF needs ENDIF. Add it before testing the logic.",
+            "code": "age = 12\nif age > 12 then\n    print(\"Join\")\nendif"
+          },
+          {
+            "title": "Fix the logic error",
+            "explanation": "Use >= so age 12 is included.",
+            "code": "age = 12\nif age >= 12 then\n    print(\"Join\")\nendif"
+          },
+          {
+            "title": "Retest the boundary",
+            "explanation": "Age 11 prints nothing; ages 12 and 13 print Join.",
+            "code": "age = 12\nif age >= 12 then\n    print(\"Join\")\nendif"
+          }
+        ]
+      }
     }
   }
 }

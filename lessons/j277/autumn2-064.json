@@ -356,6 +356,35 @@
         ],
         "foot": ""
       }
+    },
+    "codeModelling": {
+      "mode": "persistent-code",
+      "ido": {
+        "question": "A school portal requires usernames of at least five characters. Ask again until the username is long enough.",
+        "scaffold": "username = input(\"Username?\")\nwhile _____\n    username = _____\nendwhile\nprint(\"Accepted\")",
+        "steps": [
+          {
+            "title": "Read the username",
+            "explanation": "Store the entered string before testing it.",
+            "code": "username = input(\"Username?\")"
+          },
+          {
+            "title": "Check the length",
+            "explanation": "The username is invalid if its length is less than 5.",
+            "code": "username = input(\"Username?\")\nwhile username.length < 5"
+          },
+          {
+            "title": "Repeat invalid input",
+            "explanation": "Ask again inside the loop so a new value is tested.",
+            "code": "username = input(\"Username?\")\nwhile username.length < 5\n    username = input(\"Try again:\")\nendwhile"
+          },
+          {
+            "title": "Test the boundary",
+            "explanation": "Four characters cause another prompt; five characters are accepted. This checks length, not identity.",
+            "code": "username = input(\"Username?\")\nwhile username.length < 5\n    username = input(\"Try again:\")\nendwhile\nprint(\"Accepted\")"
+          }
+        ]
+      }
     }
   }
 }

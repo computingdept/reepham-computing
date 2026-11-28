@@ -350,6 +350,35 @@
         ],
         "foot": ""
       }
+    },
+    "codeModelling": {
+      "mode": "persistent-code",
+      "ido": {
+        "question": "A theatre has two rows of three seats. Store \"Taken\" in the second row, third seat, then display that seat's status.",
+        "scaffold": "array seats[2,3]\nseats[_,_] = _____\nprint(seats[_,_])",
+        "steps": [
+          {
+            "title": "Declare the grid",
+            "explanation": "Two rows and three columns give six positions.",
+            "code": "array seats[2,3]"
+          },
+          {
+            "title": "Choose the row and column",
+            "explanation": "Indices start at zero: second row is 1 and third column is 2.",
+            "code": "array seats[2,3]\nseats[1,2] = \"Taken\""
+          },
+          {
+            "title": "Read the same position",
+            "explanation": "Use both indices in the same order to print Taken.",
+            "code": "array seats[2,3]\nseats[1,2] = \"Taken\"\nprint(seats[1,2])"
+          },
+          {
+            "title": "Check the coordinates",
+            "explanation": "Valid row indices are 0–1; column indices are 0–2. [2,1] would be outside this grid.",
+            "code": "array seats[2,3]\nseats[1,2] = \"Taken\"\nprint(seats[1,2])"
+          }
+        ]
+      }
     }
   }
 }
