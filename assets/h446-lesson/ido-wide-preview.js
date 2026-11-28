@@ -64,8 +64,8 @@
         routePilot=true;
       }
     }
-    // Pilot one staged linked-list example before expanding the draft-grid family.
-    if(!panel&&eligible[1].toLowerCase()==="h446"&&eligible[2]==="223"&&q.get("ido-draft")==="1"){
+    // Approved staged linked-list and OOP grid family; use content-based checks.
+    if(!panel&&eligible[1].toLowerCase()==="h446"){
       const grid=section.querySelector(".ido-focus-deck > .ido-example > .draft-grid");
       if(grid?.children.length===2&&[...grid.children].every(node=>node.matches(".draft-panel"))&&
          grid.children[0].querySelector(":scope > .draft-figure > svg")){
