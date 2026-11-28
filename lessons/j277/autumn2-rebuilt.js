@@ -1654,6 +1654,11 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       }
       return b.flatMap((line,j)=>line.trim()&&!matched.has(j)?[j+1]:[]);
     };
+    // A prose plan is not source code. Only explicitly labelled, comment-only
+    // plans use the list; code and trace scaffolds keep their original editor.
+    const planLines=String(m.scaffold??"").split("\n").filter(line=>line.trim());
+    const prosePlan=fixed&&starter.label==="PLAN"&&planLines.length>0&&planLines.every(line=>/^\s*\/\/\s*\S/.test(line));
+    const planMarkup=prosePlan?'<ol class="j277-ido-plan">'+planLines.map(line=>'<li>'+escape(line.replace(/^\s*\/\/\s*/,"").trim())+'</li>').join("")+'</ol>':"";
     const fixedRows=fixed?Math.max(...m.steps.map(item=>String(item.code).split("\n").length)):0;
     // Number only actual source lines, never the empty rows reserved for layout.
     const numberedCode=(source,rows,highlights=new Set(),highlightSyntax=false)=>{
@@ -1681,7 +1686,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       const compact=lines.length>10||longest>44;
       return '<div class="ido-step" hidden><span class="ido-step-label">STEP '+(i+1)+' OF '+m.steps.length+'</span><h2>'+escape(item.title)+'</h2><p>'+escape(item.explanation)+'</p>'+(isFocus?'<div class="j277-model-focus-label">FOCUS · CODE SECTION</div>':'')+'<pre class="j277-model-code j277-model-result'+(compact?' j277-model-compact':'')+'"><code>'+erlModelCode(shown)+'</code></pre></div>';
     });
-    return '<section id="i-do" class="page phase-ido j277-code-model-phase'+(fixed?' j277-ido-fixed-code':'')+(fixed&&m.largeCodePreview===true?' j277-ido-large-code-preview':'')+'" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">I DO · BUILD THE ERL PROGRAM</span><h2>'+escape(m.question)+'</h2><p class="j277-code-scaffold-label">'+escape(starter.label)+'</p><pre class="j277-model-code j277-model-starter"><code>'+(fixed?numberedCode(m.scaffold,String(m.scaffold).split("\n").length):escape(m.scaffold))+'</code></pre>'+(starter.note?'<p class="j277-code-scaffold-note">'+escape(starter.note)+'</p>':"")+'</div><div class="ido-method"><span class="phase-tag">TEACHER MODEL · ONE STEP AT A TIME</span>'+steps+'</div></article></div></section>';
+    return '<section id="i-do" class="page phase-ido j277-code-model-phase'+(fixed?' j277-ido-fixed-code':'')+(fixed&&m.largeCodePreview===true?' j277-ido-large-code-preview':'')+'" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">I DO · BUILD THE ERL PROGRAM</span><h2>'+escape(m.question)+'</h2><p class="j277-code-scaffold-label">'+escape(starter.label)+'</p>'+(prosePlan?planMarkup:'<pre class="j277-model-code j277-model-starter"><code>'+(fixed?numberedCode(m.scaffold,String(m.scaffold).split("\n").length):escape(m.scaffold))+'</code></pre>')+(starter.note?'<p class="j277-code-scaffold-note">'+escape(starter.note)+'</p>':"")+'</div><div class="ido-method"><span class="phase-tag">TEACHER MODEL · ONE STEP AT A TIME</span>'+steps+'</div></article></div></section>';
   }
   const isCpu=["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis);
   const headings=lesson.m.headings||["Read the comparison","Explain cache size","Explain number of cores","Check all four marks"];
@@ -2163,6 +2168,24 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  }
  #i-do.j277-ido-fixed-code .ido-reference .j277-model-line::before{color:#6d8279}
  #i-do.j277-ido-fixed-code .j277-model-line-active::before{color:#e5bd70}
+ /* Plain-language plans use normal text instead of a second code editor. */
+ #i-do.j277-code-model-phase .ido-reference ol.j277-ido-plan{
+   list-style:none;counter-reset:j277-plan;display:grid;gap:10px;
+   margin:12px 0 0!important;padding:0!important;
+ }
+ body:not(.answer-page) #i-do.j277-code-model-phase .ido-reference ol.j277-ido-plan > li{
+   counter-increment:j277-plan;list-style:none;display:grid;
+   grid-template-columns:1.65em minmax(0,1fr);gap:.55em;align-items:start;
+   margin:0!important;padding:0!important;
+   font-size:clamp(17px,1.2vw,22px)!important;line-height:1.35!important;
+   font-weight:500;overflow-wrap:break-word;
+ }
+ #i-do.j277-code-model-phase .ido-reference ol.j277-ido-plan > li::before{
+   content:counter(j277-plan);display:grid;place-items:center;
+   width:1.75em;height:1.75em;border-radius:50%;
+   background:#e5eee9;color:#184a3c;font-size:.82em;font-weight:700;
+   font-variant-numeric:tabular-nums;
+ }
  /* Fixed-position I Do editor geometry. */
  #i-do.j277-ido-fixed-code .ido-method .ido-step:not([hidden]){
    display:grid;grid-template-rows:20px minmax(30px,auto) auto auto;
