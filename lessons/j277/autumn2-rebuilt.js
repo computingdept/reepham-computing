@@ -1640,13 +1640,22 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     const starter=idoStarterPresentation(m);
     const fixed=m.fixedCode===true;
     const fixedRows=fixed?Math.max(...m.steps.map(item=>String(item.code).split("\n").length)):0;
+    // Number only actual source lines, never the empty rows reserved for layout.
+    const numberedCode=(source,rows,highlights=new Set(),highlightSyntax=false)=>{
+      const lines=String(source).split("\n");
+      const alreadyNumbered=lines.filter(line=>line.trim()).every(line=>/^\s*\d+\s+\S/.test(line));
+      return Array.from({length:rows},(_,j)=>{
+        const actual=j<lines.length,line=actual?lines[j]:"";
+        return '<span class="j277-model-line'+(highlights.has(j+1)?' j277-model-line-active':'')+'" data-line="'+(actual&&!alreadyNumbered?j+1:"")+'">'+(actual?(highlightSyntax?erlModelCode(line):escape(line))||"&#160;":"&#160;")+'</span>';
+      }).join("\n");
+    };
     // Invisible sizing copies reserve the largest explanation at the current width.
     const fixedCopy=fixed?m.steps.map(item=>'<span class="j277-model-measure" aria-hidden="true">'+escape(item.explanation)+'</span>').join(""):"";
     const steps=arr(m.steps,(item,i)=>{
       if(fixed){
         const lines=String(item.code).split("\n");
         const highlights=new Set(item.highlightLines||[]);
-        const panel=Array.from({length:fixedRows},(_,j)=>'<span class="j277-model-line'+(highlights.has(j+1)?' j277-model-line-active':'')+'">'+(j<lines.length?erlModelCode(lines[j])||"&#160;":"&#160;")+'</span>').join("\n");
+        const panel=numberedCode(item.code,fixedRows,highlights,true);
         return '<div class="ido-step" hidden><span class="ido-step-label">STEP '+(i+1)+' OF '+m.steps.length+'</span><h2>'+escape(item.title)+'</h2><div class="j277-model-explanation"><p>'+escape(item.explanation)+'</p>'+fixedCopy+'</div><pre class="j277-model-code j277-model-result"><code>'+panel+'</code></pre></div>';
       }
       const shown=item.displayCode??item.code;
@@ -1656,7 +1665,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       const compact=lines.length>10||longest>44;
       return '<div class="ido-step" hidden><span class="ido-step-label">STEP '+(i+1)+' OF '+m.steps.length+'</span><h2>'+escape(item.title)+'</h2><p>'+escape(item.explanation)+'</p>'+(isFocus?'<div class="j277-model-focus-label">FOCUS · CODE SECTION</div>':'')+'<pre class="j277-model-code j277-model-result'+(compact?' j277-model-compact':'')+'"><code>'+erlModelCode(shown)+'</code></pre></div>';
     });
-    return '<section id="i-do" class="page phase-ido j277-code-model-phase'+(fixed?' j277-ido-fixed-code':'')+'" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">I DO · BUILD THE ERL PROGRAM</span><h2>'+escape(m.question)+'</h2><p class="j277-code-scaffold-label">'+escape(starter.label)+'</p><pre class="j277-model-code j277-model-starter"><code>'+escape(m.scaffold)+'</code></pre>'+(starter.note?'<p class="j277-code-scaffold-note">'+escape(starter.note)+'</p>':"")+'</div><div class="ido-method"><span class="phase-tag">TEACHER MODEL · ONE STEP AT A TIME</span>'+steps+'</div></article></div></section>';
+    return '<section id="i-do" class="page phase-ido j277-code-model-phase'+(fixed?' j277-ido-fixed-code':'')+'" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">I DO · BUILD THE ERL PROGRAM</span><h2>'+escape(m.question)+'</h2><p class="j277-code-scaffold-label">'+escape(starter.label)+'</p><pre class="j277-model-code j277-model-starter"><code>'+(fixed?numberedCode(m.scaffold,String(m.scaffold).split("\n").length):escape(m.scaffold))+'</code></pre>'+(starter.note?'<p class="j277-code-scaffold-note">'+escape(starter.note)+'</p>':"")+'</div><div class="ido-method"><span class="phase-tag">TEACHER MODEL · ONE STEP AT A TIME</span>'+steps+'</div></article></div></section>';
   }
   const isCpu=["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis);
   const headings=lesson.m.headings||["Read the comparison","Explain cache size","Explain number of cores","Check all four marks"];
@@ -2114,7 +2123,31 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    }
  }
 
- /* Opt-in fixed-position I Do editor: every reveal uses identical geometry. */
+ /* Opt-in fixed-position I Do editor: wider solution panel, numbered source,
+    and identical reveal geometry. Other examples keep their existing split. */
+ @media(min-width:901px){
+   #i-do.j277-code-model-phase.j277-ido-fixed-code .ido-focus-deck > .ido-example{
+     grid-template-columns:minmax(0,35fr) minmax(0,65fr)!important;
+   }
+ }
+ #i-do.j277-ido-fixed-code .ido-reference pre.j277-model-starter{
+   font-size:clamp(14px,1.02vw,19px)!important;
+   line-height:1.4!important;white-space:pre;overflow-x:auto;
+   padding:10px 8px;
+ }
+ #i-do.j277-ido-fixed-code .ido-reference pre.j277-model-starter code{
+   display:block;font:inherit!important;white-space:normal;
+ }
+ #i-do.j277-ido-fixed-code .j277-model-line::before{
+   content:attr(data-line);
+   display:inline-block;box-sizing:border-box;width:2.4em;
+   padding-right:.7em;text-align:right;vertical-align:baseline;
+   color:#98a4b7;font-size:.78em;font-weight:500;
+   font-variant-numeric:tabular-nums;user-select:none;
+ }
+ #i-do.j277-ido-fixed-code .ido-reference .j277-model-line::before{color:#6d8279}
+ #i-do.j277-ido-fixed-code .j277-model-line-active::before{color:#e5bd70}
+ /* Fixed-position I Do editor geometry. */
  #i-do.j277-ido-fixed-code .ido-method .ido-step:not([hidden]){
    display:grid;grid-template-rows:20px minmax(30px,auto) auto auto;
    align-content:start;align-items:start;gap:5px;
@@ -2140,22 +2173,28 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  }
  #i-do.j277-ido-fixed-code .ido-method .ido-step > pre.j277-model-result{
    margin:0!important;padding:10px 10px;
-   font-size:clamp(13px,1.0vw,18px)!important;line-height:1.4!important;
+   font-size:clamp(17px,1.27vw,23px)!important;line-height:1.34!important;
    font-weight:500;white-space:pre;overflow-x:auto;
  }
  #i-do.j277-ido-fixed-code .ido-method pre.j277-model-result code{
    display:block;white-space:normal;font:inherit!important;
  }
- #i-do.j277-ido-fixed-code .ido-method .j277-model-line{
-   display:block;white-space:pre;min-height:1.4em;line-height:1.4;
+ #i-do.j277-ido-fixed-code .j277-model-line{
+   display:block;white-space:pre;min-height:1.34em;line-height:1.34;
    padding:0 4px;border-radius:3px;
  }
  #i-do.j277-ido-fixed-code .ido-method .j277-model-line-active{
    background:#414438;box-shadow:inset 3px 0 #d9af53;
  }
- @media(max-width:900px){
+ @media(min-width:901px) and (max-height:760px){
    #i-do.j277-ido-fixed-code .ido-method .ido-step > pre.j277-model-result{
-     font-size:13px!important;
+     font-size:clamp(17px,1.15vw,20px)!important;
+   }
+ }
+ @media(max-width:900px){
+   #i-do.j277-ido-fixed-code .ido-method .ido-step > pre.j277-model-result,
+   #i-do.j277-ido-fixed-code .ido-reference pre.j277-model-starter{
+     font-size:14px!important;
    }
  }
  @media(max-width:900px){
