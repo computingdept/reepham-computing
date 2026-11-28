@@ -1,3 +1,6 @@
+/* Shared automatic I Do layout; one controller for both courses. */
+import './ido-wide-preview.js?v=20261128-default1';
+
 /* I Do presentation labels: use one clear example heading and remove only
    the redundant question-visibility caption. Preserve actual example counts,
    teaching cues, specialist content and every reveal stage. */
