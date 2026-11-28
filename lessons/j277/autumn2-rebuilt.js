@@ -1525,6 +1525,28 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
         note(273,312,"Simple controls suit the job",18));
     }
   }
+  if(kind==="nl-logical-shifts"||kind==="nl-binary-overflow"){
+   const frame=(label,body)=>svgScene(label,body).replace('viewBox="0 0 560 232"','viewBox="0 0 560 340"').replace('width="554" height="226"','width="554" height="334"');
+   const x=i=>65+i*59, row=(bits,y,highlight=-1,fill="#e4f1e8")=>[...bits].map((v,i)=>pill(x(i),y,52,36,v,i===highlight?fill:"#e4f1e8",22)).join("");
+   const arrow=(x1,y1,x2,y2)=>'<path d="M'+x1+' '+y1+' L'+x2+' '+y2+'" stroke="#49816a" stroke-width="2" fill="none"/>';
+   if(kind==="nl-logical-shifts"){
+    const bits="10010110",left=bits.slice(1)+"0",right="0"+bits.slice(0,7);
+    let body=note(24,27,"LOGICAL LEFT SHIFT · 1 PLACE",20)+row(bits,37,0,"#f5d7d3")+row(left,104,7,"#fae9c9");
+    for(let i=1;i<8;i++)body+=arrow(x(i)+26,74,x(i-1)+26,103);
+    body+=note(24,158,"Leftmost bit discarded · zero enters on right",15);
+    body+=note(24,185,"LOGICAL RIGHT SHIFT · 1 PLACE",20)+row(bits,195,7,"#f5d7d3")+row(right,262,0,"#fae9c9");
+    for(let i=0;i<7;i++)body+=arrow(x(i)+26,232,x(i+1)+26,261);
+    body+=note(24,319,"Rightmost bit discarded · zero enters on left",15);
+    return frame("Logical shifts of 10010110: left gives 00101100; right gives 01001011. Edge bits are discarded and zero fills the vacant position.",body);
+   }
+   const A="11111111",B="00000001",sum=(parseInt(A,2)+parseInt(B,2)).toString(2);
+   let body=note(24,27,"8-BIT ADDITION · OVERFLOW",20)+row(A,39)+note(38,98,"+",25)+row(B,78);
+   body+=line(65,120,536,120)+pill(7,129,48,36,sum[0],"#f5d7d3",22)+row(sum.slice(1),129);
+   body+=note(24,185,"Carry beyond 8 bits is lost · stored result = 0",15);
+   body+=note(24,219,"LEFT SHIFT · 1 PLACE",20)+row("10000001",229,0,"#f5d7d3")+row("00000010",280,7,"#fae9c9");
+   for(let i=1;i<8;i++)body+=arrow(x(i)+26,266,x(i-1)+26,279);
+   return frame("255 plus 1 requires nine bits; only eight zero bits are stored. A left shift of 10000001 discards the leading one and produces 00000010.",body);
+  }
   if(kind==="shift"){
    let positions=[128,64,32,16,8,4,2,1],bits="00010110";
    return svgScene("Eight-bit logical left shift: 00010110 becomes 01011000 after shifting left two places",note(26,37,"8-bit value: 00010110",19)+positions.map((v,i)=>pill(20+i*65,57,60,48,`${bits[i]}`,"#eaf3ee",23)).join("")+`<path d="M280 109 V149 L269 137 M280 149 L291 137" stroke="#be8632" fill="none" stroke-width="4"/>`+note(35,169,"LEFT 2 PLACES · fill zeros on right",17)+note(115,209,"01011000  =  88",23));
