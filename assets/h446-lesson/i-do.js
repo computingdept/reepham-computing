@@ -1,5 +1,6 @@
 /* Shared automatic I Do layout; one controller for both courses. */
-import './ido-wide-preview.js?v=20261128-default1';
+import('./ido-wide-preview.js?v=20261128-default1')
+  .catch(error=>console.warn('Automatic I Do layout unavailable; original layout retained:',error));
 
 /* I Do presentation labels: use one clear example heading and remove only
    the redundant question-visibility caption. Preserve actual example counts,
