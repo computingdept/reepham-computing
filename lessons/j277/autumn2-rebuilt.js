@@ -1562,6 +1562,28 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    let positions=[128,64,32,16,8,4,2,1],bits="00010110";
    return svgScene("Eight-bit logical left shift: 00010110 becomes 01011000 after shifting left two places",note(26,37,"8-bit value: 00010110",19)+positions.map((v,i)=>pill(20+i*65,57,60,48,`${bits[i]}`,"#eaf3ee",23)).join("")+`<path d="M280 109 V149 L269 137 M280 149 L291 137" stroke="#be8632" fill="none" stroke-width="4"/>`+note(35,169,"LEFT 2 PLACES · fill zeros on right",17)+note(115,209,"01011000  =  88",23));
   }
+  // New Learning: four distinct visual explanations for characters and images.
+  if(["nl-character-codes","nl-bitmap-grid","nl-colour-depth","nl-image-size"].includes(kind)){
+   const palette=["#eaf1f7","#3a7298","#d86c70","#f4c86e"];
+   const picture=["00000000","02200220","02222220","00222200","00022000","00000000"];
+   const grid=(x,y,size)=>picture.map((row,j)=>[...row].map((c,i)=>'<rect x="'+(x+i*size)+'" y="'+(y+j*size)+'" width="'+size+'" height="'+size+'" fill="'+palette[Number(c)]+'" stroke="#ffffff" stroke-width="1.2"/>').join("")).join("");
+   const frame=(label,body)=>svgScene(label,body).replace('viewBox="0 0 560 232"','viewBox="0 0 560 300"').replace('width="554" height="226"','width="554" height="294"');
+   if(kind==="nl-character-codes"){
+    const rows=[["A","65","01000001"],["B","66","01000010"],["a","97","01100001"]];
+    const body=note(24,30,"ASCII",23)+note(28,65,"Character",16)+note(208,65,"Denary code",16)+note(380,65,"Binary",16)+rows.map((r,i)=>pill(20,76+i*53,110,44,r[0],"#e4f0e8",25)+pill(168,76+i*53,135,44,r[1],"#e4f0e8",22)+pill(335,76+i*53,200,44,r[2],"#fdf2df",21)).join("")+note(24,267,"Unicode can represent many more characters.",19);
+    return frame("ASCII maps A to 65, B to 66, and lowercase a to 97. Unicode supports many more characters.",body);
+   }
+   if(kind==="nl-bitmap-grid"){
+    const size=34,x=65,y=46;
+    return frame("A heart bitmap has 8 columns and 6 rows, making 48 pixels. One pixel is outlined.",note(65,30,"8 pixels wide",20)+grid(x,y,size)+'<rect x="'+(x+3*size)+'" y="'+(y+2*size)+'" width="'+size+'" height="'+size+'" fill="none" stroke="#173c2d" stroke-width="4"/>'+line(x+4*size,y+2.5*size,383,118)+note(388,114,"One pixel",20)+note(359,194,"6 pixels high",19)+note(359,229,"48 pixels",23));
+   }
+   if(kind==="nl-colour-depth"){
+    const row=(depth,y)=>{const colours=depth===1?["#ffffff","#173c2d"]:palette;return note(25,y+22,depth+" bit"+(depth===1?"":"s"),22)+colours.map((c,i)=>'<rect x="'+(155+i*58)+'" y="'+y+'" width="50" height="47" rx="4" fill="'+c+'" stroke="#8ba99b"/>'+note(155+i*58+10,y+68,i.toString(2).padStart(depth,"0"),18)).join("")+note(405,y+26,colours.length+" colours",20)};
+    return frame("One bit can represent two colours. Two bits can represent four colours. Each binary code maps to one colour.",row(1,36)+row(2,155)+note(25,267,"More bits per pixel = more possible colours",19));
+   }
+   const body=grid(32,48,27)+note(32,30,"8 × 6 pixels",20)+note(282,69,"48 pixels",23)+note(282,108,"× 2 bits per pixel",20)+line(282,123,522,123)+'<g data-nl-result="">'+note(282,159,"96 bits",25)+note(282,201,"÷ 8 = 12 bytes",23)+'</g>'+note(32,267,"Uncompressed image data",19);
+   return frame("An 8 by 6 image at 2 bits per pixel needs 96 bits or 12 bytes, excluding metadata.",body).replace("<svg ",'<svg data-nl-animation="image-size" ');
+  }
   if(kind==="chars"){
    return svgScene("Character set: three characters mapped to numbers and binary codes",note(28,34,"CHARACTER",17)+note(208,34,"DENARY CODE",17)+note(380,34,"BINARY",17)+[["A","65","01000001"],["B","66","01000010"],["a","97","01100001"]].map((row,i)=>pill(20,49+i*54,110,43,row[0],"#e4f0e8",22)+pill(168,49+i*54,135,43,row[1]) +pill(335,49+i*54,200,43,row[2],"#fdf2df",19)).join(""));
   }
