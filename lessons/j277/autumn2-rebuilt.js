@@ -506,7 +506,19 @@
    b+=t(280,191,"REARRANGE DATA ON A MAGNETIC HARD DISK",15);
   }else if(mode==="utility"){
    const ico=[named(0,"Encryption"),named(1,"Compression"),named(2,"Defrag")];
-   ico.forEach((v,i)=>{const x=18+i*180;b+=card(x,97,163,167,v,["#e1effa","#e2f2e7","#f8edd4"][i],18);});
+   const utilityOverviewIcons=spec.newLearningUtilityIcons===true&&ico.join("|")==="Encryption|Compression|Defragmentation";
+   ico.forEach((v,i)=>{
+    const x=18+i*180,col=["#e1effa","#e2f2e7","#f8edd4"][i];
+    if(!utilityOverviewIcons){b+=card(x,97,163,167,v,col,18);return;}
+    b+=shape(x,97,163,167,col)+t(x+81.5,231,v,18);
+    // Subject-specific pictograms: locked data, smaller file, contiguous disk blocks.
+    const icons=[
+     '<path d="M31 39V27a19 19 0 0 1 38 0v12" fill="none" stroke="#497fa7" stroke-width="5" stroke-linecap="round"/><rect x="22" y="39" width="56" height="43" rx="8" fill="#f8fbff" stroke="#497fa7" stroke-width="4"/><circle cx="50" cy="56" r="4.5" fill="#497fa7"/><path d="M50 60v10" stroke="#497fa7" stroke-width="4" stroke-linecap="round"/>',
+     '<rect x="16" y="10" width="68" height="70" rx="6" fill="none" stroke="#398266" stroke-width="2.5" stroke-dasharray="5 5"/><rect x="32" y="29" width="36" height="34" rx="4" fill="#f8fbf9" stroke="#398266" stroke-width="3.5"/><path d="M17 11L30 26M21 26h9v-9M83 11L70 26M79 26h-9v-9M17 79L30 66M21 66h9v9M83 79L70 66M79 66h-9v9" fill="none" stroke="#398266" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M40 40h20M40 48h20M40 56h12" stroke="#398266" stroke-width="2.5" stroke-linecap="round"/>',
+     '<g stroke="#9c7839" stroke-width="1.8"><rect x="8" y="9" width="18" height="19" rx="2" fill="#bad8f5"/><rect x="30" y="9" width="18" height="19" rx="2" fill="#f6e1a9"/><rect x="52" y="9" width="18" height="19" rx="2" fill="#bad8f5"/><rect x="74" y="9" width="18" height="19" rx="2" fill="#f6e1a9"/><path d="M50 34v17m-7-7 7 7 7-7" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="8" y="59" width="18" height="19" rx="2" fill="#bad8f5"/><rect x="30" y="59" width="18" height="19" rx="2" fill="#bad8f5"/><rect x="52" y="59" width="18" height="19" rx="2" fill="#f6e1a9"/><rect x="74" y="59" width="18" height="19" rx="2" fill="#f6e1a9"/></g>'
+    ];
+    b+='<g transform="translate('+(x+31.5)+' 113)" aria-hidden="true">'+icons[i]+'</g>';
+   });
    b+=t(280,289,"Utilities perform additional maintenance or protection tasks",15);
   }else if(mode==="ethics-map"||mode==="stakeholders"){
    const entries=words.slice(0,4);while(entries.length<4)entries.push(["Privacy","Environment","Access","Culture"][entries.length]);
@@ -1609,7 +1621,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  function newLearning(lesson){
   const stages=arr(lesson.c,([title,body],i)=>`<div class="nl-stage"${i?' hidden':''}><span class="nl-stage-label">STEP ${i+1} OF ${lesson.c.length}</span><h2>${escape(title)}</h2>${lesson.teachingVisuals?.[title]||""}<p>${examWords(lesson,body)}</p><span class="nl-stage-count">${i+1} of ${lesson.c.length}</span></div>`);
   const visualKinds=lesson.vis==="cpu-performance"?["cpu-speed","cpu-cache","cpu-cores","cpu-summary"]:Array.isArray(lesson.visuals)?lesson.visuals:null;
-  const visuals=visualKinds?visualKinds.map((type,i)=>`<div class="j277-cpu-visual" data-cpu-step="${i}"${i?" hidden":""}>${type?.approvedFlowchartSvg&&type?.flowchartCode?`<figure class="a1-scene j277-learning-scene" data-flowchart-code data-no-zoom role="button" tabindex="0" aria-label="Show equivalent code" aria-pressed="false">${type.approvedFlowchartSvg}<pre class="flowchart-code" hidden><code>${escape(type.flowchartCode)}</code></pre></figure>`:type?.approvedFlowchartSvg?`<figure class="a1-scene j277-learning-scene">${type.approvedFlowchartSvg}</figure>`:diagram(type)}</div>`).join(""):diagram(lesson.vis);
+  const visuals=visualKinds?visualKinds.map((type,i)=>`<div class="j277-cpu-visual" data-cpu-step="${i}"${i?" hidden":""}>${type?.approvedFlowchartSvg&&type?.flowchartCode?`<figure class="a1-scene j277-learning-scene" data-flowchart-code data-no-zoom role="button" tabindex="0" aria-label="Show equivalent code" aria-pressed="false">${type.approvedFlowchartSvg}<pre class="flowchart-code" hidden><code>${escape(type.flowchartCode)}</code></pre></figure>`:type?.approvedFlowchartSvg?`<figure class="a1-scene j277-learning-scene">${type.approvedFlowchartSvg}</figure>`:diagram(type&&typeof type==="object"&&type.layout==="utility"?{...type,newLearningUtilityIcons:true}:type)}</div>`).join(""):diagram(lesson.vis);
   const hasDiagram=visuals.includes("<svg");
   const heading=hasDiagram?'':`<span class="phase-tag">VISUAL REFERENCE · ${escape(lesson.s)}</span><h2>${escape(lesson.t)}</h2>`;
   const note=hasDiagram?'':`<div class="nl-reference-note"><strong>Remember:</strong> ${escape(lesson.memoryCue||(lesson.vis==="embedded-systems"?"Dedicated purpose → sensor/input → controller → output.":"Name the factor and explain its effect on performance."))}</div>`;
