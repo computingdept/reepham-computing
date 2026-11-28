@@ -1645,9 +1645,10 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   const visualKinds=lesson.vis==="cpu-performance"?["cpu-speed","cpu-cache","cpu-cores","cpu-summary"]:Array.isArray(lesson.visuals)?lesson.visuals:null;
   const visuals=visualKinds?visualKinds.map((type,i)=>`<div class="j277-cpu-visual" data-cpu-step="${i}"${i?" hidden":""}>${type?.approvedFlowchartSvg&&type?.flowchartCode?`<figure class="a1-scene j277-learning-scene" data-flowchart-code data-no-zoom role="button" tabindex="0" aria-label="Show equivalent code" aria-pressed="false">${type.approvedFlowchartSvg}<pre class="flowchart-code" hidden><code>${escape(type.flowchartCode)}</code></pre></figure>`:type?.approvedFlowchartSvg?`<figure class="a1-scene j277-learning-scene">${type.approvedFlowchartSvg}</figure>`:diagram(type&&typeof type==="object"&&type.layout==="utility"?{...type,newLearningUtilityIcons:true}:type)}</div>`).join(""):diagram(lesson.vis);
   const hasDiagram=visuals.includes("<svg");
+  const topAlignedVisuals=visuals.replace(/<svg\b(?![^>]*\bpreserveAspectRatio=)/g,'<svg preserveAspectRatio="xMidYMin meet"');
   const heading=hasDiagram?'':`<span class="phase-tag">VISUAL REFERENCE · ${escape(lesson.s)}</span><h2>${escape(lesson.t)}</h2>`;
   const note=hasDiagram?'':`<div class="nl-reference-note"><strong>Remember:</strong> ${escape(lesson.memoryCue||(lesson.vis==="embedded-systems"?"Dedicated purpose → sensor/input → controller → output.":"Name the factor and explain its effect on performance."))}</div>`;
-  return `<section id="new-learning" class="page phase-focus${hasDiagram?' a1-visual-learning':''}" data-phase-time="New learning"><div class="nl-focus"><article class="nl-reference">${heading}${visuals}${note}</article><article class="nl-explanation">${stages}</article></div></section>`;
+  return `<section id="new-learning" class="page phase-focus${hasDiagram?' a1-visual-learning':''}" data-phase-time="New learning"><div class="nl-focus"><article class="nl-reference">${heading}${topAlignedVisuals}${note}</article><article class="nl-explanation">${stages}</article></div></section>`;
  }
 
  function erlModelCode(source){
@@ -2051,7 +2052,17 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    min-width:0;
  }
  .j277-visual-lesson #new-learning .nl-reference .j277-cpu-visual{
-   flex:1;display:flex;align-items:flex-start;justify-content:center;min-height:0;
+   flex:0 0 auto;display:block;min-height:0;
+ }
+ /* Keep the visible New Learning scene at the top, rather than filling and centring in the reference panel. */
+ .j277-visual-lesson #new-learning.a1-visual-learning .nl-reference{
+   justify-content:flex-start;
+ }
+ .j277-visual-lesson #new-learning.a1-visual-learning .nl-reference > .j277-cpu-visual:not([hidden]){
+   display:block!important;flex:0 0 auto!important;align-self:stretch;margin:0!important;
+ }
+ .j277-visual-lesson #new-learning.a1-visual-learning .nl-reference > .j277-cpu-visual > figure{
+   margin:0 auto!important;align-self:flex-start;
  }
  .j277-visual-lesson #new-learning .nl-reference .j277-cpu-visual .a1-scene{
    display:block;
