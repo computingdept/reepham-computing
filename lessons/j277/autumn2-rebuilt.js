@@ -690,10 +690,10 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  "081":{family:"test",labels:["Expected cost=12","Actual sum=7","Correct * operator","Retest output"],families:["comparison","trace","test","cycle"],rows:[["3 tickets","12","7"],["Corrected","12","12"]]},
  "082":{family:"search",labels:["Check index 0","Move to index 1","Compare index 2","Find target 2"],values:["8","4","11","2","7"],target:"2",searchType:"linear",families:["array","search","search","search"]},
  "083":{family:"search",labels:["Sorted prerequisite","Check midpoint","Discard lower half","Find target 12"],values:["2","4","6","8","10","12","14"],target:"12",searchType:"binary",families:["array","search","search","search"]},
- "084":{family:"sort",labels:["Start 5,2,4","Compare 5 and 2","Swap 5 and 4","First pass ordered"],values:["5","2","4"],sortType:"bubble",families:["array","sort","sort","sort"],snapshots:[["5","2","4"],["2","5","4"],["2","4","5"],["2","4","5"]]},
- "085":{family:"sort",labels:["Start 4,1,3","Insert key 1","Insert key 3","Sorted 1,3,4"],values:["4","1","3"],sortType:"insertion",families:["array","sort","sort","sort"],snapshots:[["4","1","3"],["1","4","3"],["1","3","4"],["1","3","4"]]},
- "086":{family:"merge",labels:["Split 8,3,5,1","Pairs [8,3] [5,1]","Merge sorted pairs","Final 1,3,5,8"],values:["8","3","5","1"],families:["array","merge","merge","merge"]},
- "087":{stageValues:[["5","2","9","1"],["1","3","5","7","9"],["6","2","4","1","8"],["8","3","5","1"]],family:"search",labels:["Linear: unsorted","Binary: sorted","Bubble: adjacent","Merge: split groups"],values:["5","2","9","1"],searchType:"linear",searchTypes:["linear","binary","linear","linear"],families:["search","search","sort","merge"],sortType:"bubble"},
+ "084":{modelSnapshots:[["5","2","4"],["2","5","4"],["2","5","4"],["2","4","5"]],modelHighlights:[[0,1],[0,1],[1,2],[1,2]],family:"sort",labels:["Start 5,2,4","Compare 5 and 2","Swap 5 and 4","First pass ordered"],values:["5","2","4"],sortType:"bubble",families:["array","sort","sort","sort"],snapshots:[["5","2","4"],["2","5","4"],["2","4","5"],["2","4","5"]]},
+ "085":{modelSnapshots:[["4","1","3"],["1","4","3"],["1","4","3"],["1","3","4"]],modelHighlights:[[0],[0,1],[1,2],[1,2]],family:"sort",labels:["Start 4,1,3","Insert key 1","Insert key 3","Sorted 1,3,4"],values:["4","1","3"],sortType:"insertion",families:["array","sort","sort","sort"],snapshots:[["4","1","3"],["1","4","3"],["1","3","4"],["1","3","4"]]},
+ "086":{modelSplitFirst:true,family:"merge",labels:["Split 8,3,5,1","Pairs [8,3] [5,1]","Merge sorted pairs","Final 1,3,5,8"],values:["8","3","5","1"],families:["array","merge","merge","merge"]},
+ "087":{modelHighlights:[[],[0],[1],[2]],stageValues:[["5","2","9","1"],["1","3","5","7","9"],["6","2","4","1","8"],["8","3","5","1"]],family:"search",labels:["Linear: unsorted","Binary: sorted","Bubble: adjacent","Merge: split groups"],values:["5","2","9","1"],searchType:"linear",searchTypes:["linear","binary","linear","linear"],families:["search","search","sort","merge"],sortType:"bubble"},
  "088":{family:"gate",labels:["Inputs 0 and 1","AND needs both","OR needs either","NOT reverses input"],families:["gate","gate","gate","gate"],gateStages:["AND","AND","OR","NOT"]},
  "089":{family:"truth",labels:["List 00,01,10,11","AND outputs 0001","OR outputs 0111","NOT reverses one input"],families:["truth","truth","truth","gate"],logicStages:["AND","AND","OR","NOT"],gateStages:["AND","AND","OR","NOT"]},
  "090":{family:"truth",labels:["First AND gate","OR with input C","Compute X then Q","Eight input cases"],families:["compound-gate","gate","truth","truth"],modelFamily:"compound-gate",threeInput:true,gateStages:["AND","AND","OR","AND"],logicStages:["AND","AND","OR","AND"]},
@@ -736,6 +736,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
       gate:phase==="guided"?gate(q):(plan.gateStages||[])[index]||gate(q),
       searchType:effectiveSearch,sortType:effectiveSort,
       snapshots:(!nums&&phase==="learning")?plan.snapshots||null:null,
+      ...(phase==="model"?{modelSnapshots:plan.modelSnapshots||null,modelHighlights:plan.modelHighlights||null,modelSplitFirst:!!plan.modelSplitFirst}:{}),
       unsafe:/\bunsorted\b|without sorting|not sorted/i.test(q),
       question:String(q||"").slice(0,220)
     };
@@ -884,7 +885,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
         levels.push(levels[levels.length-1].flatMap(g=>g.length<=1?[g]:[g.slice(0,Math.ceil(g.length/2)),g.slice(Math.ceil(g.length/2))]));
       }
       const merged=levels.slice(0,-1).reverse().map(groups=>groups.map(g=>g.slice().sort((a,b)=>Number(a)-Number(b))));
-      const shown=stage===0?levels.slice(0,1):stage===1?levels:stage===2?levels.concat(merged.slice(0,1)):levels.concat(merged);
+      const shown=stage===0?levels.slice(0,mode==="model"&&p.modelSplitFirst?2:1):stage===1?levels:stage===2?levels.concat(merged.slice(0,1)):levels.concat(merged);
       const dy=Math.min(52,225/Math.max(1,shown.length-1)),hh=Math.min(37,dy-8);
       shown.forEach((groups,i)=>{
         let x=26;const y=69+i*dy;
@@ -893,12 +894,13 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
           x+=w;
         });
       });
-      lower=stage===0?"Start with the unsorted list":stage===1?"Split until every group has one item":stage===2?"Merge neighbouring items into sorted groups":"Merge sorted groups until one list remains";
+      lower=stage===0?(mode==="model"&&p.modelSplitFirst?"Split the unsorted list into two halves":"Start with the unsorted list"):stage===1?"Split until every group has one item":stage===2?"Merge neighbouring items into sorted groups":"Merge sorted groups until one list remains";
     }else{
     let arr=items.slice();
     if(family==="string"){arr=String(val(0,"COMPUTER")).split("").slice(0,9);}
     const original=arr.slice(),target=String(p.target||"");
     let highlight=[];
+    if(mode==="model"&&Array.isArray(p.modelSnapshots?.[stage]))arr=p.modelSnapshots[stage].map(String);
     if(family==="search"){
       if(p.searchType==="binary"){
         const middle=Math.floor((arr.length-1)/2),goal=arr.findIndex(x=>String(x)===target);
@@ -925,6 +927,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     }else if(family==="merge"){highlight=stage<2?[0,1]:[Math.floor(arr.length/2),arr.length-1];lower="Split into halves, then merge sorted sublists";}
     else if(family==="string"){highlight=stage===0?[]:stage===1?[0,1,2,3]:stage===2?[4,5,6,7]:[0];lower="Character positions begin at index 0";}
     else{highlight=stage===0?[]:[Math.min(stage-1,arr.length-1)];lower="Zero-based index: first element is 0";}
+    if(mode==="model"&&Array.isArray(p.modelHighlights?.[stage]))highlight=p.modelHighlights[stage];
     body+=text(280,94,guided?"IDENTIFY THE NEXT STEP":family==="sort"?"SORTING · STAGE "+(stage+1):family==="search"?"FOLLOW SEARCH RANGE":family==="string"?"CHARACTER POSITIONS":"INDEXED VALUES",17,c.muted);
     body+=chart(arr,highlight,145,guided&&mode==="independent");
     if(target&&(family==="search"||family==="sort"))body+=text(280,264,"Target: "+target,18);
