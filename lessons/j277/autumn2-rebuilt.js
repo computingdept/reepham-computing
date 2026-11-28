@@ -1824,8 +1824,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  #you-do .question-pane{background:#eff8f3}
  #you-do .answer-pane{background:#fff}
  @media(max-width:900px){#you-do .answer-card-pair{grid-template-columns:1fr}}
- #new-learning .nl-stage .a1-scene{width:100%;max-width:560px;margin:.7rem auto}
- #new-learning .nl-stage .a1-scene svg{max-height:min(30vh,255px)}
+ 
+ 
  .a1-scene{margin:9px auto;max-width:min(100%,540px);background:#f7fbf8;border-radius:12px}
  .a1-scene svg{display:block;width:100%;height:auto;max-height:min(35vh,220px)}
  .a1-we-hint{padding:15px;background:#eaf4ed;border-left:5px solid #3b8b5a;border-radius:7px;font-weight:700}
@@ -1834,7 +1834,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  #you-do .source-note{font-size:clamp(12px,.9vw,15px);line-height:1.3}
  #i-do .ido-reference .a1-scene{max-width:490px}
  #we-do .wedo-reference .a1-scene{max-width:460px}
- #new-learning .nl-reference .a1-scene{max-width:460px}
+ 
  #we-do .wedo-practice .wedo-step h2{font-size:clamp(19px,1.6vw,27px);line-height:1.35}
  #i-do .ido-method .ido-step h2{font-size:clamp(21px,1.75vw,30px);line-height:1.35}
  @media(max-height:740px) and (min-width:901px){.a1-scene svg{max-height:150px}#i-do .ido-reference .a1-scene{max-width:390px}}
@@ -1867,33 +1867,30 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  @media(max-width:900px){.y11-guided-visual .y11-scene svg,#i-do .j277-ido-visual-frame .y11-scene svg{max-height:none}}
  .y11-challenge-hint{margin:16px 0 4px;padding:13px 16px;border:1px solid #c7d9c8;background:#f0f8f2;border-radius:11px}.y11-challenge-hint summary{font-weight:850;cursor:pointer}.y11-challenge-hint p{line-height:1.5} 
  /* Year 11: scale substantive teaching diagrams for classroom TVs and phones. */
- .j277-visual-lesson #new-learning .nl-reference .y11-scene,
  .j277-visual-lesson #i-do .ido-reference .y11-scene,
- .j277-visual-lesson #we-do .wedo-reference .y11-scene{max-width:min(100%,610px)}
- .j277-visual-lesson #new-learning .nl-reference .y11-scene svg{max-height:min(41vh,350px)}
+.j277-visual-lesson #we-do .wedo-reference .y11-scene{max-width:min(100%,610px)}
+ 
  .j277-visual-lesson #i-do .j277-ido-visual-frame .y11-scene svg{max-height:min(45vh,365px)}
  .j277-visual-lesson #we-do .y11-guided-visual .y11-scene svg{max-height:min(43vh,350px)}
- @media(max-width:900px){.j277-visual-lesson #new-learning .nl-reference .y11-scene svg,.j277-visual-lesson #i-do .j277-ido-visual-frame .y11-scene svg,.j277-visual-lesson #we-do .y11-guided-visual .y11-scene svg{max-height:none}}
+ @media(max-width:900px){.j277-visual-lesson #i-do .j277-ido-visual-frame .y11-scene svg,
+.j277-visual-lesson #we-do .y11-guided-visual .y11-scene svg{max-height:none}}
   /* Make failed teaching visuals explicit instead of silently substituting generic boxes. */
  .j277-visual-error{margin:12px;padding:20px;border:2px solid #b65c48;border-radius:12px;background:#fff2ed;color:#773e2f;font-size:18px;font-weight:800}
  .j277-assessment-warmup{margin:15px 0 19px;padding:16px;border:1px solid #bdd7c5;border-radius:11px;background:#f2f8f3}.j277-assessment-warmup h3{font-size:16px}.j277-assessment-warmup pre{white-space:pre-wrap;font-size:17px;line-height:1.5} 
  /* Lesson 019: larger visuals, balanced two-panel classroom layout.
     Scoped to J277 CPU; shared H446 classroom CSS stays untouched. */
  @media(min-width:901px){
-  .j277-visual-lesson #new-learning .nl-focus{grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:14px}
-  .j277-visual-lesson #new-learning .nl-reference,
-  .j277-visual-lesson #new-learning .nl-explanation{padding:clamp(12px,1.3vw,19px)}
+  
+  
  }
- .j277-visual-lesson #new-learning .nl-reference h2{font-size:clamp(23px,1.6vw,30px);line-height:1.2;margin:0 0 9px}
- .j277-visual-lesson #new-learning .nl-explanation h2{font-size:clamp(22px,1.55vw,29px);line-height:1.23;margin:0 0 13px}
- .j277-visual-lesson #new-learning .nl-stage p{font-size:clamp(17px,1.12vw,21px);line-height:1.35}
- .j277-visual-lesson #new-learning .nl-reference-note{font-size:clamp(14px,1vw,17px);padding:9px 12px}
- .j277-visual-lesson #new-learning .j277-cpu-visual{flex:1;min-height:0;display:flex;align-items:flex-start;justify-content:center}
- .j277-visual-lesson #new-learning .j277-cpu-visual[hidden]{display:none!important}
- .j277-visual-lesson #new-learning .nl-reference .j277-cpu-visual .a1-scene{width:100%;max-width:none;margin:0;display:block}
- .j277-visual-lesson #new-learning .nl-reference .j277-cpu-visual svg{
-   width:100%;height:auto;max-height:min(68vh,610px);display:block
- }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  .j277-visual-lesson #i-do .ido-reference h2,
  .j277-visual-lesson #we-do .wedo-reference h2{font-size:clamp(21px,1.4vw,27px);line-height:1.24}
  .j277-visual-lesson #i-do .ido-method .ido-step h2,
@@ -1905,9 +1902,9 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  .j277-visual-lesson #i-do .ido-reference p,
  .j277-visual-lesson #we-do .wedo-reference p{font-size:clamp(17px,1.1vw,21px);line-height:1.35}
  @media(max-width:900px){
-  .j277-visual-lesson #new-learning .nl-focus{grid-template-columns:1fr}
-  .j277-visual-lesson #new-learning .j277-cpu-visual{flex:none}
-  .j277-visual-lesson #new-learning .nl-reference .j277-cpu-visual svg{max-height:none}
+  
+  
+  
   .j277-visual-lesson #i-do .ido-reference .a1-scene svg,
   .j277-visual-lesson #we-do .wedo-reference .a1-scene svg{max-height:none}
  }
@@ -1946,7 +1943,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  .j277-visual-lesson #you-do .j277-prior-exam{border-top:5px solid #e0b247;}
  .j277-visual-lesson #you-do .j277-prior-exam h3{font-size:clamp(19px,1.35vw,25px);margin:8px 0;}
 
- .j277-visual-v3 #new-learning .a1-scene svg{max-height:min(42vh,330px);}
+ 
  .j277-visual-v3 .j277-ido-visual-frame[hidden]{display:none!important;}
  .j277-visual-v3 .j277-ido-visual-frame{width:100%;}
  .j277-visual-v3 .a1-scene.j277-learning-scene{
@@ -2015,21 +2012,18 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    --j277-cpu-title:clamp(24px,1.75vw,30px);
    --j277-cpu-copy:clamp(19px,1.24vw,22px);
  }
- .j277-visual-lesson #new-learning .nl-reference h2,
- .j277-visual-lesson #new-learning .nl-explanation h2,
  .j277-visual-lesson #i-do .ido-reference h2,
- .j277-visual-lesson #i-do .ido-method .ido-step h2,
- .j277-visual-lesson #we-do .wedo-reference h2,
- .j277-visual-lesson #we-do .wedo-practice .wedo-step h2{
+.j277-visual-lesson #i-do .ido-method .ido-step h2,
+.j277-visual-lesson #we-do .wedo-reference h2,
+.j277-visual-lesson #we-do .wedo-practice .wedo-step h2{
    font-size:var(--j277-cpu-title);
    line-height:1.22;
    margin:0 0 12px;
  }
- .j277-visual-lesson #new-learning .nl-stage p,
  .j277-visual-lesson #i-do .ido-reference .j277-cpu-question,
- .j277-visual-lesson #i-do .ido-method .ido-step p,
- .j277-visual-lesson #we-do .wedo-reference .j277-cpu-question,
- .j277-visual-lesson #we-do .wedo-practice .wedo-step p{
+.j277-visual-lesson #i-do .ido-method .ido-step p,
+.j277-visual-lesson #we-do .wedo-reference .j277-cpu-question,
+.j277-visual-lesson #we-do .wedo-practice .wedo-step p{
    font-size:var(--j277-cpu-copy);
    line-height:1.42;
    font-weight:500;
@@ -2043,39 +2037,19 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    background:var(--green-soft);
    border-radius:0 9px 9px 0;
  }
- .j277-visual-lesson #new-learning .nl-reference,
- .j277-visual-lesson #new-learning .nl-explanation,
  .j277-visual-lesson #i-do .ido-reference,
- .j277-visual-lesson #i-do .ido-method,
- .j277-visual-lesson #we-do .wedo-reference,
- .j277-visual-lesson #we-do .wedo-practice{
+.j277-visual-lesson #i-do .ido-method,
+.j277-visual-lesson #we-do .wedo-reference,
+.j277-visual-lesson #we-do .wedo-practice{
    min-width:0;
  }
- .j277-visual-lesson #new-learning .nl-reference .j277-cpu-visual{
-   flex:0 0 auto;display:block;min-height:0;
- }
+ 
  /* Keep the visible New Learning scene at the top, rather than filling and centring in the reference panel. */
- .j277-visual-lesson #new-learning.a1-visual-learning .nl-reference{
-   justify-content:flex-start;
- }
- .j277-visual-lesson #new-learning.a1-visual-learning .nl-reference > .j277-cpu-visual:not([hidden]){
-   display:block!important;flex:0 0 auto!important;align-self:stretch;margin:0!important;
- }
- .j277-visual-lesson #new-learning.a1-visual-learning .nl-reference > .j277-cpu-visual > figure{
-   margin:0 auto!important;align-self:flex-start;
- }
- .j277-visual-lesson #new-learning .nl-reference .j277-cpu-visual .a1-scene{
-   display:block;
-   width:100%;
-   max-width:none;
-   margin:0 auto;
- }
- .j277-visual-lesson #new-learning .nl-reference .j277-cpu-visual svg{
-   display:block;
-   width:100%;
-   height:auto;
-   max-height:min(67vh,570px);
- }
+ 
+ 
+ 
+ 
+ 
  .j277-visual-lesson #i-do .ido-reference .a1-scene,
  .j277-visual-lesson #we-do .wedo-reference .a1-scene{
    width:100%;
@@ -2095,10 +2069,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    margin-top:4px;
  }
  @media(min-width:901px){
-   .j277-visual-lesson #new-learning .nl-focus{
-     grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr);
-     gap:16px;
-   }
+   
    .j277-visual-lesson #i-do .ido-example,
    .j277-visual-lesson #we-do .wedo-example{
      grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);
@@ -2106,9 +2077,8 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    }
  }
  @media(max-width:900px){
-   .j277-visual-lesson #new-learning .nl-reference .j277-cpu-visual svg,
    .j277-visual-lesson #i-do .ido-reference .a1-scene svg,
-   .j277-visual-lesson #we-do .wedo-reference .a1-scene svg{
+.j277-visual-lesson #we-do .wedo-reference .a1-scene svg{
      max-height:none;
    }
  }
@@ -2323,7 +2293,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20261025-exit-unified1">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261127-flowchart-code1">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
- <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261113-card-outlines1">${lessonStyles}<link rel="stylesheet" href="../../../assets/classroom-visual-zoom.css?v=20261114-clickclose2"></head>`;
+ <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261113-card-outlines1">${lessonStyles}<link rel="stylesheet" href="../../../assets/j277/new-learning.css?v=20261128-central1"><link rel="stylesheet" href="../../../assets/classroom-visual-zoom.css?v=20261114-clickclose2"></head>`;
  function renderLesson(number,lesson,rhsExistingPriorExam=null){
   // Canonicalise the Year 11 diagram schema before generating any phase.
   // A silent fallback would hide the dedicated SVGs and disable I Do / We Do reveals.
@@ -2339,7 +2309,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   const nav=["do-now","overview","new-learning","i-do","we-do","you-do","vocabulary","exit"];
   const names=["Do Now","Objectives","New Learning","I Do","We Do","You Do","Key Vocabulary","Exit Ticket"];
   const parts=[doNow(lesson),objectives(lesson),newLearning(lesson),iDo(lesson),weDo(lesson),youDo(lesson,number),vocabulary(lesson),exit(lesson)];
-   const cpuSync=["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?'<script>(function(){const root=document.getElementById("new-learning");if(!root)return;const stages=[...root.querySelectorAll(".nl-stage")];const figures=[...root.querySelectorAll("[data-cpu-step]")];function sync(){const active=Math.max(0,stages.findIndex(s=>!s.hidden));figures.forEach((f,i)=>{f.hidden=i!==active;});}const obs=new MutationObserver(sync);stages.forEach(s=>obs.observe(s,{attributes:true,attributeFilter:["hidden"]}));sync();})();<\/script>':"";
+   const newLearningSync=["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?'<script src="../../../assets/j277/new-learning.js?v=20261128-central1"><\/script>':"";
  const idoSync=(lesson.visualAuditV3||lesson.year11)?'<script>(function(){const root=document.getElementById("i-do");if(!root)return;const steps=[...root.querySelectorAll(".ido-step")],scenes=[...root.querySelectorAll("[data-ido-step-visual]")];if(!steps.length||!scenes.length)return;function sync(){const active=Math.max(0,steps.findIndex(s=>!s.hidden));scenes.forEach((v,i)=>v.hidden=i!==active);}const observer=new MutationObserver(sync);steps.forEach(s=>observer.observe(s,{attributes:true,attributeFilter:["hidden"]}));sync();})();<\/script>':"";
  const y11Sync=lesson.year11?'<script>(function(){document.querySelectorAll("#we-do .wedo-example").forEach(ex=>{const steps=[...ex.querySelectorAll(".wedo-step")],visuals=[...ex.querySelectorAll("[data-y11-guided-visual]")];if(!steps.length||!visuals.length)return;function sync(){const i=Math.max(0,steps.findIndex(el=>!el.hidden));visuals.forEach((v,j)=>v.hidden=i!==j)}const obs=new MutationObserver(sync);steps.forEach(x=>obs.observe(x,{attributes:true,attributeFilter:["hidden"]}));sync()})})();<\/script>':"";
   // Use the existing shared I Do controller by default; retain its diagnostic opt-out.
@@ -2436,7 +2406,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    <div class="nav-tools"><button id="advance" class="control-btn">Continue →</button><button id="previous" class="back-btn">← Previous</button><p id="page-count"></p></div></div>
    <div class="signal-wrap"><div class="signals" aria-label="Classroom routine"><span id="phase-logo" class="signal-tile signal-phase"></span><span id="behaviour-logo" class="signal-tile signal-routine"></span><span id="response-logo" class="signal-tile signal-response"></span></div><div class="signal-meta"><span id="phase-time" class="signal-phase-time"></span><span class="lesson-label">OCR J277 · Lesson ${number}<br>${escape(lesson.t)}</span></div></div>
    <main id="main">${parts.join("")}</main><div class="lesson-footer">Lesson ${number} · ${escape(lesson.t)} <span>Year ${lesson.year11?11:10} · OCR J277 · Original exam-style questions</span></div>
-   ${pilotSetup}${rhsSharedYouDoSetup}${weDoSkillSetup}<script src="../../../assets/h446-lesson/lesson.js?v=${lessonControllerVersion}"></script>${rhsYear11BankActiveSetup}${cpuSync}${idoSync}${y11Sync}${defaultYouDo}<script src="../../../assets/classroom-visual-zoom.js?v=20261127-flowchart-code1"></script></body></html>`;
+   ${pilotSetup}${rhsSharedYouDoSetup}${weDoSkillSetup}<script src="../../../assets/h446-lesson/lesson.js?v=${lessonControllerVersion}"></script>${rhsYear11BankActiveSetup}${newLearningSync}${idoSync}${y11Sync}${defaultYouDo}<script src="../../../assets/classroom-visual-zoom.js?v=20261127-flowchart-code1"></script></body></html>`;
   document.open();document.write(html);document.close();
  }
  function renderAnswers(number,lesson){
