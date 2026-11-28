@@ -14,6 +14,25 @@ function indexed(items,opt={}){
    return R(x0+i*(w+6),145,w,74,fill,active?C.gold:"#9fbdae",8)+T(x0+i*(w+6)+w/2,190,v,21,excluded?"#9aa5a0":C.ink)+T(x0+i*(w+6)+w/2,136,i,12,C.muted);
  }).join("");
 }
+// Opt-in teaching view: two fixed-size arrays, one key and one operation per stage.
+function insertionArrays(state){
+ const w=92,gap=10,x0=70,cx=i=>x0+i*(w+gap)+w/2;
+ let h=T(70,76,"UNSORTED ARRAY",19,C.ink,"start",850)+T(70,224,"SORTED ARRAY",19,C.ink,"start",850);
+ const row=(values,y,isSorted)=>values.map((v,i)=>{
+   const shift=isSorted&&state.shift?.includes(i),selected=isSorted?state.insert===i:state.source===i;
+   const empty=v===null,active=shift||selected;
+   return T(cx(i),y-8,i,14,C.muted)+R(x0+i*(w+gap),y,w,48,active?C.cream:empty?C.grey:isSorted?C.mint:C.light,active?C.gold:"#9fbdae",7)+
+     T(cx(i),y+33,empty?"":v,26,C.ink);
+ }).join("");
+ h+=row(state.unsorted,106,false)+row(state.sorted,252,true);
+ h+=R(220,166,200,40,state.key===undefined?C.grey:C.cream,state.key===undefined?"#a4c2b1":C.gold,7)+T(320,192,state.key===undefined?"Key: —":"Key: "+state.key,20);
+ if(state.shift){
+   const [from,to]=state.shift;
+   h+=L(cx(from),312,cx(to),312,C.gold,true);
+ }
+ h+=T(320,341,state.caption||"",18);
+ return h;
+}
 function binaryBits(s,focus=0,hide=false){
  const v=String(s||"00000000").padStart(8,"0").slice(-8),width=62,gap=6,x=51;
  return [...v].map((b,i)=>R(x+i*(width+gap),113,width,77,focus===i?C.cream:b==="1"?C.mint:C.light,focus===i?C.gold:"#9cbdab",7)+T(x+i*(width+gap)+width/2,143,2**(7-i),14,C.muted)+T(x+i*(width+gap)+width/2,174,b,28)).join("");
@@ -89,9 +108,12 @@ function draw(spec){
   let ar=(a.length?a:["5","2","8","1","4"]).map(Number),focus=n;
   if(snapshots){
     const state=snapshots[n];
-    h+=indexed(state.values.map(String),{active:state.active,active2:state.active2,done:state.done||[]});
-    h+=T(320,261,state.caption||"",18);
-    if(state.key!==undefined)h+=T(320,293,"Key held: "+state.key,18,C.gold);
+    if(type==="insertion"&&spec.idoTwoArrays===true)h+=insertionArrays(state);
+    else {
+      h+=indexed(state.values.map(String),{active:state.active,active2:state.active2,done:state.done||[]});
+      h+=T(320,261,state.caption||"",18);
+      if(state.key!==undefined)h+=T(320,293,"Key held: "+state.key,18,C.gold);
+    }
   }else if(type==="bubble"){if(!spec.hide)for(let i=0;i<=focus;i++){let j=i%Math.max(1,ar.length-1);if(ar[j]>ar[j+1]){let t=ar[j];ar[j]=ar[j+1];ar[j+1]=t;}}
     h+=indexed(ar.map(String),{active:focus%Math.max(1,ar.length-1),active2:focus%Math.max(1,ar.length-1)+1});h+=T(320,265,"Compare neighbouring values; swap when the left value is larger",18);
   }else{if(!spec.hide)for(let i=1;i<=Math.min(focus+1,ar.length-1);i++){let key=ar[i],j=i-1;while(j>=0&&ar[j]>key){ar[j+1]=ar[j];j--;}ar[j+1]=key;}
@@ -125,5 +147,6 @@ function draw(spec){
 }
 // Capability marker for the opt-in detailed I Do sequences.
 draw.idoDetailedVersion=1;
+draw.idoTwoArraysVersion=1;
 window.J277Y11Diagram=draw;
 })();
