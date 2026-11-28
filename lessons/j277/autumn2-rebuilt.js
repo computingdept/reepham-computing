@@ -1640,12 +1640,14 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     const starter=idoStarterPresentation(m);
     const fixed=m.fixedCode===true;
     const fixedRows=fixed?Math.max(...m.steps.map(item=>String(item.code).split("\n").length)):0;
+    // Invisible sizing copies reserve the largest explanation at the current width.
+    const fixedCopy=fixed?m.steps.map(item=>'<span class="j277-model-measure" aria-hidden="true">'+escape(item.explanation)+'</span>').join(""):"";
     const steps=arr(m.steps,(item,i)=>{
       if(fixed){
         const lines=String(item.code).split("\n");
         const highlights=new Set(item.highlightLines||[]);
         const panel=Array.from({length:fixedRows},(_,j)=>'<span class="j277-model-line'+(highlights.has(j+1)?' j277-model-line-active':'')+'">'+(j<lines.length?erlModelCode(lines[j])||"&#160;":"&#160;")+'</span>').join("\n");
-        return '<div class="ido-step" hidden><span class="ido-step-label">STEP '+(i+1)+' OF '+m.steps.length+'</span><h2>'+escape(item.title)+'</h2><p>'+escape(item.explanation)+'</p><pre class="j277-model-code j277-model-result"><code>'+panel+'</code></pre></div>';
+        return '<div class="ido-step" hidden><span class="ido-step-label">STEP '+(i+1)+' OF '+m.steps.length+'</span><h2>'+escape(item.title)+'</h2><div class="j277-model-explanation"><p>'+escape(item.explanation)+'</p>'+fixedCopy+'</div><pre class="j277-model-code j277-model-result"><code>'+panel+'</code></pre></div>';
       }
       const shown=item.displayCode??item.code;
       const isFocus=item.displayCode!==undefined&&item.displayCode!==item.code;
@@ -2114,7 +2116,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
 
  /* Opt-in fixed-position I Do editor: every reveal uses identical geometry. */
  #i-do.j277-ido-fixed-code .ido-method .ido-step:not([hidden]){
-   display:grid;grid-template-rows:20px 30px 4.05em auto;
+   display:grid;grid-template-rows:20px minmax(30px,auto) auto auto;
    align-content:start;align-items:start;gap:5px;
    font-size:clamp(15px,1.05vw,19px);line-height:1.35;
  }
@@ -2125,9 +2127,16 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    font-size:clamp(19px,1.35vw,25px)!important;line-height:1.2;
    margin:0!important;align-self:center;
  }
- #i-do.j277-ido-fixed-code .ido-method .ido-step > p{
-   font-size:inherit!important;line-height:1.35!important;margin:0!important;
-   align-self:start;
+ #i-do.j277-ido-fixed-code .ido-method .j277-model-explanation{
+   display:grid;grid-template-columns:minmax(0,1fr);align-items:start;min-width:0;
+ }
+ body:not(.answer-page) #i-do.j277-ido-fixed-code .ido-method .ido-step .j277-model-explanation > :is(p,span){
+   grid-area:1/1;min-width:0;
+   font-size:clamp(17px,1.2vw,22px)!important;line-height:1.35!important;
+   font-weight:500;margin:0!important;padding:0;overflow-wrap:break-word;
+ }
+ #i-do.j277-ido-fixed-code .j277-model-measure{
+   visibility:hidden;pointer-events:none;user-select:none;
  }
  #i-do.j277-ido-fixed-code .ido-method .ido-step > pre.j277-model-result{
    margin:0!important;padding:10px 10px;
@@ -2145,9 +2154,6 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    background:#414438;box-shadow:inset 3px 0 #d9af53;
  }
  @media(max-width:900px){
-   #i-do.j277-ido-fixed-code .ido-method .ido-step:not([hidden]){
-     grid-template-rows:20px 30px 5.4em auto;
-   }
    #i-do.j277-ido-fixed-code .ido-method .ido-step > pre.j277-model-result{
      font-size:13px!important;
    }
