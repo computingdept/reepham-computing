@@ -13,7 +13,7 @@
   // Count hidden stages too. Avoid widening if the method needs the space.
   function chooseWide(section,reference,method){
     if(section.querySelectorAll(".ido-example").length!==1)return false;
-    const svgs=[...reference.querySelectorAll(":scope > svg,:scope > .adder-ido-diagram > svg,.j277-ido-visual-frame .y11-scene svg,:scope > .route-figure > svg,:scope > .h-figure > svg,:scope > .draft-figure > svg")];
+    const svgs=[...reference.querySelectorAll(":scope > svg,:scope > .adder-ido-diagram > svg,.j277-ido-visual-frame .y11-scene svg,:scope > .route-figure > svg,:scope > .h-figure > svg,:scope > .draft-figure > svg,:scope > .p23-figure > svg,:scope > .h13-figure > svg")];
     const substantial=svgs.some(svg=>{
       const v=(svg.getAttribute("viewBox")||"").trim().split(/[\s,]+/).map(Number);
       const ratio=v.length===4&&v[2]>0&&v[3]>0?v[2]/v[3]:0;
@@ -46,6 +46,7 @@
     let specialist=false;
     let routePilot=false;
     let draftPilot=false;
+    let teachingPilot=false;
     // Approved nested algorithm-grid family; classify by structure, not lesson number.
     if(!panel&&eligible[1].toLowerCase()==="h446"){
       const grid=section.querySelector(".ido-focus-deck > .ido-example > .algorithm-grid");
@@ -74,13 +75,24 @@
         draftPilot=true;
       }
     }
+    // Preview two reviewed examples before extending the remaining teaching families.
+    if(!panel&&eligible[1].toLowerCase()==="h446"&&["231","235"].includes(eligible[2])&&q.get("ido-teaching")==="1"){
+      const grid=section.querySelector(".ido-focus-deck > .ido-example > :is(.p23-grid,.h13-grid)");
+      const parameters=grid?.matches(".p23-grid");
+      if(grid?.children.length===2&&[...grid.children].every(node=>node.matches(parameters?".p23-panel":".h13-pane"))&&
+         grid.children[0].querySelector(parameters?":scope > .p23-figure > svg":":scope > .h13-figure > svg")){
+        [panel,method]=grid.children;
+        specialist=true;
+        teachingPilot=true;
+      }
+    }
     const tag=panel?.querySelector(":scope > .phase-tag");
     const title=panel?.querySelector(":scope > h2");
     if(!tag||!title||tag.nextElementSibling!==title||tag.children.length)return;
     if(!method||panel.parentElement.children.length!==2)return;
     // Only compact generic example labels; retain meaningful specialist teaching cues.
     const genericLabel=/^(?:EXAMPLE|WORKED EXAMPLE|I DO|I DO\s*·\s*(?:MODEL|COMPLETE MODEL|ONE COMPLETE MODEL|MODEL EXAMPLE|WATCH THE FULL METHOD)|ONE COMPLETE WORKED EXAMPLE|ONE WORKING SOLUTION FIRST)$/i.test(tag.textContent.trim());
-    const draftLabel=draftPilot&&tag.textContent.trim()==="I DO · TEACHER MODEL";
+    const draftLabel=(draftPilot||teachingPilot)&&tag.textContent.trim()==="I DO · TEACHER MODEL";
     if(!genericLabel&&!draftLabel&&!(routePilot&&tag.textContent.trim()==="I DO · SAFE HEURISTIC"))return;
     const wide=mode==="wide"||(mode==="auto"&&chooseWide(section,panel,method));
     // Unqualified specialist layouts retain their original presentation in full.
@@ -90,7 +102,7 @@
     if(!document.querySelector('link[rel="stylesheet"][href*="/ido-wide-preview.css"]')||specialist||routePilot){
       const css=document.createElement("link");
       css.rel="stylesheet";
-      css.href="/assets/h446-lesson/ido-wide-preview.css?v="+(draftPilot?"20261128-draft1":routePilot?"20261128-route1":specialist?"20261128-specialist1":"20261128-shared1");
+      css.href="/assets/h446-lesson/ido-wide-preview.css?v="+(teachingPilot?"20261128-teaching1":draftPilot?"20261128-draft1":routePilot?"20261128-route1":specialist?"20261128-specialist1":"20261128-shared1");
       document.head.appendChild(css);
     }
     const original=tag.textContent;
