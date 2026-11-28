@@ -101,6 +101,13 @@
     const title=panel?.querySelector(":scope > h2");
     if(!tag||!title||tag.nextElementSibling!==title||tag.children.length)return;
     if(!method||panel.parentElement.children.length!==2)return;
+    // Normalise legacy generic model headings independently of the width decision.
+    // Never relabel timed, mock, assessment or NEA examples through this rule.
+    const legacyModelLabel=/^I DO\s*·\s*(?:UNMARKED EXAMPLE|UNMARKED MODEL|FULL MODEL|WORKED MODEL)$/i.test(tag.textContent.trim());
+    const timedH446=eligible[1].toLowerCase()==="h446"&&[212,213,214,222,243,247,250,280,305,306,308].includes(Number(eligible[2]));
+    const protectedModel=timedH446||/\b(?:mock|assessment)\b/i.test(document.title||"")||section.dataset.assessmentMode==="true"||/\b(?:timed|mock|assessment|closed.book)\b/i.test(section.dataset.phaseTime||"");
+    if(legacyModelLabel&&!protectedModel)tag.textContent="EXAMPLE";
+
     // Only compact generic example labels; retain meaningful specialist teaching cues.
     const genericLabel=/^(?:EXAMPLE|WORKED EXAMPLE|I DO|I DO\s*·\s*(?:MODEL|COMPLETE MODEL|ONE COMPLETE MODEL|MODEL EXAMPLE|WATCH THE FULL METHOD)|ONE COMPLETE WORKED EXAMPLE|ONE WORKING SOLUTION FIRST)$/i.test(tag.textContent.trim());
     const draftLabel=((draftPilot||teachingPilot)&&tag.textContent.trim()==="I DO · TEACHER MODEL")||(network&&tag.textContent.trim()==="I DO · WORKED EXAMPLE");
