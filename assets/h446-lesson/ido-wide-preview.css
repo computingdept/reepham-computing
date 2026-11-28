@@ -1,0 +1,18 @@
+/* H446 I Do wide-visual preview only. All other phases and print untouched. */
+@media screen and (min-width:901px){
+  html.rhs-ido-wide-preview body #i-do .ido-focus-deck > .ido-example{
+    grid-template-columns:minmax(0,65fr) minmax(0,35fr)!important;
+  }
+  html.rhs-ido-wide-preview body #i-do .ido-reference,
+  html.rhs-ido-wide-preview body #i-do .ido-method{min-width:0}
+  html.rhs-ido-wide-preview body #i-do .ido-reference > .rhs-ido-compact-header{
+    display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px;margin:0 0 8px;min-width:0;
+  }
+  html.rhs-ido-wide-preview body #i-do .rhs-ido-compact-header > .phase-tag{flex:0 0 auto;margin:0}
+  html.rhs-ido-wide-preview body #i-do .rhs-ido-compact-header > h2{min-width:0;margin:0;line-height:1.15}
+  html.rhs-ido-wide-preview body #i-do .ido-reference > .adder-ido-diagram{width:100%;max-width:none}
+  html.rhs-ido-wide-preview body #i-do .ido-reference > svg,
+  html.rhs-ido-wide-preview body #i-do .ido-reference > .adder-ido-diagram > svg{
+    display:block;width:100%;max-width:100%;height:auto;max-height:min(60vh,540px);margin:5px auto 8px;
+  }
+}
