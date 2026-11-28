@@ -348,6 +348,35 @@
         ],
         "foot": ""
       }
+    },
+    "codeModelling": {
+      "mode": "persistent-code",
+      "ido": {
+        "question": "Write a procedure that accepts a pupil's name and displays a welcome message. Call it for Mia.",
+        "scaffold": "procedure greet(name)\n    message = _____\n    print(_____)\nendprocedure\ngreet(_____)",
+        "steps": [
+          {
+            "title": "Define the procedure",
+            "explanation": "The parameter name receives the supplied argument.",
+            "code": "procedure greet(name)"
+          },
+          {
+            "title": "Create a local variable",
+            "explanation": "message is created inside the procedure and holds the greeting.",
+            "code": "procedure greet(name)\n    message = \"Hello \" + name"
+          },
+          {
+            "title": "Display rather than return",
+            "explanation": "A procedure performs a task without returning a function value.",
+            "code": "procedure greet(name)\n    message = \"Hello \" + name\n    print(message)\nendprocedure"
+          },
+          {
+            "title": "Call the procedure",
+            "explanation": "Mia is passed to name. The output is Hello Mia. message is local to greet.",
+            "code": "procedure greet(name)\n    message = \"Hello \" + name\n    print(message)\nendprocedure\ngreet(\"Mia\")"
+          }
+        ]
+      }
     }
   }
 }

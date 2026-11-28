@@ -359,6 +359,35 @@
         ],
         "foot": ""
       }
+    },
+    "codeModelling": {
+      "mode": "persistent-code",
+      "ido": {
+        "question": "An online form accepts integer ages from 11 to 18 inclusive. Ask again until an age is in range, then display Accepted.",
+        "scaffold": "age = int(input(\"Age?\"))\nwhile _____\n    age = _____\nendwhile\nprint(\"Accepted\")",
+        "steps": [
+          {
+            "title": "Read an integer age",
+            "explanation": "The example assumes the user enters an integer. The permitted range is 11–18.",
+            "code": "age = int(input(\"Age?\"))"
+          },
+          {
+            "title": "Identify invalid values",
+            "explanation": "Use OR because an age below 11 or above 18 is invalid.",
+            "code": "age = int(input(\"Age?\"))\nwhile age < 11 OR age > 18"
+          },
+          {
+            "title": "Ask again",
+            "explanation": "Read another age inside the loop until it is valid.",
+            "code": "age = int(input(\"Age?\"))\nwhile age < 11 OR age > 18\n    age = int(input(\"Try again:\"))\nendwhile"
+          },
+          {
+            "title": "Test the boundaries",
+            "explanation": "10 and 19 are rejected; 11 and 18 are accepted. This validates age, not identity.",
+            "code": "age = int(input(\"Age?\"))\nwhile age < 11 OR age > 18\n    age = int(input(\"Try again:\"))\nendwhile\nprint(\"Accepted\")"
+          }
+        ]
+      }
     }
   }
 }

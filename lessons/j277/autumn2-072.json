@@ -348,6 +348,35 @@
         ],
         "foot": ""
       }
+    },
+    "codeModelling": {
+      "mode": "persistent-code",
+      "ido": {
+        "question": "An existing text file, attendance.txt, contains Mia on line 1 and Leo on line 2. Open it, read and print both names, then close it.",
+        "scaffold": "file = open(_____)\nfirst = file.readLine()\nsecond = _____\nprint(first)\nprint(second)\nfile._____()",
+        "steps": [
+          {
+            "title": "Open the existing file",
+            "explanation": "open returns a handle that lets the program access the file.",
+            "code": "file = open(\"attendance.txt\")"
+          },
+          {
+            "title": "Read the first line",
+            "explanation": "readLine returns the next line, Mia, and advances the reading position.",
+            "code": "file = open(\"attendance.txt\")\nfirst = file.readLine()"
+          },
+          {
+            "title": "Read the second line and display",
+            "explanation": "The second readLine returns Leo. Print both values in order.",
+            "code": "file = open(\"attendance.txt\")\nfirst = file.readLine()\nsecond = file.readLine()\nprint(first)\nprint(second)"
+          },
+          {
+            "title": "Close the file",
+            "explanation": "Release the file after reading. The output is Mia, then Leo on a new line.",
+            "code": "file = open(\"attendance.txt\")\nfirst = file.readLine()\nsecond = file.readLine()\nprint(first)\nprint(second)\nfile.close()"
+          }
+        ]
+      }
     }
   }
 }

@@ -348,6 +348,35 @@
         ],
         "foot": ""
       }
+    },
+    "codeModelling": {
+      "mode": "persistent-code",
+      "ido": {
+        "question": "Trace this points tally. Record total after each assignment and the output when PRINT executes.",
+        "scaffold": "1  total = 0\n2  total = total + 1\n3  total = total + 2\n4  total = total + 3\n5  print(total)\n\nLine | total | Output\n  1  |   _   |\n  2  |   _   |\n  3  |   _   |\n  4  |   _   |\n  5  |       |   _",
+        "steps": [
+          {
+            "title": "Initialise the trace",
+            "explanation": "Line 1 sets total to 0. Leave output blank until PRINT.",
+            "code": "Line | total | Output\n  1  |   0   |"
+          },
+          {
+            "title": "Follow lines 2 and 3",
+            "explanation": "Add 1 to 0, then add 2 to 1. Record the new value each time.",
+            "code": "Line | total | Output\n  1  |   0   |\n  2  |   1   |\n  3  |   3   |"
+          },
+          {
+            "title": "Complete the accumulator",
+            "explanation": "Line 4 adds 3 to the existing total of 3, giving 6.",
+            "code": "Line | total | Output\n  1  |   0   |\n  2  |   1   |\n  3  |   3   |\n  4  |   6   |"
+          },
+          {
+            "title": "Record the output",
+            "explanation": "Line 5 prints 6 without changing total. The trace matches the expected sum.",
+            "code": "Line | total | Output\n  1  |   0   |\n  2  |   1   |\n  3  |   3   |\n  4  |   6   |\n  5  |       |   6"
+          }
+        ]
+      }
     }
   }
 }
