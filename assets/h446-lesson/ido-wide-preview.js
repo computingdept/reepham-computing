@@ -75,8 +75,8 @@
         draftPilot=true;
       }
     }
-    // Preview two reviewed examples before extending the remaining teaching families.
-    if(!panel&&eligible[1].toLowerCase()==="h446"&&["231","235"].includes(eligible[2])&&q.get("ido-teaching")==="1"){
+    // Approved teaching grids. Preserve mock and assessment presentation.
+    if(!panel&&eligible[1].toLowerCase()==="h446"&&!/\b(?:mock|assessment)\b/i.test(document.title||"")){
       const grid=section.querySelector(".ido-focus-deck > .ido-example > :is(.p23-grid,.h13-grid)");
       const parameters=grid?.matches(".p23-grid");
       if(grid?.children.length===2&&[...grid.children].every(node=>node.matches(parameters?".p23-panel":".h13-pane"))&&
