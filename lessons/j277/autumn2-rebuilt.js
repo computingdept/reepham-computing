@@ -3052,6 +3052,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  // retained the old asset, reload it before generating the lesson HTML.
  function supportsDetailedIdo(spec){
    const draw=window.J277Y11Diagram;
+   if(["defrag","mixed-revision"].includes(spec?.idoDetailedExtended))return draw?.idoRevisionVersion===1;
    if(spec?.idoDetailedExtended)return draw?.idoExtendedVersion===1;
    if(spec?.idoTwoArrays===true)return draw?.idoTwoArraysVersion===1;
    if(spec?.idoBitSteps===true||Array.isArray(spec?.idoSnapshots))return draw?.idoDetailedVersion===1;
@@ -3062,7 +3063,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    if(supportsDetailedIdo(spec))return;
    await new Promise(resolve=>{
      const script=document.createElement("script");
-     script.src=(spec.idoDetailedExtended?"../year11-extended-diagrams.js?v=20261128-ido-test-cpu1":"../year11-diagrams.js?v=20261128-ido-insertion4")+"&retry="+Date.now();
+     script.src=(spec.idoDetailedExtended?"../year11-extended-diagrams.js?v=20261128-ido-final3":"../year11-diagrams.js?v=20261128-ido-insertion4")+"&retry="+Date.now();
      script.onload=resolve;script.onerror=resolve;
      document.head.appendChild(script);
    });

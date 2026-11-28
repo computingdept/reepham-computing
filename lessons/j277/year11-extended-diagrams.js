@@ -464,7 +464,29 @@ function detailedCpuFetch(stage){
  h+=text(320,352,["PC points to the next instruction","Copy address 42 into MAR","Request the instruction at address 42","Transfer ADD 5 into MDR","PC now points to address 43","Control unit decodes ADD 5","ALU adds 5: ACC = 15"][stage],19);
  return h;
 }
+
+function detailedDefrag(stage){
+ const before=["A1","B1","FREE","A2","B2","FREE","A3","B3","FREE","FREE"],after=["A1","A2","A3","B1","B2","B3","FREE","FREE","FREE","FREE"];
+ const row=(values,y,active)=>values.map((v,i)=>label(21+i*60,y,56,53,v,v==="FREE"?K.grey:v.startsWith("A")?(active?K.amber:K.mint):K.sky,v==="FREE"?11:19)).join("");
+ let h=small(22,79,"BEFORE · FILE A IS SPLIT INTO THREE FRAGMENTS")+row(before,94,stage===0)+text(320,176,"A1, A2 and A3 belong to the same file",18);
+ if(stage>=1)h+=arrow(320,186,320,215)+small(22,235,"AFTER · EACH FILE OCCUPIES ADJACENT BLOCKS")+row(after,247,stage===1||stage===2)+text(320,325,stage>=2?"Less movement of the HDD read/write head":"Same files and same number of free blocks",19);
+ else h+=text(320,273,"Reading file A needs access to separated blocks",19);
+ if(stage===3)h+=text(320,357,"SSD: no mechanical head; avoid routine defragmentation",18);
+ return h;
+}
+function detailedRevision(stage){
+ if(stage<2){
+   let h=small(24,83,"CONCEPT 1 · VIRTUAL MEMORY")+box(28,111,245,168,K.sky)+text(150,142,"RAM",22)+label(42,157,102,44,"Page A",K.mint,17)+label(155,157,104,44,"Page B",K.mint,17)+label(42,211,217,44,"Page C",K.amber,19)+box(383,111,228,168,K.grey)+text(497,142,"SECONDARY STORAGE",17)+label(399,182,196,62,"Page D",K.amber,21)+arrow(275,200,379,200)+arrow(379,227,275,227)+text(320,312,"OS moves pages between RAM and storage",19);
+   if(stage===1)h+=text(320,347,"Frequent paging slows access: storage is slower",18);return h;
+ }
+ let h=small(24,83,"CONCEPT 2 · BINARY SEARCH · TARGET 7");
+ [1,3,5,7,9].forEach((v,i)=>{const x=32+i*117;h+=text(x+53,124,"Index "+i,15)+label(x,139,106,82,v,stage===3?(i===2?K.amber:i<2?K.grey:K.mint):K.sky,30);if(stage===3&&i<3)h+=text(x+53,244,"Discard",15,"middle","#64746c");});
+ if(stage===2)h+=text(320,291,"Values must be in sorted order",22);
+ else h+=text(320,291,"Midpoint 5 < target 7: keep the right half",21)+text(320,325,"The remaining values are 7 and 9",18);return h;
+}
 function layout(spec,stage){
+ if(spec.phase==="i-do"&&spec.idoDetailedExtended==="defrag")return detailedDefrag(stage);
+ if(spec.phase==="i-do"&&spec.idoDetailedExtended==="mixed-revision")return detailedRevision(stage);
  if(spec.phase==="i-do"&&spec.idoDetailedExtended==="test-plan")return detailedTestPlan(spec,stage);
  if(spec.phase==="i-do"&&spec.idoDetailedExtended==="cpu-fetch")return detailedCpuFetch(stage);
  const exact=matchedLessonScene(spec,stage);if(exact)return exact;
@@ -566,4 +588,5 @@ window.J277Y11Diagram=function(spec){
  return '<figure class="a1-scene y11-scene" role="group" aria-label="'+E(header)+'"><svg viewBox="0 0 640 404" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="'+E(header)+'">'+box(1,1,638,402,"#fcfefc","#c7d9cc")+text(23,38,header.slice(0,52),21,"start")+stepBadge+body+text(320,394,labelText.slice(0,84),14,"middle","#537268")+'</svg></figure>';
 };
 window.J277Y11Diagram.idoExtendedVersion=1;
+window.J277Y11Diagram.idoRevisionVersion=1;
 })();
