@@ -1531,13 +1531,21 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    const arrow=(x1,y1,x2,y2)=>'<path d="M'+x1+' '+y1+' L'+x2+' '+y2+'" stroke="#49816a" stroke-width="2" fill="none"/>';
    if(kind==="nl-logical-shifts"){
     const bits="10010110",left=bits.slice(1)+"0",right="0"+bits.slice(0,7);
-    let body=note(24,27,"LOGICAL LEFT SHIFT · 1 PLACE",20)+row(bits,37,0,"#f5d7d3")+row(left,104,7,"#fae9c9");
-    for(let i=1;i<8;i++)body+=arrow(x(i)+26,74,x(i-1)+26,103);
+    // The SVG provides movement metadata; timing and playback belong to central New Learning assets.
+    const moving=(bit,i,y,dx,dy,fill,discard=false)=>'<g data-nl-moving="'+(discard?"discard":"bit")+'" style="--nl-dx:'+dx+'px;--nl-dy:'+dy+'px">'+pill(x(i),y,52,36,bit,fill,22)+'</g>';
+    const track=(direction,sourceY,resultY,delay)=>{
+     const leftward=direction<0,discard=leftward?0:7,entry=leftward?7:0;
+     let h='<g style="--nl-delay:'+delay+'s">'+row(bits,sourceY,discard,"#f5d7d3");
+     h+='<g data-nl-result="">'+row(leftward?left:right,resultY,entry,"#fae9c9")+'</g>';
+     for(let i=0;i<8;i++)h+=moving(bits[i],i,sourceY,direction*59,resultY-sourceY,i===discard?"#f5d7d3":"#e4f1e8",i===discard);
+     h+=moving("0",entry-direction,sourceY,direction*59,resultY-sourceY,"#fae9c9");
+     return h+'</g>';
+    };
+    let body=note(24,27,"LOGICAL LEFT SHIFT · 1 PLACE",20)+track(-1,37,104,0);
     body+=note(24,158,"Leftmost bit discarded · zero enters on right",15);
-    body+=note(24,185,"LOGICAL RIGHT SHIFT · 1 PLACE",20)+row(bits,195,7,"#f5d7d3")+row(right,262,0,"#fae9c9");
-    for(let i=0;i<7;i++)body+=arrow(x(i)+26,232,x(i+1)+26,261);
+    body+=note(24,185,"LOGICAL RIGHT SHIFT · 1 PLACE",20)+track(1,195,262,1.7);
     body+=note(24,319,"Rightmost bit discarded · zero enters on left",15);
-    return frame("Logical shifts of 10010110: left gives 00101100; right gives 01001011. Edge bits are discarded and zero fills the vacant position.",body);
+    return frame("Logical shifts of 10010110: left gives 00101100; right gives 01001011. Edge bits are discarded and zero fills the vacant position.",body).replace("<svg ",'<svg data-nl-animation="logical-shifts" ');
    }
    const A="11111111",B="00000001",sum=(parseInt(A,2)+parseInt(B,2)).toString(2);
    let body=note(24,27,"8-BIT ADDITION · OVERFLOW",20)+row(A,39)+note(38,98,"+",25)+row(B,78);
@@ -2293,7 +2301,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20261025-exit-unified1">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261127-flowchart-code1">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
- <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261113-card-outlines1">${lessonStyles}<link rel="stylesheet" href="../../../assets/j277/new-learning.css?v=20261128-central1"><link rel="stylesheet" href="../../../assets/classroom-visual-zoom.css?v=20261114-clickclose2"></head>`;
+ <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261113-card-outlines1">${lessonStyles}<link rel="stylesheet" href="../../../assets/j277/new-learning.css?v=20261128-motion1"><link rel="stylesheet" href="../../../assets/classroom-visual-zoom.css?v=20261114-clickclose2"></head>`;
  function renderLesson(number,lesson,rhsExistingPriorExam=null){
   // Canonicalise the Year 11 diagram schema before generating any phase.
   // A silent fallback would hide the dedicated SVGs and disable I Do / We Do reveals.
@@ -2309,7 +2317,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   const nav=["do-now","overview","new-learning","i-do","we-do","you-do","vocabulary","exit"];
   const names=["Do Now","Objectives","New Learning","I Do","We Do","You Do","Key Vocabulary","Exit Ticket"];
   const parts=[doNow(lesson),objectives(lesson),newLearning(lesson),iDo(lesson),weDo(lesson),youDo(lesson,number),vocabulary(lesson),exit(lesson)];
-   const newLearningSync=["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?'<script src="../../../assets/j277/new-learning.js?v=20261128-central1"><\/script>':"";
+   const newLearningSync=["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?'<script src="../../../assets/j277/new-learning.js?v=20261128-motion1"><\/script>':"";
  const idoSync=(lesson.visualAuditV3||lesson.year11)?'<script>(function(){const root=document.getElementById("i-do");if(!root)return;const steps=[...root.querySelectorAll(".ido-step")],scenes=[...root.querySelectorAll("[data-ido-step-visual]")];if(!steps.length||!scenes.length)return;function sync(){const active=Math.max(0,steps.findIndex(s=>!s.hidden));scenes.forEach((v,i)=>v.hidden=i!==active);}const observer=new MutationObserver(sync);steps.forEach(s=>observer.observe(s,{attributes:true,attributeFilter:["hidden"]}));sync();})();<\/script>':"";
  const y11Sync=lesson.year11?'<script>(function(){document.querySelectorAll("#we-do .wedo-example").forEach(ex=>{const steps=[...ex.querySelectorAll(".wedo-step")],visuals=[...ex.querySelectorAll("[data-y11-guided-visual]")];if(!steps.length||!visuals.length)return;function sync(){const i=Math.max(0,steps.findIndex(el=>!el.hidden));visuals.forEach((v,j)=>v.hidden=i!==j)}const obs=new MutationObserver(sync);steps.forEach(x=>obs.observe(x,{attributes:true,attributeFilter:["hidden"]}));sync()})})();<\/script>':"";
   // Use the existing shared I Do controller by default; retain its diagnostic opt-out.
