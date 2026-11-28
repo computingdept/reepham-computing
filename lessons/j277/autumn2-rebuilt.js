@@ -1109,6 +1109,9 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     if(!family||typeof window.J277Y11Diagram!=="function"){
       return '<div class="j277-visual-error" role="alert">Teaching diagram unavailable — please refresh the page.</div>';
     }
+    if((spec.idoBitSteps===true||Array.isArray(spec.idoSnapshots))&&window.J277Y11Diagram.idoDetailedVersion!==1){
+      return '<div class="j277-visual-error" role="alert">This detailed I Do diagram needs the updated renderer. Refresh the lesson after updating the preview.</div>';
+    }
     return window.J277Y11Diagram({...spec,y11:family});
   }
   const learning=j277LearningScene(spec);if(learning)return learning;
@@ -2872,6 +2875,18 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    }
    return null;
  }
+ // Only detailed I Do models need the expanded Year 11 renderer. If the browser
+ // retained the old asset, reload it before generating the lesson HTML.
+ async function ensureDetailedIdoRenderer(lesson){
+   const spec=lesson?.idoVisual;
+   if(!(spec?.idoBitSteps===true||Array.isArray(spec?.idoSnapshots))||window.J277Y11Diagram?.idoDetailedVersion===1)return;
+   await new Promise(resolve=>{
+     const script=document.createElement("script");
+     script.src="../year11-diagrams.js?v=20261128-ido-reveals3&retry="+Date.now();
+     script.onload=resolve;script.onerror=resolve;
+     document.head.appendChild(script);
+   });
+ }
  function load(number,mode){
   const n=Number(number),from=String(number);
   fetch("../autumn2-"+from+".json?v=20261025-exit-why-057",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("Cannot load lesson data");return r.json()}).then(async all=>{
@@ -2882,7 +2897,10 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
    if(interleaveY10[String(number)] && !data.isAssessment) data.k={...data.k,...interleaveY10[String(number)]};
    await applyCodeFirstMaster(data,number);
    if(mode==="answers")renderAnswers(number,data);
-   else renderLesson(number,data,await rhsPreviousExamSource(number,data));
+   else {
+     await ensureDetailedIdoRenderer(data);
+     renderLesson(number,data,await rhsPreviousExamSource(number,data));
+   }
   }).catch(e=>{document.body.innerHTML='<p style="padding:24px;font:700 18px Arial,sans-serif">Lesson could not load: '+escape(e.message)+'</p>';});
  }
  window.J277Autumn2={render:load};

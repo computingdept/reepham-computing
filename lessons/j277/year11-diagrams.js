@@ -123,5 +123,7 @@ function draw(spec){
  if(label&&type!=="merge")h+=T(320,337,label,14,C.muted);
  return '<figure class="a1-scene y11-scene" aria-label="'+esc(title)+'"><svg viewBox="0 0 640 360" role="img" aria-label="'+esc(title)+'" xmlns="http://www.w3.org/2000/svg">'+R(1,1,638,358,"#fbfdfc","#bfd4c7",16)+h+'</svg></figure>';
 }
+// Capability marker for the opt-in detailed I Do sequences.
+draw.idoDetailedVersion=1;
 window.J277Y11Diagram=draw;
 })();
