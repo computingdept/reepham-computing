@@ -1525,6 +1525,21 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
         note(273,312,"Simple controls suit the job",18));
     }
   }
+  if(kind==="nl-shift-round-down"){
+   const x=i=>63+i*59, bits=n=>n.toString(2).padStart(8,"0");
+   const digit=(bit,i,lost=false)=>'<text class="nl-bit-digit'+(bit==="1"?" nl-bit-one":"")+(lost?" nl-bit-lost":"")+'" x="'+x(i)+'" y="83">'+bit+'</text>';
+   const cells=Array.from({length:8},(_,i)=>'<text class="nl-bit-place" x="'+x(i)+'" y="26">'+(128>>i)+'</text><rect class="nl-bit-cell" x="'+(x(i)-26)+'" y="42" width="52" height="58" rx="7"/>').join("");
+   const clipId="nl-shift-round-down-clip", directions=["right","right","left","left"];
+   let value=7;
+   const steps=directions.map((direction,i)=>{
+    const left=direction==="left",dx=left?-59:59;
+    const digits=[...bits(value)].map((b,j)=>digit(b,j,b==="1"&&j===(left?0:7))).join("")+digit("0",left?8:-1);
+    const scene='<g data-shift-sequence-step="" style="--nl-shift-delay:'+(i*2)+'s;--nl-shift-duration:2s"><g clip-path="url(#'+clipId+')"><g class="nl-shift-motion" style="--nl-shift-dx:'+dx+'px">'+digits+'</g></g><text class="nl-shift-direction" x="270" y="132">'+(left?"Shift left":"Shift right")+'</text><text class="nl-shift-denary" x="270" y="166">Denary: '+value+'</text></g>';
+    value=left?(value<<1)&255:value>>>1;
+    return scene;
+   }).join("");
+   return '<figure class="a1-scene nl-shift-board" data-no-zoom><svg data-nl-animation="shift-round-down" style="--nl-shift-total:8s" viewBox="0 0 540 190" role="img" aria-label="Start at 7. Two right shifts give 3 then 1. Two left shifts give 2 then 4. Lost bits cannot be recovered." xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="'+clipId+'"><rect x="37" y="42" width="465" height="58"/></clipPath></defs>'+cells+steps+'<g data-shift-sequence-final="">'+[...bits(value)].map((b,i)=>digit(b,i)).join("")+'<text class="nl-shift-direction" x="270" y="132">Lost bits cannot return</text><text class="nl-shift-denary" x="270" y="166">Denary: '+value+'</text></g></svg></figure>';
+  }
   if(kind==="nl-shift-left"||kind==="nl-shift-right"||kind==="nl-logical-shifts"){
    const left=kind!=="nl-shift-right",direction=left?"left":"right",dx=left?-59:59;
    const start="00000110",result=left?"00001100":"00000011",value=left?12:3;
@@ -2294,7 +2309,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-base.css?v=20261025-exit-unified1">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-classroom.css?v=20261127-flowchart-code1">
  <link rel="stylesheet" href="../../../assets/h446-lesson/lesson-print.css?v=20260929-1815">
- <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261113-card-outlines1">${lessonStyles}<link rel="stylesheet" href="../../../assets/j277/new-learning.css?v=20261128-shiftreveal2"><link rel="stylesheet" href="../../../assets/classroom-visual-zoom.css?v=20261114-clickclose2"></head>`;
+ <link rel="stylesheet" href="../../../assets/j277/code-first.css?v=20261013-logo1"><link rel="stylesheet" href="../../../assets/j277/classroom-polish.css?v=20261113-card-outlines1">${lessonStyles}<link rel="stylesheet" href="../../../assets/j277/new-learning.css?v=20261128-shiftsequence1"><link rel="stylesheet" href="../../../assets/classroom-visual-zoom.css?v=20261114-clickclose2"></head>`;
  function renderLesson(number,lesson,rhsExistingPriorExam=null){
   // Canonicalise the Year 11 diagram schema before generating any phase.
   // A silent fallback would hide the dedicated SVGs and disable I Do / We Do reveals.
