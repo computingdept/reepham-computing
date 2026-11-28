@@ -112,3 +112,21 @@
   #new-learning [data-nl-animation].nl-playing [data-nl-moving]{animation:none;visibility:hidden}
   #new-learning [data-nl-animation].nl-playing [data-nl-result]{animation:none;opacity:1}
 }
+
+/* Single-row teaching adaptation of the Skills Lab shift board. */
+#new-learning .nl-shift-board{background:transparent;border:0;padding:0}
+#new-learning .nl-shift-board svg{display:block;width:100%;height:auto}
+#new-learning .nl-shift-board .nl-bit rect{fill:#f0f6f2;stroke:#bdcfc3;stroke-width:1.5}
+#new-learning .nl-shift-board .nl-bit-on rect{fill:#d2e9da;stroke:#7ca88b}
+#new-learning .nl-shift-board text{text-anchor:middle;fill:#173c2d;font-family:Consolas,ui-monospace,monospace;font-weight:700}
+#new-learning .nl-shift-board [data-shift-digit]{font-size:25px}
+#new-learning .nl-shift-board .nl-bit-place{font-size:16px;fill:#54725e}
+#new-learning .nl-shift-board svg.nl-shifting .nl-bit [data-shift-digit]{visibility:hidden}
+#new-learning .nl-shift-board svg.nl-shifting .nl-bit rect{fill:#f0f6f2;stroke:#bdcfc3}
+#new-learning .nl-shift-board .nl-shift-value{text-align:center;font-size:clamp(22px,2.2vw,34px);margin:8px 0 16px}
+#new-learning .nl-shift-controls{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+#new-learning .nl-shift-controls button{font:inherit;font-weight:700;padding:10px 16px;min-height:44px;background:#fff;border:1px solid #a3c3b2;border-radius:10px;color:#173c2d;cursor:pointer}
+#new-learning .nl-shift-controls button:hover:not(:disabled){background:#eaf4ee}
+#new-learning .nl-shift-controls button:disabled{opacity:.55;cursor:default}
+#new-learning .nl-shift-controls button:focus-visible{outline:3px solid #54725e;outline-offset:2px}
+@media print{#new-learning .nl-shift-controls{display:none}}
