@@ -1610,7 +1610,7 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   return `<section id="new-learning" class="page phase-focus${hasDiagram?' a1-visual-learning':''}" data-phase-time="New learning"><div class="nl-focus"><article class="nl-reference">${heading}${visuals}${note}</article><article class="nl-explanation">${stages}</article></div></section>`;
  }
 
- function iDo(lesson){
+ function iDo(lesson, compactHeaderPilot=false){
   // Explicit opt-in: keep the coding question/scaffold visible while model ERL builds one step at a time.
   if(lesson.codeModelling && lesson.codeModelling.ido){
     const m=lesson.codeModelling.ido;
@@ -1624,9 +1624,9 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
     ?lesson.m.st.map((_,i)=>`<div class="j277-ido-visual-frame" data-ido-step-visual="${i}"${i?" hidden":""}>${diagram({...lesson.idoVisual,focus:i,rich:lesson.idoVisual.rich?{...lesson.idoVisual.rich,focus:i,phase:"model"}:undefined})}</div>`).join("")
     :diagram(lesson.idoVisual||lesson.vis);
   const reference=isCpu
-    ?`<h2>${escape(lesson.m.title||"Compare CPU specifications")}</h2>${stageVisuals}<p class="j277-cpu-question">${examWords(lesson,lesson.m.q)}</p>`
+    ?`${compactHeaderPilot?`<div class="j277-ido-compact-header"><span class="phase-tag">EXAMPLE</span><h2>${escape(lesson.m.title||"Compare CPU specifications")}</h2></div>`:`<h2>${escape(lesson.m.title||"Compare CPU specifications")}</h2>`}${stageVisuals}<p class="j277-cpu-question">${examWords(lesson,lesson.m.q)}</p>`
     :`<h2>${escape(lesson.m.q)}</h2>${diagram(lesson.vis)}`;
-  return `<section id="i-do" class="page phase-ido" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference"><span class="phase-tag">I DO · ONE COMPLETE MODEL</span>${reference}</div><div class="ido-method">${steps}</div></article></div></section>`;
+  return `<section id="i-do" class="page phase-ido" data-phase-time="Teacher models"><div class="ido-focus-deck"><article class="ido-example"><div class="ido-reference">${compactHeaderPilot&&isCpu?"":`<span class="phase-tag">I DO · ONE COMPLETE MODEL</span>`}${reference}</div><div class="ido-method">${steps}</div></article></div></section>`;
  }
  function weDo(lesson){
   // Explicit opt-in: guide short ERL programs through mini-whiteboard stages, fading the scaffold.
@@ -2070,11 +2070,13 @@ else if(["if-branch","nested-if","validation"].includes(kind)){
   lesson=j277UpgradeVisuals(lesson,number);
   const nav=["do-now","overview","new-learning","i-do","we-do","you-do","vocabulary","exit"];
   const names=["Do Now","Objectives","New Learning","I Do","We Do","You Do","Key Vocabulary","Exit Ticket"];
-  const parts=[doNow(lesson),objectives(lesson),newLearning(lesson),iDo(lesson),weDo(lesson),youDo(lesson,number),vocabulary(lesson),exit(lesson)];
+  const compactHeaderPilot=String(number)==="112"&&new URLSearchParams(location.search).get("ido-header")==="compact";
+  const parts=[doNow(lesson),objectives(lesson),newLearning(lesson),iDo(lesson,compactHeaderPilot),weDo(lesson),youDo(lesson,number),vocabulary(lesson),exit(lesson)];
    const cpuSync=["cpu-performance","embedded-systems","diagram-spec"].includes(lesson.vis)?'<script>(function(){const root=document.getElementById("new-learning");if(!root)return;const stages=[...root.querySelectorAll(".nl-stage")];const figures=[...root.querySelectorAll("[data-cpu-step]")];function sync(){const active=Math.max(0,stages.findIndex(s=>!s.hidden));figures.forEach((f,i)=>{f.hidden=i!==active;});}const obs=new MutationObserver(sync);stages.forEach(s=>obs.observe(s,{attributes:true,attributeFilter:["hidden"]}));sync();})();<\/script>':"";
  const idoSync=(lesson.visualAuditV3||lesson.year11)?'<script>(function(){const root=document.getElementById("i-do");if(!root)return;const steps=[...root.querySelectorAll(".ido-step")],scenes=[...root.querySelectorAll("[data-ido-step-visual]")];if(!steps.length||!scenes.length)return;function sync(){const active=Math.max(0,steps.findIndex(s=>!s.hidden));scenes.forEach((v,i)=>v.hidden=i!==active);}const observer=new MutationObserver(sync);steps.forEach(s=>observer.observe(s,{attributes:true,attributeFilter:["hidden"]}));sync();})();<\/script>':"";
  const y11Sync=lesson.year11?'<script>(function(){document.querySelectorAll("#we-do .wedo-example").forEach(ex=>{const steps=[...ex.querySelectorAll(".wedo-step")],visuals=[...ex.querySelectorAll("[data-y11-guided-visual]")];if(!steps.length||!visuals.length)return;function sync(){const i=Math.max(0,steps.findIndex(el=>!el.hidden));visuals.forEach((v,j)=>v.hidden=i!==j)}const obs=new MutationObserver(sync);steps.forEach(x=>obs.observe(x,{attributes:true,attributeFilter:["hidden"]}));sync()})})();<\/script>':"";
- const baseHead=sharedHead(number,lesson.t,lesson.year11);
+ const compactHeaderCSS=compactHeaderPilot?'<style>#i-do .ido-reference .j277-ido-compact-header{display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px;margin:0 0 8px;min-width:0}#i-do .ido-reference .j277-ido-compact-header>.phase-tag{flex:0 0 auto;margin:0}#i-do .ido-reference .j277-ido-compact-header>h2{min-width:0;margin:0;line-height:1.15}</style>':"";
+  const baseHead=sharedHead(number,lesson.t,lesson.year11).replace("</head>",compactHeaderCSS+"</head>");
   const pageHead=String(number)==="057"
     ?baseHead.replace("</head>",'<link rel="stylesheet" href="../../../assets/j277/code-first-trace.css?v=20261025-loop-trace1"></head>')
     :baseHead;
