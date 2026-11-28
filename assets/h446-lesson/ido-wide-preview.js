@@ -53,10 +53,12 @@
         specialist=true;
       }
     }
-    // Two reviewed pathfinding routes only, until the teacher verifies both.
-    if(!panel&&eligible[1].toLowerCase()==="h446"&&["220","221"].includes(eligible[2])&&q.get("ido-route")==="1"){
+    // Compatible pathfinding grids: require the matching staged figure structure.
+    if(!panel&&eligible[1].toLowerCase()==="h446"){
       const grid=section.querySelector(".ido-focus-deck > .ido-example > :is(.route-grid,.h-grid)");
-      if(grid?.children.length===2&&[...grid.children].every(node=>node.matches(grid.matches(".route-grid")?".route-pane":".h-panel"))){
+      const routeFamily=grid?.matches(".route-grid");
+      if(grid?.children.length===2&&[...grid.children].every(node=>node.matches(routeFamily?".route-pane":".h-panel"))&&
+         grid.children[0].querySelector(routeFamily?":scope > .route-figure > svg":":scope > .h-figure > svg")){
         [panel,method]=grid.children;
         routePilot=true;
       }
