@@ -141,3 +141,24 @@
  #new-learning .nl-shift-board .nl-playing [data-shift-before] .nl-shift-motion{animation:none}
  #new-learning .nl-shift-board .nl-playing [data-shift-after]{animation:none;visibility:visible}
 }
+
+/* Reusable consecutive shift sequence: one visible board throughout.
+   Each authored step supplies only its direction and delay. */
+#new-learning .nl-shift-board [data-shift-sequence-step]{visibility:hidden}
+#new-learning .nl-shift-board .nl-playing [data-shift-sequence-step]{
+ animation:j277-shift-sequence-step var(--nl-shift-duration,2s) linear var(--nl-shift-delay,0s) forwards;
+}
+#new-learning .nl-shift-board .nl-playing [data-shift-sequence-step] .nl-shift-motion{
+ animation:j277-shift-slide var(--nl-shift-duration,2s) ease-in-out var(--nl-shift-delay,0s) both;
+}
+#new-learning .nl-shift-board .nl-playing [data-shift-sequence-final]{
+ animation:j277-shift-sequence-final .01s steps(1,end) var(--nl-shift-total,8s) both;
+}
+#new-learning .nl-shift-board .nl-bit-lost{fill:#97503b}
+@keyframes j277-shift-sequence-step{0%,99.99%{visibility:visible}100%{visibility:hidden}}
+@keyframes j277-shift-sequence-final{0%{visibility:hidden}100%{visibility:visible}}
+@media(prefers-reduced-motion:reduce),print{
+ #new-learning .nl-shift-board .nl-playing [data-shift-sequence-step]{animation:none;visibility:hidden}
+ #new-learning .nl-shift-board .nl-playing [data-shift-sequence-step] .nl-shift-motion{animation:none}
+ #new-learning .nl-shift-board .nl-playing [data-shift-sequence-final]{animation:none;visibility:visible}
+}
